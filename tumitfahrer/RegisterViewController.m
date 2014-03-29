@@ -24,17 +24,17 @@
         float distance = 15;
         float beginY = 100;
         float centerX = (self.view.frame.size.width - buttonWidth)/2;
-        CustomTextField *emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, beginY, buttonWidth, 40) placeholderText:@"Your TUM email" customIconName:@"customIcon"];
+        CustomTextField *emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, beginY, buttonWidth, 40) placeholderText:@"Your TUM email" customIconName:@"customIcon" returnKeyType:UIReturnKeyNext];
         emailTextField.delegate = self;
         
-        CustomTextField *firstNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, beginY + distance + emailTextField.frame.size.height, buttonWidth, 40) placeholderText:@"First name" customIconName:@"customIcon"];
+        CustomTextField *firstNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, beginY + distance + emailTextField.frame.size.height, buttonWidth, 40) placeholderText:@"First name" customIconName:@"customIcon" returnKeyType:UIReturnKeyNext];
         firstNameTextField.delegate = self;
         
-        CustomTextField *lastNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, beginY + distance*2 + emailTextField.frame.size.height*2, buttonWidth, 40) placeholderText:@"Last name" customIconName:@"customIcon"];
+        CustomTextField *lastNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, beginY + distance*2 + emailTextField.frame.size.height*2, buttonWidth, 40) placeholderText:@"Last name" customIconName:@"customIcon" returnKeyType:UIReturnKeyNext];
         lastNameTextField.delegate = self;
         
         // TODO: show picker instead of department
-        CustomTextField *departmentNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, beginY + distance*3 + emailTextField.frame.size.height*3, buttonWidth, 40) placeholderText:@"Department" customIconName:@"customIcon"];
+        CustomTextField *departmentNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, beginY + distance*3 + emailTextField.frame.size.height*3, buttonWidth, 40) placeholderText:@"Department" customIconName:@"customIcon" returnKeyType:UIReturnKeyDone];
         departmentNameTextField.delegate = self;
         
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];

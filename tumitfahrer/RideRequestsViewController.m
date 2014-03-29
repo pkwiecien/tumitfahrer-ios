@@ -9,8 +9,16 @@
 #import "RideRequestsViewController.h"
 #import "LoginViewController.h"
 #import "CustomTextField.h"
+#import "ColorFullView.h"
+#import "ForgotPasswordViewController.h"
+#import "RegisterViewController.h"
+#import <MCPanelViewController.h>
+#import "MenuViewController.h"
 
 @interface RideRequestsViewController ()
+
+@property NSMutableArray *viewControllers;
+@property MCPanelViewController *menuPanelViewController;
 
 @end
 
@@ -20,7 +28,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+
     }
     return self;
 }
@@ -28,15 +36,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    MenuViewController *menuController = [[MenuViewController alloc] init];
+    menuController.preferredContentSize = CGSizeMake(150, 0);
+    
+    self.menuPanelViewController = [menuController viewControllerInPanelViewController];
+    self.menuPanelViewController.backgroundStyle = MCPanelBackgroundStyleLight;
+    self.menuPanelViewController.tintColor = [UIColor colorWithRed:0.7 green:0.7 blue:1 alpha:1];
+    
+    self.navigationController.navigationBar.hidden = YES;
+
 }
 
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController addGestureRecognizerToViewForScreenEdgeGestureWithPanelViewController:self.menuPanelViewController withDirection:MCPanelAnimationDirectionLeft];
+}
 -(void)viewDidAppear:(BOOL)animated
 {
     BOOL isUserLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:@"loggedIn"];
 
     if (!isUserLoggedIn) {
-        [self showLoginScreen:YES];
+        //[self showLoginScreen:YES];
     }
 }
 
@@ -52,4 +74,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+- (IBAction)menuButtonPressed:(id)sender {
+    [self.navigationController presentPanelViewController:self.menuPanelViewController withDirection:MCPanelAnimationDirectionLeft];
+}
 @end

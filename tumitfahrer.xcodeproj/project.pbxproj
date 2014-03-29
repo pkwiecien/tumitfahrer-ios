@@ -37,6 +37,9 @@
 		E59987FC18E7251000B01C62 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59987FA18E7251000B01C62 /* RegisterViewController.xib */; };
 		E599880118E72BF600B01C62 /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987FF18E72BF500B01C62 /* ForgotPasswordViewController.m */; };
 		E599880218E72BF600B01C62 /* ForgotPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E599880018E72BF600B01C62 /* ForgotPasswordViewController.xib */; };
+		E599880618E7390700B01C62 /* ColorFullView.m in Sources */ = {isa = PBXBuildFile; fileRef = E599880518E7390700B01C62 /* ColorFullView.m */; };
+		E599880B18E7836D00B01C62 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E599880918E7836D00B01C62 /* MenuViewController.m */; };
+		E599880C18E7836D00B01C62 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E599880A18E7836D00B01C62 /* MenuViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +94,11 @@
 		E59987FE18E72BF500B01C62 /* ForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgotPasswordViewController.h; sourceTree = "<group>"; };
 		E59987FF18E72BF500B01C62 /* ForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotPasswordViewController.m; sourceTree = "<group>"; };
 		E599880018E72BF600B01C62 /* ForgotPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgotPasswordViewController.xib; sourceTree = "<group>"; };
+		E599880418E7390700B01C62 /* ColorFullView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorFullView.h; sourceTree = "<group>"; };
+		E599880518E7390700B01C62 /* ColorFullView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorFullView.m; sourceTree = "<group>"; };
+		E599880818E7836D00B01C62 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
+		E599880918E7836D00B01C62 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		E599880A18E7836D00B01C62 /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +212,8 @@
 		E59987C418E6DBC300B01C62 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E599880718E7835F00B01C62 /* Menu */,
+				E599880318E738F700B01C62 /* Views */,
 				E59987FD18E72BD100B01C62 /* ForgotPassword */,
 				E59987F718E724F900B01C62 /* Register */,
 				E59987CC18E6E3A100B01C62 /* Login */,
@@ -268,6 +278,25 @@
 				E599880018E72BF600B01C62 /* ForgotPasswordViewController.xib */,
 			);
 			name = ForgotPassword;
+			sourceTree = "<group>";
+		};
+		E599880318E738F700B01C62 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E599880418E7390700B01C62 /* ColorFullView.h */,
+				E599880518E7390700B01C62 /* ColorFullView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		E599880718E7835F00B01C62 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				E599880818E7836D00B01C62 /* MenuViewController.h */,
+				E599880918E7836D00B01C62 /* MenuViewController.m */,
+				E599880A18E7836D00B01C62 /* MenuViewController.xib */,
+			);
+			name = Menu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -353,6 +382,7 @@
 			files = (
 				E599880218E72BF600B01C62 /* ForgotPasswordViewController.xib in Resources */,
 				E59987FC18E7251000B01C62 /* RegisterViewController.xib in Resources */,
+				E599880C18E7836D00B01C62 /* MenuViewController.xib in Resources */,
 				E59987D118E6E47F00B01C62 /* LoginViewController.xib in Resources */,
 				E59987F218E70B8800B01C62 /* inputTextBox.png in Resources */,
 				E522BAD218AE13F600ECD375 /* Images.xcassets in Resources */,
@@ -421,7 +451,9 @@
 				E599880118E72BF600B01C62 /* ForgotPasswordViewController.m in Sources */,
 				E59987FB18E7251000B01C62 /* RegisterViewController.m in Sources */,
 				E59987D718E6ECF200B01C62 /* CustomTextField.m in Sources */,
+				E599880618E7390700B01C62 /* ColorFullView.m in Sources */,
 				E522BAC618AE13F600ECD375 /* main.m in Sources */,
+				E599880B18E7836D00B01C62 /* MenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

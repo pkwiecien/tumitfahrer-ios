@@ -1,5 +1,5 @@
 //
-//  RideRequestsViewController.h
+//  ColorFullView.h
 //  tumitfahrer
 //
 //  Created by Pawel Kwiecien on 3/29/14.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RideRequestsViewController : UIViewController
+@interface ColorFullView : UIView
 
-- (IBAction)menuButtonPressed:(id)sender;
+- (id)initWithFrame:(CGRect)frame color:(UIColor*)color;
 
 @end

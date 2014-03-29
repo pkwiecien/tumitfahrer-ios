@@ -1,5 +1,5 @@
 //
-//  RideRequestsViewController.h
+//  MenuViewController.h
 //  tumitfahrer
 //
 //  Created by Pawel Kwiecien on 3/29/14.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RideRequestsViewController : UIViewController
-
-- (IBAction)menuButtonPressed:(id)sender;
+@interface MenuViewController : UIViewController
 
 @end

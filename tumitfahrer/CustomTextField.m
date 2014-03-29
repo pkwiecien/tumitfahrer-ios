@@ -10,7 +10,7 @@
 
 @implementation CustomTextField
 
-- (instancetype)initWithFrame:(CGRect)frame placeholderText:(NSString*)placeholderText customIconName:(NSString *)customIconName
+- (instancetype)initWithFrame:(CGRect)frame placeholderText:(NSString*)placeholderText customIconName:(NSString *)customIconName returnKeyType:(UIReturnKeyType)returnKeyType
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -20,7 +20,7 @@
         self.attributedPlaceholder = [[NSAttributedString alloc] initWithString:placeholderText attributes:@{NSForegroundColorAttributeName: [UIColor lightGrayColor]}];
         self.autocorrectionType = UITextAutocorrectionTypeNo;
         self.keyboardType = UIKeyboardTypeDefault;
-        self.returnKeyType = UIReturnKeyDone;
+        self.returnKeyType = returnKeyType;
 //        self.clearButtonMode = UITextFieldViewModeWhileEditing;
         
         UIImageView *clearButtonVIew = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];

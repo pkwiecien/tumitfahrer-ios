@@ -24,10 +24,10 @@
         // Custom initializatio
         float buttonWidth = 253;
         float centerX = (self.view.frame.size.width - buttonWidth)/2;
-        CustomTextField *emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, 100, buttonWidth, 40) placeholderText:@"Your TUM email" customIconName:@"customIcon"];
+        CustomTextField *emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, 100, buttonWidth, 40) placeholderText:@"Your TUM email" customIconName:@"customIcon" returnKeyType:UIReturnKeyNext];
         emailTextField.delegate = self;
         
-        CustomTextField *passwordTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, 160, buttonWidth, 40) placeholderText:@"Your password" customIconName:@"customIcon"];
+        CustomTextField *passwordTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, 160, buttonWidth, 40) placeholderText:@"Your password" customIconName:@"customIcon" returnKeyType:UIReturnKeyDone];
         passwordTextField.delegate = self;
         
         [self.view addSubview:emailTextField];
@@ -55,7 +55,10 @@
 }
 
 - (IBAction)loginButtonPressed:(id)sender {
-
+    
+    [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"loggedIn"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 // show register view

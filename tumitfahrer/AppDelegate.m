@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "RideRequestsViewController.h"
+#import "ForgotPasswordViewController.h"
 
 @implementation AppDelegate
 

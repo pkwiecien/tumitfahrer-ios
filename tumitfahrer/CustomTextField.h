@@ -10,7 +10,6 @@
 
 @interface CustomTextField : UITextField<UITextFieldDelegate>
 
-- (instancetype)initWithFrame:(CGRect)frame placeholderText:(NSString*)placeholderText customIconName:(NSString *)customIconName;
-
+- (instancetype)initWithFrame:(CGRect)frame placeholderText:(NSString*)placeholderText customIconName:(NSString *)customIconName returnKeyType:(UIReturnKeyType)returnKeyType;
 
 @end
