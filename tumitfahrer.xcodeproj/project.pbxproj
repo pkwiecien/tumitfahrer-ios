@@ -23,6 +23,16 @@
 		E53D5D0018B14C39004016F8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E53D5CFF18B14C39004016F8 /* QuartzCore.framework */; };
 		E59987C918E6DBEA00B01C62 /* RideRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987C718E6DBEA00B01C62 /* RideRequestsViewController.m */; };
 		E59987CA18E6DBEA00B01C62 /* RideRequestsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59987C818E6DBEA00B01C62 /* RideRequestsViewController.xib */; };
+		E59987D018E6E47F00B01C62 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987CE18E6E47F00B01C62 /* LoginViewController.m */; };
+		E59987D118E6E47F00B01C62 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59987CF18E6E47F00B01C62 /* LoginViewController.xib */; };
+		E59987D718E6ECF200B01C62 /* CustomTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987D618E6ECF200B01C62 /* CustomTextField.m */; };
+		E59987D918E6F66E00B01C62 /* customIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = E59987D818E6F66E00B01C62 /* customIcon.png */; };
+		E59987DC18E701AF00B01C62 /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987DB18E701AF00B01C62 /* CustomButton.m */; };
+		E59987EF18E70A4B00B01C62 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = E59987ED18E70A4B00B01C62 /* background.png */; };
+		E59987F018E70A4B00B01C62 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E59987EE18E70A4B00B01C62 /* background@2x.png */; };
+		E59987F218E70B8800B01C62 /* inputTextBox.png in Resources */ = {isa = PBXBuildFile; fileRef = E59987F118E70B8800B01C62 /* inputTextBox.png */; };
+		E59987F518E70DD100B01C62 /* blueButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E59987F318E70DD100B01C62 /* blueButton.png */; };
+		E59987F618E70DD100B01C62 /* blueButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E59987F418E70DD100B01C62 /* blueButton@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +68,19 @@
 		E59987C618E6DBEA00B01C62 /* RideRequestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideRequestsViewController.h; sourceTree = "<group>"; };
 		E59987C718E6DBEA00B01C62 /* RideRequestsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideRequestsViewController.m; sourceTree = "<group>"; };
 		E59987C818E6DBEA00B01C62 /* RideRequestsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RideRequestsViewController.xib; sourceTree = "<group>"; };
+		E59987CD18E6E47F00B01C62 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		E59987CE18E6E47F00B01C62 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		E59987CF18E6E47F00B01C62 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		E59987D518E6ECF100B01C62 /* CustomTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTextField.h; sourceTree = "<group>"; };
+		E59987D618E6ECF200B01C62 /* CustomTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTextField.m; sourceTree = "<group>"; };
+		E59987D818E6F66E00B01C62 /* customIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = customIcon.png; sourceTree = "<group>"; };
+		E59987DA18E701AF00B01C62 /* CustomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomButton.h; sourceTree = "<group>"; };
+		E59987DB18E701AF00B01C62 /* CustomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomButton.m; sourceTree = "<group>"; };
+		E59987ED18E70A4B00B01C62 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		E59987EE18E70A4B00B01C62 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
+		E59987F118E70B8800B01C62 /* inputTextBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inputTextBox.png; sourceTree = "<group>"; };
+		E59987F318E70DD100B01C62 /* blueButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueButton.png; sourceTree = "<group>"; };
+		E59987F418E70DD100B01C62 /* blueButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueButton@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +145,7 @@
 		E522BABF18AE13F600ECD375 /* tumitfahrer */ = {
 			isa = PBXGroup;
 			children = (
+				E59987D418E6ECD800B01C62 /* UIElements */,
 				E59987C518E6DBCE00B01C62 /* Model */,
 				E59987C418E6DBC300B01C62 /* ViewControllers */,
 				E522BAC818AE13F600ECD375 /* AppDelegate.h */,
@@ -135,6 +159,12 @@
 		E522BAC018AE13F600ECD375 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E59987F318E70DD100B01C62 /* blueButton.png */,
+				E59987F418E70DD100B01C62 /* blueButton@2x.png */,
+				E59987F118E70B8800B01C62 /* inputTextBox.png */,
+				E59987ED18E70A4B00B01C62 /* background.png */,
+				E59987EE18E70A4B00B01C62 /* background@2x.png */,
+				E59987D818E6F66E00B01C62 /* customIcon.png */,
 				E522BAC118AE13F600ECD375 /* tumitfahrer-Info.plist */,
 				E522BAC218AE13F600ECD375 /* InfoPlist.strings */,
 				E522BAC518AE13F600ECD375 /* main.m */,
@@ -164,6 +194,7 @@
 		E59987C418E6DBC300B01C62 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E59987CC18E6E3A100B01C62 /* Login */,
 				E59987CB18E6DC2700B01C62 /* RideRequests */,
 			);
 			name = ViewControllers;
@@ -184,6 +215,27 @@
 				E59987C818E6DBEA00B01C62 /* RideRequestsViewController.xib */,
 			);
 			name = RideRequests;
+			sourceTree = "<group>";
+		};
+		E59987CC18E6E3A100B01C62 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				E59987CD18E6E47F00B01C62 /* LoginViewController.h */,
+				E59987CE18E6E47F00B01C62 /* LoginViewController.m */,
+				E59987CF18E6E47F00B01C62 /* LoginViewController.xib */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		E59987D418E6ECD800B01C62 /* UIElements */ = {
+			isa = PBXGroup;
+			children = (
+				E59987D518E6ECF100B01C62 /* CustomTextField.h */,
+				E59987D618E6ECF200B01C62 /* CustomTextField.m */,
+				E59987DA18E701AF00B01C62 /* CustomButton.h */,
+				E59987DB18E701AF00B01C62 /* CustomButton.m */,
+			);
+			name = UIElements;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,9 +319,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E59987D118E6E47F00B01C62 /* LoginViewController.xib in Resources */,
+				E59987F218E70B8800B01C62 /* inputTextBox.png in Resources */,
 				E522BAD218AE13F600ECD375 /* Images.xcassets in Resources */,
+				E59987EF18E70A4B00B01C62 /* background.png in Resources */,
 				E59987CA18E6DBEA00B01C62 /* RideRequestsViewController.xib in Resources */,
 				E522BAC418AE13F600ECD375 /* InfoPlist.strings in Resources */,
+				E59987F618E70DD100B01C62 /* blueButton@2x.png in Resources */,
+				E59987F518E70DD100B01C62 /* blueButton.png in Resources */,
+				E59987F018E70A4B00B01C62 /* background@2x.png in Resources */,
+				E59987D918E6F66E00B01C62 /* customIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,8 +380,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E59987DC18E701AF00B01C62 /* CustomButton.m in Sources */,
+				E59987D018E6E47F00B01C62 /* LoginViewController.m in Sources */,
 				E59987C918E6DBEA00B01C62 /* RideRequestsViewController.m in Sources */,
 				E522BACA18AE13F600ECD375 /* AppDelegate.m in Sources */,
+				E59987D718E6ECF200B01C62 /* CustomTextField.m in Sources */,
 				E522BAC618AE13F600ECD375 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

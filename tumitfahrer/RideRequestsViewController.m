@@ -7,6 +7,8 @@
 //
 
 #import "RideRequestsViewController.h"
+#import "LoginViewController.h"
+#import "CustomTextField.h"
 
 @interface RideRequestsViewController ()
 
@@ -27,6 +29,21 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    BOOL isUserLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:@"loggedIn"];
+
+    if (!isUserLoggedIn) {
+        [self showLoginScreen:YES];
+    }
+}
+
+-(void)showLoginScreen:(BOOL)animated
+{
+    LoginViewController *loginVC = [[LoginViewController alloc] init];
+    [self presentViewController:loginVC animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning

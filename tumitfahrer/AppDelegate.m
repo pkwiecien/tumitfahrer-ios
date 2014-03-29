@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "LoginViewController.h"
 #import "RideRequestsViewController.h"
 
 @implementation AppDelegate
@@ -16,11 +17,16 @@
 	
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
+    // set color of status bar to light
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    RideRequestsViewController *rideRequestVC = [[RideRequestsViewController alloc] init];
+    UINavigationController *mainNavController = [[UINavigationController alloc] initWithRootViewController:rideRequestVC];
+
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 
-    RideRequestsViewController *rideRequestVC = [[RideRequestsViewController alloc] init];
-    self.window.rootViewController = rideRequestVC;
+    self.window.rootViewController = mainNavController;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
