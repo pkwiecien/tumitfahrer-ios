@@ -1,5 +1,5 @@
 //
-//  LoginViewController.h
+//  RegisterViewController.h
 //  tumitfahrer
 //
 //  Created by Pawel Kwiecien on 3/29/14.
@@ -8,10 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LoginViewController : UIViewController<UITextFieldDelegate>
-
-- (IBAction)loginButtonPressed:(id)sender;
+@interface RegisterViewController : UIViewController<UITextFieldDelegate>
 - (IBAction)registerButtonPressed:(id)sender;
-- (IBAction)forgotPasswordButtonPressed:(id)sender;
+- (IBAction)backToLoginButtonPressed:(id)sender;
 
 @end

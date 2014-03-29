@@ -10,22 +10,28 @@
 
 @implementation CustomTextField
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame placeholderText:(NSString*)placeholderText customIconName:(NSString *)customIconName
 {
     self = [super initWithFrame:frame];
     if (self) {
         self.background = [UIImage imageNamed:@"inputTextBox"];
         self.font = [UIFont systemFontOfSize:15];
         self.textColor = [UIColor whiteColor];
-        self.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Your username" attributes:@{NSForegroundColorAttributeName: [UIColor grayColor]}];
+        self.attributedPlaceholder = [[NSAttributedString alloc] initWithString:placeholderText attributes:@{NSForegroundColorAttributeName: [UIColor lightGrayColor]}];
         self.autocorrectionType = UITextAutocorrectionTypeNo;
         self.keyboardType = UIKeyboardTypeDefault;
         self.returnKeyType = UIReturnKeyDone;
-        self.clearButtonMode = UITextFieldViewModeWhileEditing;
+//        self.clearButtonMode = UITextFieldViewModeWhileEditing;
+        
+        UIImageView *clearButtonVIew = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
+        clearButtonVIew.image = [UIImage imageNamed:@"customIcon"];
+        self.rightView = clearButtonVIew;
+        self.rightViewMode = UITextFieldViewModeWhileEditing;
+        
         self.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
-        imageView.image = [UIImage imageNamed:@"customIcon"];
+        imageView.image = [UIImage imageNamed:customIconName];
         
         /*UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(1, 1, 60, 25)];
          [lbl setText:@"Partenza:"];
@@ -34,9 +40,21 @@
         self.leftView = imageView;
         self.leftViewMode = UITextFieldViewModeAlways;
         self.delegate = self;
-//        [self.window addSubview:textField];
     }
     return self;
+}
+
+
+// padding of the input text and placeholder
+-(CGRect)textRectForBounds:(CGRect)bounds
+{
+    return CGRectInset(bounds, 30, 0);
+}
+
+// padding of the input text while editing
+-(CGRect)editingRectForBounds:(CGRect)bounds
+{
+    return CGRectInset(bounds, 30, 0);
 }
 
 // padding of the icon in input box
@@ -44,6 +62,13 @@
 {
     CGRect textRect = [super leftViewRectForBounds:bounds];
     textRect.origin.x += 10;
+    return textRect;
+}
+
+-(CGRect)rightViewRectForBounds:(CGRect)bounds
+{
+    CGRect textRect = [super rightViewRectForBounds:bounds];
+    textRect.origin.x -= 10;
     return textRect;
 }
 
