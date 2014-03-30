@@ -11,5 +11,6 @@
 @interface RegisterViewController : UIViewController<UITextFieldDelegate>
 - (IBAction)registerButtonPressed:(id)sender;
 - (IBAction)backToLoginButtonPressed:(id)sender;
+- (IBAction)dismissKeyboard:(id)sender;
 
 @end

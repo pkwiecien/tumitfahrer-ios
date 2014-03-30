@@ -7,11 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MediaPlayer/MediaPlayer.h>
 
 @interface LoginViewController : UIViewController<UITextFieldDelegate>
+
+
+@property (strong) MPMoviePlayerController *moviePlayerController;
 
 - (IBAction)loginButtonPressed:(id)sender;
 - (IBAction)registerButtonPressed:(id)sender;
 - (IBAction)forgotPasswordButtonPressed:(id)sender;
+- (IBAction)dismissKeyboard:(id)sender;
 
 @end

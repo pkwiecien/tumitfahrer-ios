@@ -57,9 +57,9 @@
 {
     BOOL isUserLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:@"loggedIn"];
 
-    if (!isUserLoggedIn) {
-        //[self showLoginScreen:YES];
-    }
+//    if (!isUserLoggedIn) {
+        [self showLoginScreen:YES];
+  //  }
 }
 
 -(void)showLoginScreen:(BOOL)animated

@@ -10,8 +10,12 @@
 #import "CustomTextField.h"
 #import "RegisterViewController.h"
 #import "ForgotPasswordViewController.h"
+#import "Constants.h"
 
 @interface LoginViewController ()
+
+@property CustomTextField *emailTextField;
+@property CustomTextField *passwordTextField;
 
 @end
 
@@ -22,21 +26,15 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initializatio
-        float buttonWidth = 253;
-        float centerX = (self.view.frame.size.width - buttonWidth)/2;
-        CustomTextField *emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, 100, buttonWidth, 40) placeholderText:@"Your TUM email" customIconName:@"customIcon" returnKeyType:UIReturnKeyNext];
-        emailTextField.delegate = self;
+        float centerX = (self.view.frame.size.width - cUIElementWidth)/2;
+        self.emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIconName:@"customIcon" returnKeyType:UIReturnKeyNext];
+        self.emailTextField.delegate = self;
         
-        CustomTextField *passwordTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, 160, buttonWidth, 40) placeholderText:@"Your password" customIconName:@"customIcon" returnKeyType:UIReturnKeyDone];
-        passwordTextField.delegate = self;
+        self.passwordTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop+self.emailTextField.frame.size.height + cUIElementPadding, cUIElementWidth, cUIElementHeight) placeholderText:@"Your password" customIconName:@"customIcon" returnKeyType:UIReturnKeyDone];
+        self.passwordTextField.delegate = self;
         
-        [self.view addSubview:emailTextField];
-        [self.view addSubview:passwordTextField];
-        
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
-        
-        [self.view addSubview:imageView ];
-        [self.view sendSubviewToBack:imageView ];
+        [self.view addSubview:self.emailTextField];
+        [self.view addSubview:self.passwordTextField];
     }
     return self;
 }
@@ -52,6 +50,30 @@
     if (email) {
 //        self.emailField.text = email;
     }
+    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"highway-nosound@2x" ofType:@"mp4"];
+    NSURL *fileURL = [NSURL fileURLWithPath:filepath];
+    
+    if(self.moviePlayerController == nil) {
+        self.moviePlayerController = [[MPMoviePlayerController alloc] initWithContentURL:fileURL];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(introMovieFinished:)
+                                                 name:MPMoviePlayerPlaybackDidFinishNotification
+                                               object:self.moviePlayerController];
+    
+        // Hide the video controls from the user
+        [self.moviePlayerController setControlStyle:MPMovieControlStyleNone];
+    
+        [self.moviePlayerController prepareToPlay];
+        [self.moviePlayerController.view setFrame: CGRectMake(0, 0, 416, 1100)];
+        [self.view addSubview:self.moviePlayerController.view];
+        [self.view sendSubviewToBack:self.moviePlayerController.view];
+    }
+    [self.moviePlayerController play];
+}
+
+- (void)introMovieFinished:(NSNotification *)notification
+{
+    [self.moviePlayerController play];
 }
 
 - (IBAction)loginButtonPressed:(id)sender {
@@ -73,9 +95,14 @@
     [self presentViewController:forgotVC animated:NO completion:nil];
 }
 
+- (IBAction)dismissKeyboard:(id)sender {
+    [self.view endEditing:YES];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
+
 
 @end

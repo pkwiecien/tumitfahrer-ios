@@ -40,6 +40,11 @@
 		E599880618E7390700B01C62 /* ColorFullView.m in Sources */ = {isa = PBXBuildFile; fileRef = E599880518E7390700B01C62 /* ColorFullView.m */; };
 		E599880B18E7836D00B01C62 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E599880918E7836D00B01C62 /* MenuViewController.m */; };
 		E599880C18E7836D00B01C62 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E599880A18E7836D00B01C62 /* MenuViewController.xib */; };
+		E599880E18E7FB1600B01C62 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E599880D18E7FB1600B01C62 /* AVFoundation.framework */; };
+		E599881118E7FC5900B01C62 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E599881018E7FC5900B01C62 /* MediaPlayer.framework */; };
+		E599881918E804E500B01C62 /* highway-nosound@2x.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E599881818E804E500B01C62 /* highway-nosound@2x.mp4 */; };
+		E599882018E8145500B01C62 /* road.png in Resources */ = {isa = PBXBuildFile; fileRef = E599881E18E8145500B01C62 /* road.png */; };
+		E599882118E8145500B01C62 /* road@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E599881F18E8145500B01C62 /* road@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +104,12 @@
 		E599880818E7836D00B01C62 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		E599880918E7836D00B01C62 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		E599880A18E7836D00B01C62 /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
+		E599880D18E7FB1600B01C62 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		E599881018E7FC5900B01C62 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		E599881818E804E500B01C62 /* highway-nosound@2x.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "highway-nosound@2x.mp4"; sourceTree = "<group>"; };
+		E599881E18E8145500B01C62 /* road.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = road.png; sourceTree = "<group>"; };
+		E599881F18E8145500B01C62 /* road@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "road@2x.png"; sourceTree = "<group>"; };
+		E599882318E8157300B01C62 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +117,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E599881118E7FC5900B01C62 /* MediaPlayer.framework in Frameworks */,
+				E599880E18E7FB1600B01C62 /* AVFoundation.framework in Frameworks */,
 				E53D5D0018B14C39004016F8 /* QuartzCore.framework in Frameworks */,
 				E522BABC18AE13F600ECD375 /* CoreGraphics.framework in Frameworks */,
 				E522BABE18AE13F600ECD375 /* UIKit.framework in Frameworks */,
@@ -150,6 +163,8 @@
 		E522BAB818AE13F600ECD375 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E599881018E7FC5900B01C62 /* MediaPlayer.framework */,
+				E599880D18E7FB1600B01C62 /* AVFoundation.framework */,
 				E53D5CFF18B14C39004016F8 /* QuartzCore.framework */,
 				E522BAB918AE13F600ECD375 /* Foundation.framework */,
 				E522BABB18AE13F600ECD375 /* CoreGraphics.framework */,
@@ -177,6 +192,9 @@
 		E522BAC018AE13F600ECD375 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E599881E18E8145500B01C62 /* road.png */,
+				E599881F18E8145500B01C62 /* road@2x.png */,
+				E599881818E804E500B01C62 /* highway-nosound@2x.mp4 */,
 				E59987F318E70DD100B01C62 /* blueButton.png */,
 				E59987F418E70DD100B01C62 /* blueButton@2x.png */,
 				E59987F118E70B8800B01C62 /* inputTextBox.png */,
@@ -212,6 +230,7 @@
 		E59987C418E6DBC300B01C62 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E599882218E8155800B01C62 /* Utilities */,
 				E599880718E7835F00B01C62 /* Menu */,
 				E599880318E738F700B01C62 /* Views */,
 				E59987FD18E72BD100B01C62 /* ForgotPassword */,
@@ -297,6 +316,14 @@
 				E599880A18E7836D00B01C62 /* MenuViewController.xib */,
 			);
 			name = Menu;
+			sourceTree = "<group>";
+		};
+		E599882218E8155800B01C62 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				E599882318E8157300B01C62 /* Constants.h */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -387,11 +414,14 @@
 				E59987F218E70B8800B01C62 /* inputTextBox.png in Resources */,
 				E522BAD218AE13F600ECD375 /* Images.xcassets in Resources */,
 				E59987EF18E70A4B00B01C62 /* background.png in Resources */,
+				E599881918E804E500B01C62 /* highway-nosound@2x.mp4 in Resources */,
 				E59987CA18E6DBEA00B01C62 /* RideRequestsViewController.xib in Resources */,
 				E522BAC418AE13F600ECD375 /* InfoPlist.strings in Resources */,
 				E59987F618E70DD100B01C62 /* blueButton@2x.png in Resources */,
+				E599882018E8145500B01C62 /* road.png in Resources */,
 				E59987F518E70DD100B01C62 /* blueButton.png in Resources */,
 				E59987F018E70A4B00B01C62 /* background@2x.png in Resources */,
+				E599882118E8145500B01C62 /* road@2x.png in Resources */,
 				E59987D918E6F66E00B01C62 /* customIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ForgotPasswordViewController : UIViewController
+@interface ForgotPasswordViewController : UIViewController<UITextFieldDelegate>
+- (IBAction)backToLoginButtonPressed:(id)sender;
+- (IBAction)sendReminderButtonPressed:(id)sender;
+- (IBAction)dismissKeyboard:(id)sender;
 
 @end
