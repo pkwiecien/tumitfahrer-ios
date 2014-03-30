@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "SlideNavigationController.h"
+#import "HAPaperCollectionViewController.h"
 
-@interface RideRequestsViewController : UIViewController<SlideNavigationControllerDelegate>
+@interface RideRequestsViewController : HAPaperCollectionViewController<SlideNavigationControllerDelegate>
 
 - (IBAction)menuButtonPressed:(id)sender;
+
+- (UICollectionViewController*)nextViewControllerAtPoint:(CGPoint)point;
+
+- (id)initWithCollectionViewLayout:(UICollectionViewFlowLayout *)layout;
 
 @end

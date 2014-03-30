@@ -11,9 +11,17 @@
 #import "RideRequestsViewController.h"
 #import "ForgotPasswordViewController.h"
 #import "MenuViewController.h"
-#import "TestViewController.h"
 #import "SlideNavigationController.h"
 #import "Constants.h"
+#import "HATransitionController.h"
+#import "HACollectionViewSmallLayout.h"
+
+@interface AppDelegate () <UINavigationControllerDelegate, HATransitionControllerDelegate>
+
+@property (nonatomic) SlideNavigationController *navigationController;
+@property (nonatomic) HATransitionController *transitionController;
+
+@end
 
 @implementation AppDelegate
 
@@ -28,15 +36,21 @@
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 
     // init controllers
-    RideRequestsViewController *rideRequestVC = [[RideRequestsViewController alloc] init];
+    HACollectionViewSmallLayout *smallLayout = [[HACollectionViewSmallLayout alloc] init];
+    RideRequestsViewController *rideRequestVC = [[RideRequestsViewController alloc] initWithCollectionViewLayout:smallLayout];
     MenuViewController *leftMenu = [[MenuViewController alloc] init];
     
     // init slide panel
-    SlideNavigationController *slideNC = [[SlideNavigationController alloc] initWithRootViewController:rideRequestVC];
-    slideNC.enableSwipeGesture = NO;
-    slideNC.portraitSlideOffset = cSlideMenuOffset;     // width of visible view controller
+    self.navigationController = [[SlideNavigationController alloc] initWithRootViewController:rideRequestVC];
+    self.navigationController.enableSwipeGesture = NO;
+    self.navigationController.portraitSlideOffset = cSlideMenuOffset;     // width of visible view controller
     [SlideNavigationController sharedInstance].leftMenu = leftMenu;
-    self.window.rootViewController = slideNC;
+    self.navigationController.delegate = self;
+    self.navigationController.navigationBarHidden = YES;
+    self.window.rootViewController = self.navigationController;
+    
+    self.transitionController = [[HATransitionController alloc] initWithCollectionView:rideRequestVC.collectionView];
+    self.transitionController.delegate = self;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

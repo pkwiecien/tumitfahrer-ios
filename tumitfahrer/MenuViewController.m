@@ -7,10 +7,12 @@
 //
 
 #import "MenuViewController.h"
+#import "MenuTableViewCell.h"
 
 @interface MenuViewController ()
 
 @property NSMutableArray *viewControllers;
+@property NSMutableArray *menuItems;
 
 @end
 
@@ -21,7 +23,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        [self.view setBackgroundColor:[UIColor blackColor]];
     }
     return self;
 }
@@ -30,6 +31,11 @@
 {
     [super viewDidLoad];
     self.tableView.backgroundColor = [UIColor clearColor];
+    self.menuItems = [NSMutableArray arrayWithObjects:@"Requests", @"Campus Rides", @"Activities", @"Your Schedule", @"Profile", @"Settings", nil];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gradientBackground"]];
+    [self.view addSubview:imageView];
+    [self.view sendSubviewToBack:imageView];
 
     // Do any additional setup after loading the view from its nib.
 }
@@ -41,29 +47,36 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return [self.menuItems count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"CustomTableCell";
-    __block UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"MenuTableViewCell";
+    __block MenuTableViewCell *cell = (MenuTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(!cell)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MenuTableViewCell" owner:self options:nil];
+        cell = [nib objectAtIndex:0];
     }
     
-    cell.textLabel.text = [NSString stringWithFormat:@"Option %d", indexPath.row];
+    cell.menuLabel.text = self.menuItems[indexPath.row];
+    cell.iconMenuImageView.image = [UIImage imageNamed:@"customIcon"];
     cell.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];
+    
+    UIView *bgColorView = [[UIView alloc] init];
+    bgColorView.backgroundColor = [UIColor colorWithRed:70 green:30 blue:180 alpha:0.3];
+    bgColorView.layer.masksToBounds = YES;
+    [cell setSelectedBackgroundView:bgColorView];
     
     return cell;
 }
 
-- (void)didReceiveMemoryWarning
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    return 50;
 }
+
 
 @end

@@ -37,7 +37,6 @@
 		E59987FC18E7251000B01C62 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59987FA18E7251000B01C62 /* RegisterViewController.xib */; };
 		E599880118E72BF600B01C62 /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987FF18E72BF500B01C62 /* ForgotPasswordViewController.m */; };
 		E599880218E72BF600B01C62 /* ForgotPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E599880018E72BF600B01C62 /* ForgotPasswordViewController.xib */; };
-		E599880618E7390700B01C62 /* ColorFullView.m in Sources */ = {isa = PBXBuildFile; fileRef = E599880518E7390700B01C62 /* ColorFullView.m */; };
 		E599880B18E7836D00B01C62 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E599880918E7836D00B01C62 /* MenuViewController.m */; };
 		E599880C18E7836D00B01C62 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E599880A18E7836D00B01C62 /* MenuViewController.xib */; };
 		E599880E18E7FB1600B01C62 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E599880D18E7FB1600B01C62 /* AVFoundation.framework */; };
@@ -47,8 +46,17 @@
 		E599882118E8145500B01C62 /* road@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E599881F18E8145500B01C62 /* road@2x.png */; };
 		E599882618E821D700B01C62 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = E599882418E821D700B01C62 /* circle.png */; };
 		E599882718E821D700B01C62 /* circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E599882518E821D700B01C62 /* circle@2x.png */; };
-		E599883118E834EC00B01C62 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E599882F18E834EC00B01C62 /* TestViewController.m */; };
-		E599883218E834EC00B01C62 /* TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E599883018E834EC00B01C62 /* TestViewController.xib */; };
+		E599885C18E84CE600B01C62 /* gradientBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E599885A18E84CE600B01C62 /* gradientBackground.png */; };
+		E599885D18E84CE600B01C62 /* gradientBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E599885B18E84CE600B01C62 /* gradientBackground@2x.png */; };
+		E599886218E84D9D00B01C62 /* MenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E599886018E84D9D00B01C62 /* MenuTableViewCell.m */; };
+		E599886318E84D9D00B01C62 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E599886118E84D9D00B01C62 /* MenuTableViewCell.xib */; };
+		E599886518E8559500B01C62 /* garching.png in Resources */ = {isa = PBXBuildFile; fileRef = E599886418E8559500B01C62 /* garching.png */; };
+		E599887218E8616200B01C62 /* HATransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = E599886F18E8616200B01C62 /* HATransitionController.m */; };
+		E599887318E8616200B01C62 /* HATransitionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E599887118E8616200B01C62 /* HATransitionLayout.m */; };
+		E599887818E8617100B01C62 /* HACollectionViewLargeLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E599887518E8617100B01C62 /* HACollectionViewLargeLayout.m */; };
+		E599887918E8617100B01C62 /* HACollectionViewSmallLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E599887718E8617100B01C62 /* HACollectionViewSmallLayout.m */; };
+		E599888118E88A0000B01C62 /* NibCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E599888018E88A0000B01C62 /* NibCell.xib */; };
+		E599888418E88C5100B01C62 /* HAPaperCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E599888318E88C5100B01C62 /* HAPaperCollectionViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,8 +111,6 @@
 		E59987FE18E72BF500B01C62 /* ForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgotPasswordViewController.h; sourceTree = "<group>"; };
 		E59987FF18E72BF500B01C62 /* ForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotPasswordViewController.m; sourceTree = "<group>"; };
 		E599880018E72BF600B01C62 /* ForgotPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgotPasswordViewController.xib; sourceTree = "<group>"; };
-		E599880418E7390700B01C62 /* ColorFullView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorFullView.h; sourceTree = "<group>"; };
-		E599880518E7390700B01C62 /* ColorFullView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorFullView.m; sourceTree = "<group>"; };
 		E599880818E7836D00B01C62 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		E599880918E7836D00B01C62 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		E599880A18E7836D00B01C62 /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
@@ -116,9 +122,23 @@
 		E599882318E8157300B01C62 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		E599882418E821D700B01C62 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
 		E599882518E821D700B01C62 /* circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle@2x.png"; sourceTree = "<group>"; };
-		E599882E18E834EC00B01C62 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
-		E599882F18E834EC00B01C62 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
-		E599883018E834EC00B01C62 /* TestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestViewController.xib; sourceTree = "<group>"; };
+		E599885A18E84CE600B01C62 /* gradientBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradientBackground.png; sourceTree = "<group>"; };
+		E599885B18E84CE600B01C62 /* gradientBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gradientBackground@2x.png"; sourceTree = "<group>"; };
+		E599885F18E84D9D00B01C62 /* MenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableViewCell.h; sourceTree = "<group>"; };
+		E599886018E84D9D00B01C62 /* MenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableViewCell.m; sourceTree = "<group>"; };
+		E599886118E84D9D00B01C62 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
+		E599886418E8559500B01C62 /* garching.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = garching.png; sourceTree = "<group>"; };
+		E599886E18E8616200B01C62 /* HATransitionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HATransitionController.h; sourceTree = "<group>"; };
+		E599886F18E8616200B01C62 /* HATransitionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HATransitionController.m; sourceTree = "<group>"; };
+		E599887018E8616200B01C62 /* HATransitionLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HATransitionLayout.h; sourceTree = "<group>"; };
+		E599887118E8616200B01C62 /* HATransitionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HATransitionLayout.m; sourceTree = "<group>"; };
+		E599887418E8617100B01C62 /* HACollectionViewLargeLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HACollectionViewLargeLayout.h; sourceTree = "<group>"; };
+		E599887518E8617100B01C62 /* HACollectionViewLargeLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HACollectionViewLargeLayout.m; sourceTree = "<group>"; };
+		E599887618E8617100B01C62 /* HACollectionViewSmallLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HACollectionViewSmallLayout.h; sourceTree = "<group>"; };
+		E599887718E8617100B01C62 /* HACollectionViewSmallLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HACollectionViewSmallLayout.m; sourceTree = "<group>"; };
+		E599888018E88A0000B01C62 /* NibCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NibCell.xib; sourceTree = "<group>"; };
+		E599888218E88C5100B01C62 /* HAPaperCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HAPaperCollectionViewController.h; sourceTree = "<group>"; };
+		E599888318E88C5100B01C62 /* HAPaperCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HAPaperCollectionViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,13 +207,15 @@
 		E522BABF18AE13F600ECD375 /* tumitfahrer */ = {
 			isa = PBXGroup;
 			children = (
-				E59987D418E6ECD800B01C62 /* UIElements */,
-				E59987C518E6DBCE00B01C62 /* Model */,
-				E59987C418E6DBC300B01C62 /* ViewControllers */,
 				E522BAC818AE13F600ECD375 /* AppDelegate.h */,
 				E522BAC918AE13F600ECD375 /* AppDelegate.m */,
 				E522BAD118AE13F600ECD375 /* Images.xcassets */,
+				E59987C518E6DBCE00B01C62 /* Model */,
 				E522BAC018AE13F600ECD375 /* Supporting Files */,
+				E59987D418E6ECD800B01C62 /* UIElements */,
+				E599882218E8155800B01C62 /* Utilities */,
+				E59987C418E6DBC300B01C62 /* ViewControllers */,
+				E599886618E860FA00B01C62 /* zLibraries */,
 			);
 			path = tumitfahrer;
 			sourceTree = "<group>";
@@ -201,12 +223,15 @@
 		E522BAC018AE13F600ECD375 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E599885A18E84CE600B01C62 /* gradientBackground.png */,
+				E599885B18E84CE600B01C62 /* gradientBackground@2x.png */,
 				E599882418E821D700B01C62 /* circle.png */,
 				E599882518E821D700B01C62 /* circle@2x.png */,
 				E599881E18E8145500B01C62 /* road.png */,
 				E599881F18E8145500B01C62 /* road@2x.png */,
 				E599881818E804E500B01C62 /* highway-nosound@2x.mp4 */,
 				E59987F318E70DD100B01C62 /* blueButton.png */,
+				E599886418E8559500B01C62 /* garching.png */,
 				E59987F418E70DD100B01C62 /* blueButton@2x.png */,
 				E59987F118E70B8800B01C62 /* inputTextBox.png */,
 				E59987ED18E70A4B00B01C62 /* background.png */,
@@ -241,13 +266,10 @@
 		E59987C418E6DBC300B01C62 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				E599882D18E834E100B01C62 /* Test */,
-				E599882218E8155800B01C62 /* Utilities */,
-				E599880718E7835F00B01C62 /* Menu */,
-				E599880318E738F700B01C62 /* Views */,
 				E59987FD18E72BD100B01C62 /* ForgotPassword */,
-				E59987F718E724F900B01C62 /* Register */,
+				E599880718E7835F00B01C62 /* LeftMenu */,
 				E59987CC18E6E3A100B01C62 /* Login */,
+				E59987F718E724F900B01C62 /* Register */,
 				E59987CB18E6DC2700B01C62 /* RideRequests */,
 			);
 			name = ViewControllers;
@@ -266,6 +288,7 @@
 				E59987C618E6DBEA00B01C62 /* RideRequestsViewController.h */,
 				E59987C718E6DBEA00B01C62 /* RideRequestsViewController.m */,
 				E59987C818E6DBEA00B01C62 /* RideRequestsViewController.xib */,
+				E599888018E88A0000B01C62 /* NibCell.xib */,
 			);
 			name = RideRequests;
 			sourceTree = "<group>";
@@ -311,23 +334,15 @@
 			name = ForgotPassword;
 			sourceTree = "<group>";
 		};
-		E599880318E738F700B01C62 /* Views */ = {
+		E599880718E7835F00B01C62 /* LeftMenu */ = {
 			isa = PBXGroup;
 			children = (
-				E599880418E7390700B01C62 /* ColorFullView.h */,
-				E599880518E7390700B01C62 /* ColorFullView.m */,
-			);
-			name = Views;
-			sourceTree = "<group>";
-		};
-		E599880718E7835F00B01C62 /* Menu */ = {
-			isa = PBXGroup;
-			children = (
+				E599885E18E84D7F00B01C62 /* CustomCell */,
 				E599880818E7836D00B01C62 /* MenuViewController.h */,
 				E599880918E7836D00B01C62 /* MenuViewController.m */,
 				E599880A18E7836D00B01C62 /* MenuViewController.xib */,
 			);
-			name = Menu;
+			name = LeftMenu;
 			sourceTree = "<group>";
 		};
 		E599882218E8155800B01C62 /* Utilities */ = {
@@ -338,14 +353,55 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
-		E599882D18E834E100B01C62 /* Test */ = {
+		E599885E18E84D7F00B01C62 /* CustomCell */ = {
 			isa = PBXGroup;
 			children = (
-				E599882E18E834EC00B01C62 /* TestViewController.h */,
-				E599882F18E834EC00B01C62 /* TestViewController.m */,
-				E599883018E834EC00B01C62 /* TestViewController.xib */,
+				E599885F18E84D9D00B01C62 /* MenuTableViewCell.h */,
+				E599886018E84D9D00B01C62 /* MenuTableViewCell.m */,
+				E599886118E84D9D00B01C62 /* MenuTableViewCell.xib */,
 			);
-			name = Test;
+			name = CustomCell;
+			sourceTree = "<group>";
+		};
+		E599886618E860FA00B01C62 /* zLibraries */ = {
+			isa = PBXGroup;
+			children = (
+				E599886718E8610800B01C62 /* Paper */,
+			);
+			name = zLibraries;
+			sourceTree = "<group>";
+		};
+		E599886718E8610800B01C62 /* Paper */ = {
+			isa = PBXGroup;
+			children = (
+				E599888218E88C5100B01C62 /* HAPaperCollectionViewController.h */,
+				E599888318E88C5100B01C62 /* HAPaperCollectionViewController.m */,
+				E599886D18E8615300B01C62 /* Custom Layout */,
+				E599886C18E8613000B01C62 /* Transition */,
+			);
+			name = Paper;
+			sourceTree = "<group>";
+		};
+		E599886C18E8613000B01C62 /* Transition */ = {
+			isa = PBXGroup;
+			children = (
+				E599886E18E8616200B01C62 /* HATransitionController.h */,
+				E599886F18E8616200B01C62 /* HATransitionController.m */,
+				E599887018E8616200B01C62 /* HATransitionLayout.h */,
+				E599887118E8616200B01C62 /* HATransitionLayout.m */,
+			);
+			name = Transition;
+			sourceTree = "<group>";
+		};
+		E599886D18E8615300B01C62 /* Custom Layout */ = {
+			isa = PBXGroup;
+			children = (
+				E599887418E8617100B01C62 /* HACollectionViewLargeLayout.h */,
+				E599887518E8617100B01C62 /* HACollectionViewLargeLayout.m */,
+				E599887618E8617100B01C62 /* HACollectionViewSmallLayout.h */,
+				E599887718E8617100B01C62 /* HACollectionViewSmallLayout.m */,
+			);
+			name = "Custom Layout";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -429,12 +485,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E599885D18E84CE600B01C62 /* gradientBackground@2x.png in Resources */,
 				E599880218E72BF600B01C62 /* ForgotPasswordViewController.xib in Resources */,
+				E599885C18E84CE600B01C62 /* gradientBackground.png in Resources */,
 				E59987FC18E7251000B01C62 /* RegisterViewController.xib in Resources */,
 				E599880C18E7836D00B01C62 /* MenuViewController.xib in Resources */,
 				E59987D118E6E47F00B01C62 /* LoginViewController.xib in Resources */,
 				E599882718E821D700B01C62 /* circle@2x.png in Resources */,
-				E599883218E834EC00B01C62 /* TestViewController.xib in Resources */,
 				E59987F218E70B8800B01C62 /* inputTextBox.png in Resources */,
 				E522BAD218AE13F600ECD375 /* Images.xcassets in Resources */,
 				E59987EF18E70A4B00B01C62 /* background.png in Resources */,
@@ -442,11 +499,14 @@
 				E59987CA18E6DBEA00B01C62 /* RideRequestsViewController.xib in Resources */,
 				E599882618E821D700B01C62 /* circle.png in Resources */,
 				E522BAC418AE13F600ECD375 /* InfoPlist.strings in Resources */,
+				E599888118E88A0000B01C62 /* NibCell.xib in Resources */,
 				E59987F618E70DD100B01C62 /* blueButton@2x.png in Resources */,
+				E599886318E84D9D00B01C62 /* MenuTableViewCell.xib in Resources */,
 				E599882018E8145500B01C62 /* road.png in Resources */,
 				E59987F518E70DD100B01C62 /* blueButton.png in Resources */,
 				E59987F018E70A4B00B01C62 /* background@2x.png in Resources */,
 				E599882118E8145500B01C62 /* road@2x.png in Resources */,
+				E599886518E8559500B01C62 /* garching.png in Resources */,
 				E59987D918E6F66E00B01C62 /* customIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -500,16 +560,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				E59987DC18E701AF00B01C62 /* CustomButton.m in Sources */,
+				E599887318E8616200B01C62 /* HATransitionLayout.m in Sources */,
 				E59987D018E6E47F00B01C62 /* LoginViewController.m in Sources */,
+				E599886218E84D9D00B01C62 /* MenuTableViewCell.m in Sources */,
 				E59987C918E6DBEA00B01C62 /* RideRequestsViewController.m in Sources */,
+				E599888418E88C5100B01C62 /* HAPaperCollectionViewController.m in Sources */,
 				E522BACA18AE13F600ECD375 /* AppDelegate.m in Sources */,
+				E599887918E8617100B01C62 /* HACollectionViewSmallLayout.m in Sources */,
 				E599880118E72BF600B01C62 /* ForgotPasswordViewController.m in Sources */,
 				E59987FB18E7251000B01C62 /* RegisterViewController.m in Sources */,
+				E599887818E8617100B01C62 /* HACollectionViewLargeLayout.m in Sources */,
 				E59987D718E6ECF200B01C62 /* CustomTextField.m in Sources */,
-				E599883118E834EC00B01C62 /* TestViewController.m in Sources */,
-				E599880618E7390700B01C62 /* ColorFullView.m in Sources */,
 				E522BAC618AE13F600ECD375 /* main.m in Sources */,
 				E599880B18E7836D00B01C62 /* MenuViewController.m in Sources */,
+				E599887218E8616200B01C62 /* HATransitionController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
