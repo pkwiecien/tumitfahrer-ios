@@ -45,6 +45,10 @@
 		E599881918E804E500B01C62 /* highway-nosound@2x.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E599881818E804E500B01C62 /* highway-nosound@2x.mp4 */; };
 		E599882018E8145500B01C62 /* road.png in Resources */ = {isa = PBXBuildFile; fileRef = E599881E18E8145500B01C62 /* road.png */; };
 		E599882118E8145500B01C62 /* road@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E599881F18E8145500B01C62 /* road@2x.png */; };
+		E599882618E821D700B01C62 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = E599882418E821D700B01C62 /* circle.png */; };
+		E599882718E821D700B01C62 /* circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E599882518E821D700B01C62 /* circle@2x.png */; };
+		E599883118E834EC00B01C62 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E599882F18E834EC00B01C62 /* TestViewController.m */; };
+		E599883218E834EC00B01C62 /* TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E599883018E834EC00B01C62 /* TestViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +114,11 @@
 		E599881E18E8145500B01C62 /* road.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = road.png; sourceTree = "<group>"; };
 		E599881F18E8145500B01C62 /* road@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "road@2x.png"; sourceTree = "<group>"; };
 		E599882318E8157300B01C62 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		E599882418E821D700B01C62 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
+		E599882518E821D700B01C62 /* circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle@2x.png"; sourceTree = "<group>"; };
+		E599882E18E834EC00B01C62 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		E599882F18E834EC00B01C62 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
+		E599883018E834EC00B01C62 /* TestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +201,8 @@
 		E522BAC018AE13F600ECD375 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E599882418E821D700B01C62 /* circle.png */,
+				E599882518E821D700B01C62 /* circle@2x.png */,
 				E599881E18E8145500B01C62 /* road.png */,
 				E599881F18E8145500B01C62 /* road@2x.png */,
 				E599881818E804E500B01C62 /* highway-nosound@2x.mp4 */,
@@ -230,6 +241,7 @@
 		E59987C418E6DBC300B01C62 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E599882D18E834E100B01C62 /* Test */,
 				E599882218E8155800B01C62 /* Utilities */,
 				E599880718E7835F00B01C62 /* Menu */,
 				E599880318E738F700B01C62 /* Views */,
@@ -326,6 +338,16 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
+		E599882D18E834E100B01C62 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				E599882E18E834EC00B01C62 /* TestViewController.h */,
+				E599882F18E834EC00B01C62 /* TestViewController.m */,
+				E599883018E834EC00B01C62 /* TestViewController.xib */,
+			);
+			name = Test;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -411,11 +433,14 @@
 				E59987FC18E7251000B01C62 /* RegisterViewController.xib in Resources */,
 				E599880C18E7836D00B01C62 /* MenuViewController.xib in Resources */,
 				E59987D118E6E47F00B01C62 /* LoginViewController.xib in Resources */,
+				E599882718E821D700B01C62 /* circle@2x.png in Resources */,
+				E599883218E834EC00B01C62 /* TestViewController.xib in Resources */,
 				E59987F218E70B8800B01C62 /* inputTextBox.png in Resources */,
 				E522BAD218AE13F600ECD375 /* Images.xcassets in Resources */,
 				E59987EF18E70A4B00B01C62 /* background.png in Resources */,
 				E599881918E804E500B01C62 /* highway-nosound@2x.mp4 in Resources */,
 				E59987CA18E6DBEA00B01C62 /* RideRequestsViewController.xib in Resources */,
+				E599882618E821D700B01C62 /* circle.png in Resources */,
 				E522BAC418AE13F600ECD375 /* InfoPlist.strings in Resources */,
 				E59987F618E70DD100B01C62 /* blueButton@2x.png in Resources */,
 				E599882018E8145500B01C62 /* road.png in Resources */,
@@ -481,6 +506,7 @@
 				E599880118E72BF600B01C62 /* ForgotPasswordViewController.m in Sources */,
 				E59987FB18E7251000B01C62 /* RegisterViewController.m in Sources */,
 				E59987D718E6ECF200B01C62 /* CustomTextField.m in Sources */,
+				E599883118E834EC00B01C62 /* TestViewController.m in Sources */,
 				E599880618E7390700B01C62 /* ColorFullView.m in Sources */,
 				E522BAC618AE13F600ECD375 /* main.m in Sources */,
 				E599880B18E7836D00B01C62 /* MenuViewController.m in Sources */,

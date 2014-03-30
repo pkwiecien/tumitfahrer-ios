@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SlideNavigationController.h"
 
-@interface RideRequestsViewController : UIViewController
+@interface RideRequestsViewController : UIViewController<SlideNavigationControllerDelegate>
 
 - (IBAction)menuButtonPressed:(id)sender;
 

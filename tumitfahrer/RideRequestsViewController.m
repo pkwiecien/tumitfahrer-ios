@@ -12,13 +12,11 @@
 #import "ColorFullView.h"
 #import "ForgotPasswordViewController.h"
 #import "RegisterViewController.h"
-#import <MCPanelViewController.h>
 #import "MenuViewController.h"
 
 @interface RideRequestsViewController ()
 
 @property NSMutableArray *viewControllers;
-@property MCPanelViewController *menuPanelViewController;
 
 @end
 
@@ -38,28 +36,21 @@
     [super viewDidLoad];
     
     MenuViewController *menuController = [[MenuViewController alloc] init];
-    menuController.preferredContentSize = CGSizeMake(150, 0);
-    
-    self.menuPanelViewController = [menuController viewControllerInPanelViewController];
-    self.menuPanelViewController.backgroundStyle = MCPanelBackgroundStyleLight;
-    self.menuPanelViewController.tintColor = [UIColor colorWithRed:0.7 green:0.7 blue:1 alpha:1];
+    menuController.preferredContentSize = CGSizeMake(180, 0);
     
     self.navigationController.navigationBar.hidden = YES;
-
 }
-
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self.navigationController addGestureRecognizerToViewForScreenEdgeGestureWithPanelViewController:self.menuPanelViewController withDirection:MCPanelAnimationDirectionLeft];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
     BOOL isUserLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:@"loggedIn"];
 
 //    if (!isUserLoggedIn) {
-        [self showLoginScreen:YES];
-  //  }
+//        [self showLoginScreen:YES];
+//  }
 }
 
 -(void)showLoginScreen:(BOOL)animated
@@ -74,8 +65,16 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-- (IBAction)menuButtonPressed:(id)sender {
-    [self.navigationController presentPanelViewController:self.menuPanelViewController withDirection:MCPanelAnimationDirectionLeft];
+- (BOOL)slideNavigationControllerShouldDisplayLeftMenu
+{
+    return YES;
 }
+
+
+#pragma mark - IBActions -
+- (IBAction)menuButtonPressed:(id)sender {
+    UIViewController *test = [SlideNavigationController sharedInstance].leftMenu;
+    [[SlideNavigationController sharedInstance] toggleLeftMenu];
+}
+
 @end

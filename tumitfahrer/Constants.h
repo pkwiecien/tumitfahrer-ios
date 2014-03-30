@@ -20,4 +20,6 @@
 
 #define cMarginTop             100
 
+#define cSlideMenuOffset        110
+
 #endif

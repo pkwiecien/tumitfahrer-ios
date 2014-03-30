@@ -10,6 +10,10 @@
 #import "LoginViewController.h"
 #import "RideRequestsViewController.h"
 #import "ForgotPasswordViewController.h"
+#import "MenuViewController.h"
+#import "TestViewController.h"
+#import "SlideNavigationController.h"
+#import "Constants.h"
 
 @implementation AppDelegate
 
@@ -17,17 +21,22 @@
 {
 	
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
     // set color of status bar to light
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
-    RideRequestsViewController *rideRequestVC = [[RideRequestsViewController alloc] init];
-    UINavigationController *mainNavController = [[UINavigationController alloc] initWithRootViewController:rideRequestVC];
-
+    // register app for receiving push notifications
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 
-    self.window.rootViewController = mainNavController;
+    // init controllers
+    RideRequestsViewController *rideRequestVC = [[RideRequestsViewController alloc] init];
+    MenuViewController *leftMenu = [[MenuViewController alloc] init];
+    
+    // init slide panel
+    SlideNavigationController *slideNC = [[SlideNavigationController alloc] initWithRootViewController:rideRequestVC];
+    slideNC.enableSwipeGesture = NO;
+    slideNC.portraitSlideOffset = cSlideMenuOffset;     // width of visible view controller
+    [SlideNavigationController sharedInstance].leftMenu = leftMenu;
+    self.window.rootViewController = slideNC;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
