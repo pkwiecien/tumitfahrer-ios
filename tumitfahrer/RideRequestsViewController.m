@@ -7,10 +7,9 @@
 //
 
 #import "RideRequestsViewController.h"
+#import "RideDetailsViewController.h"
 #import "LoginViewController.h"
 #import "CustomTextField.h"
-#import "ForgotPasswordViewController.h"
-#import "RegisterViewController.h"
 #import "MenuViewController.h"
 #import "HATransitionLayout.h"
 #import "HACollectionViewLargeLayout.h"
@@ -27,12 +26,12 @@
 
 @implementation RideRequestsViewController
 
--(id)initWithCollectionViewLayout:(UICollectionViewFlowLayout *)layout
+-(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    if (self = [super initWithCollectionViewLayout:layout])
+    
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
     {
-//        [self.collectionView setBackgroundColor:[UIColor clearColor]];
-        NSLog(@"%f", self.collectionView.frame.size.height);
+        
     }
     return self;
 }
@@ -40,41 +39,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     UINib *cellNib = [UINib nibWithNibName:@"NibCell" bundle:nil];
-    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"cvCell"];
+    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"rideCell"];
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [flowLayout setItemSize:CGSizeMake(250, 350)];
+    self.collectionView.delegate = self;
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    [self.collectionView setCollectionViewLayout:flowLayout];
     
     MenuViewController *menuController = [[MenuViewController alloc] init];
     menuController.preferredContentSize = CGSizeMake(180, 0);
-    
-    
-    _mainView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 300)];
-    _mainView.clipsToBounds = YES;
-    _mainView.layer.cornerRadius = 4;
-    // Label logo
-    UILabel *logo = [[UILabel alloc] initWithFrame:CGRectMake(15, 12, 290, 0)];
-    logo.backgroundColor = [UIColor clearColor];
-    logo.textColor = [UIColor whiteColor];
-    logo.font = [UIFont fontWithName:@"Helvetica-Bold" size:22];
-    logo.text = @"Paper";
-    [logo sizeToFit];
-    // Label Shadow
-    [logo setClipsToBounds:NO];
-    [logo.layer setShadowOffset:CGSizeMake(0, 0)];
-    [logo.layer setShadowColor:[[UIColor blackColor] CGColor]];
-    [logo.layer setShadowRadius:1.0];
-    [logo.layer setShadowOpacity:0.6];
-    [_mainView addSubview:logo];
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [button addTarget:self
-               action:@selector(aMethod)
-     forControlEvents:UIControlEventTouchUpInside];
-    [button setTitle:@"Show View" forState:UIControlStateNormal];
-    button.frame = CGRectMake(80.0, 210.0, 160.0, 40.0);
-    [_mainView addSubview:button];
-    
-//    [self.view insertSubview:_mainView belowSubview:self.collectionView];
+}
+
+
+-(void)enlarge {
+    self.upperImage.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        // animate it to the identity transform (100% scale)
+        self.upperImage.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished){
+        // if you want to do something once the animation finishes, put it here
+    }];
 }
 
 -(void)aMethod
@@ -82,12 +67,6 @@
     [[SlideNavigationController sharedInstance] toggleLeftMenu];
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
-    [self.view insertSubview:_mainView aboveSubview:self.collectionView];
-
-    self.collectionView.decelerationRate = self.class != [RideRequestsViewController class] ? UIScrollViewDecelerationRateNormal : UIScrollViewDecelerationRateFast;
-}
 -(void)viewDidAppear:(BOOL)animated
 {
     BOOL isUserLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:@"loggedIn"];
@@ -95,6 +74,15 @@
 //    if (!isUserLoggedIn) {
 //        [self showLoginScreen:YES];
 //  }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    
+    // Adjust scrollView decelerationRate
+    self.collectionView.decelerationRate = self.class != [RideRequestsViewController class] ? UIScrollViewDecelerationRateNormal : UIScrollViewDecelerationRateFast;
 }
 
 -(void)showLoginScreen:(BOOL)animated
@@ -120,21 +108,31 @@
 }
 
 #pragma mark - Collections
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    UIViewController *vc = [self nextViewControllerAtPoint:CGPointZero];
-    [self.navigationController pushViewController:vc animated:YES];
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
 }
 
-- (UICollectionViewController *)nextViewControllerAtPoint:(CGPoint)point
-{
-    // We could have multiple section stacks and find the right one,
-    HACollectionViewLargeLayout *largeLayout = [[HACollectionViewLargeLayout alloc] init];
-    HAPaperCollectionViewController *nextCollectionViewController = [[HAPaperCollectionViewController alloc] initWithCollectionViewLayout:largeLayout];
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return  MAX_COUNT;
+}
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    nextCollectionViewController.useLayoutToLayoutNavigationTransitions = YES;
-    return nextCollectionViewController;
+    static NSString *cellIdentifier = @"rideCell";
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    
+    return cell;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    RideDetailsViewController *rideDetailsVC = [[RideDetailsViewController alloc] init];
+    [self.navigationController pushViewController:rideDetailsVC animated:YES];
+}
+
+-(UICollectionViewTransitionLayout *)collectionView:(UICollectionView *)collectionView transitionLayoutForOldLayout:(UICollectionViewLayout *)fromLayout newLayout:(UICollectionViewLayout *)toLayout
+{
+    HATransitionLayout *transitionLayout = [[HATransitionLayout alloc] initWithCurrentLayout:fromLayout nextLayout:toLayout];
+    return transitionLayout;
 }
 
 @end

@@ -16,10 +16,9 @@
 #import "HATransitionController.h"
 #import "HACollectionViewSmallLayout.h"
 
-@interface AppDelegate () <UINavigationControllerDelegate, HATransitionControllerDelegate>
+@interface AppDelegate ()
 
 @property (nonatomic) SlideNavigationController *navigationController;
-@property (nonatomic) HATransitionController *transitionController;
 
 @end
 
@@ -36,8 +35,7 @@
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 
     // init controllers
-    HACollectionViewSmallLayout *smallLayout = [[HACollectionViewSmallLayout alloc] init];
-    RideRequestsViewController *rideRequestVC = [[RideRequestsViewController alloc] initWithCollectionViewLayout:smallLayout];
+    RideRequestsViewController *rideRequestVC = [[RideRequestsViewController alloc] init];
     MenuViewController *leftMenu = [[MenuViewController alloc] init];
     
     // init slide panel
@@ -45,12 +43,8 @@
     self.navigationController.enableSwipeGesture = NO;
     self.navigationController.portraitSlideOffset = cSlideMenuOffset;     // width of visible view controller
     [SlideNavigationController sharedInstance].leftMenu = leftMenu;
-    self.navigationController.delegate = self;
     self.navigationController.navigationBarHidden = YES;
     self.window.rootViewController = self.navigationController;
-    
-    self.transitionController = [[HATransitionController alloc] initWithCollectionView:rideRequestVC.collectionView];
-    self.transitionController.delegate = self;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

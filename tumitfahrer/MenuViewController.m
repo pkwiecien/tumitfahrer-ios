@@ -8,6 +8,10 @@
 
 #import "MenuViewController.h"
 #import "MenuTableViewCell.h"
+#import "CampusRidesViewController.h"
+#import "RideRequestsViewController.h"
+#import "ActivityRidesViewController.h"
+#import <SlideNavigationController.h>
 
 @interface MenuViewController ()
 
@@ -22,7 +26,10 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        RideRequestsViewController *rideRequestsVC = [[RideRequestsViewController alloc] init];
+        CampusRidesViewController *campusRidesVC = [[CampusRidesViewController alloc] init];
+        ActivityRidesViewController *activityRidesVC = [[ActivityRidesViewController alloc] init];
+        self.viewControllers = [NSMutableArray arrayWithObjects:rideRequestsVC, campusRidesVC, activityRidesVC, nil];
     }
     return self;
 }
@@ -78,5 +85,11 @@
     return 50;
 }
 
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.row < [self.viewControllers count])
+        [[SlideNavigationController sharedInstance] switchToViewController:[self.viewControllers objectAtIndex:indexPath.row]  withCompletion:nil];
+}
 
 @end

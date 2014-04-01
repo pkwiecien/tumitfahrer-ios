@@ -40,17 +40,12 @@
     [self.view sendSubviewToBack:imageView];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (IBAction)backToLoginButtonPressed:(id)sender {
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (IBAction)sendReminderButtonPressed:(id)sender {
+
 }
 
 - (IBAction)dismissKeyboard:(id)sender {

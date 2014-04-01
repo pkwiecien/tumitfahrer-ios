@@ -10,12 +10,10 @@
 #import "SlideNavigationController.h"
 #import "HAPaperCollectionViewController.h"
 
-@interface RideRequestsViewController : HAPaperCollectionViewController<SlideNavigationControllerDelegate>
+@interface RideRequestsViewController : UIViewController<SlideNavigationControllerDelegate, UICollectionViewDelegate>
 
 - (IBAction)menuButtonPressed:(id)sender;
-
-- (UICollectionViewController*)nextViewControllerAtPoint:(CGPoint)point;
-
-- (id)initWithCollectionViewLayout:(UICollectionViewFlowLayout *)layout;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIImageView *upperImage;
 
 @end
