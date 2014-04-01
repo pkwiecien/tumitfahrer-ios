@@ -29,14 +29,18 @@
     return self;
 }
 
+#pragma mark - Hide StatusBar
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CELL_ID forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
+    cell.layer.cornerRadius = 4;
     cell.clipsToBounds = YES;
-    
-    UIImageView *backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Cell"]];
-    cell.backgroundView = backgroundView;
     
     return cell;
 }

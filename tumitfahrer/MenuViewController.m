@@ -8,15 +8,18 @@
 
 #import "MenuViewController.h"
 #import "MenuTableViewCell.h"
-#import "CampusRidesViewController.h"
+#import "SettingsViewController.h"
 #import "RideRequestsViewController.h"
 #import "ActivityRidesViewController.h"
 #import <SlideNavigationController.h>
+#import "HATransitionController.h"
+#import "CampusRidesViewController.h"
 
 @interface MenuViewController ()
 
 @property NSMutableArray *viewControllers;
 @property NSMutableArray *menuItems;
+@property (nonatomic) HATransitionController *transitionController;
 
 @end
 
@@ -27,8 +30,10 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         RideRequestsViewController *rideRequestsVC = [[RideRequestsViewController alloc] init];
-        CampusRidesViewController *campusRidesVC = [[CampusRidesViewController alloc] init];
         ActivityRidesViewController *activityRidesVC = [[ActivityRidesViewController alloc] init];
+        CampusRidesViewController *campusRidesVC = [[CampusRidesViewController alloc] init];
+        self.transitionController = [[HATransitionController alloc] initWithCollectionView:campusRidesVC.collectionView];
+
         self.viewControllers = [NSMutableArray arrayWithObjects:rideRequestsVC, campusRidesVC, activityRidesVC, nil];
     }
     return self;
@@ -91,5 +96,36 @@
     if(indexPath.row < [self.viewControllers count])
         [[SlideNavigationController sharedInstance] switchToViewController:[self.viewControllers objectAtIndex:indexPath.row]  withCompletion:nil];
 }
+
+#pragma mark - Paper collection view
+
+- (id <UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController
+                          interactionControllerForAnimationController:(id <UIViewControllerAnimatedTransitioning>) animationController
+{
+    if (animationController==self.transitionController) {
+        return self.transitionController;
+    }
+    return nil;
+}
+
+
+- (id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
+                                   animationControllerForOperation:(UINavigationControllerOperation)operation
+                                                fromViewController:(UIViewController *)fromVC
+                                                  toViewController:(UIViewController *)toVC
+{
+    if (![fromVC isKindOfClass:[UICollectionViewController class]] || ![toVC isKindOfClass:[UICollectionViewController class]])
+    {
+        return nil;
+    }
+    if (!self.transitionController.hasActiveInteraction)
+    {
+        return nil;
+    }
+    
+    self.transitionController.navigationOperation = operation;
+    return self.transitionController;
+}
+
 
 @end
