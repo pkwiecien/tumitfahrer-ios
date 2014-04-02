@@ -66,6 +66,8 @@
 		E5DF641F18EB639600D53164 /* CampusRidesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DF641E18EB639600D53164 /* CampusRidesViewController.m */; };
 		E5DF642118EB64BD00D53164 /* CollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DF642018EB64BD00D53164 /* CollectionCell.xib */; };
 		E5DF642318EB658300D53164 /* CampusRidesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DF642218EB658300D53164 /* CampusRidesViewController.xib */; };
+		E5DF642818EBD8AB00D53164 /* BalancedColumnLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DF642718EBD8AB00D53164 /* BalancedColumnLayout.m */; };
+		E5DF642A18EBDD2A00D53164 /* BalancedColumnCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DF642918EBDD2A00D53164 /* BalancedColumnCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,6 +163,9 @@
 		E5DF641E18EB639600D53164 /* CampusRidesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CampusRidesViewController.m; sourceTree = "<group>"; };
 		E5DF642018EB64BD00D53164 /* CollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionCell.xib; sourceTree = "<group>"; };
 		E5DF642218EB658300D53164 /* CampusRidesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CampusRidesViewController.xib; sourceTree = "<group>"; };
+		E5DF642618EBD8AB00D53164 /* BalancedColumnLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalancedColumnLayout.h; sourceTree = "<group>"; };
+		E5DF642718EBD8AB00D53164 /* BalancedColumnLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BalancedColumnLayout.m; sourceTree = "<group>"; };
+		E5DF642918EBDD2A00D53164 /* BalancedColumnCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BalancedColumnCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -453,6 +458,7 @@
 		E5DF641718EB569800D53164 /* Activity Rides */ = {
 			isa = PBXGroup;
 			children = (
+				E5DF642518EBD87A00D53164 /* Activities Collection View */,
 				E5DF641818EB56A600D53164 /* ActivityRidesViewController.h */,
 				E5DF641918EB56A600D53164 /* ActivityRidesViewController.m */,
 				E5DF641A18EB56A600D53164 /* ActivityRidesViewController.xib */,
@@ -469,6 +475,16 @@
 				E5DF642218EB658300D53164 /* CampusRidesViewController.xib */,
 			);
 			name = "Campus Rides";
+			sourceTree = "<group>";
+		};
+		E5DF642518EBD87A00D53164 /* Activities Collection View */ = {
+			isa = PBXGroup;
+			children = (
+				E5DF642618EBD8AB00D53164 /* BalancedColumnLayout.h */,
+				E5DF642718EBD8AB00D53164 /* BalancedColumnLayout.m */,
+				E5DF642918EBDD2A00D53164 /* BalancedColumnCell.xib */,
+			);
+			name = "Activities Collection View";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -559,6 +575,7 @@
 				E599885C18E84CE600B01C62 /* gradientBackground.png in Resources */,
 				E59987FC18E7251000B01C62 /* RegisterViewController.xib in Resources */,
 				E599880C18E7836D00B01C62 /* MenuViewController.xib in Resources */,
+				E5DF642A18EBDD2A00D53164 /* BalancedColumnCell.xib in Resources */,
 				E59987D118E6E47F00B01C62 /* LoginViewController.xib in Resources */,
 				E599882718E821D700B01C62 /* circle@2x.png in Resources */,
 				E5DF641618EB548E00D53164 /* SettingsViewController.xib in Resources */,
@@ -642,6 +659,7 @@
 				E599888418E88C5100B01C62 /* HAPaperCollectionViewController.m in Sources */,
 				E5DF641518EB548E00D53164 /* SettingsViewController.m in Sources */,
 				E522BACA18AE13F600ECD375 /* AppDelegate.m in Sources */,
+				E5DF642818EBD8AB00D53164 /* BalancedColumnLayout.m in Sources */,
 				E599887918E8617100B01C62 /* HACollectionViewSmallLayout.m in Sources */,
 				E599880118E72BF600B01C62 /* ForgotPasswordViewController.m in Sources */,
 				E59987FB18E7251000B01C62 /* RegisterViewController.m in Sources */,
