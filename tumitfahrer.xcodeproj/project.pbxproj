@@ -293,15 +293,15 @@
 		E59987C418E6DBC300B01C62 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				E5DF642418EB68F500D53164 /* Campus Rides */,
 				E5DF641718EB569800D53164 /* Activity Rides */,
-				E5DF640C18EB46E400D53164 /* Ride */,
-				E5DF640B18EB42D800D53164 /* Settings */,
+				E5DF642418EB68F500D53164 /* Campus Rides */,
 				E59987FD18E72BD100B01C62 /* Forgot Password */,
 				E599880718E7835F00B01C62 /* Left Menu */,
 				E59987CC18E6E3A100B01C62 /* Login */,
 				E59987F718E724F900B01C62 /* Register */,
+				E5DF640C18EB46E400D53164 /* Ride */,
 				E59987CB18E6DC2700B01C62 /* Ride Requests */,
+				E5DF640B18EB42D800D53164 /* Settings */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";

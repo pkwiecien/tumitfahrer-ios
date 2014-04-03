@@ -98,7 +98,6 @@
 }
 
 #pragma mark - Paper collection view
-
 - (id <UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController
                           interactionControllerForAnimationController:(id <UIViewControllerAnimatedTransitioning>) animationController
 {
