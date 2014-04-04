@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface RideDetailsViewController : UIViewController
+- (IBAction)arrowLeftPressed:(id)sender;
 
 @end

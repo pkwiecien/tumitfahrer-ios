@@ -260,8 +260,6 @@ static NSString *const RBCollectionViewBalancedColumnCellKind = @"RBCollectionVi
 	CGFloat left = 0;
 	CGFloat width = self.collectionView.frame.size.width;
     
-	id delegate = self.collectionView.delegate;
-    
 	attributes.frame = CGRectMake(left, top, width, height);
     
 	return attributes;

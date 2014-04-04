@@ -25,8 +25,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationController.navigationBarHidden = NO;
-
+    [self setNeedsStatusBarAppearanceUpdate];
+    self.navigationController.navigationBarHidden = YES;
+}
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return  UIStatusBarStyleDefault;
 }
 
+- (IBAction)arrowLeftPressed:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 @end

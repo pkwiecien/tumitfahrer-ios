@@ -52,7 +52,7 @@
     UIImage *img = [UIImage imageNamed:@"garching"];
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenRect.size.width, 260)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(-2, -2, screenRect.size.width+4, 260)];
     [imageView setImage:img];
     
     [self.myView addSubview:imageView ];

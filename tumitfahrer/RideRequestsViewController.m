@@ -39,6 +39,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setNeedsStatusBarAppearanceUpdate];
     UINib *cellNib = [UINib nibWithNibName:@"NibCell" bundle:nil];
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"rideCell"];
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
@@ -51,6 +52,9 @@
     menuController.preferredContentSize = CGSizeMake(180, 0);
 }
 
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleDefault;
+}
 
 -(void)enlarge {
     self.upperImage.transform = CGAffineTransformMakeScale(0.01, 0.01);
@@ -133,6 +137,16 @@
 {
     HATransitionLayout *transitionLayout = [[HATransitionLayout alloc] initWithCurrentLayout:fromLayout nextLayout:toLayout];
     return transitionLayout;
+}
+
+- (IBAction)addRideButtonPressed:(id)sender {
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Add a ride"
+                                                      message:@"This functionality is coming soon :)"
+                                                     delegate:nil
+                                            cancelButtonTitle:@"OK"
+                                            otherButtonTitles:nil];
+    
+    [message show];
 }
 
 @end

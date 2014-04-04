@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <SlideNavigationController.h>
 
-@interface ActivityRidesViewController : UIViewController<SlideNavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface ActivityRidesViewController : UIViewController<SlideNavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate, UIScrollViewDelegate, UINavigationControllerDelegate>
 
 - (IBAction)menuButtonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIView *departurePlaceView;
 
 @end

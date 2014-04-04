@@ -14,6 +14,7 @@
 #import <SlideNavigationController.h>
 #import "HATransitionController.h"
 #import "CampusRidesViewController.h"
+#import "AnotherActivitiesViewController.h"
 
 @interface MenuViewController ()
 
@@ -32,9 +33,10 @@
         RideRequestsViewController *rideRequestsVC = [[RideRequestsViewController alloc] init];
         ActivityRidesViewController *activityRidesVC = [[ActivityRidesViewController alloc] init];
         CampusRidesViewController *campusRidesVC = [[CampusRidesViewController alloc] init];
+        AnotherActivitiesViewController *anotherActivitiesVC = [[AnotherActivitiesViewController alloc] init];
         self.transitionController = [[HATransitionController alloc] initWithCollectionView:campusRidesVC.collectionView];
-
-        self.viewControllers = [NSMutableArray arrayWithObjects:rideRequestsVC, campusRidesVC, activityRidesVC, nil];
+        
+        self.viewControllers = [NSMutableArray arrayWithObjects:rideRequestsVC, campusRidesVC, activityRidesVC, anotherActivitiesVC, nil];
     }
     return self;
 }
@@ -48,7 +50,7 @@
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gradientBackground"]];
     [self.view addSubview:imageView];
     [self.view sendSubviewToBack:imageView];
-
+    
     // Do any additional setup after loading the view from its nib.
 }
 

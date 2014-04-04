@@ -15,5 +15,5 @@
 - (IBAction)menuButtonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIImageView *upperImage;
-
+- (IBAction)addRideButtonPressed:(id)sender;
 @end

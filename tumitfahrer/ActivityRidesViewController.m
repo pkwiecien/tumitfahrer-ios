@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSArray * dataKeys;
 @property (nonatomic, strong) NSDictionary * data;
 @property (nonatomic, strong) NSCache * imageCache;
+@property (nonatomic, assign) CGFloat lastContentOffset;
 
 @end
 
@@ -37,11 +38,54 @@
     
     UINib *cellNib = [UINib nibWithNibName:@"BalancedColumnCell" bundle:nil];
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"BalancedCell"];
+    
+    UISwipeGestureRecognizer* swipeUpGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeUpFrom:)];
+    swipeUpGestureRecognizer.delegate = self;
+    swipeUpGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
+    
+    UISwipeGestureRecognizer *swipeDownGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeDown:)];
+    swipeDownGestureRecognizer.delegate = self;
+    swipeDownGestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
+    
+    UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeUpFrom:)];
+    swipeRight.numberOfTouchesRequired = 1;
+    swipeRight.delegate = self;
+    [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    [self.collectionView addGestureRecognizer:swipeRight];
+    
+    [self.collectionView addGestureRecognizer:swipeUpGestureRecognizer];
+    [self.collectionView addGestureRecognizer:swipeDownGestureRecognizer];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = YES;
+}
+
+#pragma mark - Gesture recognizers
+- (void)handleSwipeUpFrom:(UIGestureRecognizer*)recognizer {
+
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
+    if (self.lastContentOffset > scrollView.contentOffset.y)
+        NSLog(@"scroll up");
+    else if (self.lastContentOffset < scrollView.contentOffset.y)
+        NSLog(@"scroll down!");
+    
+    self.lastContentOffset = scrollView.contentOffset.y;
+}
+
+- (void)handleSwipeDown:(UIGestureRecognizer*)recognizer {
+    CGRect frame = self.departurePlaceView.frame;
+    frame.size.height -= 100;
+    self.departurePlaceView.frame = frame;
+    
+    frame = self.collectionView.frame;
+    frame.size.height += 100;
+    self.collectionView.frame = frame;
 }
 
 #pragma mark - UICollectionViewDelegate
