@@ -16,3 +16,5 @@ profile
 *.out
 
 Pods/*
+tumitfahrer/UbertestersSDK/UbertestersSDK.framework/Versions/*
+tumitfahrer/UbertestersSDK/UbertestersSDKResources.bundle/*

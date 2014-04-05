@@ -71,6 +71,16 @@
 		E5FDDBC618EDE9B100CE7B01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBC518EDE9B100CE7B01 /* MapKit.framework */; };
 		E5FDDBCB18EE79F900CE7B01 /* AnotherActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FDDBC918EE79F900CE7B01 /* AnotherActivitiesViewController.m */; };
 		E5FDDBCC18EE79F900CE7B01 /* AnotherActivitiesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FDDBCA18EE79F900CE7B01 /* AnotherActivitiesViewController.xib */; };
+		E5FDDBD618EFDD0100CE7B01 /* UbertestersSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBD418EFDD0100CE7B01 /* UbertestersSDK.framework */; };
+		E5FDDBD718EFDD0100CE7B01 /* UbertestersSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E5FDDBD518EFDD0100CE7B01 /* UbertestersSDKResources.bundle */; };
+		E5FDDBD918EFDD1E00CE7B01 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBD818EFDD1E00CE7B01 /* AdSupport.framework */; };
+		E5FDDBDB18EFDD2700CE7B01 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBDA18EFDD2700CE7B01 /* CoreImage.framework */; };
+		E5FDDBDD18EFDD2E00CE7B01 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBDC18EFDD2E00CE7B01 /* SystemConfiguration.framework */; };
+		E5FDDBDF18EFDD3500CE7B01 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBDE18EFDD3500CE7B01 /* CoreTelephony.framework */; };
+		E5FDDBE118EFDD3B00CE7B01 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBE018EFDD3B00CE7B01 /* CoreLocation.framework */; };
+		E5FDDBE318EFDD4000CE7B01 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBE218EFDD4000CE7B01 /* AudioToolbox.framework */; };
+		E5FDDBE518EFDD4800CE7B01 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBE418EFDD4800CE7B01 /* OpenGLES.framework */; };
+		E5FDDBE718EFDD4F00CE7B01 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBE618EFDD4F00CE7B01 /* CoreMotion.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -173,6 +183,16 @@
 		E5FDDBC818EE79F900CE7B01 /* AnotherActivitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnotherActivitiesViewController.h; sourceTree = "<group>"; };
 		E5FDDBC918EE79F900CE7B01 /* AnotherActivitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnotherActivitiesViewController.m; sourceTree = "<group>"; };
 		E5FDDBCA18EE79F900CE7B01 /* AnotherActivitiesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnotherActivitiesViewController.xib; sourceTree = "<group>"; };
+		E5FDDBD418EFDD0100CE7B01 /* UbertestersSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UbertestersSDK.framework; sourceTree = "<group>"; };
+		E5FDDBD518EFDD0100CE7B01 /* UbertestersSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UbertestersSDKResources.bundle; sourceTree = "<group>"; };
+		E5FDDBD818EFDD1E00CE7B01 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		E5FDDBDA18EFDD2700CE7B01 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		E5FDDBDC18EFDD2E00CE7B01 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		E5FDDBDE18EFDD3500CE7B01 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		E5FDDBE018EFDD3B00CE7B01 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		E5FDDBE218EFDD4000CE7B01 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		E5FDDBE418EFDD4800CE7B01 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		E5FDDBE618EFDD4F00CE7B01 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,8 +200,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5FDDBE718EFDD4F00CE7B01 /* CoreMotion.framework in Frameworks */,
+				E5FDDBE518EFDD4800CE7B01 /* OpenGLES.framework in Frameworks */,
+				E5FDDBE318EFDD4000CE7B01 /* AudioToolbox.framework in Frameworks */,
+				E5FDDBE118EFDD3B00CE7B01 /* CoreLocation.framework in Frameworks */,
+				E5FDDBDF18EFDD3500CE7B01 /* CoreTelephony.framework in Frameworks */,
+				E5FDDBDD18EFDD2E00CE7B01 /* SystemConfiguration.framework in Frameworks */,
+				E5FDDBDB18EFDD2700CE7B01 /* CoreImage.framework in Frameworks */,
+				E5FDDBD918EFDD1E00CE7B01 /* AdSupport.framework in Frameworks */,
 				E5FDDBC618EDE9B100CE7B01 /* MapKit.framework in Frameworks */,
 				E599881118E7FC5900B01C62 /* MediaPlayer.framework in Frameworks */,
+				E5FDDBD618EFDD0100CE7B01 /* UbertestersSDK.framework in Frameworks */,
 				E599880E18E7FB1600B01C62 /* AVFoundation.framework in Frameworks */,
 				E53D5D0018B14C39004016F8 /* QuartzCore.framework in Frameworks */,
 				E522BABC18AE13F600ECD375 /* CoreGraphics.framework in Frameworks */,
@@ -227,6 +256,14 @@
 		E522BAB818AE13F600ECD375 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E5FDDBE618EFDD4F00CE7B01 /* CoreMotion.framework */,
+				E5FDDBE418EFDD4800CE7B01 /* OpenGLES.framework */,
+				E5FDDBE218EFDD4000CE7B01 /* AudioToolbox.framework */,
+				E5FDDBE018EFDD3B00CE7B01 /* CoreLocation.framework */,
+				E5FDDBDE18EFDD3500CE7B01 /* CoreTelephony.framework */,
+				E5FDDBDC18EFDD2E00CE7B01 /* SystemConfiguration.framework */,
+				E5FDDBDA18EFDD2700CE7B01 /* CoreImage.framework */,
+				E5FDDBD818EFDD1E00CE7B01 /* AdSupport.framework */,
 				E5FDDBC518EDE9B100CE7B01 /* MapKit.framework */,
 				E599881018E7FC5900B01C62 /* MediaPlayer.framework */,
 				E599880D18E7FB1600B01C62 /* AVFoundation.framework */,
@@ -248,6 +285,7 @@
 				E522BAD118AE13F600ECD375 /* Images.xcassets */,
 				E59987C518E6DBCE00B01C62 /* Model */,
 				E522BAC018AE13F600ECD375 /* Supporting Files */,
+				E5FDDBD318EFDD0100CE7B01 /* UbertestersSDK */,
 				E59987D418E6ECD800B01C62 /* UI Elements */,
 				E599882218E8155800B01C62 /* Utilities */,
 				E59987C418E6DBC300B01C62 /* ViewControllers */,
@@ -507,6 +545,15 @@
 			name = "Another Acitvites";
 			sourceTree = "<group>";
 		};
+		E5FDDBD318EFDD0100CE7B01 /* UbertestersSDK */ = {
+			isa = PBXGroup;
+			children = (
+				E5FDDBD418EFDD0100CE7B01 /* UbertestersSDK.framework */,
+				E5FDDBD518EFDD0100CE7B01 /* UbertestersSDKResources.bundle */,
+			);
+			path = UbertestersSDK;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -603,6 +650,7 @@
 				E59987F218E70B8800B01C62 /* inputTextBox.png in Resources */,
 				E5FDDBCC18EE79F900CE7B01 /* AnotherActivitiesViewController.xib in Resources */,
 				E522BAD218AE13F600ECD375 /* Images.xcassets in Resources */,
+				E5FDDBD718EFDD0100CE7B01 /* UbertestersSDKResources.bundle in Resources */,
 				E59987EF18E70A4B00B01C62 /* background.png in Resources */,
 				E599881918E804E500B01C62 /* highway-nosound@2x.mp4 in Resources */,
 				E59987CA18E6DBEA00B01C62 /* RideRequestsViewController.xib in Resources */,
@@ -809,6 +857,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/tumitfahrer/UbertestersSDK",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tumitfahrer/tumitfahrer-Prefix.pch";
 				INFOPLIST_FILE = "tumitfahrer/tumitfahrer-Info.plist";
@@ -826,6 +878,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/tumitfahrer/UbertestersSDK",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tumitfahrer/tumitfahrer-Prefix.pch";
 				INFOPLIST_FILE = "tumitfahrer/tumitfahrer-Info.plist";

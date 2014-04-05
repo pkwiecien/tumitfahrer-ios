@@ -25,18 +25,32 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self setupNavbar];
+}
+
+-(void)setupNavbar
+{
+    UIColor *navBarColor = [UIColor colorWithRed:0 green:0.361 blue:0.588 alpha:1]; /*#0e3750*/
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setBarTintColor:navBarColor];
+    
     self.navigationController.navigationBarHidden = NO;
     
-    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"AddSmallIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(aMethod)];
+    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"AddSmallIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(showUnimplementedAlertView)];
     self.navigationItem.rightBarButtonItem = rightBarButton;
     
     self.tabBar.delegate = self;
     [self.tabBar setSelectedItem:[self.tabBar.items objectAtIndex:0]];
     UITabBarItem *item = [self.tabBar.items objectAtIndex:0];
     self.title = item.title;
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 }
 
--(void)aMethod
+-(void)showUnimplementedAlertView
 {
     UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Add ride" message:@"This functionality is coming soon :)" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
     [message show];

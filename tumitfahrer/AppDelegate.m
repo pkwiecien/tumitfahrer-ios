@@ -15,6 +15,7 @@
 #import "Constants.h"
 #import "HATransitionController.h"
 #import "HACollectionViewSmallLayout.h"
+#import <UbertestersSDK/Ubertesters.h>
 
 @interface AppDelegate ()
 
@@ -26,6 +27,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+
 	
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // set color of status bar to light
@@ -48,6 +50,11 @@
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    
+    //Ubertersters SDK initialization
+    [[Ubertesters shared] initializeWithOptions:UTOptionsManual|UTOptionsShake];
+    
     return YES;
 
 }
