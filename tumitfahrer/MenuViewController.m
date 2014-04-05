@@ -16,6 +16,8 @@
 #import "CampusRidesViewController.h"
 #import "AnotherActivitiesViewController.h"
 #import "ActionManager.h"
+#import "SettingsViewController.h"
+#import "ProfileViewController.h"
 
 @interface MenuViewController ()
 
@@ -36,9 +38,11 @@
         ActivityRidesViewController *activityRidesVC = [[ActivityRidesViewController alloc] init];
         CampusRidesViewController *campusRidesVC = [[CampusRidesViewController alloc] init];
         AnotherActivitiesViewController *anotherActivitiesVC = [[AnotherActivitiesViewController alloc] init];
+        SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
+        ProfileViewController *profileVC = [[ProfileViewController alloc] init];
         self.transitionController = [[HATransitionController alloc] initWithCollectionView:campusRidesVC.collectionView];
         
-        self.viewControllers = [NSMutableArray arrayWithObjects:rideRequestsVC, campusRidesVC, activityRidesVC, anotherActivitiesVC, nil];
+        self.viewControllers = [NSMutableArray arrayWithObjects:rideRequestsVC, campusRidesVC, activityRidesVC, anotherActivitiesVC, profileVC, settingsVC, nil];
     }
     return self;
 }

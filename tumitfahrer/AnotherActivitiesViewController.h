@@ -10,7 +10,9 @@
 #import <SlideNavigationController.h>
 
 @interface AnotherActivitiesViewController : UIViewController <SlideNavigationControllerDelegate, UITabBarDelegate>
-- (IBAction)addIconPressed:(id)sender;
+
 @property (weak, nonatomic) IBOutlet UITabBar *tabBar;
+
+- (IBAction)addIconPressed:(id)sender;
 
 @end

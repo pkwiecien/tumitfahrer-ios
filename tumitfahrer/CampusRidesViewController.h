@@ -14,9 +14,7 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, readonly, getter=isFullscreen) BOOL fullscreen;
 @property (nonatomic, readonly, getter=isTransitioning) BOOL transitioning;
-@property (weak, nonatomic) IBOutlet UIView *myView;
 
-- (IBAction)buttonPressed:(id)sender;
 - (IBAction)menuButtonPressed:(id)sender;
 
 @end

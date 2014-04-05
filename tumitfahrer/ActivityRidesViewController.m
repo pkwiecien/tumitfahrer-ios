@@ -40,6 +40,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     self.isUpperViewSmall = NO;
     
     UINib *cellNib = [UINib nibWithNibName:@"BalancedColumnCell" bundle:nil];

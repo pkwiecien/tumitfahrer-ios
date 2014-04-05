@@ -7,6 +7,7 @@
 //
 
 #import "AnotherActivitiesViewController.h"
+#import "ActionManager.h"
 
 @interface AnotherActivitiesViewController ()
 
@@ -25,8 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setNeedsStatusBarAppearanceUpdate];
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -52,14 +52,9 @@
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 }
 
--(UIStatusBarStyle)preferredStatusBarStyle{
-    return UIStatusBarStyleLightContent;
-}
-
 -(void)showUnimplementedAlertView
 {
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Add ride" message:@"This functionality is coming soon :)" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [message show];
+    [[ActionManager sharedManager] showAlertViewWithTitle:@"Add a ride"];
 }
 
 -(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		068F5848AB864309B2DEC0B8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAEC5882914944C4B8E2DE24 /* libPods.a */; };
+		E51FD50218F0864C0098AD11 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E51FD50018F0864C0098AD11 /* ProfileViewController.m */; };
+		E51FD50318F0864C0098AD11 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E51FD50118F0864C0098AD11 /* ProfileViewController.xib */; };
 		E522BABA18AE13F600ECD375 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E522BAB918AE13F600ECD375 /* Foundation.framework */; };
 		E522BABC18AE13F600ECD375 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E522BABB18AE13F600ECD375 /* CoreGraphics.framework */; };
 		E522BABE18AE13F600ECD375 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E522BABD18AE13F600ECD375 /* UIKit.framework */; };
@@ -98,6 +100,9 @@
 /* Begin PBXFileReference section */
 		BAEC5882914944C4B8E2DE24 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C71CE6059C014DFABC5B4F22 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		E51FD4FF18F0864C0098AD11 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		E51FD50018F0864C0098AD11 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		E51FD50118F0864C0098AD11 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		E522BAB618AE13F600ECD375 /* tumitfahrer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tumitfahrer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E522BAB918AE13F600ECD375 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E522BABB18AE13F600ECD375 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -239,6 +244,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E51FD4FE18F086300098AD11 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				E51FD4FF18F0864C0098AD11 /* ProfileViewController.h */,
+				E51FD50018F0864C0098AD11 /* ProfileViewController.m */,
+				E51FD50118F0864C0098AD11 /* ProfileViewController.xib */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
 		E522BAAD18AE13F600ECD375 = {
 			isa = PBXGroup;
 			children = (
@@ -346,12 +361,13 @@
 		E59987C418E6DBC300B01C62 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				E5FDDBC718EE79A100CE7B01 /* Another Acitvites */,
 				E5DF641718EB569800D53164 /* Activity Rides */,
+				E5FDDBC718EE79A100CE7B01 /* Another Acitvites */,
 				E5DF642418EB68F500D53164 /* Campus Rides */,
 				E59987FD18E72BD100B01C62 /* Forgot Password */,
 				E599880718E7835F00B01C62 /* Left Menu */,
 				E59987CC18E6E3A100B01C62 /* Login */,
+				E51FD4FE18F086300098AD11 /* Profile */,
 				E59987F718E724F900B01C62 /* Register */,
 				E5DF640C18EB46E400D53164 /* Ride */,
 				E59987CB18E6DC2700B01C62 /* Ride Requests */,
@@ -679,6 +695,7 @@
 				E599886318E84D9D00B01C62 /* MenuTableViewCell.xib in Resources */,
 				E599882018E8145500B01C62 /* road.png in Resources */,
 				E59987F518E70DD100B01C62 /* blueButton.png in Resources */,
+				E51FD50318F0864C0098AD11 /* ProfileViewController.xib in Resources */,
 				E59987F018E70A4B00B01C62 /* background@2x.png in Resources */,
 				E599882118E8145500B01C62 /* road@2x.png in Resources */,
 				E5DF642318EB658300D53164 /* CampusRidesViewController.xib in Resources */,
@@ -745,6 +762,7 @@
 				E599886218E84D9D00B01C62 /* MenuTableViewCell.m in Sources */,
 				E59987C918E6DBEA00B01C62 /* RideRequestsViewController.m in Sources */,
 				E5FDDBEE18EFFF6D00CE7B01 /* BuildingsManager.m in Sources */,
+				E51FD50218F0864C0098AD11 /* ProfileViewController.m in Sources */,
 				E599888418E88C5100B01C62 /* HAPaperCollectionViewController.m in Sources */,
 				E5DF641518EB548E00D53164 /* SettingsViewController.m in Sources */,
 				E522BACA18AE13F600ECD375 /* AppDelegate.m in Sources */,
