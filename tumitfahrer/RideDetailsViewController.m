@@ -7,6 +7,8 @@
 //
 
 #import "RideDetailsViewController.h"
+#import "BuildingsManager.h"
+#import "UnimplementedActionManager.h"
 
 @interface RideDetailsViewController ()
 
@@ -27,6 +29,7 @@
     [super viewDidLoad];
     [self setNeedsStatusBarAppearanceUpdate];
     self.navigationController.navigationBarHidden = YES;
+    self.mainImageView.image = [UIImage imageNamed:[[[BuildingsManager sharedManager] buildingsArray] objectAtIndex:self.imageNumber]];
 }
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
@@ -36,4 +39,12 @@
 - (IBAction)arrowLeftPressed:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
+- (IBAction)joinButtonPressed:(id)sender {
+    [[UnimplementedActionManager sharedManager] showAlertView:@"Functionality coming soon :)" title:@"Ride details"];
+}
+
+- (IBAction)contactDriverButtonPressed:(id)sender {
+        [[UnimplementedActionManager sharedManager] showAlertView:@"Functionality coming soon :)" title:@"Ride details"];
+}
+
 @end

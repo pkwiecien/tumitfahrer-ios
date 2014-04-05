@@ -26,12 +26,9 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-
-	
+{	
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // set color of status bar to light
-    //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
     // register app for receiving push notifications
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
@@ -48,9 +45,7 @@
     self.navigationController.navigationBarHidden = YES;
     self.window.rootViewController = self.navigationController;
     
-    self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    
     
     //Ubertersters SDK initialization
     [[Ubertesters shared] initializeWithOptions:UTOptionsManual|UTOptionsShake];

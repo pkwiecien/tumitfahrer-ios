@@ -14,6 +14,7 @@
 #import "HATransitionLayout.h"
 #import "HACollectionViewLargeLayout.h"
 #import "HACollectionViewSmallLayout.h"
+#import "BuildingsManager.h"
 
 #define MAX_COUNT 20
 
@@ -31,7 +32,7 @@
     
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
     {
-        
+//        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     }
     return self;
 }
@@ -43,17 +44,13 @@
     UINib *cellNib = [UINib nibWithNibName:@"NibCell" bundle:nil];
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"rideCell"];
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [flowLayout setItemSize:CGSizeMake(250, 350)];
+    [flowLayout setItemSize:CGSizeMake(250, 320)];
     self.collectionView.delegate = self;
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
     [self.collectionView setCollectionViewLayout:flowLayout];
     
     MenuViewController *menuController = [[MenuViewController alloc] init];
     menuController.preferredContentSize = CGSizeMake(180, 0);
-}
-
--(UIStatusBarStyle)preferredStatusBarStyle{
-    return UIStatusBarStyleDefault;
 }
 
 -(void)enlarge {
@@ -117,12 +114,16 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return  MAX_COUNT;
+    return  [[[BuildingsManager sharedManager] buildingsArray] count];
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *cellIdentifier = @"rideCell";
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    
+    UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:1];
+    imageView.image = [UIImage imageNamed:[[[BuildingsManager sharedManager] buildingsArray] objectAtIndex:indexPath.row]];
+    [imageView setClipsToBounds:YES];
     
     return cell;
 }
@@ -130,6 +131,7 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     RideDetailsViewController *rideDetailsVC = [[RideDetailsViewController alloc] init];
+    rideDetailsVC.imageNumber = indexPath.row;
     [self.navigationController pushViewController:rideDetailsVC animated:YES];
 }
 

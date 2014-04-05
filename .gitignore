@@ -18,3 +18,4 @@ profile
 Pods/*
 tumitfahrer/UbertestersSDK/UbertestersSDK.framework/Versions/*
 tumitfahrer/UbertestersSDK/UbertestersSDKResources.bundle/*
+tumitfahrer/Images.xcassets/*
