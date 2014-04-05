@@ -10,13 +10,15 @@
 #import "SlideNavigationController.h"
 #import "HAPaperCollectionViewController.h"
 
-@interface RideRequestsViewController : UIViewController<SlideNavigationControllerDelegate, UICollectionViewDelegate>
+@interface RideRequestsViewController : UIViewController<SlideNavigationControllerDelegate, UICollectionViewDelegate, UIGestureRecognizerDelegate>
 
-- (IBAction)menuButtonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIImageView *upperImage;
+@property (weak, nonatomic) IBOutlet UIButton *settingsButton;
+@property (weak, nonatomic) IBOutlet UIView *departureView;
+
 - (IBAction)addRideButtonPressed:(id)sender;
 - (IBAction)filterRidesButtonPressed:(id)sender;
-@property (weak, nonatomic) IBOutlet UIButton *settingsButton;
+- (IBAction)menuButtonPressed:(id)sender;
 
 @end

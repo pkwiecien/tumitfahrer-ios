@@ -9,6 +9,7 @@
 #import "ActivityRidesViewController.h"
 #import "RideDetailsViewController.h"
 #import "BalancedColumnLayout.h"
+#import "BuildingsManager.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface ActivityRidesViewController () <BalancedColumnLayoutDelegate>
@@ -19,6 +20,10 @@
 @property (nonatomic, strong) NSDictionary * data;
 @property (nonatomic, strong) NSCache * imageCache;
 @property (nonatomic, assign) CGFloat lastContentOffset;
+@property (nonatomic, assign) CGRect upperFrame;
+@property (nonatomic, assign) CGRect departureLabelFrame;
+@property (nonatomic, assign) CGRect lowerFrame;
+@property (nonatomic, assign) BOOL isUpperViewSmall;
 
 @end
 
@@ -35,63 +40,80 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.isUpperViewSmall = NO;
     
     UINib *cellNib = [UINib nibWithNibName:@"BalancedColumnCell" bundle:nil];
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"BalancedCell"];
+    self.departurePlaceView.clipsToBounds = YES;
     
-    UISwipeGestureRecognizer* swipeUpGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeUpFrom:)];
-    swipeUpGestureRecognizer.delegate = self;
-    swipeUpGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
-    
-    UISwipeGestureRecognizer *swipeDownGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeDown:)];
-    swipeDownGestureRecognizer.delegate = self;
-    swipeDownGestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
-    
-    UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeUpFrom:)];
-    swipeRight.numberOfTouchesRequired = 1;
-    swipeRight.delegate = self;
-    [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
-    [self.collectionView addGestureRecognizer:swipeRight];
-    
-    [self.collectionView addGestureRecognizer:swipeUpGestureRecognizer];
-    [self.collectionView addGestureRecognizer:swipeDownGestureRecognizer];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(makeViewLarge)];
+    tapGesture.numberOfTapsRequired = 1;
+    tapGesture.delegate = self;
+    [self.departurePlaceView addGestureRecognizer:tapGesture];
+}
+
+-(void)makeViewLarge
+{
+    [self makeViewLargeQuickly:NO];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = YES;
+
+    if(self.isUpperViewSmall)
+    {
+        [self makeViewSmallQuickly:YES];
+    }
+    else
+    {
+        [self makeViewLargeQuickly:YES];
+    }
 }
 
-#pragma mark - Gesture recognizers
-- (void)handleSwipeUpFrom:(UIGestureRecognizer*)recognizer {
+-(void)makeViewSmallQuickly:(BOOL)isQuickly
+{
+    [UIView animateWithDuration:(isQuickly?0.01:1.0) animations:^{
+        self.upperFrame =  CGRectMake(0, 0, self.departurePlaceView.frame.size.width, 120);
+        self.departurePlaceView.frame = self.upperFrame;
+        
+        self.departureLabelFrame = CGRectMake(0, 85, self.departureLabelView.frame.size.width, self.departureLabelView.frame.size.height);
+        self.departureLabelView.frame = self.departureLabelFrame;
+        
+        self.lowerFrame = CGRectMake(0, 122, self.collectionView.frame.size.width, 450);
+        self.collectionView.frame = self.lowerFrame;
+    }];
+}
 
+-(void)makeViewLargeQuickly:(BOOL)isQuickly
+{
+    [UIView animateWithDuration:(isQuickly?0.01:1.0) animations:^{
+        self.upperFrame =  CGRectMake(0, 0, self.departurePlaceView.frame.size.width, 242);
+        self.departurePlaceView.frame = self.upperFrame;
+        
+        self.departureLabelFrame = CGRectMake(15, 193, self.departureLabelView.frame.size.width, self.departureLabelView.frame.size.height);
+        self.departureLabelView.frame = self.departureLabelFrame;
+        
+        self.lowerFrame = CGRectMake(0, 243, self.collectionView.frame.size.width, 450);
+        self.collectionView.frame = self.lowerFrame;
+    }];
 }
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    
-    if (self.lastContentOffset > scrollView.contentOffset.y)
-        NSLog(@"scroll up");
-    else if (self.lastContentOffset < scrollView.contentOffset.y)
-        NSLog(@"scroll down!");
+    if (self.lastContentOffset < scrollView.contentOffset.y)
+    {
+        // scroll down
+        [self makeViewSmallQuickly:NO];
+    }
     
     self.lastContentOffset = scrollView.contentOffset.y;
-}
-
-- (void)handleSwipeDown:(UIGestureRecognizer*)recognizer {
-    CGRect frame = self.departurePlaceView.frame;
-    frame.size.height -= 100;
-    self.departurePlaceView.frame = frame;
-    
-    frame = self.collectionView.frame;
-    frame.size.height += 100;
-    self.collectionView.frame = frame;
 }
 
 #pragma mark - UICollectionViewDelegate
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 20;
+    return [[[BuildingsManager sharedManager] buildingsArray] count];
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -109,12 +131,18 @@
 {
     UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"BalancedCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
+    
+    UIImageView *imageCell = (UIImageView *)[cell.contentView viewWithTag:30];
+    imageCell.image = [UIImage imageNamed:[[[BuildingsManager sharedManager] buildingsArray] objectAtIndex:indexPath.row]];
+    [imageCell setClipsToBounds:YES];
+    
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     RideDetailsViewController *rideDetailsVC = [[RideDetailsViewController alloc] init];
+    rideDetailsVC.imageNumber = indexPath.row;
     [self.navigationController pushViewController:rideDetailsVC animated:YES];
 }
 
@@ -125,10 +153,17 @@
     return YES;
 }
 
-
 - (IBAction)menuButtonPressed:(id)sender {
     [[SlideNavigationController sharedInstance] toggleLeftMenu];
+    
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    if(self.upperFrame.size.height > 200)
+        self.isUpperViewSmall = NO;
+    else
+        self.isUpperViewSmall = YES;
+}
 
 @end

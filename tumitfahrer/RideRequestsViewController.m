@@ -53,6 +53,17 @@
     menuController.preferredContentSize = CGSizeMake(180, 0);
     
     [self.settingsButton setImage:[UIImage imageNamed:@"SettingsGreyIcon"] forState:UIControlStateHighlighted];
+    
+    UISwipeGestureRecognizer *swipeRightLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeRightLeft)];
+    swipeRightLeft.numberOfTouchesRequired = 1;
+    swipeRightLeft.delegate = self;
+    [swipeRightLeft setDirection:UISwipeGestureRecognizerDirectionRight|UISwipeGestureRecognizerDirectionLeft];
+    [self.departureView addGestureRecognizer:swipeRightLeft];
+}
+
+-(void)handleSwipeRightLeft
+{
+    [[ActionManager sharedManager] showAlertViewWithTitle:@"Filter will be used to specify departure place"];
 }
 
 -(void)enlarge {
