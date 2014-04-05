@@ -82,7 +82,7 @@
 		E5FDDBE518EFDD4800CE7B01 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBE418EFDD4800CE7B01 /* OpenGLES.framework */; };
 		E5FDDBE718EFDD4F00CE7B01 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBE618EFDD4F00CE7B01 /* CoreMotion.framework */; };
 		E5FDDBEE18EFFF6D00CE7B01 /* BuildingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FDDBED18EFFF6D00CE7B01 /* BuildingsManager.m */; };
-		E5FDDBF118F0059D00CE7B01 /* UnimplementedActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FDDBF018F0059D00CE7B01 /* UnimplementedActionManager.m */; };
+		E5FDDBF118F0059D00CE7B01 /* ActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FDDBF018F0059D00CE7B01 /* ActionManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -197,8 +197,8 @@
 		E5FDDBE618EFDD4F00CE7B01 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		E5FDDBEC18EFFF6D00CE7B01 /* BuildingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuildingsManager.h; sourceTree = "<group>"; };
 		E5FDDBED18EFFF6D00CE7B01 /* BuildingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuildingsManager.m; sourceTree = "<group>"; };
-		E5FDDBEF18F0059D00CE7B01 /* UnimplementedActionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnimplementedActionManager.h; sourceTree = "<group>"; };
-		E5FDDBF018F0059D00CE7B01 /* UnimplementedActionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnimplementedActionManager.m; sourceTree = "<group>"; };
+		E5FDDBEF18F0059D00CE7B01 /* ActionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionManager.h; sourceTree = "<group>"; };
+		E5FDDBF018F0059D00CE7B01 /* ActionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -436,8 +436,8 @@
 				E599882318E8157300B01C62 /* Constants.h */,
 				E5FDDBEC18EFFF6D00CE7B01 /* BuildingsManager.h */,
 				E5FDDBED18EFFF6D00CE7B01 /* BuildingsManager.m */,
-				E5FDDBEF18F0059D00CE7B01 /* UnimplementedActionManager.h */,
-				E5FDDBF018F0059D00CE7B01 /* UnimplementedActionManager.m */,
+				E5FDDBEF18F0059D00CE7B01 /* ActionManager.h */,
+				E5FDDBF018F0059D00CE7B01 /* ActionManager.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -757,7 +757,7 @@
 				E522BAC618AE13F600ECD375 /* main.m in Sources */,
 				E599880B18E7836D00B01C62 /* MenuViewController.m in Sources */,
 				E599887218E8616200B01C62 /* HATransitionController.m in Sources */,
-				E5FDDBF118F0059D00CE7B01 /* UnimplementedActionManager.m in Sources */,
+				E5FDDBF118F0059D00CE7B01 /* ActionManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

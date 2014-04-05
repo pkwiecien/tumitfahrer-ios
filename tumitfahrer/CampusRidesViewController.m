@@ -48,15 +48,6 @@
 {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = YES;
-    
-    UIImage *img = [UIImage imageNamed:@"garching"];
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(-2, -2, screenRect.size.width+4, 260)];
-    [imageView setImage:img];
-    
-    [self.myView addSubview:imageView ];
-    [self.myView sendSubviewToBack:imageView];
 
     _slide = 0;
     

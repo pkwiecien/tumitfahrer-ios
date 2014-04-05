@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@interface UnimplementedActionManager : NSObject
+@interface ActionManager : NSObject
 
 +(instancetype)sharedManager;
--(void)showAlertView:(NSString*)message title:(NSString*)title;
+-(void)showAlertViewWithTitle:(NSString *)title;
+- (UIImage *)colorImage:(UIImage *)origImage withColor:(UIColor *)color;
 
 @end

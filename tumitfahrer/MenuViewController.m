@@ -15,11 +15,13 @@
 #import "HATransitionController.h"
 #import "CampusRidesViewController.h"
 #import "AnotherActivitiesViewController.h"
+#import "ActionManager.h"
 
 @interface MenuViewController ()
 
 @property NSMutableArray *viewControllers;
 @property NSMutableArray *menuItems;
+@property NSMutableArray *menuIcons;
 @property (nonatomic) HATransitionController *transitionController;
 
 @end
@@ -46,6 +48,7 @@
     [super viewDidLoad];
     self.tableView.backgroundColor = [UIColor clearColor];
     self.menuItems = [NSMutableArray arrayWithObjects:@"Requests", @"Campus Rides", @"Activities", @"Your Schedule", @"Profile", @"Settings", nil];
+    self.menuIcons = [NSMutableArray arrayWithObjects:@"RequestIcon", @"CampusIcon", @"ActivityIcon", @"ScheduleIcon", @"ProfileIcon", @"SettingsIcon", nil];
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gradientBackground"]];
     [self.view addSubview:imageView];
@@ -75,7 +78,9 @@
     }
     
     cell.menuLabel.text = self.menuItems[indexPath.row];
-    cell.iconMenuImageView.image = [UIImage imageNamed:@"customIcon"];
+    UIColor *almostWhiteColor = [UIColor colorWithRed:0.961 green:0.961 blue:0.961 alpha:0.8];
+    UIImage *newImg = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:self.menuIcons[indexPath.row]] withColor:almostWhiteColor];
+    cell.iconMenuImageView.image = newImg;
     cell.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];
     

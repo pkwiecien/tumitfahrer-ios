@@ -8,7 +8,7 @@
 
 #import "RideDetailsViewController.h"
 #import "BuildingsManager.h"
-#import "UnimplementedActionManager.h"
+#import "ActionManager.h"
 
 @interface RideDetailsViewController ()
 
@@ -40,11 +40,11 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)joinButtonPressed:(id)sender {
-    [[UnimplementedActionManager sharedManager] showAlertView:@"Functionality coming soon :)" title:@"Ride details"];
+    [[ActionManager sharedManager] showAlertViewWithTitle:@"Join a ride"];
 }
 
 - (IBAction)contactDriverButtonPressed:(id)sender {
-        [[UnimplementedActionManager sharedManager] showAlertView:@"Functionality coming soon :)" title:@"Ride details"];
+    [[ActionManager sharedManager] showAlertViewWithTitle:@"Contact driver"];
 }
 
 @end

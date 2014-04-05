@@ -16,4 +16,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIImageView *upperImage;
 - (IBAction)addRideButtonPressed:(id)sender;
+- (IBAction)filterRidesButtonPressed:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *settingsButton;
+
 @end

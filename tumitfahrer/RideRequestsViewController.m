@@ -15,6 +15,7 @@
 #import "HACollectionViewLargeLayout.h"
 #import "HACollectionViewSmallLayout.h"
 #import "BuildingsManager.h"
+#import "ActionManager.h"
 
 #define MAX_COUNT 20
 
@@ -51,6 +52,8 @@
     
     MenuViewController *menuController = [[MenuViewController alloc] init];
     menuController.preferredContentSize = CGSizeMake(180, 0);
+    
+    [self.settingsButton setImage:[UIImage imageNamed:@"SettingsGreyIcon"] forState:UIControlStateHighlighted];
 }
 
 -(void)enlarge {
@@ -108,6 +111,11 @@
     [[SlideNavigationController sharedInstance] toggleLeftMenu];
 }
 
+
+- (IBAction)filterRidesButtonPressed:(id)sender {
+    [[ActionManager sharedManager] showAlertViewWithTitle:@"Filter rides"];
+}
+
 #pragma mark - Collections
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
@@ -142,13 +150,7 @@
 }
 
 - (IBAction)addRideButtonPressed:(id)sender {
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Add a ride"
-                                                      message:@"This functionality is coming soon :)"
-                                                     delegate:nil
-                                            cancelButtonTitle:@"OK"
-                                            otherButtonTitles:nil];
-    
-    [message show];
+    [[ActionManager sharedManager] showAlertViewWithTitle:@"Add a ride"];
 }
 
 @end
