@@ -10,6 +10,7 @@
 #import "HACollectionViewSmallLayout.h"
 #import "HACollectionViewLargeLayout.h"
 #import "BuildingsManager.h"
+#import "ActionManager.h"
 
 #define kTransitionSpeed 0.02f
 #define kLargeLayoutScale 2.5F
@@ -75,6 +76,11 @@
     [_collectionView.layer setShadowColor:[[UIColor blackColor] CGColor]];
     [_collectionView.layer setShadowRadius:6.0];
     [_collectionView.layer setShadowOpacity:0.5];
+    
+    
+    [self.settingsIcon setBackgroundImage:[[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"SettingsBlackIcon"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [self.filterIcon setBackgroundImage:[[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"FilterIcon"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [self.addIcon setBackgroundImage:[[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"AddBlackIcon"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
 }
 
 

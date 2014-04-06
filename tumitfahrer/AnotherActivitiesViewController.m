@@ -8,6 +8,8 @@
 
 #import "AnotherActivitiesViewController.h"
 #import "ActionManager.h"
+#import "BuildingsManager.h"
+#import "RideDetailsViewController.h"
 
 @interface AnotherActivitiesViewController ()
 
@@ -26,6 +28,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UINib *cellNib = [UINib nibWithNibName:@"AnotherCollectionCell" bundle:nil];
+    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"AnotherCell"];
+    self.collectionView.backgroundColor = [UIColor lightGrayColor];
+    
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [flowLayout setItemSize:CGSizeMake(140, 200)];
+    [flowLayout setSectionInset:UIEdgeInsetsMake(10, 10, 10, 10)];
+    self.collectionView.delegate = self;
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    [self.collectionView setCollectionViewLayout:flowLayout];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -71,5 +83,40 @@
 - (IBAction)addIconPressed:(id)sender {
        [[SlideNavigationController sharedInstance] toggleLeftMenu];
 }
+
+
+#pragma mark - Collection view
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return [[[BuildingsManager sharedManager] buildingsArray] count];
+}
+
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"AnotherCell" forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor whiteColor];
+    
+    UIImageView *imageCell = (UIImageView *)[cell.contentView viewWithTag:5];
+    imageCell.image = [UIImage imageNamed:[[[BuildingsManager sharedManager] buildingsArray] objectAtIndex:indexPath.row]];
+    [imageCell setClipsToBounds:YES];
+    
+    return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    RideDetailsViewController *rideDetailsVC = [[RideDetailsViewController alloc] init];
+    rideDetailsVC.imageNumber = indexPath.row;
+    [self.navigationController pushViewController:rideDetailsVC animated:YES];
+}
+
+#pragma mark – UICollectionViewDelegateFlowLayout
+
 
 @end

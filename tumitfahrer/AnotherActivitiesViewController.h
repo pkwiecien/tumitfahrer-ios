@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <SlideNavigationController.h>
 
-@interface AnotherActivitiesViewController : UIViewController <SlideNavigationControllerDelegate, UITabBarDelegate>
+@interface AnotherActivitiesViewController : UIViewController <SlideNavigationControllerDelegate, UITabBarDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITabBar *tabBar;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 - (IBAction)addIconPressed:(id)sender;
 

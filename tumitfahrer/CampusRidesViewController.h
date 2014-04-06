@@ -14,6 +14,9 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, readonly, getter=isFullscreen) BOOL fullscreen;
 @property (nonatomic, readonly, getter=isTransitioning) BOOL transitioning;
+@property (weak, nonatomic) IBOutlet UIButton *filterIcon;
+@property (weak, nonatomic) IBOutlet UIButton *addIcon;
+@property (weak, nonatomic) IBOutlet UIButton *settingsIcon;
 
 - (IBAction)menuButtonPressed:(id)sender;
 

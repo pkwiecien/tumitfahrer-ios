@@ -45,6 +45,7 @@
     UINib *cellNib = [UINib nibWithNibName:@"BalancedColumnCell" bundle:nil];
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"BalancedCell"];
     self.departurePlaceView.clipsToBounds = YES;
+    self.collectionView.backgroundColor = [UIColor lightGrayColor];
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(makeViewLarge)];
     tapGesture.numberOfTapsRequired = 1;
@@ -112,6 +113,7 @@
 }
 
 #pragma mark - UICollectionViewDelegate
+
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return [[[BuildingsManager sharedManager] buildingsArray] count];

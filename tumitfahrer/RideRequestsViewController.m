@@ -17,8 +17,6 @@
 #import "BuildingsManager.h"
 #import "ActionManager.h"
 
-#define MAX_COUNT 20
-
 @interface RideRequestsViewController ()
 
 @property NSMutableArray *viewControllers;
@@ -84,11 +82,11 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-   // BOOL isUserLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:@"loggedIn"];
+   BOOL isUserLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:@"loggedIn"];
 
-//    if (!isUserLoggedIn) {
-//        [self showLoginScreen:YES];
-//  }
+   if (!isUserLoggedIn) {
+        [self showLoginScreen:YES];
+  }
 }
 
 - (void)viewWillAppear:(BOOL)animated

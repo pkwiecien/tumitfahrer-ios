@@ -10,6 +10,7 @@
 		068F5848AB864309B2DEC0B8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAEC5882914944C4B8E2DE24 /* libPods.a */; };
 		E51FD50218F0864C0098AD11 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E51FD50018F0864C0098AD11 /* ProfileViewController.m */; };
 		E51FD50318F0864C0098AD11 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E51FD50118F0864C0098AD11 /* ProfileViewController.xib */; };
+		E51FD50518F1615B0098AD11 /* AnotherCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E51FD50418F1615B0098AD11 /* AnotherCollectionCell.xib */; };
 		E522BABA18AE13F600ECD375 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E522BAB918AE13F600ECD375 /* Foundation.framework */; };
 		E522BABC18AE13F600ECD375 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E522BABB18AE13F600ECD375 /* CoreGraphics.framework */; };
 		E522BABE18AE13F600ECD375 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E522BABD18AE13F600ECD375 /* UIKit.framework */; };
@@ -103,6 +104,7 @@
 		E51FD4FF18F0864C0098AD11 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		E51FD50018F0864C0098AD11 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		E51FD50118F0864C0098AD11 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
+		E51FD50418F1615B0098AD11 /* AnotherCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnotherCollectionCell.xib; sourceTree = "<group>"; };
 		E522BAB618AE13F600ECD375 /* tumitfahrer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tumitfahrer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E522BAB918AE13F600ECD375 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E522BABB18AE13F600ECD375 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -369,7 +371,7 @@
 				E59987CC18E6E3A100B01C62 /* Login */,
 				E51FD4FE18F086300098AD11 /* Profile */,
 				E59987F718E724F900B01C62 /* Register */,
-				E5DF640C18EB46E400D53164 /* Ride */,
+				E5DF640C18EB46E400D53164 /* Ride Details */,
 				E59987CB18E6DC2700B01C62 /* Ride Requests */,
 				E5DF640B18EB42D800D53164 /* Settings */,
 			);
@@ -519,14 +521,14 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
-		E5DF640C18EB46E400D53164 /* Ride */ = {
+		E5DF640C18EB46E400D53164 /* Ride Details */ = {
 			isa = PBXGroup;
 			children = (
 				E5DF640D18EB46F900D53164 /* RideDetailsViewController.h */,
 				E5DF640E18EB46F900D53164 /* RideDetailsViewController.m */,
 				E5DF640F18EB46F900D53164 /* RideDetailsViewController.xib */,
 			);
-			name = Ride;
+			name = "Ride Details";
 			sourceTree = "<group>";
 		};
 		E5DF641718EB569800D53164 /* Activity Rides */ = {
@@ -564,6 +566,7 @@
 		E5FDDBC718EE79A100CE7B01 /* Another Acitvites */ = {
 			isa = PBXGroup;
 			children = (
+				E51FD50418F1615B0098AD11 /* AnotherCollectionCell.xib */,
 				E5FDDBC818EE79F900CE7B01 /* AnotherActivitiesViewController.h */,
 				E5FDDBC918EE79F900CE7B01 /* AnotherActivitiesViewController.m */,
 				E5FDDBCA18EE79F900CE7B01 /* AnotherActivitiesViewController.xib */,
@@ -672,6 +675,7 @@
 				E599885D18E84CE600B01C62 /* gradientBackground@2x.png in Resources */,
 				E599880218E72BF600B01C62 /* ForgotPasswordViewController.xib in Resources */,
 				E5DF641118EB46F900D53164 /* RideDetailsViewController.xib in Resources */,
+				E51FD50518F1615B0098AD11 /* AnotherCollectionCell.xib in Resources */,
 				E5DF642118EB64BD00D53164 /* CollectionCell.xib in Resources */,
 				E599885C18E84CE600B01C62 /* gradientBackground.png in Resources */,
 				E59987FC18E7251000B01C62 /* RegisterViewController.xib in Resources */,

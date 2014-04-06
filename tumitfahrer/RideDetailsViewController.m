@@ -27,13 +27,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setNeedsStatusBarAppearanceUpdate];
     self.navigationController.navigationBarHidden = YES;
     self.mainImageView.image = [UIImage imageNamed:[[[BuildingsManager sharedManager] buildingsArray] objectAtIndex:self.imageNumber]];
 }
--(UIStatusBarStyle)preferredStatusBarStyle
+
+-(void)viewWillAppear:(BOOL)animated
 {
-    return  UIStatusBarStyleDefault;
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
 
 - (IBAction)arrowLeftPressed:(id)sender {
