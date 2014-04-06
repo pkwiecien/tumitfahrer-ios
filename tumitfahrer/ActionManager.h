@@ -13,5 +13,6 @@
 +(instancetype)sharedManager;
 -(void)showAlertViewWithTitle:(NSString *)title;
 - (UIImage *)colorImage:(UIImage *)origImage withColor:(UIColor *)color;
+-(UIImage *)imageWithColor:(UIColor *)color;
 
 @end

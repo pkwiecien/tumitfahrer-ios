@@ -40,7 +40,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     self.isUpperViewSmall = NO;
     
     UINib *cellNib = [UINib nibWithNibName:@"BalancedColumnCell" bundle:nil];
@@ -60,6 +59,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     self.navigationController.navigationBarHidden = YES;
 
     if(self.isUpperViewSmall)

@@ -9,8 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <SlideNavigationController.h>
 
-@interface SettingsViewController : UIViewController <SlideNavigationControllerDelegate>
-- (IBAction)menuButtonPressed:(id)sender;
+@interface SettingsViewController : UIViewController <SlideNavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UIButton *sendFeedbackButton;
+@property (weak, nonatomic) IBOutlet UIButton *logoutButton;
+@property (nonatomic, strong) UITableView *tableView;
+
+- (IBAction)sendFeedbackButtonPressed:(id)sender;
+- (IBAction)logoutButtonPressed:(id)sender;
 
 @end
