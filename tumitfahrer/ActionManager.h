@@ -12,7 +12,14 @@
 
 +(instancetype)sharedManager;
 -(void)showAlertViewWithTitle:(NSString *)title;
+
+// image utilities
 - (UIImage *)colorImage:(UIImage *)origImage withColor:(UIColor *)color;
 -(UIImage *)imageWithColor:(UIColor *)color;
+
+// enctryption untilities
+-(NSString*)encodeBase64WithCredentials:(NSString*)credentials;
+-(NSString*)decodeBase64String:(NSString*)base64String;
+-(NSString *)createSHA512:(NSString *)string;
 
 @end

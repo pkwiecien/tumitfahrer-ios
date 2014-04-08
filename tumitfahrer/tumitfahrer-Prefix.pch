@@ -31,3 +31,5 @@
 // Make RestKit globally available
 #import <RestKit/RestKit.h>
 
+static NSString * const SALT = @"toj369sbz1f316sx";
+

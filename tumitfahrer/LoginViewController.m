@@ -64,7 +64,7 @@
 {
     NSString *email = [[NSUserDefaults standardUserDefaults] valueForKey:@"emailLoggedInUser"];
     if (email) {
-//        self.emailField.text = email;
+        //        self.emailField.text = email;
     }
     NSString *filepath = [[NSBundle mainBundle] pathForResource:@"highway-nosound@2x" ofType:@"mp4"];
     NSURL *fileURL = [NSURL fileURLWithPath:filepath];
@@ -72,13 +72,13 @@
     if(self.moviePlayerController == nil) {
         self.moviePlayerController = [[MPMoviePlayerController alloc] initWithContentURL:fileURL];
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(introMovieFinished:)
-                                                 name:MPMoviePlayerPlaybackDidFinishNotification
-                                               object:self.moviePlayerController];
-    
+                                                 selector:@selector(introMovieFinished:)
+                                                     name:MPMoviePlayerPlaybackDidFinishNotification
+                                                   object:self.moviePlayerController];
+        
         // Hide the video controls from the user
         [self.moviePlayerController setControlStyle:MPMovieControlStyleNone];
-    
+        
         [self.moviePlayerController prepareToPlay];
         [self.moviePlayerController.view setFrame: CGRectMake(0, 0, 416, 1100)];
         [self.view addSubview:self.moviePlayerController.view];
@@ -93,28 +93,47 @@
 }
 
 - (IBAction)loginButtonPressed:(id)sender {
-    
-    [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"loggedIn"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    [self loadData];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self createUserSession];
 }
 
-- (void)loadData
-{
-    // Load the object model via RestKit
+- (BOOL)createUserSession {
+    BOOL __block result = false;
+    
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
+    
+    [objectManager postObject:nil path:@"/api/v2/sessions" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        [CurrentUser sharedInstance].user = (User *)[mappingResult firstObject];
+        RKLogInfo(@"Load complete, current user %@!", [CurrentUser sharedInstance].user.firstName);
+        
+        result = true;
+        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"loggedIn"];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"LastUpdatedAt"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        [[ActionManager sharedManager] showAlertViewWithTitle:[error localizedDescription]];
+        RKLogError(@"Load failed with error: %@", error);
+    }];
+    
+     /*
+      // sample method for getting users
     [[RKObjectManager sharedManager] getObjectsAtPath:@"/api/v2/users" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [CurrentUser sharedInstance].user = (User *)[mappingResult firstObject];
         RKLogInfo(@"Load complete, current user %@!", [CurrentUser sharedInstance].user.firstName);
         
+        result = true;
+        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"loggedIn"];
         [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"LastUpdatedAt"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [[ActionManager sharedManager] showAlertViewWithTitle:[error localizedDescription]];
         RKLogError(@"Load failed with error: %@", error);
-    }];
+    }];*/
+    
+    return result;
 }
+
 
 // show register view
 - (IBAction)registerButtonPressed:(id)sender {
@@ -171,6 +190,15 @@
     }
     
     return self.fetchedResultsController;
+}
+
+-(NSString *)encryptCredentialsWithEmail:(NSString *)email password:(NSString *)password {
+    
+    NSString *encryptedPassword = [[ActionManager sharedManager] createSHA512:password];
+    NSString *credentials = [NSString stringWithFormat:@"%@:%@", email, encryptedPassword];
+    NSString *encryptedCredentials = [[ActionManager sharedManager] encodeBase64WithCredentials:credentials];
+    
+    return encryptedCredentials;
 }
 
 

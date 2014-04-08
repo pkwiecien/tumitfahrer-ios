@@ -109,7 +109,8 @@
     NSError *error = nil;
     
     // Initialize RestKit
-    NSURL *baseURL = [NSURL URLWithString:@"http://tumitfahrer-staging.herokuapp.com"];
+    //    NSURL *baseURL = [NSURL URLWithString:@"http://tumitfahrer-staging.herokuapp.com"];
+    NSURL *baseURL = [NSURL URLWithString:@"http://192.168.0.102:3000"];
     RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:baseURL];
     
     // Enable Activity Indicator Spinner
@@ -138,9 +139,16 @@
     dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZ";
     [[RKValueTransformer defaultValueTransformer] insertValueTransformer:dateFormatter atIndex:0];
     
-    // Register our mappings with the provider
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userMapping                                                                                            method:RKRequestMethodGET                                                                                       pathPattern:@"/api/v2/users"                                                                                           keyPath:@"users"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    // Register mappings with the provider
+    // mapping for user session
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userMapping                                                                                            method:RKRequestMethodPOST                                                                                       pathPattern:@"/api/v2/sessions"                                                                                           keyPath:@"user"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     [objectManager addResponseDescriptor:responseDescriptor];
+    
+    // TODO: complete mapping for GET all rides
+    /*
+    responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userMapping                                                                                            method:RKRequestMethodPOST                                                                                       pathPattern:@"/api/v2/rides"                                                                                           keyPath:@"ride"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    [objectManager addResponseDescriptor:responseDescriptor];
+     */
     
     #ifdef RESTKIT_GENERATE_SEED_DB
     RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelInfo);
