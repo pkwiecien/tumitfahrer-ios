@@ -27,7 +27,7 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{	
+{
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     [self setupPushNotifications];
@@ -39,9 +39,9 @@
     
     [self.window makeKeyAndVisible];
     return YES;
-
+    
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -50,10 +50,10 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"loggedIn"];
-
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -105,11 +105,11 @@
 }
 
 -(void)setupRestKit {
-
+    
     NSError *error = nil;
     
     // Initialize RestKit
-    NSURL *baseURL = [NSURL URLWithString:@"http://131.159.193.45:3000"];
+    NSURL *baseURL = [NSURL URLWithString:@"http://tumitfahrer-staging.herokuapp.com"];
     RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:baseURL];
     
     // Enable Activity Indicator Spinner
@@ -122,17 +122,17 @@
     RKEntityMapping *userMapping = [RKEntityMapping mappingForEntityForName:@"User" inManagedObjectStore:managedObjectStore];
     userMapping.identificationAttributes = @[ @"userId" ];
     [userMapping addAttributeMappingsFromDictionary:@{
-                                                        @"id":             @"userId",
-                                                        @"first_name":     @"firstName",
-                                                        @"last_name":      @"lastName",
-                                                        @"email":          @"email",
-                                                        @"is_student":     @"isStudent",
-                                                        @"phone_number":   @"phoneNumber",
-                                                        @"car":            @"car",
-                                                        @"department":     @"department",
-                                                        @"api_key":        @"apiKey",
-                                                        @"created_at":     @"createdAt",
-                                                        @"updated_at":     @"updatedAt"}];
+                                                      @"id":             @"userId",
+                                                      @"first_name":     @"firstName",
+                                                      @"last_name":      @"lastName",
+                                                      @"email":          @"email",
+                                                      @"is_student":     @"isStudent",
+                                                      @"phone_number":   @"phoneNumber",
+                                                      @"car":            @"car",
+                                                      @"department":     @"department",
+                                                      @"api_key":        @"apiKey",
+                                                      @"created_at":     @"createdAt",
+                                                      @"updated_at":     @"updatedAt"}];
     
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
     dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZ";
@@ -163,7 +163,7 @@
     } else {
         RKLogError(@"Failed to finish import and save seed database due to error: %@", error);
     }
-    #else
+#else
     /**
      Complete Core Data stack initialization
      */
@@ -181,8 +181,8 @@
     
     // Configure a managed object cache to ensure we do not create duplicate objects
     managedObjectStore.managedObjectCache = [[RKInMemoryManagedObjectCache alloc] initWithManagedObjectContext:managedObjectStore.persistentStoreManagedObjectContext];
-    #endif
-
+#endif
+    
 }
 
 @end

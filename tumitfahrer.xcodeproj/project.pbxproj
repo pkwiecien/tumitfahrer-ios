@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		068F5848AB864309B2DEC0B8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAEC5882914944C4B8E2DE24 /* libPods.a */; };
+		E50DB26B18F447B800E87E62 /* CurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB26A18F447B800E87E62 /* CurrentUser.m */; };
 		E51FD50218F0864C0098AD11 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E51FD50018F0864C0098AD11 /* ProfileViewController.m */; };
 		E51FD50318F0864C0098AD11 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E51FD50118F0864C0098AD11 /* ProfileViewController.xib */; };
 		E51FD50518F1615B0098AD11 /* AnotherCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E51FD50418F1615B0098AD11 /* AnotherCollectionCell.xib */; };
@@ -108,6 +109,8 @@
 /* Begin PBXFileReference section */
 		BAEC5882914944C4B8E2DE24 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C71CE6059C014DFABC5B4F22 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		E50DB26918F447B800E87E62 /* CurrentUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentUser.h; sourceTree = "<group>"; };
+		E50DB26A18F447B800E87E62 /* CurrentUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentUser.m; sourceTree = "<group>"; };
 		E51FD4FF18F0864C0098AD11 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		E51FD50018F0864C0098AD11 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		E51FD50118F0864C0098AD11 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
@@ -413,6 +416,8 @@
 			children = (
 				E51FD52418F3EC6B0098AD11 /* User.h */,
 				E51FD52518F3EC6B0098AD11 /* User.m */,
+				E50DB26918F447B800E87E62 /* CurrentUser.h */,
+				E50DB26A18F447B800E87E62 /* CurrentUser.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -809,6 +814,7 @@
 				E59987FB18E7251000B01C62 /* RegisterViewController.m in Sources */,
 				E599887818E8617100B01C62 /* HACollectionViewLargeLayout.m in Sources */,
 				E59987D718E6ECF200B01C62 /* CustomTextField.m in Sources */,
+				E50DB26B18F447B800E87E62 /* CurrentUser.m in Sources */,
 				E522BAC618AE13F600ECD375 /* main.m in Sources */,
 				E599880B18E7836D00B01C62 /* MenuViewController.m in Sources */,
 				E51FD51A18F3D2590098AD11 /* tumitfahrer.xcdatamodeld in Sources */,

@@ -12,6 +12,7 @@
 #import "ForgotPasswordViewController.h"
 #import "Constants.h"
 #import "ActionManager.h"
+#import "CurrentUser.h"
 
 @interface LoginViewController () <NSFetchedResultsControllerDelegate>
 
@@ -56,6 +57,7 @@
     
     // Set debug logging level. Set to 'RKLogLevelTrace' to see JSON payload
     RKLogConfigureByName("RestKit/Network", RKLogLevelDebug);
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -95,35 +97,16 @@
     [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"loggedIn"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO];
-    fetchRequest.sortDescriptors = @[descriptor];
-    NSError *error = nil;
-    
-    // Setup fetched results
-    self.fetchedResultsController = [[NSFetchedResultsController alloc]
-                                     initWithFetchRequest:fetchRequest
-                                     managedObjectContext:[RKManagedObjectStore defaultStore].
-                                     mainQueueManagedObjectContext
-                                     sectionNameKeyPath:nil cacheName:nil];
-    [self.fetchedResultsController setDelegate:self];
-    
-    BOOL fetchSuccessful = [self.fetchedResultsController performFetch:&error];
-    NSAssert([[self.fetchedResultsController fetchedObjects] count], @"Seeding didn't work...");
-    if (! fetchSuccessful) {
-        [[ActionManager sharedManager] showAlertViewWithTitle:[error localizedDescription]];
-    }
-    
     [self loadData];
-    //    [self dismissViewControllerAnimated:YES completion:nil];
-
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)loadData
 {
     // Load the object model via RestKit
     [[RKObjectManager sharedManager] getObjectsAtPath:@"/api/v2/users" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        RKLogInfo(@"Load complete!");
+        [CurrentUser sharedInstance].user = (User *)[mappingResult firstObject];
+        RKLogInfo(@"Load complete, current user %@!", [CurrentUser sharedInstance].user.firstName);
         
         [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"LastUpdatedAt"];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -162,6 +145,33 @@
     NSLog(@"Fetched %d results!", [result count]);
 }
 
+#pragma mark - Fetched results controller
+
+-(NSFetchedResultsController *)fetchedResultsController
+{
+    if (self.fetchedResultsController != nil) {
+        return self.fetchedResultsController;
+    }
+    
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO];
+    fetchRequest.sortDescriptors = @[descriptor];
+    NSError *error = nil;
+    
+    // Setup fetched results
+    self.fetchedResultsController = [[NSFetchedResultsController alloc]
+                                     initWithFetchRequest:fetchRequest
+                                     managedObjectContext:[RKManagedObjectStore defaultStore].
+                                     mainQueueManagedObjectContext
+                                     sectionNameKeyPath:nil cacheName:@"User"];
+    self.fetchedResultsController.delegate = self;
+    
+    if (![self.fetchedResultsController performFetch:&error]) {
+        [[ActionManager sharedManager] showAlertViewWithTitle:[error localizedDescription]];
+    }
+    
+    return self.fetchedResultsController;
+}
 
 
 @end
