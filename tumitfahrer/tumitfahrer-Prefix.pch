@@ -14,8 +14,20 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import <QuartzCore/QuartzCore.h>
-
+    #import <CoreData/CoreData.h>
 
 #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 
 #endif
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+    #import <SystemConfiguration/SystemConfiguration.h>
+    #import <MobileCoreServices/MobileCoreServices.h>
+#else
+    #import <SystemConfiguration/SystemConfiguration.h>
+    #import <CoreServices/CoreServices.h>
+#endif
+
+// Make RestKit globally available
+#import <RestKit/RestKit.h>
+

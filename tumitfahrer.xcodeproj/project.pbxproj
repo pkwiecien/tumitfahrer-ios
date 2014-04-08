@@ -16,6 +16,8 @@
 		E51FD51118F3B6BD0098AD11 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E51FD51018F3B6BD0098AD11 /* MobileCoreServices.framework */; };
 		E51FD51518F3B6E00098AD11 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E51FD51418F3B6E00098AD11 /* libxml2.dylib */; };
 		E51FD51718F3B6EA0098AD11 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E51FD51618F3B6EA0098AD11 /* CFNetwork.framework */; };
+		E51FD51A18F3D2590098AD11 /* tumitfahrer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E51FD51818F3D2590098AD11 /* tumitfahrer.xcdatamodeld */; };
+		E51FD52618F3EC6B0098AD11 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E51FD52518F3EC6B0098AD11 /* User.m */; };
 		E522BABA18AE13F600ECD375 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E522BAB918AE13F600ECD375 /* Foundation.framework */; };
 		E522BABC18AE13F600ECD375 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E522BABB18AE13F600ECD375 /* CoreGraphics.framework */; };
 		E522BABE18AE13F600ECD375 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E522BABD18AE13F600ECD375 /* UIKit.framework */; };
@@ -117,6 +119,9 @@
 		E51FD51218F3B6D10098AD11 /* libxpc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxpc.dylib; path = usr/lib/system/libxpc.dylib; sourceTree = SDKROOT; };
 		E51FD51418F3B6E00098AD11 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		E51FD51618F3B6EA0098AD11 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		E51FD51918F3D2590098AD11 /* tumitfahrer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = tumitfahrer.xcdatamodel; sourceTree = "<group>"; };
+		E51FD52418F3EC6B0098AD11 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		E51FD52518F3EC6B0098AD11 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		E522BAB618AE13F600ECD375 /* tumitfahrer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tumitfahrer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E522BAB918AE13F600ECD375 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E522BABB18AE13F600ECD375 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -337,6 +342,7 @@
 				E599882218E8155800B01C62 /* Utilities */,
 				E59987C418E6DBC300B01C62 /* ViewControllers */,
 				E599886618E860FA00B01C62 /* zLibraries */,
+				E51FD51818F3D2590098AD11 /* tumitfahrer.xcdatamodeld */,
 			);
 			path = tumitfahrer;
 			sourceTree = "<group>";
@@ -405,6 +411,8 @@
 		E59987C518E6DBCE00B01C62 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E51FD52418F3EC6B0098AD11 /* User.h */,
+				E51FD52518F3EC6B0098AD11 /* User.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -780,6 +788,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E51FD52618F3EC6B0098AD11 /* User.m in Sources */,
 				E59987DC18E701AF00B01C62 /* CustomButton.m in Sources */,
 				E5DF641B18EB56A600D53164 /* ActivityRidesViewController.m in Sources */,
 				E599887318E8616200B01C62 /* HATransitionLayout.m in Sources */,
@@ -802,6 +811,7 @@
 				E59987D718E6ECF200B01C62 /* CustomTextField.m in Sources */,
 				E522BAC618AE13F600ECD375 /* main.m in Sources */,
 				E599880B18E7836D00B01C62 /* MenuViewController.m in Sources */,
+				E51FD51A18F3D2590098AD11 /* tumitfahrer.xcdatamodeld in Sources */,
 				E599887218E8616200B01C62 /* HATransitionController.m in Sources */,
 				E5FDDBF118F0059D00CE7B01 /* ActionManager.m in Sources */,
 			);
@@ -1038,6 +1048,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E51FD51818F3D2590098AD11 /* tumitfahrer.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E51FD51918F3D2590098AD11 /* tumitfahrer.xcdatamodel */,
+			);
+			currentVersion = E51FD51918F3D2590098AD11 /* tumitfahrer.xcdatamodel */;
+			path = tumitfahrer.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E522BAAE18AE13F600ECD375 /* Project object */;
 }

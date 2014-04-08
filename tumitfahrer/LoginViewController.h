@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
-#import <RestKit.h>
 
 @interface LoginViewController : UIViewController<UITextFieldDelegate, UIGestureRecognizerDelegate>
 

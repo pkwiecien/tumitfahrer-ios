@@ -7,15 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 #import "SlideNavigationController.h"
 #import "HAPaperCollectionViewController.h"
 
-@interface RideRequestsViewController : UIViewController<SlideNavigationControllerDelegate, UICollectionViewDelegate, UIGestureRecognizerDelegate>
+@interface RideRequestsViewController : UIViewController<SlideNavigationControllerDelegate, UICollectionViewDelegate, UIGestureRecognizerDelegate, NSFetchedResultsControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIImageView *upperImage;
 @property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 @property (weak, nonatomic) IBOutlet UIView *departureView;
+
+// RESTkit and core date
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 - (IBAction)addRideButtonPressed:(id)sender;
 - (IBAction)filterRidesButtonPressed:(id)sender;

@@ -175,7 +175,7 @@
 - (IBAction)sendFeedbackButtonPressed:(id)sender {
 }
 - (IBAction)logoutButtonPressed:(id)sender {
-    
+    [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"loggedIn"];
 }
 
 @end

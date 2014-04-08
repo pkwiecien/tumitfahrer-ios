@@ -131,7 +131,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [self.view sendSubviewToBack:self.collectionView];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -146,9 +146,6 @@
     UIView *smallCellView = (UIView *)[cell.contentView viewWithTag:20];
     
     if (_fullscreen) {
-        // change color of status bar
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-
         _fullscreen = NO;
         _collectionView.decelerationRate = UIScrollViewDecelerationRateNormal;
         
@@ -173,9 +170,6 @@
         }];
     }
     else {
-        // change color of status bar
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-
         [self.view bringSubviewToFront:self.collectionView];
         [self setNeedsStatusBarAppearanceUpdate];
         

@@ -13,10 +13,11 @@
 #import "Constants.h"
 #import "ActionManager.h"
 
-@interface LoginViewController ()
+@interface LoginViewController () <NSFetchedResultsControllerDelegate>
 
 @property CustomTextField *emailTextField;
 @property CustomTextField *passwordTextField;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @end
 
@@ -52,6 +53,9 @@
     
     // Add the gesture to the view
     [self.view addGestureRecognizer:tapRecognizer];
+    
+    // Set debug logging level. Set to 'RKLogLevelTrace' to see JSON payload
+    RKLogConfigureByName("RestKit/Network", RKLogLevelDebug);
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -90,7 +94,43 @@
     
     [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"loggedIn"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO];
+    fetchRequest.sortDescriptors = @[descriptor];
+    NSError *error = nil;
+    
+    // Setup fetched results
+    self.fetchedResultsController = [[NSFetchedResultsController alloc]
+                                     initWithFetchRequest:fetchRequest
+                                     managedObjectContext:[RKManagedObjectStore defaultStore].
+                                     mainQueueManagedObjectContext
+                                     sectionNameKeyPath:nil cacheName:nil];
+    [self.fetchedResultsController setDelegate:self];
+    
+    BOOL fetchSuccessful = [self.fetchedResultsController performFetch:&error];
+    NSAssert([[self.fetchedResultsController fetchedObjects] count], @"Seeding didn't work...");
+    if (! fetchSuccessful) {
+        [[ActionManager sharedManager] showAlertViewWithTitle:[error localizedDescription]];
+    }
+    
+    [self loadData];
+    //    [self dismissViewControllerAnimated:YES completion:nil];
+
+}
+
+- (void)loadData
+{
+    // Load the object model via RestKit
+    [[RKObjectManager sharedManager] getObjectsAtPath:@"/api/v2/users" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        RKLogInfo(@"Load complete!");
+        
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"LastUpdatedAt"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        [[ActionManager sharedManager] showAlertViewWithTitle:[error localizedDescription]];
+        RKLogError(@"Load failed with error: %@", error);
+    }];
 }
 
 // show register view
@@ -113,6 +153,15 @@
 {
     
 }
+
+#pragma mark NSFetchedResultsControllerDelegate methods
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)fetchedResultsController
+{
+    NSArray *result = [fetchedResultsController fetchedObjects];
+    NSLog(@"Fetched %d results!", [result count]);
+}
+
 
 
 @end

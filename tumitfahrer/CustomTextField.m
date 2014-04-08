@@ -91,13 +91,15 @@
     return YES;
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    
 }
 
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
     return YES;
 }
-- (void)textFieldDidEndEditing:(UITextField *)textField{
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
     if([self.text length] == 0)
     {
         self.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.placeholderText attributes:@{NSForegroundColorAttributeName: [UIColor lightGrayColor]}];
