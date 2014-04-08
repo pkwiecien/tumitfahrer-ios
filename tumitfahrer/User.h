@@ -25,4 +25,8 @@
 @property (nonatomic, retain) NSString * apiKey;
 @property (nonatomic, retain) NSString * password;
 
++ (RKEntityMapping *)postSessionMapping;
++ (RKResponseDescriptor *)postSessionResponseDescriptorWithMapping:(RKEntityMapping*)mapping;
++ (RKResponseDescriptor *)postUserResponseDescriptorWithMapping:(RKEntityMapping*)mapping;
+
 @end

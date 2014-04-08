@@ -24,4 +24,40 @@
 @dynamic apiKey;
 @dynamic password;
 
++ (RKEntityMapping *)postSessionMapping
+{
+    RKEntityMapping *sessionMapping = [RKEntityMapping mappingForEntityForName:@"User" inManagedObjectStore:[[RKObjectManager sharedManager] managedObjectStore]];
+    sessionMapping.identificationAttributes = @[ @"userId" ];
+    [sessionMapping addAttributeMappingsFromDictionary:@{
+                                                      @"id":             @"userId",
+                                                      @"first_name":     @"firstName",
+                                                      @"last_name":      @"lastName",
+                                                      @"email":          @"email",
+                                                      @"is_student":     @"isStudent",
+                                                      @"phone_number":   @"phoneNumber",
+                                                      @"car":            @"car",
+                                                      @"department":     @"department",
+                                                      @"api_key":        @"apiKey",
+                                                      @"created_at":     @"createdAt",
+                                                      @"updated_at":     @"updatedAt"}];
+    
+    return sessionMapping;
+}
+
++ (RKResponseDescriptor *)postSessionResponseDescriptorWithMapping:(RKEntityMapping*)mapping
+{
+    // create response description for user's session
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodPOST                                                                                       pathPattern:@"/api/v2/sessions"                                                                                           keyPath:@"user"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    return responseDescriptor;
+}
+
++(RKResponseDescriptor *)postUserResponseDescriptorWithMapping:(RKEntityMapping *)mapping
+{
+    // create response description for user's session
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodPOST                                                                                       pathPattern:@"/api/v2/users"                                                                                           keyPath:@"user"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    return responseDescriptor;
+}
+
 @end

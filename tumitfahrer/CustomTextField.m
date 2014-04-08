@@ -17,7 +17,7 @@
 
 @implementation CustomTextField
 
-- (instancetype)initWithFrame:(CGRect)frame placeholderText:(NSString*)placeholderText customIcon:(UIImage *)customIcon returnKeyType:(UIReturnKeyType)returnKeyType
+- (instancetype)initWithFrame:(CGRect)frame placeholderText:(NSString*)placeholderText customIcon:(UIImage *)customIcon returnKeyType:(UIReturnKeyType)returnKeyType keyboardType:(UIKeyboardType)keyboardType
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -30,6 +30,8 @@
         self.autocorrectionType = UITextAutocorrectionTypeNo;
         self.keyboardType = UIKeyboardTypeDefault;
         self.returnKeyType = returnKeyType;
+        self.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        self.keyboardType = keyboardType;
         
         UIButton *clearButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
         [clearButton setImage:[[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"DeleteIcon2"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
@@ -50,6 +52,15 @@
         self.leftViewMode = UITextFieldViewModeAlways;
         self.delegate = self;
     }
+    return self;
+}
+
+-(instancetype)initWithFrame:(CGRect)frame placeholderText:(NSString *)placeholderText customIcon:(UIImage *)customIcon returnKeyType:(UIReturnKeyType)returnKeyType keyboardType:(UIKeyboardType)keyboardType secureInput:(BOOL)secureInput
+{
+    self = [self initWithFrame:frame placeholderText:placeholderText customIcon:customIcon returnKeyType:returnKeyType keyboardType:keyboardType];
+    
+    self.secureTextEntry = secureInput;
+    
     return self;
 }
 

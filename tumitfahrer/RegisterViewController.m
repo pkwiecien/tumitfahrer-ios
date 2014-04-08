@@ -25,16 +25,16 @@
 
         float centerX = (self.view.frame.size.width - cUIElementWidth)/2;
         UIImage *emailIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"EmailIcon"] withColor:[UIColor whiteColor]];
-        CustomTextField *emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIcon:emailIcon returnKeyType:UIReturnKeyNext];
+        CustomTextField *emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIcon:emailIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeEmailAddress];
         
         UIImage *profileIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"ProfileIcon"] withColor:[UIColor whiteColor]];
-        CustomTextField *firstNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop + cUIElementPadding + emailTextField.frame.size.height, cUIElementWidth, cUIElementHeight) placeholderText:@"First name" customIcon:profileIcon returnKeyType:UIReturnKeyNext];
+        CustomTextField *firstNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop + cUIElementPadding + emailTextField.frame.size.height, cUIElementWidth, cUIElementHeight) placeholderText:@"First name" customIcon:profileIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeDefault];
         
-        CustomTextField *lastNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop + cUIElementPadding*2 + emailTextField.frame.size.height*2, cUIElementWidth, cUIElementHeight) placeholderText:@"Last name" customIcon:profileIcon returnKeyType:UIReturnKeyNext];
+        CustomTextField *lastNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop + cUIElementPadding*2 + emailTextField.frame.size.height*2, cUIElementWidth, cUIElementHeight) placeholderText:@"Last name" customIcon:profileIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeDefault];
         
         // TODO: show picker instead of department
         UIImage *campusIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"CampusIcon"] withColor:[UIColor whiteColor]];
-        CustomTextField *departmentNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX,cMarginTop + cUIElementPadding*3 + emailTextField.frame.size.height*3, cUIElementWidth, cUIElementHeight) placeholderText:@"Department" customIcon:campusIcon returnKeyType:UIReturnKeyDone];
+        CustomTextField *departmentNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX,cMarginTop + cUIElementPadding*3 + emailTextField.frame.size.height*3, cUIElementWidth, cUIElementHeight) placeholderText:@"Department" customIcon:campusIcon returnKeyType:UIReturnKeyDone keyboardType:UIKeyboardTypeDefault];
         
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
         

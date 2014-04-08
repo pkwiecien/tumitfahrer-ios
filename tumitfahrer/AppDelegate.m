@@ -17,6 +17,7 @@
 #import "HACollectionViewSmallLayout.h"
 #import <UbertestersSDK/Ubertesters.h>
 #import <RestKit/RestKit.h>
+#import "User.h"
 
 @interface AppDelegate ()
 
@@ -120,29 +121,16 @@
     RKManagedObjectStore *managedObjectStore = [[RKManagedObjectStore alloc] initWithManagedObjectModel:managedObjectModel];
     objectManager.managedObjectStore = managedObjectStore;
     
-    RKEntityMapping *userMapping = [RKEntityMapping mappingForEntityForName:@"User" inManagedObjectStore:managedObjectStore];
-    userMapping.identificationAttributes = @[ @"userId" ];
-    [userMapping addAttributeMappingsFromDictionary:@{
-                                                      @"id":             @"userId",
-                                                      @"first_name":     @"firstName",
-                                                      @"last_name":      @"lastName",
-                                                      @"email":          @"email",
-                                                      @"is_student":     @"isStudent",
-                                                      @"phone_number":   @"phoneNumber",
-                                                      @"car":            @"car",
-                                                      @"department":     @"department",
-                                                      @"api_key":        @"apiKey",
-                                                      @"created_at":     @"createdAt",
-                                                      @"updated_at":     @"updatedAt"}];
     
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
     dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZ";
     [[RKValueTransformer defaultValueTransformer] insertValueTransformer:dateFormatter atIndex:0];
+
     
-    // Register mappings with the provider
-    // mapping for user session
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userMapping                                                                                            method:RKRequestMethodPOST                                                                                       pathPattern:@"/api/v2/sessions"                                                                                           keyPath:@"user"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
-    [objectManager addResponseDescriptor:responseDescriptor];
+    // add mappings to object manager
+    RKEntityMapping *postSessionMapping =[User postSessionMapping];
+    [objectManager addResponseDescriptor:[User postSessionResponseDescriptorWithMapping:postSessionMapping]];
+    [objectManager addResponseDescriptor:[User postUserResponseDescriptorWithMapping:postSessionMapping]];
     
     // TODO: complete mapping for GET all rides
     /*

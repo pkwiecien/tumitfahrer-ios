@@ -31,10 +31,10 @@
         // Custom initializatio
         float centerX = (self.view.frame.size.width - cUIElementWidth)/2;
         UIImage *emailWhiteIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"EmailIcon"] withColor:[UIColor whiteColor]];
-        self.emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIcon:emailWhiteIcon returnKeyType:UIReturnKeyNext];
+        self.emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIcon:emailWhiteIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeEmailAddress secureInput:NO];
         
         UIImage *passwordWhiteIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"PasswordIcon"] withColor:[UIColor whiteColor]];
-        self.passwordTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop+self.emailTextField.frame.size.height + cUIElementPadding, cUIElementWidth, cUIElementHeight) placeholderText:@"Your password" customIcon:passwordWhiteIcon returnKeyType:UIReturnKeyDone];
+        self.passwordTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop+self.emailTextField.frame.size.height + cUIElementPadding, cUIElementWidth, cUIElementHeight) placeholderText:@"Your password" customIcon:passwordWhiteIcon returnKeyType:UIReturnKeyDone keyboardType:UIKeyboardTypeDefault secureInput:YES];
         
         [self.view addSubview:self.emailTextField];
         [self.view addSubview:self.passwordTextField];
@@ -101,7 +101,7 @@
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
-    
+
     [objectManager postObject:nil path:@"/api/v2/sessions" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [CurrentUser sharedInstance].user = (User *)[mappingResult firstObject];
         RKLogInfo(@"Load complete, current user %@!", [CurrentUser sharedInstance].user.firstName);
