@@ -7,31 +7,40 @@
 //
 
 #import "CustomTextField.h"
+#import "ActionManager.h"
+
+@interface CustomTextField ()
+
+@property (nonatomic, strong) NSString *placeholderText;
+
+@end
 
 @implementation CustomTextField
 
-- (instancetype)initWithFrame:(CGRect)frame placeholderText:(NSString*)placeholderText customIconName:(NSString *)customIconName returnKeyType:(UIReturnKeyType)returnKeyType
+- (instancetype)initWithFrame:(CGRect)frame placeholderText:(NSString*)placeholderText customIcon:(UIImage *)customIcon returnKeyType:(UIReturnKeyType)returnKeyType
 {
     self = [super initWithFrame:frame];
     if (self) {
         self.background = [UIImage imageNamed:@"inputTextBox"];
         self.font = [UIFont systemFontOfSize:15];
         self.textColor = [UIColor whiteColor];
-        self.attributedPlaceholder = [[NSAttributedString alloc] initWithString:placeholderText attributes:@{NSForegroundColorAttributeName: [UIColor lightGrayColor]}];
+        
+        self.placeholderText = placeholderText;
+        self.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.placeholderText attributes:@{NSForegroundColorAttributeName: [UIColor lightGrayColor]}];
         self.autocorrectionType = UITextAutocorrectionTypeNo;
         self.keyboardType = UIKeyboardTypeDefault;
         self.returnKeyType = returnKeyType;
-//        self.clearButtonMode = UITextFieldViewModeWhileEditing;
         
-        UIImageView *clearButtonVIew = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
-        clearButtonVIew.image = [UIImage imageNamed:@"customIcon"];
-        self.rightView = clearButtonVIew;
+        UIButton *clearButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
+        [clearButton setImage:[[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"DeleteIcon2"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+        [clearButton addTarget:self action:@selector(resetBox) forControlEvents:UIControlEventTouchUpInside];
         self.rightViewMode = UITextFieldViewModeWhileEditing;
+        self.rightView = clearButton;
         
         self.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
-        imageView.image = [UIImage imageNamed:customIconName];
+        imageView.image = customIcon;
         
         /*UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(1, 1, 60, 25)];
          [lbl setText:@"Partenza:"];
@@ -44,6 +53,10 @@
     return self;
 }
 
+-(void)resetBox
+{
+    self.text = @"";
+}
 
 // padding of the input text and placeholder
 -(CGRect)textRectForBounds:(CGRect)bounds
@@ -73,14 +86,22 @@
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    if([self.text length]==0)
+        self.placeholder =  @"";
     return YES;
 }
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
 }
+
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
     return YES;
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField{
+    if([self.text length] == 0)
+    {
+        self.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.placeholderText attributes:@{NSForegroundColorAttributeName: [UIColor lightGrayColor]}];
+    }
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     return YES;

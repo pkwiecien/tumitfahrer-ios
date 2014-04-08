@@ -39,7 +39,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     UINib *cellNib = [UINib nibWithNibName:@"NibCell" bundle:nil];
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"rideCell"];
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
@@ -75,23 +74,15 @@
     }];
 }
 
--(void)aMethod
-{
-    [[SlideNavigationController sharedInstance] toggleLeftMenu];
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-   BOOL isUserLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:@"loggedIn"];
-
-   if (!isUserLoggedIn) {
-        [self showLoginScreen:YES];
-  }
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    BOOL isUserLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:@"loggedIn"];
+    
+    if (!isUserLoggedIn) {
+        [self showLoginScreen:YES];
+    }
     self.navigationController.navigationBarHidden = YES;
     
     // Adjust scrollView decelerationRate

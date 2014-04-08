@@ -11,6 +11,7 @@
 #import "RegisterViewController.h"
 #import "ForgotPasswordViewController.h"
 #import "Constants.h"
+#import "ActionManager.h"
 
 @interface LoginViewController ()
 
@@ -27,11 +28,11 @@
     if (self) {
         // Custom initializatio
         float centerX = (self.view.frame.size.width - cUIElementWidth)/2;
-        self.emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIconName:@"customIcon" returnKeyType:UIReturnKeyNext];
-        self.emailTextField.delegate = self;
+        UIImage *emailWhiteIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"EmailIcon"] withColor:[UIColor whiteColor]];
+        self.emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIcon:emailWhiteIcon returnKeyType:UIReturnKeyNext];
         
-        self.passwordTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop+self.emailTextField.frame.size.height + cUIElementPadding, cUIElementWidth, cUIElementHeight) placeholderText:@"Your password" customIconName:@"customIcon" returnKeyType:UIReturnKeyDone];
-        self.passwordTextField.delegate = self;
+        UIImage *passwordWhiteIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"PasswordIcon"] withColor:[UIColor whiteColor]];
+        self.passwordTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop+self.emailTextField.frame.size.height + cUIElementPadding, cUIElementWidth, cUIElementHeight) placeholderText:@"Your password" customIcon:passwordWhiteIcon returnKeyType:UIReturnKeyDone];
         
         [self.view addSubview:self.emailTextField];
         [self.view addSubview:self.passwordTextField];
@@ -43,6 +44,14 @@
 {
     [super viewDidLoad];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    UITapGestureRecognizer *tapRecognizer =
+    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRecognized)];
+    tapRecognizer.delegate = self;
+    // Set required taps and number of touches
+    
+    // Add the gesture to the view
+    [self.view addGestureRecognizer:tapRecognizer];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -100,9 +109,9 @@
     [self.view endEditing:YES];
 }
 
-- (void)didReceiveMemoryWarning
+-(void)tapRecognized
 {
-    [super didReceiveMemoryWarning];
+    
 }
 
 

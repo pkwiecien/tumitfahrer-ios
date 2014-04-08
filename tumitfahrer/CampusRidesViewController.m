@@ -131,6 +131,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [self.view sendSubviewToBack:self.collectionView];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
 
 #pragma mark - UICollectionViewDelegate

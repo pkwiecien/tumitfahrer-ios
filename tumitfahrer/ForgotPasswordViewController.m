@@ -9,6 +9,7 @@
 #import "ForgotPasswordViewController.h"
 #import "Constants.h"
 #import "CustomTextField.h"
+#import "ActionManager.h"
 
 @interface ForgotPasswordViewController ()
 
@@ -30,11 +31,11 @@
     [super viewDidLoad];
     
     float centerX = (self.view.frame.size.width - cUIElementWidth)/2;
-    CustomTextField *emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIconName:@"customIcon" returnKeyType:UIReturnKeyNext];
-    emailTextField.delegate = self;
+    UIImage *emailIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"EmailIcon"] withColor:[UIColor whiteColor]];
+    CustomTextField *emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIcon:emailIcon returnKeyType:UIReturnKeyNext];
     [self.view addSubview:emailTextField];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"road2"]];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"road"]];
     
     [self.view addSubview:imageView];
     [self.view sendSubviewToBack:imageView];
