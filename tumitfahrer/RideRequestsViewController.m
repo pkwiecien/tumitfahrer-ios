@@ -31,7 +31,7 @@
     
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
     {
-//        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        //        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     }
     return self;
 }
@@ -57,6 +57,9 @@
     swipeRightLeft.delegate = self;
     [swipeRightLeft setDirection:UISwipeGestureRecognizerDirectionRight|UISwipeGestureRecognizerDirectionLeft];
     [self.departureView addGestureRecognizer:swipeRightLeft];
+    
+    [LocationController sharedInstance].delegate = self;
+    [[LocationController sharedInstance] startUpdatingLocation];
 }
 
 -(void)handleSwipeRightLeft
@@ -151,6 +154,36 @@
 
 - (IBAction)addRideButtonPressed:(id)sender {
     [[ActionManager sharedManager] showAlertViewWithTitle:@"Add a ride"];
+}
+
+-(void)didReceiveLocation:(CLLocation *)location {
+    
+    NSLog(@"Current location: %f %f", location.coordinate.latitude, location.coordinate.longitude);
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://www.panoramio.com/map/get_panoramas.php?set=public&from=0&to=1&minx=%f&miny=%f&maxx=%f&maxy=%f&size=medium&mapfilter=true", location.coordinate.longitude, location.coordinate.latitude, location.coordinate.longitude+0.02, location.coordinate.latitude+0.02];
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+    
+    [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (connectionError)
+        {
+            NSLog(@"Error connecting data from server: %@", connectionError.localizedDescription);
+        } else {
+            NSLog(@"Response data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+
+            NSError *localError = nil;
+            if (localError) {
+                return;
+            }
+
+            // parse json
+            NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
+            NSLog(@"photo url: %@", parsedObject[@"photos"][0][@"photo_file_url"]);
+            NSURL *url = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];
+            
+            [self.upperImage setImageWithURL:url];
+        }
+    }];
 }
 
 @end

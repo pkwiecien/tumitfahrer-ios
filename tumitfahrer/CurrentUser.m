@@ -10,14 +10,14 @@
 
 @implementation CurrentUser
 
--(instancetype)init
-{
+-(instancetype)init {
     self = [super init];
+    if (self) {
+    }
     return self;
 }
 
-+(instancetype)sharedInstance
-{
++(instancetype)sharedInstance {
     static CurrentUser *currentUser = nil;
     static dispatch_once_t onceToken;
     
@@ -28,8 +28,7 @@
     return currentUser;
 }
 
--(NSString *)description
-{
+-(NSString *)description {
     return [NSString stringWithFormat:@"Name: %@ %@, email: %@, registered at: %@", self.user.firstName, self.user.lastName, self.user.email, self.user.createdAt];
 }
 

@@ -50,8 +50,8 @@ static NSString *const RBCollectionViewBalancedColumnCellKind = @"RBCollectionVi
 
 - (void)setup
 {
-	self.interItemSpacingY = 5.0f;
-	self.cellWidth = 300; // Defaults to full width of iPhone + 10px gutters
+	self.interItemSpacingY = 3.0f;
+	self.cellWidth = 400; // Defaults to full width of iPhone + 10px gutters
 }
 
 #pragma mark - Properties (Getters & Setters)

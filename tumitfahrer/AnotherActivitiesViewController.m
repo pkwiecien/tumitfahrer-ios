@@ -30,14 +30,16 @@
     [super viewDidLoad];
     UINib *cellNib = [UINib nibWithNibName:@"AnotherCollectionCell" bundle:nil];
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"AnotherCell"];
-    self.collectionView.backgroundColor = [UIColor lightGrayColor];
+    self.collectionView.backgroundColor = [UIColor whiteColor];
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [flowLayout setItemSize:CGSizeMake(140, 200)];
-    [flowLayout setSectionInset:UIEdgeInsetsMake(10, 10, 10, 10)];
+    [flowLayout setItemSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width/2-1, 200)];
+    [flowLayout setSectionInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     self.collectionView.delegate = self;
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     [self.collectionView setCollectionViewLayout:flowLayout];
+    
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated

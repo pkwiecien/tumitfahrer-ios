@@ -19,7 +19,7 @@
                 <tabBar clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a7c-zF-xw4">
                     <rect key="frame" x="0.0" y="451" width="320" height="49"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <items>
                         <tabBarItem title="Campus" image="CampusIcon" id="CLD-uV-5dK"/>
                         <tabBarItem title="Acitvities" image="ActivityIcon" id="OjO-ce-EF0"/>
@@ -31,11 +31,12 @@
                 <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="dZz-z9-u7P">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="451"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="CO2-7y-gxl">
-                        <size key="itemSize" width="140" height="250"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="CO2-7y-gxl">
+                        <size key="itemSize" width="0.0" height="0.0"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                     <cells/>
                     <connections>

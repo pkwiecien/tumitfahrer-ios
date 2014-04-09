@@ -11,8 +11,9 @@
 
 @interface CurrentUser : NSObject
 
++(instancetype)sharedInstance;
+
 @property (nonatomic, strong) User *user;
 
-+(instancetype)sharedInstance;
 
 @end

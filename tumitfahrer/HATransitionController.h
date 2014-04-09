@@ -12,7 +12,6 @@
 - (void)interactionBeganAtPoint:(CGPoint)point;
 @end
 
-
 @interface HATransitionController : NSObject  <UIViewControllerAnimatedTransitioning, UIViewControllerInteractiveTransitioning, UIGestureRecognizerDelegate>
 
 @property (nonatomic) id <HATransitionControllerDelegate> delegate;

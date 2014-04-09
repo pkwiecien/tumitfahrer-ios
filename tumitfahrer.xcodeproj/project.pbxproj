@@ -10,6 +10,7 @@
 		068F5848AB864309B2DEC0B8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAEC5882914944C4B8E2DE24 /* libPods.a */; };
 		E50DB26B18F447B800E87E62 /* CurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB26A18F447B800E87E62 /* CurrentUser.m */; };
 		E50DB26F18F52E8500E87E62 /* StatusResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB26E18F52E8500E87E62 /* StatusResponse.m */; };
+		E50DB27218F5DFB200E87E62 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB27118F5DFB200E87E62 /* LocationController.m */; };
 		E51FD50218F0864C0098AD11 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E51FD50018F0864C0098AD11 /* ProfileViewController.m */; };
 		E51FD50318F0864C0098AD11 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E51FD50118F0864C0098AD11 /* ProfileViewController.xib */; };
 		E51FD50518F1615B0098AD11 /* AnotherCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E51FD50418F1615B0098AD11 /* AnotherCollectionCell.xib */; };
@@ -114,6 +115,8 @@
 		E50DB26A18F447B800E87E62 /* CurrentUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentUser.m; sourceTree = "<group>"; };
 		E50DB26D18F52E8500E87E62 /* StatusResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusResponse.h; sourceTree = "<group>"; };
 		E50DB26E18F52E8500E87E62 /* StatusResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusResponse.m; sourceTree = "<group>"; };
+		E50DB27018F5DFB200E87E62 /* LocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationController.h; sourceTree = "<group>"; };
+		E50DB27118F5DFB200E87E62 /* LocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationController.m; sourceTree = "<group>"; };
 		E51FD4FF18F0864C0098AD11 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		E51FD50018F0864C0098AD11 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		E51FD50118F0864C0098AD11 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
@@ -236,6 +239,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5FDDBE118EFDD3B00CE7B01 /* CoreLocation.framework in Frameworks */,
 				E51FD51718F3B6EA0098AD11 /* CFNetwork.framework in Frameworks */,
 				E51FD51518F3B6E00098AD11 /* libxml2.dylib in Frameworks */,
 				E51FD51118F3B6BD0098AD11 /* MobileCoreServices.framework in Frameworks */,
@@ -244,7 +248,6 @@
 				E5FDDBE718EFDD4F00CE7B01 /* CoreMotion.framework in Frameworks */,
 				E5FDDBE518EFDD4800CE7B01 /* OpenGLES.framework in Frameworks */,
 				E5FDDBE318EFDD4000CE7B01 /* AudioToolbox.framework in Frameworks */,
-				E5FDDBE118EFDD3B00CE7B01 /* CoreLocation.framework in Frameworks */,
 				E5FDDBDF18EFDD3500CE7B01 /* CoreTelephony.framework in Frameworks */,
 				E5FDDBDD18EFDD2E00CE7B01 /* SystemConfiguration.framework in Frameworks */,
 				E5FDDBDB18EFDD2700CE7B01 /* CoreImage.framework in Frameworks */,
@@ -506,6 +509,8 @@
 				E5FDDBED18EFFF6D00CE7B01 /* BuildingsManager.m */,
 				E5FDDBEF18F0059D00CE7B01 /* ActionManager.h */,
 				E5FDDBF018F0059D00CE7B01 /* ActionManager.m */,
+				E50DB27018F5DFB200E87E62 /* LocationController.h */,
+				E50DB27118F5DFB200E87E62 /* LocationController.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -819,6 +824,7 @@
 				E5FDDBEE18EFFF6D00CE7B01 /* BuildingsManager.m in Sources */,
 				E51FD50218F0864C0098AD11 /* ProfileViewController.m in Sources */,
 				E599888418E88C5100B01C62 /* HAPaperCollectionViewController.m in Sources */,
+				E50DB27218F5DFB200E87E62 /* LocationController.m in Sources */,
 				E5DF641518EB548E00D53164 /* SettingsViewController.m in Sources */,
 				E522BACA18AE13F600ECD375 /* AppDelegate.m in Sources */,
 				E5DF642818EBD8AB00D53164 /* BalancedColumnLayout.m in Sources */,
