@@ -28,5 +28,9 @@
     return currentUser;
 }
 
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"Name: %@ %@, email: %@, registered at: %@", self.user.firstName, self.user.lastName, self.user.email, self.user.createdAt];
+}
 
 @end

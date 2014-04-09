@@ -18,7 +18,7 @@
 // padding between UI elements
 #define cUIElementPadding      10
 
-#define cMarginTop             100
+#define cMarginTop             120
 
 #define cSlideMenuOffset        110
 

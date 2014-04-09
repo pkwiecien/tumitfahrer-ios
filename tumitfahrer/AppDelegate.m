@@ -111,7 +111,7 @@
     
     // Initialize RestKit
     //    NSURL *baseURL = [NSURL URLWithString:@"http://tumitfahrer-staging.herokuapp.com"];
-    NSURL *baseURL = [NSURL URLWithString:@"http://192.168.0.102:3000"];
+    NSURL *baseURL = [NSURL URLWithString:@"http://131.159.193.45:3000"];
     RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:baseURL];
     
     // Enable Activity Indicator Spinner
@@ -121,24 +121,18 @@
     RKManagedObjectStore *managedObjectStore = [[RKManagedObjectStore alloc] initWithManagedObjectModel:managedObjectModel];
     objectManager.managedObjectStore = managedObjectStore;
     
-    
+    // register date formatter compliant with the date format in the backend
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
     dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZ";
     [[RKValueTransformer defaultValueTransformer] insertValueTransformer:dateFormatter atIndex:0];
-
     
     // add mappings to object manager
     RKEntityMapping *postSessionMapping =[User postSessionMapping];
     [objectManager addResponseDescriptor:[User postSessionResponseDescriptorWithMapping:postSessionMapping]];
-    [objectManager addResponseDescriptor:[User postUserResponseDescriptorWithMapping:postSessionMapping]];
+    RKObjectMapping *postUserMapping =[User postUserMapping];
+    [objectManager addResponseDescriptor:[User postUserResponseDescriptorWithMapping:postUserMapping]];
     
-    // TODO: complete mapping for GET all rides
-    /*
-    responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userMapping                                                                                            method:RKRequestMethodPOST                                                                                       pathPattern:@"/api/v2/rides"                                                                                           keyPath:@"ride"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
-    [objectManager addResponseDescriptor:responseDescriptor];
-     */
-    
-    #ifdef RESTKIT_GENERATE_SEED_DB
+#ifdef RESTKIT_GENERATE_SEED_DB
     RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelInfo);
     RKLogConfigureByName("RestKit/CoreData", RKLogLevelTrace);
     

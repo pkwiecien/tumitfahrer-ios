@@ -7,7 +7,7 @@
 //
 
 #import "User.h"
-
+#import "StatusResponse.h"
 
 @implementation User
 
@@ -24,8 +24,7 @@
 @dynamic apiKey;
 @dynamic password;
 
-+ (RKEntityMapping *)postSessionMapping
-{
++ (RKEntityMapping *)postSessionMapping {
     RKEntityMapping *sessionMapping = [RKEntityMapping mappingForEntityForName:@"User" inManagedObjectStore:[[RKObjectManager sharedManager] managedObjectStore]];
     sessionMapping.identificationAttributes = @[ @"userId" ];
     [sessionMapping addAttributeMappingsFromDictionary:@{
@@ -44,18 +43,23 @@
     return sessionMapping;
 }
 
-+ (RKResponseDescriptor *)postSessionResponseDescriptorWithMapping:(RKEntityMapping*)mapping
-{
++ (RKResponseDescriptor *)postSessionResponseDescriptorWithMapping:(RKEntityMapping*)mapping {
     // create response description for user's session
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodPOST                                                                                       pathPattern:@"/api/v2/sessions"                                                                                           keyPath:@"user"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     
     return responseDescriptor;
 }
 
-+(RKResponseDescriptor *)postUserResponseDescriptorWithMapping:(RKEntityMapping *)mapping
-{
++(RKObjectMapping *)postUserMapping {
+    RKObjectMapping *responseMapping = [RKObjectMapping mappingForClass:[StatusResponse class]];
+    [responseMapping addAttributeMappingsFromDictionary:@{@"message":@"message"}];
+
+    return responseMapping;
+}
+
++(RKResponseDescriptor *)postUserResponseDescriptorWithMapping:(RKObjectMapping *)mapping {
     // create response description for user's session
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodPOST                                                                                       pathPattern:@"/api/v2/users"                                                                                           keyPath:@"user"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodPOST                                                                                       pathPattern:@"/api/v2/users"                                                                                           keyPath:nil                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     
     return responseDescriptor;
 }

@@ -12,6 +12,7 @@
 @interface LoginViewController : UIViewController<UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 @property (strong) MPMoviePlayerController *moviePlayerController;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 - (IBAction)loginButtonPressed:(id)sender;
 - (IBAction)registerButtonPressed:(id)sender;

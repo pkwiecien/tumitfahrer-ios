@@ -27,6 +27,7 @@
 
 + (RKEntityMapping *)postSessionMapping;
 + (RKResponseDescriptor *)postSessionResponseDescriptorWithMapping:(RKEntityMapping*)mapping;
-+ (RKResponseDescriptor *)postUserResponseDescriptorWithMapping:(RKEntityMapping*)mapping;
++ (RKObjectMapping *)postUserMapping;
++ (RKResponseDescriptor *)postUserResponseDescriptorWithMapping:(RKObjectMapping*)mapping;
 
 @end

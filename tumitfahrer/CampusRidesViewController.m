@@ -49,8 +49,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationController.navigationBarHidden = YES;
-
     _slide = 0;
     
     // Custom layouts
@@ -131,6 +129,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [self.view sendSubviewToBack:self.collectionView];
+    self.navigationController.navigationBarHidden = YES;
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
