@@ -18,6 +18,7 @@
 #import "ActionManager.h"
 #import "SettingsViewController.h"
 #import "ProfileViewController.h"
+#import "CurrentUser.h"
 
 @interface MenuViewController ()
 
@@ -57,8 +58,13 @@
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gradientBackground"]];
     [self.view addSubview:imageView];
     [self.view sendSubviewToBack:imageView];
-    
-    // Do any additional setup after loading the view from its nib.
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    NSLog(@"Current user: %@", [CurrentUser sharedInstance].user);
+    self.usernameLabel.text = [CurrentUser sharedInstance].user.firstName;
+    self.initialsLabel.text = [[[CurrentUser sharedInstance].user.firstName substringToIndex:1] stringByAppendingString:[[CurrentUser sharedInstance].user.lastName substringToIndex:1]];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

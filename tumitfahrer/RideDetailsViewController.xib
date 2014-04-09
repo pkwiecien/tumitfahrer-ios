@@ -20,7 +20,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="garching.png" translatesAutoresizingMaskIntoConstraints="NO" id="m4q-Xr-0ZQ">
-                            <rect key="frame" x="0.0" y="-18" width="327" height="215"/>
+                            <rect key="frame" x="-20" y="-3" width="367" height="200"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CircleWhiteTransparent" translatesAutoresizingMaskIntoConstraints="NO" id="4K7-ZL-Ckb">

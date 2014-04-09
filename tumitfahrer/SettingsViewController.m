@@ -8,6 +8,7 @@
 
 #import "SettingsViewController.h"
 #import "ActionManager.h"
+#import "LoginViewController.h"
 
 #define singleRowHeight 45
 #define headerHeight 25
@@ -176,6 +177,9 @@
 }
 - (IBAction)logoutButtonPressed:(id)sender {
     [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"loggedIn"];
+    
+    LoginViewController *loginVC = [[LoginViewController alloc] init];
+    [self presentViewController:loginVC animated:YES completion:nil];
 }
 
 @end

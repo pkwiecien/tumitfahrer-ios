@@ -29,6 +29,15 @@
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = YES;
     self.mainImageView.image = [UIImage imageNamed:[[[BuildingsManager sharedManager] buildingsArray] objectAtIndex:self.imageNumber]];
+    
+    // Set parallax for horizontal effect
+    UIInterpolatingMotionEffect *horizontalMotionEffect = [[UIInterpolatingMotionEffect alloc]
+     initWithKeyPath:@"center.x" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+    horizontalMotionEffect.minimumRelativeValue = @(-20);
+    horizontalMotionEffect.maximumRelativeValue = @(20);
+    
+    // Add both effects to your view
+    [self.mainImageView addMotionEffect:horizontalMotionEffect];
 }
 
 -(void)viewWillAppear:(BOOL)animated

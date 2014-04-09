@@ -36,7 +36,7 @@
     [self setupRestKit];
     
     // Ubertersters SDK initialization
-    [[Ubertesters shared] initializeWithOptions:UTOptionsManual|UTOptionsShake];
+    [[Ubertesters shared] initializeWithOptions:UTOptionsManual];
     
     [self.window makeKeyAndVisible];
     return YES;
@@ -69,7 +69,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"loggedIn"];
+//    [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"loggedIn"];
 }
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
@@ -110,8 +110,8 @@
     NSError *error = nil;
     
     // Initialize RestKit
-    //    NSURL *baseURL = [NSURL URLWithString:@"http://tumitfahrer-staging.herokuapp.com"];
-    NSURL *baseURL = [NSURL URLWithString:@"http://131.159.193.45:3000"];
+    NSURL *baseURL = [NSURL URLWithString:@"http://tumitfahrer-staging.herokuapp.com"];
+//    NSURL *baseURL = [NSURL URLWithString:@"http://131.159.193.45:3000"];
     RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:baseURL];
     
     // Enable Activity Indicator Spinner

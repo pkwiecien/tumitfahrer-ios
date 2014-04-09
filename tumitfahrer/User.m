@@ -26,7 +26,7 @@
 
 + (RKEntityMapping *)postSessionMapping {
     RKEntityMapping *sessionMapping = [RKEntityMapping mappingForEntityForName:@"User" inManagedObjectStore:[[RKObjectManager sharedManager] managedObjectStore]];
-    sessionMapping.identificationAttributes = @[ @"userId" ];
+    //sessionMapping.identificationAttributes = @[ @"userId" ];
     [sessionMapping addAttributeMappingsFromDictionary:@{
                                                       @"id":             @"userId",
                                                       @"first_name":     @"firstName",
