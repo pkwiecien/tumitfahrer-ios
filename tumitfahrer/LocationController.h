@@ -23,6 +23,7 @@
 @property (nonatomic, strong) UIImage *locationImage;
 
 + (LocationController*)sharedInstance; // Singleton method
++ (CLLocation*)locationForAddress:(NSString *)address;
 
 - (void)startUpdatingLocation;
 

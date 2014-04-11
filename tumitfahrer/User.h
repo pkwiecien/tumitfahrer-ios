@@ -42,9 +42,4 @@
 - (void)addRidesAsPassenger:(NSSet *)values;
 - (void)removeRidesAsPassenger:(NSSet *)values;
 
-+ (RKEntityMapping *)postSessionMapping;
-+ (RKResponseDescriptor *)postSessionResponseDescriptorWithMapping:(RKEntityMapping*)mapping;
-+(RKObjectMapping *)postUserMapping;
-+(RKResponseDescriptor *)postUserResponseDescriptorWithMapping:(RKObjectMapping *)mapping;
-
 @end

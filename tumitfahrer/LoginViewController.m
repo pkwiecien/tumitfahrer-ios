@@ -28,7 +28,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+
         float centerX = (self.view.frame.size.width - cUIElementWidth)/2;
         UIImage *emailWhiteIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"EmailIcon"] withColor:[UIColor whiteColor]];
         self.emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIcon:emailWhiteIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeEmailAddress shouldStartWithCapital:NO];
@@ -50,14 +50,11 @@
     UITapGestureRecognizer *tapRecognizer =
     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRecognized)];
     tapRecognizer.delegate = self;
-    // Set required taps and number of touches
-    
     // Add the gesture to the view
     [self.view addGestureRecognizer:tapRecognizer];
     
     // Set debug logging level to 'RKLogLevelTrace' to see JSON payload
     RKLogConfigureByName("RestKit/Network", RKLogLevelDebug);
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -146,34 +143,6 @@
 
 -(void)tapRecognized
 {
-    
-}
-
-- (void)loadAllItems
-{
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
-    NSEntityDescription *e = [NSEntityDescription entityForName:@"User"
-                                         inManagedObjectContext:[RKManagedObjectStore defaultStore].
-                              mainQueueManagedObjectContext];
-    request.entity = e;
-    
-    NSSortDescriptor *sd = [NSSortDescriptor sortDescriptorWithKey:@"userId"
-                                                         ascending:YES];
-    request.sortDescriptors = @[sd];
-    
-    NSError *error;
-    RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    
-    NSArray *result = [objectManager.managedObjectStore.mainQueueManagedObjectContext executeFetchRequest:request error:&error];
-    if (!result) {
-        [NSException raise:@"Fetch failed"
-                    format:@"Reason: %@", [error localizedDescription]];
-    }
-    
-    for (User *user in result) {
-        NSLog(@"Next user: %@", user);
-    }
     
 }
 

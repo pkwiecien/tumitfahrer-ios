@@ -9,10 +9,15 @@
 /* Begin PBXBuildFile section */
 		068F5848AB864309B2DEC0B8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAEC5882914944C4B8E2DE24 /* libPods.a */; };
 		E50DB26B18F447B800E87E62 /* CurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB26A18F447B800E87E62 /* CurrentUser.m */; };
-		E50DB26F18F52E8500E87E62 /* StatusResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB26E18F52E8500E87E62 /* StatusResponse.m */; };
+		E50DB26F18F52E8500E87E62 /* StatusMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB26E18F52E8500E87E62 /* StatusMapping.m */; };
 		E50DB27218F5DFB200E87E62 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB27118F5DFB200E87E62 /* LocationController.m */; };
-		E50DB27B18F8513700E87E62 /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB27A18F8513700E87E62 /* Ride.m */; };
 		E50DB27E18F8513700E87E62 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB27D18F8513700E87E62 /* User.m */; };
+		E50DB28218F86F8000E87E62 /* UserMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB28118F86F8000E87E62 /* UserMapping.m */; };
+		E50DB28518F86F8800E87E62 /* SessionMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB28418F86F8800E87E62 /* SessionMapping.m */; };
+		E50DB28818F8706500E87E62 /* RideMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB28718F8706500E87E62 /* RideMapping.m */; };
+		E50DB28B18F8730400E87E62 /* RidesStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB28A18F8730400E87E62 /* RidesStore.m */; };
+		E50DB28E18F8803000E87E62 /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB28D18F8803000E87E62 /* Ride.m */; };
+		E50DB29118F881BC00E87E62 /* PanoramioUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB29018F881BC00E87E62 /* PanoramioUtilities.m */; };
 		E51FD50218F0864C0098AD11 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E51FD50018F0864C0098AD11 /* ProfileViewController.m */; };
 		E51FD50318F0864C0098AD11 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E51FD50118F0864C0098AD11 /* ProfileViewController.xib */; };
 		E51FD50518F1615B0098AD11 /* AnotherCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E51FD50418F1615B0098AD11 /* AnotherCollectionCell.xib */; };
@@ -114,14 +119,24 @@
 		C71CE6059C014DFABC5B4F22 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		E50DB26918F447B800E87E62 /* CurrentUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentUser.h; sourceTree = "<group>"; };
 		E50DB26A18F447B800E87E62 /* CurrentUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentUser.m; sourceTree = "<group>"; };
-		E50DB26D18F52E8500E87E62 /* StatusResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusResponse.h; sourceTree = "<group>"; };
-		E50DB26E18F52E8500E87E62 /* StatusResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusResponse.m; sourceTree = "<group>"; };
+		E50DB26D18F52E8500E87E62 /* StatusMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusMapping.h; sourceTree = "<group>"; };
+		E50DB26E18F52E8500E87E62 /* StatusMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusMapping.m; sourceTree = "<group>"; };
 		E50DB27018F5DFB200E87E62 /* LocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationController.h; sourceTree = "<group>"; };
 		E50DB27118F5DFB200E87E62 /* LocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationController.m; sourceTree = "<group>"; };
-		E50DB27918F8513700E87E62 /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
-		E50DB27A18F8513700E87E62 /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
 		E50DB27C18F8513700E87E62 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		E50DB27D18F8513700E87E62 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		E50DB28018F86F8000E87E62 /* UserMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserMapping.h; sourceTree = "<group>"; };
+		E50DB28118F86F8000E87E62 /* UserMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserMapping.m; sourceTree = "<group>"; };
+		E50DB28318F86F8800E87E62 /* SessionMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionMapping.h; sourceTree = "<group>"; };
+		E50DB28418F86F8800E87E62 /* SessionMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionMapping.m; sourceTree = "<group>"; };
+		E50DB28618F8706500E87E62 /* RideMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideMapping.h; sourceTree = "<group>"; };
+		E50DB28718F8706500E87E62 /* RideMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideMapping.m; sourceTree = "<group>"; };
+		E50DB28918F8730400E87E62 /* RidesStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RidesStore.h; sourceTree = "<group>"; };
+		E50DB28A18F8730400E87E62 /* RidesStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RidesStore.m; sourceTree = "<group>"; };
+		E50DB28C18F8803000E87E62 /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
+		E50DB28D18F8803000E87E62 /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
+		E50DB28F18F881BC00E87E62 /* PanoramioUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanoramioUtilities.h; sourceTree = "<group>"; };
+		E50DB29018F881BC00E87E62 /* PanoramioUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanoramioUtilities.m; sourceTree = "<group>"; };
 		E51FD4FF18F0864C0098AD11 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		E51FD50018F0864C0098AD11 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		E51FD50118F0864C0098AD11 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
@@ -283,8 +298,14 @@
 		E50DB26C18F52E5900E87E62 /* RKMappings */ = {
 			isa = PBXGroup;
 			children = (
-				E50DB26D18F52E8500E87E62 /* StatusResponse.h */,
-				E50DB26E18F52E8500E87E62 /* StatusResponse.m */,
+				E50DB26D18F52E8500E87E62 /* StatusMapping.h */,
+				E50DB26E18F52E8500E87E62 /* StatusMapping.m */,
+				E50DB28018F86F8000E87E62 /* UserMapping.h */,
+				E50DB28118F86F8000E87E62 /* UserMapping.m */,
+				E50DB28318F86F8800E87E62 /* SessionMapping.h */,
+				E50DB28418F86F8800E87E62 /* SessionMapping.m */,
+				E50DB28618F8706500E87E62 /* RideMapping.h */,
+				E50DB28718F8706500E87E62 /* RideMapping.m */,
 			);
 			name = RKMappings;
 			sourceTree = "<group>";
@@ -435,8 +456,10 @@
 			children = (
 				E50DB26918F447B800E87E62 /* CurrentUser.h */,
 				E50DB26A18F447B800E87E62 /* CurrentUser.m */,
-				E50DB27918F8513700E87E62 /* Ride.h */,
-				E50DB27A18F8513700E87E62 /* Ride.m */,
+				E50DB28C18F8803000E87E62 /* Ride.h */,
+				E50DB28D18F8803000E87E62 /* Ride.m */,
+				E50DB28918F8730400E87E62 /* RidesStore.h */,
+				E50DB28A18F8730400E87E62 /* RidesStore.m */,
 				E50DB27C18F8513700E87E62 /* User.h */,
 				E50DB27D18F8513700E87E62 /* User.m */,
 			);
@@ -516,6 +539,8 @@
 				E5FDDBF018F0059D00CE7B01 /* ActionManager.m */,
 				E50DB27018F5DFB200E87E62 /* LocationController.h */,
 				E50DB27118F5DFB200E87E62 /* LocationController.m */,
+				E50DB28F18F881BC00E87E62 /* PanoramioUtilities.h */,
+				E50DB29018F881BC00E87E62 /* PanoramioUtilities.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -822,6 +847,7 @@
 				E5FDDBCB18EE79F900CE7B01 /* AnotherActivitiesViewController.m in Sources */,
 				E5DF641018EB46F900D53164 /* RideDetailsViewController.m in Sources */,
 				E59987D018E6E47F00B01C62 /* LoginViewController.m in Sources */,
+				E50DB28218F86F8000E87E62 /* UserMapping.m in Sources */,
 				E5DF641F18EB639600D53164 /* CampusRidesViewController.m in Sources */,
 				E599886218E84D9D00B01C62 /* MenuTableViewCell.m in Sources */,
 				E59987C918E6DBEA00B01C62 /* RideRequestsViewController.m in Sources */,
@@ -831,17 +857,21 @@
 				E50DB27218F5DFB200E87E62 /* LocationController.m in Sources */,
 				E5DF641518EB548E00D53164 /* SettingsViewController.m in Sources */,
 				E522BACA18AE13F600ECD375 /* AppDelegate.m in Sources */,
-				E50DB27B18F8513700E87E62 /* Ride.m in Sources */,
 				E5DF642818EBD8AB00D53164 /* BalancedColumnLayout.m in Sources */,
+				E50DB28E18F8803000E87E62 /* Ride.m in Sources */,
+				E50DB29118F881BC00E87E62 /* PanoramioUtilities.m in Sources */,
 				E599887918E8617100B01C62 /* HACollectionViewSmallLayout.m in Sources */,
 				E599880118E72BF600B01C62 /* ForgotPasswordViewController.m in Sources */,
 				E59987FB18E7251000B01C62 /* RegisterViewController.m in Sources */,
+				E50DB28B18F8730400E87E62 /* RidesStore.m in Sources */,
 				E50DB27E18F8513700E87E62 /* User.m in Sources */,
+				E50DB28818F8706500E87E62 /* RideMapping.m in Sources */,
 				E599887818E8617100B01C62 /* HACollectionViewLargeLayout.m in Sources */,
 				E59987D718E6ECF200B01C62 /* CustomTextField.m in Sources */,
 				E50DB26B18F447B800E87E62 /* CurrentUser.m in Sources */,
-				E50DB26F18F52E8500E87E62 /* StatusResponse.m in Sources */,
+				E50DB26F18F52E8500E87E62 /* StatusMapping.m in Sources */,
 				E522BAC618AE13F600ECD375 /* main.m in Sources */,
+				E50DB28518F86F8800E87E62 /* SessionMapping.m in Sources */,
 				E599880B18E7836D00B01C62 /* MenuViewController.m in Sources */,
 				E51FD51A18F3D2590098AD11 /* tumitfahrer.xcdatamodeld in Sources */,
 				E599887218E8616200B01C62 /* HATransitionController.m in Sources */,

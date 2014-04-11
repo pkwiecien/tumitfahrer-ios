@@ -10,8 +10,7 @@
 
 @implementation LocationController
 
--(instancetype)init
-{
+-(instancetype)init {
     self = [super init];
     if (self) {
         self.locationManager = [[CLLocationManager alloc] init];
@@ -32,16 +31,31 @@
     return sharedInstance;
 }
 
-- (void)startUpdatingLocation
-{
+- (void)startUpdatingLocation {
     [self.locationManager startUpdatingLocation];
 }
 
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     self.currentLocation = [locations lastObject];
     [self.delegate didReceiveLocation:self.currentLocation];
     [self.locationManager stopUpdatingLocation];
+}
+
++(CLLocation *)locationForAddress:(NSString *)address {
+    __block CLLocation *location;
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
+        
+        //        for (CLPlacemark* aPlacemark in placemarks)
+        CLPlacemark *aPlacemark = [placemarks firstObject];
+        
+        // Process the placemark.
+        NSString *latDest1 = [NSString stringWithFormat:@"%.4f",aPlacemark.location.coordinate.latitude];
+        NSString *lngDest1 = [NSString stringWithFormat:@"%.4f",aPlacemark.location.coordinate.longitude];
+        location = [[CLLocation alloc] initWithLatitude:aPlacemark.location.coordinate.latitude longitude:aPlacemark.location.coordinate.longitude];
+        NSLog(@"Coordinates: %@ %@", latDest1, lngDest1);
+    }];
+    return location;
 }
 
 @end

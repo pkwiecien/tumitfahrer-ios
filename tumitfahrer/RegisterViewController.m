@@ -11,7 +11,7 @@
 #import "Constants.h"
 #import "ActionManager.h"
 #import "CurrentUser.h"
-#import "StatusResponse.h"
+#import "StatusMapping.h"
 #import "LoginViewController.h"
 
 @interface RegisterViewController () <NSFetchedResultsControllerDelegate>

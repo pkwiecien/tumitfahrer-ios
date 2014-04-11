@@ -1,13 +1,15 @@
 //
-//  StatusResponse.m
+//  StatusResponse.h
 //  tumitfahrer
 //
 //  Created by Pawel Kwiecien on 4/9/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
-#import "StatusResponse.h"
+#import <Foundation/Foundation.h>
 
-@implementation StatusResponse
+@interface StatusMapping : NSObject
+
+@property NSString *message;
 
 @end

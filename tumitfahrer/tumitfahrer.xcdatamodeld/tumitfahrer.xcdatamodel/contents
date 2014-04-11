@@ -9,13 +9,13 @@
         <attribute name="distance" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="duration" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="freeSeats" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="id" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="isFinished" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isPaid" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="meetingPoint" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="realtimeDepartureTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="realtimeKm" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="rideId" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="driver" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="User" inverseName="ridesAsDriver" inverseEntity="User" syncable="YES"/>
         <relationship name="passengers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="ridesAsPassenger" inverseEntity="User" syncable="YES"/>

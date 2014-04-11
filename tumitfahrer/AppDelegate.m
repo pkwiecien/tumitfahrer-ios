@@ -5,7 +5,8 @@
 //  Created by Pawel Kwiecien on 2/14/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
-
+#import <RestKit/RestKit.h>
+#import <UbertestersSDK/Ubertesters.h>
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "RideRequestsViewController.h"
@@ -15,9 +16,10 @@
 #import "Constants.h"
 #import "HATransitionController.h"
 #import "HACollectionViewSmallLayout.h"
-#import <UbertestersSDK/Ubertesters.h>
-#import <RestKit/RestKit.h>
-#import "User.h"
+
+#import "UserMapping.h"
+#import "SessionMapping.h"
+#import "RideMapping.h"
 
 @interface AppDelegate ()
 
@@ -125,11 +127,13 @@
     [[RKValueTransformer defaultValueTransformer] insertValueTransformer:dateFormatter atIndex:0];
     
     // add mappings to object manager
-    RKEntityMapping *postSessionMapping =[User postSessionMapping];
-    [objectManager addResponseDescriptor:[User postSessionResponseDescriptorWithMapping:postSessionMapping]];
-    RKObjectMapping *postUserMapping =[User postUserMapping];
-    [objectManager addResponseDescriptor:[User postUserResponseDescriptorWithMapping:postUserMapping]];
+    RKEntityMapping *postSessionMapping =[SessionMapping postSessionMapping];
+    [objectManager addResponseDescriptor:[SessionMapping postSessionResponseDescriptorWithMapping:postSessionMapping]];
+    RKObjectMapping *postUserMapping =[UserMapping postUserMapping];
+    [objectManager addResponseDescriptor:[UserMapping postUserResponseDescriptorWithMapping:postUserMapping]];
 
+    RKEntityMapping *getRidesMapping = [RideMapping getRidesMapping];
+    [objectManager addResponseDescriptor:[RideMapping getRidesResponseDescriptorWithMapping:getRidesMapping]];
     /**
      Complete Core Data stack initialization
      */

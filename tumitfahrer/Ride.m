@@ -31,4 +31,8 @@
 @dynamic driver;
 @dynamic passengers;
 
+-(NSString *)description {
+    return [NSString stringWithFormat:@"Ride id: %d, departure: %@", self.rideId, self.departurePlace];
+}
+
 @end

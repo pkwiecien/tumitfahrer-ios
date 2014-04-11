@@ -31,6 +31,7 @@
 @property (nonatomic, strong) UIImage * destinationImage;
 @property (nonatomic, retain) User *driver;
 @property (nonatomic, retain) NSSet *passengers;
+
 @end
 
 @interface Ride (CoreDataGeneratedAccessors)

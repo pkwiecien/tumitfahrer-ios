@@ -17,6 +17,7 @@
 #import "BuildingsManager.h"
 #import "ActionManager.h"
 #import "User.h"
+#import "PanoramioUtilities.h"
 #import "CurrentUser.h"
 
 @interface RideRequestsViewController ()
@@ -142,6 +143,7 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return  [[[BuildingsManager sharedManager] buildingsArray] count];
+//    return [[[RidesStore sharedStore] allRides] count];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -174,35 +176,20 @@
 }
 
 -(void)didReceiveLocation:(CLLocation *)location {
-    
     NSLog(@"Current location: %f %f", location.coordinate.latitude, location.coordinate.longitude);
-    
-    NSString *urlString = [NSString stringWithFormat:@"http://www.panoramio.com/map/get_panoramas.php?set=public&from=0&to=1&minx=%f&miny=%f&maxx=%f&maxy=%f&size=medium&mapfilter=true", location.coordinate.longitude, location.coordinate.latitude, location.coordinate.longitude+0.02, location.coordinate.latitude+0.02];
-    NSURL *url = [[NSURL alloc] initWithString:urlString];
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-    
-    [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        if (connectionError)
-        {
-            NSLog(@"Error connecting data from server: %@", connectionError.localizedDescription);
-        } else {
-            NSLog(@"Response data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-            
-            NSError *localError = nil;
-            if (localError) {
-                return;
-            }
-            
-            // parse json
-            NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
-            NSLog(@"photo url: %@", parsedObject[@"photos"][0][@"photo_file_url"]);
-            NSURL *url = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];
-            
-            UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
-            [self.upperImage setImage:image];
-            [LocationController sharedInstance].locationImage = image;
-        }
-    }];
+    PanoramioUtilities *panoUtils = [[PanoramioUtilities alloc] init];
+    [panoUtils fetchPhotoForLocation:location];
+}
+
+-(void)didReceivePhotoForLocation:(UIImage *)image {
+    [self.upperImage setImage:image];
+}
+
+-(void)didRecieveRidesFromWebService:(NSArray *)rides
+{
+    for (Ride *ride in rides) {
+        NSLog(@"Ride: %@", ride);
+    }
 }
 
 @end
