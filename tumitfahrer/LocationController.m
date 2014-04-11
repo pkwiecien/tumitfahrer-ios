@@ -8,6 +8,12 @@
 
 #import "LocationController.h"
 
+@interface LocationController ()
+
+@property (nonatomic) BOOL hasReturnedLocation;
+
+@end
+
 @implementation LocationController
 
 -(instancetype)init
@@ -17,6 +23,7 @@
         self.locationManager = [[CLLocationManager alloc] init];
         self.locationManager.delegate = self;
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        self.hasReturnedLocation = NO;
     }
     return self;
 }
@@ -35,12 +42,17 @@
 - (void)startUpdatingLocation
 {
     [self.locationManager startUpdatingLocation];
+    self.hasReturnedLocation = NO;
 }
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    self.location = [locations lastObject];
-    [self.delegate didReceiveLocation:self.location];
+    if (!self.hasReturnedLocation) {
+        self.location = [locations lastObject];
+        self.hasReturnedLocation = YES;
+        [self.delegate didReceiveLocation:self.location];
+    }
+    
     [self.locationManager stopUpdatingLocation];
 }
 

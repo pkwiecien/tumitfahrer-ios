@@ -132,28 +132,6 @@
     RKObjectMapping *postUserMapping =[User postUserMapping];
     [objectManager addResponseDescriptor:[User postUserResponseDescriptorWithMapping:postUserMapping]];
     
-#ifdef RESTKIT_GENERATE_SEED_DB
-    RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelInfo);
-    RKLogConfigureByName("RestKit/CoreData", RKLogLevelTrace);
-    
-    NSError *error = nil;
-    BOOL success = RKEnsureDirectoryExistsAtPath(RKApplicationDataDirectory(), &error);
-    if (! success) {
-        RKLogError(@"Failed to create Application Data Directory at path '%@': %@", RKApplicationDataDirectory(), error);
-    }
-    NSString *seedStorePath = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"TumitfahrerSeedDb.sqlite"];
-    RKManagedObjectImporter *importer = [[RKManagedObjectImporter alloc] initWithManagedObjectModel:managedObjectModel storePath:seedStorePath];
-    
-    [importer importObjectsFromItemAtPath:[[NSBundle mainBundle] pathForResource:@"restkit" ofType:@"json"] withMapping:tweetMapping keyPath:nil error:&error];
-    [importer importObjectsFromItemAtPath:[[NSBundle mainBundle] pathForResource:@"users" ofType:@"json"] withMapping:userMapping keyPath:@"user" error:&error];
-    
-    success = [importer finishImporting:&error];
-    if (success) {
-        [importer logSeedingInfo];
-    } else {
-        RKLogError(@"Failed to finish import and save seed database due to error: %@", error);
-    }
-#else
     /**
      Complete Core Data stack initialization
      */
@@ -171,7 +149,6 @@
     
     // Configure a managed object cache to ensure we do not create duplicate objects
     managedObjectStore.managedObjectCache = [[RKInMemoryManagedObjectCache alloc] initWithManagedObjectContext:managedObjectStore.persistentStoreManagedObjectContext];
-#endif
     
 }
 
