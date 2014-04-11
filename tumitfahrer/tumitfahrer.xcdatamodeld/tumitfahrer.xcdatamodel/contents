@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5063" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Ride" representedClassName="Ride" syncable="YES">
+        <attribute name="createdAt" attributeType="Date" syncable="YES"/>
+        <attribute name="departurePlace" attributeType="String" syncable="YES"/>
+        <attribute name="departureTime" attributeType="Date" syncable="YES"/>
+        <attribute name="destination" attributeType="String" syncable="YES"/>
+        <attribute name="destinationImage" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="distance" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="duration" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="freeSeats" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="isFinished" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isPaid" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="meetingPoint" attributeType="String" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="realtimeDepartureTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="realtimeKm" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="driver" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="User" inverseName="ridesAsDriver" inverseEntity="User" syncable="YES"/>
+        <relationship name="passengers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="ridesAsPassenger" inverseEntity="User" syncable="YES"/>
+    </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="apiKey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="car" optional="YES" attributeType="String" syncable="YES"/>
@@ -13,8 +33,11 @@
         <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <relationship name="ridesAsDriver" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ride" inverseName="driver" inverseEntity="Ride" syncable="YES"/>
+        <relationship name="ridesAsPassenger" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ride" inverseName="passengers" inverseEntity="Ride" syncable="YES"/>
     </entity>
     <elements>
-        <element name="User" positionX="-63" positionY="-18" width="128" height="225"/>
+        <element name="User" positionX="-63" positionY="-18" width="128" height="253"/>
+        <element name="Ride" positionX="279" positionY="-112" width="128" height="313"/>
     </elements>
 </model>

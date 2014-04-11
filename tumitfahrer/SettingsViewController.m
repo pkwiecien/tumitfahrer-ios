@@ -176,7 +176,8 @@
 - (IBAction)sendFeedbackButtonPressed:(id)sender {
 }
 - (IBAction)logoutButtonPressed:(id)sender {
-    [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"loggedIn"];
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"emailLoggedInUser"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     LoginViewController *loginVC = [[LoginViewController alloc] init];
     [self presentViewController:loginVC animated:YES completion:nil];

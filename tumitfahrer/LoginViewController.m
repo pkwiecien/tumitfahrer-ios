@@ -63,8 +63,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     NSString *email = [[NSUserDefaults standardUserDefaults] valueForKey:@"emailLoggedInUser"];
-    if (email) {
-        //        self.emailField.text = email;
+    if (email!=nil) {
+        self.emailTextField.text = email;
     }
     NSString *filepath = [[NSBundle mainBundle] pathForResource:@"highway-nosound@2x" ofType:@"mp4"];
     NSURL *fileURL = [NSURL fileURLWithPath:filepath];
@@ -93,19 +93,28 @@
 }
 
 - (IBAction)loginButtonPressed:(id)sender {
-    [self createUserSession];
+    
+    // firstly check if the user was previously stored in core data
+    if ([CurrentUser fetchUserWithEmail:self.emailTextField.text]) {
+        // user fetched successfully from core data
+        [self storeCurrentUserInDefaults];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        // new user, get account from webservice
+        [self createUserSession];
+    }
 }
 
 - (void)createUserSession {
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
-
+    
     [objectManager postObject:nil path:@"/api/v2/sessions" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [CurrentUser sharedInstance].user = (User *)[mappingResult firstObject];
         RKLogInfo(@"Load complete, current user %@!", [CurrentUser sharedInstance].user.firstName);
         
-        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"loggedIn"];
+        [self storeCurrentUserInDefaults];
         [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"LastUpdatedAt"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -113,23 +122,11 @@
         [[ActionManager sharedManager] showAlertViewWithTitle:[error localizedDescription]];
         RKLogError(@"Load failed with error: %@", error);
     }];
-    
-     /*
-      // sample method for getting users
-    [[RKObjectManager sharedManager] getObjectsAtPath:@"/api/v2/users" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        [CurrentUser sharedInstance].user = (User *)[mappingResult firstObject];
-        RKLogInfo(@"Load complete, current user %@!", [CurrentUser sharedInstance].user.firstName);
-        
-        result = true;
-        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"loggedIn"];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"LastUpdatedAt"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        [[ActionManager sharedManager] showAlertViewWithTitle:[error localizedDescription]];
-        RKLogError(@"Load failed with error: %@", error);
-    }];*/
 }
 
+-(void)storeCurrentUserInDefaults {
+    [[NSUserDefaults standardUserDefaults] setValue:self.emailTextField.text forKey:@"emailLoggedInUser"];
+}
 
 // show register view
 - (IBAction)registerButtonPressed:(id)sender {
@@ -152,12 +149,32 @@
     
 }
 
-#pragma mark NSFetchedResultsControllerDelegate methods
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)fetchedResultsController
+- (void)loadAllItems
 {
-    NSArray *result = [fetchedResultsController fetchedObjects];
-    NSLog(@"Fetched %d results!", [result count]);
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    
+    NSEntityDescription *e = [NSEntityDescription entityForName:@"User"
+                                         inManagedObjectContext:[RKManagedObjectStore defaultStore].
+                              mainQueueManagedObjectContext];
+    request.entity = e;
+    
+    NSSortDescriptor *sd = [NSSortDescriptor sortDescriptorWithKey:@"userId"
+                                                         ascending:YES];
+    request.sortDescriptors = @[sd];
+    
+    NSError *error;
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    
+    NSArray *result = [objectManager.managedObjectStore.mainQueueManagedObjectContext executeFetchRequest:request error:&error];
+    if (!result) {
+        [NSException raise:@"Fetch failed"
+                    format:@"Reason: %@", [error localizedDescription]];
+    }
+    
+    for (User *user in result) {
+        NSLog(@"Next user: %@", user);
+    }
+    
 }
 
 #pragma mark - Fetched results controller

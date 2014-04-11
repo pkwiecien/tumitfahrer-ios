@@ -21,7 +21,7 @@
 
 // RESTkit and core date
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+//@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 - (IBAction)addRideButtonPressed:(id)sender;
 - (IBAction)filterRidesButtonPressed:(id)sender;

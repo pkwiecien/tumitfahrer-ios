@@ -52,9 +52,7 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"loggedIn"];
-    
+    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -137,8 +135,7 @@
      */
     [managedObjectStore createPersistentStoreCoordinator];
     NSString *storePath = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"Tumitfahrer.sqlite"];
-    NSString *seedPath = [[NSBundle mainBundle] pathForResource:@"TumitfahrerSeedDb" ofType:@"sqlite"];
-    NSPersistentStore *persistentStore = [managedObjectStore addSQLitePersistentStoreAtPath:storePath fromSeedDatabaseAtPath:seedPath withConfiguration:nil options:nil error:&error];
+    NSPersistentStore *persistentStore = [managedObjectStore addSQLitePersistentStoreAtPath:storePath fromSeedDatabaseAtPath:nil withConfiguration:nil options:nil error:&error];
     if(!persistentStore)
     {
         RKLogError(@"Failed to add persistent store with error: %@", error);

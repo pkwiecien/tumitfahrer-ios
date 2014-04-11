@@ -38,8 +38,6 @@
     self.collectionView.delegate = self;
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     [self.collectionView setCollectionViewLayout:flowLayout];
-    
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated

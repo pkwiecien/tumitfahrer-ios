@@ -39,8 +39,8 @@
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    self.location = [locations lastObject];
-    [self.delegate didReceiveLocation:self.location];
+    self.currentLocation = [locations lastObject];
+    [self.delegate didReceiveLocation:self.currentLocation];
     [self.locationManager stopUpdatingLocation];
 }
 

@@ -15,5 +15,6 @@
 
 @property (nonatomic, strong) User *user;
 
++ (BOOL)fetchUserWithEmail:(NSString *)email;
 
 @end

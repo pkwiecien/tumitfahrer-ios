@@ -11,6 +11,8 @@
 		E50DB26B18F447B800E87E62 /* CurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB26A18F447B800E87E62 /* CurrentUser.m */; };
 		E50DB26F18F52E8500E87E62 /* StatusResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB26E18F52E8500E87E62 /* StatusResponse.m */; };
 		E50DB27218F5DFB200E87E62 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB27118F5DFB200E87E62 /* LocationController.m */; };
+		E50DB27B18F8513700E87E62 /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB27A18F8513700E87E62 /* Ride.m */; };
+		E50DB27E18F8513700E87E62 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB27D18F8513700E87E62 /* User.m */; };
 		E51FD50218F0864C0098AD11 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E51FD50018F0864C0098AD11 /* ProfileViewController.m */; };
 		E51FD50318F0864C0098AD11 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E51FD50118F0864C0098AD11 /* ProfileViewController.xib */; };
 		E51FD50518F1615B0098AD11 /* AnotherCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E51FD50418F1615B0098AD11 /* AnotherCollectionCell.xib */; };
@@ -20,7 +22,6 @@
 		E51FD51518F3B6E00098AD11 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E51FD51418F3B6E00098AD11 /* libxml2.dylib */; };
 		E51FD51718F3B6EA0098AD11 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E51FD51618F3B6EA0098AD11 /* CFNetwork.framework */; };
 		E51FD51A18F3D2590098AD11 /* tumitfahrer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E51FD51818F3D2590098AD11 /* tumitfahrer.xcdatamodeld */; };
-		E51FD52618F3EC6B0098AD11 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E51FD52518F3EC6B0098AD11 /* User.m */; };
 		E522BABA18AE13F600ECD375 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E522BAB918AE13F600ECD375 /* Foundation.framework */; };
 		E522BABC18AE13F600ECD375 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E522BABB18AE13F600ECD375 /* CoreGraphics.framework */; };
 		E522BABE18AE13F600ECD375 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E522BABD18AE13F600ECD375 /* UIKit.framework */; };
@@ -117,6 +118,10 @@
 		E50DB26E18F52E8500E87E62 /* StatusResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusResponse.m; sourceTree = "<group>"; };
 		E50DB27018F5DFB200E87E62 /* LocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationController.h; sourceTree = "<group>"; };
 		E50DB27118F5DFB200E87E62 /* LocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationController.m; sourceTree = "<group>"; };
+		E50DB27918F8513700E87E62 /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
+		E50DB27A18F8513700E87E62 /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
+		E50DB27C18F8513700E87E62 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		E50DB27D18F8513700E87E62 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		E51FD4FF18F0864C0098AD11 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		E51FD50018F0864C0098AD11 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		E51FD50118F0864C0098AD11 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
@@ -129,8 +134,6 @@
 		E51FD51418F3B6E00098AD11 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		E51FD51618F3B6EA0098AD11 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		E51FD51918F3D2590098AD11 /* tumitfahrer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = tumitfahrer.xcdatamodel; sourceTree = "<group>"; };
-		E51FD52418F3EC6B0098AD11 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		E51FD52518F3EC6B0098AD11 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		E522BAB618AE13F600ECD375 /* tumitfahrer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tumitfahrer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E522BAB918AE13F600ECD375 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E522BABB18AE13F600ECD375 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -430,10 +433,12 @@
 		E59987C518E6DBCE00B01C62 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				E51FD52418F3EC6B0098AD11 /* User.h */,
-				E51FD52518F3EC6B0098AD11 /* User.m */,
 				E50DB26918F447B800E87E62 /* CurrentUser.h */,
 				E50DB26A18F447B800E87E62 /* CurrentUser.m */,
+				E50DB27918F8513700E87E62 /* Ride.h */,
+				E50DB27A18F8513700E87E62 /* Ride.m */,
+				E50DB27C18F8513700E87E62 /* User.h */,
+				E50DB27D18F8513700E87E62 /* User.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -811,7 +816,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E51FD52618F3EC6B0098AD11 /* User.m in Sources */,
 				E59987DC18E701AF00B01C62 /* CustomButton.m in Sources */,
 				E5DF641B18EB56A600D53164 /* ActivityRidesViewController.m in Sources */,
 				E599887318E8616200B01C62 /* HATransitionLayout.m in Sources */,
@@ -827,10 +831,12 @@
 				E50DB27218F5DFB200E87E62 /* LocationController.m in Sources */,
 				E5DF641518EB548E00D53164 /* SettingsViewController.m in Sources */,
 				E522BACA18AE13F600ECD375 /* AppDelegate.m in Sources */,
+				E50DB27B18F8513700E87E62 /* Ride.m in Sources */,
 				E5DF642818EBD8AB00D53164 /* BalancedColumnLayout.m in Sources */,
 				E599887918E8617100B01C62 /* HACollectionViewSmallLayout.m in Sources */,
 				E599880118E72BF600B01C62 /* ForgotPasswordViewController.m in Sources */,
 				E59987FB18E7251000B01C62 /* RegisterViewController.m in Sources */,
+				E50DB27E18F8513700E87E62 /* User.m in Sources */,
 				E599887818E8617100B01C62 /* HACollectionViewLargeLayout.m in Sources */,
 				E59987D718E6ECF200B01C62 /* CustomTextField.m in Sources */,
 				E50DB26B18F447B800E87E62 /* CurrentUser.m in Sources */,

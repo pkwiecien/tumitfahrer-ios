@@ -16,6 +16,8 @@
 #import "HACollectionViewSmallLayout.h"
 #import "BuildingsManager.h"
 #import "ActionManager.h"
+#import "User.h"
+#import "CurrentUser.h"
 
 @interface RideRequestsViewController ()
 
@@ -60,6 +62,34 @@
     
     [LocationController sharedInstance].delegate = self;
     [[LocationController sharedInstance] startUpdatingLocation];
+    
+    // get current user
+    NSString *emailLoggedInUser = [[NSUserDefaults standardUserDefaults] valueForKey:@"emailLoggedInUser"];
+    
+    if (emailLoggedInUser != nil) {
+        [CurrentUser fetchUserWithEmail:emailLoggedInUser];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    
+    if([CurrentUser sharedInstance].user == nil)
+    {
+        [self showLoginScreen:YES];
+    }
+    
+    self.navigationController.navigationBarHidden = YES;
+    
+    // Adjust scrollView decelerationRate
+    self.collectionView.decelerationRate = self.class != [RideRequestsViewController class] ? UIScrollViewDecelerationRateNormal : UIScrollViewDecelerationRateFast;
+    
+    if([LocationController sharedInstance].locationImage)
+    {
+        self.upperImage.image = [LocationController sharedInstance].locationImage;
+    }
 }
 
 -(void)handleSwipeRightLeft
@@ -77,20 +107,6 @@
     }];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    BOOL isUserLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:@"loggedIn"];
-    
-    if (!isUserLoggedIn) {
-        [self showLoginScreen:YES];
-    }
-    self.navigationController.navigationBarHidden = YES;
-    
-    // Adjust scrollView decelerationRate
-    self.collectionView.decelerationRate = self.class != [RideRequestsViewController class] ? UIScrollViewDecelerationRateNormal : UIScrollViewDecelerationRateFast;
-}
 
 -(void)showLoginScreen:(BOOL)animated
 {
@@ -127,6 +143,7 @@
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return  [[[BuildingsManager sharedManager] buildingsArray] count];
 }
+
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *cellIdentifier = @"rideCell";
@@ -140,7 +157,7 @@
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
+{    
     RideDetailsViewController *rideDetailsVC = [[RideDetailsViewController alloc] init];
     rideDetailsVC.imageNumber = indexPath.row;
     [self.navigationController pushViewController:rideDetailsVC animated:YES];
@@ -170,18 +187,20 @@
             NSLog(@"Error connecting data from server: %@", connectionError.localizedDescription);
         } else {
             NSLog(@"Response data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-
+            
             NSError *localError = nil;
             if (localError) {
                 return;
             }
-
+            
             // parse json
             NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
             NSLog(@"photo url: %@", parsedObject[@"photos"][0][@"photo_file_url"]);
             NSURL *url = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];
             
-            [self.upperImage setImageWithURL:url];
+            UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
+            [self.upperImage setImage:image];
+            [LocationController sharedInstance].locationImage = image;
         }
     }];
 }
