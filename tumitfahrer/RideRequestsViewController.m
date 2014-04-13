@@ -17,8 +17,8 @@
 #import "BuildingsManager.h"
 #import "ActionManager.h"
 #import "User.h"
-#import "PanoramioUtilities.h"
 #import "CurrentUser.h"
+#import "Ride.h"
 
 @interface RideRequestsViewController ()
 
@@ -34,6 +34,9 @@
     
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
     {
+        [[NSNotificationCenter defaultCenter] addObserver:self                                                 selector:@selector(receivedPhotoForCurrentLocationNotification) name:@"ReceivedPhotoForCurrentLocation" object:nil];
+        
+        [[PanoramioUtilities sharedInstance] addObserver:self];
     }
     return self;
 }
@@ -59,10 +62,7 @@
     swipeRightLeft.delegate = self;
     [swipeRightLeft setDirection:UISwipeGestureRecognizerDirectionRight|UISwipeGestureRecognizerDirectionLeft];
     [self.departureView addGestureRecognizer:swipeRightLeft];
-    
-    [LocationController sharedInstance].delegate = self;
-    [[LocationController sharedInstance] startUpdatingLocation];
-    
+        
     // get current user
     NSString *emailLoggedInUser = [[NSUserDefaults standardUserDefaults] valueForKey:@"emailLoggedInUser"];
     
@@ -86,9 +86,31 @@
     // Adjust scrollView decelerationRate
     self.collectionView.decelerationRate = self.class != [RideRequestsViewController class] ? UIScrollViewDecelerationRateNormal : UIScrollViewDecelerationRateFast;
     
-    if([LocationController sharedInstance].locationImage)
-    {
+    if([LocationController sharedInstance].locationImage !=nil) {
         self.upperImage.image = [LocationController sharedInstance].locationImage;
+    } else {
+        [[LocationController sharedInstance] startUpdatingLocation];
+    }
+    /*
+    if([LocationController sharedInstance].locationImage !=nil) {
+        self.upperImage.image = [LocationController sharedInstance].locationImage;
+    } else if ([[LocationController sharedInstance] currentLocation] != nil){
+        [[LocationController sharedInstance] startUpdatingLocation];
+        [[PanoramioUtilities sharedInstance] fetchPhotoForCurrentLocation:[[LocationController sharedInstance] currentLocation]];
+    } else {
+        [[LocationController sharedInstance] startUpdatingLocation];
+    }*/
+    
+}
+
+
+- (void)receivedPhotoForCurrentLocationNotification {
+    self.upperImage.image = [LocationController sharedInstance].locationImage;
+}
+
+- (void)myMethod:(UIView *)exampleView completion:(void (^)(BOOL finished))completion {
+    if (completion) {
+        [self.upperImage setImage:[LocationController sharedInstance].locationImage];
     }
 }
 
@@ -114,12 +136,6 @@
     [self presentViewController:loginVC animated:YES completion:nil];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (BOOL)slideNavigationControllerShouldDisplayLeftMenu
 {
     return YES;
@@ -141,8 +157,8 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-//    return  [[[BuildingsManager sharedManager] buildingsArray] count];
-    return [[[RidesStore sharedStore] allRides] count];
+    return  [[[BuildingsManager sharedManager] buildingsArray] count];
+    //    return [[[RidesStore sharedStore] allRides] count];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -151,15 +167,16 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
     UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:1];
-//    imageView.image = [UIImage imageNamed:[[[BuildingsManager sharedManager] buildingsArray] objectAtIndex:indexPath.row]];
-    imageView.image = [RidesStore sharedStore] obj
+    imageView.image = [UIImage imageNamed:[[[BuildingsManager sharedManager] buildingsArray] objectAtIndex:indexPath.row]];
+    //    Ride *ride = [[[RidesStore sharedStore] allRides] objectAtIndex:indexPath.row];
+    //    imageView.image = ride.destinationImage;
     [imageView setClipsToBounds:YES];
     
     return cell;
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{    
+{
     RideDetailsViewController *rideDetailsVC = [[RideDetailsViewController alloc] init];
     rideDetailsVC.imageNumber = indexPath.row;
     [self.navigationController pushViewController:rideDetailsVC animated:YES];
@@ -175,14 +192,8 @@
     [[ActionManager sharedManager] showAlertViewWithTitle:@"Add a ride"];
 }
 
--(void)didReceiveLocation:(CLLocation *)location {
-    NSLog(@"Current location: %f %f", location.coordinate.latitude, location.coordinate.longitude);
-    PanoramioUtilities *panoUtils = [[PanoramioUtilities alloc] init];
-    [panoUtils fetchPhotoForLocation:location];
-}
-
--(void)didReceivePhotoForLocation:(UIImage *)image {
-    [self.upperImage setImage:image];
+-(void)didReceivePhotoForRide:(NSInteger)rideId {
+    [self.collectionView reloadData];
 }
 
 -(void)didRecieveRidesFromWebService:(NSArray *)rides
@@ -190,6 +201,14 @@
     for (Ride *ride in rides) {
         NSLog(@"Ride: %@", ride);
     }
+}
+
+-(void)didReceivePhotoForCurrentLocation:(UIImage *)image {
+    self.upperImage.image = image;
+}
+
+-(void)dealloc {
+    [[PanoramioUtilities sharedInstance] removeObserver:self];
 }
 
 @end

@@ -64,7 +64,7 @@
         self.privateRides = [NSMutableArray arrayWithArray:[mappingResult array]];
         
         for (Ride *ride in self.privateRides) {
-            [[LocationController sharedInstance] fetchLocationForAddress:ride.destination];
+            [[LocationController sharedInstance] fetchLocationForAddress:ride.destination rideId:ride.rideId];
         }
         
         [self.delegate didRecieveRidesFromWebService:self.privateRides];

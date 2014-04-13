@@ -12,8 +12,9 @@
 #import "HAPaperCollectionViewController.h"
 #import "LocationController.h"
 #import "RidesStore.h"
+#import "PanoramioUtilities.h"
 
-@interface RideRequestsViewController : UIViewController<SlideNavigationControllerDelegate, UICollectionViewDelegate, UIGestureRecognizerDelegate, NSFetchedResultsControllerDelegate, LocationControllerDelegate, RideStoreDelegate>
+@interface RideRequestsViewController : UIViewController<SlideNavigationControllerDelegate, UICollectionViewDelegate, UIGestureRecognizerDelegate, NSFetchedResultsControllerDelegate, LocationControllerDelegate, RideStoreDelegate, PanoramioUtilitiesDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIImageView *upperImage;

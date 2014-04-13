@@ -20,6 +20,8 @@
 #import "UserMapping.h"
 #import "SessionMapping.h"
 #import "RideMapping.h"
+#import "LocationController.h"
+#import "PanoramioUtilities.h"
 
 @interface AppDelegate ()
 
@@ -36,6 +38,7 @@
     [self setupPushNotifications];
     [self setupNavigationController];
     [self setupRestKit];
+    [self setupObservers];
     
     // Ubertersters SDK initialization
     [[Ubertesters shared] initializeWithOptions:UTOptionsManual];
@@ -153,4 +156,7 @@
     
 }
 
+-(void)setupObservers {
+    [[LocationController sharedInstance] addObserver:[PanoramioUtilities sharedInstance]];
+}
 @end

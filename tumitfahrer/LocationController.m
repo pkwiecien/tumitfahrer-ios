@@ -8,6 +8,13 @@
 
 #import "LocationController.h"
 
+@interface LocationController ()
+
+@property (nonatomic) BOOL isLocationFetched;
+@property (nonatomic, strong) NSMutableArray *observers;
+
+@end
+
 @implementation LocationController
 
 -(instancetype)init {
@@ -16,6 +23,8 @@
         self.locationManager = [[CLLocationManager alloc] init];
         self.locationManager.delegate = self;
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        self.isLocationFetched = NO;
+        self.observers = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -31,17 +40,40 @@
     return sharedInstance;
 }
 
+# pragma mark - observer methods
+-(void)addObserver:(id<LocationControllerDelegate>)observer {
+    [self.observers addObject:observer];
+}
+
+-(void)notifyAll {
+    for (id<LocationControllerDelegate> observer in self.observers) {
+        [observer didReceiveCurrentLocation:self.currentLocation];
+    }
+}
+
+-(void)removeObserver:(id<LocationControllerDelegate>)observer {
+    [self.observers removeObject:observer];
+}
+
+#pragma mark - location utilities
+
 - (void)startUpdatingLocation {
+    self.isLocationFetched = NO;
     [self.locationManager startUpdatingLocation];
 }
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    self.currentLocation = [locations lastObject];
-    [self.delegate didReceiveLocation:self.currentLocation];
+    if (!self.isLocationFetched) {
+        self.currentLocation = [locations lastObject];
+        self.isLocationFetched = YES;
+        [self notifyAll];
+    }
     [self.locationManager stopUpdatingLocation];
 }
 
-- (void)fetchLocationForAddress:(NSString *)address {
+# pragma mark - general functions
+
+- (void)fetchLocationForAddress:(NSString *)address rideId:(NSInteger)rideId {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
         
@@ -54,8 +86,6 @@
         NSLog(@"Coordinates: %@ %@", latDest1, lngDest1);
         
         CLLocation *location = [[CLLocation alloc] initWithLatitude:aPlacemark.location.coordinate.latitude longitude:aPlacemark.location.coordinate.longitude];
-        [self.delegate didReceiveLocationForAddress:location];
-
     }];
 }
 

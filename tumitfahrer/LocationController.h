@@ -13,7 +13,7 @@
 
 @optional
 
-- (void)didReceiveLocation: (CLLocation*)location;
+- (void)didReceiveCurrentLocation: (CLLocation*)location;
 - (void)didReceiveLocationForAddress: (CLLocation*)location rideId:(NSInteger)rideId;
 
 @end
@@ -22,12 +22,14 @@
 
 @property (nonatomic, strong) CLLocationManager* locationManager;
 @property (nonatomic, strong) CLLocation* currentLocation;
-@property (nonatomic, weak) id<LocationControllerDelegate> delegate;
 @property (nonatomic, strong) UIImage *locationImage;
 
 + (LocationController*)sharedInstance; // Singleton method
 
-- (void)fetchLocationForAddress:(NSString *)address;
+- (void)fetchLocationForAddress:(NSString *)address rideId:(NSInteger)rideId;
 - (void)startUpdatingLocation;
+- (void)addObserver:(id<LocationControllerDelegate>) observer;
+- (void)notifyAll;
+- (void)removeObserver:(id<LocationControllerDelegate>)observer;
 
 @end

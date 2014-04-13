@@ -7,12 +7,14 @@
 //
 
 #import "CurrentUser.h"
+#import "LocationController.h"
 
 @implementation CurrentUser
 
 -(instancetype)init {
     self = [super init];
     if (self) {
+        [[LocationController sharedInstance] startUpdatingLocation];
     }
     return self;
 }
