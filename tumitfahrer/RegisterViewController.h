@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RegisterViewController : UIViewController<UITextFieldDelegate>
+@interface RegisterViewController : UIViewController<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate>
+
+@property (nonatomic, strong) UIPickerView *pickerView;
+
 - (IBAction)registerButtonPressed:(id)sender;
 - (IBAction)backToLoginButtonPressed:(id)sender;
 - (IBAction)dismissKeyboard:(id)sender;

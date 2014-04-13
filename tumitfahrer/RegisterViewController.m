@@ -13,6 +13,7 @@
 #import "CurrentUser.h"
 #import "StatusMapping.h"
 #import "LoginViewController.h"
+#import "FacultyManager.h"
 
 @interface RegisterViewController () <NSFetchedResultsControllerDelegate>
 
@@ -26,26 +27,14 @@
 
 @implementation RegisterViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
         
-        float centerX = (self.view.frame.size.width - cUIElementWidth)/2;
-        UIImage *emailIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"EmailIcon"] withColor:[UIColor whiteColor]];
-        self.emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIcon:emailIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeEmailAddress shouldStartWithCapital:NO];
-        
-        UIImage *profileIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"ProfileIcon"] withColor:[UIColor whiteColor]];
-        self.firstNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop + cUIElementPadding + self.emailTextField.frame.size.height, cUIElementWidth, cUIElementHeight) placeholderText:@"First name" customIcon:profileIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeDefault shouldStartWithCapital:YES];
-        
-        self.lastNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop + cUIElementPadding*2 + self.emailTextField.frame.size.height*2, cUIElementWidth, cUIElementHeight) placeholderText:@"Last name" customIcon:profileIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeDefault shouldStartWithCapital:YES];
-        
-        // TODO: show picker instead of department
-        UIImage *campusIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"CampusIcon"] withColor:[UIColor whiteColor]];
-        self.departmentNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX,cMarginTop + cUIElementPadding*3 + self.emailTextField.frame.size.height*3, cUIElementWidth, cUIElementHeight) placeholderText:@"Department" customIcon:campusIcon returnKeyType:UIReturnKeyDone keyboardType:UIKeyboardTypeDefault shouldStartWithCapital:NO];
-        
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
+        [self prepareInputFields];
+        [self preparePickerView];
         
         [self.view addSubview:imageView ];
         [self.view sendSubviewToBack:imageView ];
@@ -54,18 +43,39 @@
         [self.view addSubview:self.firstNameTextField];
         [self.view addSubview:self.lastNameTextField];
         [self.view addSubview:self.departmentNameTextField];
+        [self.view addSubview:self.pickerView];
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
+-(void)viewWillAppear:(BOOL)animated {
+    self.pickerView.hidden = YES;
+}
+
+- (void)prepareInputFields {
+    
+    float centerX = (self.view.frame.size.width - cUIElementWidth)/2;
+    UIImage *emailIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"EmailIcon"] withColor:[UIColor whiteColor]];
+    self.emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIcon:emailIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeEmailAddress shouldStartWithCapital:NO];
+    
+    UIImage *profileIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"ProfileIcon"] withColor:[UIColor whiteColor]];
+    self.firstNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop + cUIElementPadding + self.emailTextField.frame.size.height, cUIElementWidth, cUIElementHeight) placeholderText:@"First name" customIcon:profileIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeDefault shouldStartWithCapital:YES];
+    
+    self.lastNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop + cUIElementPadding*2 + self.emailTextField.frame.size.height*2, cUIElementWidth, cUIElementHeight) placeholderText:@"Last name" customIcon:profileIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeDefault shouldStartWithCapital:YES];
+    
+    
+    [self.emailTextField addTarget:self action:@selector(hidePickerView) forControlEvents:UIControlEventAllTouchEvents];
+    [self.firstNameTextField addTarget:self action:@selector(hidePickerView) forControlEvents:UIControlEventAllTouchEvents];
+    [self.lastNameTextField addTarget:self action:@selector(hidePickerView) forControlEvents:UIControlEventAllTouchEvents];
+    
+    // TODO: show picker instead of department
+    UIImage *campusIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"CampusIcon"] withColor:[UIColor whiteColor]];
+    self.departmentNameTextField = [[CustomTextField alloc] initNotEditableButton:CGRectMake(centerX,cMarginTop + cUIElementPadding*3 + self.emailTextField.frame.size.height*3, cUIElementWidth, cUIElementHeight) placeholderText:@"Department" customIcon:campusIcon];
+    [self.departmentNameTextField addTarget:self action:@selector(showDepartmentPickerView) forControlEvents:UIControlEventAllTouchEvents];
 }
 
 - (IBAction)registerButtonPressed:(id)sender {
@@ -87,16 +97,21 @@
     }];
 }
 
+- (void)showDepartmentPickerView {
+    [self.view endEditing:YES];
+    self.pickerView.hidden = !self.pickerView.hidden;
+}
+
 - (IBAction)backToLoginButtonPressed:(id)sender {
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (IBAction)dismissKeyboard:(id)sender {
+    self.pickerView.hidden = YES;
     [self.view endEditing:YES];
 }
 
--(NSFetchedResultsController *)fetchedResultsController
-{
+-(NSFetchedResultsController *)fetchedResultsController {
     if (self.fetchedResultsController != nil) {
         return self.fetchedResultsController;
     }
@@ -119,6 +134,63 @@
     }
     
     return self.fetchedResultsController;
+}
+
+-(void)preparePickerView {
+    self.pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 440, self.view.frame.size.width, 80)];
+    self.pickerView.delegate = self;
+    self.pickerView.dataSource = self;
+    self.pickerView.backgroundColor = [UIColor colorWithRed:70 green:30 blue:180 alpha:0.6];
+
+    // alternative to pickerView:didSelect
+//    UITapGestureRecognizer *tapGesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pickerViewTapGestureRecognized:)];
+//    tapGesture.cancelsTouchesInView = NO;
+//    tapGesture.delegate = self;
+//    [self.pickerView addGestureRecognizer:tapGesture];
+}
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+    return true;
+}
+
+- (void)hidePickerView {
+    self.pickerView.hidden = YES;
+}
+
+#pragma mark - picker view delegates
+
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return [[[FacultyManager sharedInstance] allFaculties] count];
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    return [[FacultyManager sharedInstance] nameOfFacultyAtIndex:row];
+}
+
+/*
+- (void)pickerViewTapGestureRecognized:(UITapGestureRecognizer*)gestureRecognizer {
+    CGPoint touchPoint = [gestureRecognizer locationInView:gestureRecognizer.view.superview];
+    
+    CGRect frame = self.pickerView.frame;
+    CGRect selectorFrame = CGRectInset( frame, 0.0, self.pickerView.bounds.size.height * 0.85 / 2.0 );
+    
+    if( CGRectContainsPoint( selectorFrame, touchPoint) )
+    {
+        self.departmentNameTextField.text = [[FacultyManager sharedInstance] nameOfFacultyAtIndex:[self.pickerView selectedRowInComponent:0]];
+        self.pickerView.hidden = YES;
+    }
+} */
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    self.departmentNameTextField.text = [[FacultyManager sharedInstance] nameOfFacultyAtIndex:[self.pickerView selectedRowInComponent:0]];
+}
+
+-(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
+    return 35.0f;
 }
 
 @end

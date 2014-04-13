@@ -12,18 +12,19 @@
 @interface CustomTextField ()
 
 @property (nonatomic, strong) NSString *placeholderText;
+@property (nonatomic) BOOL isEditable;
 
 @end
 
 @implementation CustomTextField
 
-- (instancetype)initWithFrame:(CGRect)frame placeholderText:(NSString*)placeholderText customIcon:(UIImage *)customIcon returnKeyType:(UIReturnKeyType)returnKeyType keyboardType:(UIKeyboardType)keyboardType shouldStartWithCapital:(BOOL)shouldStartWithCapital
-{
+- (instancetype)initWithFrame:(CGRect)frame placeholderText:(NSString*)placeholderText customIcon:(UIImage *)customIcon returnKeyType:(UIReturnKeyType)returnKeyType keyboardType:(UIKeyboardType)keyboardType shouldStartWithCapital:(BOOL)shouldStartWithCapital {
     self = [super initWithFrame:frame];
     if (self) {
         self.background = [UIImage imageNamed:@"inputTextBox"];
         self.font = [UIFont systemFontOfSize:15];
         self.textColor = [UIColor whiteColor];
+        self.isEditable = true;
         
         self.placeholderText = placeholderText;
         self.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.placeholderText attributes:@{NSForegroundColorAttributeName: [UIColor lightGrayColor]}];
@@ -59,8 +60,7 @@
     return self;
 }
 
--(instancetype)initWithFrame:(CGRect)frame placeholderText:(NSString *)placeholderText customIcon:(UIImage *)customIcon returnKeyType:(UIReturnKeyType)returnKeyType keyboardType:(UIKeyboardType)keyboardType secureInput:(BOOL)secureInput
-{
+-(instancetype)initWithFrame:(CGRect)frame placeholderText:(NSString *)placeholderText customIcon:(UIImage *)customIcon returnKeyType:(UIReturnKeyType)returnKeyType keyboardType:(UIKeyboardType)keyboardType secureInput:(BOOL)secureInput {
     self = [self initWithFrame:frame placeholderText:placeholderText customIcon:customIcon returnKeyType:returnKeyType keyboardType:keyboardType shouldStartWithCapital:NO];
     
     self.secureTextEntry = secureInput;
@@ -68,33 +68,51 @@
     return self;
 }
 
--(void)resetBox
-{
+-(instancetype)initNotEditableButton:(CGRect)frame placeholderText:(NSString *)placeholderText customIcon:(UIImage *)customIcon {
+    self = [self initWithFrame:frame placeholderText:placeholderText customIcon:customIcon returnKeyType:UIReturnKeyDefault keyboardType:UIKeyboardTypeAlphabet shouldStartWithCapital:NO];
+    self.isEditable = false;
+    return self;
+}
+
+-(BOOL)canBecomeFirstResponder {
+    if(self.isEditable)
+        return YES;
+    return NO;
+}
+
+-(BOOL)canPerformAction:(SEL)action withSender:(id)sender {
+    // by default switch off following actions in the input field
+    if (action == @selector(paste:) || action == @selector(cut:) || action ==  @selector(select:) || action ==  @selector(selectAll:))
+        return NO;
+    return [super canPerformAction:action withSender:sender];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    return YES;
+}
+
+-(void)resetBox {
     self.text = @"";
 }
 
 // padding of the input text and placeholder
--(CGRect)textRectForBounds:(CGRect)bounds
-{
+-(CGRect)textRectForBounds:(CGRect)bounds {
     return CGRectInset(bounds, 30, 0);
 }
 
 // padding of the input text while editing
--(CGRect)editingRectForBounds:(CGRect)bounds
-{
+-(CGRect)editingRectForBounds:(CGRect)bounds {
     return CGRectInset(bounds, 30, 0);
 }
 
 // padding of the icon in input box
--(CGRect)leftViewRectForBounds:(CGRect)bounds
-{
+-(CGRect)leftViewRectForBounds:(CGRect)bounds {
     CGRect textRect = [super leftViewRectForBounds:bounds];
     textRect.origin.x += 10;
     return textRect;
 }
 
--(CGRect)rightViewRectForBounds:(CGRect)bounds
-{
+-(CGRect)rightViewRectForBounds:(CGRect)bounds {
     CGRect textRect = [super rightViewRectForBounds:bounds];
     textRect.origin.x -= 10;
     return textRect;
@@ -120,9 +138,7 @@
         self.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.placeholderText attributes:@{NSForegroundColorAttributeName: [UIColor lightGrayColor]}];
     }
 }
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    return YES;
-}
+
 - (BOOL)textFieldShouldClear:(UITextField *)textField{
     return YES;
 }

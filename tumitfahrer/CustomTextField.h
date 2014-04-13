@@ -14,6 +14,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame placeholderText:(NSString*)placeholderText customIcon:(UIImage *)customIcon returnKeyType:(UIReturnKeyType)returnKeyType keyboardType:(UIKeyboardType)keyboardType secureInput:(BOOL)secureInput;
 
-
+-(instancetype)initNotEditableButton:(CGRect)frame placeholderText:(NSString *)placeholderText customIcon:(UIImage *)customIcon;
 
 @end
