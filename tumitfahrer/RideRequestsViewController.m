@@ -34,9 +34,6 @@
     
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
     {
-        [[NSNotificationCenter defaultCenter] addObserver:self                                                 selector:@selector(receivedPhotoForCurrentLocationNotification) name:@"ReceivedPhotoForCurrentLocation" object:nil];
-        
-        [[PanoramioUtilities sharedInstance] addObserver:self];
     }
     return self;
 }
@@ -69,6 +66,9 @@
     if (emailLoggedInUser != nil) {
         [CurrentUser fetchUserWithEmail:emailLoggedInUser];
     }
+    
+    [[PanoramioUtilities sharedInstance] addObserver:self];
+    [[RidesStore sharedStore] addObserver:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -101,11 +101,6 @@
         [[LocationController sharedInstance] startUpdatingLocation];
     }*/
     
-}
-
-
-- (void)receivedPhotoForCurrentLocationNotification {
-    self.upperImage.image = [LocationController sharedInstance].locationImage;
 }
 
 - (void)myMethod:(UIView *)exampleView completion:(void (^)(BOOL finished))completion {
@@ -157,8 +152,8 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return  [[[BuildingsManager sharedManager] buildingsArray] count];
-    //    return [[[RidesStore sharedStore] allRides] count];
+//    return  [[[BuildingsManager sharedManager] buildingsArray] count];
+    return [[[RidesStore sharedStore] allRides] count];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -167,10 +162,17 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
     UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:1];
-    imageView.image = [UIImage imageNamed:[[[BuildingsManager sharedManager] buildingsArray] objectAtIndex:indexPath.row]];
-    //    Ride *ride = [[[RidesStore sharedStore] allRides] objectAtIndex:indexPath.row];
-    //    imageView.image = ride.destinationImage;
+//    imageView.image = [UIImage imageNamed:[[[BuildingsManager sharedManager] buildingsArray] objectAtIndex:indexPath.row]];
+    Ride *ride = [[[RidesStore sharedStore] allRides] objectAtIndex:indexPath.row];
+    if(ride.destinationImage == nil) {
+        imageView.image = [UIImage imageNamed:@"PlaceholderImage"];
+    } else {
+        imageView.image = ride.destinationImage;
+    }
+    
     [imageView setClipsToBounds:YES];
+    UILabel *destinationLabel = (UILabel *)[cell.contentView viewWithTag:9];
+    destinationLabel.text = ride.destination;
     
     return cell;
 }
@@ -178,7 +180,7 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     RideDetailsViewController *rideDetailsVC = [[RideDetailsViewController alloc] init];
-    rideDetailsVC.imageNumber = indexPath.row;
+    rideDetailsVC.selectedRide = [[[RidesStore sharedStore] allRides] objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:rideDetailsVC animated:YES];
 }
 
@@ -195,6 +197,7 @@
 -(void)didReceivePhotoForRide:(NSInteger)rideId {
     [self.collectionView reloadData];
 }
+
 
 -(void)didRecieveRidesFromWebService:(NSArray *)rides
 {

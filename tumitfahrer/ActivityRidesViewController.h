@@ -15,7 +15,6 @@
 @property (weak, nonatomic) IBOutlet UIView *departurePlaceView;
 @property (weak, nonatomic) IBOutlet UIView *departureLabelView;
 
-
 - (IBAction)menuButtonPressed:(id)sender;
 
 @end

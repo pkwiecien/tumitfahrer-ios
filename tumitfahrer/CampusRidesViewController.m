@@ -9,7 +9,8 @@
 #import "CampusRidesViewController.h"
 #import "HACollectionViewSmallLayout.h"
 #import "HACollectionViewLargeLayout.h"
-#import "BuildingsManager.h"
+#import "Ride.h"
+#import "RidesStore.h"
 #import "ActionManager.h"
 
 #define kTransitionSpeed 0.02f
@@ -85,7 +86,7 @@
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [[[BuildingsManager sharedManager] buildingsArray] count];
+    return [[[RidesStore sharedStore] allRides] count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -95,12 +96,25 @@
     cell.layer.cornerRadius = 4;
     
     UIImageView *imageLargeCell = (UIImageView *)[cell.contentView viewWithTag:11];
-    imageLargeCell.image = [UIImage imageNamed:[[[BuildingsManager sharedManager] buildingsArray] objectAtIndex:indexPath.row]];
+    
+    Ride *ride = [[[RidesStore sharedStore] allRides] objectAtIndex:indexPath.row];
+    if(ride.destinationImage == nil) {
+        imageLargeCell.image = [UIImage imageNamed:@"PlaceholderImage"];
+    } else {
+        imageLargeCell.image = ride.destinationImage;
+    }
     [imageLargeCell setClipsToBounds:YES];
     
     UIImageView *imageSmallCell = (UIImageView *)[cell.contentView viewWithTag:21];
-    imageSmallCell.image = [UIImage imageNamed:[[[BuildingsManager sharedManager] buildingsArray] objectAtIndex:indexPath.row]];
+    if(ride.destinationImage == nil) {
+        imageSmallCell.image = [UIImage imageNamed:@"PlaceholderImage"];
+    } else {
+        imageSmallCell.image = ride.destinationImage;
+    }
     [imageSmallCell setClipsToBounds:YES];
+    
+    UILabel *destinationLabel = (UILabel *)[cell.contentView viewWithTag:9];
+    destinationLabel.text = ride.destination;  
     
     UIView *largeCellView = (UIView *)[cell.contentView viewWithTag:10];
     UIView *smallCellView = (UIView *)[cell.contentView viewWithTag:20];

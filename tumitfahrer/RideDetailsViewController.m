@@ -7,8 +7,8 @@
 //
 
 #import "RideDetailsViewController.h"
-#import "BuildingsManager.h"
 #import "ActionManager.h"
+#import "Ride.h"
 
 @interface RideDetailsViewController ()
 
@@ -28,13 +28,17 @@
 {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = YES;
-    self.mainImageView.image = [UIImage imageNamed:[[[BuildingsManager sharedManager] buildingsArray] objectAtIndex:self.imageNumber]];
+    if(self.selectedRide.destinationImage == nil) {
+        self.mainImageView.image = [UIImage imageNamed:@"PlaceholderImage"];
+    } else {
+        self.mainImageView.image = self.selectedRide.destinationImage;
+    }
     
     // Set parallax for horizontal effect
     UIInterpolatingMotionEffect *horizontalMotionEffect = [[UIInterpolatingMotionEffect alloc]
      initWithKeyPath:@"center.x" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
-    horizontalMotionEffect.minimumRelativeValue = @(-20);
-    horizontalMotionEffect.maximumRelativeValue = @(20);
+    horizontalMotionEffect.minimumRelativeValue = @(-40);
+    horizontalMotionEffect.maximumRelativeValue = @(40);
     
     // Add both effects to your view
     [self.mainImageView addMotionEffect:horizontalMotionEffect];

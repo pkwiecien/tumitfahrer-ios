@@ -158,5 +158,7 @@
 
 -(void)setupObservers {
     [[LocationController sharedInstance] addObserver:[PanoramioUtilities sharedInstance]];
+    [[LocationController sharedInstance] addObserver:[RidesStore sharedStore]];
+    [[PanoramioUtilities sharedInstance] addObserver:[RidesStore sharedStore]];
 }
 @end

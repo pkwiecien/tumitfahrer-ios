@@ -12,6 +12,7 @@
 
 +(instancetype)sharedManager;
 -(void)showAlertViewWithTitle:(NSString *)title;
+-(void)showAlertViewWithTitle:(NSString *)title description:(NSString*)description;
 
 // image utilities
 - (UIImage *)colorImage:(UIImage *)origImage withColor:(UIColor *)color;

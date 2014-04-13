@@ -18,7 +18,7 @@
                                                      @"destination": @"destination",
                                                      @"meeting_point":@"meetingPoint",
                                                      @"departure_time":@"departureTime",
-                                                     @"free_seats":@"free_seats",
+                                                     @"free_seats":@"freeSeats",
                                                      @"duration":@"duration",
                                                      @"distance":@"distance",
                                                      @"created_at": @"createdAt",
@@ -30,7 +30,7 @@
 
 +(RKResponseDescriptor *)getRidesResponseDescriptorWithMapping:(RKEntityMapping *)mapping {
     // create response description for rides
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodGET                                                                                       pathPattern:@"/api/v2/rides"                                                                                           keyPath:@"rides"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodGET pathPattern:@"/api/v2/rides" keyPath:@"rides"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     
     return responseDescriptor;
 }

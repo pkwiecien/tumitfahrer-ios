@@ -26,6 +26,7 @@
 
 - (void)addObserver:(id<PanoramioUtilitiesDelegate>) observer;
 - (void)notifyWithImage:(UIImage*)image;
+-(void)notifyAllAboutNewImage:(UIImage *)image rideId:(NSInteger)rideId;
 - (void)removeObserver:(id<PanoramioUtilitiesDelegate>)observer;
 
 - (void)fetchPhotoForCurrentLocation:(CLLocation*)location;

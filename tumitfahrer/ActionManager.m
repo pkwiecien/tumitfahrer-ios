@@ -27,7 +27,11 @@
 }
 
 -(void)showAlertViewWithTitle:(NSString *)title {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:@"Functionality coming soon" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [self showAlertViewWithTitle:title description:@"Functionality coming soon"];
+}
+
+-(void)showAlertViewWithTitle:(NSString *)title description:(NSString *)description {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:description delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
 }
 

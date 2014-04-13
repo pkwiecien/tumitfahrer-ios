@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class Ride;
+
 @interface RideDetailsViewController : UIViewController
 
-- (IBAction)arrowLeftPressed:(id)sender;
-
-@property (nonatomic, assign) NSInteger imageNumber;
+@property (nonatomic, strong) Ride *selectedRide;
 @property (weak, nonatomic) IBOutlet UIImageView *mainImageView;
+
+- (IBAction)arrowLeftPressed:(id)sender;
 - (IBAction)joinButtonPressed:(id)sender;
 - (IBAction)contactDriverButtonPressed:(id)sender;
 

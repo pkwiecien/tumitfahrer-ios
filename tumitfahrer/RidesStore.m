@@ -13,6 +13,7 @@
 
 @property (nonatomic) NSMutableArray *privateRides;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) NSMutableArray *observers;
 
 @end
 
@@ -21,10 +22,16 @@
 -(instancetype)init {
     self = [super init];
     if (self) {
+        self.observers = [[NSMutableArray alloc] init];
         [self loadRides];
-        if ([self.privateRides count] == 0) {
-            [self fetchRidesFromWebservice];
-        }
+//        if ([self.privateRides count] == 0) {
+            // TODO: introduce something like fetchNewRidesFromWebservic
+        [self fetchRidesFromWebservice];
+       /* } else {
+            for (Ride *ride in self.privateRides) {
+                [[LocationController sharedInstance] fetchLocationForAddress:ride.destination rideId:ride.rideId];
+            }
+        }*/
     }
     return self;
 }
@@ -60,14 +67,12 @@
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
 //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
     
-    [objectManager postObject:nil path:@"/api/v2/rides" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    [objectManager getObjectsAtPath:@"/api/v2/rides" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         self.privateRides = [NSMutableArray arrayWithArray:[mappingResult array]];
         
         for (Ride *ride in self.privateRides) {
             [[LocationController sharedInstance] fetchLocationForAddress:ride.destination rideId:ride.rideId];
         }
-        
-        [self.delegate didRecieveRidesFromWebService:self.privateRides];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);
     }];
@@ -115,7 +120,7 @@
 -(void)didReceivePhotoForLocation:(UIImage *)image rideId:(NSInteger)rideId{
     Ride *ride = [self getRideWithId:rideId];
     ride.destinationImage = image;
-    [self.delegate didReceivePhotoForRide:rideId];
+    [self notifyAllAboutNewImageForRideId:rideId];
 }
 
 #pragma mark - utility funtioncs
@@ -133,6 +138,23 @@
     for (Ride *ride in self.allRides) {
         NSLog(@"Ride: %@", ride);
     }
+}
+
+# pragma mark - observer methods
+-(void)addObserver:(id<RideStoreDelegate>)observer {
+    [self.observers addObject:observer];
+}
+
+-(void)notifyAllAboutNewImageForRideId:(NSInteger)rideId {
+    for (id<RideStoreDelegate> observer in self.observers) {
+        if ([observer respondsToSelector:@selector(didReceivePhotoForRide:)]) {
+            [observer didReceivePhotoForRide:rideId];
+        }
+    }
+}
+
+-(void)removeObserver:(id<RideStoreDelegate>)observer {
+    [self.observers removeObject:observer];
 }
 
 @end

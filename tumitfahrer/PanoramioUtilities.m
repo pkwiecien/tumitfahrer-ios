@@ -88,11 +88,17 @@
             
             // parse json
             NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
-            NSLog(@"photo url: %@", parsedObject[@"photos"][0][@"photo_file_url"]);
-            NSURL *url = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];
-            
-            UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
-            [LocationController sharedInstance].locationImage = retrievedImage;
+            @try {
+                
+                NSLog(@"photo url: %@", parsedObject[@"photos"][0][@"photo_file_url"]);
+                NSURL *url = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];
+                
+                UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
+                [self notifyAllAboutNewImage:retrievedImage rideId:rideId];
+            }
+            @catch (NSException *exception) {
+                NSLog(@"Photo could not be received for location: %@", location);
+            }
         }
     }];
 }
@@ -108,7 +114,17 @@
 
 -(void)notifyWithImage:(UIImage*)image {
     for (id<PanoramioUtilitiesDelegate> observer in self.observers) {
-        [observer didReceivePhotoForCurrentLocation:image];
+        if ([observer respondsToSelector:@selector(didReceivePhotoForCurrentLocation:)]) {
+            [observer didReceivePhotoForCurrentLocation:image];
+        }
+    }
+}
+
+-(void)notifyAllAboutNewImage:(UIImage *)image rideId:(NSInteger)rideId {
+    for (id<PanoramioUtilitiesDelegate> observer in self.observers) {
+        if ([observer respondsToSelector:@selector(didReceivePhotoForLocation:rideId:)]) {
+            [observer didReceivePhotoForLocation:image rideId:rideId];
+        }
     }
 }
 

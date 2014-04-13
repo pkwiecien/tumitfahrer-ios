@@ -116,7 +116,7 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         [self dismissViewControllerAnimated:YES completion:nil];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        [[ActionManager sharedManager] showAlertViewWithTitle:[error localizedDescription]];
+        [[ActionManager sharedManager] showAlertViewWithTitle:@"Invalid email/password" description:@"Could not authenticate, please check your credentials."];
         RKLogError(@"Load failed with error: %@", error);
     }];
 }

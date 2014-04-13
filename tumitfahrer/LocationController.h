@@ -15,6 +15,7 @@
 
 - (void)didReceiveCurrentLocation: (CLLocation*)location;
 - (void)didReceiveLocationForAddress: (CLLocation*)location rideId:(NSInteger)rideId;
+//- (void)didReceiveLocationForAddress: (CLLocation*)location;
 
 @end
 
@@ -29,7 +30,8 @@
 - (void)fetchLocationForAddress:(NSString *)address rideId:(NSInteger)rideId;
 - (void)startUpdatingLocation;
 - (void)addObserver:(id<LocationControllerDelegate>) observer;
-- (void)notifyAll;
+- (void)notifyAllAboutNewCurrentLocation;
+- (void)notifyAllAboutNewLocation:(CLLocation*)location rideWithRideId:(NSInteger)rideId;
 - (void)removeObserver:(id<LocationControllerDelegate>)observer;
 
 @end

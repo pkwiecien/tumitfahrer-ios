@@ -10,6 +10,8 @@
 #import "ActionManager.h"
 #import "BuildingsManager.h"
 #import "RideDetailsViewController.h"
+#import "RidesStore.h"
+#import "Ride.h"
 
 @interface AnotherActivitiesViewController ()
 
@@ -102,9 +104,17 @@
     UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"AnotherCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
     
-    UIImageView *imageCell = (UIImageView *)[cell.contentView viewWithTag:5];
-    imageCell.image = [UIImage imageNamed:[[[BuildingsManager sharedManager] buildingsArray] objectAtIndex:indexPath.row]];
-    [imageCell setClipsToBounds:YES];
+    UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:5];
+    Ride *ride = [[[RidesStore sharedStore] allRides] objectAtIndex:indexPath.row];
+    if(ride.destinationImage == nil) {
+        imageView.image = [UIImage imageNamed:@"PlaceholderImage"];
+    } else {
+        imageView.image = ride.destinationImage;
+    }
+    
+    [imageView setClipsToBounds:YES];
+    UILabel *destinationLabel = (UILabel *)[cell.contentView viewWithTag:9];
+    destinationLabel.text = ride.destination;
     
     return cell;
 }
@@ -112,7 +122,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     RideDetailsViewController *rideDetailsVC = [[RideDetailsViewController alloc] init];
-    rideDetailsVC.imageNumber = indexPath.row;
+    rideDetailsVC.selectedRide = [[[RidesStore sharedStore] allRides] objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:rideDetailsVC animated:YES];
 }
 

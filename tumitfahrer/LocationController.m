@@ -45,9 +45,19 @@
     [self.observers addObject:observer];
 }
 
--(void)notifyAll {
+-(void)notifyAllAboutNewCurrentLocation {
     for (id<LocationControllerDelegate> observer in self.observers) {
-        [observer didReceiveCurrentLocation:self.currentLocation];
+        if ([observer respondsToSelector:@selector(didReceiveCurrentLocation:)]) {
+            [observer didReceiveCurrentLocation:self.currentLocation];
+        }
+    }
+}
+
+-(void)notifyAllAboutNewLocation:(CLLocation*)location rideWithRideId:(NSInteger)rideId {
+    for (id<LocationControllerDelegate> observer in self.observers) {
+        if ([observer respondsToSelector:@selector(didReceiveLocationForAddress:rideId:)]) {
+            [observer didReceiveLocationForAddress:location rideId:rideId];
+        }
     }
 }
 
@@ -66,7 +76,7 @@
     if (!self.isLocationFetched) {
         self.currentLocation = [locations lastObject];
         self.isLocationFetched = YES;
-        [self notifyAll];
+        [self notifyAllAboutNewCurrentLocation];
     }
     [self.locationManager stopUpdatingLocation];
 }
@@ -81,11 +91,8 @@
         CLPlacemark *aPlacemark = [placemarks firstObject];
         
         // Process the placemark.
-        NSString *latDest1 = [NSString stringWithFormat:@"%.4f",aPlacemark.location.coordinate.latitude];
-        NSString *lngDest1 = [NSString stringWithFormat:@"%.4f",aPlacemark.location.coordinate.longitude];
-        NSLog(@"Coordinates: %@ %@", latDest1, lngDest1);
-        
         CLLocation *location = [[CLLocation alloc] initWithLatitude:aPlacemark.location.coordinate.latitude longitude:aPlacemark.location.coordinate.longitude];
+        [self notifyAllAboutNewLocation:location rideWithRideId:rideId];
     }];
 }
 
