@@ -41,8 +41,7 @@
     [self.locationManager stopUpdatingLocation];
 }
 
-+(CLLocation *)locationForAddress:(NSString *)address {
-    __block CLLocation *location;
+- (void)fetchLocationForAddress:(NSString *)address {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
         
@@ -52,10 +51,12 @@
         // Process the placemark.
         NSString *latDest1 = [NSString stringWithFormat:@"%.4f",aPlacemark.location.coordinate.latitude];
         NSString *lngDest1 = [NSString stringWithFormat:@"%.4f",aPlacemark.location.coordinate.longitude];
-        location = [[CLLocation alloc] initWithLatitude:aPlacemark.location.coordinate.latitude longitude:aPlacemark.location.coordinate.longitude];
         NSLog(@"Coordinates: %@ %@", latDest1, lngDest1);
+        
+        CLLocation *location = [[CLLocation alloc] initWithLatitude:aPlacemark.location.coordinate.latitude longitude:aPlacemark.location.coordinate.longitude];
+        [self.delegate didReceiveLocationForAddress:location];
+
     }];
-    return location;
 }
 
 @end

@@ -2,7 +2,7 @@
 //  Ride.h
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 4/11/14.
+//  Created by Pawel Kwiecien on 4/13/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
@@ -29,6 +29,8 @@
 @property (nonatomic) BOOL isFinished;
 @property (nonatomic) BOOL isPaid;
 @property (nonatomic, strong) UIImage * destinationImage;
+@property (nonatomic) double destinationLatitude;
+@property (nonatomic) double destinationLongitude;
 @property (nonatomic, retain) User *driver;
 @property (nonatomic, retain) NSSet *passengers;
 

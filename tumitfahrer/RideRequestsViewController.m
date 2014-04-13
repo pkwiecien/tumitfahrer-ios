@@ -34,7 +34,6 @@
     
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
     {
-        //        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     }
     return self;
 }
@@ -142,8 +141,8 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return  [[[BuildingsManager sharedManager] buildingsArray] count];
-//    return [[[RidesStore sharedStore] allRides] count];
+//    return  [[[BuildingsManager sharedManager] buildingsArray] count];
+    return [[[RidesStore sharedStore] allRides] count];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -152,7 +151,8 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
     UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:1];
-    imageView.image = [UIImage imageNamed:[[[BuildingsManager sharedManager] buildingsArray] objectAtIndex:indexPath.row]];
+//    imageView.image = [UIImage imageNamed:[[[BuildingsManager sharedManager] buildingsArray] objectAtIndex:indexPath.row]];
+    imageView.image = [RidesStore sharedStore] obj
     [imageView setClipsToBounds:YES];
     
     return cell;

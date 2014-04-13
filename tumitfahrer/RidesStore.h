@@ -7,14 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LocationController.h"
+#import "PanoramioUtilities.h"
 
 @protocol RideStoreDelegate <NSObject>
 
 - (void)didRecieveRidesFromWebService: (NSArray*)rides;
+- (void)didReceivePhotoForRide: (NSInteger)rideId;
 
 @end
 
-@interface RidesStore : NSObject
+@interface RidesStore : NSObject <LocationControllerDelegate, PanoramioUtilitiesDelegate>
 
 @property (nonatomic, readonly) NSArray *allRides;
 @property (nonatomic, weak) id<RideStoreDelegate> delegate;

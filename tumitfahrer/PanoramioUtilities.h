@@ -11,7 +11,7 @@
 
 @protocol PanoramioUtilitiesDelegate <NSObject>
 
--(void)didReceivePhotoForLocation:(UIImage *)image;
+-(void)didReceivePhotoForLocation:(UIImage *)image rideId:(NSInteger)rideId;
 
 @end
 
@@ -19,6 +19,8 @@
 
 @property (nonatomic, weak) id<PanoramioUtilitiesDelegate> delegate;
 
-- (UIImage*)fetchPhotoForLocation:(CLLocation*)location;
++ (PanoramioUtilities*)sharedInstance; // Singleton method
+
+- (UIImage*)fetchPhotoForLocation:(CLLocation*)location rideId:(NSInteger)rideId;
 
 @end

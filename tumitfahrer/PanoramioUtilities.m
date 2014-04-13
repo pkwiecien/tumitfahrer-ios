@@ -11,7 +11,25 @@
 
 @implementation PanoramioUtilities
 
-- (UIImage*)fetchPhotoForLocation:(CLLocation*)location {
+-(instancetype)init {
+    self = [super init];
+    if (self) {
+    }
+    return self;
+}
+
++(PanoramioUtilities *)sharedInstance {
+    static PanoramioUtilities *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    
+    return sharedInstance;
+}
+
+- (UIImage*)fetchPhotoForLocation:(CLLocation*)location rideId:(NSInteger)rideId{
 
     __block UIImage *retrievedImage = nil;
     
@@ -38,7 +56,7 @@
             
             retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
             [LocationController sharedInstance].locationImage = retrievedImage;
-            [self.delegate didReceivePhotoForLocation:retrievedImage];
+            [self.delegate didReceivePhotoForLocation:retrievedImage rideId:rideId];
         }
     }];
     

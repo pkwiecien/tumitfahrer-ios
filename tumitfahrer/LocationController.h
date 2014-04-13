@@ -11,7 +11,10 @@
 
 @protocol LocationControllerDelegate <NSObject>
 
+@optional
+
 - (void)didReceiveLocation: (CLLocation*)location;
+- (void)didReceiveLocationForAddress: (CLLocation*)location rideId:(NSInteger)rideId;
 
 @end
 
@@ -23,8 +26,8 @@
 @property (nonatomic, strong) UIImage *locationImage;
 
 + (LocationController*)sharedInstance; // Singleton method
-+ (CLLocation*)locationForAddress:(NSString *)address;
 
+- (void)fetchLocationForAddress:(NSString *)address;
 - (void)startUpdatingLocation;
 
 @end

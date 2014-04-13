@@ -7,9 +7,7 @@
 //
 
 #import "RidesStore.h"
-#import "PanoramioUtilities.h"
 #import "Ride.h"
-#import "LocationController.h"
 
 @interface RidesStore () <NSFetchedResultsControllerDelegate>
 
@@ -66,9 +64,7 @@
         self.privateRides = [NSMutableArray arrayWithArray:[mappingResult array]];
         
         for (Ride *ride in self.privateRides) {
-            PanoramioUtilities *panoUtils = [[PanoramioUtilities alloc] init];
-            
-            ride.destinationImage = [panoUtils fetchPhotoForLocation:[LocationController locationForAddress:ride.destination]];
+            [[LocationController sharedInstance] fetchLocationForAddress:ride.destination];
         }
         
         [self.delegate didRecieveRidesFromWebService:self.privateRides];
@@ -105,6 +101,38 @@
     }
     
     return self.fetchedResultsController;
+}
+
+-(void)didReceiveLocationForAddress:(CLLocation *)location rideId:(NSInteger)rideId{
+    Ride *ride = [self getRideWithId:rideId];
+    ride.destinationLatitude = location.coordinate.latitude;
+    ride.destinationLongitude = location.coordinate.longitude;
+    
+    [self printAllRides];
+    [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:location rideId:rideId];
+}
+
+-(void)didReceivePhotoForLocation:(UIImage *)image rideId:(NSInteger)rideId{
+    Ride *ride = [self getRideWithId:rideId];
+    ride.destinationImage = image;
+    [self.delegate didReceivePhotoForRide:rideId];
+}
+
+#pragma mark - utility funtioncs
+
+- (Ride *)getRideWithId:(NSInteger)rideId {
+    for (Ride *ride in self.allRides) {
+        if (ride.rideId == rideId) {
+            return ride;
+        }
+    }
+    return nil;
+}
+
+- (void)printAllRides {
+    for (Ride *ride in self.allRides) {
+        NSLog(@"Ride: %@", ride);
+    }
 }
 
 @end

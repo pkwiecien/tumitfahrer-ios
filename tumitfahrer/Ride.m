@@ -2,7 +2,7 @@
 //  Ride.m
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 4/11/14.
+//  Created by Pawel Kwiecien on 4/13/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
@@ -28,11 +28,13 @@
 @dynamic isFinished;
 @dynamic isPaid;
 @dynamic destinationImage;
+@dynamic destinationLatitude;
+@dynamic destinationLongitude;
 @dynamic driver;
 @dynamic passengers;
 
 -(NSString *)description {
-    return [NSString stringWithFormat:@"Ride id: %d, departure: %@", self.rideId, self.departurePlace];
+    return [NSString stringWithFormat:@"id: %d, destination: %@", self.rideId, self.destination];
 }
 
 @end
