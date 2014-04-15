@@ -8,7 +8,6 @@
 
 #import "AnotherActivitiesViewController.h"
 #import "ActionManager.h"
-#import "BuildingsManager.h"
 #import "RideDetailsViewController.h"
 #import "RidesStore.h"
 #import "Ride.h"
@@ -19,16 +18,14 @@
 
 @implementation AnotherActivitiesViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     UINib *cellNib = [UINib nibWithNibName:@"AnotherCollectionCell" bundle:nil];
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"AnotherCell"];
@@ -42,14 +39,12 @@
     [self.collectionView setCollectionViewLayout:flowLayout];
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
+-(void)viewWillAppear:(BOOL)animated {
     [self setupNavbar];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
--(void)setupNavbar
-{
+-(void)setupNavbar {
     UIColor *navBarColor = [UIColor colorWithRed:0 green:0.361 blue:0.588 alpha:1]; /*#0e3750*/
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setBarTintColor:navBarColor];
@@ -67,18 +62,15 @@
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 }
 
--(void)showUnimplementedAlertView
-{
+-(void)showUnimplementedAlertView {
     [[ActionManager sharedManager] showAlertViewWithTitle:@"Add a ride"];
 }
 
--(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
-{
+-(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
     self.title = item.title;
 }
 
--(BOOL)slideNavigationControllerShouldDisplayLeftMenu
-{
+-(BOOL)slideNavigationControllerShouldDisplayLeftMenu {
     return YES;
 }
 
@@ -89,18 +81,15 @@
 
 #pragma mark - Collection view
 
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return [[[BuildingsManager sharedManager] buildingsArray] count];
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return [[[RidesStore sharedStore] allRides] count];
 }
 
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
 }
 
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"AnotherCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
     
@@ -119,8 +108,7 @@
     return cell;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     RideDetailsViewController *rideDetailsVC = [[RideDetailsViewController alloc] init];
     rideDetailsVC.selectedRide = [[[RidesStore sharedStore] allRides] objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:rideDetailsVC animated:YES];

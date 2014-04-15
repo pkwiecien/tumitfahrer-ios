@@ -14,7 +14,6 @@
 #import "HATransitionLayout.h"
 #import "HACollectionViewLargeLayout.h"
 #import "HACollectionViewSmallLayout.h"
-#import "BuildingsManager.h"
 #import "ActionManager.h"
 #import "User.h"
 #import "CurrentUser.h"
@@ -152,7 +151,6 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-//    return  [[[BuildingsManager sharedManager] buildingsArray] count];
     return [[[RidesStore sharedStore] allRides] count];
 }
 
@@ -162,7 +160,6 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
     UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:1];
-//    imageView.image = [UIImage imageNamed:[[[BuildingsManager sharedManager] buildingsArray] objectAtIndex:indexPath.row]];
     Ride *ride = [[[RidesStore sharedStore] allRides] objectAtIndex:indexPath.row];
     if(ride.destinationImage == nil) {
         imageView.image = [UIImage imageNamed:@"PlaceholderImage"];

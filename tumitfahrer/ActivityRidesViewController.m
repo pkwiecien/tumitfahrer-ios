@@ -8,12 +8,12 @@
 
 #import "ActivityRidesViewController.h"
 #import "RideDetailsViewController.h"
-#import "BalancedColumnLayout.h"
+#import "CvLayout.h"
 #import "RidesStore.h"
 #import "Ride.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface ActivityRidesViewController () <BalancedColumnLayoutDelegate>
+@interface ActivityRidesViewController ()
 
 @property (nonatomic, strong) NSMutableDictionary * cellHeights;
 @property (nonatomic, strong) NSArray * imageHeights;
@@ -30,23 +30,24 @@
 
 @implementation ActivityRidesViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.isUpperViewSmall = NO;
     
-    UINib *cellNib = [UINib nibWithNibName:@"BalancedColumnCell" bundle:nil];
-    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"BalancedCell"];
+    UINib *cellNib = [UINib nibWithNibName:@"AnotherCollectionCell" bundle:nil];
+    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"AnotherCell"];
+    
+    CvLayout *cvLayout = [[CvLayout alloc] init];
+    [self.collectionView setCollectionViewLayout:cvLayout];
+    self.collectionView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
     self.departurePlaceView.clipsToBounds = YES;
-    self.collectionView.backgroundColor = [UIColor whiteColor];
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(makeViewLarge)];
     tapGesture.numberOfTapsRequired = 1;
@@ -54,28 +55,23 @@
     [self.departurePlaceView addGestureRecognizer:tapGesture];
 }
 
--(void)makeViewLarge
-{
+-(void)makeViewLarge {
     [self makeViewLargeQuickly:NO];
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
+-(void)viewWillAppear:(BOOL)animated {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     self.navigationController.navigationBarHidden = YES;
 
-    if(self.isUpperViewSmall)
-    {
+    if(self.isUpperViewSmall) {
         [self makeViewSmallQuickly:YES];
     }
-    else
-    {
+    else {
         [self makeViewLargeQuickly:YES];
     }
 }
 
--(void)makeViewSmallQuickly:(BOOL)isQuickly
-{
+-(void)makeViewSmallQuickly:(BOOL)isQuickly {
     [UIView animateWithDuration:(isQuickly?0.01:1.0) animations:^{
         self.upperFrame =  CGRectMake(0, 0, self.departurePlaceView.frame.size.width, 120);
         self.departurePlaceView.frame = self.upperFrame;
@@ -88,8 +84,7 @@
     }];
 }
 
--(void)makeViewLargeQuickly:(BOOL)isQuickly
-{
+-(void)makeViewLargeQuickly:(BOOL)isQuickly {
     [UIView animateWithDuration:(isQuickly?0.01:1.0) animations:^{
         self.upperFrame =  CGRectMake(0, 0, self.departurePlaceView.frame.size.width, 242);
         self.departurePlaceView.frame = self.upperFrame;
@@ -102,8 +97,7 @@
     }];
 }
 
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (self.lastContentOffset < scrollView.contentOffset.y)
     {
         // scroll down
@@ -115,28 +109,20 @@
 
 #pragma mark - UICollectionViewDelegate
 
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return [[[RidesStore sharedStore] allRides] count];
 }
 
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
 }
 
--(CGFloat)collectionView:(UICollectionView *)collectionView layout:(BalancedColumnLayout *)collectionViewLayout heightForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 80;
-}
-
-
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"BalancedCell" forIndexPath:indexPath];
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"AnotherCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
     
-    UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:30];
+    UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:5];
     Ride *ride = [[[RidesStore sharedStore] allRides] objectAtIndex:indexPath.row];
     if(ride.destinationImage == nil) {
         imageView.image = [UIImage imageNamed:@"PlaceholderImage"];
@@ -151,8 +137,7 @@
     return cell;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     RideDetailsViewController *rideDetailsVC = [[RideDetailsViewController alloc] init];
     rideDetailsVC.selectedRide = [[[RidesStore sharedStore] allRides] objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:rideDetailsVC animated:YES];
@@ -160,8 +145,7 @@
 
 #pragma mark - SlideNavigation
 
--(BOOL)slideNavigationControllerShouldDisplayLeftMenu
-{
+-(BOOL)slideNavigationControllerShouldDisplayLeftMenu {
     return YES;
 }
 
@@ -170,8 +154,7 @@
     
 }
 
--(void)viewWillDisappear:(BOOL)animated
-{
+-(void)viewWillDisappear:(BOOL)animated {
     if(self.upperFrame.size.height > 200)
         self.isUpperViewSmall = NO;
     else
