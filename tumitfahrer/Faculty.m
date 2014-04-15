@@ -14,7 +14,7 @@
     self = [super init];
     if (self) {
         self.name = name;
-        self.facultyId = facultyId;
+        self.facultyId = (int)facultyId;
     }
     return self;
 }

@@ -10,6 +10,7 @@
 #import "Constants.h"
 #import "CustomTextField.h"
 #import "ActionManager.h"
+#import "LoginViewController.h"
 
 @interface ForgotPasswordViewController ()
 
@@ -17,17 +18,14 @@
 
 @implementation ForgotPasswordViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     float centerX = (self.view.frame.size.width - cUIElementWidth)/2;
@@ -41,12 +39,32 @@
     [self.view sendSubviewToBack:imageView];
 }
 
-- (IBAction)backToLoginButtonPressed:(id)sender {
-    [self dismissViewControllerAnimated:NO completion:nil];
+-(NSURLRequest*)buildUrlRequest {
+    
+    NSString *urlString = [API_ADDRESS stringByAppendingString:@"/api/v2/forgot"];
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"POST"];
+    return urlRequest;
 }
 
 - (IBAction)sendReminderButtonPressed:(id)sender {
+    
+    [NSURLConnection sendAsynchronousRequest:[self buildUrlRequest] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (connectionError)
+        {
+            NSLog(@"Could not request password reminder. Error connecting data from server: %@", connectionError.localizedDescription);
+        } else {
+            NSLog(@"Password reminder sent successfully");
+            LoginViewController *loginVC = (LoginViewController*)self.presentingViewController;
+            loginVC.statusLabel.text = @"Password sent to your email address";
+            [self backToLoginButtonPressed:nil];
+        }
+    }];
+}
 
+- (IBAction)backToLoginButtonPressed:(id)sender {
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (IBAction)dismissKeyboard:(id)sender {

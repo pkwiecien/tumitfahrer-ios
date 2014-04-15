@@ -113,7 +113,7 @@
     NSError *error = nil;
     
     // Initialize RestKit
-    NSURL *baseURL = [NSURL URLWithString:@"http://tumitfahrer-staging.herokuapp.com"];
+    NSURL *baseURL = [NSURL URLWithString:API_ADDRESS];
 //    NSURL *baseURL = [NSURL URLWithString:@"http://131.159.193.45:3000"];
     RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:baseURL];
     
@@ -134,7 +134,6 @@
     [objectManager addResponseDescriptor:[SessionMapping postSessionResponseDescriptorWithMapping:postSessionMapping]];
     RKObjectMapping *postUserMapping =[UserMapping postUserMapping];
     [objectManager addResponseDescriptor:[UserMapping postUserResponseDescriptorWithMapping:postUserMapping]];
-
     RKEntityMapping *getRidesMapping = [RideMapping getRidesMapping];
     [objectManager addResponseDescriptor:[RideMapping getRidesResponseDescriptorWithMapping:getRidesMapping]];
     /**

@@ -8,8 +8,6 @@
 
 #import "User.h"
 #import "Ride.h"
-#import "StatusMapping.h"
-
 
 @implementation User
 
