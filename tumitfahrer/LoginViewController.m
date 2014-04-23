@@ -13,6 +13,8 @@
 #import "Constants.h"
 #import "ActionManager.h"
 #import "CurrentUser.h"
+#import "RideRequestsViewController.h"
+#import <SlideNavigationController.h>
 
 @interface LoginViewController () <NSFetchedResultsControllerDelegate>
 
@@ -59,7 +61,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    NSString *email = [[NSUserDefaults standardUserDefaults] valueForKey:@"emailLoggedInUser"];
+    NSString *email = [[NSUserDefaults standardUserDefaults] valueForKey:@"storedEmail"];
     if (email!=nil) {
         self.emailTextField.text = email;
     }
@@ -95,6 +97,7 @@
     if ([CurrentUser fetchUserWithEmail:self.emailTextField.text]) {
         // user fetched successfully from core data
         [self storeCurrentUserInDefaults];
+        [[SlideNavigationController sharedInstance] popToRootViewControllerAnimated:NO];
         [self dismissViewControllerAnimated:YES completion:nil];
     } else {
         // new user, get account from webservice
@@ -110,10 +113,7 @@
     [objectManager postObject:nil path:@"/api/v2/sessions" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [CurrentUser sharedInstance].user = (User *)[mappingResult firstObject];
         RKLogInfo(@"Load complete, current user %@!", [CurrentUser sharedInstance].user.firstName);
-        
         [self storeCurrentUserInDefaults];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"LastUpdatedAt"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
         [self dismissViewControllerAnimated:YES completion:nil];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [[ActionManager sharedManager] showAlertViewWithTitle:@"Invalid email/password" description:@"Could not authenticate, please check your credentials."];
@@ -123,6 +123,8 @@
 
 -(void)storeCurrentUserInDefaults {
     [[NSUserDefaults standardUserDefaults] setValue:self.emailTextField.text forKey:@"emailLoggedInUser"];
+    [[NSUserDefaults standardUserDefaults] setValue:self.emailTextField.text forKey:@"storedEmail"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 // show register view

@@ -10,6 +10,7 @@
 #import <SlideNavigationController.h>
 
 @interface ProfileViewController : UIViewController<SlideNavigationControllerDelegate>
+
 @property (weak, nonatomic) IBOutlet UIView *profileView;
 @property (weak, nonatomic) IBOutlet UILabel *friendsCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ridesCountLabel;

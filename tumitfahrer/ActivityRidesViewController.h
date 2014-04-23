@@ -11,10 +11,13 @@
 
 @interface ActivityRidesViewController : UIViewController<SlideNavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate, UIScrollViewDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate>
 
+@property (weak, nonatomic) IBOutlet UIButton *menuButton;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIView *departurePlaceView;
 @property (weak, nonatomic) IBOutlet UIView *departureLabelView;
 
 - (IBAction)menuButtonPressed:(id)sender;
+- (IBAction)searchButtonPressed:(id)sender;
+- (IBAction)addButtonPressed:(id)sender;
 
 @end

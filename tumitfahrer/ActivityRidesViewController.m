@@ -5,13 +5,15 @@
 //  Created by Pawel Kwiecien on 4/1/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
-
+#import <QuartzCore/QuartzCore.h>
 #import "ActivityRidesViewController.h"
 #import "RideDetailsViewController.h"
 #import "CvLayout.h"
 #import "RidesStore.h"
 #import "Ride.h"
-#import <QuartzCore/QuartzCore.h>
+#import "ActionManager.h"
+#import "SearchRideViewController.h"
+#import "AddRideViewController.h"
 
 @interface ActivityRidesViewController ()
 
@@ -48,6 +50,8 @@
     [self.collectionView setCollectionViewLayout:cvLayout];
     self.collectionView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
     self.departurePlaceView.clipsToBounds = YES;
+ 
+    [self.menuButton setBackgroundImage:[[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"SettingsBlackIcon"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(makeViewLarge)];
     tapGesture.numberOfTapsRequired = 1;
@@ -60,7 +64,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     self.navigationController.navigationBarHidden = YES;
 
     if(self.isUpperViewSmall) {
@@ -152,6 +156,20 @@
 - (IBAction)menuButtonPressed:(id)sender {
     [[SlideNavigationController sharedInstance] toggleLeftMenu];
     
+}
+
+- (IBAction)searchButtonPressed:(id)sender {
+    SearchRideViewController *searchRideVC = [[SearchRideViewController alloc] init];
+    searchRideVC.modalTransitionStyle = UIModalPresentationFullScreen;
+    UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:searchRideVC];
+
+    [self presentViewController:navBar animated:YES completion:nil];
+}
+
+- (IBAction)addButtonPressed:(id)sender {
+    AddRideViewController *addRideVC = [[AddRideViewController alloc] init];
+    UINavigationController *navBar = [[UINavigationController alloc] initWithRootViewController:addRideVC];
+    [self presentViewController:navBar animated:YES completion:nil];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {

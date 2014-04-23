@@ -99,7 +99,7 @@
     
     // init and configure slide panel
     self.navigationController = [[SlideNavigationController alloc] initWithRootViewController:rideRequestVC];
-    self.navigationController.enableSwipeGesture = NO;
+    self.navigationController.enableSwipeGesture = YES;
     self.navigationController.portraitSlideOffset = cSlideMenuOffset; // width of visible view controller
     [SlideNavigationController sharedInstance].leftMenu = leftMenu;
     self.navigationController.navigationBarHidden = YES;

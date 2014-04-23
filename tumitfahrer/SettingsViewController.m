@@ -180,6 +180,7 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     LoginViewController *loginVC = [[LoginViewController alloc] init];
+    loginVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentViewController:loginVC animated:YES completion:nil];
 }
 
