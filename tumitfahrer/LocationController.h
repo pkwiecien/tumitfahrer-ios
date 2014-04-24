@@ -24,6 +24,7 @@
 @property (nonatomic, strong) CLLocationManager* locationManager;
 @property (nonatomic, strong) CLLocation* currentLocation;
 @property (nonatomic, strong) UIImage *locationImage;
+@property (nonatomic, strong) NSString *currentAddress;
 
 + (LocationController*)sharedInstance; // Singleton method
 

@@ -10,6 +10,7 @@
 
 @interface UserMapping : NSObject
 
++(RKEntityMapping *)userMapping;
 +(RKObjectMapping *)postUserMapping;
 +(RKResponseDescriptor *)postUserResponseDescriptorWithMapping:(RKObjectMapping *)mapping;
 

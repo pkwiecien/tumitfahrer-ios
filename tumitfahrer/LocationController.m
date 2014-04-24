@@ -77,6 +77,18 @@
         self.currentLocation = [locations lastObject];
         self.isLocationFetched = YES;
         [self notifyAllAboutNewCurrentLocation];
+        
+        
+        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+        [geocoder reverseGeocodeLocation:self.currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+            if (error == nil && [placemarks count] > 0)
+            {
+                CLPlacemark *placemark = [placemarks lastObject];
+                
+                NSLog(@"Current address: %@", placemark.thoroughfare);
+                self.currentAddress = placemark.thoroughfare;
+            }
+        }];
     }
     [self.locationManager stopUpdatingLocation];
 }

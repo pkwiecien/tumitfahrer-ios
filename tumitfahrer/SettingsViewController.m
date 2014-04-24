@@ -10,10 +10,6 @@
 #import "ActionManager.h"
 #import "LoginViewController.h"
 
-#define singleRowHeight 45
-#define headerHeight 25
-#define footerHeight 25
-
 @interface SettingsViewController ()
 
 @property (nonatomic, strong) NSArray *tableOptions;
@@ -62,14 +58,14 @@
     CGFloat x = 0;
     CGFloat y = 230;
     CGFloat width = self.view.frame.size.width;
-    CGFloat height = singleRowHeight*([self.tableOptions count]+1)+footerHeight+headerHeight;
+    CGFloat height = TableSingleRowHeight*([self.tableOptions count]+1)+TableFooterHeight+TableHeaderHeight;
     CGRect tableFrame = CGRectMake(x, y, width, height);
     
     UITableView *tableView = [[UITableView alloc]initWithFrame:tableFrame style:UITableViewStylePlain];
     
-    tableView.rowHeight = singleRowHeight;
-    tableView.sectionFooterHeight = footerHeight;
-    tableView.sectionHeaderHeight = headerHeight;
+    tableView.rowHeight = TableSingleRowHeight;
+    tableView.sectionFooterHeight = TableFooterHeight;
+    tableView.sectionHeaderHeight = TableHeaderHeight;
     tableView.scrollEnabled = YES;
     tableView.showsVerticalScrollIndicator = YES;
     tableView.userInteractionEnabled = YES;

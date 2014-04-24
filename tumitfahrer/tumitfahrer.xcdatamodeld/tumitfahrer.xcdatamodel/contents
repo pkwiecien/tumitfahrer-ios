@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5063" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Ride" representedClassName="Ride" syncable="YES">
         <attribute name="createdAt" attributeType="Date" syncable="YES"/>
         <attribute name="departurePlace" attributeType="String" syncable="YES"/>
@@ -39,7 +39,7 @@
         <relationship name="ridesAsPassenger" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ride" inverseName="passengers" inverseEntity="Ride" syncable="YES"/>
     </entity>
     <elements>
+        <element name="Ride" positionX="279" positionY="-109" width="128" height="343"/>
         <element name="User" positionX="-63" positionY="-18" width="128" height="253"/>
-        <element name="Ride" positionX="279" positionY="-112" width="128" height="343"/>
     </elements>
 </model>

@@ -11,6 +11,24 @@
 
 @implementation UserMapping
 
++(RKEntityMapping *)userMapping {
+    RKEntityMapping *userMapping = [RKEntityMapping mappingForEntityForName:@"User" inManagedObjectStore:[[RKObjectManager sharedManager] managedObjectStore]];
+    userMapping.identificationAttributes = @[ @"userId" ];
+    [userMapping addAttributeMappingsFromDictionary:@{
+                                                         @"id":             @"userId",
+                                                         @"first_name":     @"firstName",
+                                                         @"last_name":      @"lastName",
+                                                         @"email":          @"email",
+                                                         @"is_student":     @"isStudent",
+                                                         @"phone_number":   @"phoneNumber",
+                                                         @"car":            @"car",
+                                                         @"department":     @"department",
+                                                         @"created_at":     @"createdAt",
+                                                         @"updated_at":     @"updatedAt"}];
+    
+    return userMapping;
+}
+
 +(RKObjectMapping *)postUserMapping {
     RKObjectMapping *responseMapping = [RKObjectMapping mappingForClass:[StatusMapping class]];
     [responseMapping addAttributeMappingsFromDictionary:@{@"message":@"message"}];

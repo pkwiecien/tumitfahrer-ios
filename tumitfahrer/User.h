@@ -2,13 +2,12 @@
 //  User.h
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 4/11/14.
+//  Created by Pawel Kwiecien on 4/23/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import <RestKit/RestKit.h>
 
 @class Ride;
 
@@ -28,6 +27,7 @@
 @property (nonatomic) int userId;
 @property (nonatomic, retain) NSSet *ridesAsDriver;
 @property (nonatomic, retain) NSSet *ridesAsPassenger;
+
 @end
 
 @interface User (CoreDataGeneratedAccessors)

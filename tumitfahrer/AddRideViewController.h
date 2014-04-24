@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddRideViewController : UIViewController
+@interface AddRideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UITableView *shareTableView;
 
 @end

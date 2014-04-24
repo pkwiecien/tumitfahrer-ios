@@ -113,8 +113,10 @@
     NSError *error = nil;
     
     // Initialize RestKit
-    NSURL *baseURL = [NSURL URLWithString:API_ADDRESS];
-//    NSURL *baseURL = [NSURL URLWithString:@"http://131.159.193.45:3000"];
+    //    NSURL *baseURL = [NSURL URLWithString:API_ADDRESS];
+    //    NSURL *baseURL = [NSURL URLWithString:@"http://131.159.204.182:3000"];
+    NSURL *baseURL = [NSURL URLWithString:@"http://192.168.0.104:3000"];
+    
     RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:baseURL];
     
     // Enable Activity Indicator Spinner
@@ -136,6 +138,10 @@
     [objectManager addResponseDescriptor:[UserMapping postUserResponseDescriptorWithMapping:postUserMapping]];
     RKEntityMapping *getRidesMapping = [RideMapping getRidesMapping];
     [objectManager addResponseDescriptor:[RideMapping getRidesResponseDescriptorWithMapping:getRidesMapping]];
+    
+    RKEntityMapping *postRideMapping = [RideMapping postRideMapping];
+    [objectManager addResponseDescriptorsFromArray:@[[RideMapping postRideResponseDescriptorWithMapping:postRideMapping]]];
+    
     /**
      Complete Core Data stack initialization
      */

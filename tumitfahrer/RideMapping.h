@@ -13,5 +13,7 @@
 +(RKEntityMapping *)getRidesMapping;
 +(RKResponseDescriptor *)getRidesResponseDescriptorWithMapping:(RKEntityMapping *)mapping;
 
++(RKEntityMapping *)postRideMapping;
++(RKResponseDescriptor *)postRideResponseDescriptorWithMapping:(RKEntityMapping *)mapping;
 
 @end
