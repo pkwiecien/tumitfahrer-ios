@@ -37,8 +37,8 @@
     // Set parallax for horizontal effect
     UIInterpolatingMotionEffect *horizontalMotionEffect = [[UIInterpolatingMotionEffect alloc]
      initWithKeyPath:@"center.x" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
-    horizontalMotionEffect.minimumRelativeValue = @(-40);
-    horizontalMotionEffect.maximumRelativeValue = @(40);
+    horizontalMotionEffect.minimumRelativeValue = @(-20);
+    horizontalMotionEffect.maximumRelativeValue = @(20);
     
     // Add both effects to your view
     [self.mainImageView addMotionEffect:horizontalMotionEffect];
@@ -50,6 +50,7 @@
 }
 
 - (IBAction)arrowLeftPressed:(id)sender {
+    self.mainImageView.frame = CGRectMake(self.mainImageView.frame.origin.x+40, self.mainImageView.frame.origin.y, self.mainImageView.frame.size.width, self.mainImageView.frame.size.height);
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)joinButtonPressed:(id)sender {

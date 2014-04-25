@@ -140,6 +140,11 @@
     }
 }
 
+-(void)addRideToStore:(Ride *)ride {
+    [self.privateRides addObject:ride];
+    [[LocationController sharedInstance] fetchLocationForAddress:ride.destination rideId:ride.rideId];
+}
+
 # pragma mark - observer methods
 -(void)addObserver:(id<RideStoreDelegate>)observer {
     [self.observers addObject:observer];

@@ -16,6 +16,7 @@
 #import "SwitchTableViewCell.h"
 #import "FreeSeatsTableViewCell.h"
 #import "Constants.h"
+#import "RidesStore.h"
 
 @interface AddRideViewController () <NSFetchedResultsControllerDelegate>
 
@@ -229,6 +230,7 @@
     
     [objectManager postObject:nil path:@"/api/v2/rides" parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         Ride *ride = (Ride *)[mappingResult firstObject];
+        [[RidesStore sharedStore] addRideToStore:ride];
         NSLog(@"Response: %@", operation.HTTPRequestOperation.responseString);
         NSLog(@"This is ride: %@", ride);
         NSLog(@"This is driver: %@", ride.driver);

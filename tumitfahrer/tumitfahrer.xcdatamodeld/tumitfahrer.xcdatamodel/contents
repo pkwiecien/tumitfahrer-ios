@@ -1,5 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C1021" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="FriendRequest" representedClassName="FriendRequest" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="requestId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="receivedFriendRequest" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="friendRequestsReceived" inverseEntity="User" syncable="YES"/>
+        <relationship name="sentFriendRequest" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="friendRequestsSent" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="Message" representedClassName="Message" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="isSeen" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="messageId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="receivedMessage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="messagesReceived" inverseEntity="User" syncable="YES"/>
+        <relationship name="sentMessage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="messagesSent" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="Rating" representedClassName="Rating" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="ratingId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="ratingType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="rideId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="givenRating" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="ratingsGiven" inverseEntity="User" syncable="YES"/>
+        <relationship name="receivedRating" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="ratingsReceived" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="Request" representedClassName="Request" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="passengerId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="requestedFrom" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="requestedTo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="requestId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="requestedRide" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ride" inverseName="requests" inverseEntity="Ride" syncable="YES"/>
+    </entity>
     <entity name="Ride" representedClassName="Ride" syncable="YES">
         <attribute name="createdAt" attributeType="Date" syncable="YES"/>
         <attribute name="departurePlace" attributeType="String" syncable="YES"/>
@@ -21,6 +55,7 @@
         <attribute name="updatedAt" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="driver" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="User" inverseName="ridesAsDriver" inverseEntity="User" syncable="YES"/>
         <relationship name="passengers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="ridesAsPassenger" inverseEntity="User" syncable="YES"/>
+        <relationship name="requests" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Request" inverseName="requestedRide" inverseEntity="Request" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="apiKey" optional="YES" attributeType="String" syncable="YES"/>
@@ -35,11 +70,22 @@
         <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <relationship name="friendRequestsReceived" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FriendRequest" inverseName="receivedFriendRequest" inverseEntity="FriendRequest" syncable="YES"/>
+        <relationship name="friendRequestsSent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FriendRequest" inverseName="sentFriendRequest" inverseEntity="FriendRequest" syncable="YES"/>
+        <relationship name="friends" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="friends" inverseEntity="User" syncable="YES"/>
+        <relationship name="messagesReceived" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="receivedMessage" inverseEntity="Message" syncable="YES"/>
+        <relationship name="messagesSent" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="sentMessage" inverseEntity="Message" syncable="YES"/>
+        <relationship name="ratingsGiven" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Rating" inverseName="givenRating" inverseEntity="Rating" syncable="YES"/>
+        <relationship name="ratingsReceived" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Rating" inverseName="receivedRating" inverseEntity="Rating" syncable="YES"/>
         <relationship name="ridesAsDriver" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ride" inverseName="driver" inverseEntity="Ride" syncable="YES"/>
         <relationship name="ridesAsPassenger" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ride" inverseName="passengers" inverseEntity="Ride" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Ride" positionX="279" positionY="-109" width="128" height="343"/>
-        <element name="User" positionX="-63" positionY="-18" width="128" height="253"/>
+        <element name="Ride" positionX="567" positionY="-99" width="128" height="360"/>
+        <element name="User" positionX="-63" positionY="-18" width="128" height="358"/>
+        <element name="Request" positionX="783" positionY="113" width="128" height="148"/>
+        <element name="FriendRequest" positionX="295" positionY="54" width="128" height="118"/>
+        <element name="Message" positionX="-29" positionY="-387" width="128" height="148"/>
+        <element name="Rating" positionX="-315" positionY="158" width="128" height="148"/>
     </elements>
 </model>

@@ -28,6 +28,8 @@
 @property (nonatomic, assign) CGRect lowerFrame;
 @property (nonatomic, assign) BOOL isUpperViewSmall;
 
+@property (nonatomic, strong) UIRefreshControl *topControl;
+
 @end
 
 @implementation ActivityRidesViewController
@@ -58,6 +60,16 @@
     tapGesture.numberOfTapsRequired = 1;
     tapGesture.delegate = self;
     [self.departurePlaceView addGestureRecognizer:tapGesture];
+    
+    self.topControl = [[UIRefreshControl alloc] init];
+    self.topControl.tintColor = [UIColor grayColor];
+    [self.topControl addTarget:self action:@selector(refershControlAction) forControlEvents:UIControlEventValueChanged];
+//    [self.collectionView addSubview:self.topControl];
+}
+
+-(void)refershControlAction
+{
+    NSLog(@"Refresh control action");
 }
 
 -(void)makeViewLarge {
@@ -67,6 +79,7 @@
 -(void)viewWillAppear:(BOOL)animated {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     self.navigationController.navigationBarHidden = YES;
+    [self.collectionView reloadData];
 
     if(self.isUpperViewSmall) {
         [self makeViewSmallQuickly:YES];
@@ -103,6 +116,11 @@
 }
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if ((scrollView.contentOffset.y + scrollView.frame.size.height - 70) >= scrollView.contentSize.height)
+    {
+        NSLog(@"Should load more data");
+    }
+    
     if (self.lastContentOffset < scrollView.contentOffset.y)
     {
         // scroll down

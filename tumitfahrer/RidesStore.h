@@ -10,6 +10,8 @@
 #import "LocationController.h"
 #import "PanoramioUtilities.h"
 
+@class Ride;
+
 @protocol RideStoreDelegate <NSObject>
 
 - (void)didRecieveRidesFromWebService: (NSArray*)rides;
@@ -26,6 +28,7 @@
 -(NSArray*)allRides;
 -(void)loadRides;
 
+- (void)addRideToStore:(Ride*)ride;
 - (void)addObserver:(id<RideStoreDelegate>) observer;
 - (void)notifyAllAboutNewImageForRideId:(NSInteger)rideId;
 - (void)removeObserver:(id<RideStoreDelegate>)observer;
