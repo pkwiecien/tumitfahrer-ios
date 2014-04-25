@@ -45,6 +45,7 @@
     
     UINib *cellNib = [UINib nibWithNibName:@"AnotherCollectionCell" bundle:nil];
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"AnotherCell"];
+    self.collectionView.alwaysBounceVertical = YES;
     
     CvLayout *cvLayout = [[CvLayout alloc] init];
     [self.collectionView setCollectionViewLayout:cvLayout];

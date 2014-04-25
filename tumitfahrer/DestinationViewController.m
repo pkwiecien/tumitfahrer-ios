@@ -34,50 +34,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //    self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
     self.searchBar = [[UISearchBar alloc] init];
     self.searchBar.delegate = self;
+    self.searchBar.showsCancelButton = NO;
+    self.searchBar.placeholder = @"Search Address";
     self.navigationItem.titleView = self.searchBar;
     
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"cancel", @"Cancel") style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonClicked)];
-    self.navigationItem.rightBarButtonItem = cancelButton;
-    //    self.navigationController.navigationBarHidden = YES;
-    //    [self setupNavbar];
     [self makeBackground];
-    //    self.searchDisplayController.searchBar.placeholder = @"Search Address";
 }
 
-- (void)cancelButtonClicked
-{
-    NSLog(@"searchBarSearchButtonClicked");
-    [self.searchBar setShowsCancelButton:NO animated:YES];
-    
-    [self.searchBar resignFirstResponder];
-    //[self dismissModalViewControllerAnimated:YES];
-}
-
--(void)setupNavbar {
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    //    self.navigationController.navigationBar.shadowImage = [UIImage new];
-    self.navigationController.navigationBar.translucent = YES;
-    
-    // left button of the navigation bar
-    UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-    [settingsView addTarget:self action:@selector(saveButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [settingsView setBackgroundImage:[[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"ArrowLeftBlack"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
-    [self.navigationItem setLeftBarButtonItem:settingsButton];
-    
-    // right button of the navigation bar
-    CustomBarButton *searchButton = [[CustomBarButton alloc] initWithTitle:@"Select"];
-    [searchButton addTarget:self action:@selector(saveButtonPressed) forControlEvents:UIControlEventTouchDown];
-    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
-    self.navigationItem.rightBarButtonItem = searchButtonItem;
-    
-    self.navigationController.navigationBarHidden = NO;
-    self.title = @"Destination";
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+-(void)viewWillAppear:(BOOL)animated {
+    [self.searchBar becomeFirstResponder];
 }
 
 -(void)makeBackground {
@@ -99,6 +66,9 @@
 }
 
 - (SPGooglePlacesAutocompletePlace *)placeAtIndexPath:(NSIndexPath *)indexPath {
+    for (NSString *val in searchResultPlaces) {
+        NSLog(@"search result: %@", val);
+    }
     return [searchResultPlaces objectAtIndex:indexPath.row];
 }
 
@@ -115,6 +85,11 @@
     
     cell.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];
+    
+    UIView *bgColorView = [[UIView alloc] init];
+    bgColorView.backgroundColor = [UIColor colorWithRed:70 green:30 blue:180 alpha:0.3];
+    bgColorView.layer.masksToBounds = YES;
+    [cell setSelectedBackgroundView:bgColorView];
     
     return cell;
 }
@@ -136,12 +111,21 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     SPGooglePlacesAutocompletePlace *place = [self placeAtIndexPath:indexPath];
+    NSLog(@"Place: %@", place);
     [place resolveToPlacemark:^(CLPlacemark *placemark, NSString *addressString, NSError *error) {
         if (error) {
             SPPresentAlertViewWithErrorAndTitle(error, @"Could not map selected Place");
         } else if (placemark) {
-            [self dismissSearchControllerWhileStayingActive];
-            [self.searchDisplayController.searchResultsTableView deselectRowAtIndexPath:indexPath animated:NO];
+            if (placemark.thoroughfare) {
+                [self.delegate selectedDestination:placemark.thoroughfare indexPath:self.rideTableIndexPath];
+                [self.navigationController popViewControllerAnimated:YES];
+            } else if(placemark.subLocality) {
+                [self.delegate selectedDestination:placemark.subLocality indexPath:self.rideTableIndexPath];
+                [self.navigationController popViewControllerAnimated:YES];
+            } else if(placemark.locality) {
+                [self.delegate selectedDestination:placemark.locality indexPath:self.rideTableIndexPath];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
         }
     }];
 }
@@ -172,6 +156,16 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     [self handleSearchForSearchString:searchText];
+}
+
+-(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    [self.searchBar setShowsCancelButton:YES animated:YES];
+    return YES;
+}
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [self.searchBar setShowsCancelButton:NO animated:YES];
+    [self.searchBar resignFirstResponder];
 }
 
 

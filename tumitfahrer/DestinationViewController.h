@@ -11,11 +11,19 @@
 
 @class SPGooglePlacesAutocompleteQuery;
 
+@protocol DestinationViewControllerDelegate
+
+-(void)selectedDestination:(NSString *)destination indexPath:(NSIndexPath*)indexPath;
+
+@end
+
 @interface DestinationViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate> {
     
     NSArray *searchResultPlaces;
     SPGooglePlacesAutocompleteQuery *searchQuery;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) id <DestinationViewControllerDelegate> delegate;
+@property (nonatomic) NSIndexPath *rideTableIndexPath;
 
 @end

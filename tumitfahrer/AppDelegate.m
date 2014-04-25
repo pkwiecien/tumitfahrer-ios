@@ -114,8 +114,7 @@
     
     // Initialize RestKit
     //    NSURL *baseURL = [NSURL URLWithString:API_ADDRESS];
-    //    NSURL *baseURL = [NSURL URLWithString:@"http://131.159.204.182:3000"];
-    NSURL *baseURL = [NSURL URLWithString:@"http://192.168.0.104:3000"];
+    NSURL *baseURL = [NSURL URLWithString:@"http://131.159.200.147:3000"];
     
     RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:baseURL];
     

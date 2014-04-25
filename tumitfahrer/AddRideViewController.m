@@ -16,7 +16,6 @@
 #import "SwitchTableViewCell.h"
 #import "FreeSeatsTableViewCell.h"
 #import "Constants.h"
-#import "DestinationViewController.h"
 
 @interface AddRideViewController () <NSFetchedResultsControllerDelegate>
 
@@ -130,11 +129,11 @@
     }
     
     if (indexPath.section == 0) {
-        NSLog(@"Printing: %@", [self.tableValues objectAtIndex:indexPath.row]);
         cell.detailTextLabel.text = [self.tableValues objectAtIndex:indexPath.row];
         cell.textLabel.text = [self.tablePlaceholders objectAtIndex:indexPath.row];
         if (indexPath.row ==2) {
-            freeSeatsCell.stepperLabelText = [self.tablePlaceholders objectAtIndex:indexPath.row];
+            freeSeatsCell.stepperLabelText.text = [self.tablePlaceholders objectAtIndex:indexPath.row];
+            [self.tableValues replaceObjectAtIndex:2 withObject:freeSeatsCell.passengersCountLabel.text];
         }
     } else if(indexPath.section == 1) {
         switchCell.switchCellTextLabel.text = [self.shareValues objectAtIndex:indexPath.row];
@@ -178,10 +177,11 @@
             meetingPointVC.selectedValueDelegate = self;
             [self.navigationController pushViewController:meetingPointVC animated:YES];
         }
-        if (([[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Destination"])) {
+        if (([[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Destination"]) || [[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Departure"]) {
             DestinationViewController *destinationVC = [[DestinationViewController alloc] init];
+            destinationVC.delegate = self;
+            destinationVC.rideTableIndexPath = indexPath;
             [self.navigationController pushViewController:destinationVC animated:YES];
-            //[self presentViewController:destinationVC animated:YES completion:nil];
         }
     }
 }
@@ -210,7 +210,18 @@
     
     NSDictionary *queryParams;
     // add enum
-    queryParams = @{@"departure_place": @"Gdynia", @"destination": @"Sopot", @"departure_time": @"2012-02-03 12:20", @"free_seats": @"3", @"meeting_point": @"Parking lot"};
+    NSString *departurePlace = [self.tableValues objectAtIndex:0];
+    NSString *destination = [self.tableValues objectAtIndex:1];
+    NSString *freeSeats = [self.tableValues objectAtIndex:2];
+    NSString *meetingPoint = [self.tableValues objectAtIndex:3];
+    if (!departurePlace || !destination || !meetingPoint) {
+        return;
+    }
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
+    NSString *now = [formatter stringFromDate:[NSDate date]];
+
+    queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": now, @"free_seats": freeSeats, @"meeting_point": meetingPoint};
     NSDictionary *rideParams = @{@"ride": queryParams};
     
     [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"apiKey" value:[[CurrentUser sharedInstance] user].apiKey];
@@ -261,6 +272,10 @@
 
 -(void)selectedValueIs:(NSString *)value {
     [self.tableValues replaceObjectAtIndex:3 withObject:value];
+}
+
+-(void)selectedDestination:(NSString *)destination indexPath:(NSIndexPath*)indexPath{
+    [self.tableValues replaceObjectAtIndex:indexPath.row withObject:destination];
 }
 
 @end

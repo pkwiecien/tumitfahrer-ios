@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "MeetingPointViewController.h"
+#import "DestinationViewController.h"
 
-@interface AddRideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MeetingPointDelegate>
+@class DestinationViewController;
+
+@interface AddRideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MeetingPointDelegate, DestinationViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
