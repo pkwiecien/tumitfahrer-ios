@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		068F5848AB864309B2DEC0B8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAEC5882914944C4B8E2DE24 /* libPods.a */; };
+		E504D9BC190A58710036FFA8 /* MeetingPointViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9BA190A58710036FFA8 /* MeetingPointViewController.m */; };
+		E504D9BD190A58710036FFA8 /* MeetingPointViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E504D9BB190A58710036FFA8 /* MeetingPointViewController.xib */; };
+		E504D9C2190A6C940036FFA8 /* DestinationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9C0190A6C940036FFA8 /* DestinationViewController.m */; };
+		E504D9C3190A6C940036FFA8 /* DestinationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E504D9C1190A6C940036FFA8 /* DestinationViewController.xib */; };
+		E504D9C6190A6DA10036FFA8 /* LayoutUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9C5190A6DA10036FFA8 /* LayoutUtilities.m */; };
+		E504D9D0190A7FC50036FFA8 /* SPGooglePlacesAutocompletePlace.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9C9190A7FC50036FFA8 /* SPGooglePlacesAutocompletePlace.m */; };
+		E504D9D1190A7FC50036FFA8 /* SPGooglePlacesAutocompleteQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9CB190A7FC50036FFA8 /* SPGooglePlacesAutocompleteQuery.m */; };
+		E504D9D2190A7FC50036FFA8 /* SPGooglePlacesAutocompleteUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9CD190A7FC50036FFA8 /* SPGooglePlacesAutocompleteUtilities.m */; };
+		E504D9D3190A7FC50036FFA8 /* SPGooglePlacesPlaceDetailQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9CF190A7FC50036FFA8 /* SPGooglePlacesPlaceDetailQuery.m */; };
 		E50DB26B18F447B800E87E62 /* CurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB26A18F447B800E87E62 /* CurrentUser.m */; };
 		E50DB26F18F52E8500E87E62 /* StatusMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB26E18F52E8500E87E62 /* StatusMapping.m */; };
 		E50DB27218F5DFB200E87E62 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB27118F5DFB200E87E62 /* LocationController.m */; };
@@ -128,6 +137,22 @@
 /* Begin PBXFileReference section */
 		BAEC5882914944C4B8E2DE24 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C71CE6059C014DFABC5B4F22 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		E504D9B9190A58710036FFA8 /* MeetingPointViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetingPointViewController.h; sourceTree = "<group>"; };
+		E504D9BA190A58710036FFA8 /* MeetingPointViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetingPointViewController.m; sourceTree = "<group>"; };
+		E504D9BB190A58710036FFA8 /* MeetingPointViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeetingPointViewController.xib; sourceTree = "<group>"; };
+		E504D9BF190A6C940036FFA8 /* DestinationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DestinationViewController.h; sourceTree = "<group>"; };
+		E504D9C0190A6C940036FFA8 /* DestinationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DestinationViewController.m; sourceTree = "<group>"; };
+		E504D9C1190A6C940036FFA8 /* DestinationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DestinationViewController.xib; sourceTree = "<group>"; };
+		E504D9C4190A6DA10036FFA8 /* LayoutUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutUtilities.h; sourceTree = "<group>"; };
+		E504D9C5190A6DA10036FFA8 /* LayoutUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutUtilities.m; sourceTree = "<group>"; };
+		E504D9C8190A7FC50036FFA8 /* SPGooglePlacesAutocompletePlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPGooglePlacesAutocompletePlace.h; sourceTree = "<group>"; };
+		E504D9C9190A7FC50036FFA8 /* SPGooglePlacesAutocompletePlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPGooglePlacesAutocompletePlace.m; sourceTree = "<group>"; };
+		E504D9CA190A7FC50036FFA8 /* SPGooglePlacesAutocompleteQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPGooglePlacesAutocompleteQuery.h; sourceTree = "<group>"; };
+		E504D9CB190A7FC50036FFA8 /* SPGooglePlacesAutocompleteQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPGooglePlacesAutocompleteQuery.m; sourceTree = "<group>"; };
+		E504D9CC190A7FC50036FFA8 /* SPGooglePlacesAutocompleteUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPGooglePlacesAutocompleteUtilities.h; sourceTree = "<group>"; };
+		E504D9CD190A7FC50036FFA8 /* SPGooglePlacesAutocompleteUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPGooglePlacesAutocompleteUtilities.m; sourceTree = "<group>"; };
+		E504D9CE190A7FC50036FFA8 /* SPGooglePlacesPlaceDetailQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPGooglePlacesPlaceDetailQuery.h; sourceTree = "<group>"; };
+		E504D9CF190A7FC50036FFA8 /* SPGooglePlacesPlaceDetailQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPGooglePlacesPlaceDetailQuery.m; sourceTree = "<group>"; };
 		E50DB26918F447B800E87E62 /* CurrentUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentUser.h; sourceTree = "<group>"; };
 		E50DB26A18F447B800E87E62 /* CurrentUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentUser.m; sourceTree = "<group>"; };
 		E50DB26D18F52E8500E87E62 /* StatusMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusMapping.h; sourceTree = "<group>"; };
@@ -286,6 +311,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5FDDBC618EDE9B100CE7B01 /* MapKit.framework in Frameworks */,
 				E5FDDBE118EFDD3B00CE7B01 /* CoreLocation.framework in Frameworks */,
 				E51FD51718F3B6EA0098AD11 /* CFNetwork.framework in Frameworks */,
 				E51FD51518F3B6E00098AD11 /* libxml2.dylib in Frameworks */,
@@ -299,7 +325,6 @@
 				E5FDDBDD18EFDD2E00CE7B01 /* SystemConfiguration.framework in Frameworks */,
 				E5FDDBDB18EFDD2700CE7B01 /* CoreImage.framework in Frameworks */,
 				E5FDDBD918EFDD1E00CE7B01 /* AdSupport.framework in Frameworks */,
-				E5FDDBC618EDE9B100CE7B01 /* MapKit.framework in Frameworks */,
 				E599881118E7FC5900B01C62 /* MediaPlayer.framework in Frameworks */,
 				E5FDDBD618EFDD0100CE7B01 /* UbertestersSDK.framework in Frameworks */,
 				E599880E18E7FB1600B01C62 /* AVFoundation.framework in Frameworks */,
@@ -324,6 +349,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E504D9B8190A585A0036FFA8 /* Meeting Point */ = {
+			isa = PBXGroup;
+			children = (
+				E504D9B9190A58710036FFA8 /* MeetingPointViewController.h */,
+				E504D9BA190A58710036FFA8 /* MeetingPointViewController.m */,
+				E504D9BB190A58710036FFA8 /* MeetingPointViewController.xib */,
+			);
+			name = "Meeting Point";
+			sourceTree = "<group>";
+		};
+		E504D9BE190A6C860036FFA8 /* Destination */ = {
+			isa = PBXGroup;
+			children = (
+				E504D9BF190A6C940036FFA8 /* DestinationViewController.h */,
+				E504D9C0190A6C940036FFA8 /* DestinationViewController.m */,
+				E504D9C1190A6C940036FFA8 /* DestinationViewController.xib */,
+			);
+			name = Destination;
+			sourceTree = "<group>";
+		};
+		E504D9C7190A7FAC0036FFA8 /* GooglePlacesAutocomplete */ = {
+			isa = PBXGroup;
+			children = (
+				E504D9C8190A7FC50036FFA8 /* SPGooglePlacesAutocompletePlace.h */,
+				E504D9C9190A7FC50036FFA8 /* SPGooglePlacesAutocompletePlace.m */,
+				E504D9CA190A7FC50036FFA8 /* SPGooglePlacesAutocompleteQuery.h */,
+				E504D9CB190A7FC50036FFA8 /* SPGooglePlacesAutocompleteQuery.m */,
+				E504D9CC190A7FC50036FFA8 /* SPGooglePlacesAutocompleteUtilities.h */,
+				E504D9CD190A7FC50036FFA8 /* SPGooglePlacesAutocompleteUtilities.m */,
+				E504D9CE190A7FC50036FFA8 /* SPGooglePlacesPlaceDetailQuery.h */,
+				E504D9CF190A7FC50036FFA8 /* SPGooglePlacesPlaceDetailQuery.m */,
+			);
+			name = GooglePlacesAutocomplete;
+			sourceTree = "<group>";
+		};
 		E50DB26C18F52E5900E87E62 /* RKMappings */ = {
 			isa = PBXGroup;
 			children = (
@@ -576,6 +636,8 @@
 				E50DB27118F5DFB200E87E62 /* LocationController.m */,
 				E50DB28F18F881BC00E87E62 /* PanoramioUtilities.h */,
 				E50DB29018F881BC00E87E62 /* PanoramioUtilities.m */,
+				E504D9C4190A6DA10036FFA8 /* LayoutUtilities.h */,
+				E504D9C5190A6DA10036FFA8 /* LayoutUtilities.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -593,6 +655,7 @@
 		E599886618E860FA00B01C62 /* zLibraries */ = {
 			isa = PBXGroup;
 			children = (
+				E504D9C7190A7FAC0036FFA8 /* GooglePlacesAutocomplete */,
 				E599886718E8610800B01C62 /* Paper */,
 			);
 			name = zLibraries;
@@ -688,6 +751,8 @@
 		E5E2155A1907A92700B0B150 /* Add Ride */ = {
 			isa = PBXGroup;
 			children = (
+				E504D9BE190A6C860036FFA8 /* Destination */,
+				E504D9B8190A585A0036FFA8 /* Meeting Point */,
 				E5E2157B1908490700B0B150 /* Free Seats Cell */,
 				E5E2157A1908443100B0B150 /* Switch Cell */,
 				E5E2155C1907A94A00B0B150 /* AddRideViewController.h */,
@@ -847,6 +912,7 @@
 				E599880C18E7836D00B01C62 /* MenuViewController.xib in Resources */,
 				E5DF642A18EBDD2A00D53164 /* BalancedColumnCell.xib in Resources */,
 				E59987D118E6E47F00B01C62 /* LoginViewController.xib in Resources */,
+				E504D9BD190A58710036FFA8 /* MeetingPointViewController.xib in Resources */,
 				E599882718E821D700B01C62 /* circle@2x.png in Resources */,
 				E5DF641618EB548E00D53164 /* SettingsViewController.xib in Resources */,
 				E5DF641C18EB56A600D53164 /* ActivityRidesViewController.xib in Resources */,
@@ -871,6 +937,7 @@
 				E599882118E8145500B01C62 /* road@2x.png in Resources */,
 				E5DF642318EB658300D53164 /* CampusRidesViewController.xib in Resources */,
 				E5E215791908442100B0B150 /* SwitchTableViewCell.xib in Resources */,
+				E504D9C3190A6C940036FFA8 /* DestinationViewController.xib in Resources */,
 				E599886518E8559500B01C62 /* garching.png in Resources */,
 				E59987D918E6F66E00B01C62 /* customIcon.png in Resources */,
 			);
@@ -933,7 +1000,9 @@
 				E5DF641018EB46F900D53164 /* RideDetailsViewController.m in Sources */,
 				E59987D018E6E47F00B01C62 /* LoginViewController.m in Sources */,
 				E50DB28218F86F8000E87E62 /* UserMapping.m in Sources */,
+				E504D9BC190A58710036FFA8 /* MeetingPointViewController.m in Sources */,
 				E5DF641F18EB639600D53164 /* CampusRidesViewController.m in Sources */,
+				E504D9D0190A7FC50036FFA8 /* SPGooglePlacesAutocompletePlace.m in Sources */,
 				E599886218E84D9D00B01C62 /* MenuTableViewCell.m in Sources */,
 				E59987C918E6DBEA00B01C62 /* RideRequestsViewController.m in Sources */,
 				E5E2157F1908492200B0B150 /* FreeSeatsTableViewCell.m in Sources */,
@@ -952,12 +1021,16 @@
 				E599880118E72BF600B01C62 /* ForgotPasswordViewController.m in Sources */,
 				E59987FB18E7251000B01C62 /* RegisterViewController.m in Sources */,
 				E50DB28B18F8730400E87E62 /* RidesStore.m in Sources */,
+				E504D9C6190A6DA10036FFA8 /* LayoutUtilities.m in Sources */,
 				E50DB28818F8706500E87E62 /* RideMapping.m in Sources */,
 				E599887818E8617100B01C62 /* HACollectionViewLargeLayout.m in Sources */,
+				E504D9D1190A7FC50036FFA8 /* SPGooglePlacesAutocompleteQuery.m in Sources */,
 				E59987D718E6ECF200B01C62 /* CustomTextField.m in Sources */,
 				E50DB26B18F447B800E87E62 /* CurrentUser.m in Sources */,
 				E50DB29418FA7A8800E87E62 /* FacultyManager.m in Sources */,
+				E504D9D3190A7FC50036FFA8 /* SPGooglePlacesPlaceDetailQuery.m in Sources */,
 				E50DB26F18F52E8500E87E62 /* StatusMapping.m in Sources */,
+				E504D9D2190A7FC50036FFA8 /* SPGooglePlacesAutocompleteUtilities.m in Sources */,
 				E58F958618FD107E00A0A55B /* CvLayout.m in Sources */,
 				E522BAC618AE13F600ECD375 /* main.m in Sources */,
 				E50DB28518F86F8800E87E62 /* SessionMapping.m in Sources */,
@@ -966,6 +1039,7 @@
 				E599887218E8616200B01C62 /* HATransitionController.m in Sources */,
 				E5FDDBF118F0059D00CE7B01 /* ActionManager.m in Sources */,
 				E50DB29818FA7D4100E87E62 /* Faculty.m in Sources */,
+				E504D9C2190A6C940036FFA8 /* DestinationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

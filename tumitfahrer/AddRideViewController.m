@@ -15,15 +15,16 @@
 #import "LocationController.h"
 #import "SwitchTableViewCell.h"
 #import "FreeSeatsTableViewCell.h"
+#import "Constants.h"
+#import "DestinationViewController.h"
 
 @interface AddRideViewController () <NSFetchedResultsControllerDelegate>
 
-@property (nonatomic) UIColor *customGrayColor;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
-@property (nonatomic, strong) NSArray *tablePlaceholders;
-@property (nonatomic, strong) NSMutableArray *tableValues;
 @property (nonatomic, strong) NSMutableArray *shareValues;
 @property (nonatomic, strong) NSMutableArray *passengerValues;
+@property (nonatomic, strong) NSMutableArray *tableValues;
+@property (nonatomic, strong) NSMutableArray *tablePlaceholders;
 
 @end
 
@@ -32,10 +33,10 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.tablePlaceholders = [[NSArray alloc] initWithObjects:@"Departure", @"Destination", @"Free Seats", @"Meeting Point", nil];
+        self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"Departure", @"Destination", @"Free Seats", @"Meeting Point", nil];
         self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", nil];
         self.shareValues = [[NSMutableArray alloc] initWithObjects:@"Facebook", @"Email", nil];
-        self.passengerValues = [[NSMutableArray alloc] initWithObjects:@"Add a passenger", nil];
+        self.passengerValues = [[NSMutableArray alloc] initWithObjects:@"Add a passenger", @"Add second passenger", @"Add third passenger", @"Add fourth passenger", @"Add fifth passenger", nil];
     }
     return self;
 }
@@ -43,71 +44,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.customGrayColor = [UIColor colorWithRed:224/255.0 green:224/255.0 blue:224/255.0 alpha:1.0];
-    [self.view setBackgroundColor:self.customGrayColor];
-    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
     [self setupNavbar];
     [self makeBackground];
-    self.tableView = [self makeTableView];
-    [self.view addSubview:self.tableView];
+    
     [self.tableValues replaceObjectAtIndex:0 withObject:[LocationController sharedInstance].currentAddress];
 }
 
--(void)makeBackground
-{
+-(void)viewWillAppear:(BOOL)animated {
+    [self.tableView reloadData];
+}
+
+-(void)makeBackground {
     UIImageView *imgBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gradientBackground"]];
     imgBackgroundView.frame = self.view.bounds;
     [self.view addSubview:imgBackgroundView];
     [self.view sendSubviewToBack:imgBackgroundView];
 }
-
--(UITableView*)makeTableView {
-    CGFloat x = 0;
-    CGFloat y = 90;
-    CGFloat width = self.view.frame.size.width;
-    CGFloat height = TableSingleRowHeight*([self.tablePlaceholders count])+TableSingleRowHeight*([self.shareValues count])+TableSingleRowHeight*[self.passengerValues count] +TableHeaderHeight*2;
-    CGRect tableFrame = CGRectMake(x, y, width, height);
-    
-    UITableView *tableView = [[UITableView alloc]initWithFrame:tableFrame style:UITableViewStylePlain];
-    
-    tableView.rowHeight = TableSingleRowHeight;
-    tableView.sectionHeaderHeight = TableHeaderHeight;
-    tableView.scrollEnabled = YES;
-    tableView.showsVerticalScrollIndicator = YES;
-    tableView.userInteractionEnabled = YES;
-    tableView.bounces = NO;
-    tableView.backgroundColor = [UIColor clearColor];
-    
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    
-    return tableView;
-}
-
--(void)viewWillAppear:(BOOL)animated {
-}
-
-//-(void)setupNavbar
-//{
-//    UIColor *navBarColor = [UIColor colorWithRed:0 green:0.361 blue:0.588 alpha:1]; /*#0e3750*/
-//    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-//    [[UINavigationBar appearance] setBarTintColor:navBarColor];
-//    [self.navigationController.navigationBar setBackgroundImage:[[ActionManager sharedManager] imageWithColor:navBarColor] forBarMetrics:UIBarMetricsDefault];
-//    self.navigationController.navigationBarHidden = NO;
-//    self.navigationController.navigationBar.translucent = NO;
-//
-//
-//    // right button of the navigation bar
-//    CustomBarButton *searchButton = [[CustomBarButton alloc] initWithTitle:@"Add"];
-//    [searchButton addTarget:self action:@selector(addRideButtonPressed) forControlEvents:UIControlEventTouchDown];
-//    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
-//    self.navigationItem.rightBarButtonItem = searchButtonItem;
-//
-//    // title of the navigation bar
-//    self.title = @"Add a Ride";
-//    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
-//}
 
 -(void)setupNavbar {
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
@@ -123,15 +77,23 @@
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
     [self.navigationItem setLeftBarButtonItem:settingsButton];
     
+    // right button of the navigation bar
+    CustomBarButton *searchButton = [[CustomBarButton alloc] initWithTitle:@"Add"];
+    [searchButton addTarget:self action:@selector(addRideButtonPressed) forControlEvents:UIControlEventTouchDown];
+    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
+    self.navigationItem.rightBarButtonItem = searchButtonItem;
+    
     self.navigationController.navigationBarHidden = NO;
     self.title = @"ADD RIDE";
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 }
 
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 3;
 }
+
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -168,6 +130,7 @@
     }
     
     if (indexPath.section == 0) {
+        NSLog(@"Printing: %@", [self.tableValues objectAtIndex:indexPath.row]);
         cell.detailTextLabel.text = [self.tableValues objectAtIndex:indexPath.row];
         cell.textLabel.text = [self.tablePlaceholders objectAtIndex:indexPath.row];
         if (indexPath.row ==2) {
@@ -202,10 +165,25 @@
     if(indexPath.section == 1)
         return switchCell;
     if (indexPath.section == 0 && indexPath.row ==2) {
-       return freeSeatsCell;
+        return freeSeatsCell;
     }
     
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        if ([[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Meeting Point"]) {
+            MeetingPointViewController *meetingPointVC = [[MeetingPointViewController alloc] init];
+            meetingPointVC.selectedValueDelegate = self;
+            [self.navigationController pushViewController:meetingPointVC animated:YES];
+        }
+        if (([[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Destination"])) {
+            DestinationViewController *destinationVC = [[DestinationViewController alloc] init];
+            [self.navigationController pushViewController:destinationVC animated:YES];
+            //[self presentViewController:destinationVC animated:YES completion:nil];
+        }
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -248,7 +226,6 @@
         [[ActionManager sharedManager] showAlertViewWithTitle:[error localizedDescription]];
         RKLogError(@"Load failed with error: %@", error);
     }];
-    
 }
 
 -(void)closeButtonPressed {
@@ -280,6 +257,10 @@
     
     return self.fetchedResultsController;
     
+}
+
+-(void)selectedValueIs:(NSString *)value {
+    [self.tableValues replaceObjectAtIndex:3 withObject:value];
 }
 
 @end

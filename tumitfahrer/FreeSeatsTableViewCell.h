@@ -12,6 +12,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *stepperLabelText;
 @property (weak, nonatomic) IBOutlet UILabel *passengersCountLabel;
+
+@property (weak, nonatomic) IBOutlet UIStepper *stepper;
 - (IBAction)stepperValueChanged:(UIStepper *)sender;
 
 @end

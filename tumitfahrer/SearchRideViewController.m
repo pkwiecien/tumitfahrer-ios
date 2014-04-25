@@ -66,5 +66,22 @@
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 20;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *CellIdentifier = @"SettingsCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if(cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
+    }
+    cell.textLabel.text = [NSString stringWithFormat:@"Label %ld", (long)indexPath.row];
+    
+    return cell;
+}
 
 @end

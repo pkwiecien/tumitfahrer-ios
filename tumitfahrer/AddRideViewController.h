@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MeetingPointViewController.h"
 
-@interface AddRideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface AddRideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MeetingPointDelegate>
 
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) UITableView *shareTableView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

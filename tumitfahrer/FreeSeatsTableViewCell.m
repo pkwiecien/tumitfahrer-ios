@@ -12,21 +12,19 @@
 
 - (void)awakeFromNib
 {
-    // Initialization code
+    self.stepper.value = 1;
+    self.stepper.maximumValue = 8;
+    self.stepper.minimumValue = 1;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 - (IBAction)stepperValueChanged:(UIStepper *)sender {
-    double value = [sender value];
-    if (value > 0 && value < 8) {
-        self.stepperLabelText.text = [NSString stringWithFormat:@"%d", (int)value];
-    }
+    NSUInteger value = sender.value;
+    self.passengersCountLabel.text = [NSString stringWithFormat:@"%d", (int)value];
 }
 
 @end
