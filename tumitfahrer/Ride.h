@@ -2,7 +2,7 @@
 //  Ride.h
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 4/25/14.
+//  Created by Pawel Kwiecien on 4/26/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
@@ -13,26 +13,27 @@
 
 @interface Ride : NSManagedObject
 
-@property (nonatomic) int rideId;
-@property (nonatomic, retain) NSString * departurePlace;
-@property (nonatomic, retain) NSString * destination;
-@property (nonatomic, retain) NSString * meetingPoint;
-@property (nonatomic, retain) NSDate * departureTime;
-@property (nonatomic) int freeSeats;
 @property (nonatomic, retain) NSDate * createdAt;
-@property (nonatomic, retain) NSString * updatedAt;
-@property (nonatomic) float realtimeKm;
+@property (nonatomic, retain) NSString * departurePlace;
+@property (nonatomic, retain) NSDate * departureTime;
+@property (nonatomic, retain) NSString * destination;
+@property (nonatomic, retain) id destinationImage;
+@property (nonatomic, retain) NSNumber * destinationLatitude;
+@property (nonatomic, retain) NSNumber * destinationLongitude;
+@property (nonatomic, retain) NSNumber * distance;
+@property (nonatomic, retain) NSNumber * duration;
+@property (nonatomic, retain) NSNumber * freeSeats;
+@property (nonatomic, retain) NSNumber * isFinished;
+@property (nonatomic, retain) NSNumber * isPaid;
+@property (nonatomic, retain) NSString * meetingPoint;
+@property (nonatomic, retain) NSNumber * price;
 @property (nonatomic, retain) NSDate * realtimeDepartureTime;
-@property (nonatomic) float price;
-@property (nonatomic) float duration;
-@property (nonatomic) float distance;
-@property (nonatomic) BOOL isFinished;
-@property (nonatomic) BOOL isPaid;
-@property (nonatomic, strong) UIImage * destinationImage;
-@property (nonatomic) double destinationLatitude;
-@property (nonatomic) double destinationLongitude;
+@property (nonatomic, retain) NSNumber * realtimeKm;
+@property (nonatomic, retain) NSNumber * rideId;
+@property (nonatomic, retain) NSString * updatedAt;
 @property (nonatomic, retain) User *driver;
 @property (nonatomic, retain) NSSet *passengers;
+@property (nonatomic, retain) NSSet *requests;
 @end
 
 @interface Ride (CoreDataGeneratedAccessors)
@@ -42,5 +43,9 @@
 - (void)addPassengers:(NSSet *)values;
 - (void)removePassengers:(NSSet *)values;
 
+- (void)addRequestsObject:(Request *)value;
+- (void)removeRequestsObject:(Request *)value;
+- (void)addRequests:(NSSet *)values;
+- (void)removeRequests:(NSSet *)values;
 
 @end
