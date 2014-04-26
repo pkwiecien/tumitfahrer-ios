@@ -8,7 +8,6 @@
 
 #import "RegisterViewController.h"
 #import "CustomTextField.h"
-#import "Constants.h"
 #import "ActionManager.h"
 #import "CurrentUser.h"
 #import "LoginViewController.h"
@@ -58,10 +57,10 @@
 - (void)prepareInputFields {
     
     float centerX = (self.view.frame.size.width - cUIElementWidth)/2;
-    UIImage *emailIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"EmailIcon"] withColor:[UIColor whiteColor]];
+    UIImage *emailIcon = [ActionManager colorImage:[UIImage imageNamed:@"EmailIcon"] withColor:[UIColor whiteColor]];
     self.emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIcon:emailIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeEmailAddress shouldStartWithCapital:NO];
     
-    UIImage *profileIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"ProfileIcon"] withColor:[UIColor whiteColor]];
+    UIImage *profileIcon = [ActionManager colorImage:[UIImage imageNamed:@"ProfileIcon"] withColor:[UIColor whiteColor]];
     self.firstNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop + cUIElementPadding + self.emailTextField.frame.size.height, cUIElementWidth, cUIElementHeight) placeholderText:@"First name" customIcon:profileIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeDefault shouldStartWithCapital:YES];
     
     self.lastNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop + cUIElementPadding*2 + self.emailTextField.frame.size.height*2, cUIElementWidth, cUIElementHeight) placeholderText:@"Last name" customIcon:profileIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeDefault shouldStartWithCapital:YES];
@@ -72,7 +71,7 @@
     [self.lastNameTextField addTarget:self action:@selector(hidePickerView) forControlEvents:UIControlEventAllTouchEvents];
     
     // TODO: show picker instead of department
-    UIImage *campusIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"CampusIcon"] withColor:[UIColor whiteColor]];
+    UIImage *campusIcon = [ActionManager colorImage:[UIImage imageNamed:@"CampusIcon"] withColor:[UIColor whiteColor]];
     self.departmentNameTextField = [[CustomTextField alloc] initNotEditableButton:CGRectMake(centerX,cMarginTop + cUIElementPadding*3 + self.emailTextField.frame.size.height*3, cUIElementWidth, cUIElementHeight) placeholderText:@"Department" customIcon:campusIcon];
     [self.departmentNameTextField addTarget:self action:@selector(showDepartmentPickerView) forControlEvents:UIControlEventAllTouchEvents];
 }
@@ -91,7 +90,7 @@
         loginVC.statusLabel.text = @"Login with the password from the email";
         [self backToLoginButtonPressed:nil];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        [[ActionManager sharedManager] showAlertViewWithTitle:[error localizedDescription]];
+        [ActionManager showAlertViewWithTitle:[error localizedDescription]];
         RKLogError(@"Load failed with error: %@", error);
     }];
 }
@@ -129,7 +128,7 @@
     self.fetchedResultsController.delegate = self;
     
     if (![self.fetchedResultsController performFetch:&error]) {
-        [[ActionManager sharedManager] showAlertViewWithTitle:[error localizedDescription]];
+        [ActionManager showAlertViewWithTitle:[error localizedDescription]];
     }
     
     return self.fetchedResultsController;

@@ -54,11 +54,11 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)joinButtonPressed:(id)sender {
-    [[ActionManager sharedManager] showAlertViewWithTitle:@"Join a ride"];
+    [ActionManager showAlertViewWithTitle:@"Join a ride"];
 }
 
 - (IBAction)contactDriverButtonPressed:(id)sender {
-    [[ActionManager sharedManager] showAlertViewWithTitle:@"Contact driver"];
+    [ActionManager showAlertViewWithTitle:@"Contact driver"];
 }
 
 @end

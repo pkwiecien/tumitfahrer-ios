@@ -15,16 +15,18 @@
 
 @property (nonatomic, retain) NSString * apiKey;
 @property (nonatomic, retain) NSString * car;
-@property (nonatomic) NSTimeInterval createdAt;
-@property (nonatomic) int16_t department;
+@property (nonatomic, retain) NSDate * createdAt;
+@property (nonatomic, retain) NSNumber * department;
 @property (nonatomic, retain) NSString * email;
 @property (nonatomic, retain) NSString * firstName;
 @property (nonatomic) BOOL isStudent;
 @property (nonatomic, retain) NSString * lastName;
 @property (nonatomic, retain) NSString * password;
 @property (nonatomic, retain) NSString * phoneNumber;
-@property (nonatomic) NSTimeInterval updatedAt;
-@property (nonatomic) int32_t userId;
+@property (nonatomic, retain) NSDate * updatedAt;
+@property (nonatomic) int userId;
+@property (nonatomic, retain) NSSet *ridesAsDriver;
+@property (nonatomic, retain) NSSet *ridesAsPassenger;
 @property (nonatomic, retain) NSSet *friendRequestsReceived;
 @property (nonatomic, retain) FriendRequest *friendRequestsSent;
 @property (nonatomic, retain) NSSet *friends;
@@ -32,8 +34,6 @@
 @property (nonatomic, retain) NSSet *messagesSent;
 @property (nonatomic, retain) NSSet *ratingsGiven;
 @property (nonatomic, retain) NSSet *ratingsReceived;
-@property (nonatomic, retain) NSSet *ridesAsDriver;
-@property (nonatomic, retain) NSSet *ridesAsPassenger;
 @end
 
 @interface User (CoreDataGeneratedAccessors)

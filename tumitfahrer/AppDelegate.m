@@ -13,14 +13,14 @@
 #import "ForgotPasswordViewController.h"
 #import "MenuViewController.h"
 #import "SlideNavigationController.h"
-#import "Constants.h"
 #import "HATransitionController.h"
 #import "HACollectionViewSmallLayout.h"
 #import "Device.h"
-
+#import "ActivityRidesViewController.h"
 #import "UserMapping.h"
 #import "SessionMapping.h"
 #import "RideMapping.h"
+#import "DeviceMapping.h"
 #import "LocationController.h"
 #import "PanoramioUtilities.h"
 
@@ -42,7 +42,7 @@
     [self setupObservers];
     
     // Ubertersters SDK initialization
-    //[[Ubertesters shared] initializeWithOptions:UTOptionsManual];
+    [[Ubertesters shared] initializeWithOptions:UTOptionsManual];
     
     [self.window makeKeyAndVisible];
     return YES;
@@ -73,18 +73,16 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-//    [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"loggedIn"];
 }
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
-	NSLog(@"My token is: %@", deviceToken);
     const unsigned *tokenBytes = [deviceToken bytes];
     NSString *hexToken = [NSString stringWithFormat:@"%08x%08x%08x%08x%08x%08x%08x%08x",
                           ntohl(tokenBytes[0]), ntohl(tokenBytes[1]), ntohl(tokenBytes[2]),
                           ntohl(tokenBytes[3]), ntohl(tokenBytes[4]), ntohl(tokenBytes[5]),
                           ntohl(tokenBytes[6]), ntohl(tokenBytes[7])];
-    NSLog(@"%@", hexToken);
+    NSLog(@"Device token is: %@", hexToken);
     [[Device sharedInstance] setDeviceToken:hexToken];
 }
 
@@ -102,11 +100,12 @@
 
 -(void)setupNavigationController {
     // init controllers
-    RideRequestsViewController *rideRequestVC = [[RideRequestsViewController alloc] init];
+    ActivityRidesViewController *activityRidesVC = [[ActivityRidesViewController alloc] init];
+    // RideRequestsViewController *rideRequestVC = [[RideRequestsViewController alloc] init];
     MenuViewController *leftMenu = [[MenuViewController alloc] init];
     
     // init and configure slide panel
-    self.navigationController = [[SlideNavigationController alloc] initWithRootViewController:rideRequestVC];
+    self.navigationController = [[SlideNavigationController alloc] initWithRootViewController:activityRidesVC];
     self.navigationController.enableSwipeGesture = YES;
     self.navigationController.portraitSlideOffset = cSlideMenuOffset; // width of visible view controller
     [SlideNavigationController sharedInstance].leftMenu = leftMenu;
@@ -114,6 +113,11 @@
     
     // set root view controller
     self.window.rootViewController = self.navigationController;
+}
+
+-(void)setupLeftMenu {
+    MenuViewController *menuController = [[MenuViewController alloc] init];
+    menuController.preferredContentSize = CGSizeMake(180, 0);
 }
 
 -(void)setupRestKit {
@@ -138,23 +142,9 @@
     [[RKValueTransformer defaultValueTransformer] insertValueTransformer:dateFormatter atIndex:0];
     
     // add mappings to object manager
-    RKEntityMapping *postSessionMapping =[SessionMapping postSessionMapping];
-    [objectManager addResponseDescriptor:[SessionMapping postSessionResponseDescriptorWithMapping:postSessionMapping]];
-    RKObjectMapping *postUserMapping =[UserMapping postUserMapping];
-    [objectManager addResponseDescriptor:[UserMapping postUserResponseDescriptorWithMapping:postUserMapping]];
-    RKEntityMapping *getRidesMapping = [RideMapping getRidesMapping];
-    [objectManager addResponseDescriptor:[RideMapping getRidesResponseDescriptorWithMapping:getRidesMapping]];
-    /*
-    RKObjectMapping *postDeviceTokenMapping = [DeviceMapping postDeviceMapping];
-    [objectManager addResponseDescriptor:[DeviceMapping postDeviceResponseDescriptorWithMapping:postDeviceTokenMapping]];
-     */
+    [self initMappingsForObjectManager:objectManager];
     
-    RKEntityMapping *postRideMapping = [RideMapping postRideMapping];
-    [objectManager addResponseDescriptorsFromArray:@[[RideMapping postRideResponseDescriptorWithMapping:postRideMapping]]];
-    
-    /**
-     Complete Core Data stack initialization
-     */
+    // complete Core Data stack initialization
     [managedObjectStore createPersistentStoreCoordinator];
     NSString *storePath = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"Tumitfahrer.sqlite"];
     NSPersistentStore *persistentStore = [managedObjectStore addSQLitePersistentStoreAtPath:storePath fromSeedDatabaseAtPath:nil withConfiguration:nil options:nil error:&error];
@@ -171,9 +161,27 @@
     
 }
 
+-(void)initMappingsForObjectManager:(RKObjectManager *)objectManager {
+    
+    RKEntityMapping *postSessionMapping =[SessionMapping sessionMapping];
+    [objectManager addResponseDescriptor:[SessionMapping postSessionResponseDescriptorWithMapping:postSessionMapping]];
+    RKObjectMapping *postUserMapping =[UserMapping postUserMapping];
+    [objectManager addResponseDescriptor:[UserMapping postUserResponseDescriptorWithMapping:postUserMapping]];
+    RKEntityMapping *getRidesMapping = [RideMapping getRidesMapping];
+    [objectManager addResponseDescriptor:[RideMapping getRidesResponseDescriptorWithMapping:getRidesMapping]];
+    RKObjectMapping *postDeviceTokenMapping = [DeviceMapping postDeviceMapping];
+    [objectManager addResponseDescriptor:[DeviceMapping postDeviceResponseDescriptorWithMapping:postDeviceTokenMapping]];
+    RKEntityMapping *postRideMapping = [RideMapping postRideMapping];
+    [objectManager addResponseDescriptorsFromArray:@[[RideMapping postRideResponseDescriptorWithMapping:postRideMapping]]];
+}
+
 -(void)setupObservers {
+    // for getting location of a specific photo
     [[LocationController sharedInstance] addObserver:[PanoramioUtilities sharedInstance]];
+    // for getting location for a specific ride
     [[LocationController sharedInstance] addObserver:[RidesStore sharedStore]];
+    // for getting images for a specific location
     [[PanoramioUtilities sharedInstance] addObserver:[RidesStore sharedStore]];
 }
+
 @end

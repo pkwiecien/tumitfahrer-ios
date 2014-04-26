@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PanoramioUtilities.h"
+#import "RidesStore.h"
 #import <SlideNavigationController.h>
 
-@interface ActivityRidesViewController : UIViewController<SlideNavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate, UIScrollViewDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate>
+@interface ActivityRidesViewController : UIViewController<SlideNavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate, UIScrollViewDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, PanoramioUtilitiesDelegate, RideStoreDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *menuButton;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;

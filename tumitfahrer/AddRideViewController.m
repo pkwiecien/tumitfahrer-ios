@@ -15,7 +15,6 @@
 #import "LocationController.h"
 #import "SwitchTableViewCell.h"
 #import "FreeSeatsTableViewCell.h"
-#import "Constants.h"
 #import "RidesStore.h"
 
 @interface AddRideViewController () <NSFetchedResultsControllerDelegate>
@@ -73,7 +72,7 @@
     
     UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     [settingsView addTarget:self action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [settingsView setBackgroundImage:[[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"DeleteIcon2"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [settingsView setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"DeleteIcon2"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
     [self.navigationItem setLeftBarButtonItem:settingsButton];
     
@@ -236,7 +235,7 @@
         NSLog(@"This is driver: %@", ride.driver);
         [self dismissViewControllerAnimated:YES completion:nil];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        [[ActionManager sharedManager] showAlertViewWithTitle:[error localizedDescription]];
+        [ActionManager showAlertViewWithTitle:[error localizedDescription]];
         RKLogError(@"Load failed with error: %@", error);
     }];
 }
@@ -265,7 +264,7 @@
     self.fetchedResultsController.delegate = self;
     
     if (![self.fetchedResultsController performFetch:&error]) {
-        [[ActionManager sharedManager] showAlertViewWithTitle:[error localizedDescription]];
+        [ActionManager showAlertViewWithTitle:[error localizedDescription]];
     }
     
     return self.fetchedResultsController;

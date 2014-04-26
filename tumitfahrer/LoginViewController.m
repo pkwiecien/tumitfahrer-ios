@@ -10,7 +10,6 @@
 #import "CustomTextField.h"
 #import "RegisterViewController.h"
 #import "ForgotPasswordViewController.h"
-#import "Constants.h"
 #import "ActionManager.h"
 #import "CurrentUser.h"
 #import "RideRequestsViewController.h"
@@ -32,10 +31,10 @@
     if (self) {
 
         float centerX = (self.view.frame.size.width - cUIElementWidth)/2;
-        UIImage *emailWhiteIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"EmailIcon"] withColor:[UIColor whiteColor]];
+        UIImage *emailWhiteIcon = [ActionManager colorImage:[UIImage imageNamed:@"EmailIcon"] withColor:[UIColor whiteColor]];
         self.emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIcon:emailWhiteIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeEmailAddress shouldStartWithCapital:NO];
         
-        UIImage *passwordWhiteIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"PasswordIcon"] withColor:[UIColor whiteColor]];
+        UIImage *passwordWhiteIcon = [ActionManager colorImage:[UIImage imageNamed:@"PasswordIcon"] withColor:[UIColor whiteColor]];
         self.passwordTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop+self.emailTextField.frame.size.height + cUIElementPadding, cUIElementWidth, cUIElementHeight) placeholderText:@"Your password" customIcon:passwordWhiteIcon returnKeyType:UIReturnKeyDone keyboardType:UIKeyboardTypeDefault secureInput:YES];
         
         [self.view addSubview:self.emailTextField];
@@ -93,21 +92,15 @@
 
 - (IBAction)loginButtonPressed:(id)sender {
     
-    NSArray *testArray = [NSArray arrayWithObjects:@"first",@"second", nil];
-    for(NSString *str in testArray)
-    {
-        NSLog(@"%@", str);
-    }
-    
     // firstly check if the user was previously stored in core data
-    if ([CurrentUser fetchUserWithEmail:self.emailTextField.text]) {
+    if ([CurrentUser fetchUserFromCoreDataWithEmail:self.emailTextField.text]) {
         // user fetched successfully from core data
         [self storeCurrentUserInDefaults];
         [[SlideNavigationController sharedInstance] popToRootViewControllerAnimated:NO];
         [self dismissViewControllerAnimated:YES completion:nil];
         
         // check if fetch user has assigned a device token]
-        //[self checkDeviceToken];
+        [self checkDeviceToken];
     } else {
         // new user, get account from webservice
         [self createUserSession];
@@ -129,23 +122,18 @@
         [self storeCurrentUserInDefaults];
         [self dismissViewControllerAnimated:YES completion:nil];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        [[ActionManager sharedManager] showAlertViewWithTitle:@"Invalid email/password" description:@"Could not authenticate, please check your credentials."];
+        [ActionManager showAlertViewWithTitle:@"Invalid email/password" description:@"Could not authenticate, please check your credentials."];
         RKLogError(@"Load failed with error: %@", error);
     }];
 }
 
 -(void)checkDeviceToken {
     
-    
-    [[CurrentUser sharedInstance] hasDeviceToken:^(NSArray *finished) {
-        NSLog(@"array: %@", finished);
-        for(NSMutableDictionary *dict in finished)
-        {
-            NSLog(@"elem: %@", dict);
+    [[CurrentUser sharedInstance] hasDeviceTokenInWebservice:^(BOOL tokenExistsInDatabase) {
+        // device token is not in db, need to send it
+        if (!tokenExistsInDatabase) {
+            [[CurrentUser sharedInstance] sendDeviceTokenToWebservice];
         }
-            // device token is not in db, need to send it
-            [[CurrentUser sharedInstance] sendDeviceToken];
-        
     }];
 }
 
@@ -198,7 +186,7 @@
     self.fetchedResultsController.delegate = self;
     
     if (![self.fetchedResultsController performFetch:&error]) {
-        [[ActionManager sharedManager] showAlertViewWithTitle:[error localizedDescription]];
+        [ActionManager showAlertViewWithTitle:[error localizedDescription]];
     }
     
     return self.fetchedResultsController;
@@ -206,9 +194,9 @@
 
 -(NSString *)encryptCredentialsWithEmail:(NSString *)email password:(NSString *)password {
     
-    NSString *encryptedPassword = [[ActionManager sharedManager] createSHA512:password];
+    NSString *encryptedPassword = [ActionManager createSHA512:password];
     NSString *credentials = [NSString stringWithFormat:@"%@:%@", email, encryptedPassword];
-    NSString *encryptedCredentials = [[ActionManager sharedManager] encodeBase64WithCredentials:credentials];
+    NSString *encryptedCredentials = [ActionManager encodeBase64WithCredentials:credentials];
     
     return encryptedCredentials;
 }

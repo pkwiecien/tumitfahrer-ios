@@ -32,7 +32,7 @@
     return currentUser;
 }
 
-+ (BOOL)fetchUserWithEmail:(NSString *)email {
++ (BOOL)fetchUserFromCoreDataWithEmail:(NSString *)email {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *e = [NSEntityDescription entityForName:@"User"
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
@@ -57,38 +57,26 @@
     return false;
 }
 
-- (void)hasDeviceToken:(myCompletion)block {
+#pragma mark - Device token methods
+
+- (void)hasDeviceTokenInWebservice:(boolCompletionHandler)block {
     
     [NSURLConnection sendAsynchronousRequest:[self buildGetDeviceTokenRequest] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if(connectionError) {
             NSLog(@"Could not retrieve device token");
-            block(nil);
+            block(NO);
         } else {
-            NSLog(@"response: %@", response);
-            NSLog(@"data: %@", data);
-            
-            NSError *testError;
-            NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&testError];
-            
-            NSLog(@"parsed: %@", parsedObject);
-            
-            NSMutableArray *devices1 = [[NSMutableArray alloc] initWithObjects:@"one", @"two", nil];
-            NSLog(@"devs: %@", devices1);
-            NSArray *devices = [parsedObject valueForKey:@"devices"];
-            NSString *status = parsedObject[@"status"];
-            NSLog(@"status: %@", status);
-            NSLog(@"devices: %@", devices);
-            block(devices);
-
-            /*
-            //NSArray *deviceTokens = [JsonParser devicesFromJson:data error:&error];
-            for (NSString *deviceToken in deviceTokens) {
-                if ([deviceToken isEqualToString:[Device sharedInstance].deviceToken]) {
-                    block(YES);
+            NSError *error;
+            NSArray *deviceTokens = [JsonParser  devicesFromJson:data error:error];
+            if (!error) {
+                for (NSString *deviceToken in deviceTokens) {
+                    if ([deviceToken isEqualToString:[Device sharedInstance].deviceToken]) {
+                        block(YES);
+                        return;
+                    }
                 }
-                NSLog(@"%@", deviceToken);
-            }*/
-//            block(nil);
+            }
+            block(NO);
         }}];
 }
 
@@ -100,7 +88,7 @@
     return urlRequest;
 }
 
-- (void)sendDeviceToken {
+- (void)sendDeviceTokenToWebservice {
     
     NSDictionary *queryParams;
     // add enum
@@ -114,6 +102,8 @@
         NSLog(@"Could not send device token to DB. Error connecting data from server: %@", error.localizedDescription);
     }];
 }
+
+# pragma mark - Object to string
 
 -(NSString *)description {
     return [NSString stringWithFormat:@"Name: %@ %@, email: %@, registered at: %@", self.user.firstName, self.user.lastName, self.user.email, self.user.createdAt];

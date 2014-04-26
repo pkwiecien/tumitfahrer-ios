@@ -36,6 +36,8 @@
     return sharedInstance;
 }
 
+# pragma mark - build requests and fetch methods
+
 - (NSURLRequest*)buildUrlRequestWithLocation:(CLLocation *)location {
     
     NSString *urlString = [NSString stringWithFormat:@"http://www.panoramio.com/map/get_panoramas.php?set=public&from=0&to=1&minx=%f&miny=%f&maxx=%f&maxy=%f&size=medium&mapfilter=true", location.coordinate.longitude, location.coordinate.latitude, location.coordinate.longitude+0.02, location.coordinate.latitude+0.02];
@@ -67,6 +69,7 @@
             UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
             [LocationController sharedInstance].locationImage = retrievedImage;
             
+            // notify observers about retrieved image
             [self notifyWithImage:retrievedImage];
         }
     }];
@@ -103,11 +106,12 @@
     }];
 }
 
+# pragma mark - observer methods
+
 -(void)didReceiveCurrentLocation:(CLLocation *)location {
     [self fetchPhotoForCurrentLocation:location];
 }
 
-# pragma mark - observer methods
 -(void)addObserver:(id<LocationControllerDelegate>)observer {
     [self.observers addObject:observer];
 }

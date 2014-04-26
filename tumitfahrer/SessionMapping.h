@@ -10,7 +10,7 @@
 
 @interface SessionMapping : NSObject
 
-+ (RKEntityMapping *)postSessionMapping;
++ (RKEntityMapping *)sessionMapping;
 + (RKResponseDescriptor *)postSessionResponseDescriptorWithMapping:(RKEntityMapping*)mapping;
 
 @end

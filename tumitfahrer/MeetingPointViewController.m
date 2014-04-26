@@ -42,7 +42,7 @@
     // left button of the navigation bar
     UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     [settingsView addTarget:self action:@selector(saveButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [settingsView setBackgroundImage:[[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"ArrowLeftBlack"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [settingsView setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"ArrowLeftBlack"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
     [self.navigationItem setLeftBarButtonItem:settingsButton];
     

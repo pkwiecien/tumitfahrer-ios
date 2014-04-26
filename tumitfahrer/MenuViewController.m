@@ -83,7 +83,7 @@
     
     cell.menuLabel.text = self.menuItems[indexPath.row];
     UIColor *almostWhiteColor = [UIColor colorWithRed:0.961 green:0.961 blue:0.961 alpha:0.8];
-    UIImage *newImg = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:self.menuIcons[indexPath.row]] withColor:almostWhiteColor];
+    UIImage *newImg = [ActionManager colorImage:[UIImage imageNamed:self.menuIcons[indexPath.row]] withColor:almostWhiteColor];
     cell.iconMenuImageView.image = newImg;
     cell.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];

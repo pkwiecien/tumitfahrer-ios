@@ -18,6 +18,8 @@
 
 @implementation CustomTextField
 
+#pragma mark - button initializer
+
 - (instancetype)initWithFrame:(CGRect)frame placeholderText:(NSString*)placeholderText customIcon:(UIImage *)customIcon returnKeyType:(UIReturnKeyType)returnKeyType keyboardType:(UIKeyboardType)keyboardType shouldStartWithCapital:(BOOL)shouldStartWithCapital {
     self = [super initWithFrame:frame];
     if (self) {
@@ -39,7 +41,7 @@
         self.keyboardType = keyboardType;
         
         UIButton *clearButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
-        [clearButton setImage:[[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"DeleteIcon2"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+        [clearButton setImage:[ActionManager colorImage:[UIImage imageNamed:@"DeleteIcon2"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
         [clearButton addTarget:self action:@selector(resetBox) forControlEvents:UIControlEventTouchUpInside];
         self.rightViewMode = UITextFieldViewModeWhileEditing;
         self.rightView = clearButton;
@@ -73,6 +75,8 @@
     self.isEditable = false;
     return self;
 }
+
+#pragma mark - button delegate methods
 
 -(BOOL)canBecomeFirstResponder {
     if(self.isEditable)

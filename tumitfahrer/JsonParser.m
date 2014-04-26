@@ -19,18 +19,10 @@
         error = localError;
         return nil;
     }
-    NSLog(@"parsed: %@", parsedObject);
-    
     NSArray *devices = parsedObject[@"devices"];
     NSMutableArray *deviceTokens = [[NSMutableArray alloc] init];
-    [deviceTokens addObject:@"test"];
-    
-    NSLog(@"One %@", [devices[0] valueForKey:@"token"]);
-    NSLog(@"Two %@", devices[1]);
-    NSLog(@"%lu", (unsigned long)[devices count]);
 
     for(NSMutableDictionary *device in devices) {
-        NSLog(@"token: %@", device[@"token"]);
         [deviceTokens addObject:device[@"token"]];
     }
 

@@ -55,6 +55,7 @@
     return self.facultyArray;
 }
 
+// return name of a specific faculty
 -(NSString *)nameOfFacultyAtIndex:(NSInteger)index {
     Faculty *faculty = [self.facultyArray objectAtIndex:index];
     return faculty.name;

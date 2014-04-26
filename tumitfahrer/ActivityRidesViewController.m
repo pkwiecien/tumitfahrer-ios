@@ -14,6 +14,7 @@
 #import "ActionManager.h"
 #import "SearchRideViewController.h"
 #import "AddRideViewController.h"
+#import "CurrentUser.h"
 
 @interface ActivityRidesViewController ()
 
@@ -54,7 +55,7 @@
     self.collectionView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
     self.departurePlaceView.clipsToBounds = YES;
  
-    [self.menuButton setBackgroundImage:[[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"SettingsBlackIcon"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [self.menuButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"SettingsBlackIcon"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(makeViewLarge)];
     tapGesture.numberOfTapsRequired = 1;
@@ -64,7 +65,17 @@
     self.topControl = [[UIRefreshControl alloc] init];
     self.topControl.tintColor = [UIColor grayColor];
     [self.topControl addTarget:self action:@selector(refershControlAction) forControlEvents:UIControlEventValueChanged];
-//    [self.collectionView addSubview:self.topControl];
+    //    [self.collectionView addSubview:self.topControl];
+    
+    // get current user
+    NSString *emailLoggedInUser = [[NSUserDefaults standardUserDefaults] valueForKey:@"emailLoggedInUser"];
+    
+    if (emailLoggedInUser != nil) {
+        [CurrentUser fetchUserFromCoreDataWithEmail:emailLoggedInUser];
+    }
+    
+    [[PanoramioUtilities sharedInstance] addObserver:self];
+    [[RidesStore sharedStore] addObserver:self];
 }
 
 -(void)refershControlAction
@@ -196,6 +207,18 @@
         self.isUpperViewSmall = NO;
     else
         self.isUpperViewSmall = YES;
+}
+
+-(void)didReceivePhotoForRide:(NSInteger)rideId {
+    [self.collectionView reloadData];
+}
+
+
+-(void)didRecieveRidesFromWebService:(NSArray *)rides
+{
+    for (Ride *ride in rides) {
+        NSLog(@"Ride: %@", ride);
+    }
 }
 
 @end

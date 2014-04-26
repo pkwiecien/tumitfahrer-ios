@@ -10,7 +10,7 @@
 
 @implementation SessionMapping
 
-+ (RKEntityMapping *)postSessionMapping {
++ (RKEntityMapping *)sessionMapping {
     RKEntityMapping *sessionMapping = [RKEntityMapping mappingForEntityForName:@"User" inManagedObjectStore:[[RKObjectManager sharedManager] managedObjectStore]];
     sessionMapping.identificationAttributes = @[ @"userId" ];
     [sessionMapping addAttributeMappingsFromDictionary:@{
@@ -31,7 +31,7 @@
 
 + (RKResponseDescriptor *)postSessionResponseDescriptorWithMapping:(RKEntityMapping*)mapping {
     // create response description for user's session
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodPOST                                                                                       pathPattern:@"/api/v2/sessions"                                                                                           keyPath:@"user"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodPOST                                                                                       pathPattern:API_SESSIONS                                                                                           keyPath:@"user"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     
     return responseDescriptor;
 }

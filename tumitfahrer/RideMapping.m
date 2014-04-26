@@ -31,26 +31,14 @@
 
 +(RKResponseDescriptor *)getRidesResponseDescriptorWithMapping:(RKEntityMapping *)mapping {
     // create response description for rides
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodGET pathPattern:@"/api/v2/rides" keyPath:@"rides"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodGET pathPattern:API_RIDES keyPath:@"rides"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     
     return responseDescriptor;
 }
 
 +(RKEntityMapping *)postRideMapping {
     
-    RKEntityMapping *rideMapping = [RKEntityMapping mappingForEntityForName:@"Ride" inManagedObjectStore:[[RKObjectManager sharedManager] managedObjectStore]];
-    rideMapping.identificationAttributes = @[@"rideId"];
-    [rideMapping addAttributeMappingsFromDictionary:@{@"id": @"rideId",
-                                                      @"departure_place": @"departurePlace",
-                                                      @"destination": @"destination",
-                                                      @"meeting_point":@"meetingPoint",
-                                                      @"departure_time":@"departureTime",
-                                                      @"free_seats":@"freeSeats",
-                                                      @"duration":@"duration",
-                                                      @"distance":@"distance",
-                                                      @"created_at": @"createdAt",
-                                                      @"updated_at": @"updatedAt"
-                                                      }];
+    RKEntityMapping *rideMapping = [self getRidesMapping];
     
     [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"driver" toKeyPath:@"driver" withMapping:[UserMapping userMapping]]];
     
@@ -61,7 +49,9 @@
 }
 
 +(RKResponseDescriptor *)postRideResponseDescriptorWithMapping:(RKEntityMapping *)mapping {
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping method:RKRequestMethodPOST pathPattern:@"/api/v2/rides" keyPath:@"ride" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor
+                                                responseDescriptorWithMapping:mapping method:RKRequestMethodPOST pathPattern:API_RIDES keyPath:@"ride" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     
     return responseDescriptor;
 }

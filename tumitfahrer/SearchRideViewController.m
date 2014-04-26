@@ -36,7 +36,7 @@
     UIColor *navBarColor = [UIColor colorWithRed:0 green:0.361 blue:0.588 alpha:1]; /*#0e3750*/
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setBarTintColor:navBarColor];
-    [self.navigationController.navigationBar setBackgroundImage:[[ActionManager sharedManager] imageWithColor:navBarColor] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:[ActionManager imageWithColor:navBarColor] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBarHidden = NO;
     self.navigationController.navigationBar.translucent = NO;
     

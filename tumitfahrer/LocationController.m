@@ -41,6 +41,7 @@
 }
 
 # pragma mark - observer methods
+
 -(void)addObserver:(id<LocationControllerDelegate>)observer {
     [self.observers addObject:observer];
 }
@@ -99,7 +100,6 @@
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
         
-        //        for (CLPlacemark* aPlacemark in placemarks)
         CLPlacemark *aPlacemark = [placemarks firstObject];
         
         // Process the placemark.

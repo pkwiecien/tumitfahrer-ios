@@ -48,9 +48,6 @@
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
     [self.collectionView setCollectionViewLayout:flowLayout];
     
-    MenuViewController *menuController = [[MenuViewController alloc] init];
-    menuController.preferredContentSize = CGSizeMake(180, 0);
-    
     [self.settingsButton setImage:[UIImage imageNamed:@"SettingsGreyIcon"] forState:UIControlStateHighlighted];
     
     UISwipeGestureRecognizer *swipeRightLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeRightLeft)];
@@ -58,17 +55,6 @@
     swipeRightLeft.delegate = self;
     [swipeRightLeft setDirection:UISwipeGestureRecognizerDirectionRight|UISwipeGestureRecognizerDirectionLeft];
     [self.departureView addGestureRecognizer:swipeRightLeft];
-        
-    // get current user
-    NSArray *strings = [NSArray arrayWithObjects:@"first", @"second", nil];
-    for (NSString *str in strings) {
-        NSLog(@"%@", str);
-    }
-    NSString *emailLoggedInUser = [[NSUserDefaults standardUserDefaults] valueForKey:@"emailLoggedInUser"];
-    
-    if (emailLoggedInUser != nil) {
-        [CurrentUser fetchUserWithEmail:emailLoggedInUser];
-    }
     
     [[PanoramioUtilities sharedInstance] addObserver:self];
     [[RidesStore sharedStore] addObserver:self];
@@ -114,7 +100,7 @@
 
 -(void)handleSwipeRightLeft
 {
-    [[ActionManager sharedManager] showAlertViewWithTitle:@"Filter will be used to specify departure place"];
+    [ActionManager showAlertViewWithTitle:@"Filter will be used to specify departure place"];
 }
 
 -(void)enlarge {
@@ -146,7 +132,7 @@
 
 
 - (IBAction)filterRidesButtonPressed:(id)sender {
-    [[ActionManager sharedManager] showAlertViewWithTitle:@"Filter rides"];
+    [ActionManager showAlertViewWithTitle:@"Filter rides"];
 }
 
 #pragma mark - Collections
@@ -192,7 +178,7 @@
 }
 
 - (IBAction)addRideButtonPressed:(id)sender {
-    [[ActionManager sharedManager] showAlertViewWithTitle:@"Add a ride"];
+    [ActionManager showAlertViewWithTitle:@"Add a ride"];
 }
 
 -(void)didReceivePhotoForRide:(NSInteger)rideId {

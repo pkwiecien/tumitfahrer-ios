@@ -15,7 +15,6 @@
 
 - (void)didReceiveCurrentLocation: (CLLocation*)location;
 - (void)didReceiveLocationForAddress: (CLLocation*)location rideId:(NSInteger)rideId;
-//- (void)didReceiveLocationForAddress: (CLLocation*)location;
 
 @end
 

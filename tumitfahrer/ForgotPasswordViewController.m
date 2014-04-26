@@ -7,7 +7,6 @@
 //
 
 #import "ForgotPasswordViewController.h"
-#import "Constants.h"
 #import "CustomTextField.h"
 #import "ActionManager.h"
 #import "LoginViewController.h"
@@ -29,7 +28,7 @@
     [super viewDidLoad];
     
     float centerX = (self.view.frame.size.width - cUIElementWidth)/2;
-    UIImage *emailIcon = [[ActionManager sharedManager] colorImage:[UIImage imageNamed:@"EmailIcon"] withColor:[UIColor whiteColor]];
+    UIImage *emailIcon = [ActionManager colorImage:[UIImage imageNamed:@"EmailIcon"] withColor:[UIColor whiteColor]];
     CustomTextField *emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIcon:emailIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeEmailAddress shouldStartWithCapital:NO];
     [self.view addSubview:emailTextField];
     

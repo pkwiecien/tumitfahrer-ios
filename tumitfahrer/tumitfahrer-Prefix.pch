@@ -33,9 +33,29 @@
 
 static NSString * const SALT = @"toj369sbz1f316sx";
 //static NSString * const API_ADDRESS = @"http://tumitfahrer-staging.herokuapp.com";
-static NSString * const API_ADDRESS = @"http://131.159.200.147:3000";
+static NSString * const API_ADDRESS = @"http://192.168.0.103:3000";
 
 
+# pragma mark - Constants
 static int const TableSingleRowHeight = 45;
 static int const TableHeaderHeight = 45;
 static int const TableFooterHeight = 45;
+
+// width of buttons, input fields, etc
+static int const cUIElementWidth = 253;
+
+// width of buttons, input fields, etc
+static int const  cUIElementHeight = 40;
+
+// padding between UI elements
+static int const cUIElementPadding = 10;
+
+static int const cMarginTop =120;
+
+static int const cSlideMenuOffset = 110;
+
+# pragma mark - API mapping for RestKit
+static NSString *API_USERS = @"/api/v2/users";
+static NSString *API_SESSIONS = @"/api/v2/sessions";
+static NSString *API_RIDES = @"/api/v2/rides";
+static NSString *API_USERS_DEVICES = @"/api/v2/users/:userId/devices";

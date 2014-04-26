@@ -15,10 +15,10 @@
 
 @property (nonatomic, strong) User *user;
 
-+ (BOOL)fetchUserWithEmail:(NSString *)email;
++ (BOOL)fetchUserFromCoreDataWithEmail:(NSString *)email;
 
-typedef void(^myCompletion)(NSArray*);
-- (void)hasDeviceToken:(myCompletion)block;
-- (void)sendDeviceToken;
+typedef void(^boolCompletionHandler)(BOOL);
+- (void)hasDeviceTokenInWebservice:(boolCompletionHandler)block;
+- (void)sendDeviceTokenToWebservice;
 
 @end

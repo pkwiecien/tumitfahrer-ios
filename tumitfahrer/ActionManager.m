@@ -11,33 +11,18 @@
 
 @implementation ActionManager
 
--(instancetype)init {
-    self = [super init];
-    return  self;
-}
-
-+(instancetype)sharedManager {
-    static ActionManager *sharedManager;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedManager = [[self alloc] init];
-    });
-    
-    return  sharedManager;
-}
-
--(void)showAlertViewWithTitle:(NSString *)title {
++ (void)showAlertViewWithTitle:(NSString *)title {
     [self showAlertViewWithTitle:title description:@"Functionality coming soon"];
 }
 
--(void)showAlertViewWithTitle:(NSString *)title description:(NSString *)description {
++ (void)showAlertViewWithTitle:(NSString *)title description:(NSString *)description {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:description delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
 }
 
 #pragma mark - image handling
 // explanation: stackoverflow.com/questions/3514066/how-to-tint-a-transparent-png-image-in-iphone
-- (UIImage *)colorImage:(UIImage *)origImage withColor:(UIColor *)color {
++ (UIImage *)colorImage:(UIImage *)origImage withColor:(UIColor *)color {
     UIGraphicsBeginImageContextWithOptions (origImage.size, NO, [[UIScreen mainScreen] scale]);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
@@ -72,8 +57,8 @@
     return coloredImage;
 }
 
-
--(UIImage *)imageWithColor:(UIColor *)color {
+// create a square filled with a specific color (useful e.g. for buttons or backgrounds)
++ (UIImage *)imageWithColor:(UIColor *)color {
     CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
     UIGraphicsBeginImageContext(rect.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -90,21 +75,21 @@
 
 #pragma mark - encryption
 
--(NSString*)encodeBase64WithCredentials:(NSString*)credentials {
++ (NSString*)encodeBase64WithCredentials:(NSString*)credentials {
     NSData *plainData = [credentials dataUsingEncoding:NSUTF8StringEncoding];
     NSString *base64String = [plainData base64EncodedStringWithOptions:0];
     
     return base64String;
 }
 
--(NSString *)decodeBase64String:(NSString *)base64String {
++ (NSString *)decodeBase64String:(NSString *)base64String {
     NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:base64String options:0];
     NSString *decodedString = [[NSString alloc] initWithData:decodedData encoding:NSUTF8StringEncoding];
 
     return decodedString;
 }
 
--(NSString *)createSHA512:(NSString *)string {
++ (NSString *)createSHA512:(NSString *)string {
     string = [string stringByAppendingString:SALT];
     const char *s = [string cStringUsingEncoding:NSASCIIStringEncoding];
 

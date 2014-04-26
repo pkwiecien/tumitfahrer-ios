@@ -10,17 +10,16 @@
 
 @interface ActionManager : NSObject
 
-+(instancetype)sharedManager;
--(void)showAlertViewWithTitle:(NSString *)title;
--(void)showAlertViewWithTitle:(NSString *)title description:(NSString*)description;
++ (void)showAlertViewWithTitle:(NSString *)title;
++ (void)showAlertViewWithTitle:(NSString *)title description:(NSString*)description;
 
 // image utilities
-- (UIImage *)colorImage:(UIImage *)origImage withColor:(UIColor *)color;
--(UIImage *)imageWithColor:(UIColor *)color;
++ (UIImage *)colorImage:(UIImage *)origImage withColor:(UIColor *)color;
++ (UIImage *)imageWithColor:(UIColor *)color;
 
 // enctryption untilities
--(NSString*)encodeBase64WithCredentials:(NSString*)credentials;
--(NSString*)decodeBase64String:(NSString*)base64String;
--(NSString *)createSHA512:(NSString *)string;
++ (NSString*)encodeBase64WithCredentials:(NSString*)credentials;
++ (NSString*)decodeBase64String:(NSString*)base64String;
++ (NSString *)createSHA512:(NSString *)string;
 
 @end

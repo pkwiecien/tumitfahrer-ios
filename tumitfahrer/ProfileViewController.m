@@ -54,16 +54,16 @@
     [self.tableView.layer setShadowOffset:CGSizeMake(1.0, 1.0)];
     
     [self.friendsButton setSelected:YES];
+
+    [self.friendsButton setBackgroundImage:[ActionManager imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [self.ridesButton setBackgroundImage:[ActionManager imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [self.projectsButton setBackgroundImage:[ActionManager imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [self.ratingButton setBackgroundImage:[ActionManager imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
     
-    [self.friendsButton setBackgroundImage:[[ActionManager sharedManager] imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-    [self.ridesButton setBackgroundImage:[[ActionManager sharedManager] imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-    [self.projectsButton setBackgroundImage:[[ActionManager sharedManager] imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-    [self.ratingButton setBackgroundImage:[[ActionManager sharedManager] imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-    
-    [self.friendsButton setBackgroundImage:[[ActionManager sharedManager] imageWithColor:self.customGrayColor] forState:UIControlStateSelected];
-    [self.ridesButton setBackgroundImage:[[ActionManager sharedManager] imageWithColor:self.customGrayColor] forState:UIControlStateSelected];
-    [self.projectsButton setBackgroundImage:[[ActionManager sharedManager] imageWithColor:self.customGrayColor] forState:UIControlStateSelected];
-    [self.ratingButton setBackgroundImage:[[ActionManager sharedManager] imageWithColor:self.customGrayColor] forState:UIControlStateSelected];
+    [self.friendsButton setBackgroundImage:[ActionManager imageWithColor:self.customGrayColor] forState:UIControlStateSelected];
+    [self.ridesButton setBackgroundImage:[ActionManager imageWithColor:self.customGrayColor] forState:UIControlStateSelected];
+    [self.projectsButton setBackgroundImage:[ActionManager imageWithColor:self.customGrayColor] forState:UIControlStateSelected];
+    [self.ratingButton setBackgroundImage:[ActionManager imageWithColor:self.customGrayColor] forState:UIControlStateSelected];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -76,7 +76,7 @@
     UIColor *navBarColor = [UIColor colorWithRed:0 green:0.361 blue:0.588 alpha:1]; /*#0e3750*/
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setBarTintColor:navBarColor];
-    [self.navigationController.navigationBar setBackgroundImage:[[ActionManager sharedManager] imageWithColor:navBarColor] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:[ActionManager imageWithColor:navBarColor] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBarHidden = NO;
     self.navigationController.navigationBar.translucent = NO;
     
@@ -88,7 +88,7 @@
 
 -(void)showUnimplementedAlertView
 {
-    [[ActionManager sharedManager] showAlertViewWithTitle:@"Edit profile"];
+    [ActionManager showAlertViewWithTitle:@"Edit profile"];
 }
 
 

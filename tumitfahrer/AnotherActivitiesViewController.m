@@ -50,7 +50,7 @@
     [[UINavigationBar appearance] setBarTintColor:navBarColor];
     self.navigationController.navigationBarHidden = NO;
     self.navigationController.navigationBar.translucent = NO;
-    [self.navigationController.navigationBar setBackgroundImage:[[ActionManager sharedManager] imageWithColor:navBarColor] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:[ActionManager imageWithColor:navBarColor] forBarMetrics:UIBarMetricsDefault];
     
     UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"AddSmallIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(showUnimplementedAlertView)];
     self.navigationItem.rightBarButtonItem = rightBarButton;
@@ -63,7 +63,7 @@
 }
 
 -(void)showUnimplementedAlertView {
-    [[ActionManager sharedManager] showAlertViewWithTitle:@"Add a ride"];
+    [ActionManager showAlertViewWithTitle:@"Add a ride"];
 }
 
 -(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
