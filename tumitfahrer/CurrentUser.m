@@ -8,6 +8,8 @@
 
 #import "CurrentUser.h"
 #import "LocationController.h"
+#import "JsonParser.h"
+#import "Device.h"
 
 @implementation CurrentUser
 
@@ -53,6 +55,64 @@
         return true;
     }
     return false;
+}
+
+- (void)hasDeviceToken:(myCompletion)block {
+    
+    [NSURLConnection sendAsynchronousRequest:[self buildGetDeviceTokenRequest] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if(connectionError) {
+            NSLog(@"Could not retrieve device token");
+            block(nil);
+        } else {
+            NSLog(@"response: %@", response);
+            NSLog(@"data: %@", data);
+            
+            NSError *testError;
+            NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&testError];
+            
+            NSLog(@"parsed: %@", parsedObject);
+            
+            NSMutableArray *devices1 = [[NSMutableArray alloc] initWithObjects:@"one", @"two", nil];
+            NSLog(@"devs: %@", devices1);
+            NSArray *devices = [parsedObject valueForKey:@"devices"];
+            NSString *status = parsedObject[@"status"];
+            NSLog(@"status: %@", status);
+            NSLog(@"devices: %@", devices);
+            block(devices);
+
+            /*
+            //NSArray *deviceTokens = [JsonParser devicesFromJson:data error:&error];
+            for (NSString *deviceToken in deviceTokens) {
+                if ([deviceToken isEqualToString:[Device sharedInstance].deviceToken]) {
+                    block(YES);
+                }
+                NSLog(@"%@", deviceToken);
+            }*/
+//            block(nil);
+        }}];
+}
+
+- (NSURLRequest *)buildGetDeviceTokenRequest {
+    NSString *urlString = [API_ADDRESS stringByAppendingString:[NSString stringWithFormat:@"/api/v2/users/%d/devices", [CurrentUser sharedInstance].user.userId]];
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    return urlRequest;
+}
+
+- (void)sendDeviceToken {
+    
+    NSDictionary *queryParams;
+    // add enum
+    queryParams = @{@"platform": @"ios", @"token": [[Device sharedInstance] deviceToken], @"enabled":@"true"};
+    NSDictionary *deviceParams = @{@"device": queryParams};
+    
+    NSString *pathString = [NSString stringWithFormat:@"/api/v2/users/%d/devices", [CurrentUser sharedInstance].user.userId];
+    [[RKObjectManager sharedManager] postObject:nil path:pathString parameters:deviceParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        NSLog(@"success");
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        NSLog(@"Could not send device token to DB. Error connecting data from server: %@", error.localizedDescription);
+    }];
 }
 
 -(NSString *)description {

@@ -32,7 +32,9 @@
 #import <RestKit/RestKit.h>
 
 static NSString * const SALT = @"toj369sbz1f316sx";
-static NSString * const API_ADDRESS = @"http://tumitfahrer-staging.herokuapp.com";
+//static NSString * const API_ADDRESS = @"http://tumitfahrer-staging.herokuapp.com";
+static NSString * const API_ADDRESS = @"http://131.159.200.147:3000";
+
 
 static int const TableSingleRowHeight = 45;
 static int const TableHeaderHeight = 45;

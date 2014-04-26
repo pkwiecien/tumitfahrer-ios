@@ -7,12 +7,7 @@
 //
 
 #import "User.h"
-#import "FriendRequest.h"
-#import "Message.h"
-#import "Rating.h"
 #import "Ride.h"
-#import "User.h"
-
 
 @implementation User
 
@@ -30,12 +25,5 @@
 @dynamic userId;
 @dynamic ridesAsDriver;
 @dynamic ridesAsPassenger;
-@dynamic friends;
-@dynamic friendRequestsReceived;
-@dynamic messagesReceived;
-@dynamic messagesSent;
-@dynamic ratingsGiven;
-@dynamic ratingsReceived;
-@dynamic friendRequestsSent;
 
 @end

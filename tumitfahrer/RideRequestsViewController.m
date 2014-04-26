@@ -60,6 +60,10 @@
     [self.departureView addGestureRecognizer:swipeRightLeft];
         
     // get current user
+    NSArray *strings = [NSArray arrayWithObjects:@"first", @"second", nil];
+    for (NSString *str in strings) {
+        NSLog(@"%@", str);
+    }
     NSString *emailLoggedInUser = [[NSUserDefaults standardUserDefaults] valueForKey:@"emailLoggedInUser"];
     
     if (emailLoggedInUser != nil) {
@@ -77,7 +81,7 @@
     
     if([CurrentUser sharedInstance].user == nil)
     {
-        [self showLoginScreen:YES];
+        [self showLoginScreen:NO];
     }
     
     self.navigationController.navigationBarHidden = YES;
@@ -127,8 +131,7 @@
 -(void)showLoginScreen:(BOOL)animated
 {
     LoginViewController *loginVC = [[LoginViewController alloc] init];
-    loginVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self presentViewController:loginVC animated:YES completion:nil];
+    [self presentViewController:loginVC animated:animated completion:nil];
 }
 
 - (BOOL)slideNavigationControllerShouldDisplayLeftMenu

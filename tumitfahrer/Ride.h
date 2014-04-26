@@ -33,7 +33,6 @@
 @property (nonatomic) double destinationLongitude;
 @property (nonatomic, retain) User *driver;
 @property (nonatomic, retain) NSSet *passengers;
-@property (nonatomic, retain) NSSet *requests;
 @end
 
 @interface Ride (CoreDataGeneratedAccessors)
@@ -43,9 +42,5 @@
 - (void)addPassengers:(NSSet *)values;
 - (void)removePassengers:(NSSet *)values;
 
-- (void)addRequestsObject:(Request *)value;
-- (void)removeRequestsObject:(Request *)value;
-- (void)addRequests:(NSSet *)values;
-- (void)removeRequests:(NSSet *)values;
 
 @end

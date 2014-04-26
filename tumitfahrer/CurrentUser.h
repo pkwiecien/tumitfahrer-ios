@@ -17,4 +17,8 @@
 
 + (BOOL)fetchUserWithEmail:(NSString *)email;
 
+typedef void(^myCompletion)(NSArray*);
+- (void)hasDeviceToken:(myCompletion)block;
+- (void)sendDeviceToken;
+
 @end

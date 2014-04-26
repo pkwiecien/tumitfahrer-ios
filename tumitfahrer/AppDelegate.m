@@ -16,6 +16,7 @@
 #import "Constants.h"
 #import "HATransitionController.h"
 #import "HACollectionViewSmallLayout.h"
+#import "Device.h"
 
 #import "UserMapping.h"
 #import "SessionMapping.h"
@@ -41,7 +42,7 @@
     [self setupObservers];
     
     // Ubertersters SDK initialization
-    [[Ubertesters shared] initializeWithOptions:UTOptionsManual];
+    //[[Ubertesters shared] initializeWithOptions:UTOptionsManual];
     
     [self.window makeKeyAndVisible];
     return YES;
@@ -78,6 +79,13 @@
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
 	NSLog(@"My token is: %@", deviceToken);
+    const unsigned *tokenBytes = [deviceToken bytes];
+    NSString *hexToken = [NSString stringWithFormat:@"%08x%08x%08x%08x%08x%08x%08x%08x",
+                          ntohl(tokenBytes[0]), ntohl(tokenBytes[1]), ntohl(tokenBytes[2]),
+                          ntohl(tokenBytes[3]), ntohl(tokenBytes[4]), ntohl(tokenBytes[5]),
+                          ntohl(tokenBytes[6]), ntohl(tokenBytes[7])];
+    NSLog(@"%@", hexToken);
+    [[Device sharedInstance] setDeviceToken:hexToken];
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
@@ -113,9 +121,8 @@
     NSError *error = nil;
     
     // Initialize RestKit
-    //    NSURL *baseURL = [NSURL URLWithString:API_ADDRESS];
-    NSURL *baseURL = [NSURL URLWithString:@"http://131.159.200.147:3000"];
-    
+    NSURL *baseURL = [NSURL URLWithString:API_ADDRESS];
+
     RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:baseURL];
     
     // Enable Activity Indicator Spinner
@@ -137,6 +144,10 @@
     [objectManager addResponseDescriptor:[UserMapping postUserResponseDescriptorWithMapping:postUserMapping]];
     RKEntityMapping *getRidesMapping = [RideMapping getRidesMapping];
     [objectManager addResponseDescriptor:[RideMapping getRidesResponseDescriptorWithMapping:getRidesMapping]];
+    /*
+    RKObjectMapping *postDeviceTokenMapping = [DeviceMapping postDeviceMapping];
+    [objectManager addResponseDescriptor:[DeviceMapping postDeviceResponseDescriptorWithMapping:postDeviceTokenMapping]];
+     */
     
     RKEntityMapping *postRideMapping = [RideMapping postRideMapping];
     [objectManager addResponseDescriptorsFromArray:@[[RideMapping postRideResponseDescriptorWithMapping:postRideMapping]]];

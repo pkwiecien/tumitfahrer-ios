@@ -7,7 +7,6 @@
 //
 
 #import "Ride.h"
-#import "Request.h"
 #import "User.h"
 
 
@@ -33,6 +32,5 @@
 @dynamic updatedAt;
 @dynamic driver;
 @dynamic passengers;
-@dynamic requests;
 
 @end

@@ -81,11 +81,11 @@
         <relationship name="ridesAsPassenger" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ride" inverseName="passengers" inverseEntity="Ride" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Ride" positionX="567" positionY="-99" width="128" height="360"/>
-        <element name="User" positionX="-63" positionY="-18" width="128" height="358"/>
-        <element name="Request" positionX="783" positionY="113" width="128" height="148"/>
         <element name="FriendRequest" positionX="295" positionY="54" width="128" height="118"/>
         <element name="Message" positionX="-29" positionY="-387" width="128" height="148"/>
         <element name="Rating" positionX="-315" positionY="158" width="128" height="148"/>
+        <element name="Request" positionX="783" positionY="113" width="128" height="148"/>
+        <element name="Ride" positionX="567" positionY="-99" width="128" height="360"/>
+        <element name="User" positionX="-63" positionY="-18" width="128" height="358"/>
     </elements>
 </model>

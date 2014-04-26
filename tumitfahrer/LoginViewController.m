@@ -93,12 +93,21 @@
 
 - (IBAction)loginButtonPressed:(id)sender {
     
+    NSArray *testArray = [NSArray arrayWithObjects:@"first",@"second", nil];
+    for(NSString *str in testArray)
+    {
+        NSLog(@"%@", str);
+    }
+    
     // firstly check if the user was previously stored in core data
     if ([CurrentUser fetchUserWithEmail:self.emailTextField.text]) {
         // user fetched successfully from core data
         [self storeCurrentUserInDefaults];
         [[SlideNavigationController sharedInstance] popToRootViewControllerAnimated:NO];
         [self dismissViewControllerAnimated:YES completion:nil];
+        
+        // check if fetch user has assigned a device token]
+        //[self checkDeviceToken];
     } else {
         // new user, get account from webservice
         [self createUserSession];
@@ -113,11 +122,30 @@
     [objectManager postObject:nil path:@"/api/v2/sessions" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [CurrentUser sharedInstance].user = (User *)[mappingResult firstObject];
         RKLogInfo(@"Load complete, current user %@!", [CurrentUser sharedInstance].user.firstName);
+        
+        // check if fetch user has assigned a device token]
+        [self checkDeviceToken];
+        
         [self storeCurrentUserInDefaults];
         [self dismissViewControllerAnimated:YES completion:nil];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [[ActionManager sharedManager] showAlertViewWithTitle:@"Invalid email/password" description:@"Could not authenticate, please check your credentials."];
         RKLogError(@"Load failed with error: %@", error);
+    }];
+}
+
+-(void)checkDeviceToken {
+    
+    
+    [[CurrentUser sharedInstance] hasDeviceToken:^(NSArray *finished) {
+        NSLog(@"array: %@", finished);
+        for(NSMutableDictionary *dict in finished)
+        {
+            NSLog(@"elem: %@", dict);
+        }
+            // device token is not in db, need to send it
+            [[CurrentUser sharedInstance] sendDeviceToken];
+        
     }];
 }
 

@@ -17,12 +17,11 @@
 		E504D9D1190A7FC50036FFA8 /* SPGooglePlacesAutocompleteQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9CB190A7FC50036FFA8 /* SPGooglePlacesAutocompleteQuery.m */; };
 		E504D9D2190A7FC50036FFA8 /* SPGooglePlacesAutocompleteUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9CD190A7FC50036FFA8 /* SPGooglePlacesAutocompleteUtilities.m */; };
 		E504D9D3190A7FC50036FFA8 /* SPGooglePlacesPlaceDetailQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9CF190A7FC50036FFA8 /* SPGooglePlacesPlaceDetailQuery.m */; };
-		E504D9D6190AF2160036FFA8 /* FriendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9D5190AF2160036FFA8 /* FriendRequest.m */; };
-		E504D9D9190AF2170036FFA8 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9D8190AF2170036FFA8 /* Message.m */; };
-		E504D9DC190AF2170036FFA8 /* Rating.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9DB190AF2170036FFA8 /* Rating.m */; };
 		E504D9DF190AF2170036FFA8 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9DE190AF2170036FFA8 /* User.m */; };
-		E504D9E2190AF2170036FFA8 /* Request.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9E1190AF2170036FFA8 /* Request.m */; };
 		E504D9E5190AF24D0036FFA8 /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9E4190AF24D0036FFA8 /* Ride.m */; };
+		E504D9E8190B02490036FFA8 /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9E7190B02490036FFA8 /* Device.m */; };
+		E504D9EB190B963E0036FFA8 /* JsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9EA190B963E0036FFA8 /* JsonParser.m */; };
+		E504D9EE190BCCE20036FFA8 /* DeviceMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9ED190BCCE20036FFA8 /* DeviceMapping.m */; };
 		E50DB26B18F447B800E87E62 /* CurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB26A18F447B800E87E62 /* CurrentUser.m */; };
 		E50DB26F18F52E8500E87E62 /* StatusMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB26E18F52E8500E87E62 /* StatusMapping.m */; };
 		E50DB27218F5DFB200E87E62 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB27118F5DFB200E87E62 /* LocationController.m */; };
@@ -157,18 +156,16 @@
 		E504D9CD190A7FC50036FFA8 /* SPGooglePlacesAutocompleteUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPGooglePlacesAutocompleteUtilities.m; sourceTree = "<group>"; };
 		E504D9CE190A7FC50036FFA8 /* SPGooglePlacesPlaceDetailQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPGooglePlacesPlaceDetailQuery.h; sourceTree = "<group>"; };
 		E504D9CF190A7FC50036FFA8 /* SPGooglePlacesPlaceDetailQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPGooglePlacesPlaceDetailQuery.m; sourceTree = "<group>"; };
-		E504D9D4190AF2160036FFA8 /* FriendRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendRequest.h; sourceTree = "<group>"; };
-		E504D9D5190AF2160036FFA8 /* FriendRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendRequest.m; sourceTree = "<group>"; };
-		E504D9D7190AF2170036FFA8 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
-		E504D9D8190AF2170036FFA8 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
-		E504D9DA190AF2170036FFA8 /* Rating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rating.h; sourceTree = "<group>"; };
-		E504D9DB190AF2170036FFA8 /* Rating.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rating.m; sourceTree = "<group>"; };
 		E504D9DD190AF2170036FFA8 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		E504D9DE190AF2170036FFA8 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
-		E504D9E0190AF2170036FFA8 /* Request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Request.h; sourceTree = "<group>"; };
-		E504D9E1190AF2170036FFA8 /* Request.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Request.m; sourceTree = "<group>"; };
 		E504D9E3190AF24D0036FFA8 /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
 		E504D9E4190AF24D0036FFA8 /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
+		E504D9E6190B02490036FFA8 /* Device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
+		E504D9E7190B02490036FFA8 /* Device.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Device.m; sourceTree = "<group>"; };
+		E504D9E9190B963E0036FFA8 /* JsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonParser.h; sourceTree = "<group>"; };
+		E504D9EA190B963E0036FFA8 /* JsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonParser.m; sourceTree = "<group>"; };
+		E504D9EC190BCCE20036FFA8 /* DeviceMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceMapping.h; sourceTree = "<group>"; };
+		E504D9ED190BCCE20036FFA8 /* DeviceMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceMapping.m; sourceTree = "<group>"; };
 		E50DB26918F447B800E87E62 /* CurrentUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentUser.h; sourceTree = "<group>"; };
 		E50DB26A18F447B800E87E62 /* CurrentUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentUser.m; sourceTree = "<group>"; };
 		E50DB26D18F52E8500E87E62 /* StatusMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusMapping.h; sourceTree = "<group>"; };
@@ -407,6 +404,8 @@
 				E50DB28418F86F8800E87E62 /* SessionMapping.m */,
 				E50DB28618F8706500E87E62 /* RideMapping.h */,
 				E50DB28718F8706500E87E62 /* RideMapping.m */,
+				E504D9EC190BCCE20036FFA8 /* DeviceMapping.h */,
+				E504D9ED190BCCE20036FFA8 /* DeviceMapping.m */,
 			);
 			name = RKMappings;
 			sourceTree = "<group>";
@@ -559,20 +558,14 @@
 			children = (
 				E50DB26918F447B800E87E62 /* CurrentUser.h */,
 				E50DB26A18F447B800E87E62 /* CurrentUser.m */,
-				E50DB28918F8730400E87E62 /* RidesStore.h */,
-				E50DB28A18F8730400E87E62 /* RidesStore.m */,
+				E504D9E6190B02490036FFA8 /* Device.h */,
+				E504D9E7190B02490036FFA8 /* Device.m */,
 				E504D9E3190AF24D0036FFA8 /* Ride.h */,
 				E504D9E4190AF24D0036FFA8 /* Ride.m */,
+				E50DB28918F8730400E87E62 /* RidesStore.h */,
+				E50DB28A18F8730400E87E62 /* RidesStore.m */,
 				E504D9DD190AF2170036FFA8 /* User.h */,
 				E504D9DE190AF2170036FFA8 /* User.m */,
-				E504D9E0190AF2170036FFA8 /* Request.h */,
-				E504D9E1190AF2170036FFA8 /* Request.m */,
-				E504D9DA190AF2170036FFA8 /* Rating.h */,
-				E504D9DB190AF2170036FFA8 /* Rating.m */,
-				E504D9D7190AF2170036FFA8 /* Message.h */,
-				E504D9D8190AF2170036FFA8 /* Message.m */,
-				E504D9D4190AF2160036FFA8 /* FriendRequest.h */,
-				E504D9D5190AF2160036FFA8 /* FriendRequest.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -658,6 +651,8 @@
 				E50DB29018F881BC00E87E62 /* PanoramioUtilities.m */,
 				E504D9C4190A6DA10036FFA8 /* LayoutUtilities.h */,
 				E504D9C5190A6DA10036FFA8 /* LayoutUtilities.m */,
+				E504D9E9190B963E0036FFA8 /* JsonParser.h */,
+				E504D9EA190B963E0036FFA8 /* JsonParser.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1014,7 +1009,6 @@
 				E504D9DF190AF2170036FFA8 /* User.m in Sources */,
 				E59987DC18E701AF00B01C62 /* CustomButton.m in Sources */,
 				E5DF641B18EB56A600D53164 /* ActivityRidesViewController.m in Sources */,
-				E504D9D6190AF2160036FFA8 /* FriendRequest.m in Sources */,
 				E599887318E8616200B01C62 /* HATransitionLayout.m in Sources */,
 				E5FDDBCB18EE79F900CE7B01 /* AnotherActivitiesViewController.m in Sources */,
 				E5DF641018EB46F900D53164 /* RideDetailsViewController.m in Sources */,
@@ -1023,15 +1017,14 @@
 				E504D9BC190A58710036FFA8 /* MeetingPointViewController.m in Sources */,
 				E5DF641F18EB639600D53164 /* CampusRidesViewController.m in Sources */,
 				E504D9D0190A7FC50036FFA8 /* SPGooglePlacesAutocompletePlace.m in Sources */,
-				E504D9D9190AF2170036FFA8 /* Message.m in Sources */,
 				E599886218E84D9D00B01C62 /* MenuTableViewCell.m in Sources */,
 				E59987C918E6DBEA00B01C62 /* RideRequestsViewController.m in Sources */,
-				E504D9DC190AF2170036FFA8 /* Rating.m in Sources */,
 				E5E2157F1908492200B0B150 /* FreeSeatsTableViewCell.m in Sources */,
 				E5E215681907B82500B0B150 /* CustomBarButton.m in Sources */,
 				E5E215781908442100B0B150 /* SwitchTableViewCell.m in Sources */,
 				E51FD50218F0864C0098AD11 /* ProfileViewController.m in Sources */,
 				E599888418E88C5100B01C62 /* HAPaperCollectionViewController.m in Sources */,
+				E504D9E8190B02490036FFA8 /* Device.m in Sources */,
 				E50DB27218F5DFB200E87E62 /* LocationController.m in Sources */,
 				E5DF641518EB548E00D53164 /* SettingsViewController.m in Sources */,
 				E5E215641907A95F00B0B150 /* SearchRideViewController.m in Sources */,
@@ -1039,7 +1032,7 @@
 				E5E2155F1907A94A00B0B150 /* AddRideViewController.m in Sources */,
 				E5DF642818EBD8AB00D53164 /* BalancedColumnLayout.m in Sources */,
 				E50DB29118F881BC00E87E62 /* PanoramioUtilities.m in Sources */,
-				E504D9E2190AF2170036FFA8 /* Request.m in Sources */,
+				E504D9EE190BCCE20036FFA8 /* DeviceMapping.m in Sources */,
 				E599887918E8617100B01C62 /* HACollectionViewSmallLayout.m in Sources */,
 				E599880118E72BF600B01C62 /* ForgotPasswordViewController.m in Sources */,
 				E59987FB18E7251000B01C62 /* RegisterViewController.m in Sources */,
@@ -1047,6 +1040,7 @@
 				E504D9C6190A6DA10036FFA8 /* LayoutUtilities.m in Sources */,
 				E50DB28818F8706500E87E62 /* RideMapping.m in Sources */,
 				E504D9E5190AF24D0036FFA8 /* Ride.m in Sources */,
+				E504D9EB190B963E0036FFA8 /* JsonParser.m in Sources */,
 				E599887818E8617100B01C62 /* HACollectionViewLargeLayout.m in Sources */,
 				E504D9D1190A7FC50036FFA8 /* SPGooglePlacesAutocompleteQuery.m in Sources */,
 				E59987D718E6ECF200B01C62 /* CustomTextField.m in Sources */,
