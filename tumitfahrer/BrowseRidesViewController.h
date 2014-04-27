@@ -13,12 +13,6 @@
 
 @interface BrowseRidesViewController : UIViewController<SlideNavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate, UIScrollViewDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, PanoramioUtilitiesDelegate, RideStoreDelegate>
 
-typedef enum contentTypes : NSUInteger {
-    ContentTypeCampusRides = 1,
-    ContentTypeActivityRides = 2,
-    ContentTypeExistingRequests = 3
-} ContentType;
-
 @property (nonatomic, assign) ContentType ContentTypeEnum;
 @property (weak, nonatomic) IBOutlet UILabel *contentTitle;
 @property (weak, nonatomic) IBOutlet UIButton *menuButton;

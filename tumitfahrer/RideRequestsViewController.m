@@ -129,7 +129,7 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [[[RidesStore sharedStore] allRides] count];
+    return [[[RidesStore sharedStore] allRideRequests] count];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -138,7 +138,7 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     
     UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:1];
-    Ride *ride = [[[RidesStore sharedStore] allRides] objectAtIndex:indexPath.row];
+    Ride *ride = [[[RidesStore sharedStore] allRideRequests] objectAtIndex:indexPath.row];
     if(ride.destinationImage == nil) {
         imageView.image = [UIImage imageNamed:@"PlaceholderImage"];
     } else {
@@ -155,7 +155,7 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     RideDetailsViewController *rideDetailsVC = [[RideDetailsViewController alloc] init];
-    rideDetailsVC.selectedRide = [[[RidesStore sharedStore] allRides] objectAtIndex:indexPath.row];
+    rideDetailsVC.selectedRide = [[[RidesStore sharedStore] allRideRequests] objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:rideDetailsVC animated:YES];
 }
 

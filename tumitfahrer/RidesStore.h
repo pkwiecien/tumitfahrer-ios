@@ -21,12 +21,12 @@
 
 @interface RidesStore : NSObject <LocationControllerDelegate, PanoramioUtilitiesDelegate>
 
-@property (nonatomic, readonly) NSArray *allRides;
-
 + (instancetype)sharedStore;
 
--(NSArray*)allRides;
--(void)loadRides;
+-(NSArray *)allCampusRides;
+-(NSArray *)allActivityRides;
+-(NSArray *)allRideRequests;
+-(NSArray *)allRidesByType:(ContentType)contentType;
 
 - (void)addRideToStore:(Ride*)ride;
 - (void)addObserver:(id<RideStoreDelegate>) observer;

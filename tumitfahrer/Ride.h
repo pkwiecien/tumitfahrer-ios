@@ -2,7 +2,7 @@
 //  Ride.h
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 4/26/14.
+//  Created by Pawel Kwiecien on 4/27/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
@@ -13,27 +13,28 @@
 
 @interface Ride : NSManagedObject
 
-@property (nonatomic, retain) NSSet *requests;
-@property (nonatomic) int rideId;
+@property (nonatomic) NSDate * createdAt;
 @property (nonatomic, retain) NSString * departurePlace;
+@property (nonatomic) NSDate * departureTime;
 @property (nonatomic, retain) NSString * destination;
-@property (nonatomic, retain) NSString * meetingPoint;
-@property (nonatomic, retain) NSDate * departureTime;
-@property (nonatomic) int freeSeats;
-@property (nonatomic, retain) NSDate * createdAt;
-@property (nonatomic, retain) NSString * updatedAt;
-@property (nonatomic) float realtimeKm;
-@property (nonatomic, retain) NSDate * realtimeDepartureTime;
-@property (nonatomic) float price;
-@property (nonatomic) float duration;
-@property (nonatomic) float distance;
-@property (nonatomic) BOOL isFinished;
-@property (nonatomic) BOOL isPaid;
-@property (nonatomic, strong) UIImage * destinationImage;
+@property (nonatomic, retain) id destinationImage;
 @property (nonatomic) double destinationLatitude;
 @property (nonatomic) double destinationLongitude;
+@property (nonatomic) float distance;
+@property (nonatomic) float duration;
+@property (nonatomic) int32_t freeSeats;
+@property (nonatomic) BOOL isFinished;
+@property (nonatomic) BOOL isPaid;
+@property (nonatomic, retain) NSString * meetingPoint;
+@property (nonatomic) float price;
+@property (nonatomic) NSDate * realtimeDepartureTime;
+@property (nonatomic) float realtimeKm;
+@property (nonatomic) int32_t rideId;
+@property (nonatomic) NSDate * updatedAt;
+@property (nonatomic) int16_t rideType;
 @property (nonatomic, retain) User *driver;
 @property (nonatomic, retain) NSSet *passengers;
+@property (nonatomic, retain) NSSet *requests;
 
 @end
 

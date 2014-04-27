@@ -55,6 +55,14 @@ static int const cMarginTop =120;
 // slide menu offset
 static int const cSlideMenuOffset = 70;
 
+typedef enum contentTypes : NSUInteger {
+    ContentTypeCampusRides = 0,
+    ContentTypeActivityRides = 1,
+    ContentTypeExistingRequests = 2
+} ContentType;
+
+typedef void(^boolCompletionHandler)(BOOL);
+
 # pragma mark - API mapping for RestKit
 static NSString *API_USERS = @"/api/v2/users";
 static NSString *API_SESSIONS = @"/api/v2/sessions";

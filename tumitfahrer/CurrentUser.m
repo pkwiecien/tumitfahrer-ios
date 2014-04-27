@@ -89,18 +89,19 @@
 }
 
 - (void)sendDeviceTokenToWebservice {
-    
-    NSDictionary *queryParams;
-    // add enum
-    queryParams = @{@"platform": @"ios", @"token": [[Device sharedInstance] deviceToken], @"enabled":@"true"};
-    NSDictionary *deviceParams = @{@"device": queryParams};
-    
-    NSString *pathString = [NSString stringWithFormat:@"/api/v2/users/%d/devices", [CurrentUser sharedInstance].user.userId];
-    [[RKObjectManager sharedManager] postObject:nil path:pathString parameters:deviceParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        NSLog(@"success");
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        NSLog(@"Could not send device token to DB. Error connecting data from server: %@", error.localizedDescription);
-    }];
+    if([[Device sharedInstance] deviceToken]) {
+        NSDictionary *queryParams;
+        // add enum
+        queryParams = @{@"platform": @"ios", @"token": [[Device sharedInstance] deviceToken], @"enabled":@"true"};
+        NSDictionary *deviceParams = @{@"device": queryParams};
+        
+        NSString *pathString = [NSString stringWithFormat:@"/api/v2/users/%d/devices", [CurrentUser sharedInstance].user.userId];
+        [[RKObjectManager sharedManager] postObject:nil path:pathString parameters:deviceParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+            NSLog(@"success");
+        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+            NSLog(@"Could not send device token to DB. Error connecting data from server: %@", error.localizedDescription);
+        }];
+    }
 }
 
 # pragma mark - Object to string

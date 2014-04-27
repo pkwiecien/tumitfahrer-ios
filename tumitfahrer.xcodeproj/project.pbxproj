@@ -57,7 +57,6 @@
 		E55D866A190C059200B1400A /* FriendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E55D8669190C059200B1400A /* FriendRequest.m */; };
 		E55D866D190C059200B1400A /* Request.m in Sources */ = {isa = PBXBuildFile; fileRef = E55D866C190C059200B1400A /* Request.m */; };
 		E55D8670190C059200B1400A /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E55D866F190C059200B1400A /* User.m */; };
-		E55D8678190C074100B1400A /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E55D8677190C074100B1400A /* Ride.m */; };
 		E58F958618FD107E00A0A55B /* CvLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E58F958518FD107E00A0A55B /* CvLayout.m */; };
 		E59987C918E6DBEA00B01C62 /* RideRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987C718E6DBEA00B01C62 /* RideRequestsViewController.m */; };
 		E59987CA18E6DBEA00B01C62 /* RideRequestsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59987C818E6DBEA00B01C62 /* RideRequestsViewController.xib */; };
@@ -102,6 +101,7 @@
 		E5E215801908492200B0B150 /* FreeSeatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E2157E1908492200B0B150 /* FreeSeatsTableViewCell.xib */; };
 		E5FC44D5190CF83100E8DB65 /* MenuTopHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FC44D4190CF83100E8DB65 /* MenuTopHeaderView.xib */; };
 		E5FC44D6190D30FF00E8DB65 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E599880918E7836D00B01C62 /* MenuViewController.m */; };
+		E5FC44DF190D55C900E8DB65 /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FC44DE190D55C900E8DB65 /* Ride.m */; };
 		E5FDDBC618EDE9B100CE7B01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBC518EDE9B100CE7B01 /* MapKit.framework */; };
 		E5FDDBCB18EE79F900CE7B01 /* AnotherActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FDDBC918EE79F900CE7B01 /* AnotherActivitiesViewController.m */; };
 		E5FDDBCC18EE79F900CE7B01 /* AnotherActivitiesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FDDBCA18EE79F900CE7B01 /* AnotherActivitiesViewController.xib */; };
@@ -212,8 +212,6 @@
 		E55D866C190C059200B1400A /* Request.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Request.m; sourceTree = "<group>"; };
 		E55D866E190C059200B1400A /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		E55D866F190C059200B1400A /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
-		E55D8676190C074100B1400A /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
-		E55D8677190C074100B1400A /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
 		E58F958418FD107E00A0A55B /* CvLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CvLayout.h; sourceTree = "<group>"; };
 		E58F958518FD107E00A0A55B /* CvLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CvLayout.m; sourceTree = "<group>"; };
 		E59987C618E6DBEA00B01C62 /* RideRequestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideRequestsViewController.h; sourceTree = "<group>"; };
@@ -281,6 +279,8 @@
 		E5E2157D1908492200B0B150 /* FreeSeatsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreeSeatsTableViewCell.m; sourceTree = "<group>"; };
 		E5E2157E1908492200B0B150 /* FreeSeatsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FreeSeatsTableViewCell.xib; sourceTree = "<group>"; };
 		E5FC44D4190CF83100E8DB65 /* MenuTopHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuTopHeaderView.xib; sourceTree = "<group>"; };
+		E5FC44DD190D55C900E8DB65 /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
+		E5FC44DE190D55C900E8DB65 /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
 		E5FDDBC518EDE9B100CE7B01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E5FDDBC818EE79F900CE7B01 /* AnotherActivitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnotherActivitiesViewController.h; sourceTree = "<group>"; };
 		E5FDDBC918EE79F900CE7B01 /* AnotherActivitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnotherActivitiesViewController.m; sourceTree = "<group>"; };
@@ -539,12 +539,12 @@
 				E55D8663190C059200B1400A /* Rating.m */,
 				E55D866B190C059200B1400A /* Request.h */,
 				E55D866C190C059200B1400A /* Request.m */,
-				E55D8676190C074100B1400A /* Ride.h */,
-				E55D8677190C074100B1400A /* Ride.m */,
 				E50DB28918F8730400E87E62 /* RidesStore.h */,
 				E50DB28A18F8730400E87E62 /* RidesStore.m */,
 				E55D866E190C059200B1400A /* User.h */,
 				E55D866F190C059200B1400A /* User.m */,
+				E5FC44DD190D55C900E8DB65 /* Ride.h */,
+				E5FC44DE190D55C900E8DB65 /* Ride.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -984,7 +984,6 @@
 				E599887318E8616200B01C62 /* HATransitionLayout.m in Sources */,
 				E5FDDBCB18EE79F900CE7B01 /* AnotherActivitiesViewController.m in Sources */,
 				E5DF641018EB46F900D53164 /* RideDetailsViewController.m in Sources */,
-				E55D8678190C074100B1400A /* Ride.m in Sources */,
 				E59987D018E6E47F00B01C62 /* LoginViewController.m in Sources */,
 				E50DB28218F86F8000E87E62 /* UserMapping.m in Sources */,
 				E55D8670190C059200B1400A /* User.m in Sources */,
@@ -1005,6 +1004,7 @@
 				E5DF641518EB548E00D53164 /* SettingsViewController.m in Sources */,
 				E5E215641907A95F00B0B150 /* SearchRideViewController.m in Sources */,
 				E522BACA18AE13F600ECD375 /* AppDelegate.m in Sources */,
+				E5FC44DF190D55C900E8DB65 /* Ride.m in Sources */,
 				E55D8664190C059200B1400A /* Rating.m in Sources */,
 				E5E2155F1907A94A00B0B150 /* AddRideViewController.m in Sources */,
 				E5DF642818EBD8AB00D53164 /* BalancedColumnLayout.m in Sources */,

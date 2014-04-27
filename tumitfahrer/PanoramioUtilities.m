@@ -41,6 +41,7 @@
 - (NSURLRequest*)buildUrlRequestWithLocation:(CLLocation *)location {
     
     NSString *urlString = [NSString stringWithFormat:@"http://www.panoramio.com/map/get_panoramas.php?set=public&from=0&to=1&minx=%f&miny=%f&maxx=%f&maxy=%f&size=medium&mapfilter=true", location.coordinate.longitude, location.coordinate.latitude, location.coordinate.longitude+0.02, location.coordinate.latitude+0.02];
+    NSLog(@"request: %@", urlString);
     NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
     
@@ -92,7 +93,7 @@
             // parse json
             NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
             @try {
-                
+                NSLog(@"parsed object: %@", parsedObject);
                 NSLog(@"photo url: %@", parsedObject[@"photos"][0][@"photo_file_url"]);
                 NSURL *url = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];
                 

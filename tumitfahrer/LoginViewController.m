@@ -101,9 +101,6 @@
     } else {
         // new user, get account from webservice
         [self createUserSession];
-        
-        // check if fetch user has assigned a device token]
-        [self checkDeviceToken];
     }
 }
 

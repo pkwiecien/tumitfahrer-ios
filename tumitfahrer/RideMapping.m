@@ -22,6 +22,7 @@
                                                       @"free_seats":@"freeSeats",
                                                       @"duration":@"duration",
                                                       @"distance":@"distance",
+                                                      @"ride_type":@"rideType",
                                                       @"created_at": @"createdAt",
                                                       @"updated_at": @"updatedAt"
                                                       }];

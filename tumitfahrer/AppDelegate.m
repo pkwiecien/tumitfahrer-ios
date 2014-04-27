@@ -159,7 +159,6 @@
     
     // Configure a managed object cache to ensure we do not create duplicate objects
     managedObjectStore.managedObjectCache = [[RKInMemoryManagedObjectCache alloc] initWithManagedObjectContext:managedObjectStore.persistentStoreManagedObjectContext];
-    
 }
 
 -(void)initMappingsForObjectManager:(RKObjectManager *)objectManager {

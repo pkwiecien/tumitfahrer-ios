@@ -52,7 +52,8 @@
         <attribute name="realtimeDepartureTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="realtimeKm" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="rideId" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
-        <attribute name="updatedAt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rideType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="driver" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="User" inverseName="ridesAsDriver" inverseEntity="User" syncable="YES"/>
         <relationship name="passengers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="ridesAsPassenger" inverseEntity="User" syncable="YES"/>
         <relationship name="requests" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Request" inverseName="requestedRide" inverseEntity="Request" syncable="YES"/>
@@ -85,7 +86,7 @@
         <element name="Message" positionX="-29" positionY="-387" width="128" height="148"/>
         <element name="Rating" positionX="-315" positionY="158" width="128" height="148"/>
         <element name="Request" positionX="783" positionY="113" width="128" height="148"/>
-        <element name="Ride" positionX="567" positionY="-99" width="128" height="360"/>
+        <element name="Ride" positionX="567" positionY="-99" width="128" height="375"/>
         <element name="User" positionX="-63" positionY="-18" width="128" height="358"/>
     </elements>
 </model>

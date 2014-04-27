@@ -17,7 +17,6 @@
 
 + (BOOL)fetchUserFromCoreDataWithEmail:(NSString *)email;
 
-typedef void(^boolCompletionHandler)(BOOL);
 - (void)hasDeviceTokenInWebservice:(boolCompletionHandler)block;
 - (void)sendDeviceTokenToWebservice;
 

@@ -85,7 +85,7 @@
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [[[RidesStore sharedStore] allRides] count];
+    return [[[RidesStore sharedStore] allCampusRides] count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -96,7 +96,7 @@
     
     UIImageView *imageLargeCell = (UIImageView *)[cell.contentView viewWithTag:11];
     
-    Ride *ride = [[[RidesStore sharedStore] allRides] objectAtIndex:indexPath.row];
+    Ride *ride = [[[RidesStore sharedStore] allCampusRides] objectAtIndex:indexPath.row];
     if(ride.destinationImage == nil) {
         imageLargeCell.image = [UIImage imageNamed:@"PlaceholderImage"];
     } else {
