@@ -16,7 +16,7 @@
 #import "HATransitionController.h"
 #import "HACollectionViewSmallLayout.h"
 #import "Device.h"
-#import "ActivityRidesViewController.h"
+#import "BrowseRidesViewController.h"
 #import "UserMapping.h"
 #import "SessionMapping.h"
 #import "RideMapping.h"
@@ -100,12 +100,13 @@
 
 -(void)setupNavigationController {
     // init controllers
-    ActivityRidesViewController *activityRidesVC = [[ActivityRidesViewController alloc] init];
+    BrowseRidesViewController *activityRidesVC = [[BrowseRidesViewController alloc] initWithContentType:ContentTypeCampusRides];
     // RideRequestsViewController *rideRequestVC = [[RideRequestsViewController alloc] init];
     MenuViewController *leftMenu = [[MenuViewController alloc] init];
     
     // init and configure slide panel
     self.navigationController = [[SlideNavigationController alloc] initWithRootViewController:activityRidesVC];
+    self.navigationController.avoidSwitchingToSameClassViewController = NO;
     self.navigationController.enableSwipeGesture = YES;
     self.navigationController.portraitSlideOffset = cSlideMenuOffset; // width of visible view controller
     [SlideNavigationController sharedInstance].leftMenu = leftMenu;

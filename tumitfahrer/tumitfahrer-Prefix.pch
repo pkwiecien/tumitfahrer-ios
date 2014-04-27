@@ -53,7 +53,7 @@ static int const cUIElementPadding = 10;
 static int const cMarginTop =120;
 
 // slide menu offset
-static int const cSlideMenuOffset = 110;
+static int const cSlideMenuOffset = 70;
 
 # pragma mark - API mapping for RestKit
 static NSString *API_USERS = @"/api/v2/users";

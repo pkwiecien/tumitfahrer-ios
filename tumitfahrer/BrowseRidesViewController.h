@@ -1,0 +1,35 @@
+//
+//  ActivityRidesViewController.h
+//  tumitfahrer
+//
+//  Created by Pawel Kwiecien on 4/1/14.
+//  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "PanoramioUtilities.h"
+#import "RidesStore.h"
+#import <SlideNavigationController.h>
+
+@interface BrowseRidesViewController : UIViewController<SlideNavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate, UIScrollViewDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, PanoramioUtilitiesDelegate, RideStoreDelegate>
+
+typedef enum contentTypes : NSUInteger {
+    ContentTypeCampusRides = 1,
+    ContentTypeActivityRides = 2,
+    ContentTypeExistingRequests = 3
+} ContentType;
+
+@property (nonatomic, assign) ContentType ContentTypeEnum;
+@property (weak, nonatomic) IBOutlet UILabel *contentTitle;
+@property (weak, nonatomic) IBOutlet UIButton *menuButton;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIView *departurePlaceView;
+@property (weak, nonatomic) IBOutlet UIView *departureLabelView;
+
+- (instancetype)initWithContentType:(ContentType)contentType;
+- (IBAction)menuButtonPressed:(id)sender;
+- (IBAction)searchButtonPressed:(id)sender;
+- (IBAction)addButtonPressed:(id)sender;
+
+
+@end

@@ -68,7 +68,6 @@
 		E59987FC18E7251000B01C62 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59987FA18E7251000B01C62 /* RegisterViewController.xib */; };
 		E599880118E72BF600B01C62 /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987FF18E72BF500B01C62 /* ForgotPasswordViewController.m */; };
 		E599880218E72BF600B01C62 /* ForgotPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E599880018E72BF600B01C62 /* ForgotPasswordViewController.xib */; };
-		E599880B18E7836D00B01C62 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E599880918E7836D00B01C62 /* MenuViewController.m */; };
 		E599880C18E7836D00B01C62 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E599880A18E7836D00B01C62 /* MenuViewController.xib */; };
 		E599880E18E7FB1600B01C62 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E599880D18E7FB1600B01C62 /* AVFoundation.framework */; };
 		E599881118E7FC5900B01C62 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E599881018E7FC5900B01C62 /* MediaPlayer.framework */; };
@@ -85,8 +84,8 @@
 		E5DF641118EB46F900D53164 /* RideDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DF640F18EB46F900D53164 /* RideDetailsViewController.xib */; };
 		E5DF641518EB548E00D53164 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DF641318EB548E00D53164 /* SettingsViewController.m */; };
 		E5DF641618EB548E00D53164 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DF641418EB548E00D53164 /* SettingsViewController.xib */; };
-		E5DF641B18EB56A600D53164 /* ActivityRidesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DF641918EB56A600D53164 /* ActivityRidesViewController.m */; };
-		E5DF641C18EB56A600D53164 /* ActivityRidesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DF641A18EB56A600D53164 /* ActivityRidesViewController.xib */; };
+		E5DF641B18EB56A600D53164 /* BrowseRidesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DF641918EB56A600D53164 /* BrowseRidesViewController.m */; };
+		E5DF641C18EB56A600D53164 /* BrowseRidesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DF641A18EB56A600D53164 /* BrowseRidesViewController.xib */; };
 		E5DF641F18EB639600D53164 /* CampusRidesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DF641E18EB639600D53164 /* CampusRidesViewController.m */; };
 		E5DF642118EB64BD00D53164 /* CollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DF642018EB64BD00D53164 /* CollectionCell.xib */; };
 		E5DF642318EB658300D53164 /* CampusRidesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DF642218EB658300D53164 /* CampusRidesViewController.xib */; };
@@ -102,6 +101,7 @@
 		E5E2157F1908492200B0B150 /* FreeSeatsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2157D1908492200B0B150 /* FreeSeatsTableViewCell.m */; };
 		E5E215801908492200B0B150 /* FreeSeatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E2157E1908492200B0B150 /* FreeSeatsTableViewCell.xib */; };
 		E5FC44D5190CF83100E8DB65 /* MenuTopHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FC44D4190CF83100E8DB65 /* MenuTopHeaderView.xib */; };
+		E5FC44D6190D30FF00E8DB65 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E599880918E7836D00B01C62 /* MenuViewController.m */; };
 		E5FDDBC618EDE9B100CE7B01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBC518EDE9B100CE7B01 /* MapKit.framework */; };
 		E5FDDBCB18EE79F900CE7B01 /* AnotherActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FDDBC918EE79F900CE7B01 /* AnotherActivitiesViewController.m */; };
 		E5FDDBCC18EE79F900CE7B01 /* AnotherActivitiesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FDDBCA18EE79F900CE7B01 /* AnotherActivitiesViewController.xib */; };
@@ -256,9 +256,9 @@
 		E5DF641218EB548E00D53164 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		E5DF641318EB548E00D53164 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		E5DF641418EB548E00D53164 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
-		E5DF641818EB56A600D53164 /* ActivityRidesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityRidesViewController.h; sourceTree = "<group>"; };
-		E5DF641918EB56A600D53164 /* ActivityRidesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityRidesViewController.m; sourceTree = "<group>"; };
-		E5DF641A18EB56A600D53164 /* ActivityRidesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityRidesViewController.xib; sourceTree = "<group>"; };
+		E5DF641818EB56A600D53164 /* BrowseRidesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseRidesViewController.h; sourceTree = "<group>"; };
+		E5DF641918EB56A600D53164 /* BrowseRidesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowseRidesViewController.m; sourceTree = "<group>"; };
+		E5DF641A18EB56A600D53164 /* BrowseRidesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowseRidesViewController.xib; sourceTree = "<group>"; };
 		E5DF641D18EB639600D53164 /* CampusRidesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CampusRidesViewController.h; sourceTree = "<group>"; };
 		E5DF641E18EB639600D53164 /* CampusRidesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CampusRidesViewController.m; sourceTree = "<group>"; };
 		E5DF642018EB64BD00D53164 /* CollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionCell.xib; sourceTree = "<group>"; };
@@ -710,9 +710,9 @@
 			isa = PBXGroup;
 			children = (
 				E5DF642518EBD87A00D53164 /* Activities Collection View */,
-				E5DF641818EB56A600D53164 /* ActivityRidesViewController.h */,
-				E5DF641918EB56A600D53164 /* ActivityRidesViewController.m */,
-				E5DF641A18EB56A600D53164 /* ActivityRidesViewController.xib */,
+				E5DF641818EB56A600D53164 /* BrowseRidesViewController.h */,
+				E5DF641918EB56A600D53164 /* BrowseRidesViewController.m */,
+				E5DF641A18EB56A600D53164 /* BrowseRidesViewController.xib */,
 			);
 			name = "Activity Rides";
 			sourceTree = "<group>";
@@ -912,7 +912,7 @@
 				E59987D118E6E47F00B01C62 /* LoginViewController.xib in Resources */,
 				E504D9BD190A58710036FFA8 /* MeetingPointViewController.xib in Resources */,
 				E5DF641618EB548E00D53164 /* SettingsViewController.xib in Resources */,
-				E5DF641C18EB56A600D53164 /* ActivityRidesViewController.xib in Resources */,
+				E5DF641C18EB56A600D53164 /* BrowseRidesViewController.xib in Resources */,
 				E5FDDBCC18EE79F900CE7B01 /* AnotherActivitiesViewController.xib in Resources */,
 				E522BAD218AE13F600ECD375 /* Images.xcassets in Resources */,
 				E5FDDBD718EFDD0100CE7B01 /* UbertestersSDKResources.bundle in Resources */,
@@ -979,7 +979,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5DF641B18EB56A600D53164 /* ActivityRidesViewController.m in Sources */,
+				E5DF641B18EB56A600D53164 /* BrowseRidesViewController.m in Sources */,
 				E55D866A190C059200B1400A /* FriendRequest.m in Sources */,
 				E599887318E8616200B01C62 /* HATransitionLayout.m in Sources */,
 				E5FDDBCB18EE79F900CE7B01 /* AnotherActivitiesViewController.m in Sources */,
@@ -988,6 +988,7 @@
 				E59987D018E6E47F00B01C62 /* LoginViewController.m in Sources */,
 				E50DB28218F86F8000E87E62 /* UserMapping.m in Sources */,
 				E55D8670190C059200B1400A /* User.m in Sources */,
+				E5FC44D6190D30FF00E8DB65 /* MenuViewController.m in Sources */,
 				E504D9BC190A58710036FFA8 /* MeetingPointViewController.m in Sources */,
 				E5DF641F18EB639600D53164 /* CampusRidesViewController.m in Sources */,
 				E504D9D0190A7FC50036FFA8 /* SPGooglePlacesAutocompletePlace.m in Sources */,
@@ -1028,7 +1029,6 @@
 				E58F958618FD107E00A0A55B /* CvLayout.m in Sources */,
 				E522BAC618AE13F600ECD375 /* main.m in Sources */,
 				E50DB28518F86F8800E87E62 /* SessionMapping.m in Sources */,
-				E599880B18E7836D00B01C62 /* MenuViewController.m in Sources */,
 				E51FD51A18F3D2590098AD11 /* tumitfahrer.xcdatamodeld in Sources */,
 				E599887218E8616200B01C62 /* HATransitionController.m in Sources */,
 				E5FDDBF118F0059D00CE7B01 /* ActionManager.m in Sources */,

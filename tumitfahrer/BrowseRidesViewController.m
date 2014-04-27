@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 #import <QuartzCore/QuartzCore.h>
-#import "ActivityRidesViewController.h"
+#import "BrowseRidesViewController.h"
 #import "RideDetailsViewController.h"
 #import "CvLayout.h"
 #import "RidesStore.h"
@@ -17,7 +17,7 @@
 #import "CurrentUser.h"
 #import "LoginViewController.h"
 
-@interface ActivityRidesViewController ()
+@interface BrowseRidesViewController ()
 
 @property (nonatomic, strong) NSMutableDictionary * cellHeights;
 @property (nonatomic, strong) NSArray * imageHeights;
@@ -34,11 +34,12 @@
 
 @end
 
-@implementation ActivityRidesViewController
+@implementation BrowseRidesViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+-(instancetype)initWithContentType:(ContentType)contentType {
+    self = [super init];
     if (self) {
+        self.ContentTypeEnum = contentType;
     }
     return self;
 }
@@ -77,6 +78,22 @@
     
     [[PanoramioUtilities sharedInstance] addObserver:self];
     [[RidesStore sharedStore] addObserver:self];
+    
+    [self setViewTitle];
+}
+
+-(void)setViewTitle {
+    switch (self.ContentTypeEnum) {
+        case ContentTypeActivityRides:
+            self.contentTitle.text = @"Activity Rides";
+            break;
+        case ContentTypeCampusRides:
+            self.contentTitle.text = @"Campus Rides";
+            break;
+        case ContentTypeExistingRequests:
+            self.contentTitle.text = @"Existing Request";
+            break;
+    }
 }
 
 -(void)refershControlAction
@@ -112,7 +129,6 @@
     LoginViewController *loginVC = [[LoginViewController alloc] init];
     [self presentViewController:loginVC animated:animated completion:nil];
 }
-
 
 -(void)makeViewSmallQuickly:(BOOL)isQuickly {
     [UIView animateWithDuration:(isQuickly?0.01:1.0) animations:^{

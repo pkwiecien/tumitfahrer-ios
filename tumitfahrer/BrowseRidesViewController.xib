@@ -4,9 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ActivityRidesViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BrowseRidesViewController">
             <connections>
                 <outlet property="collectionView" destination="rhQ-Z1-YhV" id="3b9-Wz-i8G"/>
+                <outlet property="contentTitle" destination="hM4-H0-50N" id="jM1-yx-aEe"/>
                 <outlet property="departureLabelView" destination="kDr-El-kRz" id="c04-Vt-je6"/>
                 <outlet property="departurePlaceView" destination="7uL-A0-zDK" id="p65-6f-4CI"/>
                 <outlet property="menuButton" destination="e5D-xV-JVf" id="goD-Eh-VJe"/>

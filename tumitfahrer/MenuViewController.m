@@ -10,9 +10,8 @@
 #import "MenuTableViewCell.h"
 #import "SettingsViewController.h"
 #import "RideRequestsViewController.h"
-#import "ActivityRidesViewController.h"
+#import "BrowseRidesViewController.h"
 #import <SlideNavigationController.h>
-#import "HATransitionController.h"
 #import "CampusRidesViewController.h"
 #import "AnotherActivitiesViewController.h"
 #import "ActionManager.h"
@@ -22,76 +21,122 @@
 
 @interface MenuViewController ()
 
-@property NSMutableArray *viewControllers;
-@property NSMutableArray *menuIcons;
-@property (nonatomic) HATransitionController *transitionController;
-
 @property NSArray *browseRidesSection;
+@property NSArray *browseRidesViewControllers;
+@property NSArray *browseRidesIcons;
 @property NSArray *addRidesSection;
+@property NSArray *addRidesViewControllers;
+@property NSArray *addRidesIcons;
 @property NSArray *profileSection;
+@property NSArray *profileViewControllers;
+@property NSArray *profileIcons;
+
 @property NSArray *allMenuItems;
+@property NSArray *allViewControllers;
+@property NSArray *allIcons;
+
+@property NSArray *headersLabels;
 
 @end
 
 @implementation MenuViewController
 
+#pragma mark - initializers
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        RideRequestsViewController *rideRequestsVC = [[RideRequestsViewController alloc] init];
-        ActivityRidesViewController *activityRidesVC = [[ActivityRidesViewController alloc] init];
-        CampusRidesViewController *campusRidesVC = [[CampusRidesViewController alloc] init];
-        AnotherActivitiesViewController *anotherActivitiesVC = [[AnotherActivitiesViewController alloc] init];
-        SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
-        ProfileViewController *profileVC = [[ProfileViewController alloc] init];
-        self.transitionController = [[HATransitionController alloc] initWithCollectionView:campusRidesVC.collectionView];
-        
-        self.viewControllers = [NSMutableArray arrayWithObjects:campusRidesVC, activityRidesVC, rideRequestsVC, anotherActivitiesVC, profileVC, settingsVC, nil];
+        [self initViewControllers];
+        [self initCellTitles];
+        [self initCellIcons];
+        [self initTableHeaderLabels];
     }
     return self;
 }
 
+-(void)initViewControllers {
+    // section 0 - view controllers
+    BrowseRidesViewController *campusRidesVC = [[BrowseRidesViewController alloc] initWithContentType:ContentTypeCampusRides];
+    BrowseRidesViewController *activityRidesVC = [[BrowseRidesViewController alloc] initWithContentType:ContentTypeActivityRides];
+    BrowseRidesViewController *existingRequestsVC = [[BrowseRidesViewController alloc] initWithContentType:ContentTypeExistingRequests];
+    self.browseRidesViewControllers = [NSArray arrayWithObjects:campusRidesVC, activityRidesVC, existingRequestsVC, nil];
+    
+    // section 1 - view controllers
+    self.addRidesViewControllers = [NSArray arrayWithObjects: nil];
+    
+    // section 2 - view controllers
+    SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
+    ProfileViewController *profileVC = [[ProfileViewController alloc] init];
+    self.profileViewControllers = [NSArray arrayWithObjects:profileVC, settingsVC, nil];
+    
+    // add all sections to view controllers
+    self.allViewControllers = [NSArray arrayWithObjects:self.browseRidesViewControllers, self.addRidesViewControllers, self.profileViewControllers, nil];
+}
+
+-(void)initCellTitles {
+    self.browseRidesSection = [NSArray arrayWithObjects:@"Campus Rides", @"Activities", @"Existing Requests", nil];
+    self.addRidesSection = [NSArray arrayWithObjects:@"New Ride", @"New Request", nil];
+    self.profileSection = [NSArray arrayWithObjects:@"Profile", @"Schedule", @"Messages", @"Settings", nil];
+    self.allMenuItems = [NSArray arrayWithObjects:self.browseRidesSection, self.addRidesSection, self.profileSection, nil];
+}
+
+-(void)initCellIcons {
+    self.browseRidesIcons = [NSArray arrayWithObjects:@"CampusIcon", @"ActivityIcon", @"RequestIcon", nil];
+    self.addRidesIcons = [NSArray arrayWithObjects:@"RequestIcon", @"RequestIcon", nil];
+    self.profileIcons = [NSArray arrayWithObjects:@"ScheduleIcon", @"ProfileIcon", @"SettingsIcon",  @"SettingsIcon", nil];
+    
+    self.allIcons = [NSArray arrayWithObjects:self.browseRidesIcons, self.addRidesIcons, self.profileIcons, nil];
+}
+
+-(void)initTableHeaderLabels {
+    self.headersLabels = [NSArray arrayWithObjects:@"BROWSE OFFERS", @"ADD", @"YOUR ACCOUNT", nil];
+}
+
+#pragma mark - view controller configuration
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self addBackgroundToTableView];
+    [self makeHeaderForTableView];
+}
+
+-(void)addBackgroundToTableView {
     self.tableView.backgroundColor = [UIColor clearColor];
-    
-    self.browseRidesSection = [NSArray arrayWithObjects:@"Campus Rides", @"Activities", @"Ride Requests", nil];
-    self.addRidesSection = [NSArray arrayWithObjects:@"Add Ride", @"Add Request", nil];
-    self.profileSection = [NSArray arrayWithObjects:@"Your Schedule", @"Profile", @"Messages", @"Settings", nil];
-    self.allMenuItems = [NSArray arrayWithObjects:self.browseRidesSection, self.addRidesSection, self.profileSection, nil];
-    
-    self.menuIcons = [NSMutableArray arrayWithObjects:@"RequestIcon", @"CampusIcon", @"ActivityIcon", @"ScheduleIcon", @"ProfileIcon", @"SettingsIcon", @"", @"", @"", nil];
-    
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gradientBackground"]];
     [self.view addSubview:imageView];
     [self.view sendSubviewToBack:imageView];
-    
+}
+
+-(void)makeHeaderForTableView {
     UIView *menuTopHeaderView = [[[NSBundle mainBundle] loadNibNamed:@"MenuTopHeaderView" owner:self options:nil] firstObject];
     UILabel *initialsLabel = (UILabel *)[menuTopHeaderView viewWithTag:2];
     UILabel *usernameLabel = (UILabel *)[menuTopHeaderView viewWithTag:3];
     
     usernameLabel.text = [CurrentUser sharedInstance].user.firstName;
     initialsLabel.text = [[[CurrentUser sharedInstance].user.firstName substringToIndex:1] stringByAppendingString:[[CurrentUser sharedInstance].user.lastName substringToIndex:1]];
-    
     self.tableView.tableHeaderView = menuTopHeaderView;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    NSLog(@"Current user: %@", [CurrentUser sharedInstance].user);
+    
+    // set initally first row selected
+    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView selectRowAtIndexPath:indexPath animated:YES  scrollPosition:UITableViewScrollPositionBottom];
 }
+
+#pragma mark - table view
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [self.allMenuItems count];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
     return [[self.allMenuItems objectAtIndex:section] count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"MenuTableViewCell";
-    __block MenuTableViewCell *cell = (MenuTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    MenuTableViewCell *cell = (MenuTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
     if(!cell)
     {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MenuTableViewCell" owner:self options:nil];
@@ -99,12 +144,14 @@
     }
     
     cell.menuLabel.text = [[self.allMenuItems objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    // add icon to the cell
     UIColor *almostWhiteColor = [UIColor colorWithRed:0.961 green:0.961 blue:0.961 alpha:0.8];
-    UIImage *newImg = [ActionManager colorImage:[UIImage imageNamed:self.menuIcons[indexPath.row]] withColor:almostWhiteColor];
+    UIImage *newImg = [ActionManager colorImage:[UIImage imageNamed:[[self.allIcons objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]] withColor:almostWhiteColor];
     cell.iconMenuImageView.image = newImg;
+    // set background of cell to transparent
     cell.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];
-    
+    // configure background of selected cell
     UIView *bgColorView = [[UIView alloc] init];
     bgColorView.backgroundColor = [UIColor colorWithRed:70 green:30 blue:180 alpha:0.3];
     bgColorView.layer.masksToBounds = YES;
@@ -118,40 +165,31 @@
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"DETAILS";
+    return [self.headersLabels objectAtIndex:section];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 40;
+}
+- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 40)];
+    [headerView setBackgroundColor:[UIColor clearColor]];
+
+    UILabel *label= [[UILabel alloc]initWithFrame:CGRectMake(15,20,self.view.frame.size.width,20)];
+    label.backgroundColor = [UIColor clearColor];
+    label.text = [self.headersLabels objectAtIndex:section];
+    [label setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:16.0]];//font size and style
+    [label setTextColor:[UIColor whiteColor]];
+    
+    [headerView addSubview:label];
+    return headerView;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(indexPath.row < [self.viewControllers count])
-        [[SlideNavigationController sharedInstance] switchToViewController:[self.viewControllers objectAtIndex:indexPath.row]  withCompletion:nil];
-}
-
-#pragma mark - Paper collection view
-- (id <UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController
-                          interactionControllerForAnimationController:(id <UIViewControllerAnimatedTransitioning>) animationController {
-   
-    if (animationController==self.transitionController) {
-        return self.transitionController;
-    }
-    return nil;
-}
-
-
-- (id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
-                                   animationControllerForOperation:(UINavigationControllerOperation)operation
-                                                fromViewController:(UIViewController *)fromVC
-                                                  toViewController:(UIViewController *)toVC {
-    if (![fromVC isKindOfClass:[UICollectionViewController class]] || ![toVC isKindOfClass:[UICollectionViewController class]])
-    {
-        return nil;
-    }
-    if (!self.transitionController.hasActiveInteraction)
-    {
-        return nil;
-    }
-    
-    self.transitionController.navigationOperation = operation;
-    return self.transitionController;
+    UIViewController *viewController = [[self.allViewControllers objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    if(viewController)
+        [[SlideNavigationController sharedInstance] switchToViewController:viewController withCompletion:nil];
 }
 
 
