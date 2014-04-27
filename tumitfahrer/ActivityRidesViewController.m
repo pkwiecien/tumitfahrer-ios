@@ -15,6 +15,7 @@
 #import "SearchRideViewController.h"
 #import "AddRideViewController.h"
 #import "CurrentUser.h"
+#import "LoginViewController.h"
 
 @interface ActivityRidesViewController ()
 
@@ -90,6 +91,12 @@
 -(void)viewWillAppear:(BOOL)animated {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     self.navigationController.navigationBarHidden = YES;
+    
+    if([CurrentUser sharedInstance].user == nil)
+    {
+        [self showLoginScreen:NO];
+    }
+    
     [self.collectionView reloadData];
 
     if(self.isUpperViewSmall) {
@@ -99,6 +106,13 @@
         [self makeViewLargeQuickly:YES];
     }
 }
+
+-(void)showLoginScreen:(BOOL)animated
+{
+    LoginViewController *loginVC = [[LoginViewController alloc] init];
+    [self presentViewController:loginVC animated:animated completion:nil];
+}
+
 
 -(void)makeViewSmallQuickly:(BOOL)isQuickly {
     [UIView animateWithDuration:(isQuickly?0.01:1.0) animations:^{
@@ -163,8 +177,9 @@
     } else {
         imageView.image = ride.destinationImage;
     }
+    imageView.clipsToBounds = YES;
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
     
-    [imageView setClipsToBounds:YES];
     UILabel *destinationLabel = (UILabel *)[cell.contentView viewWithTag:9];
     destinationLabel.text = ride.destination;
     

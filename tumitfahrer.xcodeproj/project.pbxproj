@@ -101,6 +101,7 @@
 		E5E215791908442100B0B150 /* SwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E215771908442100B0B150 /* SwitchTableViewCell.xib */; };
 		E5E2157F1908492200B0B150 /* FreeSeatsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2157D1908492200B0B150 /* FreeSeatsTableViewCell.m */; };
 		E5E215801908492200B0B150 /* FreeSeatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E2157E1908492200B0B150 /* FreeSeatsTableViewCell.xib */; };
+		E5FC44D5190CF83100E8DB65 /* MenuTopHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FC44D4190CF83100E8DB65 /* MenuTopHeaderView.xib */; };
 		E5FDDBC618EDE9B100CE7B01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBC518EDE9B100CE7B01 /* MapKit.framework */; };
 		E5FDDBCB18EE79F900CE7B01 /* AnotherActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FDDBC918EE79F900CE7B01 /* AnotherActivitiesViewController.m */; };
 		E5FDDBCC18EE79F900CE7B01 /* AnotherActivitiesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FDDBCA18EE79F900CE7B01 /* AnotherActivitiesViewController.xib */; };
@@ -279,6 +280,7 @@
 		E5E2157C1908492200B0B150 /* FreeSeatsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreeSeatsTableViewCell.h; sourceTree = "<group>"; };
 		E5E2157D1908492200B0B150 /* FreeSeatsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreeSeatsTableViewCell.m; sourceTree = "<group>"; };
 		E5E2157E1908492200B0B150 /* FreeSeatsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FreeSeatsTableViewCell.xib; sourceTree = "<group>"; };
+		E5FC44D4190CF83100E8DB65 /* MenuTopHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuTopHeaderView.xib; sourceTree = "<group>"; };
 		E5FDDBC518EDE9B100CE7B01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E5FDDBC818EE79F900CE7B01 /* AnotherActivitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnotherActivitiesViewController.h; sourceTree = "<group>"; };
 		E5FDDBC918EE79F900CE7B01 /* AnotherActivitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnotherActivitiesViewController.m; sourceTree = "<group>"; };
@@ -602,6 +604,7 @@
 		E599880718E7835F00B01C62 /* Left Menu */ = {
 			isa = PBXGroup;
 			children = (
+				E5FC44CE190CEB3F00E8DB65 /* Top Header View */,
 				E599885E18E84D7F00B01C62 /* CustomCell */,
 				E599880818E7836D00B01C62 /* MenuViewController.h */,
 				E599880918E7836D00B01C62 /* MenuViewController.m */,
@@ -781,6 +784,14 @@
 			name = "Free Seats Cell";
 			sourceTree = "<group>";
 		};
+		E5FC44CE190CEB3F00E8DB65 /* Top Header View */ = {
+			isa = PBXGroup;
+			children = (
+				E5FC44D4190CF83100E8DB65 /* MenuTopHeaderView.xib */,
+			);
+			name = "Top Header View";
+			sourceTree = "<group>";
+		};
 		E5FDDBC718EE79A100CE7B01 /* Another Acitvites */ = {
 			isa = PBXGroup;
 			children = (
@@ -905,6 +916,7 @@
 				E5FDDBCC18EE79F900CE7B01 /* AnotherActivitiesViewController.xib in Resources */,
 				E522BAD218AE13F600ECD375 /* Images.xcassets in Resources */,
 				E5FDDBD718EFDD0100CE7B01 /* UbertestersSDKResources.bundle in Resources */,
+				E5FC44D5190CF83100E8DB65 /* MenuTopHeaderView.xib in Resources */,
 				E599881918E804E500B01C62 /* highway-nosound@2x.mp4 in Resources */,
 				E59987CA18E6DBEA00B01C62 /* RideRequestsViewController.xib in Resources */,
 				E522BAC418AE13F600ECD375 /* InfoPlist.strings in Resources */,

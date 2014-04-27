@@ -164,6 +164,12 @@
     return @"GENERAL";
 }
 
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView * headerView = [[UIView alloc] init];
+    headerView.backgroundColor = [UIColor clearColor];
+    return headerView;
+}
+
 - (BOOL)slideNavigationControllerShouldDisplayLeftMenu
 {
     return YES;

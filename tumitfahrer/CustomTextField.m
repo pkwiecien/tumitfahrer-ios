@@ -9,6 +9,8 @@
 #import "CustomTextField.h"
 #import "ActionManager.h"
 
+#define kLeftPadding 30
+
 @interface CustomTextField ()
 
 @property (nonatomic, strong) NSString *placeholderText;
@@ -101,12 +103,15 @@
 
 // padding of the input text and placeholder
 -(CGRect)textRectForBounds:(CGRect)bounds {
-    return CGRectInset(bounds, 30, 0);
+    
+    CGFloat x = bounds.origin.x + kLeftPadding;
+    CGFloat y = bounds.origin.y;
+    return CGRectMake(x,y,bounds.size.width-2*kLeftPadding, bounds.size.height);
 }
 
 // padding of the input text while editing
 -(CGRect)editingRectForBounds:(CGRect)bounds {
-    return CGRectInset(bounds, 30, 0);
+    return [self textRectForBounds:bounds];
 }
 
 // padding of the icon in input box

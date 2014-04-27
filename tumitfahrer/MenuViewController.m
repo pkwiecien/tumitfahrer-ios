@@ -23,9 +23,13 @@
 @interface MenuViewController ()
 
 @property NSMutableArray *viewControllers;
-@property NSMutableArray *menuItems;
 @property NSMutableArray *menuIcons;
 @property (nonatomic) HATransitionController *transitionController;
+
+@property NSArray *browseRidesSection;
+@property NSArray *addRidesSection;
+@property NSArray *profileSection;
+@property NSArray *allMenuItems;
 
 @end
 
@@ -42,7 +46,7 @@
         ProfileViewController *profileVC = [[ProfileViewController alloc] init];
         self.transitionController = [[HATransitionController alloc] initWithCollectionView:campusRidesVC.collectionView];
         
-        self.viewControllers = [NSMutableArray arrayWithObjects:rideRequestsVC, campusRidesVC, activityRidesVC, anotherActivitiesVC, profileVC, settingsVC, nil];
+        self.viewControllers = [NSMutableArray arrayWithObjects:campusRidesVC, activityRidesVC, rideRequestsVC, anotherActivitiesVC, profileVC, settingsVC, nil];
     }
     return self;
 }
@@ -50,26 +54,39 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.backgroundColor = [UIColor clearColor];
-    self.menuItems = [NSMutableArray arrayWithObjects:@"Requests", @"Campus Rides", @"Activities", @"Your Schedule", @"Profile", @"Settings", nil];
-    self.menuIcons = [NSMutableArray arrayWithObjects:@"RequestIcon", @"CampusIcon", @"ActivityIcon", @"ScheduleIcon", @"ProfileIcon", @"SettingsIcon", nil];
+    
+    self.browseRidesSection = [NSArray arrayWithObjects:@"Campus Rides", @"Activities", @"Ride Requests", nil];
+    self.addRidesSection = [NSArray arrayWithObjects:@"Add Ride", @"Add Request", nil];
+    self.profileSection = [NSArray arrayWithObjects:@"Your Schedule", @"Profile", @"Messages", @"Settings", nil];
+    self.allMenuItems = [NSArray arrayWithObjects:self.browseRidesSection, self.addRidesSection, self.profileSection, nil];
+    
+    self.menuIcons = [NSMutableArray arrayWithObjects:@"RequestIcon", @"CampusIcon", @"ActivityIcon", @"ScheduleIcon", @"ProfileIcon", @"SettingsIcon", @"", @"", @"", nil];
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gradientBackground"]];
     [self.view addSubview:imageView];
     [self.view sendSubviewToBack:imageView];
+    
+    UIView *menuTopHeaderView = [[[NSBundle mainBundle] loadNibNamed:@"MenuTopHeaderView" owner:self options:nil] firstObject];
+    UILabel *initialsLabel = (UILabel *)[menuTopHeaderView viewWithTag:2];
+    UILabel *usernameLabel = (UILabel *)[menuTopHeaderView viewWithTag:3];
+    
+    usernameLabel.text = [CurrentUser sharedInstance].user.firstName;
+    initialsLabel.text = [[[CurrentUser sharedInstance].user.firstName substringToIndex:1] stringByAppendingString:[[CurrentUser sharedInstance].user.lastName substringToIndex:1]];
+    
+    self.tableView.tableHeaderView = menuTopHeaderView;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     NSLog(@"Current user: %@", [CurrentUser sharedInstance].user);
-    self.usernameLabel.text = [CurrentUser sharedInstance].user.firstName;
-    self.initialsLabel.text = [[[CurrentUser sharedInstance].user.firstName substringToIndex:1] stringByAppendingString:[[CurrentUser sharedInstance].user.lastName substringToIndex:1]];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return [self.allMenuItems count];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.menuItems count];
+    
+    return [[self.allMenuItems objectAtIndex:section] count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -78,10 +95,10 @@
     if(!cell)
     {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MenuTableViewCell" owner:self options:nil];
-        cell = [nib objectAtIndex:0];
+        cell = [nib firstObject];
     }
     
-    cell.menuLabel.text = self.menuItems[indexPath.row];
+    cell.menuLabel.text = [[self.allMenuItems objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     UIColor *almostWhiteColor = [UIColor colorWithRed:0.961 green:0.961 blue:0.961 alpha:0.8];
     UIImage *newImg = [ActionManager colorImage:[UIImage imageNamed:self.menuIcons[indexPath.row]] withColor:almostWhiteColor];
     cell.iconMenuImageView.image = newImg;
@@ -100,6 +117,9 @@
     return 50;
 }
 
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return @"DETAILS";
+}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.row < [self.viewControllers count])

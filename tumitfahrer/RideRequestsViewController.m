@@ -65,11 +65,6 @@
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     
-    if([CurrentUser sharedInstance].user == nil)
-    {
-        [self showLoginScreen:NO];
-    }
-    
     self.navigationController.navigationBarHidden = YES;
     
     // Adjust scrollView decelerationRate
@@ -111,13 +106,6 @@
     } completion:^(BOOL finished){
         // if you want to do something once the animation finishes, put it here
     }];
-}
-
-
--(void)showLoginScreen:(BOOL)animated
-{
-    LoginViewController *loginVC = [[LoginViewController alloc] init];
-    [self presentViewController:loginVC animated:animated completion:nil];
 }
 
 - (BOOL)slideNavigationControllerShouldDisplayLeftMenu

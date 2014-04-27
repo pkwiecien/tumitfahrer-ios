@@ -98,12 +98,12 @@
         [self storeCurrentUserInDefaults];
         [[SlideNavigationController sharedInstance] popToRootViewControllerAnimated:NO];
         [self dismissViewControllerAnimated:YES completion:nil];
-        
-        // check if fetch user has assigned a device token]
-        [self checkDeviceToken];
     } else {
         // new user, get account from webservice
         [self createUserSession];
+        
+        // check if fetch user has assigned a device token]
+        [self checkDeviceToken];
     }
 }
 
