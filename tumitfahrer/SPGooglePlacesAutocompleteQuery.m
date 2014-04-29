@@ -55,7 +55,7 @@
     if (language) {
         [url appendFormat:@"&language=%@", language];
     }
-    if (types != -1) {
+    if ((int)types != -1) {
         [url appendFormat:@"&types=%@", SPPlaceTypeStringForPlaceType(types)];
     }
     return url;

@@ -70,8 +70,8 @@
     // Adjust scrollView decelerationRate
     self.collectionView.decelerationRate = self.class != [RideRequestsViewController class] ? UIScrollViewDecelerationRateNormal : UIScrollViewDecelerationRateFast;
     
-    if([LocationController sharedInstance].locationImage !=nil) {
-        self.upperImage.image = [LocationController sharedInstance].locationImage;
+    if([LocationController sharedInstance].currentLocationImage !=nil) {
+        self.upperImage.image = [LocationController sharedInstance].currentLocationImage;
     } else {
         [[LocationController sharedInstance] startUpdatingLocation];
     }
@@ -89,7 +89,7 @@
 
 - (void)myMethod:(UIView *)exampleView completion:(void (^)(BOOL finished))completion {
     if (completion) {
-        [self.upperImage setImage:[LocationController sharedInstance].locationImage];
+        [self.upperImage setImage:[LocationController sharedInstance].currentLocationImage];
     }
 }
 

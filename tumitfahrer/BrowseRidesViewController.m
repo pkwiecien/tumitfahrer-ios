@@ -39,7 +39,7 @@
 -(instancetype)initWithContentType:(ContentType)contentType {
     self = [super init];
     if (self) {
-        self.ContentTypeEnum = contentType;
+        self.RideType = contentType;
     }
     return self;
 }
@@ -56,7 +56,7 @@
     [self.collectionView setCollectionViewLayout:cvLayout];
     self.collectionView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
     self.departurePlaceView.clipsToBounds = YES;
- 
+    
     [self.menuButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"SettingsBlackIcon"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(makeViewLarge)];
@@ -83,7 +83,7 @@
 }
 
 -(void)setViewTitle {
-    switch (self.ContentTypeEnum) {
+    switch (self.RideType) {
         case ContentTypeActivityRides:
             self.contentTitle.text = @"Activity Rides";
             break;
@@ -115,14 +115,14 @@
     }
     
     [self.collectionView reloadData];
-
+    
     if(self.isUpperViewSmall) {
         [self makeViewSmallQuickly:YES];
     }
     else {
         [self makeViewLargeQuickly:YES];
     }
-        
+    [self refreshCurrentLocationImage];
 }
 
 -(void)showLoginScreen:(BOOL)animated
@@ -175,8 +175,8 @@
 #pragma mark - UICollectionViewDelegate
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-
-    return [[[RidesStore sharedStore] allRidesByType:self.ContentTypeEnum] count];
+    
+    return [[[RidesStore sharedStore] allRidesByType:self.RideType] count];
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -189,7 +189,7 @@
     cell.backgroundColor = [UIColor whiteColor];
     
     UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:5];
-    Ride *ride = [[[RidesStore sharedStore] allRidesByType:self.ContentTypeEnum] objectAtIndex:indexPath.row];
+    Ride *ride = [[[RidesStore sharedStore] allRidesByType:self.RideType] objectAtIndex:indexPath.row];
     if(ride.destinationImage == nil) {
         imageView.image = [UIImage imageNamed:@"PlaceholderImage"];
     } else {
@@ -206,7 +206,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     RideDetailsViewController *rideDetailsVC = [[RideDetailsViewController alloc] init];
-    rideDetailsVC.selectedRide = [[[RidesStore sharedStore] allRidesByType:self.ContentTypeEnum] objectAtIndex:indexPath.row];
+    rideDetailsVC.selectedRide = [[[RidesStore sharedStore] allRidesByType:self.RideType] objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:rideDetailsVC animated:YES];
 }
 
@@ -221,16 +221,19 @@
     
 }
 
+# pragma mark - Action buttons
+
 - (IBAction)searchButtonPressed:(id)sender {
     SearchRideViewController *searchRideVC = [[SearchRideViewController alloc] init];
     searchRideVC.modalTransitionStyle = UIModalPresentationFullScreen;
     UINavigationController *navBar=[[UINavigationController alloc]initWithRootViewController:searchRideVC];
-
+    
     [self presentViewController:navBar animated:YES completion:nil];
 }
 
 - (IBAction)addButtonPressed:(id)sender {
     AddRideViewController *addRideVC = [[AddRideViewController alloc] init];
+    addRideVC.RideType = self.RideType;
     UINavigationController *navBar = [[UINavigationController alloc] initWithRootViewController:addRideVC];
     [self presentViewController:navBar animated:YES completion:nil];
 }
@@ -246,6 +249,19 @@
     [self.collectionView reloadData];
 }
 
+-(void)didReceivePhotoForCurrentLocation:(UIImage *)image
+{
+    [LocationController sharedInstance].currentLocationImage = image;
+    [self refreshCurrentLocationImage];
+}
+
+-(void)refreshCurrentLocationImage {
+    if([LocationController sharedInstance].currentLocationImage) {
+        self.currentLocationImageView.image = [LocationController sharedInstance].currentLocationImage;
+    } else {
+        self.currentLocationImageView.image = [UIImage imageNamed:@"PlaceholderImage"];
+    }
+}
 
 -(void)didRecieveRidesFromWebService:(NSArray *)rides
 {

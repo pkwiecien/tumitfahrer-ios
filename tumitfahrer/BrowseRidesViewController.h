@@ -13,7 +13,8 @@
 
 @interface BrowseRidesViewController : UIViewController<SlideNavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate, UIScrollViewDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, PanoramioUtilitiesDelegate, RideStoreDelegate>
 
-@property (nonatomic, assign) ContentType ContentTypeEnum;
+@property (nonatomic, assign) ContentType RideType;
+@property (weak, nonatomic) IBOutlet UIImageView *currentLocationImageView;
 @property (weak, nonatomic) IBOutlet UILabel *contentTitle;
 @property (weak, nonatomic) IBOutlet UIButton *menuButton;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;

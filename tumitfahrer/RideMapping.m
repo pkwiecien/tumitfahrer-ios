@@ -8,6 +8,7 @@
 
 #import "RideMapping.h"
 #import "UserMapping.h"
+#import "Ride.h"
 
 @implementation RideMapping
 
@@ -28,6 +29,34 @@
                                                       }];
     
     return rideMapping;
+}
+
++(RKObjectMapping*)getRideSearchesMapping {
+    
+    RKObjectMapping *responseMapping = [RKObjectMapping mappingForClass:[Ride class]];
+    [responseMapping addAttributeMappingsFromDictionary:@{@"message":@"message"}];
+    
+    RKObjectMapping *rideMapping = [RKObjectMapping mappingForEntityForName:@"Ride" inManagedObjectStore:[[RKObjectManager sharedManager] managedObjectStore]];
+    rideMapping.identificationAttributes = @[@"rideId"];
+    [rideMapping addAttributeMappingsFromDictionary:@{@"id": @"rideId",
+                                                      @"departure_place": @"departurePlace",
+                                                      @"destination": @"destination",
+                                                      @"meeting_point":@"meetingPoint",
+                                                      @"departure_time":@"departureTime",
+                                                      @"free_seats":@"freeSeats",
+                                                      @"duration":@"duration",
+                                                      @"distance":@"distance",
+                                                      @"ride_type":@"rideType",
+                                                      @"created_at": @"createdAt",
+                                                      @"updated_at": @"updatedAt"
+                                                      }];
+    
+    return rideMapping;
+
+}
+
++(RKResponseDescriptor *)getRideSearchesResponseDescriptorWithMapping:(RKEntityMapping *)mapping {
+    
 }
 
 +(RKResponseDescriptor *)getRidesResponseDescriptorWithMapping:(RKEntityMapping *)mapping {

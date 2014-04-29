@@ -68,7 +68,7 @@
             NSURL *url = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];
             
             UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
-            [LocationController sharedInstance].locationImage = retrievedImage;
+            [LocationController sharedInstance].currentLocationImage = retrievedImage;
             
             // notify observers about retrieved image
             [self notifyWithImage:retrievedImage];

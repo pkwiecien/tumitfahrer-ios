@@ -14,6 +14,7 @@
 
 @interface AddRideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MeetingPointDelegate, DestinationViewControllerDelegate>
 
+@property (nonatomic, assign) ContentType RideType;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

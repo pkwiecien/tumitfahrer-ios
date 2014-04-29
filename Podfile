@@ -9,3 +9,5 @@ pod 'iOS-Slide-Menu'
 pod 'AFNetworking', '~> 1.2'
 # pod to make interacting with RESTful API simple
 pod 'RestKit'
+# pod with date selection controller
+pod "RMDateSelectionViewController", "~> 1.1.0"

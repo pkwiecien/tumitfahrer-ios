@@ -27,15 +27,14 @@
         self.observers = [[NSMutableArray alloc] init];
         [self loadAllRides];
         
-        //        if ([[self allRides] count] == 0) {
-        
-        [self fetchRidesFromWebservice:^(BOOL ridesFetched) {
-            if(ridesFetched) {
-                [self loadAllRides];
-                [self fetchLocationForAllRides];
-            }
-        }];
-        //        }
+        if ([[self allRides] count] == 0) {
+            [self fetchRidesFromWebservice:^(BOOL ridesFetched) {
+                if(ridesFetched) {
+                    [self loadAllRides];
+                    [self fetchLocationForAllRides];
+                }
+            }];
+        }
     }
     return self;
 }
@@ -63,7 +62,7 @@
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
                               mainQueueManagedObjectContext];
     NSPredicate *predicate;
-        predicate = [NSPredicate predicateWithFormat:@"(rideType = %d)", contentType];
+    predicate = [NSPredicate predicateWithFormat:@"(rideType = %d)", contentType];
     
     [request setPredicate:predicate];
     [request setReturnsObjectsAsFaults:NO];

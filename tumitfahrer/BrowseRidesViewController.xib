@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="collectionView" destination="rhQ-Z1-YhV" id="3b9-Wz-i8G"/>
                 <outlet property="contentTitle" destination="hM4-H0-50N" id="jM1-yx-aEe"/>
+                <outlet property="currentLocationImageView" destination="xSb-F8-ASx" id="SOZ-uA-fkV"/>
                 <outlet property="departureLabelView" destination="kDr-El-kRz" id="c04-Vt-je6"/>
                 <outlet property="departurePlaceView" destination="7uL-A0-zDK" id="p65-6f-4CI"/>
                 <outlet property="menuButton" destination="e5D-xV-JVf" id="goD-Eh-VJe"/>
@@ -92,11 +93,11 @@
                     </subviews>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
-                <imageView userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RoundedBox" id="qf0-Fc-8za">
+                <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RoundedBox" id="qf0-Fc-8za">
                     <rect key="frame" x="98" y="520" width="124" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hmx-9X-PyV">
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hmx-9X-PyV">
                     <rect key="frame" x="182" y="520" width="40" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" backgroundImage="SearchBlueIcon">
@@ -107,7 +108,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="I82-dQ-vQp">
-                    <rect key="frame" x="98" y="520" width="40" height="40"/>
+                    <rect key="frame" x="140" y="520" width="40" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" backgroundImage="AddBlueIcon">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
