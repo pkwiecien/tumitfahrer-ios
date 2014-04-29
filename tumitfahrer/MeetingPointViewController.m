@@ -66,7 +66,7 @@
 
 - (void)saveButtonPressed
 {
-    [self.selectedValueDelegate selectedValueIs:self.textView.text];
+    [self.selectedValueDelegate selectedMeetingPoint:self.textView.text];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

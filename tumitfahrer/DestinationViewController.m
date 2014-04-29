@@ -116,23 +116,8 @@
         if (error) {
             SPPresentAlertViewWithErrorAndTitle(error, @"Could not map selected Place");
         } else if (placemark) {
-            NSLog(@"Placemark %@", placemark);
-            if (placemark.thoroughfare) {
-                [self.delegate selectedDestination:placemark.thoroughfare indexPath:self.rideTableIndexPath];
-                [self.navigationController popViewControllerAnimated:YES];
-            } else if(placemark.subLocality) {
-                [self.delegate selectedDestination:placemark.subLocality indexPath:self.rideTableIndexPath];
-                [self.navigationController popViewControllerAnimated:YES];
-            } else if(placemark.locality) {
-                [self.delegate selectedDestination:placemark.locality indexPath:self.rideTableIndexPath];
-                [self.navigationController popViewControllerAnimated:YES];
-            } else if(placemark.name) {
-                [self.delegate selectedDestination:placemark.name indexPath:self.rideTableIndexPath];
-                [self.navigationController popViewControllerAnimated:YES];
-            }else {
-                [self.delegate selectedDestination:addressString indexPath:self.rideTableIndexPath];
-                [self.navigationController popViewControllerAnimated:YES];
-            }
+            [self.delegate selectedDestination:addressString indexPath:self.rideTableIndexPath];
+            [self.navigationController popViewControllerAnimated:YES];
         }
     }];
 }
@@ -141,7 +126,7 @@
 #pragma mark UISearchDisplayDelegate
 
 - (void)handleSearchForSearchString:(NSString *)searchString {
-        
+    
     searchQuery.input = searchString;
     searchQuery.location = [[LocationController sharedInstance] currentLocation].coordinate ;
     searchQuery.types = SPPlaceTypeGeocode; // Only return geocoding (address) results.

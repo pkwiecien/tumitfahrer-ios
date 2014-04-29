@@ -122,6 +122,7 @@
     else {
         [self makeViewLargeQuickly:YES];
     }
+        
 }
 
 -(void)showLoginScreen:(BOOL)animated

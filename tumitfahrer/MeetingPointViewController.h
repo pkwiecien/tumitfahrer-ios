@@ -10,7 +10,7 @@
 
 @protocol MeetingPointDelegate
 
--(void)selectedValueIs:(NSString *)value;
+-(void)selectedMeetingPoint:(NSString *)value;
 
 @end
 

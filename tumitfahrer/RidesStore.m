@@ -31,12 +31,7 @@
         
         [self fetchRidesFromWebservice:^(BOOL ridesFetched) {
             if(ridesFetched) {
-                //[self loadAllRides];
-                [self loadRidesByType:ContentTypeActivityRides];
-                [self loadRidesByType:ContentTypeCampusRides];
-                [self loadRidesByType:ContentTypeExistingRequests];
-                //                    [self loadCampusRides];
-                //                    [self loadAllRides];
+                [self loadAllRides];
                 [self fetchLocationForAllRides];
             }
         }];
@@ -46,22 +41,11 @@
 }
 
 -(void)loadAllRides {
-    [self loadRidesByType:ContentTypeActivityRides];
-    [self loadRidesByType:ContentTypeCampusRides];
-    [self loadRidesByType:ContentTypeExistingRequests];
+    [self fetchRidesFromCoreDataByType:ContentTypeActivityRides];
+    [self fetchRidesFromCoreDataByType:ContentTypeCampusRides];
+    [self fetchRidesFromCoreDataByType:ContentTypeExistingRequests];
 }
 
--(void)fetchLocationForAllRides {
-    for(Ride *ride in self.allActivityRides) {
-        NSLog(@"ri: %@", ride);
-        NSLog(@"id: %d", ride.rideId);
-        [self fetchLocationForRide:ride];
-    }
-    for(Ride *ride in [self allCampusRides]) {
-        NSLog(@"id: %d", ride.rideId);
-        [self fetchLocationForRide:ride];
-    }
-}
 +(instancetype)sharedStore {
     static RidesStore *ridesStore = nil;
     static dispatch_once_t onceToken;
@@ -71,7 +55,9 @@
     return ridesStore;
 }
 
--(void)loadRidesByType:(ContentType)contentType {
+#pragma mark - core data/webservice fetch methods
+
+-(void)fetchRidesFromCoreDataByType:(ContentType)contentType {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *e = [NSEntityDescription entityForName:@"Ride"
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
@@ -90,63 +76,16 @@
                     format:@"Reason: %@", [error localizedDescription]];
     }
     
-    if(contentType == 0){
+    if(contentType == ContentTypeCampusRides){
         self.campusRides =[[NSMutableArray alloc] initWithArray:result];
     }
-    else if(contentType == 1) {
+    else if(contentType == ContentTypeActivityRides) {
         self.activityRides = [[NSMutableArray alloc] initWithArray:result];
     }
-    else if(contentType == 2) {
+    else if(contentType == ContentTypeExistingRequests) {
         self.rideRequests = [[NSMutableArray alloc] initWithArray:result];
     }
 }
-
--(void)loadActivityRides {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *e = [NSEntityDescription entityForName:@"Ride"
-                                         inManagedObjectContext:[RKManagedObjectStore defaultStore].
-                              mainQueueManagedObjectContext];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(rideType = %d)", 1];
-    [request setPredicate:predicate];
-    request.entity = e;
-    
-    NSError *error;
-    NSArray *result = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:&error];
-    if (!result) {
-        [NSException raise:@"Fetch failed"
-                    format:@"Reason: %@", [error localizedDescription]];
-    }
-    
-    self.activityRides = [[NSMutableArray alloc] initWithArray:result];
-    for (Ride *ride in self.activityRides) {
-        NSLog(@"ride id is: %d", ride.rideId);
-    }
-}
-
--(void)loadCampusRides {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *e = [NSEntityDescription entityForName:@"Ride"
-                                         inManagedObjectContext:[RKManagedObjectStore defaultStore].
-                              mainQueueManagedObjectContext];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(rideType = %d)", 0];
-    [request setPredicate:predicate];
-    request.entity = e;
-    
-    NSError *error;
-    NSArray *result = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:&error];
-    if (!result) {
-        [NSException raise:@"Fetch failed"
-                    format:@"Reason: %@", [error localizedDescription]];
-    }
-    
-    self.campusRides = [[NSMutableArray alloc] initWithArray:result];
-    for (Ride *ride in self.campusRides) {
-        NSLog(@"ride id is: %d", ride.rideId);
-    }
-}
-
 
 -(void)fetchRidesFromWebservice:(boolCompletionHandler)block {
     
@@ -161,63 +100,6 @@
         block(NO);
     }];
 }
-
--(void)addRideToStore:(Ride *)ride {
-    switch (ride.rideType) {
-        case ContentTypeActivityRides:
-            [self.activityRides addObject:ride];
-            break;
-        case ContentTypeCampusRides:
-            [self.campusRides addObject:ride];
-            break;
-        case ContentTypeExistingRequests:
-            [self.rideRequests addObject:ride];
-            break;
-        default:
-            break;
-    }
-}
-
--(void)fetchLocationForRide:(Ride *)ride {
-    NSLog(@"Ride is: %@", ride);
-    [[LocationController sharedInstance] fetchLocationForAddress:ride.destination rideId:ride.rideId];
-}
-
--(NSArray *)allRidesByType:(ContentType)contentType {
-    switch (contentType) {
-        case ContentTypeActivityRides:
-            return self.allActivityRides;
-            break;
-        case ContentTypeCampusRides:
-            return self.campusRides;
-            break;
-        case ContentTypeExistingRequests:
-            return self.activityRides;
-            break;
-    }
-}
-
--(NSArray *)allCampusRides {
-    if(!self.campusRides) {
-        [self loadRidesByType:ContentTypeCampusRides];
-    }
-    return self.campusRides;
-}
-
--(NSArray *)allActivityRides {
-    if(!self.activityRides) {
-        [self loadRidesByType:ContentTypeActivityRides];
-    }
-    return self.activityRides;
-}
-
--(NSArray *)allRideRequests {
-    if(!self.rideRequests) {
-        [self loadRidesByType:ContentTypeExistingRequests];
-    }
-    return self.rideRequests;
-}
-
 
 -(NSFetchedResultsController *)fetchedResultsController
 {
@@ -246,12 +128,40 @@
     return self.fetchedResultsController;
 }
 
--(void)didReceiveLocationForAddress:(CLLocation *)location rideId:(NSInteger)rideId{
+-(void)fetchLocationForAllRides {
+    for(Ride *ride in [self allRides]) {
+        [self fetchLocationForRide:ride];
+    }
+}
+
+-(void)fetchLocationForRide:(Ride *)ride {
+    [[LocationController sharedInstance] fetchLocationForAddress:ride.destination rideId:ride.rideId];
+}
+
+-(void)addRideToStore:(Ride *)ride {
+    switch (ride.rideType) {
+        case ContentTypeActivityRides:
+            [self.activityRides addObject:ride];
+            break;
+        case ContentTypeCampusRides:
+            [self.campusRides addObject:ride];
+            break;
+        case ContentTypeExistingRequests:
+            [self.rideRequests addObject:ride];
+            break;
+        default:
+            break;
+    }
+}
+
+# pragma mark - delegate methods
+
+-(void)didReceiveLocationForAddress:(CLLocation *)location rideId:(NSInteger)rideId {
     Ride *ride = [self getRideWithId:rideId];
+    NSLog(@"ride id is: %d and fetched location lat: %f and destination was: %@", ride.rideId, location.coordinate.latitude, ride.destination);
+    
     ride.destinationLatitude = location.coordinate.latitude;
     ride.destinationLongitude = location.coordinate.longitude;
-    
-    [self printAllRides];
     [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:location rideId:rideId];
 }
 
@@ -275,6 +185,41 @@
     return rides;
 }
 
+-(NSArray *)allRidesByType:(ContentType)contentType {
+    switch (contentType) {
+        case ContentTypeActivityRides:
+            return self.allActivityRides;
+            break;
+        case ContentTypeCampusRides:
+            return self.campusRides;
+            break;
+        case ContentTypeExistingRequests:
+            return self.rideRequests;
+            break;
+    }
+}
+
+-(NSArray *)allCampusRides {
+    if(!self.campusRides) {
+        [self fetchRidesFromCoreDataByType:ContentTypeCampusRides];
+    }
+    return self.campusRides;
+}
+
+-(NSArray *)allActivityRides {
+    if(!self.activityRides) {
+        [self fetchRidesFromCoreDataByType:ContentTypeActivityRides];
+    }
+    return self.activityRides;
+}
+
+-(NSArray *)allRideRequests {
+    if(!self.rideRequests) {
+        [self fetchRidesFromCoreDataByType:ContentTypeExistingRequests];
+    }
+    return self.rideRequests;
+}
+
 - (Ride *)getRideWithId:(NSInteger)rideId {
     
     for (Ride *ride in [self allRides]) {
@@ -294,6 +239,7 @@
 }
 
 # pragma mark - observer methods
+
 -(void)addObserver:(id<RideStoreDelegate>)observer {
     [self.observers addObject:observer];
 }

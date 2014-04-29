@@ -48,7 +48,8 @@
     [self setupNavbar];
     [self makeBackground];
     
-    [self.tableValues replaceObjectAtIndex:0 withObject:[LocationController sharedInstance].currentAddress];
+    NSString *departurePlace = [LocationController sharedInstance].currentAddress;
+    [self.tableValues replaceObjectAtIndex:0 withObject:departurePlace];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -230,6 +231,7 @@
     [objectManager postObject:nil path:@"/api/v2/rides" parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         Ride *ride = (Ride *)[mappingResult firstObject];
         [[RidesStore sharedStore] addRideToStore:ride];
+        [[LocationController sharedInstance] fetchLocationForAddress:ride.destination rideId:ride.rideId];
         NSLog(@"Response: %@", operation.HTTPRequestOperation.responseString);
         NSLog(@"This is ride: %@", ride);
         NSLog(@"This is driver: %@", ride.driver);
@@ -271,7 +273,7 @@
     
 }
 
--(void)selectedValueIs:(NSString *)value {
+-(void)selectedMeetingPoint:(NSString *)value {
     [self.tableValues replaceObjectAtIndex:3 withObject:value];
 }
 

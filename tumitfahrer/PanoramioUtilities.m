@@ -93,6 +93,7 @@
             // parse json
             NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
             @try {
+                NSLog(@"request was: %@", [[self buildUrlRequestWithLocation:location] URL]);
                 NSLog(@"parsed object: %@", parsedObject);
                 NSLog(@"photo url: %@", parsedObject[@"photos"][0][@"photo_file_url"]);
                 NSURL *url = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];

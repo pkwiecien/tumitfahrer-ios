@@ -23,10 +23,12 @@
 
 + (instancetype)sharedStore;
 
--(NSArray *)allCampusRides;
--(NSArray *)allActivityRides;
--(NSArray *)allRideRequests;
--(NSArray *)allRidesByType:(ContentType)contentType;
+- (NSArray *)allCampusRides;
+- (NSArray *)allActivityRides;
+- (NSArray *)allRideRequests;
+- (NSArray *)allRidesByType:(ContentType)contentType;
+- (Ride *)getRideWithId:(NSInteger)rideId;
+
 
 - (void)addRideToStore:(Ride*)ride;
 - (void)addObserver:(id<RideStoreDelegate>) observer;
