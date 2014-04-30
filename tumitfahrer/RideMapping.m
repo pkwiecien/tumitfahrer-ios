@@ -33,11 +33,8 @@
 
 +(RKObjectMapping*)getRideSearchesMapping {
     
-    RKObjectMapping *responseMapping = [RKObjectMapping mappingForClass:[Ride class]];
-    [responseMapping addAttributeMappingsFromDictionary:@{@"message":@"message"}];
+    RKObjectMapping *rideMapping = [RKObjectMapping mappingForClass:[Ride class]];
     
-    RKObjectMapping *rideMapping = [RKObjectMapping mappingForEntityForName:@"Ride" inManagedObjectStore:[[RKObjectManager sharedManager] managedObjectStore]];
-    rideMapping.identificationAttributes = @[@"rideId"];
     [rideMapping addAttributeMappingsFromDictionary:@{@"id": @"rideId",
                                                       @"departure_place": @"departurePlace",
                                                       @"destination": @"destination",
@@ -55,8 +52,10 @@
 
 }
 
-+(RKResponseDescriptor *)getRideSearchesResponseDescriptorWithMapping:(RKEntityMapping *)mapping {
++(RKResponseDescriptor *)getRideSearchesResponseDescriptorWithMapping:(RKObjectMapping *)mapping {
     
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodGET pathPattern:API_RIDES keyPath:@"rides"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    return responseDescriptor;
 }
 
 +(RKResponseDescriptor *)getRidesResponseDescriptorWithMapping:(RKEntityMapping *)mapping {

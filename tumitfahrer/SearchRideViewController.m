@@ -9,6 +9,7 @@
 #import "SearchRideViewController.h"
 #import "ActionManager.h"
 #import "CustomBarButton.h"
+#import "Ride.h"
 
 @interface SearchRideViewController ()
 
@@ -57,16 +58,29 @@
 }
 
 
--(void)searchButtonPressed {
+- (IBAction)searchButtonPressed:(id)sender {
     
     if (self.departureTextField.text.length >0 && self.departureTextField.text.length>0 && self.dateTextField.text != nil) {
         
+        RKObjectManager *objectManager = [RKObjectManager sharedManager];
+        
+        NSDictionary *queryParams;
+        // add enum
+        queryParams = @{@"start_carpool": self.departureTextField.text, @"end_carpool": self.destinationTextField.text, @"ride_date":@"2012-02-02"};
+        
+        [objectManager postObject:nil path:@"/api/v2/search" parameters:queryParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+            
+            NSArray* rides = [mappingResult array];
+            for (Ride *ride in rides) {
+                NSLog(@"%@", ride);
+            }
+        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+            [ActionManager showAlertViewWithTitle:[error localizedDescription]];
+            RKLogError(@"Load failed with error: %@", error);
+        }];
+        
     }
     
-}
-
--(void)closeButtonPressed {
-    [[SlideNavigationController sharedInstance] toggleLeftMenu];
 }
 
 #pragma mark - RMDateSelectionViewController Delegates
@@ -84,7 +98,7 @@
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     if(textField.tag ==3) {
-        
+        [self dismissKeyboard:nil];
         RMDateSelectionViewController *dateSelectionVC = [RMDateSelectionViewController dateSelectionController];
         dateSelectionVC.delegate = self;
         
@@ -102,6 +116,4 @@
     [self.view endEditing:YES];
 }
 
-- (IBAction)searchButtonPressed:(id)sender {
-}
 @end

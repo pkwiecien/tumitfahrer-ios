@@ -173,6 +173,8 @@
     [objectManager addResponseDescriptor:[DeviceMapping postDeviceResponseDescriptorWithMapping:postDeviceTokenMapping]];
     RKEntityMapping *postRideMapping = [RideMapping postRideMapping];
     [objectManager addResponseDescriptorsFromArray:@[[RideMapping postRideResponseDescriptorWithMapping:postRideMapping]]];
+    RKObjectMapping *getRideSearchesMapping = [RideMapping getRideSearchesMapping];
+    [objectManager addResponseDescriptor:[RideMapping getRideSearchesResponseDescriptorWithMapping:getRideSearchesMapping]];
 }
 
 -(void)setupObservers {
