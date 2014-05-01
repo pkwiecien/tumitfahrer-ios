@@ -9,12 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "MeetingPointViewController.h"
 #import "DestinationViewController.h"
+#import "SlideNavigationController.h"
 
 @class DestinationViewController;
 
-@interface AddRideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MeetingPointDelegate, DestinationViewControllerDelegate>
+@interface AddRideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MeetingPointDelegate, DestinationViewControllerDelegate, SlideNavigationControllerDelegate>
+
+typedef enum showTypes : NSUInteger {
+    ShowAsModal = 0,
+    ShowAsViewController = 1,
+} AddRideDisplayType;
 
 @property (nonatomic, assign) ContentType RideType;
+@property (nonatomic, assign) AddRideDisplayType DisplayType;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

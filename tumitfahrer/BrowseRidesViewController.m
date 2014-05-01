@@ -231,8 +231,9 @@
 - (IBAction)addButtonPressed:(id)sender {
     AddRideViewController *addRideVC = [[AddRideViewController alloc] init];
     addRideVC.RideType = self.RideType;
+    addRideVC.DisplayType = ShowAsModal;
     UINavigationController *navBar = [[UINavigationController alloc] initWithRootViewController:addRideVC];
-    [self presentViewController:navBar animated:YES completion:nil];
+    [self.navigationController presentViewController:navBar animated:YES completion:nil];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {

@@ -12,6 +12,6 @@
 @interface RideSearchResultsViewController : UIViewController <SlideNavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-
 -(void)reloadDataAtIndex:(NSInteger)index;
+
 @end

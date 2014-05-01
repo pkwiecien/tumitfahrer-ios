@@ -54,6 +54,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.tableView reloadData];
+    self.navigationController.navigationBarHidden = NO;
 }
 
 -(void)makeBackground {
@@ -64,10 +65,15 @@
 }
 
 -(void)setupNavbar {
+    
+    double width = self.navigationController.navigationBar.frame.size.width;
+    double height = self.navigationController.navigationBar.frame.size.height;
+    UIImage *croppedImage = [ActionManager cropImage:[UIImage imageNamed:@"gradientBackground"] newRect:CGRectMake(0, 0, width, height)];
+
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    //    self.navigationController.navigationBar.shadowImage = [UIImage new];
-    self.navigationController.navigationBar.translucent = YES;
+    [self.navigationController.navigationBar setBackgroundImage:croppedImage forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = NO;
     
     // left button of the navigation bar
     
@@ -279,6 +285,13 @@
 
 -(void)selectedDestination:(NSString *)destination indexPath:(NSIndexPath*)indexPath{
     [self.tableValues replaceObjectAtIndex:indexPath.row withObject:destination];
+}
+
+-(BOOL)slideNavigationControllerShouldDisplayLeftMenu {
+    if(self.DisplayType == ShowAsModal)
+        return NO;
+    else
+    return YES;
 }
 
 @end

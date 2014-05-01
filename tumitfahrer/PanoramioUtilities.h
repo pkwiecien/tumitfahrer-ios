@@ -22,6 +22,8 @@
 
 @property (nonatomic, weak) id<PanoramioUtilitiesDelegate> delegate;
 
+typedef void(^photoUrlCompletionHandler)(NSURL *);
+
 + (PanoramioUtilities*)sharedInstance; // Singleton method
 
 - (void)addObserver:(id<PanoramioUtilitiesDelegate>) observer;
@@ -31,5 +33,6 @@
 
 - (void)fetchPhotoForCurrentLocation:(CLLocation*)location;
 - (void)fetchPhotoForLocation:(CLLocation*)location rideId:(NSInteger)rideId;
+-(void)fetchPhotoForLocation:(CLLocation *)location rideId:(NSInteger)rideId completionHandler:(photoUrlCompletionHandler)block;
 
 @end

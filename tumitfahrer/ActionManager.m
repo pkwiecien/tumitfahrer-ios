@@ -111,5 +111,19 @@
 }
 
 
++ (UIImage *)cropImage:(UIImage *)image newRect:(CGRect)rect {
+    
+    UIImage *originalImage = [UIImage imageNamed:@"gradientBackground"];
+    float widthFactor = rect.size.width * (originalImage.size.width/rect.size.width);
+    float heightFactor = rect.size.height * (originalImage.size.height/rect.size.height);
+    float factorX = rect.origin.x * (originalImage.size.width/rect.size.width);
+    float factorY = rect.origin.y * (originalImage.size.height/rect.size.height);
+    
+    CGRect factoredRect = CGRectMake(factorX,factorY,widthFactor,heightFactor);
+    UIImage *cropImage = [UIImage imageWithCGImage:CGImageCreateWithImageInRect([originalImage CGImage], factoredRect)];
+    
+    return cropImage;
+}
+
 
 @end

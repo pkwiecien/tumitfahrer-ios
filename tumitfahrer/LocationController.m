@@ -7,6 +7,7 @@
 //
 
 #import "LocationController.h"
+#import "PanoramioUtilities.h"
 
 @interface LocationController ()
 
@@ -108,7 +109,7 @@
     }];
 }
 
-- (void)fetchLocationForAddress:(NSString *)address rideId:(NSInteger)rideId completionHandler:(locationCompletionHandler)block {
+- (void)fetchPhotoURLForAddress:(NSString *)address rideId:(NSInteger)rideId completionHandler:(locationCompletionHandler)block {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
         
@@ -116,7 +117,9 @@
         
         // Process the placemark.
         CLLocation *location = [[CLLocation alloc] initWithLatitude:aPlacemark.location.coordinate.latitude longitude:aPlacemark.location.coordinate.longitude];
-        block(location);
+        [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:location rideId:rideId completionHandler:^(NSURL *photoUrl) {
+            block(location, photoUrl);
+        }];
     }];
 }
 

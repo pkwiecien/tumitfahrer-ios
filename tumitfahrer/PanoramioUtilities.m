@@ -108,6 +108,37 @@
     }];
 }
 
+-(void)fetchPhotoForLocation:(CLLocation *)location rideId:(NSInteger)rideId completionHandler:(photoUrlCompletionHandler)block {
+    
+    [NSURLConnection sendAsynchronousRequest:[self buildUrlRequestWithLocation:location] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (connectionError)
+        {
+            NSLog(@"Error connecting data from server: %@", connectionError.localizedDescription);
+        } else {
+            NSLog(@"Response data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+            
+            NSError *localError = nil;
+            if (localError) {
+                return;
+            }
+            
+            // parse json
+            NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
+            @try {
+                NSLog(@"request was: %@", [[self buildUrlRequestWithLocation:location] URL]);
+                NSLog(@"parsed object: %@", parsedObject);
+                NSLog(@"photo url: %@", parsedObject[@"photos"][0][@"photo_file_url"]);
+                NSURL *imageUrl = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];
+                
+                block(imageUrl);
+            }
+            @catch (NSException *exception) {
+                NSLog(@"Photo could not be received for location: %@", location);
+            }
+        }
+    }];
+}
+
 # pragma mark - observer methods
 
 -(void)didReceiveCurrentLocation:(CLLocation *)location {

@@ -25,4 +25,6 @@
 // date formatter
 + (NSString *)stringFromDate:(NSDate*)date;
 
++ (UIImage *)cropImage:(UIImage *)image newRect:(CGRect)rect;
+
 @end

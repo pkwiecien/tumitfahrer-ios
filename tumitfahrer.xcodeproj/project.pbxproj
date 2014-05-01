@@ -517,6 +517,7 @@
 			children = (
 				E5DF641718EB569800D53164 /* Activity Rides */,
 				E5E2155A1907A92700B0B150 /* Add Ride */,
+				E5FA642819124F2500C04BFF /* Add Ride Request */,
 				E5DF642418EB68F500D53164 /* Campus Rides */,
 				E59987FD18E72BD100B01C62 /* Forgot Password */,
 				E599880718E7835F00B01C62 /* Left Menu */,
@@ -800,12 +801,19 @@
 		E5FA641D191226F400C04BFF /* Ride Search Results */ = {
 			isa = PBXGroup;
 			children = (
+				E5FA642619123AE500C04BFF /* RideSearchResultCell.xib */,
 				E5FDDBC818EE79F900CE7B01 /* RideSearchResultsViewController.h */,
 				E5FDDBC918EE79F900CE7B01 /* RideSearchResultsViewController.m */,
 				E5FDDBCA18EE79F900CE7B01 /* RideSearchResultsViewController.xib */,
-				E5FA642619123AE500C04BFF /* RideSearchResultCell.xib */,
 			);
 			name = "Ride Search Results";
+			sourceTree = "<group>";
+		};
+		E5FA642819124F2500C04BFF /* Add Ride Request */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Add Ride Request";
 			sourceTree = "<group>";
 		};
 		E5FC44CE190CEB3F00E8DB65 /* Top Header View */ = {

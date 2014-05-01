@@ -75,19 +75,22 @@
             
             NSLog(@"Response: %@", operation.HTTPRequestOperation.responseString);
             NSArray* rides = [mappingResult array];
-            RideSearchResultsViewController *searchResultsVC = [[RideSearchResultsViewController alloc] init];
-
+            
             for (RideSearch *rideSearchResult in rides) {
-                NSLog(@"%@", rideSearchResult);
                 [[RideSearchStore sharedStore] addSearchResult:rideSearchResult];
-                [[LocationController sharedInstance] fetchLocationForAddress:rideSearchResult.destination rideId:rideSearchResult.rideId completionHandler:^(CLLocation * location) {
+            }
+            RideSearchResultsViewController *searchResultsVC = [[RideSearchResultsViewController alloc] init];
+            [self.navigationController pushViewController:searchResultsVC animated:YES];
+            
+            for (RideSearch *rideSearchResult in rides) {
+                [[LocationController sharedInstance] fetchPhotoURLForAddress:rideSearchResult.destination rideId:rideSearchResult.rideId completionHandler:^(CLLocation *location, NSURL * photoUrl) {
                     RideSearch *ride = [[RideSearchStore sharedStore] rideWithId:rideSearchResult.rideId];
                     ride.destinationLatitude = location.coordinate.latitude;
                     ride.destinationLongitude = location.coordinate.longitude;
+                    ride.destinationImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:photoUrl]];
                     [searchResultsVC reloadDataAtIndex:0];
                 }];
             }
-            [self.navigationController pushViewController:searchResultsVC animated:YES];
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
             [ActionManager showAlertViewWithTitle:[error localizedDescription]];
             RKLogError(@"Load failed with error: %@", error);

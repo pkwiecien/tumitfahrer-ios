@@ -43,25 +43,16 @@
 
 -(void)setupNavbar {
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"gradientBackground"] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.translucent = YES;
     self.navigationController.navigationBarHidden = NO;
     self.title = @"SEARCH RESULTS";
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 }
 
--(void)showUnimplementedAlertView {
-    [ActionManager showAlertViewWithTitle:@"Add a ride"];
-}
-
--(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
-    self.title = item.title;
-}
-
 -(BOOL)slideNavigationControllerShouldDisplayLeftMenu {
     return YES;
 }
-
 
 #pragma mark - Collection view
 
