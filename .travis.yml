@@ -1,6 +1,6 @@
 language: objective-c
 cache: bundler
 script:
-	- xctool test -workspace tumitfahrer.xcworkspace -scheme tumitfahrer -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+  - xctool test -workspace tumitfahrer.xcworkspace -scheme tumitfahrer -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
 notifications:
   email: false
