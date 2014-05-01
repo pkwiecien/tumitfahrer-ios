@@ -1,12 +1,12 @@
 //
-//  SearchRideViewController.m
+//  AddRideRequestViewController.m
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 4/23/14.
+//  Created by Pawel Kwiecien on 5/1/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
-#import "SearchRideViewController.h"
+#import "AddRideRequestViewController.h"
 #import "ActionManager.h"
 #import "CustomBarButton.h"
 #import "RideSearch.h"
@@ -14,17 +14,17 @@
 #import "LocationController.h"
 #import "RideSearchStore.h"
 
-@interface SearchRideViewController ()
 
-@property (nonatomic) UIColor *customGrayColor;
+@interface AddRideRequestViewController ()
 
 @end
 
-@implementation SearchRideViewController
+
+@implementation AddRideRequestViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self makeBackground];
     
@@ -53,7 +53,7 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.translucent = YES;
     self.navigationController.navigationBarHidden = NO;
-    self.title = @"SEARCH A RIDE";
+    self.title = @"ADD RIDE REQUEST";
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 }
 
@@ -124,5 +124,6 @@
 - (IBAction)dismissKeyboard:(id)sender {
     [self.view endEditing:YES];
 }
+
 
 @end

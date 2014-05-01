@@ -11,22 +11,18 @@
 #endif
 
 #ifdef __OBJC__
-    #import <UIKit/UIKit.h>
-    #import <Foundation/Foundation.h>
-    #import <QuartzCore/QuartzCore.h>
-    #import <CoreData/CoreData.h>
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
+#import <CoreData/CoreData.h>
 
 #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 
 #endif
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
-    #import <SystemConfiguration/SystemConfiguration.h>
-    #import <MobileCoreServices/MobileCoreServices.h>
-#else
-    #import <SystemConfiguration/SystemConfiguration.h>
-    #import <CoreServices/CoreServices.h>
-#endif
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 
 // Make RestKit globally available
 #import <RestKit/RestKit.h>
@@ -71,3 +67,8 @@ static NSString *API_SESSIONS = @"/api/v2/sessions";
 static NSString *API_RIDES = @"/api/v2/rides";
 static NSString *API_USERS_DEVICES = @"/api/v2/users/:userId/devices";
 static NSString *API_SEARCH = @"/api/v2/search";
+
+#else
+    #import <SystemConfiguration/SystemConfiguration.h>
+    #import <CoreServices/CoreServices.h>
+#endif

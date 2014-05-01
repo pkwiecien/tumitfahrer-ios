@@ -1,8 +1,8 @@
 //
-//  SearchRideViewController.h
+//  AddRideRequestViewController.h
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 4/23/14.
+//  Created by Pawel Kwiecien on 5/1/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 #import "RMDateSelectionViewController.h"
 #import "SlideNavigationController.h"
 
-@interface SearchRideViewController : UIViewController <RMDateSelectionViewControllerDelegate, UITextFieldDelegate, SlideNavigationControllerDelegate>
+@interface AddRideRequestViewController : UIViewController <RMDateSelectionViewControllerDelegate, UITextFieldDelegate, SlideNavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *departureTextField;
 @property (weak, nonatomic) IBOutlet UITextField *destinationTextField;

@@ -44,10 +44,6 @@
     [super viewDidLoad];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
-    [self setupNavbar];
-    [self makeBackground];
-    
     NSString *departurePlace = [LocationController sharedInstance].currentAddress;
     [self.tableValues replaceObjectAtIndex:0 withObject:departurePlace];
 }
@@ -55,6 +51,9 @@
 -(void)viewWillAppear:(BOOL)animated {
     [self.tableView reloadData];
     self.navigationController.navigationBarHidden = NO;
+    
+    [self setupNavbar];
+    [self makeBackground];
 }
 
 -(void)makeBackground {
@@ -65,7 +64,7 @@
 }
 
 -(void)setupNavbar {
-    
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     double width = self.navigationController.navigationBar.frame.size.width;
     double height = self.navigationController.navigationBar.frame.size.height;
     UIImage *croppedImage = [ActionManager cropImage:[UIImage imageNamed:@"gradientBackground"] newRect:CGRectMake(0, 0, width, height)];

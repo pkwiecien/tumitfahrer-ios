@@ -20,6 +20,7 @@
 #import "CurrentUser.h"
 #import "SearchRideViewController.h"
 #import "AddRideViewController.h"
+#import "AddRideRequestViewController.h"
 
 @interface MenuViewController ()
 
@@ -68,8 +69,8 @@
     // section 1 - view controllers
     AddRideViewController *addRideVC = [[AddRideViewController alloc] init];
     addRideVC.DisplayType = ShowAsViewController;
-    AddRideViewController *addRideRequestVC = [[AddRideViewController alloc] init];
-    self.addRidesViewControllers = [NSArray arrayWithObjects: addRideVC, [NSNull null], nil];
+    AddRideRequestViewController *addRideRequestVC = [[AddRideRequestViewController alloc] init];
+    self.addRidesViewControllers = [NSArray arrayWithObjects: addRideVC, addRideRequestVC, nil];
     
     // section 1 - search view controllers
     SearchRideViewController *searchRidesVC = [[SearchRideViewController alloc] init];
@@ -87,7 +88,7 @@
 
 -(void)initCellTitles {
     self.browseRidesSection = [NSArray arrayWithObjects:@"Campus Rides", @"Activities", @"Existing Requests", nil];
-    self.addRidesSection = [NSArray arrayWithObjects:@"New Ride", @"New Request", nil];
+    self.addRidesSection = [NSArray arrayWithObjects:@"New Ride", @"Ride Request", nil];
     self.searchRidesSection = [NSArray arrayWithObjects:@"Search Rides", @"Results of Search", nil];
     self.profileSection = [NSArray arrayWithObjects:@"Profile", @"Schedule", @"Messages", @"Settings", nil];
     self.allMenuItems = [NSArray arrayWithObjects:self.browseRidesSection, self.addRidesSection, self.searchRidesSection, self.profileSection, nil];
@@ -213,7 +214,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UIViewController *viewController = [[self.allViewControllers objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     if(viewController)
-        [[SlideNavigationController sharedInstance] switchToViewController:viewController withCompletion:nil];
+        [[SlideNavigationController sharedInstance] popToRootAndSwitchToViewController:viewController withCompletion:nil];
 }
 
 

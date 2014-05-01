@@ -50,13 +50,13 @@
 		E522BADA18AE13F600ECD375 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E522BAB918AE13F600ECD375 /* Foundation.framework */; };
 		E522BADB18AE13F600ECD375 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E522BABD18AE13F600ECD375 /* UIKit.framework */; };
 		E522BAE318AE13F600ECD375 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E522BAE118AE13F600ECD375 /* InfoPlist.strings */; };
-		E522BAE518AE13F600ECD375 /* tumitfahrerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E522BAE418AE13F600ECD375 /* tumitfahrerTests.m */; };
 		E53D5D0018B14C39004016F8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E53D5CFF18B14C39004016F8 /* QuartzCore.framework */; };
 		E55D8664190C059200B1400A /* Rating.m in Sources */ = {isa = PBXBuildFile; fileRef = E55D8663190C059200B1400A /* Rating.m */; };
 		E55D8667190C059200B1400A /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = E55D8666190C059200B1400A /* Message.m */; };
 		E55D866A190C059200B1400A /* FriendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E55D8669190C059200B1400A /* FriendRequest.m */; };
 		E55D866D190C059200B1400A /* Request.m in Sources */ = {isa = PBXBuildFile; fileRef = E55D866C190C059200B1400A /* Request.m */; };
 		E55D8670190C059200B1400A /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E55D866F190C059200B1400A /* User.m */; };
+		E58889CD191291060062D0DF /* ActionManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E58889CC191291060062D0DF /* ActionManagerTests.m */; };
 		E58F958618FD107E00A0A55B /* CvLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E58F958518FD107E00A0A55B /* CvLayout.m */; };
 		E59987C918E6DBEA00B01C62 /* RideRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987C718E6DBEA00B01C62 /* RideRequestsViewController.m */; };
 		E59987CA18E6DBEA00B01C62 /* RideRequestsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59987C818E6DBEA00B01C62 /* RideRequestsViewController.xib */; };
@@ -102,6 +102,8 @@
 		E5FA641C19121F6600C04BFF /* RideSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FA641B19121F6600C04BFF /* RideSearch.m */; };
 		E5FA64251912299E00C04BFF /* RideSearchStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FA64241912299E00C04BFF /* RideSearchStore.m */; };
 		E5FA642719123AE500C04BFF /* RideSearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FA642619123AE500C04BFF /* RideSearchResultCell.xib */; };
+		E5FA64321912647300C04BFF /* AddRideRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FA64301912647300C04BFF /* AddRideRequestViewController.m */; };
+		E5FA64331912647300C04BFF /* AddRideRequestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FA64311912647300C04BFF /* AddRideRequestViewController.xib */; };
 		E5FC44D5190CF83100E8DB65 /* MenuTopHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FC44D4190CF83100E8DB65 /* MenuTopHeaderView.xib */; };
 		E5FC44D6190D30FF00E8DB65 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E599880918E7836D00B01C62 /* MenuViewController.m */; };
 		E5FC44DF190D55C900E8DB65 /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FC44DE190D55C900E8DB65 /* Ride.m */; };
@@ -119,6 +121,7 @@
 		E5FDDBE518EFDD4800CE7B01 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBE418EFDD4800CE7B01 /* OpenGLES.framework */; };
 		E5FDDBE718EFDD4F00CE7B01 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBE618EFDD4F00CE7B01 /* CoreMotion.framework */; };
 		E5FDDBF118F0059D00CE7B01 /* ActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FDDBF018F0059D00CE7B01 /* ActionManager.m */; };
+		F34633546DAF4A39967E863E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAEC5882914944C4B8E2DE24 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -203,7 +206,6 @@
 		E522BAD818AE13F600ECD375 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		E522BAE018AE13F600ECD375 /* tumitfahrerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "tumitfahrerTests-Info.plist"; sourceTree = "<group>"; };
 		E522BAE218AE13F600ECD375 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		E522BAE418AE13F600ECD375 /* tumitfahrerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = tumitfahrerTests.m; sourceTree = "<group>"; };
 		E53D5CFF18B14C39004016F8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E55D8662190C059200B1400A /* Rating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rating.h; sourceTree = "<group>"; };
 		E55D8663190C059200B1400A /* Rating.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rating.m; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 		E55D866C190C059200B1400A /* Request.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Request.m; sourceTree = "<group>"; };
 		E55D866E190C059200B1400A /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		E55D866F190C059200B1400A /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		E58889CC191291060062D0DF /* ActionManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionManagerTests.m; sourceTree = "<group>"; };
 		E58F958418FD107E00A0A55B /* CvLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CvLayout.h; sourceTree = "<group>"; };
 		E58F958518FD107E00A0A55B /* CvLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CvLayout.m; sourceTree = "<group>"; };
 		E59987C618E6DBEA00B01C62 /* RideRequestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideRequestsViewController.h; sourceTree = "<group>"; };
@@ -286,6 +289,10 @@
 		E5FA64231912299E00C04BFF /* RideSearchStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideSearchStore.h; sourceTree = "<group>"; };
 		E5FA64241912299E00C04BFF /* RideSearchStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideSearchStore.m; sourceTree = "<group>"; };
 		E5FA642619123AE500C04BFF /* RideSearchResultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RideSearchResultCell.xib; sourceTree = "<group>"; };
+		E5FA642F1912647300C04BFF /* AddRideRequestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddRideRequestViewController.h; sourceTree = "<group>"; };
+		E5FA64301912647300C04BFF /* AddRideRequestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddRideRequestViewController.m; sourceTree = "<group>"; };
+		E5FA64311912647300C04BFF /* AddRideRequestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddRideRequestViewController.xib; sourceTree = "<group>"; };
+		E5FA64AB19128A2F00C04BFF /* tumitfahrer copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "tumitfahrer copy-Info.plist"; path = "/Users/pawel/Documents/dev/Objective-C/tumitfahrer/tumitfahrer copy-Info.plist"; sourceTree = "<absolute>"; };
 		E5FC44D4190CF83100E8DB65 /* MenuTopHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuTopHeaderView.xib; sourceTree = "<group>"; };
 		E5FC44DD190D55C900E8DB65 /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
 		E5FC44DE190D55C900E8DB65 /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
@@ -344,6 +351,7 @@
 				E522BAD918AE13F600ECD375 /* XCTest.framework in Frameworks */,
 				E522BADB18AE13F600ECD375 /* UIKit.framework in Frameworks */,
 				E522BADA18AE13F600ECD375 /* Foundation.framework in Frameworks */,
+				F34633546DAF4A39967E863E /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,6 +428,7 @@
 				E522BAB818AE13F600ECD375 /* Frameworks */,
 				E522BAB718AE13F600ECD375 /* Products */,
 				C71CE6059C014DFABC5B4F22 /* Pods.xcconfig */,
+				E5FA64AB19128A2F00C04BFF /* tumitfahrer copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -497,7 +506,7 @@
 		E522BADE18AE13F600ECD375 /* tumitfahrerTests */ = {
 			isa = PBXGroup;
 			children = (
-				E522BAE418AE13F600ECD375 /* tumitfahrerTests.m */,
+				E58889CC191291060062D0DF /* ActionManagerTests.m */,
 				E522BADF18AE13F600ECD375 /* Supporting Files */,
 			);
 			path = tumitfahrerTests;
@@ -812,6 +821,9 @@
 		E5FA642819124F2500C04BFF /* Add Ride Request */ = {
 			isa = PBXGroup;
 			children = (
+				E5FA642F1912647300C04BFF /* AddRideRequestViewController.h */,
+				E5FA64301912647300C04BFF /* AddRideRequestViewController.m */,
+				E5FA64311912647300C04BFF /* AddRideRequestViewController.xib */,
 			);
 			name = "Add Ride Request";
 			sourceTree = "<group>";
@@ -867,9 +879,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E522BAEB18AE13F600ECD375 /* Build configuration list for PBXNativeTarget "tumitfahrerTests" */;
 			buildPhases = (
+				1C332BCD979A44C185ED43B9 /* Check Pods Manifest.lock */,
 				E522BAD318AE13F600ECD375 /* Sources */,
 				E522BAD418AE13F600ECD375 /* Frameworks */,
 				E522BAD518AE13F600ECD375 /* Resources */,
+				37E7F40B779540A7B19A4A57 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -949,6 +963,7 @@
 				E5DF642318EB658300D53164 /* CampusRidesViewController.xib in Resources */,
 				E5E215791908442100B0B150 /* SwitchTableViewCell.xib in Resources */,
 				E5FA642719123AE500C04BFF /* RideSearchResultCell.xib in Resources */,
+				E5FA64331912647300C04BFF /* AddRideRequestViewController.xib in Resources */,
 				E504D9C3190A6C940036FFA8 /* DestinationViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -980,6 +995,36 @@
 			showEnvVarsInLog = 0;
 		};
 		09658744052A4F09B4B452D8 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1C332BCD979A44C185ED43B9 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		37E7F40B779540A7B19A4A57 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1037,6 +1082,7 @@
 				E599887918E8617100B01C62 /* HACollectionViewSmallLayout.m in Sources */,
 				E599880118E72BF600B01C62 /* ForgotPasswordViewController.m in Sources */,
 				E59987FB18E7251000B01C62 /* RegisterViewController.m in Sources */,
+				E5FA64321912647300C04BFF /* AddRideRequestViewController.m in Sources */,
 				E50DB28B18F8730400E87E62 /* RidesStore.m in Sources */,
 				E504D9C6190A6DA10036FFA8 /* LayoutUtilities.m in Sources */,
 				E50DB28818F8706500E87E62 /* RideMapping.m in Sources */,
@@ -1065,7 +1111,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E522BAE518AE13F600ECD375 /* tumitfahrerTests.m in Sources */,
+				E58889CD191291060062D0DF /* ActionManagerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1179,6 +1225,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C71CE6059C014DFABC5B4F22 /* Pods.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1205,6 +1252,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C71CE6059C014DFABC5B4F22 /* Pods.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1229,7 +1277,9 @@
 		};
 		E522BAEC18AE13F600ECD375 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C71CE6059C014DFABC5B4F22 /* Pods.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/tumitfahrer.app/tumitfahrer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1242,6 +1292,11 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"${PODS_ROOT}/Headers/RestKit\"",
+				);
 				INFOPLIST_FILE = "tumitfahrerTests/tumitfahrerTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -1251,7 +1306,9 @@
 		};
 		E522BAED18AE13F600ECD375 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C71CE6059C014DFABC5B4F22 /* Pods.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/tumitfahrer.app/tumitfahrer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1260,6 +1317,11 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tumitfahrer/tumitfahrer-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					Restkit,
+				);
 				INFOPLIST_FILE = "tumitfahrerTests/tumitfahrerTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
