@@ -333,12 +333,12 @@
 				E5FDDBDB18EFDD2700CE7B01 /* CoreImage.framework in Frameworks */,
 				E5FDDBD918EFDD1E00CE7B01 /* AdSupport.framework in Frameworks */,
 				E599881118E7FC5900B01C62 /* MediaPlayer.framework in Frameworks */,
-				E5FDDBD618EFDD0100CE7B01 /* UbertestersSDK.framework in Frameworks */,
 				E599880E18E7FB1600B01C62 /* AVFoundation.framework in Frameworks */,
 				E53D5D0018B14C39004016F8 /* QuartzCore.framework in Frameworks */,
 				E522BABC18AE13F600ECD375 /* CoreGraphics.framework in Frameworks */,
 				E522BABE18AE13F600ECD375 /* UIKit.framework in Frameworks */,
 				E522BABA18AE13F600ECD375 /* Foundation.framework in Frameworks */,
+				E5FDDBD618EFDD0100CE7B01 /* UbertestersSDK.framework in Frameworks */,
 				068F5848AB864309B2DEC0B8 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
