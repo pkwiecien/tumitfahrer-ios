@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 #import <RestKit/RestKit.h>
-#import <UbertestersSDK/Ubertesters.h>
+//#import <UbertestersSDK/Ubertesters.h>
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "RideRequestsViewController.h"
@@ -42,7 +42,7 @@
     [self setupObservers];
     
     // Ubertersters SDK initialization
-    [[Ubertesters shared] initializeWithOptions:UTOptionsManual];
+    //[[Ubertesters shared] initializeWithOptions:UTOptionsManual];
     
     [self.window makeKeyAndVisible];
     return YES;
