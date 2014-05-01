@@ -59,6 +59,7 @@
 		E58889CD191291060062D0DF /* ActionManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E58889CC191291060062D0DF /* ActionManagerTests.m */; };
 		E58889D11912C36B0062D0DF /* UbertestersSDK.framework in Resources */ = {isa = PBXBuildFile; fileRef = E5FDDBD418EFDD0100CE7B01 /* UbertestersSDK.framework */; };
 		E58889D21912C3750062D0DF /* UbertestersSDK.framework in Sources */ = {isa = PBXBuildFile; fileRef = E5FDDBD418EFDD0100CE7B01 /* UbertestersSDK.framework */; };
+		E58889D31912D64A0062D0DF /* UbertestersSDKResources.bundle in Sources */ = {isa = PBXBuildFile; fileRef = E5FDDBD518EFDD0100CE7B01 /* UbertestersSDKResources.bundle */; };
 		E58F958618FD107E00A0A55B /* CvLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E58F958518FD107E00A0A55B /* CvLayout.m */; };
 		E59987C918E6DBEA00B01C62 /* RideRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987C718E6DBEA00B01C62 /* RideRequestsViewController.m */; };
 		E59987CA18E6DBEA00B01C62 /* RideRequestsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59987C818E6DBEA00B01C62 /* RideRequestsViewController.xib */; };
@@ -1047,6 +1048,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E58889D31912D64A0062D0DF /* UbertestersSDKResources.bundle in Sources */,
 				E58889D21912C3750062D0DF /* UbertestersSDK.framework in Sources */,
 				E5DF641B18EB56A600D53164 /* BrowseRidesViewController.m in Sources */,
 				E55D866A190C059200B1400A /* FriendRequest.m in Sources */,
