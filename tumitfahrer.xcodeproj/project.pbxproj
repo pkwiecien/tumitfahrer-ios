@@ -292,7 +292,6 @@
 		E5FA642F1912647300C04BFF /* AddRideRequestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddRideRequestViewController.h; sourceTree = "<group>"; };
 		E5FA64301912647300C04BFF /* AddRideRequestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddRideRequestViewController.m; sourceTree = "<group>"; };
 		E5FA64311912647300C04BFF /* AddRideRequestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddRideRequestViewController.xib; sourceTree = "<group>"; };
-		E5FA64AB19128A2F00C04BFF /* tumitfahrer copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "tumitfahrer copy-Info.plist"; path = "/Users/pawel/Documents/dev/Objective-C/tumitfahrer/tumitfahrer copy-Info.plist"; sourceTree = "<absolute>"; };
 		E5FC44D4190CF83100E8DB65 /* MenuTopHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuTopHeaderView.xib; sourceTree = "<group>"; };
 		E5FC44DD190D55C900E8DB65 /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
 		E5FC44DE190D55C900E8DB65 /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
@@ -428,7 +427,6 @@
 				E522BAB818AE13F600ECD375 /* Frameworks */,
 				E522BAB718AE13F600ECD375 /* Products */,
 				C71CE6059C014DFABC5B4F22 /* Pods.xcconfig */,
-				E5FA64AB19128A2F00C04BFF /* tumitfahrer copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
