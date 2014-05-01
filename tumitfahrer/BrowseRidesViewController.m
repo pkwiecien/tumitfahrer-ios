@@ -19,11 +19,6 @@
 
 @interface BrowseRidesViewController ()
 
-@property (nonatomic, strong) NSMutableDictionary * cellHeights;
-@property (nonatomic, strong) NSArray * imageHeights;
-@property (nonatomic, strong) NSArray * dataKeys;
-@property (nonatomic, strong) NSDictionary * data;
-@property (nonatomic, strong) NSCache * imageCache;
 @property (nonatomic, assign) CGFloat lastContentOffset;
 @property (nonatomic, assign) CGRect upperFrame;
 @property (nonatomic, assign) CGRect departureLabelFrame;
@@ -48,8 +43,8 @@
     [super viewDidLoad];
     self.isUpperViewSmall = NO;
     
-    UINib *cellNib = [UINib nibWithNibName:@"AnotherCollectionCell" bundle:nil];
-    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"AnotherCell"];
+    UINib *cellNib = [UINib nibWithNibName:@"RideCell" bundle:nil];
+    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"RideCell"];
     self.collectionView.alwaysBounceVertical = YES;
     
     CvLayout *cvLayout = [[CvLayout alloc] init];
@@ -92,6 +87,8 @@
             break;
         case ContentTypeExistingRequests:
             self.contentTitle.text = @"Existing Request";
+            break;
+        default:
             break;
     }
 }
@@ -185,7 +182,7 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"AnotherCell" forIndexPath:indexPath];
+    UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"RideCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
     
     UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:5];

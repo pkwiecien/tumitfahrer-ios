@@ -195,6 +195,8 @@
         case ContentTypeExistingRequests:
             return self.rideRequests;
             break;
+        default:
+            return nil;
     }
 }
 

@@ -33,7 +33,7 @@
 
 static NSString * const SALT = @"toj369sbz1f316sx";
 //static NSString * const API_ADDRESS = @"http://tumitfahrer-staging.herokuapp.com";
-static NSString * const API_ADDRESS = @"http://192.168.0.101:3000";
+static NSString * const API_ADDRESS = @"http://131.159.203.210:3000";
 
 
 # pragma mark - Constants
@@ -58,13 +58,16 @@ static int const cSlideMenuOffset = 70;
 typedef enum contentTypes : NSUInteger {
     ContentTypeCampusRides = 0,
     ContentTypeActivityRides = 1,
-    ContentTypeExistingRequests = 2
+    ContentTypeExistingRequests = 2,
+    ContentTypeRideSearch = 3
 } ContentType;
 
 typedef void(^boolCompletionHandler)(BOOL);
+
 
 # pragma mark - API mapping for RestKit
 static NSString *API_USERS = @"/api/v2/users";
 static NSString *API_SESSIONS = @"/api/v2/sessions";
 static NSString *API_RIDES = @"/api/v2/rides";
 static NSString *API_USERS_DEVICES = @"/api/v2/users/:userId/devices";
+static NSString *API_SEARCH = @"/api/v2/search";

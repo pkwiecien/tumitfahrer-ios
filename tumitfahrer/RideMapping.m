@@ -8,7 +8,7 @@
 
 #import "RideMapping.h"
 #import "UserMapping.h"
-#import "Ride.h"
+#import "RideSearch.h"
 
 @implementation RideMapping
 
@@ -33,7 +33,7 @@
 
 +(RKObjectMapping*)getRideSearchesMapping {
     
-    RKObjectMapping *rideMapping = [RKObjectMapping mappingForClass:[Ride class]];
+    RKObjectMapping *rideMapping = [RKObjectMapping mappingForClass:[RideSearch class]];
     
     [rideMapping addAttributeMappingsFromDictionary:@{@"id": @"rideId",
                                                       @"departure_place": @"departurePlace",
@@ -41,8 +41,8 @@
                                                       @"meeting_point":@"meetingPoint",
                                                       @"departure_time":@"departureTime",
                                                       @"free_seats":@"freeSeats",
-                                                      @"duration":@"duration",
-                                                      @"distance":@"distance",
+                                                      @"detour":@"detour",
+                                                      @"driver_id":@"driverId",
                                                       @"ride_type":@"rideType",
                                                       @"created_at": @"createdAt",
                                                       @"updated_at": @"updatedAt"
@@ -54,7 +54,8 @@
 
 +(RKResponseDescriptor *)getRideSearchesResponseDescriptorWithMapping:(RKObjectMapping *)mapping {
     
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodGET pathPattern:API_RIDES keyPath:@"rides"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodPOST pathPattern:API_SEARCH keyPath:@"rides"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
     return responseDescriptor;
 }
 

@@ -22,4 +22,7 @@
 + (NSString*)decodeBase64String:(NSString*)base64String;
 + (NSString *)createSHA512:(NSString *)string;
 
+// date formatter
++ (NSString *)stringFromDate:(NSDate*)date;
+
 @end

@@ -108,4 +108,17 @@
     }];
 }
 
+- (void)fetchLocationForAddress:(NSString *)address rideId:(NSInteger)rideId completionHandler:(locationCompletionHandler)block {
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
+        
+        CLPlacemark *aPlacemark = [placemarks firstObject];
+        
+        // Process the placemark.
+        CLLocation *location = [[CLLocation alloc] initWithLatitude:aPlacemark.location.coordinate.latitude longitude:aPlacemark.location.coordinate.longitude];
+        block(location);
+    }];
+}
+
+
 @end

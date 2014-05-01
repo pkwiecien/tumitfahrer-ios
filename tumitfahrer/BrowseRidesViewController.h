@@ -11,7 +11,9 @@
 #import "RidesStore.h"
 #import <SlideNavigationController.h>
 
-@interface BrowseRidesViewController : UIViewController<SlideNavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate, UIScrollViewDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, PanoramioUtilitiesDelegate, RideStoreDelegate>
+@interface BrowseRidesViewController : UIViewController<SlideNavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, PanoramioUtilitiesDelegate, RideStoreDelegate>
+
+@property (nonatomic, strong) NSArray *searchResults;
 
 @property (nonatomic, assign) ContentType RideType;
 @property (weak, nonatomic) IBOutlet UIImageView *currentLocationImageView;

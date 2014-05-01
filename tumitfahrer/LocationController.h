@@ -27,7 +27,10 @@
 
 + (LocationController*)sharedInstance; // Singleton method
 
+typedef void(^locationCompletionHandler)(CLLocation *);
+
 - (void)fetchLocationForAddress:(NSString *)address rideId:(NSInteger)rideId;
+- (void)fetchLocationForAddress:(NSString *)address rideId:(NSInteger)rideId completionHandler:(locationCompletionHandler)block;
 - (void)startUpdatingLocation;
 - (void)addObserver:(id<LocationControllerDelegate>) observer;
 - (void)notifyAllAboutNewCurrentLocation;

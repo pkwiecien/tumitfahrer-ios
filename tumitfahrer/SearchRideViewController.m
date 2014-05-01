@@ -9,7 +9,10 @@
 #import "SearchRideViewController.h"
 #import "ActionManager.h"
 #import "CustomBarButton.h"
-#import "Ride.h"
+#import "RideSearch.h"
+#import "RideSearchResultsViewController.h"
+#import "LocationController.h"
+#import "RideSearchStore.h"
 
 @interface SearchRideViewController ()
 
@@ -68,28 +71,34 @@
         // add enum
         queryParams = @{@"start_carpool": self.departureTextField.text, @"end_carpool": self.destinationTextField.text, @"ride_date":@"2012-02-02"};
         
-        [objectManager postObject:nil path:@"/api/v2/search" parameters:queryParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        [objectManager postObject:nil path:API_SEARCH parameters:queryParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             
+            NSLog(@"Response: %@", operation.HTTPRequestOperation.responseString);
             NSArray* rides = [mappingResult array];
-            for (Ride *ride in rides) {
-                NSLog(@"%@", ride);
+            RideSearchResultsViewController *searchResultsVC = [[RideSearchResultsViewController alloc] init];
+
+            for (RideSearch *rideSearchResult in rides) {
+                NSLog(@"%@", rideSearchResult);
+                [[RideSearchStore sharedStore] addSearchResult:rideSearchResult];
+                [[LocationController sharedInstance] fetchLocationForAddress:rideSearchResult.destination rideId:rideSearchResult.rideId completionHandler:^(CLLocation * location) {
+                    RideSearch *ride = [[RideSearchStore sharedStore] rideWithId:rideSearchResult.rideId];
+                    ride.destinationLatitude = location.coordinate.latitude;
+                    ride.destinationLongitude = location.coordinate.longitude;
+                    [searchResultsVC reloadDataAtIndex:0];
+                }];
             }
+            [self.navigationController pushViewController:searchResultsVC animated:YES];
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
             [ActionManager showAlertViewWithTitle:[error localizedDescription]];
             RKLogError(@"Load failed with error: %@", error);
         }];
-        
     }
-    
 }
 
 #pragma mark - RMDateSelectionViewController Delegates
 
 - (void)dateSelectionViewController:(RMDateSelectionViewController *)vc didSelectDate:(NSDate *)aDate {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:MM"];
-    NSString *stringFromDate = [formatter stringFromDate:aDate];
-    self.dateTextField.text = stringFromDate;
+    self.dateTextField.text = [ActionManager stringFromDate:aDate];
 }
 
 - (void)dateSelectionViewControllerDidCancel:(RMDateSelectionViewController *)vc {

@@ -101,6 +101,15 @@
     return [response substringWithRange:NSMakeRange(1, response.length-2)];
 }
 
+# pragma mark - date formatter
+
++ (NSString *)stringFromDate:(NSDate*)date {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:MM"];
+    NSString *stringFromDate = [formatter stringFromDate:date];
+    return stringFromDate;
+}
+
 
 
 @end

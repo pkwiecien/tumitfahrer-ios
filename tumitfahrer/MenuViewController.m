@@ -13,12 +13,13 @@
 #import "BrowseRidesViewController.h"
 #import <SlideNavigationController.h>
 #import "CampusRidesViewController.h"
-#import "AnotherActivitiesViewController.h"
+#import "RideSearchResultsViewController.h"
 #import "ActionManager.h"
 #import "SettingsViewController.h"
 #import "ProfileViewController.h"
 #import "CurrentUser.h"
 #import "SearchRideViewController.h"
+#import "AddRideViewController.h"
 
 @interface MenuViewController ()
 
@@ -31,6 +32,9 @@
 @property NSArray *profileSection;
 @property NSArray *profileViewControllers;
 @property NSArray *profileIcons;
+@property NSArray *searchRidesViewControllers;
+@property NSArray *searchRidesIcons;
+@property NSArray *searchRidesSection;
 
 @property NSArray *allMenuItems;
 @property NSArray *allViewControllers;
@@ -59,38 +63,45 @@
     BrowseRidesViewController *campusRidesVC = [[BrowseRidesViewController alloc] initWithContentType:ContentTypeCampusRides];
     BrowseRidesViewController *activityRidesVC = [[BrowseRidesViewController alloc] initWithContentType:ContentTypeActivityRides];
     BrowseRidesViewController *existingRequestsVC = [[BrowseRidesViewController alloc] initWithContentType:ContentTypeExistingRequests];
-    SearchRideViewController *searchRidesVC = [[SearchRideViewController alloc] init];
-    self.browseRidesViewControllers = [NSArray arrayWithObjects:campusRidesVC, activityRidesVC, existingRequestsVC, searchRidesVC, nil];
+    self.browseRidesViewControllers = [NSArray arrayWithObjects:campusRidesVC, activityRidesVC, existingRequestsVC, nil];
     
     // section 1 - view controllers
-    self.addRidesViewControllers = [NSArray arrayWithObjects: nil];
+    AddRideViewController *addRideVC = [[AddRideViewController alloc] init];
+    AddRideViewController *addRideRequestVC = [[AddRideViewController alloc] init];
+    self.addRidesViewControllers = [NSArray arrayWithObjects:[NSNull null], [NSNull null], nil];
     
-    // section 2 - view controllers
+    // section 1 - search view controllers
+    SearchRideViewController *searchRidesVC = [[SearchRideViewController alloc] init];
+    RideSearchResultsViewController *searchResultsVC = [[RideSearchResultsViewController alloc] init];
+    self.searchRidesViewControllers = [NSArray arrayWithObjects:searchRidesVC, searchResultsVC, nil];
+    
+    // section 3 - view controllers
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
     ProfileViewController *profileVC = [[ProfileViewController alloc] init];
-    self.profileViewControllers = [NSArray arrayWithObjects:profileVC, settingsVC, nil];
+    self.profileViewControllers = [NSArray arrayWithObjects:profileVC, [NSNull null], [NSNull null], settingsVC, nil];
     
     // add all sections to view controllers
-    self.allViewControllers = [NSArray arrayWithObjects:self.browseRidesViewControllers, self.addRidesViewControllers, self.profileViewControllers, nil];
+    self.allViewControllers = [NSArray arrayWithObjects:self.browseRidesViewControllers, self.addRidesViewControllers, self.searchRidesViewControllers, self.profileViewControllers, nil];
 }
 
 -(void)initCellTitles {
-    self.browseRidesSection = [NSArray arrayWithObjects:@"Campus Rides", @"Activities", @"Existing Requests", @"Search Rides", nil];
+    self.browseRidesSection = [NSArray arrayWithObjects:@"Campus Rides", @"Activities", @"Existing Requests", nil];
     self.addRidesSection = [NSArray arrayWithObjects:@"New Ride", @"New Request", nil];
+    self.searchRidesSection = [NSArray arrayWithObjects:@"Search Rides", @"Search Results", nil];
     self.profileSection = [NSArray arrayWithObjects:@"Profile", @"Schedule", @"Messages", @"Settings", nil];
-    self.allMenuItems = [NSArray arrayWithObjects:self.browseRidesSection, self.addRidesSection, self.profileSection, nil];
+    self.allMenuItems = [NSArray arrayWithObjects:self.browseRidesSection, self.addRidesSection, self.searchRidesSection, self.profileSection, nil];
 }
 
 -(void)initCellIcons {
-    self.browseRidesIcons = [NSArray arrayWithObjects:@"CampusIcon", @"ActivityIcon", @"RequestIcon", @"RequestIcon", nil];
+    self.browseRidesIcons = [NSArray arrayWithObjects:@"CampusIcon", @"ActivityIcon", @"RequestIcon", nil];
     self.addRidesIcons = [NSArray arrayWithObjects:@"RequestIcon", @"RequestIcon", nil];
+    self.searchRidesIcons = [NSArray arrayWithObjects:@"RequestIcon", @"RequestIcon", nil];
     self.profileIcons = [NSArray arrayWithObjects:@"ScheduleIcon", @"ProfileIcon", @"SettingsIcon",  @"SettingsIcon", nil];
-    
-    self.allIcons = [NSArray arrayWithObjects:self.browseRidesIcons, self.addRidesIcons, self.profileIcons, nil];
+    self.allIcons = [NSArray arrayWithObjects:self.browseRidesIcons, self.addRidesIcons, self.searchRidesIcons, self.profileIcons, nil];
 }
 
 -(void)initTableHeaderLabels {
-    self.headersLabels = [NSArray arrayWithObjects:@"BROWSE OFFERS", @"ADD", @"YOUR ACCOUNT", nil];
+    self.headersLabels = [NSArray arrayWithObjects:@"BROWSE OFFERS", @"ADD", @"SEARCH", @"YOUR ACCOUNT", nil];
 }
 
 #pragma mark - view controller configuration
@@ -160,6 +171,16 @@
     [cell setSelectedBackgroundView:bgColorView];
     
     return cell;
+}
+
+// avoid sticky header in the table
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat sectionHeaderHeight = 40;
+    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
+        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+    } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
+        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
