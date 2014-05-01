@@ -57,6 +57,7 @@
 		E55D866D190C059200B1400A /* Request.m in Sources */ = {isa = PBXBuildFile; fileRef = E55D866C190C059200B1400A /* Request.m */; };
 		E55D8670190C059200B1400A /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E55D866F190C059200B1400A /* User.m */; };
 		E58889CD191291060062D0DF /* ActionManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E58889CC191291060062D0DF /* ActionManagerTests.m */; };
+		E58889D01912BB1A0062D0DF /* UbertestersSDK.framework in Resources */ = {isa = PBXBuildFile; fileRef = E5FDDBD418EFDD0100CE7B01 /* UbertestersSDK.framework */; };
 		E58F958618FD107E00A0A55B /* CvLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E58F958518FD107E00A0A55B /* CvLayout.m */; };
 		E59987C918E6DBEA00B01C62 /* RideRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987C718E6DBEA00B01C62 /* RideRequestsViewController.m */; };
 		E59987CA18E6DBEA00B01C62 /* RideRequestsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59987C818E6DBEA00B01C62 /* RideRequestsViewController.xib */; };
@@ -934,6 +935,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E58889D01912BB1A0062D0DF /* UbertestersSDK.framework in Resources */,
 				E599880218E72BF600B01C62 /* ForgotPasswordViewController.xib in Resources */,
 				E5E215651907A95F00B0B150 /* SearchRideViewController.xib in Resources */,
 				E5DF641118EB46F900D53164 /* RideDetailsViewController.xib in Resources */,
