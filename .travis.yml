@@ -1,5 +1,8 @@
 language: objective-c
 cache: bundler
+before_install:
+  - brew update
+  - brew upgrade xctool
 script:
   - xctool test -workspace tumitfahrer.xcworkspace -scheme tumitfahrer -sdk iphonesimulator7.1 ONLY_ACTIVE_ARCH=NO
 notifications:

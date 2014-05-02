@@ -63,6 +63,8 @@
 		E58889E4191394BB0062D0DF /* RideDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E58889E3191394BB0062D0DF /* RideDetailHeaderView.m */; };
 		E58889E81913C7010062D0DF /* UbertestersSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E58889E61913C7010062D0DF /* UbertestersSDK.framework */; };
 		E58889E91913C7010062D0DF /* UbertestersSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E58889E71913C7010062D0DF /* UbertestersSDKResources.bundle */; };
+		E58889EE1913D30C0062D0DF /* DetailsMessagesChoiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E58889ED1913D30C0062D0DF /* DetailsMessagesChoiceCell.m */; };
+		E58889F01913D3210062D0DF /* DetailsMessagesChoiceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E58889EF1913D3210062D0DF /* DetailsMessagesChoiceCell.xib */; };
 		E58F958618FD107E00A0A55B /* CvLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E58F958518FD107E00A0A55B /* CvLayout.m */; };
 		E59987C918E6DBEA00B01C62 /* RideRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987C718E6DBEA00B01C62 /* RideRequestsViewController.m */; };
 		E59987CA18E6DBEA00B01C62 /* RideRequestsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59987C818E6DBEA00B01C62 /* RideRequestsViewController.xib */; };
@@ -231,6 +233,9 @@
 		E58889E3191394BB0062D0DF /* RideDetailHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideDetailHeaderView.m; sourceTree = "<group>"; };
 		E58889E61913C7010062D0DF /* UbertestersSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UbertestersSDK.framework; sourceTree = "<group>"; };
 		E58889E71913C7010062D0DF /* UbertestersSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UbertestersSDKResources.bundle; sourceTree = "<group>"; };
+		E58889EC1913D30C0062D0DF /* DetailsMessagesChoiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsMessagesChoiceCell.h; sourceTree = "<group>"; };
+		E58889ED1913D30C0062D0DF /* DetailsMessagesChoiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsMessagesChoiceCell.m; sourceTree = "<group>"; };
+		E58889EF1913D3210062D0DF /* DetailsMessagesChoiceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailsMessagesChoiceCell.xib; sourceTree = "<group>"; };
 		E58F958418FD107E00A0A55B /* CvLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CvLayout.h; sourceTree = "<group>"; };
 		E58F958518FD107E00A0A55B /* CvLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CvLayout.m; sourceTree = "<group>"; };
 		E59987C618E6DBEA00B01C62 /* RideRequestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideRequestsViewController.h; sourceTree = "<group>"; };
@@ -533,6 +538,7 @@
 		E58889D81913832C0062D0DF /* New Ride Details */ = {
 			isa = PBXGroup;
 			children = (
+				E58889EB1913D27D0062D0DF /* DetailsMessagesChoiceCell */,
 				E58889DE191384F40062D0DF /* Ride Detail View */,
 				E58889D9191383570062D0DF /* RideDetailViewController.h */,
 				E58889DA191383570062D0DF /* RideDetailViewController.m */,
@@ -559,6 +565,16 @@
 				E58889E71913C7010062D0DF /* UbertestersSDKResources.bundle */,
 			);
 			path = UbertestersSDK;
+			sourceTree = "<group>";
+		};
+		E58889EB1913D27D0062D0DF /* DetailsMessagesChoiceCell */ = {
+			isa = PBXGroup;
+			children = (
+				E58889EC1913D30C0062D0DF /* DetailsMessagesChoiceCell.h */,
+				E58889ED1913D30C0062D0DF /* DetailsMessagesChoiceCell.m */,
+				E58889EF1913D3210062D0DF /* DetailsMessagesChoiceCell.xib */,
+			);
+			name = DetailsMessagesChoiceCell;
 			sourceTree = "<group>";
 		};
 		E59987C418E6DBC300B01C62 /* ViewControllers */ = {
@@ -973,6 +989,7 @@
 				E5DF641118EB46F900D53164 /* RideDetailsViewController.xib in Resources */,
 				E51FD50518F1615B0098AD11 /* RideCell.xib in Resources */,
 				E5DF642118EB64BD00D53164 /* CollectionCell.xib in Resources */,
+				E58889F01913D3210062D0DF /* DetailsMessagesChoiceCell.xib in Resources */,
 				E58889E91913C7010062D0DF /* UbertestersSDKResources.bundle in Resources */,
 				E59987FC18E7251000B01C62 /* RegisterViewController.xib in Resources */,
 				E599880C18E7836D00B01C62 /* MenuViewController.xib in Resources */,
@@ -1140,6 +1157,7 @@
 				E58889E1191385110062D0DF /* RideDetailView.m in Sources */,
 				E50DB29818FA7D4100E87E62 /* Faculty.m in Sources */,
 				E504D9C2190A6C940036FFA8 /* DestinationViewController.m in Sources */,
+				E58889EE1913D30C0062D0DF /* DetailsMessagesChoiceCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

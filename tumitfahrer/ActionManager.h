@@ -16,6 +16,7 @@
 // image utilities
 + (UIImage *)colorImage:(UIImage *)origImage withColor:(UIColor *)color;
 + (UIImage *)imageWithColor:(UIColor *)color;
++ (UIImage *)cropImage:(UIImage *)image newRect:(CGRect)rect;
 
 // enctryption untilities
 + (NSString*)encodeBase64WithCredentials:(NSString*)credentials;
@@ -24,7 +25,5 @@
 
 // date formatter
 + (NSString *)stringFromDate:(NSDate*)date;
-
-+ (UIImage *)cropImage:(UIImage *)image newRect:(CGRect)rect;
 
 @end
