@@ -1,0 +1,5 @@
+export BUILT_PRODUCTS_DIR="/Users/ASL/Library/Developer/Xcode/DerivedData/tumitfahrer-dfcjeixaairrnibxnsnahbqrgtep/Build/Products/Debug-iphonesimulator"
+export CURRENT_ARCH="i386"
+export OBJECT_FILE_DIR_normal="/Users/ASL/Library/Developer/Xcode/DerivedData/tumitfahrer-dfcjeixaairrnibxnsnahbqrgtep/Build/Intermediates/tumitfahrer.build/Debug-iphonesimulator/tumitfahrer.build/Objects-normal"
+export OBJROOT="/Users/ASL/Library/Developer/Xcode/DerivedData/tumitfahrer-dfcjeixaairrnibxnsnahbqrgtep/Build/Intermediates"
+export SRCROOT="/Users/ASL/tumitfahrer-ios"
