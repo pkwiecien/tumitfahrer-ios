@@ -12,6 +12,7 @@
 #import "RideInformationCell.h"
 #import "PassengersCell.h"
 #import "DriverCell.h"
+#import "ChatCell.h"
 
 @interface RideDetailViewController ()
 
@@ -66,13 +67,15 @@
     }
     else if(indexPath.row == 3) {
         return 124.0f;
-    } else
+    } else if(indexPath.row == 4) {
+        return 343.0f;
+    }else
         return 100.0f; //cell for comments, in reality the height has to be adjustable
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    return 5;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -109,7 +112,14 @@
             cell = [PassengersCell passengersCell];
         }
         return cell;
-    } else {
+    } else if(indexPath.row == 4) {
+        ChatCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ChatCell"];
+        if(cell == nil) {
+            cell = [ChatCell chatCell];
+        }
+        [cell addChatInput];
+        return cell;
+    }else {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reusable"];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reusable"];
