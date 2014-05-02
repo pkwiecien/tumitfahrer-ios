@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 #import <RestKit/RestKit.h>
-//#import <UbertestersSDK/Ubertesters.h>
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "RideRequestsViewController.h"
@@ -23,6 +22,7 @@
 #import "DeviceMapping.h"
 #import "LocationController.h"
 #import "PanoramioUtilities.h"
+#import <UbertestersSDK/Ubertesters.h>
 
 @interface AppDelegate ()
 
@@ -42,7 +42,8 @@
     [self setupObservers];
     
     // Ubertersters SDK initialization
-    //[[Ubertesters shared] initializeWithOptions:UTOptionsManual];
+    //$(PROJECT_DIR)/Pods/build/Debug-iphoneos
+    [[Ubertesters shared] initializeWithOptions:UTOptionsManual];
     
     [self.window makeKeyAndVisible];
     return YES;

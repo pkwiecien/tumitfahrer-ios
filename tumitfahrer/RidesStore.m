@@ -225,7 +225,7 @@
     
     for (Ride *ride in [self allRides]) {
         NSLog(@"Ride is %@", ride);
-        NSLog(@"ride id: %d", rideId);
+        NSLog(@"ride id: %ld", (long)rideId);
         if (ride.rideId == (int16_t)rideId) {
             return ride;
         }

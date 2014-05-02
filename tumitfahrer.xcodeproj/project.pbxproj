@@ -57,9 +57,8 @@
 		E55D866D190C059200B1400A /* Request.m in Sources */ = {isa = PBXBuildFile; fileRef = E55D866C190C059200B1400A /* Request.m */; };
 		E55D8670190C059200B1400A /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E55D866F190C059200B1400A /* User.m */; };
 		E58889CD191291060062D0DF /* ActionManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E58889CC191291060062D0DF /* ActionManagerTests.m */; };
-		E58889D11912C36B0062D0DF /* UbertestersSDK.framework in Resources */ = {isa = PBXBuildFile; fileRef = E5FDDBD418EFDD0100CE7B01 /* UbertestersSDK.framework */; };
-		E58889D21912C3750062D0DF /* UbertestersSDK.framework in Sources */ = {isa = PBXBuildFile; fileRef = E5FDDBD418EFDD0100CE7B01 /* UbertestersSDK.framework */; };
-		E58889D31912D64A0062D0DF /* UbertestersSDKResources.bundle in Sources */ = {isa = PBXBuildFile; fileRef = E5FDDBD518EFDD0100CE7B01 /* UbertestersSDKResources.bundle */; };
+		E58889D419136D9F0062D0DF /* UbertestersSDK.framework in Resources */ = {isa = PBXBuildFile; fileRef = E5FDDBD418EFDD0100CE7B01 /* UbertestersSDK.framework */; };
+		E58889D519136DBD0062D0DF /* UbertestersSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBD418EFDD0100CE7B01 /* UbertestersSDK.framework */; };
 		E58F958618FD107E00A0A55B /* CvLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E58F958518FD107E00A0A55B /* CvLayout.m */; };
 		E59987C918E6DBEA00B01C62 /* RideRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987C718E6DBEA00B01C62 /* RideRequestsViewController.m */; };
 		E59987CA18E6DBEA00B01C62 /* RideRequestsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59987C818E6DBEA00B01C62 /* RideRequestsViewController.xib */; };
@@ -113,7 +112,6 @@
 		E5FDDBC618EDE9B100CE7B01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBC518EDE9B100CE7B01 /* MapKit.framework */; };
 		E5FDDBCB18EE79F900CE7B01 /* RideSearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FDDBC918EE79F900CE7B01 /* RideSearchResultsViewController.m */; };
 		E5FDDBCC18EE79F900CE7B01 /* RideSearchResultsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FDDBCA18EE79F900CE7B01 /* RideSearchResultsViewController.xib */; };
-		E5FDDBD618EFDD0100CE7B01 /* UbertestersSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBD418EFDD0100CE7B01 /* UbertestersSDK.framework */; };
 		E5FDDBD718EFDD0100CE7B01 /* UbertestersSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E5FDDBD518EFDD0100CE7B01 /* UbertestersSDKResources.bundle */; };
 		E5FDDBD918EFDD1E00CE7B01 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBD818EFDD1E00CE7B01 /* AdSupport.framework */; };
 		E5FDDBDB18EFDD2700CE7B01 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBDA18EFDD2700CE7B01 /* CoreImage.framework */; };
@@ -338,10 +336,10 @@
 				E599881118E7FC5900B01C62 /* MediaPlayer.framework in Frameworks */,
 				E599880E18E7FB1600B01C62 /* AVFoundation.framework in Frameworks */,
 				E53D5D0018B14C39004016F8 /* QuartzCore.framework in Frameworks */,
+				E58889D519136DBD0062D0DF /* UbertestersSDK.framework in Frameworks */,
 				E522BABC18AE13F600ECD375 /* CoreGraphics.framework in Frameworks */,
 				E522BABE18AE13F600ECD375 /* UIKit.framework in Frameworks */,
 				E522BABA18AE13F600ECD375 /* Foundation.framework in Frameworks */,
-				E5FDDBD618EFDD0100CE7B01 /* UbertestersSDK.framework in Frameworks */,
 				068F5848AB864309B2DEC0B8 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -937,8 +935,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E58889D11912C36B0062D0DF /* UbertestersSDK.framework in Resources */,
 				E599880218E72BF600B01C62 /* ForgotPasswordViewController.xib in Resources */,
+				E58889D419136D9F0062D0DF /* UbertestersSDK.framework in Resources */,
 				E5E215651907A95F00B0B150 /* SearchRideViewController.xib in Resources */,
 				E5DF641118EB46F900D53164 /* RideDetailsViewController.xib in Resources */,
 				E51FD50518F1615B0098AD11 /* RideCell.xib in Resources */,
@@ -1048,8 +1046,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E58889D31912D64A0062D0DF /* UbertestersSDKResources.bundle in Sources */,
-				E58889D21912C3750062D0DF /* UbertestersSDK.framework in Sources */,
 				E5DF641B18EB56A600D53164 /* BrowseRidesViewController.m in Sources */,
 				E55D866A190C059200B1400A /* FriendRequest.m in Sources */,
 				E599887318E8616200B01C62 /* HATransitionLayout.m in Sources */,
@@ -1243,7 +1239,6 @@
 				INFOPLIST_FILE = "tumitfahrer/tumitfahrer-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 					"$(SDKROOT)/usr/lib/system",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1270,7 +1265,6 @@
 				INFOPLIST_FILE = "tumitfahrer/tumitfahrer-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 					"$(SDKROOT)/usr/lib/system",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
