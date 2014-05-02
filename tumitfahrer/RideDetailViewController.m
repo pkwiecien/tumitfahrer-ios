@@ -8,6 +8,10 @@
 
 #import "RideDetailViewController.h"
 #import "RideDetailView.h"
+#import "DetailsMessagesChoiceCell.h"
+#import "RideInformationCell.h"
+#import "PassengersCell.h"
+#import "DriverCell.h"
 
 @interface RideDetailViewController ()
 
@@ -52,21 +56,23 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.row == 0){
-        return 138.0f;
+        return 44.0f;
     }
     else if(indexPath.row == 1){
-        return 171.0f;
+        return 159.0f;
     }
     else if(indexPath.row == 2){
-        return 138.0f;
+        return 120.0f;
     }
-    else
+    else if(indexPath.row == 3) {
+        return 124.0f;
+    } else
         return 100.0f; //cell for comments, in reality the height has to be adjustable
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return 4;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -76,16 +82,43 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reusable"];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reusable"];
+    if(indexPath.row == 0) {
+        
+        DetailsMessagesChoiceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailsMessagesChoiceCell"];
+        
+        if(cell == nil){
+            cell = [DetailsMessagesChoiceCell detailsMessagesChoiceCell];
+        }
+        return cell;
     }
-    
-    cell.textLabel.text = @"Default cell";
-    
-    return cell;
-    
+    else if(indexPath.row == 1) {
+        RideInformationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideInformationCell"];
+        if(cell == nil){
+            cell = [RideInformationCell rideInformationCell];
+        }
+        return cell;
+    } else if(indexPath.row == 2) {
+        DriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DriverCell"];
+        if (cell == nil) {
+            cell = [DriverCell driverCell];
+        }
+        return cell;
+    } else if(indexPath.row == 3) {
+        PassengersCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PassengersCell"];
+        if (cell == nil) {
+            cell = [PassengersCell passengersCell];
+        }
+        return cell;
+    } else {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reusable"];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reusable"];
+        }
+        
+        cell.textLabel.text = @"Default cell";
+        
+        return cell;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

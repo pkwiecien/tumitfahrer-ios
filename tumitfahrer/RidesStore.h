@@ -29,7 +29,6 @@
 - (NSArray *)allRidesByType:(ContentType)contentType;
 - (Ride *)getRideWithId:(NSInteger)rideId;
 
-
 - (void)addRideToStore:(Ride*)ride;
 - (void)addObserver:(id<RideStoreDelegate>) observer;
 - (void)notifyAllAboutNewImageForRideId:(NSInteger)rideId;
