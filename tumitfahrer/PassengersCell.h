@@ -1,5 +1,5 @@
 //
-//  DetailsMessagesChoiceCell.h
+//  PassengersCell.h
 //  tumitfahrer
 //
 //  Created by Pawel Kwiecien on 5/2/14.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DetailsMessagesChoiceCell : UITableViewCell
+@interface PassengersCell : UITableViewCell
 
-+(DetailsMessagesChoiceCell *)detailsMessagesChoiceCell;
++(PassengersCell*)passengersCell;
 
 @end

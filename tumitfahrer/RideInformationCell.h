@@ -1,5 +1,5 @@
 //
-//  DetailsMessagesChoiceCell.h
+//  RideInformationCell.h
 //  tumitfahrer
 //
 //  Created by Pawel Kwiecien on 5/2/14.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DetailsMessagesChoiceCell : UITableViewCell
+@interface RideInformationCell : UITableViewCell
 
-+(DetailsMessagesChoiceCell *)detailsMessagesChoiceCell;
++ (RideInformationCell*) rideInformationCell;
 
 @end

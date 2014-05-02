@@ -1,5 +1,5 @@
 //
-//  DetailsMessagesChoiceCell.h
+//  DriverCell.h
 //  tumitfahrer
 //
 //  Created by Pawel Kwiecien on 5/2/14.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DetailsMessagesChoiceCell : UITableViewCell
+@interface DriverCell : UITableViewCell
 
-+(DetailsMessagesChoiceCell *)detailsMessagesChoiceCell;
++ (DriverCell*)driverCell;
 
 @end

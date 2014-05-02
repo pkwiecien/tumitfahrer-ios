@@ -1,22 +1,22 @@
 //
-//  DetailsMessagesChoiceCell.m
+//  RideInformationCell.m
 //  tumitfahrer
 //
 //  Created by Pawel Kwiecien on 5/2/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
-#import "DetailsMessagesChoiceCell.h"
+#import "RideInformationCell.h"
 
-@implementation DetailsMessagesChoiceCell
+@implementation RideInformationCell
 
-+(DetailsMessagesChoiceCell *)detailsMessagesChoiceCell {
+
++(RideInformationCell *)rideInformationCell {
     
-    DetailsMessagesChoiceCell * cell = [[[NSBundle mainBundle] loadNibNamed:@"DetailsMessagesChoiceCell" owner:self options:nil] objectAtIndex:0];
+    RideInformationCell * cell = [[[NSBundle mainBundle] loadNibNamed:@"RideInformationCell" owner:self options:nil] objectAtIndex:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
-
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -34,6 +34,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-    
+
 }
+
 @end
