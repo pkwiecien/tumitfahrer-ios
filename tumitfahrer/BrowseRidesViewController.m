@@ -16,6 +16,7 @@
 #import "AddRideViewController.h"
 #import "CurrentUser.h"
 #import "LoginViewController.h"
+#import "RideDetailViewController.h"
 
 @interface BrowseRidesViewController ()
 
@@ -202,9 +203,10 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
     RideDetailsViewController *rideDetailsVC = [[RideDetailsViewController alloc] init];
     rideDetailsVC.selectedRide = [[[RidesStore sharedStore] allRidesByType:self.RideType] objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:rideDetailsVC animated:YES];
+    [self.navigationController pushViewController:rideDetailVC animated:YES];
 }
 
 #pragma mark - SlideNavigation
