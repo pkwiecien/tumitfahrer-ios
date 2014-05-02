@@ -18,4 +18,6 @@ post_install do |installer|
 end
 
 # pod with date selection controller
-pod "RMDateSelectionViewController", "~> 1.1.0"
+pod "RMDateSelectionViewController"
+# implementation of mock objects
+pod 'OCMock'

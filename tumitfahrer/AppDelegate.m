@@ -22,7 +22,6 @@
 #import "DeviceMapping.h"
 #import "LocationController.h"
 #import "PanoramioUtilities.h"
-#import <UbertestersSDK/Ubertesters.h>
 
 @interface AppDelegate ()
 
@@ -40,10 +39,6 @@
     [self setupNavigationController];
     [self setupRestKit];
     [self setupObservers];
-    
-    // Ubertersters SDK initialization
-    //$(PROJECT_DIR)/Pods/build/Debug-iphoneos
-    [[Ubertesters shared] initializeWithOptions:UTOptionsManual];
     
     [self.window makeKeyAndVisible];
     return YES;
