@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		068F5848AB864309B2DEC0B8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAEC5882914944C4B8E2DE24 /* libPods.a */; };
+		6E4E133C1913F7B300D0C453 /* XCTest+GCovFlush.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4E133B1913F7B300D0C453 /* XCTest+GCovFlush.m */; };
+		6E4E133F1913F7BF00D0C453 /* UIApplication+GCovFlush.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4E133E1913F7BF00D0C453 /* UIApplication+GCovFlush.m */; };
 		E504D9BC190A58710036FFA8 /* MeetingPointViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9BA190A58710036FFA8 /* MeetingPointViewController.m */; };
 		E504D9BD190A58710036FFA8 /* MeetingPointViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E504D9BB190A58710036FFA8 /* MeetingPointViewController.xib */; };
 		E504D9C2190A6C940036FFA8 /* DestinationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9C0190A6C940036FFA8 /* DestinationViewController.m */; };
@@ -139,6 +141,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6E4E133A1913F7B300D0C453 /* XCTest+GCovFlush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTest+GCovFlush.h"; sourceTree = "<group>"; };
+		6E4E133B1913F7B300D0C453 /* XCTest+GCovFlush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTest+GCovFlush.m"; sourceTree = "<group>"; };
+		6E4E133D1913F7BF00D0C453 /* UIApplication+GCovFlush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+GCovFlush.h"; sourceTree = "<group>"; };
+		6E4E133E1913F7BF00D0C453 /* UIApplication+GCovFlush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+GCovFlush.m"; sourceTree = "<group>"; };
 		BAEC5882914944C4B8E2DE24 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C71CE6059C014DFABC5B4F22 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		E504D9B9190A58710036FFA8 /* MeetingPointViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetingPointViewController.h; sourceTree = "<group>"; };
@@ -484,6 +490,8 @@
 		E522BABF18AE13F600ECD375 /* tumitfahrer */ = {
 			isa = PBXGroup;
 			children = (
+				6E4E133D1913F7BF00D0C453 /* UIApplication+GCovFlush.h */,
+				6E4E133E1913F7BF00D0C453 /* UIApplication+GCovFlush.m */,
 				E58889E51913C7010062D0DF /* UbertestersSDK */,
 				E522BAC818AE13F600ECD375 /* AppDelegate.h */,
 				E522BAC918AE13F600ECD375 /* AppDelegate.m */,
@@ -515,6 +523,8 @@
 		E522BADE18AE13F600ECD375 /* tumitfahrerTests */ = {
 			isa = PBXGroup;
 			children = (
+				6E4E133A1913F7B300D0C453 /* XCTest+GCovFlush.h */,
+				6E4E133B1913F7B300D0C453 /* XCTest+GCovFlush.m */,
 				E58889CC191291060062D0DF /* ActionManagerTests.m */,
 				E522BADF18AE13F600ECD375 /* Supporting Files */,
 			);
@@ -897,6 +907,7 @@
 				E522BAB318AE13F600ECD375 /* Frameworks */,
 				E522BAB418AE13F600ECD375 /* Resources */,
 				09658744052A4F09B4B452D8 /* Copy Pods Resources */,
+				6E4E13391913F5CE00D0C453 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1072,6 +1083,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		6E4E13391913F5CE00D0C453 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = XcodeCoverage/exportenv.sh;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1087,6 +1111,7 @@
 				E59987D018E6E47F00B01C62 /* LoginViewController.m in Sources */,
 				E50DB28218F86F8000E87E62 /* UserMapping.m in Sources */,
 				E55D8670190C059200B1400A /* User.m in Sources */,
+				6E4E133F1913F7BF00D0C453 /* UIApplication+GCovFlush.m in Sources */,
 				E5FC44D6190D30FF00E8DB65 /* MenuViewController.m in Sources */,
 				E504D9BC190A58710036FFA8 /* MeetingPointViewController.m in Sources */,
 				E5DF641F18EB639600D53164 /* CampusRidesViewController.m in Sources */,
@@ -1147,6 +1172,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E4E133C1913F7B300D0C453 /* XCTest+GCovFlush.m in Sources */,
 				E58889CD191291060062D0DF /* ActionManagerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1271,6 +1297,8 @@
 					"$(PROJECT_DIR)/tumitfahrer/UbertestersSDK/**",
 					"$(PROJECT_DIR)/tumitfahrer/UbertestersSDK",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tumitfahrer/tumitfahrer-Prefix.pch";
 				INFOPLIST_FILE = "tumitfahrer/tumitfahrer-Info.plist";
@@ -1278,6 +1306,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -1298,6 +1327,8 @@
 					"$(PROJECT_DIR)/tumitfahrer/UbertestersSDK/**",
 					"$(PROJECT_DIR)/tumitfahrer/UbertestersSDK",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tumitfahrer/tumitfahrer-Prefix.pch";
 				INFOPLIST_FILE = "tumitfahrer/tumitfahrer-Info.plist";
@@ -1322,6 +1353,8 @@
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tumitfahrer/tumitfahrer-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1334,6 +1367,7 @@
 					"\"${PODS_ROOT}/Headers/RestKit\"",
 				);
 				INFOPLIST_FILE = "tumitfahrerTests/tumitfahrerTests-Info.plist";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -1351,6 +1385,8 @@
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tumitfahrer/tumitfahrer-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1359,6 +1395,7 @@
 					Restkit,
 				);
 				INFOPLIST_FILE = "tumitfahrerTests/tumitfahrerTests-Info.plist";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
