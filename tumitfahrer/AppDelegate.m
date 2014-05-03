@@ -20,6 +20,7 @@
 #import "SessionMapping.h"
 #import "RideMapping.h"
 #import "DeviceMapping.h"
+#import "RequestMapping.h"
 #import "LocationController.h"
 #import "PanoramioUtilities.h"
 #import <UbertestersSDK/Ubertesters.h>
@@ -176,6 +177,8 @@
     [objectManager addResponseDescriptorsFromArray:@[[RideMapping postRideResponseDescriptorWithMapping:postRideMapping]]];
     RKObjectMapping *getRideSearchesMapping = [RideMapping getRideSearchesMapping];
     [objectManager addResponseDescriptor:[RideMapping getRideSearchesResponseDescriptorWithMapping:getRideSearchesMapping]];
+    RKEntityMapping *requestMapping = [RequestMapping requestMapping];
+    [objectManager addResponseDescriptor:[RequestMapping postRequestResponseDescriptorWithMapping:requestMapping]];
 }
 
 -(void)setupObservers {

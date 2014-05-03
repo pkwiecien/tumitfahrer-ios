@@ -90,7 +90,7 @@
     self.browseRidesSection = [NSArray arrayWithObjects:@"Campus Rides", @"Activities", @"Existing Requests", nil];
     self.addRidesSection = [NSArray arrayWithObjects:@"New Ride", @"Ride Request", nil];
     self.searchRidesSection = [NSArray arrayWithObjects:@"Search Rides", @"Results of Search", nil];
-    self.profileSection = [NSArray arrayWithObjects:@"Profile", @"Schedule", @"Messages", @"Settings", nil];
+    self.profileSection = [NSArray arrayWithObjects:@"Profile", @"All Rides", @"Messages", @"Settings", nil];
     self.allMenuItems = [NSArray arrayWithObjects:self.browseRidesSection, self.addRidesSection, self.searchRidesSection, self.profileSection, nil];
 }
 

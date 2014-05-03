@@ -13,8 +13,14 @@
 #import "DriverCell.h"
 #import "ChatViewController.h"
 #import "ActionManager.h"
+#import "User.h"
+#import "Request.h"
+#import "CurrentUser.h"
+#import "KGStatusBar.h"
 
-@interface RideDetailViewController ()
+@interface RideDetailViewController () <NSFetchedResultsControllerDelegate>
+
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @end
 
@@ -61,9 +67,8 @@
         return 120.0f;
     }
     else if(indexPath.row == 3) {
-        return 124.0f;
-    } else if(indexPath.row == 4) {
-        return 343.0f;
+        //        return 124.0f*(1+(7-1)/3);
+        return 100*(1+(7-1)/3);
     }else
         return 100.0f; //cell for comments, in reality the height has to be adjustable
 }
@@ -82,10 +87,10 @@
 {
     if(indexPath.row == 0) {
         
-        DetailsMessagesChoiceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailsMessagesChoiceCell"];
+        RideActionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailsMessagesChoiceCell"];
         
         if(cell == nil){
-            cell = [DetailsMessagesChoiceCell detailsMessagesChoiceCell];
+            cell = [RideActionCell detailsMessagesChoiceCell];
         }
         
         cell.delegate = self;
@@ -106,12 +111,20 @@
         if (cell == nil) {
             cell = [DriverCell driverCell];
         }
+        cell.driverNameLabel.text = self.ride.driver.firstName;
+        cell.driverRatingLabel.text = [NSString stringWithFormat:@"%@", self.ride.driver.ratingAvg];
+        if (self.ride.driver.car == nil || [self.ride.driver.car isEqualToString:@""]) {
+            cell.carLabel.text = @"Not specified";
+        } else {
+            cell.carLabel.text = self.ride.driver.car;
+        }
         return cell;
     } else if(indexPath.row == 3) {
         PassengersCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PassengersCell"];
         if (cell == nil) {
             cell = [PassengersCell passengersCell];
         }
+        [cell drawCirlesWithPassengersNumber:5 freeSeats:7];
         return cell;
     } else {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reusable"];
@@ -175,5 +188,50 @@
     ChatViewController *chatVC = [[ChatViewController alloc] init];
     [self.navigationController pushViewController:chatVC animated:YES];
 }
+
+-(void)joinRideButtonPressed {
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    NSDictionary *queryParams;
+    // add enum
+    NSString *userId = [NSString stringWithFormat:@"%d", [CurrentUser sharedInstance].user.userId];
+    queryParams = @{@"passenger_id": userId, @"requested_from": self.ride.departurePlace, @"request_to":self.ride.destination};
+    NSDictionary *requestParams = @{@"request": queryParams};
+    
+    [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/rides/%d/requests", self.ride.rideId] parameters:requestParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        [KGStatusBar showSuccessWithStatus:@"Request was sent"];
+        Request *rideRequest = (Request *)[mappingResult firstObject];
+        NSLog(@"Ride request: %d", rideRequest.requestId);
+        [self.ride addRequestsObject:rideRequest];
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        [ActionManager showAlertViewWithTitle:[error localizedDescription]];
+        RKLogError(@"Load failed with error: %@", error);
+    }];
+}
+
+-(NSFetchedResultsController *)fetchedResultsController {
+    if (self.fetchedResultsController != nil) {
+        return self.fetchedResultsController;
+    }
+    
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Request"];
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO];
+    fetchRequest.sortDescriptors = @[descriptor];
+    NSError *error = nil;
+    
+    // Setup fetched results
+    self.fetchedResultsController = [[NSFetchedResultsController alloc]
+                                     initWithFetchRequest:fetchRequest
+                                     managedObjectContext:[RKManagedObjectStore defaultStore].
+                                     mainQueueManagedObjectContext
+                                     sectionNameKeyPath:nil cacheName:@"Request"];
+    self.fetchedResultsController.delegate = self;
+    
+    if (![self.fetchedResultsController performFetch:&error]) {
+        [ActionManager showAlertViewWithTitle:[error localizedDescription]];
+    }
+    
+    return self.fetchedResultsController;
+}
+
 
 @end

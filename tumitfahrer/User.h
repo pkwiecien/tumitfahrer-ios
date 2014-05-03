@@ -24,7 +24,7 @@
 @property (nonatomic, retain) NSString * password;
 @property (nonatomic, retain) NSString * phoneNumber;
 @property (nonatomic, retain) NSDate * updatedAt;
-@property (nonatomic, retain) NSNumber * userId;
+@property (nonatomic) int32_t userId;
 @property (nonatomic, retain) NSNumber * ratingAvg;
 @property (nonatomic, retain) NSSet *messagesReceived;
 @property (nonatomic, retain) NSSet *messagesSent;
@@ -32,6 +32,7 @@
 @property (nonatomic, retain) NSSet *ratingsReceived;
 @property (nonatomic, retain) NSSet *ridesAsDriver;
 @property (nonatomic, retain) NSSet *ridesAsPassenger;
+
 @end
 
 @interface User (CoreDataGeneratedAccessors)

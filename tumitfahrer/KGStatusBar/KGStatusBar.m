@@ -9,9 +9,9 @@
 #import "KGStatusBar.h"
 
 @interface KGStatusBar ()
-    @property (nonatomic, strong, readonly) UIWindow *overlayWindow;
-    @property (nonatomic, strong, readonly) UIView *topBar;
-    @property (nonatomic, strong) UILabel *stringLabel;
+@property (nonatomic, strong, readonly) UIWindow *overlayWindow;
+@property (nonatomic, strong, readonly) UIView *topBar;
+@property (nonatomic, strong) UILabel *stringLabel;
 @end
 
 @implementation KGStatusBar
@@ -32,7 +32,8 @@
 }
 
 + (void)showWithStatus:(NSString*)status {
-    [[KGStatusBar sharedView] showWithStatus:status barColor:[UIColor blackColor] textColor:[UIColor colorWithRed:191.0/255.0 green:191.0/255.0 blue:191.0/255.0 alpha:1.0]];
+    UIColor *iOSgreenColor = [UIColor colorWithRed:0.298 green:0.851 blue:0.392 alpha:1]; /*#4cd964*/
+    [[KGStatusBar sharedView] showWithStatus:status barColor:iOSgreenColor textColor:[UIColor whiteColor]];
 }
 
 + (void)showErrorWithStatus:(NSString*)status {
@@ -66,7 +67,11 @@
     CGFloat stringWidth = 0;
     CGFloat stringHeight = 0;
     if(labelText) {
-        CGSize stringSize = [labelText sizeWithFont:self.stringLabel.font constrainedToSize:CGSizeMake(self.topBar.frame.size.width, self.topBar.frame.size.height)];
+        CGRect textRect = [labelText boundingRectWithSize:CGSizeMake(self.topBar.frame.size.width, self.topBar.frame.size.height)
+                                                  options:NSStringDrawingUsesLineFragmentOrigin
+                                               attributes:@{NSFontAttributeName:self.stringLabel.font}
+                                                  context:nil];
+        CGSize stringSize= textRect.size;
         stringWidth = stringSize.width;
         stringHeight = stringSize.height;
         
@@ -129,7 +134,7 @@
 - (UILabel *)stringLabel {
     if (stringLabel == nil) {
         stringLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-		stringLabel.textColor = [UIColor colorWithRed:191.0/255.0 green:191.0/255.0 blue:191.0/255.0 alpha:1.0];
+		stringLabel.textColor = [UIColor whiteColor];
 		stringLabel.backgroundColor = [UIColor clearColor];
 		stringLabel.adjustsFontSizeToFitWidth = YES;
 #if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
@@ -138,9 +143,7 @@
         stringLabel.textAlignment = NSTextAlignmentCenter;
 #endif
 		stringLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-		stringLabel.font = [UIFont boldSystemFontOfSize:14.0];
-		stringLabel.shadowColor = [UIColor blackColor];
-		stringLabel.shadowOffset = CGSizeMake(0, -1);
+        stringLabel.font = [UIFont fontWithName:@"Helvetica-Medium" size:10.0f];
         stringLabel.numberOfLines = 0;
         stringLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     }
@@ -188,12 +191,12 @@
     
     CGAffineTransform rotationTransform = CGAffineTransformMakeRotation([self rotation]);
     [UIView animateWithDuration:[[UIApplication sharedApplication] statusBarOrientationAnimationDuration]
-                       animations:^{
-                           self.overlayWindow.transform = rotationTransform;
-                           // Transform invalidates the frame, so use bounds/center
-                           self.overlayWindow.bounds = CGRectMake(0.f, 0.f, [self rotatedSize].width, [self rotatedSize].height);
-                           self.topBar.frame = CGRectMake(0.f, 0.f, [self rotatedSize].width, 20.f);
-                       }];
+                     animations:^{
+                         self.overlayWindow.transform = rotationTransform;
+                         // Transform invalidates the frame, so use bounds/center
+                         self.overlayWindow.bounds = CGRectMake(0.f, 0.f, [self rotatedSize].width, [self rotatedSize].height);
+                         self.topBar.frame = CGRectMake(0.f, 0.f, [self rotatedSize].width, 20.f);
+                     }];
 }
 
 @end

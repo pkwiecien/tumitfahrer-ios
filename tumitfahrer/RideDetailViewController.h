@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "RideDetailView.h"
-#import "DetailsMessagesChoiceCell.h"
+#import "RideActionCell.h"
 #import "Ride.h"
 
 @class RideDetailView;

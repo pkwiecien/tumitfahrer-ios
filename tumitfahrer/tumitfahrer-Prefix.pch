@@ -65,6 +65,7 @@ typedef void(^boolCompletionHandler)(BOOL);
 static NSString *API_USERS = @"/api/v2/users";
 static NSString *API_SESSIONS = @"/api/v2/sessions";
 static NSString *API_RIDES = @"/api/v2/rides";
+static NSString *API_RIDES_REQUESTS = @"/api/v2/rides/:rideId/requests";
 static NSString *API_USERS_DEVICES = @"/api/v2/users/:userId/devices";
 static NSString *API_SEARCH = @"/api/v2/search";
 

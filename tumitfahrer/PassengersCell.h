@@ -12,4 +12,6 @@
 
 +(PassengersCell*)passengersCell;
 
+- (void)drawCirlesWithPassengersNumber:(NSInteger)passengers freeSeats:(NSInteger)freeSeats;
+
 @end

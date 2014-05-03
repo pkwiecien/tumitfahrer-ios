@@ -11,12 +11,13 @@
 
 @protocol DetailsMessagesChoiceCellDelegate <NSObject>
 
--(void)contactDriverButtonPressed;
+- (void)contactDriverButtonPressed;
+- (void)joinRideButtonPressed;
 
 @end
-@interface DetailsMessagesChoiceCell : UITableViewCell
+@interface RideActionCell : UITableViewCell
 
-+(DetailsMessagesChoiceCell *)detailsMessagesChoiceCell;
++(RideActionCell *)detailsMessagesChoiceCell;
 
 @property (weak, nonatomic) IBOutlet UIButton *joinRideButton;
 @property (weak, nonatomic) IBOutlet UIButton *contactDriverButton;

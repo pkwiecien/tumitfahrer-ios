@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
-#import "DetailsMessagesChoiceCell.h"
+#import "RideActionCell.h"
 #import "ActionManager.h"
 
-@implementation DetailsMessagesChoiceCell
+@implementation RideActionCell
 
-+(DetailsMessagesChoiceCell *)detailsMessagesChoiceCell {
++(RideActionCell *)detailsMessagesChoiceCell {
     
-    DetailsMessagesChoiceCell * cell = [[[NSBundle mainBundle] loadNibNamed:@"DetailsMessagesChoiceCell" owner:self options:nil] objectAtIndex:0];
+    RideActionCell * cell = [[[NSBundle mainBundle] loadNibNamed:@"RideActionCell" owner:self options:nil] objectAtIndex:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
@@ -24,6 +24,7 @@
 }
 
 - (IBAction)joinRideButtonPressed:(id)sender {
+    [self.delegate joinRideButtonPressed];
 }
 
 

@@ -10,4 +10,7 @@
 
 @interface RequestMapping : NSObject
 
++(RKEntityMapping*)requestMapping;
++(RKResponseDescriptor *)postRequestResponseDescriptorWithMapping:(RKEntityMapping *)mapping;
+
 @end

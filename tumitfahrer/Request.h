@@ -13,12 +13,12 @@
 
 @interface Request : NSManagedObject
 
-@property (nonatomic) NSTimeInterval createdAt;
+@property (nonatomic, retain) NSDate * createdAt;
 @property (nonatomic) int32_t passengerId;
 @property (nonatomic, retain) NSString * requestedFrom;
 @property (nonatomic, retain) NSString * requestedTo;
 @property (nonatomic) int32_t requestId;
-@property (nonatomic) NSTimeInterval updatedAt;
+@property (nonatomic, retain) NSDate *updatedAt;
 @property (nonatomic, retain) Ride *requestedRide;
 
 @end
