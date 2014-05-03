@@ -14,3 +14,5 @@ pod 'RestKit'
 pod "RMDateSelectionViewController"
 # implementation of mock objects
 pod 'OCMock'
+# chat UI
+pod 'JSMessagesViewController'

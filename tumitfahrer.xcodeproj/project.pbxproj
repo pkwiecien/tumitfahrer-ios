@@ -73,9 +73,7 @@
 		E5888A011913E37C0062D0DF /* DriverCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E58889FF1913E37C0062D0DF /* DriverCell.xib */; };
 		E5888A061913E4070062D0DF /* PassengersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5888A041913E4070062D0DF /* PassengersCell.m */; };
 		E5888A071913E4070062D0DF /* PassengersCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5888A051913E4070062D0DF /* PassengersCell.xib */; };
-		E5888A0C1913E98A0062D0DF /* ChatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5888A0A1913E98A0062D0DF /* ChatCell.m */; };
-		E5888A0D1913E98A0062D0DF /* ChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5888A0B1913E98A0062D0DF /* ChatCell.xib */; };
-		E5888A101913EAE70062D0DF /* ChatInput.m in Sources */ = {isa = PBXBuildFile; fileRef = E5888A0F1913EAE70062D0DF /* ChatInput.m */; };
+		E5888A9B1914E01B0062D0DF /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5888A9A1914E01B0062D0DF /* ChatViewController.m */; };
 		E58F958618FD107E00A0A55B /* CvLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E58F958518FD107E00A0A55B /* CvLayout.m */; };
 		E59987C918E6DBEA00B01C62 /* RideRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987C718E6DBEA00B01C62 /* RideRequestsViewController.m */; };
 		E59987CA18E6DBEA00B01C62 /* RideRequestsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59987C818E6DBEA00B01C62 /* RideRequestsViewController.xib */; };
@@ -260,11 +258,8 @@
 		E5888A031913E4070062D0DF /* PassengersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassengersCell.h; sourceTree = "<group>"; };
 		E5888A041913E4070062D0DF /* PassengersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassengersCell.m; sourceTree = "<group>"; };
 		E5888A051913E4070062D0DF /* PassengersCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PassengersCell.xib; sourceTree = "<group>"; };
-		E5888A091913E98A0062D0DF /* ChatCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatCell.h; sourceTree = "<group>"; };
-		E5888A0A1913E98A0062D0DF /* ChatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatCell.m; sourceTree = "<group>"; };
-		E5888A0B1913E98A0062D0DF /* ChatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatCell.xib; sourceTree = "<group>"; };
-		E5888A0E1913EAE70062D0DF /* ChatInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatInput.h; sourceTree = "<group>"; };
-		E5888A0F1913EAE70062D0DF /* ChatInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatInput.m; sourceTree = "<group>"; };
+		E5888A991914E01B0062D0DF /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
+		E5888A9A1914E01B0062D0DF /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		E58F958418FD107E00A0A55B /* CvLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CvLayout.h; sourceTree = "<group>"; };
 		E58F958518FD107E00A0A55B /* CvLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CvLayout.m; sourceTree = "<group>"; };
 		E59987C618E6DBEA00B01C62 /* RideRequestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideRequestsViewController.h; sourceTree = "<group>"; };
@@ -571,7 +566,7 @@
 		E58889D81913832C0062D0DF /* New Ride Details */ = {
 			isa = PBXGroup;
 			children = (
-				E5888A081913E9740062D0DF /* ChatCell */,
+				E5888A981914DFFB0062D0DF /* Chat Controller */,
 				E5888A021913E3F40062D0DF /* Passengers Cell */,
 				E58889FC1913E3630062D0DF /* Driver Cell */,
 				E58889F11913E0890062D0DF /* Ride Information Cell */,
@@ -644,24 +639,13 @@
 			name = "Passengers Cell";
 			sourceTree = "<group>";
 		};
-		E5888A081913E9740062D0DF /* ChatCell */ = {
+		E5888A981914DFFB0062D0DF /* Chat Controller */ = {
 			isa = PBXGroup;
 			children = (
-				E5888A111913EAEC0062D0DF /* Chat Input */,
-				E5888A091913E98A0062D0DF /* ChatCell.h */,
-				E5888A0A1913E98A0062D0DF /* ChatCell.m */,
-				E5888A0B1913E98A0062D0DF /* ChatCell.xib */,
+				E5888A991914E01B0062D0DF /* ChatViewController.h */,
+				E5888A9A1914E01B0062D0DF /* ChatViewController.m */,
 			);
-			name = ChatCell;
-			sourceTree = "<group>";
-		};
-		E5888A111913EAEC0062D0DF /* Chat Input */ = {
-			isa = PBXGroup;
-			children = (
-				E5888A0E1913EAE70062D0DF /* ChatInput.h */,
-				E5888A0F1913EAE70062D0DF /* ChatInput.m */,
-			);
-			name = "Chat Input";
+			name = "Chat Controller";
 			sourceTree = "<group>";
 		};
 		E59987C418E6DBC300B01C62 /* ViewControllers */ = {
@@ -1079,7 +1063,6 @@
 				E5DF642118EB64BD00D53164 /* CollectionCell.xib in Resources */,
 				E58889E91913C7010062D0DF /* UbertestersSDKResources.bundle in Resources */,
 				E59987FC18E7251000B01C62 /* RegisterViewController.xib in Resources */,
-				E5888A0D1913E98A0062D0DF /* ChatCell.xib in Resources */,
 				E599880C18E7836D00B01C62 /* MenuViewController.xib in Resources */,
 				E5DF642A18EBDD2A00D53164 /* BalancedColumnCell.xib in Resources */,
 				E59987D118E6E47F00B01C62 /* LoginViewController.xib in Resources */,
@@ -1205,7 +1188,6 @@
 				E55D866A190C059200B1400A /* FriendRequest.m in Sources */,
 				E599887318E8616200B01C62 /* HATransitionLayout.m in Sources */,
 				E5FDDBCB18EE79F900CE7B01 /* RideSearchResultsViewController.m in Sources */,
-				E5888A101913EAE70062D0DF /* ChatInput.m in Sources */,
 				E5DF641018EB46F900D53164 /* RideDetailsViewController.m in Sources */,
 				E59987D018E6E47F00B01C62 /* LoginViewController.m in Sources */,
 				E50DB28218F86F8000E87E62 /* UserMapping.m in Sources */,
@@ -1217,6 +1199,7 @@
 				E504D9D0190A7FC50036FFA8 /* SPGooglePlacesAutocompletePlace.m in Sources */,
 				E599886218E84D9D00B01C62 /* MenuTableViewCell.m in Sources */,
 				E55D866D190C059200B1400A /* Request.m in Sources */,
+				E5888A9B1914E01B0062D0DF /* ChatViewController.m in Sources */,
 				E59987C918E6DBEA00B01C62 /* RideRequestsViewController.m in Sources */,
 				E5E2157F1908492200B0B150 /* FreeSeatsTableViewCell.m in Sources */,
 				E5E215681907B82500B0B150 /* CustomBarButton.m in Sources */,
@@ -1230,7 +1213,6 @@
 				E5FA64251912299E00C04BFF /* RideSearchStore.m in Sources */,
 				E5DF641518EB548E00D53164 /* SettingsViewController.m in Sources */,
 				E5888A061913E4070062D0DF /* PassengersCell.m in Sources */,
-				E5888A0C1913E98A0062D0DF /* ChatCell.m in Sources */,
 				E5E215641907A95F00B0B150 /* SearchRideViewController.m in Sources */,
 				E58889F51913E14A0062D0DF /* RideInformationCell.m in Sources */,
 				E522BACA18AE13F600ECD375 /* AppDelegate.m in Sources */,
@@ -1331,6 +1313,8 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1372,6 +1356,8 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;

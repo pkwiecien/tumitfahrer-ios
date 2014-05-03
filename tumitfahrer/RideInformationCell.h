@@ -12,4 +12,7 @@
 
 + (RideInformationCell*) rideInformationCell;
 
+@property (weak, nonatomic) IBOutlet UILabel *departurePlaceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *destinationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "DetailsMessagesChoiceCell.h"
+#import "ActionManager.h"
 
 @implementation DetailsMessagesChoiceCell
 
@@ -14,7 +15,15 @@
     
     DetailsMessagesChoiceCell * cell = [[[NSBundle mainBundle] loadNibNamed:@"DetailsMessagesChoiceCell" owner:self options:nil] objectAtIndex:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return cell;
+}
+
+- (IBAction)contactDriverButtonPressed:(id)sender {
+    [self.delegate contactDriverButtonPressed];
+}
+
+- (IBAction)joinRideButtonPressed:(id)sender {
 }
 
 
@@ -29,6 +38,8 @@
 
 - (void)awakeFromNib
 {
+    [self.contactDriverButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"RoundedBox"] withColor:[UIColor greenColor]] forState:UIControlStateNormal];
+    [self.joinRideButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"RoundedBox"] withColor:[UIColor orangeColor]] forState:UIControlStateNormal];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

@@ -12,4 +12,8 @@
 
 + (DriverCell*)driverCell;
 
+@property (weak, nonatomic) IBOutlet UILabel *driverNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *driverRatingLabel;
+@property (weak, nonatomic) IBOutlet UILabel *carLabel;
+
 @end

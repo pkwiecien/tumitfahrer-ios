@@ -8,8 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+
+@protocol DetailsMessagesChoiceCellDelegate <NSObject>
+
+-(void)contactDriverButtonPressed;
+
+@end
 @interface DetailsMessagesChoiceCell : UITableViewCell
 
 +(DetailsMessagesChoiceCell *)detailsMessagesChoiceCell;
+
+@property (weak, nonatomic) IBOutlet UIButton *joinRideButton;
+@property (weak, nonatomic) IBOutlet UIButton *contactDriverButton;
+@property (nonatomic, strong) id<DetailsMessagesChoiceCellDelegate> delegate;
+
+- (IBAction)contactDriverButtonPressed:(id)sender;
+- (IBAction)joinRideButtonPressed:(id)sender;
 
 @end

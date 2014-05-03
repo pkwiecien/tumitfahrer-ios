@@ -8,11 +8,11 @@
 
 #import "RideDetailViewController.h"
 #import "RideDetailView.h"
-#import "DetailsMessagesChoiceCell.h"
 #import "RideInformationCell.h"
 #import "PassengersCell.h"
 #import "DriverCell.h"
-#import "ChatCell.h"
+#import "ChatViewController.h"
+#import "ActionManager.h"
 
 @interface RideDetailViewController ()
 
@@ -32,24 +32,19 @@
     
     [self.view addSubview:self.rideDetail];
     
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    
     [self.view bringSubviewToFront:_headerView];
     
     UIButton *buttonBack = [UIButton buttonWithType:UIButtonTypeCustom];
     buttonBack.frame = CGRectMake(10, 22, 44, 44);
-    [buttonBack setImage:[UIImage imageNamed:@"btn_back"] forState:UIControlStateNormal];
+    [buttonBack setImage:[UIImage imageNamed:@"ArrowLeft"] forState:UIControlStateNormal];
     [buttonBack addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buttonBack];
     
-    UIButton *buttonPost = [UIButton buttonWithType:UIButtonTypeCustom];
-    buttonPost.frame = CGRectMake(self.view.bounds.size.width - 44, 18, 44, 44);
-    [buttonPost setImage:[UIImage imageNamed:@"btn_post"] forState:UIControlStateNormal];
-    [buttonPost addTarget:self action:@selector(post) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:buttonPost];
-    
     self.rideDetail.headerView = _headerView;
-    
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 #pragma mark - UITableView
@@ -75,7 +70,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 4;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -92,6 +87,8 @@
         if(cell == nil){
             cell = [DetailsMessagesChoiceCell detailsMessagesChoiceCell];
         }
+        
+        cell.delegate = self;
         return cell;
     }
     else if(indexPath.row == 1) {
@@ -99,6 +96,10 @@
         if(cell == nil){
             cell = [RideInformationCell rideInformationCell];
         }
+        cell.departurePlaceLabel.text = self.ride.departurePlace;
+        cell.destinationLabel.text = self.ride.destination;
+        cell.timeLabel.text = [ActionManager stringFromDate:self.ride.departureTime];
+        
         return cell;
     } else if(indexPath.row == 2) {
         DriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DriverCell"];
@@ -112,14 +113,7 @@
             cell = [PassengersCell passengersCell];
         }
         return cell;
-    } else if(indexPath.row == 4) {
-        ChatCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ChatCell"];
-        if(cell == nil) {
-            cell = [ChatCell chatCell];
-        }
-        [cell addChatInput];
-        return cell;
-    }else {
+    } else {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reusable"];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reusable"];
@@ -174,10 +168,12 @@
 
 - (void)back
 {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)post
-{
+-(void)contactDriverButtonPressed {
+    ChatViewController *chatVC = [[ChatViewController alloc] init];
+    [self.navigationController pushViewController:chatVC animated:YES];
 }
 
 @end

@@ -4,6 +4,6 @@ before_install:
   - brew update
   - brew upgrade xctool
 script:
-  - xctool test -workspace tumitfahrer.xcworkspace -scheme tumitfahrer -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+  - xctool -workspace tumitfahrer.xcworkspace -scheme tumitfahrer -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO clean build test
 notifications:
   email: false
