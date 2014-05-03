@@ -10,7 +10,7 @@
 
 @interface RideMapping : NSObject
 
-+(RKEntityMapping *)getRidesMapping;
++(RKEntityMapping *)generalRideMapping;
 +(RKResponseDescriptor *)getRidesResponseDescriptorWithMapping:(RKEntityMapping *)mapping;
 
 +(RKObjectMapping*)getRideSearchesMapping;

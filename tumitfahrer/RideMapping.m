@@ -12,7 +12,7 @@
 
 @implementation RideMapping
 
-+(RKEntityMapping *)getRidesMapping {
++(RKEntityMapping *)generalRideMapping {
     RKEntityMapping *rideMapping = [RKEntityMapping mappingForEntityForName:@"Ride" inManagedObjectStore:[[RKObjectManager sharedManager] managedObjectStore]];
     rideMapping.identificationAttributes = @[@"rideId"];
     [rideMapping addAttributeMappingsFromDictionary:@{@"id": @"rideId",
@@ -28,6 +28,11 @@
                                                       @"updated_at": @"updatedAt"
                                                       }];
     
+    [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"driver" toKeyPath:@"driver" withMapping:[UserMapping userMapping]]];
+    
+    [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"passengers" toKeyPath:@"passengers" withMapping:[UserMapping userMapping]]];
+    
+    [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"requests" toKeyPath:@"requests" withMapping:[UserMapping userMapping]]];
     return rideMapping;
 }
 
@@ -68,14 +73,8 @@
 
 +(RKEntityMapping *)postRideMapping {
     
-    RKEntityMapping *rideMapping = [self getRidesMapping];
-    
-    [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"driver" toKeyPath:@"driver" withMapping:[UserMapping userMapping]]];
-    
-    [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"passengers" toKeyPath:@"passengers" withMapping:[UserMapping userMapping]]];
-    
+    RKEntityMapping *rideMapping = [self generalRideMapping];
     return rideMapping;
-    
 }
 
 +(RKResponseDescriptor *)postRideResponseDescriptorWithMapping:(RKEntityMapping *)mapping {

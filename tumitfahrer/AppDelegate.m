@@ -168,7 +168,7 @@
     [objectManager addResponseDescriptor:[SessionMapping postSessionResponseDescriptorWithMapping:postSessionMapping]];
     RKObjectMapping *postUserMapping =[UserMapping postUserMapping];
     [objectManager addResponseDescriptor:[UserMapping postUserResponseDescriptorWithMapping:postUserMapping]];
-    RKEntityMapping *getRidesMapping = [RideMapping getRidesMapping];
+    RKEntityMapping *getRidesMapping = [RideMapping generalRideMapping];
     [objectManager addResponseDescriptor:[RideMapping getRidesResponseDescriptorWithMapping:getRidesMapping]];
     RKObjectMapping *postDeviceTokenMapping = [DeviceMapping postDeviceMapping];
     [objectManager addResponseDescriptor:[DeviceMapping postDeviceResponseDescriptorWithMapping:postDeviceTokenMapping]];

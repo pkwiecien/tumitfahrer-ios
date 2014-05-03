@@ -8,6 +8,7 @@
 
 #import "RidesStore.h"
 #import "Ride.h"
+#import "User.h"
 
 @interface RidesStore () <NSFetchedResultsControllerDelegate>
 
@@ -27,14 +28,16 @@
         self.observers = [[NSMutableArray alloc] init];
         [self loadAllRides];
         
-       // if ([[self allRides] count] == 0) {
-            [self fetchRidesFromWebservice:^(BOOL ridesFetched) {
-                if(ridesFetched) {
-                    [self loadAllRides];
-                    [self fetchLocationForAllRides];
-                }
-            }];
-        //}
+        //if ([[self allRides] count] == 0) {
+        [self fetchRidesFromWebservice:^(BOOL ridesFetched) {
+            if(ridesFetched) {
+                [self loadAllRides];
+                [self fetchLocationForAllRides];
+            }
+        }];
+        /*} else {
+         [self fetchLocationForAllRides];
+         }*/
     }
     return self;
 }
@@ -66,23 +69,24 @@
     
     [request setPredicate:predicate];
     [request setReturnsObjectsAsFaults:NO];
+
     request.entity = e;
     
     NSError *error;
-    NSArray *result = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:&error];
-    if (!result) {
+    NSArray *fetchedObjects = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:&error];
+    if (!fetchedObjects) {
         [NSException raise:@"Fetch failed"
                     format:@"Reason: %@", [error localizedDescription]];
     }
     
     if(contentType == ContentTypeCampusRides){
-        self.campusRides =[[NSMutableArray alloc] initWithArray:result];
+        self.campusRides =[[NSMutableArray alloc] initWithArray:fetchedObjects];
     }
     else if(contentType == ContentTypeActivityRides) {
-        self.activityRides = [[NSMutableArray alloc] initWithArray:result];
+        self.activityRides = [[NSMutableArray alloc] initWithArray:fetchedObjects];
     }
     else if(contentType == ContentTypeExistingRequests) {
-        self.rideRequests = [[NSMutableArray alloc] initWithArray:result];
+        self.rideRequests = [[NSMutableArray alloc] initWithArray:fetchedObjects];
     }
 }
 

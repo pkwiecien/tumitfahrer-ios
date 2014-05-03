@@ -27,11 +27,18 @@
 
 - (void)testDateToString {
 
-    NSDate *date = [[NSDate alloc] initWithTimeIntervalSince1970:0];
-    NSString *stringFromDate = [ActionManager stringFromDate:date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    [components setDay:1];
+    [components setMonth:2];
+    [components setYear:2014];
+    [components setHour:23];
+    [components setMinute:59];
+    NSDate *calendarDate = [calendar dateFromComponents:components];
+    NSString *stringFromDate = [ActionManager stringFromDate:calendarDate];
     
-    NSString *dateString = @"1970-01-01 01:01";
-    XCTAssertTrue([dateString isEqualToString:stringFromDate], @"Strings are not equal %@ %@", dateString, stringFromDate);
+    NSString *expectedString = @"2014-02-01 23:59";
+    XCTAssertTrue([expectedString isEqualToString:stringFromDate], @"Strings are not equal %@ %@", expectedString, stringFromDate);
 }
 
 @end

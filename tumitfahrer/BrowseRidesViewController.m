@@ -121,6 +121,23 @@
         [self makeViewLargeQuickly:YES];
     }
     [self refreshCurrentLocationImage];
+    
+    
+    for (Ride *ride in [[RidesStore sharedStore] allActivityRides]) {
+        NSLog(@"Dirver: %d, %@ for ride: %d, number of passengers: %d", ride.driver.userId, ride.driver.firstName, ride.rideId, [ride.passengers count]);
+        if([ride.passengers count] > 0) {
+            for (User *passenger in ride.passengers) {
+                [passenger willAccessValueForKey:nil];
+                NSLog(@"passenger: %d %@", passenger.userId, passenger.firstName);
+            }
+        }
+    }
+    
+    for (Ride *ride in [[RidesStore sharedStore] allCampusRides]) {
+        NSLog(@"Dirver: %d, %@ for ride: %d, number of passengers: %d", ride.driver.userId, ride.driver.firstName, ride.rideId, [ride.passengers count]);
+    }
+    
+    
 }
 
 -(void)showLoginScreen:(BOOL)animated
