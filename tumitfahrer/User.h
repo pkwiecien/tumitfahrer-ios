@@ -2,14 +2,14 @@
 //  User.h
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 4/26/14.
+//  Created by Pawel Kwiecien on 5/3/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class FriendRequest, Message, Rating, Ride, User;
+@class Message, Rating, Ride;
 
 @interface User : NSManagedObject
 
@@ -19,34 +19,22 @@
 @property (nonatomic, retain) NSNumber * department;
 @property (nonatomic, retain) NSString * email;
 @property (nonatomic, retain) NSString * firstName;
-@property (nonatomic) BOOL isStudent;
+@property (nonatomic, retain) NSNumber * isStudent;
 @property (nonatomic, retain) NSString * lastName;
 @property (nonatomic, retain) NSString * password;
 @property (nonatomic, retain) NSString * phoneNumber;
 @property (nonatomic, retain) NSDate * updatedAt;
-@property (nonatomic) int userId;
-@property (nonatomic, retain) NSSet *ridesAsDriver;
-@property (nonatomic, retain) NSSet *ridesAsPassenger;
-@property (nonatomic, retain) NSSet *friendRequestsReceived;
-@property (nonatomic, retain) FriendRequest *friendRequestsSent;
-@property (nonatomic, retain) NSSet *friends;
+@property (nonatomic, retain) NSNumber * userId;
+@property (nonatomic, retain) NSNumber * ratingAvg;
 @property (nonatomic, retain) NSSet *messagesReceived;
 @property (nonatomic, retain) NSSet *messagesSent;
 @property (nonatomic, retain) NSSet *ratingsGiven;
 @property (nonatomic, retain) NSSet *ratingsReceived;
+@property (nonatomic, retain) NSSet *ridesAsDriver;
+@property (nonatomic, retain) NSSet *ridesAsPassenger;
 @end
 
 @interface User (CoreDataGeneratedAccessors)
-
-- (void)addFriendRequestsReceivedObject:(FriendRequest *)value;
-- (void)removeFriendRequestsReceivedObject:(FriendRequest *)value;
-- (void)addFriendRequestsReceived:(NSSet *)values;
-- (void)removeFriendRequestsReceived:(NSSet *)values;
-
-- (void)addFriendsObject:(User *)value;
-- (void)removeFriendsObject:(User *)value;
-- (void)addFriends:(NSSet *)values;
-- (void)removeFriends:(NSSet *)values;
 
 - (void)addMessagesReceivedObject:(Message *)value;
 - (void)removeMessagesReceivedObject:(Message *)value;

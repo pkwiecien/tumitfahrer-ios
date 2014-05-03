@@ -2,16 +2,14 @@
 //  User.m
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 4/26/14.
+//  Created by Pawel Kwiecien on 5/3/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
 #import "User.h"
-#import "FriendRequest.h"
 #import "Message.h"
 #import "Rating.h"
 #import "Ride.h"
-#import "User.h"
 
 
 @implementation User
@@ -28,9 +26,7 @@
 @dynamic phoneNumber;
 @dynamic updatedAt;
 @dynamic userId;
-@dynamic friendRequestsReceived;
-@dynamic friendRequestsSent;
-@dynamic friends;
+@dynamic ratingAvg;
 @dynamic messagesReceived;
 @dynamic messagesSent;
 @dynamic ratingsGiven;
