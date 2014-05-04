@@ -8,6 +8,7 @@
 
 #import "MessageListViewController.h"
 #import "ActionManager.h"
+#import "MessageCell.h"
 
 @interface MessageListViewController ()
 
@@ -47,6 +48,47 @@
     
     self.title = @"MESSAGES";
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+}
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 10;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 50.0f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 105.0f;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *headerView = [[UIView alloc] init];
+    headerView.backgroundColor = [UIColor clearColor];
+    return headerView;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    MessageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MessageCell"];
+    
+    if(cell == nil){
+        cell = [MessageCell messageCell];
+    }
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"selected cell %d %d", indexPath.section, indexPath.row);
 }
 
 - (BOOL)slideNavigationControllerShouldDisplayLeftMenu
