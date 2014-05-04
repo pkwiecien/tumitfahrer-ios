@@ -8,6 +8,7 @@
 
 #import "UserMapping.h"
 #import "StatusMapping.h"
+#import "RideMapping.h"
 
 @implementation UserMapping
 
@@ -33,7 +34,6 @@
 +(RKObjectMapping *)postUserMapping {
     RKObjectMapping *responseMapping = [RKObjectMapping mappingForClass:[StatusMapping class]];
     [responseMapping addAttributeMappingsFromDictionary:@{@"message":@"message"}];
-    
     return responseMapping;
 }
 

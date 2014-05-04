@@ -14,6 +14,7 @@
 #import "CurrentUser.h"
 #import "RideRequestsViewController.h"
 #import <SlideNavigationController.h>
+#import "Ride.h"
 
 @interface LoginViewController () <NSFetchedResultsControllerDelegate>
 
@@ -29,7 +30,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-
+        
         float centerX = (self.view.frame.size.width - cUIElementWidth)/2;
         UIImage *emailWhiteIcon = [ActionManager colorImage:[UIImage imageNamed:@"EmailIcon"] withColor:[UIColor whiteColor]];
         self.emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIcon:emailWhiteIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeEmailAddress shouldStartWithCapital:NO];
@@ -113,8 +114,15 @@
         [CurrentUser sharedInstance].user = (User *)[mappingResult firstObject];
         RKLogInfo(@"Load complete, current user %@!", [CurrentUser sharedInstance].user.firstName);
         
-        // check if fetch user has assigned a device token]
+        // check if everything is OK with user rides as driver
+        for (Ride *ride in [CurrentUser sharedInstance].user.ridesAsDriver) {
+            NSLog(@"ride of user: %d %@", ride.rideId, ride.destination);
+        }
+        
+        // check if fetch user has assigned a device token
         [self checkDeviceToken];
+        
+        //[self getUserRidesAsDriver];
         
         [self storeCurrentUserInDefaults];
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -123,6 +131,44 @@
         RKLogError(@"Load failed with error: %@", error);
     }];
 }
+
+
+/*-(void)getUserRidesAsDriver {
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    
+    NSString *path = [NSString stringWithFormat:@"/api/v2/users/%d/rides?driver", [CurrentUser sharedInstance].user.userId];
+    [objectManager getObject:self path:path parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        NSArray *rides = [mappingResult array];
+        for (Ride *ride in rides) {
+            NSLog(@"ride id: %d, destination: %@", ride.rideId, ride.destination);
+        }
+//
+//        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+//        NSEntityDescription *e = [NSEntityDescription entityForName:@"User"
+//                                             inManagedObjectContext:[RKManagedObjectStore defaultStore].
+//                                  mainQueueManagedObjectContext];
+//        NSPredicate *predicate;
+//        predicate = [NSPredicate predicateWithFormat:@"(userId = %d)", [CurrentUser sharedInstance].user.userId];
+//        
+//        [request setPredicate:predicate];
+//        [request setReturnsObjectsAsFaults:NO];
+//        
+//        request.entity = e;
+//        
+//        NSError *error;
+//        NSArray *fetchedObjects = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:&error];
+//        if (!fetchedObjects) {
+//            [NSException raise:@"Fetch failed"
+//                        format:@"Reason: %@", [error localizedDescription]];
+//        }
+        
+//        User *user = [fetchedObjects firstObject];
+        [CurrentUser sharedInstance].user.ridesAsDriver = [NSSet setWithArray:rides];
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", [error localizedDescription]);
+    }];
+}*/
+
 
 -(void)checkDeviceToken {
     

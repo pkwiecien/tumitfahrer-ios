@@ -17,6 +17,7 @@
 #import "Request.h"
 #import "CurrentUser.h"
 #import "KGStatusBar.h"
+#import "Ride.h"
 
 @interface RideDetailViewController () <NSFetchedResultsControllerDelegate>
 
@@ -51,6 +52,15 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    NSLog(@"Number of passengers: %d", [self.ride.passengers count]);
+    for (User *user in [self.ride passengers]) {
+        NSLog(@"User: %@", user);
+    }
+    
+    NSLog(@"Number of requests: %d", [self.ride.requests count]);
+    for (Request *reques in [self.ride requests]) {
+        NSLog(@"Request: %@", reques);
+    }
 }
 
 #pragma mark - UITableView
@@ -200,7 +210,7 @@
     [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/rides/%d/requests", self.ride.rideId] parameters:requestParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [KGStatusBar showSuccessWithStatus:@"Request was sent"];
         Request *rideRequest = (Request *)[mappingResult firstObject];
-        NSLog(@"Ride request: %d", rideRequest.requestId);
+        NSLog(@"Ride request: %@", rideRequest);
         [self.ride addRequestsObject:rideRequest];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [ActionManager showAlertViewWithTitle:[error localizedDescription]];

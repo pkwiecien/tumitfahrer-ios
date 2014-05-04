@@ -169,8 +169,8 @@
     [objectManager addResponseDescriptor:[SessionMapping postSessionResponseDescriptorWithMapping:postSessionMapping]];
     RKObjectMapping *postUserMapping =[UserMapping postUserMapping];
     [objectManager addResponseDescriptor:[UserMapping postUserResponseDescriptorWithMapping:postUserMapping]];
-    RKEntityMapping *getRidesMapping = [RideMapping generalRideMapping];
-    [objectManager addResponseDescriptor:[RideMapping getRidesResponseDescriptorWithMapping:getRidesMapping]];
+    RKEntityMapping *generalRidesMapping = [RideMapping generalRideMapping];
+    [objectManager addResponseDescriptor:[RideMapping getRidesResponseDescriptorWithMapping:generalRidesMapping]];
     RKObjectMapping *postDeviceTokenMapping = [DeviceMapping postDeviceMapping];
     [objectManager addResponseDescriptor:[DeviceMapping postDeviceResponseDescriptorWithMapping:postDeviceTokenMapping]];
     RKEntityMapping *postRideMapping = [RideMapping postRideMapping];
@@ -179,6 +179,8 @@
     [objectManager addResponseDescriptor:[RideMapping getRideSearchesResponseDescriptorWithMapping:getRideSearchesMapping]];
     RKEntityMapping *requestMapping = [RequestMapping requestMapping];
     [objectManager addResponseDescriptor:[RequestMapping postRequestResponseDescriptorWithMapping:requestMapping]];
+    
+    //[objectManager addResponseDescriptor:[RideMapping getRidesAsDriverResponseDescriptorWithMapping:generalRidesMapping]];
 }
 
 -(void)setupObservers {

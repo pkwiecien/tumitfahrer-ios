@@ -9,6 +9,7 @@
 #import "RideMapping.h"
 #import "UserMapping.h"
 #import "RideSearch.h"
+#import "RequestMapping.h"
 
 @implementation RideMapping
 
@@ -30,9 +31,9 @@
     
     [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"driver" toKeyPath:@"driver" withMapping:[UserMapping userMapping]]];
     
-    [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"passengers" toKeyPath:@"passengers" withMapping:[UserMapping userMapping]]];
+   [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"passengers" toKeyPath:@"passengers" withMapping:[UserMapping userMapping]]];
     
-    [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"requests" toKeyPath:@"requests" withMapping:[UserMapping userMapping]]];
+    [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"requests" toKeyPath:@"requests" withMapping:[RequestMapping requestMapping]]];
     return rideMapping;
 }
 
@@ -54,7 +55,17 @@
                                                       }];
     
     return rideMapping;
+}
 
+// mapping for user for user's rides as passenger whih should query /api/v2/users/:usersId/rides?driver
++(RKResponseDescriptor *)getRidesAsDriverResponseDescriptorWithMapping:(RKEntityMapping *)mapping {
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping
+                                                                                            method:RKRequestMethodGET
+                                                                                       pathPattern:API_USERS_RIDES_AS_DRIVER
+                                                                                           keyPath:@"rides"
+                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    return responseDescriptor;
 }
 
 +(RKResponseDescriptor *)getRideSearchesResponseDescriptorWithMapping:(RKObjectMapping *)mapping {

@@ -178,6 +178,7 @@
 - (IBAction)sendFeedbackButtonPressed:(id)sender {
 }
 - (IBAction)logoutButtonPressed:(id)sender {
+    
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"emailLoggedInUser"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     

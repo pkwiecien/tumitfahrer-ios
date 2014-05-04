@@ -16,3 +16,5 @@ pod "RMDateSelectionViewController"
 pod 'OCMock'
 # chat UI
 pod 'JSMessagesViewController'
+# pod for websockets
+pod 'SocketRocket', '~> 0.3'

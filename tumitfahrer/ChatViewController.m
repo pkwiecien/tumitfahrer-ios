@@ -12,11 +12,14 @@
 #define kSubtitleJobs @"Jobs"
 #define kSubtitleWoz @"Steve Wozniak"
 
-@interface ChatViewController ()
+@interface ChatViewController () 
+
 
 @end
 
-@implementation ChatViewController
+@implementation ChatViewController {
+    SRWebSocket *_webSocket;
+}
 
 - (void)viewDidLoad
 {
@@ -44,6 +47,16 @@
 {
     [super viewWillAppear:animated];
     [self scrollToBottomAnimated:NO];
+    //[self _reconnect];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+	[super viewDidDisappear:animated];
+    
+    _webSocket.delegate = nil;
+    [_webSocket close];
+    _webSocket = nil;
 }
 
 #pragma mark - Table view data source
@@ -168,6 +181,56 @@
 {
     UIImage *image = [self.avatars objectForKey:sender];
     return [[UIImageView alloc] initWithImage:image];
+}
+
+# pragma mark - websocket - for complete implementation see SocketRocket demo
+
+- (void)_reconnect;
+{
+    _webSocket.delegate = nil;
+    [_webSocket close];
+    
+    _webSocket = [[SRWebSocket alloc] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"ws://192.168.0.102:9000/chat"]]];
+    _webSocket.delegate = self;
+    
+    self.title = @"Opening Connection...";
+    [_webSocket open];
+}
+
+- (void)reconnect:(id)sender;
+{
+    [self _reconnect];
+}
+
+#pragma mark - SRWebSocketDelegate
+
+- (void)webSocketDidOpen:(SRWebSocket *)webSocket;
+{
+    NSLog(@"Websocket Connected");
+    self.title = @"Connected!";
+}
+
+- (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error;
+{
+    NSLog(@":( Websocket Failed With Error %@", error);
+    
+    self.title = @"Connection Failed! (see logs)";
+    _webSocket = nil;
+}
+
+- (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message;
+{
+    NSLog(@"Received \"%@\"", message);
+    //[_messages addObject:[[TCMessage alloc] initWithMessage:message fromMe:NO]];
+    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:_messages.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView scrollRectToVisible:self.tableView.tableFooterView.frame animated:YES];
+}
+
+- (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean;
+{
+    NSLog(@"WebSocket closed");
+    self.title = @"Connection Closed! (see logs)";
+    _webSocket = nil;
 }
 
 

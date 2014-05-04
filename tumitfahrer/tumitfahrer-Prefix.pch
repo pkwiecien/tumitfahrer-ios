@@ -29,7 +29,7 @@
 
 static NSString * const SALT = @"toj369sbz1f316sx";
 //static NSString * const API_ADDRESS = @"http://tumitfahrer-staging.herokuapp.com";
-static NSString * const API_ADDRESS = @"http://131.159.203.210:3000";
+static NSString * const API_ADDRESS = @"http://192.168.0.100:3000";
 
 
 # pragma mark - Constants
@@ -63,10 +63,12 @@ typedef void(^boolCompletionHandler)(BOOL);
 
 # pragma mark - API mapping for RestKit
 static NSString *API_USERS = @"/api/v2/users";
+static NSString *API_USERS_RIDES_AS_PASSENGER = @"/api/v2/users/:userId/rides?passenger";
+static NSString *API_USERS_RIDES_AS_DRIVER = @"/api/v2/users/:userId/rides";
+static NSString *API_USERS_DEVICES = @"/api/v2/users/:userId/devices";
 static NSString *API_SESSIONS = @"/api/v2/sessions";
 static NSString *API_RIDES = @"/api/v2/rides";
 static NSString *API_RIDES_REQUESTS = @"/api/v2/rides/:rideId/requests";
-static NSString *API_USERS_DEVICES = @"/api/v2/users/:userId/devices";
 static NSString *API_SEARCH = @"/api/v2/search";
 
 #else

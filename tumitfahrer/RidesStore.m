@@ -9,6 +9,7 @@
 #import "RidesStore.h"
 #import "Ride.h"
 #import "User.h"
+#import "Request.h"
 
 @interface RidesStore () <NSFetchedResultsControllerDelegate>
 
@@ -25,19 +26,20 @@
 -(instancetype)init {
     self = [super init];
     if (self) {
+        
         self.observers = [[NSMutableArray alloc] init];
         [self loadAllRides];
         
-        //if ([[self allRides] count] == 0) {
-        [self fetchRidesFromWebservice:^(BOOL ridesFetched) {
-            if(ridesFetched) {
-                [self loadAllRides];
-                [self fetchLocationForAllRides];
-            }
-        }];
-        /*} else {
-         [self fetchLocationForAllRides];
-         }*/
+        if ([[self allRides] count] == 0) {
+            [self fetchRidesFromWebservice:^(BOOL ridesFetched) {
+                if(ridesFetched) {
+                    [self loadAllRides];
+                    [self fetchLocationForAllRides];
+                }
+            }];
+        } else {
+            [self fetchLocationForAllRides];
+        }
     }
     return self;
 }
@@ -69,7 +71,7 @@
     
     [request setPredicate:predicate];
     [request setReturnsObjectsAsFaults:NO];
-
+    
     request.entity = e;
     
     NSError *error;
@@ -96,7 +98,6 @@
     //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
     
     [objectManager getObjectsAtPath:API_RIDES parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        NSLog(@"Successfully fetched rides.");
         block(YES);
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);
@@ -240,6 +241,18 @@
 - (void)printAllRides {
     for (Ride *ride in [self allRides]) {
         NSLog(@"Ride: %@", ride);
+        NSLog(@"Driver: %d %@", ride.driver.userId, ride.driver.firstName);
+        NSLog(@"ride: %@", ride);
+        NSLog(@"Number of passengers: %d", [ride.passengers count]);
+        for (User *user in [ride passengers]) {
+            NSLog(@"User: %d", user.userId);
+        }
+        
+        NSLog(@"Number of requests: %d", [ride.requests count]);
+        for (Request *reques in [ride requests]) {
+            NSLog(@"Request: %d %@", reques.requestId, reques.requestedFrom);
+        }
+        
     }
 }
 

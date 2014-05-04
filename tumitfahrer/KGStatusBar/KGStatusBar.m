@@ -67,7 +67,7 @@
     CGFloat stringWidth = 0;
     CGFloat stringHeight = 0;
     if(labelText) {
-        CGRect textRect = [labelText boundingRectWithSize:CGSizeMake(self.topBar.frame.size.width, self.topBar.frame.size.height)
+        CGRect textRect = [labelText boundingRectWithSize:CGSizeMake(self.topBar.frame.size.width, self.topBar.frame.size.height+50)
                                                   options:NSStringDrawingUsesLineFragmentOrigin
                                                attributes:@{NSFontAttributeName:self.stringLabel.font}
                                                   context:nil];
@@ -75,7 +75,7 @@
         stringWidth = stringSize.width;
         stringHeight = stringSize.height;
         
-        labelRect = CGRectMake((self.topBar.frame.size.width / 2) - (stringWidth / 2), 0, stringWidth, stringHeight);
+        labelRect = CGRectMake((self.topBar.frame.size.width / 2) - (stringWidth / 2), 0, stringWidth, stringHeight+50);
     }
     self.stringLabel.frame = labelRect;
     self.stringLabel.alpha = 0.0;

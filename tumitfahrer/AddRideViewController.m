@@ -45,7 +45,9 @@
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     NSString *departurePlace = [LocationController sharedInstance].currentAddress;
-    [self.tableValues replaceObjectAtIndex:0 withObject:departurePlace];
+    
+    if(departurePlace!=nil)
+        [self.tableValues replaceObjectAtIndex:0 withObject:departurePlace];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -231,7 +233,6 @@
     NSDictionary *rideParams = @{@"ride": queryParams};
     
     [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"apiKey" value:[[CurrentUser sharedInstance] user].apiKey];
-    NSLog(@"Setting api key: %@", [[CurrentUser sharedInstance] user].apiKey);
     
     [objectManager postObject:nil path:@"/api/v2/rides" parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         Ride *ride = (Ride *)[mappingResult firstObject];
