@@ -12,6 +12,7 @@
 #import "SPGooglePlacesAutocompleteQuery.h"
 #import "SPGooglePlacesAutocompletePlace.h"
 #import "LocationController.h"
+#import "NavigationBarUtilities.h"
 
 @interface DestinationViewController ()
 
@@ -39,19 +40,11 @@
     self.searchBar.showsCancelButton = NO;
     self.searchBar.placeholder = @"Search Address";
     self.navigationItem.titleView = self.searchBar;
-    
-    [self makeBackground];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.searchBar becomeFirstResponder];
-}
-
--(void)makeBackground {
-    UIImageView *imgBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gradientBackground"]];
-    imgBackgroundView.frame = self.view.bounds;
-    [self.view addSubview:imgBackgroundView];
-    [self.view sendSubviewToBack:imgBackgroundView];
+    self.view = [NavigationBarUtilities makeBackground:self.view];
 }
 
 -(void)saveButtonPressed {

@@ -13,6 +13,7 @@
 #import "RideSearchResultsViewController.h"
 #import "LocationController.h"
 #import "RideSearchStore.h"
+#import "NavigationBarUtilities.h"
 
 @interface SearchRideViewController ()
 
@@ -26,7 +27,6 @@
     [super viewDidLoad];
 
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    [self makeBackground];
     
     self.departureTextField.delegate = self;
     self.destinationTextField.delegate = self;
@@ -38,25 +38,15 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    [self setupNavbar];
+    [self setupView];
 }
 
--(void)makeBackground {
-    UIImageView *imgBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gradientBackground"]];
-    imgBackgroundView.frame = self.view.bounds;
-    [self.view addSubview:imgBackgroundView];
-    [self.view sendSubviewToBack:imgBackgroundView];
+-(void)setupView {
+    self.view = [NavigationBarUtilities makeBackground:self.view];
+    UINavigationController *navController = self.navigationController;
+    [NavigationBarUtilities setupNavbar:&navController];
+    self.title = @"SEARCH RIDES";
 }
-
--(void)setupNavbar {
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.translucent = YES;
-    self.navigationController.navigationBarHidden = NO;
-    self.title = @"SEARCH A RIDE";
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
-}
-
 
 - (IBAction)searchButtonPressed:(id)sender {
     

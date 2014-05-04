@@ -16,6 +16,7 @@
 #import "SwitchTableViewCell.h"
 #import "FreeSeatsTableViewCell.h"
 #import "RidesStore.h"
+#import "NavigationBarUtilities.h"
 
 @interface AddRideViewController () <NSFetchedResultsControllerDelegate>
 
@@ -52,31 +53,15 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.tableView reloadData];
-    self.navigationController.navigationBarHidden = NO;
-    
-    [self setupNavbar];
-    [self makeBackground];
+    [self setupView];
 }
 
--(void)makeBackground {
-    UIImageView *imgBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gradientBackground"]];
-    imgBackgroundView.frame = self.view.bounds;
-    [self.view addSubview:imgBackgroundView];
-    [self.view sendSubviewToBack:imgBackgroundView];
-}
 
--(void)setupNavbar {
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    double width = self.navigationController.navigationBar.frame.size.width;
-    double height = self.navigationController.navigationBar.frame.size.height;
-    UIImage *croppedImage = [ActionManager cropImage:[UIImage imageNamed:@"gradientBackground"] newRect:CGRectMake(0, 0, width, height)];
-
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [self.navigationController.navigationBar setBackgroundImage:croppedImage forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = [UIImage new];
-    self.navigationController.navigationBar.translucent = NO;
-    
-    // left button of the navigation bar
+-(void)setupView {
+    self.view = [NavigationBarUtilities makeBackground:self.view];
+    UINavigationController *navController = self.navigationController;
+    [NavigationBarUtilities setupNavbar:&navController];
+    self.title = @"ADD RIDE";
     
     UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     [settingsView addTarget:self action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -89,12 +74,7 @@
     [searchButton addTarget:self action:@selector(addRideButtonPressed) forControlEvents:UIControlEventTouchDown];
     UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
     self.navigationItem.rightBarButtonItem = searchButtonItem;
-    
-    self.navigationController.navigationBarHidden = NO;
-    self.title = @"ADD RIDE";
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 }
-
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {

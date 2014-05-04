@@ -12,6 +12,7 @@
 #import "RideSearchStore.h"
 #import "RideSearch.h"
 #import "CvLayout.h"
+#import "NavigationBarUtilities.h"
 
 @interface RideSearchResultsViewController ()
 
@@ -37,17 +38,15 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    [self setupNavbar];
+    [self setupView];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
--(void)setupNavbar {
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"gradientBackground"] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.translucent = YES;
-    self.navigationController.navigationBarHidden = NO;
+-(void)setupView {
+    self.view = [NavigationBarUtilities makeBackground:self.view];
+    UINavigationController *navController = self.navigationController;
+    [NavigationBarUtilities setupNavbar:&navController];
     self.title = @"SEARCH RESULTS";
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 }
 
 -(BOOL)slideNavigationControllerShouldDisplayLeftMenu {

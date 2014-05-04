@@ -9,6 +9,7 @@
 #import "SettingsViewController.h"
 #import "ActionManager.h"
 #import "LoginViewController.h"
+#import "NavigationBarUtilities.h"
 
 @interface SettingsViewController ()
 
@@ -30,18 +31,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self makeBackground];
     [self makeButtons];
     self.tableView = [self makeTableView];
     [self.view addSubview:self.tableView];
 }
 
--(void)makeBackground
+-(void)viewWillAppear:(BOOL)animated
 {
-    UIImageView *imgBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gradientBackground"]];
-    imgBackgroundView.frame = self.view.bounds;
-    [self.view addSubview:imgBackgroundView];
-    [self.view sendSubviewToBack:imgBackgroundView];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [self setupView];
+}
+
+-(void)setupView {
+    self.view = [NavigationBarUtilities makeBackground:self.view];
+    UINavigationController *navController = self.navigationController;
+    [NavigationBarUtilities setupNavbar:&navController];
+    self.title = @"SETTINGS";
 }
 
 -(void)makeButtons
@@ -56,7 +61,7 @@
 -(UITableView*)makeTableView
 {
     CGFloat x = 0;
-    CGFloat y = 230;
+    CGFloat y = 150;
     CGFloat width = self.view.frame.size.width;
     CGFloat height = TableSingleRowHeight*([self.tableOptions count]+1)+TableFooterHeight+TableHeaderHeight;
     CGRect tableFrame = CGRectMake(x, y, width, height);
@@ -78,23 +83,6 @@
     return tableView;
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
-    [self setupNavbar];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-}
-
--(void)setupNavbar
-{
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-//    self.navigationController.navigationBar.shadowImage = [UIImage new];
-    self.navigationController.navigationBar.translucent = YES;
-    
-    self.navigationController.navigationBarHidden = NO;
-    self.title = @"SETTINGS";
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
-}
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
