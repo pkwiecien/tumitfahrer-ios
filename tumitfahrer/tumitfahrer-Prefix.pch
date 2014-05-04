@@ -63,8 +63,7 @@ typedef void(^boolCompletionHandler)(BOOL);
 
 # pragma mark - API mapping for RestKit
 static NSString *API_USERS = @"/api/v2/users";
-static NSString *API_USERS_RIDES_AS_PASSENGER = @"/api/v2/users/:userId/rides?passenger";
-static NSString *API_USERS_RIDES_AS_DRIVER = @"/api/v2/users/:userId/rides";
+static NSString *API_USERS_RIDES = @"/api/v2/users/:userId/rides";
 static NSString *API_USERS_DEVICES = @"/api/v2/users/:userId/devices";
 static NSString *API_SESSIONS = @"/api/v2/sessions";
 static NSString *API_RIDES = @"/api/v2/rides";

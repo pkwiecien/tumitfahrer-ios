@@ -29,17 +29,14 @@
         
         self.observers = [[NSMutableArray alloc] init];
         [self loadAllRides];
+        [self fetchLocationForAllRides];
         
-        if ([[self allRides] count] == 0) {
-            [self fetchRidesFromWebservice:^(BOOL ridesFetched) {
-                if(ridesFetched) {
-                    [self loadAllRides];
-                    [self fetchLocationForAllRides];
-                }
-            }];
-        } else {
-            [self fetchLocationForAllRides];
-        }
+        [self fetchRidesFromWebservice:^(BOOL ridesFetched) {
+            if(ridesFetched) {
+                [self loadAllRides];
+                [self fetchLocationForAllRides];
+            }
+        }];
     }
     return self;
 }

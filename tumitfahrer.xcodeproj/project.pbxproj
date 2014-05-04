@@ -98,6 +98,10 @@
 		E599887918E8617100B01C62 /* HACollectionViewSmallLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E599887718E8617100B01C62 /* HACollectionViewSmallLayout.m */; };
 		E599888118E88A0000B01C62 /* NibCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E599888018E88A0000B01C62 /* NibCell.xib */; };
 		E599888418E88C5100B01C62 /* HAPaperCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E599888318E88C5100B01C62 /* HAPaperCollectionViewController.m */; };
+		E59B9A4B1916A241008DE80B /* YourRidesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59B9A491916A241008DE80B /* YourRidesViewController.m */; };
+		E59B9A4C1916A241008DE80B /* YourRidesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59B9A4A1916A241008DE80B /* YourRidesViewController.xib */; };
+		E59B9A511916AB9B008DE80B /* MessageListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59B9A4F1916AB9B008DE80B /* MessageListViewController.m */; };
+		E59B9A521916AB9B008DE80B /* MessageListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59B9A501916AB9B008DE80B /* MessageListViewController.xib */; };
 		E5DF641018EB46F900D53164 /* RideDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DF640E18EB46F900D53164 /* RideDetailsViewController.m */; };
 		E5DF641118EB46F900D53164 /* RideDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DF640F18EB46F900D53164 /* RideDetailsViewController.xib */; };
 		E5DF641518EB548E00D53164 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DF641318EB548E00D53164 /* SettingsViewController.m */; };
@@ -301,6 +305,12 @@
 		E599888018E88A0000B01C62 /* NibCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NibCell.xib; sourceTree = "<group>"; };
 		E599888218E88C5100B01C62 /* HAPaperCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HAPaperCollectionViewController.h; sourceTree = "<group>"; };
 		E599888318E88C5100B01C62 /* HAPaperCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HAPaperCollectionViewController.m; sourceTree = "<group>"; };
+		E59B9A481916A241008DE80B /* YourRidesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YourRidesViewController.h; sourceTree = "<group>"; };
+		E59B9A491916A241008DE80B /* YourRidesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YourRidesViewController.m; sourceTree = "<group>"; };
+		E59B9A4A1916A241008DE80B /* YourRidesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YourRidesViewController.xib; sourceTree = "<group>"; };
+		E59B9A4E1916AB9B008DE80B /* MessageListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageListViewController.h; sourceTree = "<group>"; };
+		E59B9A4F1916AB9B008DE80B /* MessageListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageListViewController.m; sourceTree = "<group>"; };
+		E59B9A501916AB9B008DE80B /* MessageListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageListViewController.xib; sourceTree = "<group>"; };
 		E5DF640D18EB46F900D53164 /* RideDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideDetailsViewController.h; sourceTree = "<group>"; };
 		E5DF640E18EB46F900D53164 /* RideDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideDetailsViewController.m; sourceTree = "<group>"; };
 		E5DF640F18EB46F900D53164 /* RideDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RideDetailsViewController.xib; sourceTree = "<group>"; };
@@ -669,6 +679,8 @@
 		E59987C418E6DBC300B01C62 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E59B9A4D1916AB88008DE80B /* Message List */,
+				E59B9A471916A22A008DE80B /* Your Rides */,
 				E58889D81913832C0062D0DF /* New Ride Details */,
 				E5DF641718EB569800D53164 /* Browse Ride */,
 				E5E2155A1907A92700B0B150 /* Add Ride */,
@@ -851,6 +863,26 @@
 				E599887718E8617100B01C62 /* HACollectionViewSmallLayout.m */,
 			);
 			name = "Custom Layout";
+			sourceTree = "<group>";
+		};
+		E59B9A471916A22A008DE80B /* Your Rides */ = {
+			isa = PBXGroup;
+			children = (
+				E59B9A481916A241008DE80B /* YourRidesViewController.h */,
+				E59B9A491916A241008DE80B /* YourRidesViewController.m */,
+				E59B9A4A1916A241008DE80B /* YourRidesViewController.xib */,
+			);
+			name = "Your Rides";
+			sourceTree = "<group>";
+		};
+		E59B9A4D1916AB88008DE80B /* Message List */ = {
+			isa = PBXGroup;
+			children = (
+				E59B9A4E1916AB9B008DE80B /* MessageListViewController.h */,
+				E59B9A4F1916AB9B008DE80B /* MessageListViewController.m */,
+				E59B9A501916AB9B008DE80B /* MessageListViewController.xib */,
+			);
+			name = "Message List";
 			sourceTree = "<group>";
 		};
 		E5DF640B18EB42D800D53164 /* Settings */ = {
@@ -1095,7 +1127,9 @@
 				E599881918E804E500B01C62 /* highway-nosound@2x.mp4 in Resources */,
 				E5888A011913E37C0062D0DF /* DriverCell.xib in Resources */,
 				E59987CA18E6DBEA00B01C62 /* RideRequestsViewController.xib in Resources */,
+				E59B9A521916AB9B008DE80B /* MessageListViewController.xib in Resources */,
 				E522BAC418AE13F600ECD375 /* InfoPlist.strings in Resources */,
+				E59B9A4C1916A241008DE80B /* YourRidesViewController.xib in Resources */,
 				E599888118E88A0000B01C62 /* NibCell.xib in Resources */,
 				E599886318E84D9D00B01C62 /* MenuTableViewCell.xib in Resources */,
 				E58889FB1913E2B50062D0DF /* RideActionCell.xib in Resources */,
@@ -1237,6 +1271,7 @@
 				E5FA641C19121F6600C04BFF /* RideSearch.m in Sources */,
 				E5FC44DF190D55C900E8DB65 /* Ride.m in Sources */,
 				E55D8664190C059200B1400A /* Rating.m in Sources */,
+				E59B9A511916AB9B008DE80B /* MessageListViewController.m in Sources */,
 				E5E2155F1907A94A00B0B150 /* AddRideViewController.m in Sources */,
 				E5DF642818EBD8AB00D53164 /* BalancedColumnLayout.m in Sources */,
 				E50DB29118F881BC00E87E62 /* PanoramioUtilities.m in Sources */,
@@ -1251,6 +1286,7 @@
 				E504D9EB190B963E0036FFA8 /* JsonParser.m in Sources */,
 				E58889E4191394BB0062D0DF /* RideDetailHeaderView.m in Sources */,
 				E599887818E8617100B01C62 /* HACollectionViewLargeLayout.m in Sources */,
+				E59B9A4B1916A241008DE80B /* YourRidesViewController.m in Sources */,
 				E504D9D1190A7FC50036FFA8 /* SPGooglePlacesAutocompleteQuery.m in Sources */,
 				E59987D718E6ECF200B01C62 /* CustomTextField.m in Sources */,
 				E50DB26B18F447B800E87E62 /* CurrentUser.m in Sources */,

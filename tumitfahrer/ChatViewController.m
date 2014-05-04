@@ -8,9 +8,10 @@
 
 #import "ChatViewController.h"
 #import "JSMessage.h"
+#import "ActionManager.h"
 
-#define kSubtitleJobs @"Jobs"
-#define kSubtitleWoz @"Steve Wozniak"
+#define kSubtitleMe @"Me"
+#define kSubtitleDriver @"Driver"
 
 @interface ChatViewController () 
 
@@ -33,22 +34,49 @@
     self.title = @"Messages";
     self.messageInputView.textView.placeHolder = @"New Message";
     self.sender = @"Jobs";
-    
-    [self setBackgroundColor:[UIColor whiteColor]];
-    
-    self.messages = [[NSMutableArray alloc] init];
+
+    self.messages = [[NSMutableArray alloc] initWithObjects:[[JSMessage alloc] initWithText:@"Chat will be handled by websockets. Functionality coming soon (once it's implemented on the server side)..." sender:kSubtitleMe date:[NSDate distantPast]], nil];
     
     self.avatars = [[NSDictionary alloc] initWithObjectsAndKeys:
-                    [JSAvatarImageFactory avatarImageNamed:@"futureAvatar1" croppedToCircle:YES], kSubtitleJobs,
-                    [JSAvatarImageFactory avatarImageNamed:@"futureAvatar2" croppedToCircle:YES], kSubtitleWoz,nil];
+                    [JSAvatarImageFactory avatarImageNamed:@"futureAvatar1" croppedToCircle:YES], kSubtitleMe,
+                    [JSAvatarImageFactory avatarImageNamed:@"futureAvatar2" croppedToCircle:YES], kSubtitleDriver,nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     [super viewWillAppear:animated];
     [self scrollToBottomAnimated:NO];
+    [self setupNavbar];
+    [self makeBackground];
+    
     //[self _reconnect];
 }
+
+-(void)makeBackground {
+    [self setBackgroundColor:[UIColor clearColor]];
+    UIImageView *imgBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gradientBackground"]];
+    imgBackgroundView.frame = self.view.bounds;
+    [self.view addSubview:imgBackgroundView];
+    [self.view sendSubviewToBack:imgBackgroundView];
+}
+
+-(void)setupNavbar {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    double width = self.navigationController.navigationBar.frame.size.width;
+    double height = self.navigationController.navigationBar.frame.size.height;
+    
+    UIImage *croppedImage = [ActionManager cropImage:[UIImage imageNamed:@"gradientBackground"] newRect:CGRectMake(0, 0, width, height)];
+    [self.navigationController.navigationBar setBackgroundImage:croppedImage forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.navigationBarHidden = NO;
+    
+    self.title = @"MESSAGES";
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+}
+
 
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -76,7 +104,7 @@
     else {
         // for demo purposes only, mimicing received messages
         [JSMessageSoundEffect playMessageReceivedSound];
-        sender = kSubtitleWoz;
+        sender = kSubtitleDriver;
     }
     
     [self.messages addObject:[[JSMessage alloc] initWithText:text sender:sender date:date]];

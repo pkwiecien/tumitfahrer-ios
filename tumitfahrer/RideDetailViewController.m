@@ -51,6 +51,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     NSLog(@"Number of passengers: %d", [self.ride.passengers count]);
     for (User *user in [self.ride passengers]) {
@@ -121,8 +122,9 @@
         if (cell == nil) {
             cell = [DriverCell driverCell];
         }
+
         cell.driverNameLabel.text = self.ride.driver.firstName;
-        cell.driverRatingLabel.text = [NSString stringWithFormat:@"%@", self.ride.driver.ratingAvg];
+        cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [self.ride.driver.ratingAvg floatValue]];
         if (self.ride.driver.car == nil || [self.ride.driver.car isEqualToString:@""]) {
             cell.carLabel.text = @"Not specified";
         } else {

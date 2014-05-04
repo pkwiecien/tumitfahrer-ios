@@ -1,5 +1,5 @@
-export BUILT_PRODUCTS_DIR="/Users/pawel/Library/Developer/Xcode/DerivedData/tumitfahrer-fbahuqrhvawhpqfljxjkkrxdtjwh/Build/Products/Debug-iphonesimulator"
-export CURRENT_ARCH="i386"
-export OBJECT_FILE_DIR_normal="/Users/pawel/Library/Developer/Xcode/DerivedData/tumitfahrer-fbahuqrhvawhpqfljxjkkrxdtjwh/Build/Intermediates/tumitfahrer.build/Debug-iphonesimulator/tumitfahrer.build/Objects-normal"
+export BUILT_PRODUCTS_DIR="/Users/pawel/Library/Developer/Xcode/DerivedData/tumitfahrer-fbahuqrhvawhpqfljxjkkrxdtjwh/Build/Products/Debug-iphoneos"
+export CURRENT_ARCH="armv7s"
+export OBJECT_FILE_DIR_normal="/Users/pawel/Library/Developer/Xcode/DerivedData/tumitfahrer-fbahuqrhvawhpqfljxjkkrxdtjwh/Build/Intermediates/tumitfahrer.build/Debug-iphoneos/tumitfahrer.build/Objects-normal"
 export OBJROOT="/Users/pawel/Library/Developer/Xcode/DerivedData/tumitfahrer-fbahuqrhvawhpqfljxjkkrxdtjwh/Build/Intermediates"
 export SRCROOT="/Users/pawel/Documents/dev/Objective-C/tumitfahrer"

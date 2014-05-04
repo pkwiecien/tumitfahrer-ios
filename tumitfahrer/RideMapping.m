@@ -57,6 +57,7 @@
     return rideMapping;
 }
 
+/*
 // mapping for user for user's rides as passenger whih should query /api/v2/users/:usersId/rides?driver
 +(RKResponseDescriptor *)getRidesAsDriverResponseDescriptorWithMapping:(RKEntityMapping *)mapping {
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping
@@ -66,7 +67,7 @@
                                                                                        statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     
     return responseDescriptor;
-}
+}*/
 
 +(RKResponseDescriptor *)getRideSearchesResponseDescriptorWithMapping:(RKObjectMapping *)mapping {
     
