@@ -28,6 +28,7 @@
 - (NSArray *)allRideRequests;
 - (NSArray *)allRidesByType:(ContentType)contentType;
 - (Ride *)getRideWithId:(NSInteger)rideId;
+- (NSArray *)allRideRequestsFromUserWithId:(NSInteger)userId;
 
 - (void)addRideToStore:(Ride*)ride;
 - (void)addObserver:(id<RideStoreDelegate>) observer;

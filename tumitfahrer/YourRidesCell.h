@@ -12,6 +12,7 @@
 
 + (YourRidesCell*)yourRidesCell;
 
+@property (weak, nonatomic) IBOutlet UIImageView *rideImage;
 @property (weak, nonatomic) IBOutlet UILabel *departurePlaceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *destinationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *departureTimeLabel;

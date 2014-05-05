@@ -604,7 +604,7 @@
 				E5888A021913E3F40062D0DF /* Passengers Cell */,
 				E58889FC1913E3630062D0DF /* Driver Cell */,
 				E58889F11913E0890062D0DF /* Ride Information Cell */,
-				E58889EB1913D27D0062D0DF /* DetailsMessagesChoiceCell */,
+				E58889EB1913D27D0062D0DF /* Ride Action Cell */,
 				E58889DE191384F40062D0DF /* Ride Detail View */,
 				E58889D9191383570062D0DF /* RideDetailViewController.h */,
 				E58889DA191383570062D0DF /* RideDetailViewController.m */,
@@ -633,14 +633,14 @@
 			path = UbertestersSDK;
 			sourceTree = "<group>";
 		};
-		E58889EB1913D27D0062D0DF /* DetailsMessagesChoiceCell */ = {
+		E58889EB1913D27D0062D0DF /* Ride Action Cell */ = {
 			isa = PBXGroup;
 			children = (
 				E58889F71913E2B50062D0DF /* RideActionCell.h */,
 				E58889F81913E2B50062D0DF /* RideActionCell.m */,
 				E58889F91913E2B50062D0DF /* RideActionCell.xib */,
 			);
-			name = DetailsMessagesChoiceCell;
+			name = "Ride Action Cell";
 			sourceTree = "<group>";
 		};
 		E58889F11913E0890062D0DF /* Ride Information Cell */ = {

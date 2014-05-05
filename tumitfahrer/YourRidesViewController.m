@@ -10,6 +10,9 @@
 #import "ActionManager.h"
 #import "YourRidesCell.h"
 #import "NavigationBarUtilities.h"
+#import "CurrentUser.h"
+#import "Ride.h"
+#import "RideDetailViewController.h"
 
 @interface YourRidesViewController ()
 
@@ -37,7 +40,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 10;
+    return [[[CurrentUser sharedInstance] userRides] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -45,7 +48,7 @@
     return 1;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return 50.0f;
 }
@@ -54,8 +57,7 @@
     return 100.0f;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     UIView *headerView = [[UIView alloc] init];
     headerView.backgroundColor = [UIColor clearColor];
     return headerView;
@@ -68,11 +70,19 @@
     if(cell == nil){
         cell = [YourRidesCell yourRidesCell];
     }
+
+    Ride *ride = [[[CurrentUser sharedInstance] userRides] objectAtIndex:indexPath.section];
+    cell.departurePlaceLabel.text = ride.departurePlace;
+    cell.destinationLabel.text = ride.destination;
+    cell.departureTimeLabel.text = [ActionManager stringFromDate:ride.departureTime];
+    
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"selected cell %d %d", indexPath.section, indexPath.row);
+    RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
+    rideDetailVC.ride = [[[CurrentUser sharedInstance] userRides] objectAtIndex:indexPath.section];
+    [self.navigationController pushViewController:rideDetailVC animated:YES];
 }
 
 - (BOOL)slideNavigationControllerShouldDisplayLeftMenu

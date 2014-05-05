@@ -18,6 +18,7 @@
 #import "CurrentUser.h"
 #import "KGStatusBar.h"
 #import "Ride.h"
+#import "RidesStore.h"
 
 @interface RideDetailViewController () <NSFetchedResultsControllerDelegate>
 
@@ -53,15 +54,8 @@
 -(void)viewWillAppear:(BOOL)animated {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-    NSLog(@"Number of passengers: %d", [self.ride.passengers count]);
-    for (User *user in [self.ride passengers]) {
-        NSLog(@"User: %@", user);
-    }
     
-    NSLog(@"Number of requests: %d", [self.ride.requests count]);
-    for (Request *reques in [self.ride requests]) {
-        NSLog(@"Request: %@", reques);
-    }
+    [self printRequestsAndPassengers];
 }
 
 #pragma mark - UITableView
@@ -104,6 +98,8 @@
             cell = [RideActionCell detailsMessagesChoiceCell];
         }
         
+        [self makeJoinButtonDescriptionForCell:cell];
+        
         cell.delegate = self;
         return cell;
     }
@@ -122,7 +118,7 @@
         if (cell == nil) {
             cell = [DriverCell driverCell];
         }
-
+        
         cell.driverNameLabel.text = self.ride.driver.firstName;
         cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [self.ride.driver.ratingAvg floatValue]];
         if (self.ride.driver.car == nil || [self.ride.driver.car isEqualToString:@""]) {
@@ -202,22 +198,42 @@
 }
 
 -(void)joinRideButtonPressed {
-    RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    NSDictionary *queryParams;
-    // add enum
-    NSString *userId = [NSString stringWithFormat:@"%d", [CurrentUser sharedInstance].user.userId];
-    queryParams = @{@"passenger_id": userId, @"requested_from": self.ride.departurePlace, @"request_to":self.ride.destination};
-    NSDictionary *requestParams = @{@"request": queryParams};
+    // check if the user is not trying to send a request to himself
+    if(self.ride.driver.userId == [CurrentUser sharedInstance].user.userId) {
+        [KGStatusBar showErrorWithStatus:@"Can't send request. You are the driver!"];
+        return;
+    }
     
-    [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/rides/%d/requests", self.ride.rideId] parameters:requestParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        [KGStatusBar showSuccessWithStatus:@"Request was sent"];
-        Request *rideRequest = (Request *)[mappingResult firstObject];
-        NSLog(@"Ride request: %@", rideRequest);
-        [self.ride addRequestsObject:rideRequest];
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        [ActionManager showAlertViewWithTitle:[error localizedDescription]];
-        RKLogError(@"Load failed with error: %@", error);
-    }];
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    Request *request = [self requestFoundInCoreData];
+    
+    if(request != nil) {
+        [objectManager deleteObject:request path:[NSString stringWithFormat:@"/api/v2/rides/%d/requests/%d", self.ride.rideId, request.requestId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+            NSLog(@"Request deleted");
+            [KGStatusBar showSuccessWithStatus:@"Request canceled"];
+            [self.ride removeRequestsObject:request];
+            [self.rideDetail.tableView reloadData];
+        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+            RKLogError(@"Load failed with error: %@", error);
+        }];
+    } else {
+        NSDictionary *queryParams;
+        // add enum
+        NSString *userId = [NSString stringWithFormat:@"%d", [CurrentUser sharedInstance].user.userId];
+        queryParams = @{@"passenger_id": userId, @"requested_from": self.ride.departurePlace, @"request_to":self.ride.destination};
+        NSDictionary *requestParams = @{@"request": queryParams};
+        
+        [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/rides/%d/requests", self.ride.rideId] parameters:requestParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+            [KGStatusBar showSuccessWithStatus:@"Request was sent"];
+            Request *rideRequest = (Request *)[mappingResult firstObject];
+            NSLog(@"Ride request: %@", rideRequest);
+            [self.ride addRequestsObject:rideRequest];
+            [self.rideDetail.tableView reloadData];
+        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+            [ActionManager showAlertViewWithTitle:[error localizedDescription]];
+            RKLogError(@"Load failed with error: %@", error);
+        }];
+    }
 }
 
 -(NSFetchedResultsController *)fetchedResultsController {
@@ -243,6 +259,35 @@
     }
     
     return self.fetchedResultsController;
+}
+
+- (void)printRequestsAndPassengers {
+    NSLog(@"Number of passengers: %d", [self.ride.passengers count]);
+    for (User *user in [self.ride passengers]) {
+        NSLog(@"User: %@", user);
+    }
+    
+    NSLog(@"Number of requests: %d", [self.ride.requests count]);
+    for (Request *reques in [self.ride requests]) {
+        NSLog(@"Request: %@", reques);
+    }
+}
+
+-(Request *)requestFoundInCoreData {
+    for (Request *request in self.ride.requests) {
+        if (request.passengerId == [CurrentUser sharedInstance].user.userId) {
+            return request;
+        }
+    }
+    return nil;
+}
+
+-(void)makeJoinButtonDescriptionForCell:(RideActionCell *)cell{
+    if([self requestFoundInCoreData] != nil) {
+        [cell.joinRideButton setTitle:@"Cancel request" forState:UIControlStateNormal];
+    } else {
+        [cell.joinRideButton setTitle:@"Join ride" forState:UIControlStateNormal];
+    }
 }
 
 

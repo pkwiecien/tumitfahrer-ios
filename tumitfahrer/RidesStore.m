@@ -16,6 +16,7 @@
 @property (nonatomic) NSMutableArray *campusRides;
 @property (nonatomic) NSMutableArray *activityRides;
 @property (nonatomic) NSMutableArray *rideRequests;
+@property (nonatomic) NSMutableArray *userRideRequests;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSMutableArray *observers;
 
@@ -221,6 +222,22 @@
         [self fetchRidesFromCoreDataByType:ContentTypeExistingRequests];
     }
     return self.rideRequests;
+}
+
+-(NSArray *)allRideRequestsFromUserWithId:(NSInteger)userId {
+    if (self.userRideRequests == nil) {
+        self.userRideRequests = [[NSMutableArray alloc] init];
+        
+        for (Ride *ride in [self allRides]) {
+            for (Request *request in ride.requests) {
+                if (request.passengerId == userId) {
+                    [self.userRideRequests addObject:ride];
+                }
+            }
+        }
+    }
+    
+    return self.userRideRequests;
 }
 
 - (Ride *)getRideWithId:(NSInteger)rideId {

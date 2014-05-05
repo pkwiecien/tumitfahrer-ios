@@ -22,7 +22,6 @@
 #import "AddRideViewController.h"
 #import "YourRidesViewController.h"
 #import "AddRideRequestViewController.h"
-#import "MessageListViewController.h"
 
 @interface MenuViewController ()
 
@@ -75,9 +74,8 @@
     // section 2 - view controllers
     ProfileViewController *profileVC = [[ProfileViewController alloc] init];
     YourRidesViewController *yourRidesVC = [[YourRidesViewController alloc] init];
-    MessageListViewController *messageListVC = [[MessageListViewController alloc] init];
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
-    self.profileViewControllers = [NSArray arrayWithObjects:profileVC, yourRidesVC, messageListVC, settingsVC, nil];
+    self.profileViewControllers = [NSArray arrayWithObjects:profileVC, yourRidesVC, settingsVC, nil];
     
     // add all sections to view controllers
     self.allViewControllers = [NSArray arrayWithObjects:self.browseRidesViewControllers, self.addRidesViewControllers, self.profileViewControllers, nil];
@@ -86,14 +84,14 @@
 -(void)initCellTitles {
     self.browseRidesSection = [NSArray arrayWithObjects:@"Campus Rides", @"Activities", @"Existing Requests", nil];
     self.addRidesSection = [NSArray arrayWithObjects:@"New Ride", @"New Ride Request", @"Search Rides", nil];
-    self.profileSection = [NSArray arrayWithObjects:@"Profile", @"All Rides", @"Messages", @"Settings", nil];
+    self.profileSection = [NSArray arrayWithObjects:@"Profile", @"All Rides", @"Settings", nil];
     self.allMenuItems = [NSArray arrayWithObjects:self.browseRidesSection, self.addRidesSection, self.profileSection, nil];
 }
 
 -(void)initCellIcons {
     self.browseRidesIcons = [NSArray arrayWithObjects:@"CampusIcon", @"ActivityIcon", @"ListIcon", nil];
     self.addRidesIcons = [NSArray arrayWithObjects:@"AddBlackIcon", @"QuestionIcon", @"RequestIcon", nil];
-    self.profileIcons = [NSArray arrayWithObjects:@"ProfileIcon", @"ScheduleIcon", @"MessageIcon",  @"SettingsIcon", nil];
+    self.profileIcons = [NSArray arrayWithObjects:@"ProfileIcon", @"ScheduleIcon", @"SettingsIcon", nil];
     self.allIcons = [NSArray arrayWithObjects:self.browseRidesIcons, self.addRidesIcons, self.profileIcons, nil];
 }
 

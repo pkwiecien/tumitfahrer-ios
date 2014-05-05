@@ -10,6 +10,14 @@
 #import "LocationController.h"
 #import "JsonParser.h"
 #import "Device.h"
+#import "Ride.h"
+#import "RidesStore.h"
+
+@interface CurrentUser ()
+
+@property (nonatomic, strong) NSMutableArray *privateUserRides;
+
+@end
 
 @implementation CurrentUser
 
@@ -102,6 +110,20 @@
             NSLog(@"Could not send device token to DB. Error connecting data from server: %@", error.localizedDescription);
         }];
     }
+}
+
+- (NSMutableArray *)userRides {
+    
+    if(self.privateUserRides == nil) {
+        self.privateUserRides = [NSMutableArray arrayWithArray:[self.user.ridesAsDriver allObjects]];
+        [self.privateUserRides addObjectsFromArray:[self.user.ridesAsPassenger allObjects]];
+        [self.privateUserRides addObjectsFromArray:[[RidesStore sharedStore] allRideRequestsFromUserWithId:self.user.userId]];
+        
+        for (Ride *ride in self.privateUserRides) {
+            NSLog(@"Ride id: %d", ride.rideId);
+        }
+    }
+    return  self.privateUserRides;
 }
 
 # pragma mark - Object to string
