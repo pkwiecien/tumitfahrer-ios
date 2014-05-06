@@ -73,7 +73,8 @@
                     RideSearch *ride = [[RideSearchStore sharedStore] rideWithId:rideSearchResult.rideId];
                     ride.destinationLatitude = location.coordinate.latitude;
                     ride.destinationLongitude = location.coordinate.longitude;
-                    ride.destinationImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:photoUrl]];
+                    UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:photoUrl]];
+                    ride.destinationImage = UIImagePNGRepresentation(image);
                     [searchResultsVC reloadDataAtIndex:0];
                 }];
             }

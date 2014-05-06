@@ -100,7 +100,7 @@
     if(ride.destinationImage == nil) {
         imageLargeCell.image = [UIImage imageNamed:@"PlaceholderImage"];
     } else {
-        imageLargeCell.image = ride.destinationImage;
+        imageLargeCell.image = [UIImage imageWithData:ride.destinationImage];
     }
     [imageLargeCell setClipsToBounds:YES];
     
@@ -108,7 +108,7 @@
     if(ride.destinationImage == nil) {
         imageSmallCell.image = [UIImage imageNamed:@"PlaceholderImage"];
     } else {
-        imageSmallCell.image = ride.destinationImage;
+        imageSmallCell.image = [UIImage imageWithData:ride.destinationImage];
     }
     [imageSmallCell setClipsToBounds:YES];
     

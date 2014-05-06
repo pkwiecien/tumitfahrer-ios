@@ -31,12 +31,11 @@
         
         self.observers = [[NSMutableArray alloc] init];
         [self loadAllRides];
-        [self fetchLocationForAllRides];
         
         [self fetchRidesFromWebservice:^(BOOL ridesFetched) {
             if(ridesFetched) {
                 [self loadAllRides];
-                [self fetchLocationForAllRides];
+                [self fetchLocationForUpdatedRides];
             }
         }];
     }
@@ -175,6 +174,14 @@
     }
 }
 
+-(void)fetchLocationForUpdatedRides {
+    for(Ride *ride in [self allRides]) {
+        if (ride.destinationLatitude == 0.0 || ride.destinationImage == nil) {
+            [self fetchLocationForRide:ride];
+        }
+    }
+}
+
 -(void)fetchLocationForRide:(Ride *)ride {
     [[LocationController sharedInstance] fetchLocationForAddress:ride.destination rideId:ride.rideId];
 }
@@ -226,7 +233,7 @@
 
 -(void)didReceivePhotoForLocation:(UIImage *)image rideId:(NSInteger)rideId{
     Ride *ride = [self getRideWithId:rideId];
-    ride.destinationImage = image;
+    ride.destinationImage = UIImagePNGRepresentation(image);
     [self notifyAllAboutNewImageForRideId:rideId];
 }
 

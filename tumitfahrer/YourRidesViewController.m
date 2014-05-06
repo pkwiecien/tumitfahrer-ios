@@ -14,8 +14,11 @@
 #import "Ride.h"
 #import "RideDetailViewController.h"
 #import "RidesStore.h"
+#import "CustomUILabel.h"
 
 @interface YourRidesViewController ()
+
+@property (nonatomic, retain) UILabel *zeroRidesLabel;
 
 @end
 
@@ -25,6 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self prepareZeroRidesLabel];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -32,6 +36,7 @@
     [self setupView];
     [[CurrentUser sharedInstance] refreshUserRides];
     [self.tableView reloadData];
+    [self checkIfAnyRides];
 }
 
 -(void)setupView {
@@ -39,6 +44,18 @@
     UINavigationController *navController = self.navigationController;
     [NavigationBarUtilities setupNavbar:&navController];
     self.title = @"YOUR RIDES";
+}
+
+-(void)prepareZeroRidesLabel {
+    self.zeroRidesLabel = [[CustomUILabel alloc] initInMiddle:CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height) text:@"You don't have any rides" viewWithNavigationBar:self.navigationController.navigationBar];
+}
+
+-(void)checkIfAnyRides {
+    if ([[[CurrentUser sharedInstance] userRides] count] == 0) {
+        [self.view addSubview:self.zeroRidesLabel];
+    } else {
+        [self.zeroRidesLabel removeFromSuperview];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -82,7 +99,7 @@
     if(ride.destinationImage == nil) {
         cell.rideImage.image = [UIImage imageNamed:@"PlaceholderImage"];
     } else {
-        cell.rideImage.image = ride.destinationImage;
+        cell.rideImage.image = [UIImage imageWithData:ride.destinationImage];;
     }
     
     return cell;

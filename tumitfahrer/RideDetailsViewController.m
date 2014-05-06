@@ -31,7 +31,7 @@
     if(self.selectedRide.destinationImage == nil) {
         self.mainImageView.image = [UIImage imageNamed:@"PlaceholderImage"];
     } else {
-        self.mainImageView.image = self.selectedRide.destinationImage;
+        self.mainImageView.image = [UIImage imageWithData:self.selectedRide.destinationImage];
     }
     
     // Set parallax for horizontal effect

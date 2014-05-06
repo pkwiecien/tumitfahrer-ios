@@ -192,7 +192,7 @@
     if(ride.destinationImage == nil) {
         imageView.image = [UIImage imageNamed:@"PlaceholderImage"];
     } else {
-        imageView.image = ride.destinationImage;
+        imageView.image = [UIImage imageWithData:ride.destinationImage];
     }
     imageView.clipsToBounds = YES;
     imageView.contentMode = UIViewContentModeScaleAspectFill;

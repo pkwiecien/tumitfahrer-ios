@@ -10,4 +10,6 @@
 
 @interface CustomUILabel : UILabel
 
+- (instancetype)initInMiddle:(CGRect)frame text:(NSString *)text viewWithNavigationBar:(UINavigationBar *)navigationBar;
+
 @end

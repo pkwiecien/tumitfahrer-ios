@@ -134,8 +134,9 @@
 		E5FA64331912647300C04BFF /* AddRideRequestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FA64311912647300C04BFF /* AddRideRequestViewController.xib */; };
 		E5FB4D3E1918DB18006F4F5D /* RideNoticeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FB4D3C1918DB18006F4F5D /* RideNoticeCell.m */; };
 		E5FB4D3F1918DB18006F4F5D /* RideNoticeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FB4D3D1918DB18006F4F5D /* RideNoticeCell.xib */; };
-		E5FB4D491918E5FB006F4F5D /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FB4D481918E5FB006F4F5D /* Ride.m */; };
 		E5FB4D4F1918E81B006F4F5D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FB4D4E1918E81B006F4F5D /* User.m */; };
+		E5FB4D5319191324006F4F5D /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FB4D5219191324006F4F5D /* Ride.m */; };
+		E5FB4D5619191D0A006F4F5D /* CustomUILabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FB4D5519191D0A006F4F5D /* CustomUILabel.m */; };
 		E5FC44D5190CF83100E8DB65 /* MenuTopHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FC44D4190CF83100E8DB65 /* MenuTopHeaderView.xib */; };
 		E5FC44D6190D30FF00E8DB65 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E599880918E7836D00B01C62 /* MenuViewController.m */; };
 		E5FDDBC618EDE9B100CE7B01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBC518EDE9B100CE7B01 /* MapKit.framework */; };
@@ -367,10 +368,12 @@
 		E5FB4D3B1918DB18006F4F5D /* RideNoticeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideNoticeCell.h; sourceTree = "<group>"; };
 		E5FB4D3C1918DB18006F4F5D /* RideNoticeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideNoticeCell.m; sourceTree = "<group>"; };
 		E5FB4D3D1918DB18006F4F5D /* RideNoticeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RideNoticeCell.xib; sourceTree = "<group>"; };
-		E5FB4D471918E5FB006F4F5D /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
-		E5FB4D481918E5FB006F4F5D /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
 		E5FB4D4D1918E81B006F4F5D /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		E5FB4D4E1918E81B006F4F5D /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		E5FB4D5119191324006F4F5D /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
+		E5FB4D5219191324006F4F5D /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
+		E5FB4D5419191D0A006F4F5D /* CustomUILabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomUILabel.h; sourceTree = "<group>"; };
+		E5FB4D5519191D0A006F4F5D /* CustomUILabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomUILabel.m; sourceTree = "<group>"; };
 		E5FC44D4190CF83100E8DB65 /* MenuTopHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuTopHeaderView.xib; sourceTree = "<group>"; };
 		E5FDDBC518EDE9B100CE7B01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E5FDDBC818EE79F900CE7B01 /* RideSearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideSearchResultsViewController.h; sourceTree = "<group>"; };
@@ -735,8 +738,8 @@
 				E55D8663190C059200B1400A /* Rating.m */,
 				E55D866B190C059200B1400A /* Request.h */,
 				E55D866C190C059200B1400A /* Request.m */,
-				E5FB4D471918E5FB006F4F5D /* Ride.h */,
-				E5FB4D481918E5FB006F4F5D /* Ride.m */,
+				E5FB4D5119191324006F4F5D /* Ride.h */,
+				E5FB4D5219191324006F4F5D /* Ride.m */,
 				E5FA641A19121F6600C04BFF /* RideSearch.h */,
 				E5FA641B19121F6600C04BFF /* RideSearch.m */,
 				E5FA64231912299E00C04BFF /* RideSearchStore.h */,
@@ -777,6 +780,8 @@
 				E59987D618E6ECF200B01C62 /* CustomTextField.m */,
 				E5E215661907B82500B0B150 /* CustomBarButton.h */,
 				E5E215671907B82500B0B150 /* CustomBarButton.m */,
+				E5FB4D5419191D0A006F4F5D /* CustomUILabel.h */,
+				E5FB4D5519191D0A006F4F5D /* CustomUILabel.m */,
 			);
 			name = "UI Elements";
 			sourceTree = "<group>";
@@ -1341,6 +1346,7 @@
 				E5FA641C19121F6600C04BFF /* RideSearch.m in Sources */,
 				E55D8664190C059200B1400A /* Rating.m in Sources */,
 				E59B9A511916AB9B008DE80B /* MessageListViewController.m in Sources */,
+				E5FB4D5619191D0A006F4F5D /* CustomUILabel.m in Sources */,
 				E5E2155F1907A94A00B0B150 /* AddRideViewController.m in Sources */,
 				E5DF642818EBD8AB00D53164 /* BalancedColumnLayout.m in Sources */,
 				E50DB29118F881BC00E87E62 /* PanoramioUtilities.m in Sources */,
@@ -1350,7 +1356,7 @@
 				E59987FB18E7251000B01C62 /* RegisterViewController.m in Sources */,
 				E5FA64321912647300C04BFF /* AddRideRequestViewController.m in Sources */,
 				E50DB28B18F8730400E87E62 /* RidesStore.m in Sources */,
-				E5FB4D491918E5FB006F4F5D /* Ride.m in Sources */,
+				E5FB4D5319191324006F4F5D /* Ride.m in Sources */,
 				E50DB28818F8706500E87E62 /* RideMapping.m in Sources */,
 				E504D9EB190B963E0036FFA8 /* JsonParser.m in Sources */,
 				E58889E4191394BB0062D0DF /* RideDetailHeaderView.m in Sources */,
