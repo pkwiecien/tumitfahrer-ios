@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "RideDetailHeaderView.h"
 
+@class Ride;
+
 @interface RideDetailView : UIView <UIScrollViewDelegate>
 
 @property (nonatomic) CGFloat defaultimagePagerHeight;
@@ -25,5 +27,7 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, weak) id<UITableViewDataSource> tableViewDataSource;
 @property (nonatomic, weak) id<UITableViewDelegate> tableViewDelegate;
+
+@property (nonatomic, strong) Ride *selectedRide;
 
 @end

@@ -10,6 +10,13 @@
 
 @implementation FreeSeatsTableViewCell
 
+
++(FreeSeatsTableViewCell *)freeSeatsTableViewCell {
+    
+    FreeSeatsTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"FreeSeatsTableViewCell" owner:self options:nil] objectAtIndex:0];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+}
 - (void)awakeFromNib
 {
     self.stepper.value = 1;
@@ -25,6 +32,7 @@
 - (IBAction)stepperValueChanged:(UIStepper *)sender {
     NSUInteger value = sender.value;
     self.passengersCountLabel.text = [NSString stringWithFormat:@"%d", (int)value];
+    [self.delegate stepperValueChanged:value];
 }
 
 @end

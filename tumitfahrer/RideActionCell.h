@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-
 @protocol DetailsMessagesChoiceCellDelegate <NSObject>
 
 - (void)contactDriverButtonPressed;
 - (void)joinRideButtonPressed;
 
 @end
+
 @interface RideActionCell : UITableViewCell
 
 +(RideActionCell *)detailsMessagesChoiceCell;

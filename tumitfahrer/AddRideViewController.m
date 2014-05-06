@@ -14,7 +14,6 @@
 #import "ActionManager.h"
 #import "LocationController.h"
 #import "SwitchTableViewCell.h"
-#import "FreeSeatsTableViewCell.h"
 #import "RidesStore.h"
 #import "NavigationBarUtilities.h"
 
@@ -97,11 +96,9 @@
 {
     NSString *CellIdentifier = @"SettingsCell";
     NSString *SwitchIdentifier = @"SwitchCell";
-    NSString *FreeSeatsIdentifier = @"FreeSeatsCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     SwitchTableViewCell *switchCell = [tableView dequeueReusableCellWithIdentifier:SwitchIdentifier];
-    FreeSeatsTableViewCell *freeSeatsCell = [tableView dequeueReusableCellWithIdentifier:FreeSeatsIdentifier];
     
     if(cell == nil)
     {
@@ -111,18 +108,24 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SwitchTableViewCell" owner:self options:nil];
         switchCell = [nib objectAtIndex:0];
     }
-    if(freeSeatsCell == nil) {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"FreeSeatsTableViewCell" owner:self options:nil];
-        freeSeatsCell = [nib objectAtIndex:0];
+    if(indexPath.section == 0 && indexPath.row == 2) {
+        
+        FreeSeatsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FreeSeatsTableViewCell"];
+        
+        if(cell == nil){
+            cell = [FreeSeatsTableViewCell freeSeatsTableViewCell];
+        }
+        
+        cell.delegate = self;
+        cell.backgroundColor = [UIColor clearColor];
+        cell.contentView.backgroundColor = [UIColor clearColor];
+        cell.stepperLabelText.text = [self.tablePlaceholders objectAtIndex:indexPath.row];
+        return  cell;
     }
     
     if (indexPath.section == 0) {
         cell.detailTextLabel.text = [self.tableValues objectAtIndex:indexPath.row];
         cell.textLabel.text = [self.tablePlaceholders objectAtIndex:indexPath.row];
-        if (indexPath.row ==2) {
-            freeSeatsCell.stepperLabelText.text = [self.tablePlaceholders objectAtIndex:indexPath.row];
-            [self.tableValues replaceObjectAtIndex:2 withObject:freeSeatsCell.passengersCountLabel.text];
-        }
     } else if(indexPath.section == 1) {
         switchCell.switchCellTextLabel.text = [self.shareValues objectAtIndex:indexPath.row];
     } else if(indexPath.section == 2) {
@@ -138,22 +141,15 @@
     switchCell.backgroundColor = [UIColor clearColor];
     switchCell.contentView.backgroundColor = [UIColor clearColor];
     
-    freeSeatsCell.backgroundColor = [UIColor clearColor];
-    freeSeatsCell.contentView.backgroundColor = [UIColor clearColor];
-    
     UIView *bgColorView = [[UIView alloc] init];
     bgColorView.backgroundColor = [UIColor colorWithRed:70 green:30 blue:180 alpha:0.3];
     bgColorView.layer.masksToBounds = YES;
     [cell setSelectedBackgroundView:bgColorView];
     
     switchCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    freeSeatsCell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     if(indexPath.section == 1)
         return switchCell;
-    if (indexPath.section == 0 && indexPath.row ==2) {
-        return freeSeatsCell;
-    }
     
     return cell;
 }
@@ -272,6 +268,10 @@
         return NO;
     else
     return YES;
+}
+
+-(void)stepperValueChanged:(NSInteger)stepperValue {
+    [self.tableValues replaceObjectAtIndex:2 withObject:[NSNumber numberWithInt:stepperValue]];
 }
 
 @end

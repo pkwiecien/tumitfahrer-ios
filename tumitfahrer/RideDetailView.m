@@ -84,6 +84,7 @@
         self.rideDetailFrame = CGRectMake(0.0f, -self.defaultimagePagerHeight * self.parallaxScrollFactor *2, self.tableView.frame.size.width, self.defaultimagePagerHeight + (self.defaultimagePagerHeight * self.parallaxScrollFactor * 4));
         self.rideDetailHeaderView = [[RideDetailHeaderView alloc] initWithFrame:self.rideDetailFrame];
         self.rideDetailHeaderView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        self.rideDetailHeaderView.selectedRide = self.selectedRide;
         [self insertSubview:self.rideDetailHeaderView belowSubview:self.tableView];
     }
     

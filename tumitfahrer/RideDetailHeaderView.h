@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class Ride;
 @interface RideDetailHeaderView : UIView
+
+@property (nonatomic, strong) Ride *selectedRide;
 
 @end

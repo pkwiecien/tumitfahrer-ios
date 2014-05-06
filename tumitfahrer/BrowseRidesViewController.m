@@ -166,7 +166,7 @@
         [self loadNewElements];
     }
     
-    if (self.lastContentOffset < scrollView.contentOffset.y && [[[RidesStore sharedStore] allRidesByType:self.RideType] count] > 0)
+    if (self.lastContentOffset < scrollView.contentOffset.y)
     {
         // scroll down
         [self makeViewSmallQuickly:NO];

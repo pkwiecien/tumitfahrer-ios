@@ -39,8 +39,12 @@
 
 - (void)awakeFromNib
 {
-    [self.contactDriverButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"RoundedBox"] withColor:[UIColor greenColor]] forState:UIControlStateNormal];
-    [self.joinRideButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"RoundedBox"] withColor:[UIColor orangeColor]] forState:UIControlStateNormal];
+    UIColor *iOSgreenColor = [UIColor colorWithRed:0.298 green:0.851 blue:0.392 alpha:1];
+    [self.joinRideButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"GreenButtonEmpty"] withColor:iOSgreenColor] forState:UIControlStateNormal];
+    [self.joinRideButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"RoundedBox"] withColor:iOSgreenColor] forState:UIControlStateHighlighted];
+
+    [self.contactDriverButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"GreenButtonEmpty"] withColor:[UIColor orangeColor]] forState:UIControlStateNormal];
+    [self.contactDriverButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"RoundedBox"] withColor:[UIColor orangeColor]] forState:UIControlStateHighlighted];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -48,4 +52,6 @@
     [super setSelected:selected animated:animated];
     
 }
+
+
 @end

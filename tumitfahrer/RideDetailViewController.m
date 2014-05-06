@@ -24,6 +24,8 @@
 @interface RideDetailViewController () <NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) MKRoute *currentRoute;
+@property (nonatomic, strong) MKPolyline *routeOverlay;
 
 @end
 
@@ -41,22 +43,29 @@
     
     [self.view addSubview:self.rideDetail];
     
+    UIImage *croppedImage = [ActionManager cropImage:[UIImage imageNamed:@"gradientBackground"] newRect:CGRectMake(0, 0, 320, 65)];
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:croppedImage];
+    imgView.frame = CGRectMake(0, 0, 320, 65);
+    _headerView.backgroundColor = [UIColor clearColor];
+    [_headerView addSubview:imgView];
+    [_headerView sendSubviewToBack:imgView];
     [self.view bringSubviewToFront:_headerView];
     
     UIButton *buttonBack = [UIButton buttonWithType:UIButtonTypeCustom];
-    buttonBack.frame = CGRectMake(10, 22, 44, 44);
+    buttonBack.frame = CGRectMake(10, 22, 40, 40);
     [buttonBack setImage:[UIImage imageNamed:@"ArrowLeft"] forState:UIControlStateNormal];
     [buttonBack addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buttonBack];
-    
     self.rideDetail.headerView = _headerView;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    self.rideDetail.selectedRide = self.ride;
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-    
+    self.headerViewLabel.text = [@"To " stringByAppendingString:self.ride.destination];
     [self printRequestsAndPassengers];
+    [self prepareDirections];
 }
 
 #pragma mark - UITableView
@@ -77,7 +86,7 @@
     }
     else if(indexPath.row == 4) {
         //        return 124.0f*(1+(7-1)/3);
-        return 100*(1+(7-1)/3);
+        return 100*(1+(self.ride.freeSeats-1)/3);
     }else
         return 100.0f; //cell for comments, in reality the height has to be adjustable
 }
@@ -131,6 +140,8 @@
         cell.departurePlaceLabel.text = self.ride.departurePlace;
         cell.destinationLabel.text = self.ride.destination;
         cell.timeLabel.text = [ActionManager stringFromDate:self.ride.departureTime];
+        cell.mapView.delegate = self;
+        self.map = cell.mapView;
         
         return cell;
     } else if(indexPath.row == 3) {
@@ -152,7 +163,7 @@
         if (cell == nil) {
             cell = [PassengersCell passengersCell];
         }
-        [cell drawCirlesWithPassengersNumber:5 freeSeats:7];
+        [cell drawCirlesWithPassengersNumber:[self.ride.passengers count] freeSeats:self.ride.freeSeats];
         return cell;
     } else {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reusable"];
@@ -319,6 +330,70 @@
     } else {
         [cell.joinRideButton setTitle:@"Join ride" forState:UIControlStateNormal];
     }
+}
+
+#pragma mark - map view methods
+
+// method from: https://github.com/ShinobiControls/iOS7-day-by-day/blob/master/13-mapkit-directions/13-mapkit-directions.md
+
+- (void)prepareDirections {
+    MKDirectionsRequest *directionsRequest = [MKDirectionsRequest new];
+
+    // Make the destination
+    CLLocationCoordinate2D destinationCoords = CLLocationCoordinate2DMake(self.ride.destinationLatitude, self.ride.destinationLongitude);
+    MKPlacemark *destinationPlacemark = [[MKPlacemark alloc] initWithCoordinate:destinationCoords addressDictionary:nil];
+    MKMapItem *destination = [[MKMapItem alloc] initWithPlacemark:destinationPlacemark];
+    
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder geocodeAddressString:self.ride.departurePlace completionHandler:^(NSArray* placemarks, NSError* error){
+        
+        CLPlacemark *aPlacemark = [placemarks firstObject];
+                
+        // Make the destination
+        CLLocationCoordinate2D sourceCoords = CLLocationCoordinate2DMake(aPlacemark.location.coordinate.latitude, aPlacemark.location.coordinate.longitude);
+        MKPlacemark *sourcePlacemark = [[MKPlacemark alloc] initWithCoordinate:sourceCoords addressDictionary:nil];
+        MKMapItem *source = [[MKMapItem alloc] initWithPlacemark:sourcePlacemark];
+        [self.map setCenterCoordinate:sourceCoords];
+        // Set the source and destination on the request
+        [directionsRequest setSource:source];
+        [directionsRequest setDestination:destination];
+        
+        MKDirections *directions = [[MKDirections alloc] initWithRequest:directionsRequest];
+        
+        [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
+            // Now handle the result
+            if (error) {
+                NSLog(@"There was an error getting your directions");
+                return;
+            }
+            
+            // So there wasn't an error - let's plot those routes
+            _currentRoute = [response.routes firstObject];
+            [self plotRouteOnMap:_currentRoute];
+        }];
+    }];
+}
+
+- (void)plotRouteOnMap:(MKRoute *)route
+{
+    if(_routeOverlay) {
+        [self.map removeOverlay:_routeOverlay];
+    }
+    
+    // Update the ivar
+    _routeOverlay = route.polyline;
+    
+    // Add it to the map
+    [self.map addOverlay:_routeOverlay];
+}
+
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
+{
+    MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithPolyline:overlay];
+    renderer.strokeColor = [UIColor redColor];
+    renderer.lineWidth = 4.0;
+
+    return  renderer;
 }
 
 

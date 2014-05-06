@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
-@interface RideInformationCell : UITableViewCell
+@interface RideInformationCell : UITableViewCell<MKMapViewDelegate>
 
 + (RideInformationCell*) rideInformationCell;
 
 @property (weak, nonatomic) IBOutlet UILabel *departurePlaceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *destinationLabel;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+
 @end

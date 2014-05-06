@@ -76,6 +76,7 @@
             <connections>
                 <outlet property="departurePlaceLabel" destination="bai-w1-aSj" id="0QN-Bi-Xq7"/>
                 <outlet property="destinationLabel" destination="jTy-3t-bwK" id="UZM-ZK-yGD"/>
+                <outlet property="mapView" destination="geX-4D-moM" id="bUD-Fb-HxX"/>
                 <outlet property="timeLabel" destination="Isw-De-FvY" id="o99-zW-P4u"/>
             </connections>
         </tableViewCell>

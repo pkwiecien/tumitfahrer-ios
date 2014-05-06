@@ -10,10 +10,11 @@
 #import "MeetingPointViewController.h"
 #import "DestinationViewController.h"
 #import "SlideNavigationController.h"
+#import "FreeSeatsTableViewCell.h"
 
 @class DestinationViewController;
 
-@interface AddRideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MeetingPointDelegate, DestinationViewControllerDelegate, SlideNavigationControllerDelegate>
+@interface AddRideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MeetingPointDelegate, DestinationViewControllerDelegate, SlideNavigationControllerDelegate, FreeSeatsCellDelegate>
 
 typedef enum showTypes : NSUInteger {
     ShowAsModal = 0,

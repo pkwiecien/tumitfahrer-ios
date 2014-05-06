@@ -35,15 +35,18 @@
     int padding = 80;
     int i = 0;
     int type = 0;
-    while (i++<freeSeats) {
-        [self drawCircleAtPostX:posX posY:posY tag:i type:type];
-        posX += padding;
-        if(i == passengers)
+    while (i<freeSeats) {
+        if(i >= passengers)
             type = 1;
-        if (i % 3 == 0) {
+        
+        [self drawCircleAtPostX:posX posY:posY tag:i type:type];
+        
+        posX += padding;
+        if ((i+1) % 3 == 0) {
             posY += 80;
             posX = 40;
         }
+        i++;
     }
 }
 

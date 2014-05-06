@@ -86,9 +86,7 @@
             if (error == nil && [placemarks count] > 0)
             {
                 CLPlacemark *placemark = [placemarks lastObject];
-                
-                NSLog(@"Current address: %@", placemark.thoroughfare);
-                self.currentAddress = placemark.thoroughfare;
+                self.currentAddress = [placemark.thoroughfare stringByAppendingString:[NSString stringWithFormat:@", %@", placemark.locality]];
             }
         }];
     }
