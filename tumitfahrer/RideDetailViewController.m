@@ -213,6 +213,7 @@
             [KGStatusBar showSuccessWithStatus:@"Request canceled"];
             [self.ride removeRequestsObject:request];
             [self.rideDetail.tableView reloadData];
+           // [[RidesStore sharedStore] deleteUserRequestWithId:request.requestId];
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
             RKLogError(@"Load failed with error: %@", error);
         }];
@@ -226,6 +227,7 @@
         [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/rides/%d/requests", self.ride.rideId] parameters:requestParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             [KGStatusBar showSuccessWithStatus:@"Request was sent"];
             Request *rideRequest = (Request *)[mappingResult firstObject];
+          //  [[RidesStore sharedStore] addRideToUserRequests:ride];
             NSLog(@"Ride request: %@", rideRequest);
             [self.ride addRequestsObject:rideRequest];
             [self.rideDetail.tableView reloadData];

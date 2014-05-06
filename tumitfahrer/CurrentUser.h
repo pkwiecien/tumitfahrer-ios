@@ -20,5 +20,6 @@
 - (void)hasDeviceTokenInWebservice:(boolCompletionHandler)block;
 - (void)sendDeviceTokenToWebservice;
 - (NSMutableArray *)userRides;
+- (void)refreshUserRides;
 
 @end

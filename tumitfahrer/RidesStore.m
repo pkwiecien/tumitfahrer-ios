@@ -90,6 +90,36 @@
     }
 }
 
+// select ride from rides from ride inner join request where ride.id = request.ride_id and request.requested_from = user.id
+- (void)fetchUserRequestedRidesFromCoreData:(NSInteger)userId {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *e = [NSEntityDescription entityForName:@"Ride"
+                                         inManagedObjectContext:[RKManagedObjectStore defaultStore].
+                              mainQueueManagedObjectContext];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"ANY self.requests.passengerId = %d", userId];
+    
+    [request setPredicate:predicate];
+
+    request.entity = e;
+    
+    NSError *error;
+    NSArray *fetchedObjects = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:&error];
+    if (!fetchedObjects) {
+        [NSException raise:@"Fetch failed"
+                    format:@"Reason: %@", [error localizedDescription]];
+    }
+    self.userRideRequests = [NSMutableArray arrayWithArray:fetchedObjects];
+    
+    for (Ride *ride in fetchedObjects) {
+        NSLog(@"Ride id: %d", ride.rideId);
+    }
+}
+
+-(NSArray *)rideRequestForUserWithId:(NSInteger)userId {
+    [self fetchUserRequestedRidesFromCoreData:userId];
+    return self.userRideRequests;
+}
+
 -(void)fetchRidesFromWebservice:(boolCompletionHandler)block {
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
@@ -222,22 +252,6 @@
         [self fetchRidesFromCoreDataByType:ContentTypeExistingRequests];
     }
     return self.rideRequests;
-}
-
--(NSArray *)allRideRequestsFromUserWithId:(NSInteger)userId {
-    if (self.userRideRequests == nil) {
-        self.userRideRequests = [[NSMutableArray alloc] init];
-        
-        for (Ride *ride in [self allRides]) {
-            for (Request *request in ride.requests) {
-                if (request.passengerId == userId) {
-                    [self.userRideRequests addObject:ride];
-                }
-            }
-        }
-    }
-    
-    return self.userRideRequests;
 }
 
 - (Ride *)getRideWithId:(NSInteger)rideId {

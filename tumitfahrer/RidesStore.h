@@ -10,7 +10,7 @@
 #import "LocationController.h"
 #import "PanoramioUtilities.h"
 
-@class Ride;
+@class Ride, Request;
 
 @protocol RideStoreDelegate <NSObject>
 
@@ -28,7 +28,7 @@
 - (NSArray *)allRideRequests;
 - (NSArray *)allRidesByType:(ContentType)contentType;
 - (Ride *)getRideWithId:(NSInteger)rideId;
-- (NSArray *)allRideRequestsFromUserWithId:(NSInteger)userId;
+- (NSArray *)rideRequestForUserWithId:(NSInteger)userId;
 
 - (void)addRideToStore:(Ride*)ride;
 - (void)addObserver:(id<RideStoreDelegate>) observer;

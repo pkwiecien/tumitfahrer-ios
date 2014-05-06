@@ -17,7 +17,7 @@
 @property (nonatomic, retain) NSString * departurePlace;
 @property (nonatomic) NSDate * departureTime;
 @property (nonatomic, retain) NSString * destination;
-@property (nonatomic, retain) id destinationImage;
+@property (nonatomic, retain) UIImage* destinationImage;
 @property (nonatomic) double destinationLatitude;
 @property (nonatomic) double destinationLongitude;
 @property (nonatomic) float distance;

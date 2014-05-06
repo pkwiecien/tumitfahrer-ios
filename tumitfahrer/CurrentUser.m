@@ -112,16 +112,19 @@
     }
 }
 
-- (NSMutableArray *)userRides {
+- (void)refreshUserRides {
+    self.privateUserRides = [NSMutableArray arrayWithArray:[self.user.ridesAsDriver allObjects]];
+    [self.privateUserRides addObjectsFromArray:[self.user.ridesAsPassenger allObjects]];
+    [self.privateUserRides addObjectsFromArray:[[RidesStore sharedStore] rideRequestForUserWithId:self.user.userId]];
     
+    for (Ride *ride in self.privateUserRides) {
+        NSLog(@"Ride id: %d", ride.rideId);
+    }
+}
+
+- (NSMutableArray *)userRides {
     if(self.privateUserRides == nil) {
-        self.privateUserRides = [NSMutableArray arrayWithArray:[self.user.ridesAsDriver allObjects]];
-        [self.privateUserRides addObjectsFromArray:[self.user.ridesAsPassenger allObjects]];
-        [self.privateUserRides addObjectsFromArray:[[RidesStore sharedStore] allRideRequestsFromUserWithId:self.user.userId]];
-        
-        for (Ride *ride in self.privateUserRides) {
-            NSLog(@"Ride id: %d", ride.rideId);
-        }
+        [self refreshUserRides];
     }
     return  self.privateUserRides;
 }

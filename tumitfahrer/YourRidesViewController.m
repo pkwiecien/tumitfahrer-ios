@@ -13,6 +13,7 @@
 #import "CurrentUser.h"
 #import "Ride.h"
 #import "RideDetailViewController.h"
+#import "RidesStore.h"
 
 @interface YourRidesViewController ()
 
@@ -29,6 +30,8 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self setupView];
+    [[CurrentUser sharedInstance] refreshUserRides];
+    [self.tableView reloadData];
 }
 
 -(void)setupView {
@@ -50,7 +53,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 50.0f;
+    return 30.0f;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -75,6 +78,12 @@
     cell.departurePlaceLabel.text = ride.departurePlace;
     cell.destinationLabel.text = ride.destination;
     cell.departureTimeLabel.text = [ActionManager stringFromDate:ride.departureTime];
+    
+    if(ride.destinationImage == nil) {
+        cell.rideImage.image = [UIImage imageNamed:@"PlaceholderImage"];
+    } else {
+        cell.rideImage.image = ride.destinationImage;
+    }
     
     return cell;
 }
