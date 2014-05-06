@@ -18,3 +18,5 @@ pod 'OCMock'
 pod 'JSMessagesViewController'
 # pod for websockets
 pod 'SocketRocket', '~> 0.3'
+# pod : pull down to refresh uicollection view
+pod 'SVPullToRefresh'

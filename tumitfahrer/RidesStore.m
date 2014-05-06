@@ -25,6 +25,8 @@
 
 @implementation RidesStore
 
+static int page = 0;
+
 -(instancetype)init {
     self = [super init];
     if (self) {
@@ -79,13 +81,13 @@
                     format:@"Reason: %@", [error localizedDescription]];
     }
     
-    for (Ride *ride in fetchedObjects) {
-        NSLog(@"ride id: %d", ride.rideId);
-    }
-    
-    for (Ride *ride in [CurrentUser sharedInstance].user.ridesAsDriver) {
-        NSLog(@"user's ride with id: %d", ride.rideId);
-    }
+//    for (Ride *ride in fetchedObjects) {
+//        NSLog(@"ride id: %d", ride.rideId);
+//    }
+//    
+//    for (Ride *ride in [CurrentUser sharedInstance].user.ridesAsDriver) {
+//        NSLog(@"user's ride with id: %d", ride.rideId);
+//    }
 
     if(contentType == ContentTypeCampusRides){
         self.campusRides =[[NSMutableArray alloc] initWithArray:fetchedObjects];
@@ -118,9 +120,6 @@
     }
     self.userRideRequests = [NSMutableArray arrayWithArray:fetchedObjects];
     
-    for (Ride *ride in fetchedObjects) {
-        NSLog(@"Ride id: %d", ride.rideId);
-    }
 }
 
 -(NSArray *)rideRequestForUserWithId:(NSInteger)userId {
@@ -133,8 +132,9 @@
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
     
-    [objectManager getObjectsAtPath:API_RIDES parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/rides?page=%d", page] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         block(YES);
+        page++;
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);
         block(NO);

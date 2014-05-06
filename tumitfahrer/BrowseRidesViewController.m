@@ -18,6 +18,7 @@
 #import "LoginViewController.h"
 #import "RideDetailViewController.h"
 
+
 @interface BrowseRidesViewController ()
 
 @property (nonatomic, assign) CGFloat lastContentOffset;
@@ -27,6 +28,7 @@
 @property (nonatomic, assign) BOOL isUpperViewSmall;
 
 @property (nonatomic, strong) UIRefreshControl *topControl;
+@property BOOL loadingNewElements;
 
 @end
 
@@ -121,7 +123,7 @@
         [self makeViewLargeQuickly:YES];
     }
     [self refreshCurrentLocationImage];
-    
+    self.loadingNewElements = false;
 }
 
 -(void)showLoginScreen:(BOOL)animated
@@ -157,12 +159,14 @@
 }
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if ((scrollView.contentOffset.y + scrollView.frame.size.height - 70) >= scrollView.contentSize.height)
+    if (!self.loadingNewElements && scrollView.contentSize.height > 0 && (scrollView.contentOffset.y + scrollView.frame.size.height - 70) >= scrollView.contentSize.height)
     {
-        NSLog(@"Should load more data");
+        NSLog(@"Loading more elements");
+        self.loadingNewElements = true;
+        [self loadNewElements];
     }
     
-    if (self.lastContentOffset < scrollView.contentOffset.y)
+    if (self.lastContentOffset < scrollView.contentOffset.y && [[[RidesStore sharedStore] allRidesByType:self.RideType] count] > 0)
     {
         // scroll down
         [self makeViewSmallQuickly:NO];
@@ -239,7 +243,7 @@
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
-    if(self.upperFrame.size.height > 200)
+    if(self.upperFrame.size.height > 200 || [[[RidesStore sharedStore] allRidesByType:self.RideType] count] == 0)
         self.isUpperViewSmall = NO;
     else
         self.isUpperViewSmall = YES;
@@ -269,5 +273,11 @@
         NSLog(@"Ride: %@", ride);
     }
 }
+
+
+-(void)loadNewElements {
+    
+}
+
 
 @end
