@@ -19,6 +19,7 @@
 #import "KGStatusBar.h"
 #import "Ride.h"
 #import "RidesStore.h"
+#import "RideNoticeCell.h"
 
 @interface RideDetailViewController () <NSFetchedResultsControllerDelegate>
 
@@ -66,12 +67,15 @@
         return 44.0f;
     }
     else if(indexPath.row == 1){
-        return 159.0f;
+        return 44.0f;
     }
     else if(indexPath.row == 2){
+        return 159.0f;
+    }
+    else if(indexPath.row == 3){
         return 120.0f;
     }
-    else if(indexPath.row == 3) {
+    else if(indexPath.row == 4) {
         //        return 124.0f*(1+(7-1)/3);
         return 100*(1+(7-1)/3);
     }else
@@ -80,7 +84,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    return 5;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -90,7 +94,23 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row == 0) {
+    if (indexPath.row == 0) {
+        
+        RideNoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideNoticeCell"];
+        
+        if(cell == nil){
+            cell = [RideNoticeCell rideNoticeCell];
+        }
+        
+        if(self.ride.driver.userId == [CurrentUser sharedInstance].user.userId) {
+            cell.noticeLabel.text = @"You are the driver";
+        }
+        else {
+            cell.noticeLabel.text = @"Send ride request to the driver";
+        }
+        return cell;
+    }
+    else if(indexPath.row == 1) {
         
         RideActionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailsMessagesChoiceCell"];
         
@@ -103,7 +123,7 @@
         cell.delegate = self;
         return cell;
     }
-    else if(indexPath.row == 1) {
+    else if(indexPath.row == 2) {
         RideInformationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideInformationCell"];
         if(cell == nil){
             cell = [RideInformationCell rideInformationCell];
@@ -113,7 +133,7 @@
         cell.timeLabel.text = [ActionManager stringFromDate:self.ride.departureTime];
         
         return cell;
-    } else if(indexPath.row == 2) {
+    } else if(indexPath.row == 3) {
         DriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DriverCell"];
         if (cell == nil) {
             cell = [DriverCell driverCell];
@@ -127,7 +147,7 @@
             cell.carLabel.text = self.ride.driver.car;
         }
         return cell;
-    } else if(indexPath.row == 3) {
+    } else if(indexPath.row == 4) {
         PassengersCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PassengersCell"];
         if (cell == nil) {
             cell = [PassengersCell passengersCell];
@@ -199,21 +219,28 @@
 
 -(void)joinRideButtonPressed {
     // check if the user is not trying to send a request to himself
-    if(self.ride.driver.userId == [CurrentUser sharedInstance].user.userId) {
-        [KGStatusBar showErrorWithStatus:@"Can't send request. You are the driver!"];
-        return;
-    }
-    
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     Request *request = [self requestFoundInCoreData];
-    
-    if(request != nil) {
+
+    if (self.ride.driver.userId == [CurrentUser sharedInstance].user.userId) {
+        [objectManager deleteObject:self.ride path:[NSString stringWithFormat:@"/api/v2/rides/%d", self.ride.rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+            
+            [[CurrentUser sharedInstance].user removeRidesAsDriverObject:self.ride];
+            [[RidesStore sharedStore] deleteRideFromCoreData:self.ride];
+            [[RidesStore sharedStore] fetchRidesFromCoreDataByType:ContentTypeCampusRides];
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+            RKLogError(@"Load failed with error: %@", error);
+        }];
+    } else if(request != nil) {
         [objectManager deleteObject:request path:[NSString stringWithFormat:@"/api/v2/rides/%d/requests/%d", self.ride.rideId, request.requestId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-            NSLog(@"Request deleted");
+
             [KGStatusBar showSuccessWithStatus:@"Request canceled"];
             [self.ride removeRequestsObject:request];
+            [[RidesStore sharedStore] deleteRideRequestFromCoreData:request];
+            
             [self.rideDetail.tableView reloadData];
-           // [[RidesStore sharedStore] deleteUserRequestWithId:request.requestId];
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
             RKLogError(@"Load failed with error: %@", error);
         }];
@@ -285,7 +312,9 @@
 }
 
 -(void)makeJoinButtonDescriptionForCell:(RideActionCell *)cell{
-    if([self requestFoundInCoreData] != nil) {
+    if(self.ride.driver.userId == [CurrentUser sharedInstance].user.userId) {
+        [cell.joinRideButton setTitle:@"Delete ride" forState:UIControlStateNormal];
+    } else if([self requestFoundInCoreData] != nil) {
         [cell.joinRideButton setTitle:@"Cancel request" forState:UIControlStateNormal];
     } else {
         [cell.joinRideButton setTitle:@"Join ride" forState:UIControlStateNormal];

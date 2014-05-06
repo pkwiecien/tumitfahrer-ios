@@ -65,6 +65,30 @@
     return false;
 }
 
+-(void)deleteRide:(Ride *)ride forUserId:(NSInteger)userId {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *e = [NSEntityDescription entityForName:@"User"
+                                         inManagedObjectContext:[RKManagedObjectStore defaultStore].
+                              mainQueueManagedObjectContext];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(userId = %d)", userId];
+    [request setPredicate:predicate];
+    request.entity = e;
+    
+    NSError *error;
+    NSArray *result = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:&error];
+    if (!result) {
+        [NSException raise:@"Fetch failed"
+                    format:@"Reason: %@", [error localizedDescription]];
+    }
+    
+    User *user = (User *)[result firstObject];
+    NSLog(@"user with id: %d", user.userId);
+    [user removeRidesAsDriverObject:ride];
+
+}
+
+
 #pragma mark - Device token methods
 
 - (void)hasDeviceTokenInWebservice:(boolCompletionHandler)block {

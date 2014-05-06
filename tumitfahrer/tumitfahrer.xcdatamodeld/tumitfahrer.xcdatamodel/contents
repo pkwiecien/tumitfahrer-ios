@@ -48,7 +48,7 @@
         <attribute name="rideId" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="rideType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
-        <relationship name="driver" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="User" inverseName="ridesAsDriver" inverseEntity="User" syncable="YES"/>
+        <relationship name="driver" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="ridesAsDriver" inverseEntity="User" syncable="YES"/>
         <relationship name="passengers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="ridesAsPassenger" inverseEntity="User" syncable="YES"/>
         <relationship name="requests" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Request" inverseName="requestedRide" inverseEntity="Request" syncable="YES"/>
     </entity>
@@ -70,14 +70,14 @@
         <relationship name="messagesSent" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="sentMessage" inverseEntity="Message" syncable="YES"/>
         <relationship name="ratingsGiven" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Rating" inverseName="givenRating" inverseEntity="Rating" syncable="YES"/>
         <relationship name="ratingsReceived" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Rating" inverseName="receivedRating" inverseEntity="Rating" syncable="YES"/>
-        <relationship name="ridesAsDriver" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ride" inverseName="driver" inverseEntity="Ride" syncable="YES"/>
-        <relationship name="ridesAsPassenger" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ride" inverseName="passengers" inverseEntity="Ride" syncable="YES"/>
+        <relationship name="ridesAsDriver" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Ride" inverseName="driver" inverseEntity="Ride" syncable="YES"/>
+        <relationship name="ridesAsPassenger" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Ride" inverseName="passengers" inverseEntity="Ride" syncable="YES"/>
     </entity>
     <elements>
         <element name="Message" positionX="0" positionY="0" width="128" height="150"/>
         <element name="Rating" positionX="0" positionY="0" width="128" height="150"/>
-        <element name="Request" positionX="0" positionY="0" width="128" height="163"/>
-        <element name="Ride" positionX="0" positionY="0" width="128" height="375"/>
-        <element name="User" positionX="0" positionY="0" width="128" height="328"/>
+        <element name="Request" positionX="18" positionY="-333" width="128" height="163"/>
+        <element name="Ride" positionX="-279" positionY="-175" width="128" height="373"/>
+        <element name="User" positionX="252" positionY="-40" width="128" height="328"/>
     </elements>
 </model>

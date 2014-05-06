@@ -21,5 +21,6 @@
 - (void)sendDeviceTokenToWebservice;
 - (NSMutableArray *)userRides;
 - (void)refreshUserRides;
+-(void)deleteRide:(Ride *)ride forUserId:(NSInteger)userId;
 
 @end

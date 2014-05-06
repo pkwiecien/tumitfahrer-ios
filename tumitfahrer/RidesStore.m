@@ -10,6 +10,7 @@
 #import "Ride.h"
 #import "User.h"
 #import "Request.h"
+#import "CurrentUser.h"
 
 @interface RidesStore () <NSFetchedResultsControllerDelegate>
 
@@ -79,6 +80,14 @@
                     format:@"Reason: %@", [error localizedDescription]];
     }
     
+    for (Ride *ride in fetchedObjects) {
+        NSLog(@"ride id: %d", ride.rideId);
+    }
+    
+    for (Ride *ride in [CurrentUser sharedInstance].user.ridesAsDriver) {
+        NSLog(@"user's ride with id: %d", ride.rideId);
+    }
+
     if(contentType == ContentTypeCampusRides){
         self.campusRides =[[NSMutableArray alloc] initWithArray:fetchedObjects];
     }
@@ -183,6 +192,24 @@
             break;
         default:
             break;
+    }
+}
+
+-(void)deleteRideFromCoreData:(Ride *)ride {
+    NSManagedObjectContext *context = ride.managedObjectContext;
+    [context deleteObject:ride];
+    NSError *error;
+    if (![context saveToPersistentStore:&error]) {
+        NSLog(@"delete error %@", [error localizedDescription]);
+    }
+}
+
+-(void)deleteRideRequestFromCoreData:(Request *)request {
+    NSManagedObjectContext *context = request.managedObjectContext;
+    [context deleteObject:request];
+    NSError *error;
+    if (![context saveToPersistentStore:&error]) {
+        NSLog(@"delete error %@", [error localizedDescription]);
     }
 }
 
