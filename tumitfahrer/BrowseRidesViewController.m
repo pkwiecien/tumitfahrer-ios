@@ -159,6 +159,15 @@
 }
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    CGFloat offsetY = scrollView.contentOffset.y;
+
+    if (offsetY < -50)
+    {
+        // is at the top of collection view
+        return;
+    }
+    
     if (!self.loadingNewElements && scrollView.contentSize.height > 0 && (scrollView.contentOffset.y + scrollView.frame.size.height - 70) >= scrollView.contentSize.height)
     {
         NSLog(@"Loading more elements");
@@ -166,7 +175,7 @@
         [self loadNewElements];
     }
     
-    if (self.lastContentOffset < scrollView.contentOffset.y)
+    if (self.lastContentOffset < scrollView.contentOffset.y && scrollView.contentSize.height != 0 && offsetY > 0)
     {
         // scroll down
         [self makeViewSmallQuickly:NO];
@@ -221,7 +230,6 @@
 
 - (IBAction)menuButtonPressed:(id)sender {
     [[SlideNavigationController sharedInstance] toggleLeftMenu];
-    
 }
 
 # pragma mark - Action buttons
@@ -276,7 +284,14 @@
 
 
 -(void)loadNewElements {
-    
+    [[RidesStore sharedStore] fetchNextRides:^(BOOL fetched) {
+        if (fetched) {
+            for (Ride *ride in [[RidesStore sharedStore] allRides]) {
+                NSLog(@"ride with id: %d", ride.rideId);
+                //[self.collectionView reloadData];
+            }
+        }
+    }];
 }
 
 

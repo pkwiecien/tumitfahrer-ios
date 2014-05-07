@@ -127,6 +127,16 @@ static int page = 0;
     return self.userRideRequests;
 }
 
+-(void)fetchNextRides:(boolCompletionHandler)block {
+    [self fetchRidesFromWebservice:^(BOOL ridesFetched) {
+        if(ridesFetched) {
+            [self loadAllRides];
+            block(YES);
+            [self fetchLocationForUpdatedRides];
+        }
+    }];
+}
+
 -(void)fetchRidesFromWebservice:(boolCompletionHandler)block {
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
@@ -180,6 +190,15 @@ static int page = 0;
             [self fetchLocationForRide:ride];
         }
     }
+}
+
+-(Ride *)containsRideWithId:(NSInteger)rideId {
+    for (Ride *ride in [self allRides]) {
+        if (ride.rideId == rideId) {
+            return ride;
+        }
+    }
+    return nil;
 }
 
 -(void)fetchLocationForRide:(Ride *)ride {
@@ -305,16 +324,15 @@ static int page = 0;
         NSLog(@"Ride: %@", ride);
         NSLog(@"Driver: %d %@", ride.driver.userId, ride.driver.firstName);
         NSLog(@"ride: %@", ride);
-        NSLog(@"Number of passengers: %d", [ride.passengers count]);
+        NSLog(@"Number of passengers: %d", (int)[ride.passengers count]);
         for (User *user in [ride passengers]) {
             NSLog(@"User: %d", user.userId);
         }
         
-        NSLog(@"Number of requests: %d", [ride.requests count]);
+        NSLog(@"Number of requests: %d", (int)[ride.requests count]);
         for (Request *reques in [ride requests]) {
             NSLog(@"Request: %d %@", reques.requestId, reques.requestedFrom);
         }
-        
     }
 }
 

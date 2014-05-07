@@ -302,12 +302,12 @@
 }
 
 - (void)printRequestsAndPassengers {
-    NSLog(@"Number of passengers: %d", [self.ride.passengers count]);
+    NSLog(@"Number of passengers: %d", (int)[self.ride.passengers count]);
     for (User *user in [self.ride passengers]) {
         NSLog(@"User: %@", user);
     }
     
-    NSLog(@"Number of requests: %d", [self.ride.requests count]);
+    NSLog(@"Number of requests: %d", (int)[self.ride.requests count]);
     for (Request *reques in [self.ride requests]) {
         NSLog(@"Request: %@", reques);
     }

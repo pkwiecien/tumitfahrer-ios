@@ -71,7 +71,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"selected cell %d %d", indexPath.section, indexPath.row);
+    NSLog(@"selected cell %d %d", (int)indexPath.section, (int)indexPath.row);
 }
 
 - (BOOL)slideNavigationControllerShouldDisplayLeftMenu

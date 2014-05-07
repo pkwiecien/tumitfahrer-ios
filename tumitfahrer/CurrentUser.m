@@ -63,6 +63,31 @@
         return true;
     }
     return false;
+    
+}
++ (BOOL)fetchUserFromCoreDataWithEmail:(NSString *)email encryptedPassword:(NSString *)encryptedPassword{
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *e = [NSEntityDescription entityForName:@"User"
+                                         inManagedObjectContext:[RKManagedObjectStore defaultStore].
+                              mainQueueManagedObjectContext];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(email = %@ && password= %@)", email, encryptedPassword];
+    [request setPredicate:predicate];
+    request.entity = e;
+    
+    NSError *error;
+    NSArray *result = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:&error];
+    if (!result) {
+        [NSException raise:@"Fetch failed"
+                    format:@"Reason: %@", [error localizedDescription]];
+    }
+    
+    User *user = (User *)[result firstObject];
+    if(user) {
+        [CurrentUser sharedInstance].user = user;
+        return true;
+    }
+    return false;
 }
 
 -(void)deleteRide:(Ride *)ride forUserId:(NSInteger)userId {
@@ -85,7 +110,7 @@
     User *user = (User *)[result firstObject];
     NSLog(@"user with id: %d", user.userId);
     [user removeRidesAsDriverObject:ride];
-
+    
 }
 
 
@@ -147,6 +172,16 @@
         [self refreshUserRides];
     }
     return  self.privateUserRides;
+}
+
+-(void)saveToPersisentStore {
+    
+    NSManagedObjectContext *context = self.user.managedObjectContext;
+    [context deleteObject:self.user];
+    NSError *error;
+    if (![context saveToPersistentStore:&error]) {
+        NSLog(@"delete error %@", [error localizedDescription]);
+    }
 }
 
 # pragma mark - Object to string

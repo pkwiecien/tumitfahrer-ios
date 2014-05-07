@@ -493,6 +493,7 @@
 		E51FD4FE18F086300098AD11 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				E59B9A621916D039008DE80B /* Edit Profile */,
 				E51FD4FF18F0864C0098AD11 /* ProfileViewController.h */,
 				E51FD50018F0864C0098AD11 /* ProfileViewController.m */,
 				E51FD50118F0864C0098AD11 /* ProfileViewController.xib */,
@@ -703,7 +704,6 @@
 		E59987C418E6DBC300B01C62 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				E59B9A621916D039008DE80B /* Edit Profile */,
 				E59B9A4D1916AB88008DE80B /* Message List */,
 				E59B9A471916A22A008DE80B /* Your Rides */,
 				E58889D81913832C0062D0DF /* New Ride Details */,
@@ -1549,8 +1549,8 @@
 					"$(PROJECT_DIR)/tumitfahrer/UbertestersSDK/**",
 					"$(PROJECT_DIR)/tumitfahrer/UbertestersSDK",
 				);
-				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
-				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = NO;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tumitfahrer/tumitfahrer-Prefix.pch";
 				INFOPLIST_FILE = "tumitfahrer/tumitfahrer-Info.plist";

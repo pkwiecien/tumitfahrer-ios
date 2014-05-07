@@ -13,5 +13,6 @@
 +(RKEntityMapping *)userMapping;
 +(RKObjectMapping *)postUserMapping;
 +(RKResponseDescriptor *)postUserResponseDescriptorWithMapping:(RKObjectMapping *)mapping;
++(RKResponseDescriptor *)putUserResponseDescriptorWithMapping:(RKObjectMapping *)mapping;
 
 @end

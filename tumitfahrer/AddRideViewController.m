@@ -271,7 +271,7 @@
 }
 
 -(void)stepperValueChanged:(NSInteger)stepperValue {
-    [self.tableValues replaceObjectAtIndex:2 withObject:[NSNumber numberWithInt:stepperValue]];
+    [self.tableValues replaceObjectAtIndex:2 withObject:[NSNumber numberWithInt:(int)stepperValue]];
 }
 
 @end

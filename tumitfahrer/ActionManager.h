@@ -22,6 +22,8 @@
 + (NSString*)encodeBase64WithCredentials:(NSString*)credentials;
 + (NSString*)decodeBase64String:(NSString*)base64String;
 + (NSString *)createSHA512:(NSString *)string;
++ (NSString *)encryptCredentialsWithEmail:(NSString *)email password:(NSString *)password;
++ (NSString *)encryptCredentialsWithEmail:(NSString *)email encryptedPassword:(NSString *)encryptedPassword;
 
 // date formatter
 + (NSString *)stringFromDate:(NSDate*)date;

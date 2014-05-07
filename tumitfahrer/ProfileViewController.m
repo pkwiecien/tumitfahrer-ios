@@ -9,6 +9,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ProfileViewController.h"
 #import "ActionManager.h"
+#import "NavigationBarUtilities.h"
+#import "EditProfileViewController.h"
 
 @interface ProfileViewController ()
 
@@ -53,55 +55,48 @@
     [self.tableView.layer setShadowRadius:3.0];
     [self.tableView.layer setShadowOffset:CGSizeMake(1.0, 1.0)];
     
-    [self.friendsButton setSelected:YES];
+    [self.ridesButton setSelected:YES];
 
-    [self.friendsButton setBackgroundImage:[ActionManager imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
     [self.ridesButton setBackgroundImage:[ActionManager imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-    [self.projectsButton setBackgroundImage:[ActionManager imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
     [self.ratingButton setBackgroundImage:[ActionManager imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
     
-    [self.friendsButton setBackgroundImage:[ActionManager imageWithColor:self.customGrayColor] forState:UIControlStateSelected];
     [self.ridesButton setBackgroundImage:[ActionManager imageWithColor:self.customGrayColor] forState:UIControlStateSelected];
-    [self.projectsButton setBackgroundImage:[ActionManager imageWithColor:self.customGrayColor] forState:UIControlStateSelected];
     [self.ratingButton setBackgroundImage:[ActionManager imageWithColor:self.customGrayColor] forState:UIControlStateSelected];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self setupNavbar];
+    //[self setupNavbar];
+    [self setupView];
+    
 }
 
--(void)setupNavbar
-{
-    UIColor *navBarColor = [UIColor colorWithRed:0 green:0.361 blue:0.588 alpha:1]; /*#0e3750*/
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setBarTintColor:navBarColor];
-    [self.navigationController.navigationBar setBackgroundImage:[ActionManager imageWithColor:navBarColor] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBarHidden = NO;
-    self.navigationController.navigationBar.translucent = NO;
+-(void)setupView {
+    self.view = [NavigationBarUtilities makeBackground:self.view];
+    UINavigationController *navController = self.navigationController;
+    [NavigationBarUtilities setupNavbar:&navController];
+    self.title = @"PROFILE";
     
-    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(showUnimplementedAlertView)];
+    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(displayEditProfilePage)];
     self.navigationItem.rightBarButtonItem = rightBarButton;
     self.title = @"PROFILE";
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 }
 
--(void)showUnimplementedAlertView
-{
-    [ActionManager showAlertViewWithTitle:@"Edit profile"];
+-(void)displayEditProfilePage {
+    
+    EditProfileViewController *editProfileVC = [[EditProfileViewController alloc] init];
+    UINavigationController *navBar = [[UINavigationController alloc] initWithRootViewController:editProfileVC];
+    [self.navigationController presentViewController:navBar animated:YES completion:nil];
 }
 
 
 # pragma mark - display left menu
--(BOOL)slideNavigationControllerShouldDisplayLeftMenu
-{
+-(BOOL)slideNavigationControllerShouldDisplayLeftMenu {
     return YES;
 }
 
-- (IBAction)friendsButtonPressed:(id)sender {
-    [self resetButtons];
-    [self.friendsButton setSelected:YES];
-}
+
 - (IBAction)ridesButtonPressed:(id)sender {
     [self resetButtons];
     [self.ridesButton setSelected:YES];
@@ -110,16 +105,11 @@
     [self resetButtons];
     [self.ratingButton setSelected:YES];
 }
-- (IBAction)projectsButtonPressed:(id)sender {
-    [self resetButtons];
-    [self.projectsButton setSelected:YES];
-}
+
 
 -(void)resetButtons
 {
-    [self.friendsButton setSelected:NO];
     [self.ridesButton setSelected:NO];
-    [self.projectsButton setSelected:NO];
     [self.ratingButton setSelected:NO];
 }
 @end

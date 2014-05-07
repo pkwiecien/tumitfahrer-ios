@@ -23,6 +23,7 @@
 #import "RequestMapping.h"
 #import "LocationController.h"
 #import "PanoramioUtilities.h"
+#import "CurrentUser.h"
 #import <UbertestersSDK/Ubertesters.h>
 
 @interface AppDelegate ()
@@ -80,6 +81,7 @@
 
 - (void)saveContext
 {
+    NSLog(@"user is still with apssword: %@", [CurrentUser sharedInstance].user.password);
     NSError *error = nil;
     NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].
     mainQueueManagedObjectContext;
@@ -185,6 +187,7 @@
     [objectManager addResponseDescriptor:[SessionMapping postSessionResponseDescriptorWithMapping:postSessionMapping]];
     RKObjectMapping *postUserMapping =[UserMapping postUserMapping];
     [objectManager addResponseDescriptor:[UserMapping postUserResponseDescriptorWithMapping:postUserMapping]];
+    [objectManager addResponseDescriptor:[UserMapping putUserResponseDescriptorWithMapping:postUserMapping]];
     RKEntityMapping *generalRidesMapping = [RideMapping generalRideMapping];
     [objectManager addResponseDescriptor:[RideMapping getRidesResponseDescriptorWithMapping:generalRidesMapping]];
     RKObjectMapping *postDeviceTokenMapping = [DeviceMapping postDeviceMapping];
@@ -195,8 +198,6 @@
     [objectManager addResponseDescriptor:[RideMapping getRideSearchesResponseDescriptorWithMapping:getRideSearchesMapping]];
     RKEntityMapping *requestMapping = [RequestMapping requestMapping];
     [objectManager addResponseDescriptor:[RequestMapping postRequestResponseDescriptorWithMapping:requestMapping]];
-    
-    //[objectManager addResponseDescriptor:[RideMapping getRidesAsDriverResponseDescriptorWithMapping:generalRidesMapping]];
 }
 
 -(void)setupObservers {

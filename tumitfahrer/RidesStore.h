@@ -23,13 +23,17 @@
 
 + (instancetype)sharedStore;
 
+- (NSArray *)allRides;
 - (NSArray *)allCampusRides;
 - (NSArray *)allActivityRides;
 - (NSArray *)allRideRequests;
 - (NSArray *)allRidesByType:(ContentType)contentType;
 - (Ride *)getRideWithId:(NSInteger)rideId;
+- (Ride *)containsRideWithId:(NSInteger)rideId;
 - (NSArray *)rideRequestForUserWithId:(NSInteger)userId;
 - (void)fetchRidesFromCoreDataByType:(ContentType)contentType;
+- (void)fetchRidesFromWebservice:(boolCompletionHandler)block;
+- (void)fetchNextRides:(boolCompletionHandler)block;
 - (void)deleteRideFromCoreData:(Ride *)ride;
 - (void)deleteRideRequestFromCoreData:(Request *)request;
 

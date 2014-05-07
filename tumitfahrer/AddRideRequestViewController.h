@@ -15,9 +15,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *departureTextField;
 @property (weak, nonatomic) IBOutlet UITextField *destinationTextField;
 @property (weak, nonatomic) IBOutlet UITextField *dateTextField;
-@property (weak, nonatomic) IBOutlet UIButton *searchButton;
+@property (weak, nonatomic) IBOutlet UIButton *requestButton;
 
-- (IBAction)searchButtonPressed:(id)sender;
+- (IBAction)requestRideButtonPressed:(id)sender;
 - (IBAction)dismissKeyboard:(id)sender;
 
 @end

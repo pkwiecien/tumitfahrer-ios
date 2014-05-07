@@ -20,12 +20,15 @@
         return nil;
     }
     NSArray *devices = parsedObject[@"devices"];
+    if(devices == nil)
+        return nil;
+    
     NSMutableArray *deviceTokens = [[NSMutableArray alloc] init];
-
+    
     for(NSMutableDictionary *device in devices) {
         [deviceTokens addObject:device[@"token"]];
     }
-
+    
     return deviceTokens;
 }
 

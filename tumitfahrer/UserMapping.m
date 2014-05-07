@@ -44,4 +44,11 @@
     return responseDescriptor;
 }
 
++(RKResponseDescriptor *)putUserResponseDescriptorWithMapping:(RKObjectMapping *)mapping {
+    // create response description for user's session
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodPUT                                                                                       pathPattern:API_USERS                                                                                           keyPath:nil                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    return responseDescriptor;
+}
+
 @end

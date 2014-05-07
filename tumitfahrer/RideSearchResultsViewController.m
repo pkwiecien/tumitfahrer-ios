@@ -8,11 +8,12 @@
 
 #import "RideSearchResultsViewController.h"
 #import "ActionManager.h"
-#import "RideDetailsViewController.h"
+#import "RideDetailViewController.h"
 #import "RideSearchStore.h"
 #import "RideSearch.h"
 #import "CvLayout.h"
 #import "NavigationBarUtilities.h"
+#import "RidesStore.h"
 
 @interface RideSearchResultsViewController ()
 
@@ -69,6 +70,7 @@
     
     UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:5];
     RideSearch *ride = [[[RideSearchStore sharedStore] allSearchResults] objectAtIndex:indexPath.row];
+    NSLog(@"currenlty ride: %d", ride.rideId);
     if(ride.destinationImage == nil) {
         imageView.image = [UIImage imageNamed:@"PlaceholderImage"];
     } else {
@@ -88,9 +90,15 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    RideDetailsViewController *rideDetailsVC = [[RideDetailsViewController alloc] init];
-    rideDetailsVC.selectedRide = [[[RideSearchStore sharedStore] allSearchResults] objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:rideDetailsVC animated:YES];
+    RideSearch *rideSearch = [[[RideSearchStore sharedStore] allSearchResults] objectAtIndex:indexPath.row];
+    Ride *ride = [[RidesStore sharedStore] containsRideWithId:rideSearch.rideId];
+    
+    if (ride != nil) {
+        RideDetailViewController *rideDetailsVC = [[RideDetailViewController alloc] init];
+        rideDetailsVC.ride = ride;
+        [self.navigationController pushViewController:rideDetailsVC animated:YES];
+    }
+
 }
 
 #pragma mark – UICollectionViewDelegateFlowLayout

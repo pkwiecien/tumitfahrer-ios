@@ -94,7 +94,7 @@
 - (IBAction)loginButtonPressed:(id)sender {
     
     // firstly check if the user was previously stored in core data
-    if ([CurrentUser fetchUserFromCoreDataWithEmail:self.emailTextField.text]) {
+    if ([CurrentUser fetchUserFromCoreDataWithEmail:self.emailTextField.text encryptedPassword:[ActionManager createSHA512:self.passwordTextField.text]] ) {
         // user fetched successfully from core data
         [self storeCurrentUserInDefaults];
         [[SlideNavigationController sharedInstance] popToRootViewControllerAnimated:NO];
@@ -108,22 +108,31 @@
 - (void)createUserSession {
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
+    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[ActionManager encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
     
     [objectManager postObject:nil path:@"/api/v2/sessions" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        [CurrentUser sharedInstance].user = (User *)[mappingResult firstObject];
-        RKLogInfo(@"Load complete, current user %@!", [CurrentUser sharedInstance].user.firstName);
+        User *user = (User *)[mappingResult firstObject];
+        user.password = [ActionManager createSHA512:self.passwordTextField.text];
+        [CurrentUser sharedInstance].user = user;
+        
+        RKLogInfo(@"Load complete, current user %@ with id: %d!", [CurrentUser sharedInstance].user, [CurrentUser sharedInstance].user.userId);
+        
+        NSError *error;
+        if (![[CurrentUser sharedInstance].user.managedObjectContext saveToPersistentStore:&error]) {
+            NSLog(@"Whoops");
+        }
         
         // check if everything is OK with user rides as driver
         for (Ride *ride in [CurrentUser sharedInstance].user.ridesAsDriver) {
             NSLog(@"ride of user: %d %@", ride.rideId, ride.destination);
         }
         
+        RKLogInfo(@"Load complete, current user %@ with id: %d!", [CurrentUser sharedInstance].user, [CurrentUser sharedInstance].user.userId);
+
+        
         // check if fetch user has assigned a device token
         [self checkDeviceToken];
-        
-        //[self getUserRidesAsDriver];
-        
+                
         [self storeCurrentUserInDefaults];
         [self dismissViewControllerAnimated:YES completion:nil];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -174,7 +183,7 @@
     
     [[CurrentUser sharedInstance] hasDeviceTokenInWebservice:^(BOOL tokenExistsInDatabase) {
         // device token is not in db, need to send it
-        if (!tokenExistsInDatabase) {
+        if (!tokenExistsInDatabase && [CurrentUser sharedInstance].user.userId > 0) {
             [[CurrentUser sharedInstance] sendDeviceTokenToWebservice];
         }
     }];
@@ -233,15 +242,6 @@
     }
     
     return self.fetchedResultsController;
-}
-
--(NSString *)encryptCredentialsWithEmail:(NSString *)email password:(NSString *)password {
-    
-    NSString *encryptedPassword = [ActionManager createSHA512:password];
-    NSString *credentials = [NSString stringWithFormat:@"%@:%@", email, encryptedPassword];
-    NSString *encryptedCredentials = [ActionManager encodeBase64WithCredentials:credentials];
-    
-    return encryptedCredentials;
 }
 
 

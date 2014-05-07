@@ -13,6 +13,8 @@
 +(YourRidesCell *)yourRidesCell {
     
     YourRidesCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"YourRidesCell" owner:self options:nil] objectAtIndex:0];
+    
+    cell.rideImage.layer.cornerRadius = 4.0;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.layer.cornerRadius = 4;
     cell.layer.borderColor = [UIColor blackColor].CGColor;

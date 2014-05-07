@@ -63,13 +63,12 @@
     [buttonWithImage setTag:tag];
     [buttonWithImage addTarget:self action:@selector(passengerCellPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:buttonWithImage];
-    
 }
 
 
 - (void)passengerCellPressed:(id)sender {
     UIButton *button = (UIButton *)sender;
-    NSLog(@"BUtton with tag %d", [button tag]);
+    NSLog(@"BUtton with tag %d", (int)[button tag]);
 }
 
 @end

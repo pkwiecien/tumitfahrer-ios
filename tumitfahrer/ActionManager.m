@@ -101,6 +101,20 @@
     return [response substringWithRange:NSMakeRange(1, response.length-2)];
 }
 
++ (NSString *)encryptCredentialsWithEmail:(NSString *)email password:(NSString *)password {
+    
+    NSString *encryptedPassword = [ActionManager createSHA512:password];
+    return [self encryptCredentialsWithEmail:email encryptedPassword:encryptedPassword];
+}
+
++ (NSString *)encryptCredentialsWithEmail:(NSString *)email encryptedPassword:(NSString *)encryptedPassword {
+    
+    NSString *credentials = [NSString stringWithFormat:@"%@:%@", email, encryptedPassword];
+    NSString *encryptedCredentials = [ActionManager encodeBase64WithCredentials:credentials];
+    
+    return encryptedCredentials;
+}
+
 # pragma mark - date formatter
 
 + (NSString *)stringFromDate:(NSDate*)date {

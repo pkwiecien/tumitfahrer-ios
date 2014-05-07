@@ -25,7 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     self.departureTextField.delegate = self;
@@ -74,7 +74,10 @@
                     RideSearch *ride = [[RideSearchStore sharedStore] rideWithId:rideSearchResult.rideId];
                     ride.destinationLatitude = location.coordinate.latitude;
                     ride.destinationLongitude = location.coordinate.longitude;
-                    ride.destinationImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:photoUrl]];
+                    UIImage *image =[[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:photoUrl]];
+                    if(image) {
+                        ride.destinationImage = UIImagePNGRepresentation(image);
+                    }
                     [searchResultsVC reloadDataAtIndex:0];
                 }];
             }
