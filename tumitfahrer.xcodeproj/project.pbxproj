@@ -10,6 +10,8 @@
 		068F5848AB864309B2DEC0B8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAEC5882914944C4B8E2DE24 /* libPods.a */; };
 		6E4E133C1913F7B300D0C453 /* XCTest+GCovFlush.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4E133B1913F7B300D0C453 /* XCTest+GCovFlush.m */; };
 		6E4E133F1913F7BF00D0C453 /* UIApplication+GCovFlush.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4E133E1913F7BF00D0C453 /* UIApplication+GCovFlush.m */; };
+		6EB5C89A191CEFDA0026A886 /* FacultyManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5C899191CEFDA0026A886 /* FacultyManagerTests.m */; };
+		6EB5C89C191CF32A0026A886 /* LocationControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5C89B191CF32A0026A886 /* LocationControllerTests.m */; };
 		E504D9BC190A58710036FFA8 /* MeetingPointViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9BA190A58710036FFA8 /* MeetingPointViewController.m */; };
 		E504D9BD190A58710036FFA8 /* MeetingPointViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E504D9BB190A58710036FFA8 /* MeetingPointViewController.xib */; };
 		E504D9C2190A6C940036FFA8 /* DestinationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9C0190A6C940036FFA8 /* DestinationViewController.m */; };
@@ -162,11 +164,25 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		6EB5C89D191CF8A00026A886 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		6E4E133A1913F7B300D0C453 /* XCTest+GCovFlush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTest+GCovFlush.h"; sourceTree = "<group>"; };
 		6E4E133B1913F7B300D0C453 /* XCTest+GCovFlush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTest+GCovFlush.m"; sourceTree = "<group>"; };
 		6E4E133D1913F7BF00D0C453 /* UIApplication+GCovFlush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+GCovFlush.h"; sourceTree = "<group>"; };
 		6E4E133E1913F7BF00D0C453 /* UIApplication+GCovFlush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+GCovFlush.m"; sourceTree = "<group>"; };
+		6EB5C899191CEFDA0026A886 /* FacultyManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacultyManagerTests.m; sourceTree = "<group>"; };
+		6EB5C89B191CF32A0026A886 /* LocationControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationControllerTests.m; sourceTree = "<group>"; };
 		BAEC5882914944C4B8E2DE24 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C71CE6059C014DFABC5B4F22 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		E504D9B9190A58710036FFA8 /* MeetingPointViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetingPointViewController.h; sourceTree = "<group>"; };
@@ -584,10 +600,12 @@
 		E522BADE18AE13F600ECD375 /* tumitfahrerTests */ = {
 			isa = PBXGroup;
 			children = (
+				E58889CC191291060062D0DF /* ActionManagerTests.m */,
+				6EB5C899191CEFDA0026A886 /* FacultyManagerTests.m */,
+				E522BADF18AE13F600ECD375 /* Supporting Files */,
 				6E4E133A1913F7B300D0C453 /* XCTest+GCovFlush.h */,
 				6E4E133B1913F7B300D0C453 /* XCTest+GCovFlush.m */,
-				E58889CC191291060062D0DF /* ActionManagerTests.m */,
-				E522BADF18AE13F600ECD375 /* Supporting Files */,
+				6EB5C89B191CF32A0026A886 /* LocationControllerTests.m */,
 			);
 			path = tumitfahrerTests;
 			sourceTree = "<group>";
@@ -1106,6 +1124,7 @@
 				E522BAD418AE13F600ECD375 /* Frameworks */,
 				E522BAD518AE13F600ECD375 /* Resources */,
 				37E7F40B779540A7B19A4A57 /* Copy Pods Resources */,
+				6EB5C89D191CF8A00026A886 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1372,7 +1391,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6EB5C89C191CF32A0026A886 /* LocationControllerTests.m in Sources */,
 				6E4E133C1913F7B300D0C453 /* XCTest+GCovFlush.m in Sources */,
+				6EB5C89A191CEFDA0026A886 /* FacultyManagerTests.m in Sources */,
 				E58889CD191291060062D0DF /* ActionManagerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
