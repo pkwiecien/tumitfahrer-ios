@@ -18,7 +18,7 @@
 + (UIImage *)imageWithColor:(UIColor *)color;
 + (UIImage *)cropImage:(UIImage *)image newRect:(CGRect)rect;
 
-// enctryption untilities
+// encryption untilities
 + (NSString*)encodeBase64WithCredentials:(NSString*)credentials;
 + (NSString*)decodeBase64String:(NSString*)base64String;
 + (NSString *)createSHA512:(NSString *)string;
