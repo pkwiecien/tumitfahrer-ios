@@ -7,7 +7,6 @@
 //
 #import <QuartzCore/QuartzCore.h>
 #import "BrowseRidesViewController.h"
-#import "RideDetailsViewController.h"
 #import "CvLayout.h"
 #import "RidesStore.h"
 #import "Ride.h"

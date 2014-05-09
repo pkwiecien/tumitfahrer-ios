@@ -15,8 +15,9 @@
 #import "RideRequestsViewController.h"
 #import <SlideNavigationController.h>
 #import "Ride.h"
+#import "EAIntroView.h"
 
-@interface LoginViewController () <NSFetchedResultsControllerDelegate>
+@interface LoginViewController () <NSFetchedResultsControllerDelegate, EAIntroDelegate>
 
 @property CustomTextField *emailTextField;
 @property CustomTextField *passwordTextField;
@@ -141,44 +142,6 @@
     }];
 }
 
-
-/*-(void)getUserRidesAsDriver {
-    RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    
-    NSString *path = [NSString stringWithFormat:@"/api/v2/users/%d/rides?driver", [CurrentUser sharedInstance].user.userId];
-    [objectManager getObject:self path:path parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        NSArray *rides = [mappingResult array];
-        for (Ride *ride in rides) {
-            NSLog(@"ride id: %d, destination: %@", ride.rideId, ride.destination);
-        }
-//
-//        NSFetchRequest *request = [[NSFetchRequest alloc] init];
-//        NSEntityDescription *e = [NSEntityDescription entityForName:@"User"
-//                                             inManagedObjectContext:[RKManagedObjectStore defaultStore].
-//                                  mainQueueManagedObjectContext];
-//        NSPredicate *predicate;
-//        predicate = [NSPredicate predicateWithFormat:@"(userId = %d)", [CurrentUser sharedInstance].user.userId];
-//        
-//        [request setPredicate:predicate];
-//        [request setReturnsObjectsAsFaults:NO];
-//        
-//        request.entity = e;
-//        
-//        NSError *error;
-//        NSArray *fetchedObjects = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:&error];
-//        if (!fetchedObjects) {
-//            [NSException raise:@"Fetch failed"
-//                        format:@"Reason: %@", [error localizedDescription]];
-//        }
-        
-//        User *user = [fetchedObjects firstObject];
-        [CurrentUser sharedInstance].user.ridesAsDriver = [NSSet setWithArray:rides];
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", [error localizedDescription]);
-    }];
-}*/
-
-
 -(void)checkDeviceToken {
     
     [[CurrentUser sharedInstance] hasDeviceTokenInWebservice:^(BOOL tokenExistsInDatabase) {
@@ -209,6 +172,35 @@
 
 - (IBAction)dismissKeyboard:(id)sender {
     [self.view endEditing:YES];
+}
+
+- (IBAction)showIntroButtonPressed:(id)sender {
+    
+    // first intro page
+    EAIntroPage *page1 = [EAIntroPage page];
+    page1.title = @"Hello world";
+    page1.titlePositionY = 220;
+    page1.desc = @"this is sampe description";
+    page1.descPositionY = 200;
+    page1.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CircleBlue"]];
+    page1.titleIconPositionY = 100;
+    page1.bgImage = [ActionManager imageWithColor:[[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"TweedPattern"]]];
+    
+    // second intro page
+    EAIntroPage *page2 = [EAIntroPage page];
+    page2.title = @"This is page 2";
+    page2.titlePositionY = 220;
+    page2.desc = @"this is sampel description";
+    page2.descPositionY = 200;
+    page2.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CircleBlue"]];
+    page2.titleIconPositionY = 100;
+    page2.bgImage = [ActionManager imageWithColor:[[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"TweedPattern"]]];
+
+
+    EAIntroView *intro = [[EAIntroView alloc] initWithFrame:self.view.bounds andPages:@[page1, page2]];
+    intro.delegate = self;
+    [intro showInView:self.view animateDuration:0.0];
+
 }
 
 -(void)tapRecognized

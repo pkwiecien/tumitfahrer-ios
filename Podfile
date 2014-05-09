@@ -11,12 +11,19 @@ pod 'AFNetworking', '~> 1.2'
 # pod to make interacting with RESTful API simple
 pod 'RestKit'
 # pod with date selection controller
-pod "RMDateSelectionViewController"
+pod 'RMDateSelectionViewController'
 # implementation of mock objects
 pod 'OCMock'
 # chat UI
 pod 'JSMessagesViewController'
 # pod for websockets
-pod 'SocketRocket', '~> 0.3'
-# pod : pull down to refresh uicollection view
+pod 'SocketRocket'
+# pod: pull down to refresh uicollection view
 pod 'SVPullToRefresh'
+# pod: intro page
+pod 'EAIntroView'
+# pod: circular photo
+pod 'NZCircularImageView'
+# full screen image viewer with image zoom custom view controller transition
+pod 'Vertigo'
+

@@ -7,7 +7,6 @@
 //
 
 #import "RideRequestsViewController.h"
-#import "RideDetailsViewController.h"
 #import "LoginViewController.h"
 #import "CustomTextField.h"
 #import "MenuViewController.h"
@@ -18,6 +17,7 @@
 #import "User.h"
 #import "CurrentUser.h"
 #import "Ride.h"
+#import "RideDetailViewController.h"
 
 @interface RideRequestsViewController ()
 
@@ -154,8 +154,8 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    RideDetailsViewController *rideDetailsVC = [[RideDetailsViewController alloc] init];
-    rideDetailsVC.selectedRide = [[[RidesStore sharedStore] allRideRequests] objectAtIndex:indexPath.row];
+    RideDetailViewController *rideDetailsVC = [[RideDetailViewController alloc] init];
+    rideDetailsVC.ride = [[[RidesStore sharedStore] allRideRequests] objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:rideDetailsVC animated:YES];
 }
 

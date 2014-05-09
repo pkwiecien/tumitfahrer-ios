@@ -107,8 +107,6 @@
 		E59B9A6A1916D072008DE80B /* NavigationBarUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E59B9A691916D072008DE80B /* NavigationBarUtilities.m */; };
 		E59B9A6E1916D346008DE80B /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59B9A6C1916D346008DE80B /* EditProfileViewController.m */; };
 		E59B9A6F1916D346008DE80B /* EditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59B9A6D1916D346008DE80B /* EditProfileViewController.xib */; };
-		E5DF641018EB46F900D53164 /* RideDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DF640E18EB46F900D53164 /* RideDetailsViewController.m */; };
-		E5DF641118EB46F900D53164 /* RideDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DF640F18EB46F900D53164 /* RideDetailsViewController.xib */; };
 		E5DF641518EB548E00D53164 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DF641318EB548E00D53164 /* SettingsViewController.m */; };
 		E5DF641618EB548E00D53164 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DF641418EB548E00D53164 /* SettingsViewController.xib */; };
 		E5DF641B18EB56A600D53164 /* BrowseRidesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DF641918EB56A600D53164 /* BrowseRidesViewController.m */; };
@@ -327,9 +325,6 @@
 		E59B9A6B1916D346008DE80B /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
 		E59B9A6C1916D346008DE80B /* EditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
 		E59B9A6D1916D346008DE80B /* EditProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileViewController.xib; sourceTree = "<group>"; };
-		E5DF640D18EB46F900D53164 /* RideDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideDetailsViewController.h; sourceTree = "<group>"; };
-		E5DF640E18EB46F900D53164 /* RideDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideDetailsViewController.m; sourceTree = "<group>"; };
-		E5DF640F18EB46F900D53164 /* RideDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RideDetailsViewController.xib; sourceTree = "<group>"; };
 		E5DF641218EB548E00D53164 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		E5DF641318EB548E00D53164 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		E5DF641418EB548E00D53164 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
@@ -556,9 +551,6 @@
 		E522BABF18AE13F600ECD375 /* tumitfahrer */ = {
 			isa = PBXGroup;
 			children = (
-				6E4E133D1913F7BF00D0C453 /* UIApplication+GCovFlush.h */,
-				6E4E133E1913F7BF00D0C453 /* UIApplication+GCovFlush.m */,
-				E58889E51913C7010062D0DF /* UbertestersSDK */,
 				E522BAC818AE13F600ECD375 /* AppDelegate.h */,
 				E522BAC918AE13F600ECD375 /* AppDelegate.m */,
 				E522BAD118AE13F600ECD375 /* Images.xcassets */,
@@ -566,7 +558,10 @@
 				E50DB26C18F52E5900E87E62 /* RKMappings */,
 				E522BAC018AE13F600ECD375 /* Supporting Files */,
 				E51FD51818F3D2590098AD11 /* tumitfahrer.xcdatamodeld */,
+				E58889E51913C7010062D0DF /* UbertestersSDK */,
 				E59987D418E6ECD800B01C62 /* UI Elements */,
+				6E4E133D1913F7BF00D0C453 /* UIApplication+GCovFlush.h */,
+				6E4E133E1913F7BF00D0C453 /* UIApplication+GCovFlush.m */,
 				E599882218E8155800B01C62 /* Utilities */,
 				E59987C418E6DBC300B01C62 /* ViewControllers */,
 				E599886618E860FA00B01C62 /* zLibraries */,
@@ -704,23 +699,22 @@
 		E59987C418E6DBC300B01C62 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				E59B9A4D1916AB88008DE80B /* Message List */,
-				E59B9A471916A22A008DE80B /* Your Rides */,
-				E58889D81913832C0062D0DF /* New Ride Details */,
-				E5DF641718EB569800D53164 /* Browse Ride */,
 				E5E2155A1907A92700B0B150 /* Add Ride */,
 				E5FA642819124F2500C04BFF /* Add Ride Request */,
+				E5DF641718EB569800D53164 /* Browse Ride */,
 				E5DF642418EB68F500D53164 /* Campus Rides */,
 				E59987FD18E72BD100B01C62 /* Forgot Password */,
 				E599880718E7835F00B01C62 /* Left Menu */,
 				E59987CC18E6E3A100B01C62 /* Login */,
+				E59B9A4D1916AB88008DE80B /* Message List */,
+				E58889D81913832C0062D0DF /* New Ride Details */,
 				E51FD4FE18F086300098AD11 /* Profile */,
 				E59987F718E724F900B01C62 /* Register */,
-				E5DF640C18EB46E400D53164 /* Ride Details */,
 				E59987CB18E6DC2700B01C62 /* Ride Requests */,
 				E5FA641D191226F400C04BFF /* Ride Search Results */,
 				E5E2155B1907A92D00B0B150 /* Search Ride */,
 				E5DF640B18EB42D800D53164 /* Settings */,
+				E59B9A471916A22A008DE80B /* Your Rides */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -954,16 +948,6 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
-		E5DF640C18EB46E400D53164 /* Ride Details */ = {
-			isa = PBXGroup;
-			children = (
-				E5DF640D18EB46F900D53164 /* RideDetailsViewController.h */,
-				E5DF640E18EB46F900D53164 /* RideDetailsViewController.m */,
-				E5DF640F18EB46F900D53164 /* RideDetailsViewController.xib */,
-			);
-			name = "Ride Details";
-			sourceTree = "<group>";
-		};
 		E5DF641718EB569800D53164 /* Browse Ride */ = {
 			isa = PBXGroup;
 			children = (
@@ -1176,7 +1160,6 @@
 			files = (
 				E599880218E72BF600B01C62 /* ForgotPasswordViewController.xib in Resources */,
 				E5E215651907A95F00B0B150 /* SearchRideViewController.xib in Resources */,
-				E5DF641118EB46F900D53164 /* RideDetailsViewController.xib in Resources */,
 				E51FD50518F1615B0098AD11 /* RideCell.xib in Resources */,
 				E5DF642118EB64BD00D53164 /* CollectionCell.xib in Resources */,
 				E58889E91913C7010062D0DF /* UbertestersSDKResources.bundle in Resources */,
@@ -1313,7 +1296,6 @@
 				E5DF641B18EB56A600D53164 /* BrowseRidesViewController.m in Sources */,
 				E599887318E8616200B01C62 /* HATransitionLayout.m in Sources */,
 				E5FDDBCB18EE79F900CE7B01 /* RideSearchResultsViewController.m in Sources */,
-				E5DF641018EB46F900D53164 /* RideDetailsViewController.m in Sources */,
 				E59987D018E6E47F00B01C62 /* LoginViewController.m in Sources */,
 				E50DB28218F86F8000E87E62 /* UserMapping.m in Sources */,
 				6E4E133F1913F7BF00D0C453 /* UIApplication+GCovFlush.m in Sources */,
@@ -1549,7 +1531,7 @@
 					"$(PROJECT_DIR)/tumitfahrer/UbertestersSDK/**",
 					"$(PROJECT_DIR)/tumitfahrer/UbertestersSDK",
 				);
-				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tumitfahrer/tumitfahrer-Prefix.pch";

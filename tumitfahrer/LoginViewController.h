@@ -18,5 +18,7 @@
 - (IBAction)registerButtonPressed:(id)sender;
 - (IBAction)forgotPasswordButtonPressed:(id)sender;
 - (IBAction)dismissKeyboard:(id)sender;
+- (IBAction)showIntroButtonPressed:(id)sender;
+
 
 @end

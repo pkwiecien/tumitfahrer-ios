@@ -248,6 +248,7 @@
         [objectManager deleteObject:request path:[NSString stringWithFormat:@"/api/v2/rides/%d/requests/%d", self.ride.rideId, request.requestId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
 
             [KGStatusBar showSuccessWithStatus:@"Request canceled"];
+            
             [self.ride removeRequestsObject:request];
             [[RidesStore sharedStore] deleteRideRequestFromCoreData:request];
             
