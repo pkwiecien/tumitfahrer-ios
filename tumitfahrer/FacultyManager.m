@@ -57,6 +57,9 @@
 
 // return name of a specific faculty
 -(NSString *)nameOfFacultyAtIndex:(NSInteger)index {
+    if(index < 0 || index >= [self.facultyArray count])
+        return @"";
+    
     Faculty *faculty = [self.facultyArray objectAtIndex:index];
     return faculty.name;
 }

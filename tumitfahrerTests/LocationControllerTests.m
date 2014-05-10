@@ -10,6 +10,7 @@
 #import "LocationController.h"
 #import "RideRequestsViewController.h"
 #import <OCMock/OCMock.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface LocationControllerTests : XCTestCase<LocationControllerDelegate>
 
@@ -31,22 +32,14 @@
 
 - (void)testFetchLocationForAddress
 {
-    LocationController *controller = [[LocationController alloc]init];
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    [geocoder geocodeAddressString:@"garching" completionHandler:^(NSArray* placemarks, NSError* error){
-        
-        CLPlacemark *aPlacemark = [placemarks firstObject];
-        
-        // Process the placemark.
-        CLLocation *location = [[CLLocation alloc] initWithLatitude:aPlacemark.location.coordinate.latitude longitude:aPlacemark.location.coordinate.longitude];
-        NSLog(@"Country is %@", aPlacemark.country);
-        //[self notifyAllAboutNewLocation:location rideWithRideId:rideId];
-    }];
-    //[controller fetchLocationForAddress:@"garching" rideId:1];
+    [[LocationController sharedInstance] addObserver:self];
+    [[LocationController sharedInstance] fetchLocationForAddress:@"Garching" rideId:0];
+    
+    // somehow the inner block of fetchLocationForAddress is not called during a test
+    // you need to find a way how to test asynchronous calls
 }
 
-
-- (void)didReceiveCurrentLocation:(CLLocation *)location {
+- (void)didReceiveLocationForAddress:(CLLocation *)location rideId:(NSInteger)rideId{
     CLGeocoder *geocoder =[[CLGeocoder alloc]init];
     [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
         if(error){

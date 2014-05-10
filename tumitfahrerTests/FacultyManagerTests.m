@@ -31,8 +31,7 @@
 {
     NSInteger index = 1;
     NSString *expectedString = @"Chemistry";
-    FacultyManager *manager = [[FacultyManager alloc] init];
-    NSString *stringFromFunction = [manager nameOfFacultyAtIndex:index];
+    NSString *stringFromFunction = [[FacultyManager sharedInstance] nameOfFacultyAtIndex:index];
     
     XCTAssertTrue([expectedString isEqualToString:stringFromFunction], @"String is not equal %@ %@", expectedString, stringFromFunction);
     
@@ -42,18 +41,17 @@
 {
     NSInteger index = -1;
     NSString *expectedString = @"";
-    FacultyManager *manager = [[FacultyManager alloc] init];
-    NSString *stringFromFunction = [manager nameOfFacultyAtIndex:index];
+    NSString *stringFromFunction = [[FacultyManager sharedInstance] nameOfFacultyAtIndex:index];
     
     XCTAssertTrue([expectedString isEqualToString:stringFromFunction], @"String is not equal %@ %@", expectedString, stringFromFunction);
 }
 
 - (void)testNameOfFacultyAtIndexWithOverBound
 {
-    NSInteger index = 13;
+    NSInteger index = [[[FacultyManager sharedInstance] allFaculties] count]; // index is one more than index of last element
     NSString *expectedString = @"";
-    FacultyManager *manager = [[FacultyManager alloc] init];
-    NSString *stringFromFunction = [manager nameOfFacultyAtIndex:index];
+
+    NSString *stringFromFunction = [[FacultyManager sharedInstance] nameOfFacultyAtIndex:index];
     
     XCTAssertTrue([expectedString isEqualToString:stringFromFunction], @"String is not equal %@ %@", expectedString, stringFromFunction);
     
