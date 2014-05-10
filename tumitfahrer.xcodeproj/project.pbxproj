@@ -26,6 +26,10 @@
 		E50CCC10191E529A003A9490 /* TimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCC0E191E529A003A9490 /* TimelineViewController.m */; };
 		E50CCC11191E529A003A9490 /* TimelineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50CCC0F191E529A003A9490 /* TimelineViewController.xib */; };
 		E50CCC14191E54F1003A9490 /* UIViewController+SideBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCC13191E54F1003A9490 /* UIViewController+SideBarController.m */; };
+		E50CCC1A191E5885003A9490 /* TimelineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCC18191E5885003A9490 /* TimelineCell.m */; };
+		E50CCC1B191E5885003A9490 /* TimelineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50CCC19191E5885003A9490 /* TimelineCell.xib */; };
+		E50CCC1F191E6A6E003A9490 /* LogoView.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCC1E191E6A6E003A9490 /* LogoView.m */; };
+		E50CCC21191E6A7E003A9490 /* LogoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50CCC20191E6A7E003A9490 /* LogoView.xib */; };
 		E50DB26B18F447B800E87E62 /* CurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB26A18F447B800E87E62 /* CurrentUser.m */; };
 		E50DB26F18F52E8500E87E62 /* StatusMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB26E18F52E8500E87E62 /* StatusMapping.m */; };
 		E50DB27218F5DFB200E87E62 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB27118F5DFB200E87E62 /* LocationController.m */; };
@@ -213,6 +217,12 @@
 		E50CCC0F191E529A003A9490 /* TimelineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimelineViewController.xib; sourceTree = "<group>"; };
 		E50CCC12191E54F1003A9490 /* UIViewController+SideBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SideBarController.h"; sourceTree = "<group>"; };
 		E50CCC13191E54F1003A9490 /* UIViewController+SideBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SideBarController.m"; sourceTree = "<group>"; };
+		E50CCC17191E5885003A9490 /* TimelineCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineCell.h; sourceTree = "<group>"; };
+		E50CCC18191E5885003A9490 /* TimelineCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineCell.m; sourceTree = "<group>"; };
+		E50CCC19191E5885003A9490 /* TimelineCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimelineCell.xib; sourceTree = "<group>"; };
+		E50CCC1D191E6A6E003A9490 /* LogoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogoView.h; sourceTree = "<group>"; };
+		E50CCC1E191E6A6E003A9490 /* LogoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogoView.m; sourceTree = "<group>"; };
+		E50CCC20191E6A7E003A9490 /* LogoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LogoView.xib; sourceTree = "<group>"; };
 		E50DB26918F447B800E87E62 /* CurrentUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentUser.h; sourceTree = "<group>"; };
 		E50DB26A18F447B800E87E62 /* CurrentUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentUser.m; sourceTree = "<group>"; };
 		E50DB26D18F52E8500E87E62 /* StatusMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusMapping.h; sourceTree = "<group>"; };
@@ -493,11 +503,44 @@
 		E50CCC0C191E5288003A9490 /* Timeline */ = {
 			isa = PBXGroup;
 			children = (
+				E50CCC1C191E6A5B003A9490 /* Logo View */,
+				E50CCC16191E586A003A9490 /* Timeline Cell */,
 				E50CCC0D191E529A003A9490 /* TimelineViewController.h */,
 				E50CCC0E191E529A003A9490 /* TimelineViewController.m */,
 				E50CCC0F191E529A003A9490 /* TimelineViewController.xib */,
 			);
 			name = Timeline;
+			sourceTree = "<group>";
+		};
+		E50CCC15191E5844003A9490 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				6E4E133D1913F7BF00D0C453 /* UIApplication+GCovFlush.h */,
+				6E4E133E1913F7BF00D0C453 /* UIApplication+GCovFlush.m */,
+				E50CCC12191E54F1003A9490 /* UIViewController+SideBarController.h */,
+				E50CCC13191E54F1003A9490 /* UIViewController+SideBarController.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		E50CCC16191E586A003A9490 /* Timeline Cell */ = {
+			isa = PBXGroup;
+			children = (
+				E50CCC17191E5885003A9490 /* TimelineCell.h */,
+				E50CCC18191E5885003A9490 /* TimelineCell.m */,
+				E50CCC19191E5885003A9490 /* TimelineCell.xib */,
+			);
+			name = "Timeline Cell";
+			sourceTree = "<group>";
+		};
+		E50CCC1C191E6A5B003A9490 /* Logo View */ = {
+			isa = PBXGroup;
+			children = (
+				E50CCC1D191E6A6E003A9490 /* LogoView.h */,
+				E50CCC1E191E6A6E003A9490 /* LogoView.m */,
+				E50CCC20191E6A7E003A9490 /* LogoView.xib */,
+			);
+			name = "Logo View";
 			sourceTree = "<group>";
 		};
 		E50DB26C18F52E5900E87E62 /* RKMappings */ = {
@@ -585,6 +628,7 @@
 		E522BABF18AE13F600ECD375 /* tumitfahrer */ = {
 			isa = PBXGroup;
 			children = (
+				E50CCC15191E5844003A9490 /* Categories */,
 				E522BAC818AE13F600ECD375 /* AppDelegate.h */,
 				E522BAC918AE13F600ECD375 /* AppDelegate.m */,
 				E522BAD118AE13F600ECD375 /* Images.xcassets */,
@@ -594,8 +638,6 @@
 				E51FD51818F3D2590098AD11 /* tumitfahrer.xcdatamodeld */,
 				E58889E51913C7010062D0DF /* UbertestersSDK */,
 				E59987D418E6ECD800B01C62 /* UI Elements */,
-				6E4E133D1913F7BF00D0C453 /* UIApplication+GCovFlush.h */,
-				6E4E133E1913F7BF00D0C453 /* UIApplication+GCovFlush.m */,
 				E599882218E8155800B01C62 /* Utilities */,
 				E59987C418E6DBC300B01C62 /* ViewControllers */,
 				E599886618E860FA00B01C62 /* zLibraries */,
@@ -866,8 +908,6 @@
 				E59B9A691916D072008DE80B /* NavigationBarUtilities.m */,
 				E50DB28F18F881BC00E87E62 /* PanoramioUtilities.h */,
 				E50DB29018F881BC00E87E62 /* PanoramioUtilities.m */,
-				E50CCC12191E54F1003A9490 /* UIViewController+SideBarController.h */,
-				E50CCC13191E54F1003A9490 /* UIViewController+SideBarController.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1216,10 +1256,12 @@
 				E58889DD191383570062D0DF /* RideDetailViewController.xib in Resources */,
 				E522BAD218AE13F600ECD375 /* Images.xcassets in Resources */,
 				E50CCC11191E529A003A9490 /* TimelineViewController.xib in Resources */,
+				E50CCC1B191E5885003A9490 /* TimelineCell.xib in Resources */,
 				E5FC44D5190CF83100E8DB65 /* MenuTopHeaderView.xib in Resources */,
 				E59B9A611916B7E4008DE80B /* YourRidesCell.xib in Resources */,
 				E59B9A5A1916B4B4008DE80B /* MessageCell.xib in Resources */,
 				E58889F61913E14A0062D0DF /* RideInformationCell.xib in Resources */,
+				E50CCC21191E6A7E003A9490 /* LogoView.xib in Resources */,
 				E599881918E804E500B01C62 /* highway-nosound@2x.mp4 in Resources */,
 				E5888A011913E37C0062D0DF /* DriverCell.xib in Resources */,
 				E59987CA18E6DBEA00B01C62 /* RideRequestsViewController.xib in Resources */,
@@ -1347,9 +1389,11 @@
 				E504D9D0190A7FC50036FFA8 /* SPGooglePlacesAutocompletePlace.m in Sources */,
 				E599886218E84D9D00B01C62 /* MenuTableViewCell.m in Sources */,
 				E55D866D190C059200B1400A /* Request.m in Sources */,
+				E50CCC1F191E6A6E003A9490 /* LogoView.m in Sources */,
 				E50CCC10191E529A003A9490 /* TimelineViewController.m in Sources */,
 				E5888A9B1914E01B0062D0DF /* ChatViewController.m in Sources */,
 				E59987C918E6DBEA00B01C62 /* RideRequestsViewController.m in Sources */,
+				E50CCC1A191E5885003A9490 /* TimelineCell.m in Sources */,
 				E58B8726191511EA0032524A /* RequestMapping.m in Sources */,
 				E5E2157F1908492200B0B150 /* FreeSeatsTableViewCell.m in Sources */,
 				E5E215681907B82500B0B150 /* CustomBarButton.m in Sources */,

@@ -10,13 +10,13 @@
 
 @implementation FreeSeatsTableViewCell
 
-
 +(FreeSeatsTableViewCell *)freeSeatsTableViewCell {
     
     FreeSeatsTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"FreeSeatsTableViewCell" owner:self options:nil] objectAtIndex:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
+
 - (void)awakeFromNib
 {
     self.stepper.value = 1;

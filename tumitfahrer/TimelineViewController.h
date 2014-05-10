@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TimelineViewController : UIViewController
+@interface TimelineViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
