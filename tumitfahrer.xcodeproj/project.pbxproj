@@ -23,6 +23,9 @@
 		E504D9E8190B02490036FFA8 /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9E7190B02490036FFA8 /* Device.m */; };
 		E504D9EB190B963E0036FFA8 /* JsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9EA190B963E0036FFA8 /* JsonParser.m */; };
 		E504D9EE190BCCE20036FFA8 /* DeviceMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9ED190BCCE20036FFA8 /* DeviceMapping.m */; };
+		E50CCC10191E529A003A9490 /* TimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCC0E191E529A003A9490 /* TimelineViewController.m */; };
+		E50CCC11191E529A003A9490 /* TimelineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50CCC0F191E529A003A9490 /* TimelineViewController.xib */; };
+		E50CCC14191E54F1003A9490 /* UIViewController+SideBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCC13191E54F1003A9490 /* UIViewController+SideBarController.m */; };
 		E50DB26B18F447B800E87E62 /* CurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB26A18F447B800E87E62 /* CurrentUser.m */; };
 		E50DB26F18F52E8500E87E62 /* StatusMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB26E18F52E8500E87E62 /* StatusMapping.m */; };
 		E50DB27218F5DFB200E87E62 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB27118F5DFB200E87E62 /* LocationController.m */; };
@@ -205,6 +208,11 @@
 		E504D9EA190B963E0036FFA8 /* JsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonParser.m; sourceTree = "<group>"; };
 		E504D9EC190BCCE20036FFA8 /* DeviceMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceMapping.h; sourceTree = "<group>"; };
 		E504D9ED190BCCE20036FFA8 /* DeviceMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceMapping.m; sourceTree = "<group>"; };
+		E50CCC0D191E529A003A9490 /* TimelineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineViewController.h; sourceTree = "<group>"; };
+		E50CCC0E191E529A003A9490 /* TimelineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineViewController.m; sourceTree = "<group>"; };
+		E50CCC0F191E529A003A9490 /* TimelineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimelineViewController.xib; sourceTree = "<group>"; };
+		E50CCC12191E54F1003A9490 /* UIViewController+SideBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SideBarController.h"; sourceTree = "<group>"; };
+		E50CCC13191E54F1003A9490 /* UIViewController+SideBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SideBarController.m"; sourceTree = "<group>"; };
 		E50DB26918F447B800E87E62 /* CurrentUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentUser.h; sourceTree = "<group>"; };
 		E50DB26A18F447B800E87E62 /* CurrentUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentUser.m; sourceTree = "<group>"; };
 		E50DB26D18F52E8500E87E62 /* StatusMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusMapping.h; sourceTree = "<group>"; };
@@ -482,6 +490,16 @@
 			name = GooglePlacesAutocomplete;
 			sourceTree = "<group>";
 		};
+		E50CCC0C191E5288003A9490 /* Timeline */ = {
+			isa = PBXGroup;
+			children = (
+				E50CCC0D191E529A003A9490 /* TimelineViewController.h */,
+				E50CCC0E191E529A003A9490 /* TimelineViewController.m */,
+				E50CCC0F191E529A003A9490 /* TimelineViewController.xib */,
+			);
+			name = Timeline;
+			sourceTree = "<group>";
+		};
 		E50DB26C18F52E5900E87E62 /* RKMappings */ = {
 			isa = PBXGroup;
 			children = (
@@ -717,6 +735,7 @@
 		E59987C418E6DBC300B01C62 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E50CCC0C191E5288003A9490 /* Timeline */,
 				E5E2155A1907A92700B0B150 /* Add Ride */,
 				E5FA642819124F2500C04BFF /* Add Ride Request */,
 				E5DF641718EB569800D53164 /* Browse Ride */,
@@ -847,6 +866,8 @@
 				E59B9A691916D072008DE80B /* NavigationBarUtilities.m */,
 				E50DB28F18F881BC00E87E62 /* PanoramioUtilities.h */,
 				E50DB29018F881BC00E87E62 /* PanoramioUtilities.m */,
+				E50CCC12191E54F1003A9490 /* UIViewController+SideBarController.h */,
+				E50CCC13191E54F1003A9490 /* UIViewController+SideBarController.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1194,6 +1215,7 @@
 				E5888A071913E4070062D0DF /* PassengersCell.xib in Resources */,
 				E58889DD191383570062D0DF /* RideDetailViewController.xib in Resources */,
 				E522BAD218AE13F600ECD375 /* Images.xcassets in Resources */,
+				E50CCC11191E529A003A9490 /* TimelineViewController.xib in Resources */,
 				E5FC44D5190CF83100E8DB65 /* MenuTopHeaderView.xib in Resources */,
 				E59B9A611916B7E4008DE80B /* YourRidesCell.xib in Resources */,
 				E59B9A5A1916B4B4008DE80B /* MessageCell.xib in Resources */,
@@ -1319,11 +1341,13 @@
 				E50DB28218F86F8000E87E62 /* UserMapping.m in Sources */,
 				6E4E133F1913F7BF00D0C453 /* UIApplication+GCovFlush.m in Sources */,
 				E5FC44D6190D30FF00E8DB65 /* MenuViewController.m in Sources */,
+				E50CCC14191E54F1003A9490 /* UIViewController+SideBarController.m in Sources */,
 				E504D9BC190A58710036FFA8 /* MeetingPointViewController.m in Sources */,
 				E5DF641F18EB639600D53164 /* CampusRidesViewController.m in Sources */,
 				E504D9D0190A7FC50036FFA8 /* SPGooglePlacesAutocompletePlace.m in Sources */,
 				E599886218E84D9D00B01C62 /* MenuTableViewCell.m in Sources */,
 				E55D866D190C059200B1400A /* Request.m in Sources */,
+				E50CCC10191E529A003A9490 /* TimelineViewController.m in Sources */,
 				E5888A9B1914E01B0062D0DF /* ChatViewController.m in Sources */,
 				E59987C918E6DBEA00B01C62 /* RideRequestsViewController.m in Sources */,
 				E58B8726191511EA0032524A /* RequestMapping.m in Sources */,

@@ -111,11 +111,4 @@
     [self.navigationController pushViewController:rideDetailVC animated:YES];
 }
 
-- (BOOL)slideNavigationControllerShouldDisplayLeftMenu
-{
-    return YES;
-}
-
-
-
 @end

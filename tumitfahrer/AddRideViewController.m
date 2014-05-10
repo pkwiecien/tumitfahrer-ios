@@ -263,13 +263,6 @@
     [self.tableValues replaceObjectAtIndex:indexPath.row withObject:destination];
 }
 
--(BOOL)slideNavigationControllerShouldDisplayLeftMenu {
-    if(self.DisplayType == ShowAsModal)
-        return NO;
-    else
-    return YES;
-}
-
 -(void)stepperValueChanged:(NSInteger)stepperValue {
     [self.tableValues replaceObjectAtIndex:2 withObject:[NSNumber numberWithInt:(int)stepperValue]];
 }

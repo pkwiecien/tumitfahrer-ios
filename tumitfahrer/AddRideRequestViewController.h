@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "RMDateSelectionViewController.h"
-#import "SlideNavigationController.h"
 
-@interface AddRideRequestViewController : UIViewController <RMDateSelectionViewControllerDelegate, UITextFieldDelegate, SlideNavigationControllerDelegate>
+@interface AddRideRequestViewController : UIViewController <RMDateSelectionViewControllerDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *departureTextField;
 @property (weak, nonatomic) IBOutlet UITextField *destinationTextField;

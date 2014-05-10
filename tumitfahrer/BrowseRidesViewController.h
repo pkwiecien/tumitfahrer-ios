@@ -9,9 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "PanoramioUtilities.h"
 #import "RidesStore.h"
-#import <SlideNavigationController.h>
 
-@interface BrowseRidesViewController : UIViewController<SlideNavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, PanoramioUtilitiesDelegate, RideStoreDelegate>
+@interface BrowseRidesViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, PanoramioUtilitiesDelegate, RideStoreDelegate>
 
 @property (nonatomic, strong) NSArray *searchResults;
 

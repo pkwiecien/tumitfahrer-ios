@@ -7,9 +7,8 @@
 //
 
 @import UIKit;
-#import <SlideNavigationController.h>
 
-@interface CampusRidesViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, UIViewControllerTransitioningDelegate, SlideNavigationControllerDelegate>
+@interface CampusRidesViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, UIViewControllerTransitioningDelegate>
 
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, readonly, getter=isFullscreen) BOOL fullscreen;

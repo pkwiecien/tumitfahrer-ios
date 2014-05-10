@@ -74,9 +74,4 @@
     NSLog(@"selected cell %d %d", (int)indexPath.section, (int)indexPath.row);
 }
 
-- (BOOL)slideNavigationControllerShouldDisplayLeftMenu
-{
-    return YES;
-}
-
 @end

@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <SlideNavigationController.h>
 
-@interface SettingsViewController : UIViewController <SlideNavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface SettingsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *sendFeedbackButton;
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;

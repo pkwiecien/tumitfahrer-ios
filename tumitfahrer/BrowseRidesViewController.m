@@ -17,7 +17,6 @@
 #import "LoginViewController.h"
 #import "RideDetailViewController.h"
 
-
 @interface BrowseRidesViewController ()
 
 @property (nonatomic, assign) CGFloat lastContentOffset;
@@ -222,13 +221,7 @@
 }
 
 #pragma mark - SlideNavigation
-
--(BOOL)slideNavigationControllerShouldDisplayLeftMenu {
-    return YES;
-}
-
 - (IBAction)menuButtonPressed:(id)sender {
-    [[SlideNavigationController sharedInstance] toggleLeftMenu];
 }
 
 # pragma mark - Action buttons

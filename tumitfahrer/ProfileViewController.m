@@ -90,13 +90,6 @@
     [self.navigationController presentViewController:navBar animated:YES completion:nil];
 }
 
-
-# pragma mark - display left menu
--(BOOL)slideNavigationControllerShouldDisplayLeftMenu {
-    return YES;
-}
-
-
 - (IBAction)ridesButtonPressed:(id)sender {
     [self resetButtons];
     [self.ridesButton setSelected:YES];

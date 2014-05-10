@@ -221,13 +221,7 @@
 }
 
 - (IBAction)menuButtonPressed:(id)sender {
-    [[SlideNavigationController sharedInstance] toggleLeftMenu];
 }
 
-# pragma mark - display left menu
--(BOOL)slideNavigationControllerShouldDisplayLeftMenu
-{
-    return YES;
-}
 
 @end

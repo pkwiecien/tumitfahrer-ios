@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <SlideNavigationController.h>
 
-@interface MessageListViewController : UIViewController<SlideNavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface MessageListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

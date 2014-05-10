@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <SlideNavigationController.h>
 
-@interface ProfileViewController : UIViewController<SlideNavigationControllerDelegate>
+@interface ProfileViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIView *profileView;
 @property (weak, nonatomic) IBOutlet UILabel *ridesCountLabel;

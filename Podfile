@@ -4,8 +4,6 @@ platform :ios, '7.0'
 inhibit_all_warnings!
 link_with ['tumitfahrer', 'tumitfahrerTests']
 
-# pod for a left slide menu
-pod 'iOS-Slide-Menu'
 # pod for handling networking requests
 pod 'AFNetworking', '~> 1.2'
 # pod to make interacting with RESTful API simple

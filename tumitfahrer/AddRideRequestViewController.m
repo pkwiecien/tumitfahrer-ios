@@ -111,10 +111,6 @@
     return true;
 }
 
--(BOOL)slideNavigationControllerShouldDisplayLeftMenu {
-    return YES;
-}
-
 - (IBAction)dismissKeyboard:(id)sender {
     [self.view endEditing:YES];
 }

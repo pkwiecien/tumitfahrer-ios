@@ -13,7 +13,6 @@
 #import "ActionManager.h"
 #import "CurrentUser.h"
 #import "RideRequestsViewController.h"
-#import <SlideNavigationController.h>
 #import "Ride.h"
 #import "EAIntroView.h"
 
@@ -98,7 +97,7 @@
     if ([CurrentUser fetchUserFromCoreDataWithEmail:self.emailTextField.text encryptedPassword:[ActionManager createSHA512:self.passwordTextField.text]] ) {
         // user fetched successfully from core data
         [self storeCurrentUserInDefaults];
-        [[SlideNavigationController sharedInstance] popToRootViewControllerAnimated:NO];
+//        [[SlideNavigationController sharedInstance] popToRootViewControllerAnimated:NO];
         [self dismissViewControllerAnimated:YES completion:nil];
     } else {
         // new user, get account from webservice

@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <SlideNavigationController.h>
 
-@interface YourRidesViewController : UIViewController<SlideNavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface YourRidesViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 

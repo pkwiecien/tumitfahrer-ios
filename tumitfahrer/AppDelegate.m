@@ -6,12 +6,13 @@
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 #import <RestKit/RestKit.h>
+#import <UbertestersSDK/Ubertesters.h>
+#import <QuartzCore/QuartzCore.h>
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "RideRequestsViewController.h"
 #import "ForgotPasswordViewController.h"
 #import "MenuViewController.h"
-#import "SlideNavigationController.h"
 #import "HATransitionController.h"
 #import "HACollectionViewSmallLayout.h"
 #import "Device.h"
@@ -24,11 +25,13 @@
 #import "LocationController.h"
 #import "PanoramioUtilities.h"
 #import "CurrentUser.h"
-#import <UbertestersSDK/Ubertesters.h>
+#import "MMDrawerController.h"
+#import "MMDrawerVisualState.h"
+#import "TimelineViewController.h"
 
 @interface AppDelegate ()
 
-@property (nonatomic) SlideNavigationController *navigationController;
+@property (nonatomic,strong) MMDrawerController * drawerController;
 
 @end
 
@@ -124,16 +127,23 @@
     // RideRequestsViewController *rideRequestVC = [[RideRequestsViewController alloc] init];
     MenuViewController *leftMenu = [[MenuViewController alloc] init];
     
-    // init and configure slide panel
-    self.navigationController = [[SlideNavigationController alloc] initWithRootViewController:activityRidesVC];
-    self.navigationController.avoidSwitchingToSameClassViewController = NO;
-    self.navigationController.enableSwipeGesture = YES;
-    self.navigationController.portraitSlideOffset = cSlideMenuOffset; // width of visible view controller
-    [SlideNavigationController sharedInstance].leftMenu = leftMenu;
-    self.navigationController.navigationBarHidden = YES;
+    TimelineViewController *timelineVC = [[TimelineViewController alloc] init];
+    UINavigationController *navControler2 = [[UINavigationController alloc] initWithRootViewController:timelineVC];
+
+    self.drawerController = [[MMDrawerController alloc]
+                             initWithCenterViewController:navControler2
+                             leftDrawerViewController:leftMenu
+                             rightDrawerViewController:nil];
+    [self.drawerController setShowsShadow:NO];
+    
+    [self.drawerController setMaximumLeftDrawerWidth:280];
+    [self.drawerController setRestorationIdentifier:@"MMDrawer"];
+    [self.drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+    [self.drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
+    [self.drawerController setDrawerVisualStateBlock:[MMDrawerVisualState slideAndScaleVisualStateBlock]];
     
     // set root view controller
-    self.window.rootViewController = self.navigationController;
+    self.window.rootViewController = self.drawerController;
 }
 
 -(void)setupLeftMenu {

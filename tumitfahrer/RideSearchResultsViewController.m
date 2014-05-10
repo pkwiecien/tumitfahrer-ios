@@ -50,10 +50,6 @@
     self.title = @"SEARCH RESULTS";
 }
 
--(BOOL)slideNavigationControllerShouldDisplayLeftMenu {
-    return YES;
-}
-
 #pragma mark - Collection view
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {

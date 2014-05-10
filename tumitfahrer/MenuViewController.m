@@ -11,7 +11,6 @@
 #import "SettingsViewController.h"
 #import "RideRequestsViewController.h"
 #import "BrowseRidesViewController.h"
-#import <SlideNavigationController.h>
 #import "CampusRidesViewController.h"
 #import "RideSearchResultsViewController.h"
 #import "ActionManager.h"
@@ -22,6 +21,7 @@
 #import "AddRideViewController.h"
 #import "YourRidesViewController.h"
 #import "AddRideRequestViewController.h"
+#import "MMDrawerController.h"
 
 @interface MenuViewController ()
 
@@ -206,8 +206,11 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UIViewController *viewController = [[self.allViewControllers objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    if(viewController)
-        [[SlideNavigationController sharedInstance] popToRootAndSwitchToViewController:viewController withCompletion:nil];
+    if(viewController) {
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:viewController];
+        
+        [self.sideBarController setCenterViewController:nav withCloseAnimation:YES completion:nil];
+    }
 }
 
 

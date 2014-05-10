@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <SlideNavigationController.h>
 
-@interface RideSearchResultsViewController : UIViewController <SlideNavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface RideSearchResultsViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 -(void)reloadDataAtIndex:(NSInteger)index;

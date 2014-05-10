@@ -158,10 +158,6 @@
     return headerView;
 }
 
-- (BOOL)slideNavigationControllerShouldDisplayLeftMenu
-{
-    return YES;
-}
 
 - (IBAction)sendFeedbackButtonPressed:(id)sender {
 }
