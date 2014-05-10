@@ -26,3 +26,5 @@ pod 'EAIntroView'
 pod 'NZCircularImageView'
 # full screen image viewer with image zoom custom view controller transition
 pod 'Vertigo'
+# pod: side menu
+pod 'MMDrawerController'
