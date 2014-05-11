@@ -10,6 +10,8 @@
 #import "ActionManager.h"
 #import "LoginViewController.h"
 #import "NavigationBarUtilities.h"
+#import "LogoView.h"
+#import "MMDrawerBarButtonItem.h"
 
 @interface SettingsViewController ()
 
@@ -38,15 +40,29 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    [self setupView];
+    [self setupLeftMenuButton];
+    [self setupNavigationBar];
 }
 
--(void)setupView {
+-(void)setupNavigationBar {
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.227 green:0.227 blue:0.227 alpha:1]];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.title = @"Settings";
+    
+    NSDictionary * navBarTitleTextAttributes = @{ NSForegroundColorAttributeName : [UIColor whiteColor]};
+    self.navigationController.navigationBar.titleTextAttributes = navBarTitleTextAttributes;
+    
+    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.navigationBarHidden = NO;
     self.view = [NavigationBarUtilities makeBackground:self.view];
-    UINavigationController *navController = self.navigationController;
-    [NavigationBarUtilities setupNavbar:&navController];
-    self.title = @"SETTINGS";
+}
+
+-(void)setupLeftMenuButton{
+    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
+    [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
 }
 
 -(void)makeButtons
@@ -129,7 +145,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-
+    
     UILabel *label= [[UILabel alloc]initWithFrame:CGRectMake(0,0,self.view.frame.size.width,40)];
     label.backgroundColor = [UIColor clearColor];
     label.text = @"TUMitfahrer";
@@ -170,5 +186,11 @@
     loginVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentViewController:loginVC animated:YES completion:nil];
 }
+
+#pragma mark - Button Handlers
+-(void)leftDrawerButtonPress:(id)sender{
+    [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+
 
 @end

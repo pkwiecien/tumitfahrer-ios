@@ -125,16 +125,13 @@
 
 -(void)setupNavigationController {
     // init controllers
-    BrowseRidesViewController *activityRidesVC = [[BrowseRidesViewController alloc] initWithContentType:ContentTypeCampusRides];
-    // RideRequestsViewController *rideRequestVC = [[RideRequestsViewController alloc] init];
     MenuViewController *leftMenu = [[MenuViewController alloc] init];
     
     TimelinePageViewController *parentVC = [[TimelinePageViewController alloc] init];
-    TimelineViewController *timelineVC = [[TimelineViewController alloc] init];
-    UINavigationController *navControler2 = [[UINavigationController alloc] initWithRootViewController:parentVC];
+    UINavigationController *navControler = [[UINavigationController alloc] initWithRootViewController:parentVC];
 
     self.drawerController = [[MMDrawerController alloc]
-                             initWithCenterViewController:navControler2
+                             initWithCenterViewController:navControler
                              leftDrawerViewController:leftMenu
                              rightDrawerViewController:nil];
     [self.drawerController setShowsShadow:NO];

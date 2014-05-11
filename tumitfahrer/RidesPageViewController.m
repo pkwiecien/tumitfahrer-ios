@@ -1,21 +1,19 @@
- //
-//  ParentPageViewController.m
+//
+//  RidesPageViewController.m
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 5/10/14.
+//  Created by Pawel Kwiecien on 5/11/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
-#import "TimelinePageViewController.h"
-#import "TimelineViewController.h"
+#import "RidesPageViewController.h"
 #import "MMDrawerBarButtonItem.h"
 #import "LogoView.h"
 #import "CurrentUser.h"
-#import "LoginViewController.h"
-#import "ActivityStore.h"
 #import "CustomBarButton.h"
+#import "RidesViewController.h"
 
-@interface TimelinePageViewController () <TimelineViewControllerDelegate>
+@interface RidesPageViewController () <RidesViewControllerDelegate>
 
 @property NSArray *pageTitles;
 @property NSArray *pageColors;
@@ -24,14 +22,14 @@
 
 @end
 
-@implementation TimelinePageViewController
+@implementation RidesPageViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.pageTitles = [NSArray arrayWithObjects:@"Timeline", @"Around you", @"Your activity", nil];
-        self.pageColors = [NSArray arrayWithObjects:[UIColor colorWithRed:0.757 green:0.153 blue:0.176 alpha:1], [UIColor colorWithRed:0.667 green:0.149 blue:0.188 alpha:1], [UIColor colorWithRed:0.529 green:0.122 blue:0.153 alpha:1] , nil];
+        self.pageTitles = [NSArray arrayWithObjects:@"All Campus Rides", @"Around you", @"Favourite destinations", nil];
+        self.pageColors = [NSArray arrayWithObjects:[UIColor colorWithRed:0 green:0.443 blue:0.737 alpha:1], [UIColor colorWithRed:0.008 green:0.4 blue:0.62 alpha:1], [UIColor colorWithRed:0 green:0.294 blue:0.459 alpha:1], nil];
     }
     return self;
 }
@@ -44,7 +42,7 @@
     self.pageController.dataSource = self;
     [[self.pageController view] setFrame:[[self view] bounds]];
     
-    TimelineViewController *initialViewController = [self viewControllerAtIndex:0];
+    RidesViewController *initialViewController = [self viewControllerAtIndex:0];
     initialViewController.delegate = self;
     
     NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
@@ -54,22 +52,9 @@
     [self addChildViewController:self.pageController];
     [[self view] addSubview:[self.pageController view]];
     [self.pageController didMoveToParentViewController:self];
-    
-    // get current user
-    NSString *emailLoggedInUser = [[NSUserDefaults standardUserDefaults] valueForKey:@"emailLoggedInUser"];
-    
-    if (emailLoggedInUser != nil) {
-        [CurrentUser fetchUserFromCoreDataWithEmail:emailLoggedInUser];
-    }
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    
-    NSLog(@"Current user: %@", [CurrentUser sharedInstance].user);
-    if([CurrentUser sharedInstance].user == nil)
-    {
-        [self showLoginScreen:NO];
-    }
     
     [self setupLeftMenuButton];
     [self setupNavigationBar];
@@ -91,28 +76,16 @@
     
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBarHidden = NO;
-    
-    // right button of the navigation bar
-    CustomBarButton *mapButton = [[CustomBarButton alloc] initWithTitle:@"Map"];
-    [mapButton addTarget:self action:@selector(mapButtonPressed) forControlEvents:UIControlEventTouchDown];
-    UIBarButtonItem *mapButtonItem = [[UIBarButtonItem alloc] initWithCustomView:mapButton];
-    self.navigationItem.rightBarButtonItem = mapButtonItem;
 }
 
 -(void)mapButtonPressed {
     
 }
 
--(void)showLoginScreen:(BOOL)animated
-{
-    LoginViewController *loginVC = [[LoginViewController alloc] init];
-    [self presentViewController:loginVC animated:animated completion:nil];
-}
-
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
     
-    NSUInteger index = [(TimelineViewController *)viewController index];
+    NSUInteger index = [(RidesViewController *)viewController index];
     
     if (index == 0) {
         return nil;
@@ -126,7 +99,7 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
     
-    NSUInteger index = [(TimelineViewController *)viewController index];
+    NSUInteger index = [(RidesViewController *)viewController index];
     
     index++;
     
@@ -137,16 +110,13 @@
     return [self viewControllerAtIndex:index];
 }
 
-- (TimelineViewController *)viewControllerAtIndex:(NSUInteger)index {
+- (RidesViewController *)viewControllerAtIndex:(NSUInteger)index {
     
-    TimelineViewController *timelineViewController = [[TimelineViewController alloc] init];
-    timelineViewController.index = index;
-    timelineViewController.delegate = self;
+    RidesViewController *ridesViewController = [[RidesViewController alloc] init];
+    ridesViewController.index = index;
+    ridesViewController.delegate = self;
     
-    self.title = [NSString stringWithFormat:@"Screen #%d", index];
-    
-    return timelineViewController;
-    
+    return ridesViewController;
 }
 
 

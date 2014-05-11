@@ -22,9 +22,14 @@
 #import "YourRidesViewController.h"
 #import "AddRideRequestViewController.h"
 #import "MMDrawerController.h"
+#import "TimelinePageViewController.h"
+#import "RidesPageViewController.h"
 
 @interface MenuViewController ()
 
+@property NSArray *timelineSection;
+@property NSArray *timelineViewControllers;
+@property NSArray *timelineIcons;
 @property NSArray *browseRidesSection;
 @property NSArray *browseRidesViewControllers;
 @property NSArray *browseRidesIcons;
@@ -58,45 +63,48 @@
 }
 
 -(void)initViewControllers {
+    TimelinePageViewController *timelinePageVC = [[TimelinePageViewController alloc] init];
+    self.timelineViewControllers = [NSArray arrayWithObjects:timelinePageVC, nil];
+    
     // section 0 - view controllers
-    BrowseRidesViewController *campusRidesVC = [[BrowseRidesViewController alloc] initWithContentType:ContentTypeCampusRides];
+    RidesPageViewController *campusRidesVC = [[RidesPageViewController alloc] init];
+//    BrowseRidesViewController *campusRidesVC = [[BrowseRidesViewController alloc] initWithContentType:ContentTypeCampusRides];
     BrowseRidesViewController *activityRidesVC = [[BrowseRidesViewController alloc] initWithContentType:ContentTypeActivityRides];
-    BrowseRidesViewController *existingRequestsVC = [[BrowseRidesViewController alloc] initWithContentType:ContentTypeExistingRequests];
-    self.browseRidesViewControllers = [NSArray arrayWithObjects:campusRidesVC, activityRidesVC, existingRequestsVC, nil];
+    self.browseRidesViewControllers = [NSArray arrayWithObjects:campusRidesVC, activityRidesVC, nil];
     
     // section 1 - view controllers
     AddRideViewController *addRideVC = [[AddRideViewController alloc] init];
     addRideVC.DisplayType = ShowAsViewController;
-    AddRideRequestViewController *addRideRequestVC = [[AddRideRequestViewController alloc] init];
     SearchRideViewController *searchRidesVC = [[SearchRideViewController alloc] init];
-    self.addRidesViewControllers = [NSArray arrayWithObjects: addRideVC, addRideRequestVC, searchRidesVC, nil];
+    self.addRidesViewControllers = [NSArray arrayWithObjects: addRideVC, searchRidesVC, nil];
     
     // section 2 - view controllers
     ProfileViewController *profileVC = [[ProfileViewController alloc] init];
     YourRidesViewController *yourRidesVC = [[YourRidesViewController alloc] init];
-    SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
-    self.profileViewControllers = [NSArray arrayWithObjects:profileVC, yourRidesVC, settingsVC, nil];
+    self.profileViewControllers = [NSArray arrayWithObjects:profileVC, yourRidesVC, nil];
     
     // add all sections to view controllers
-    self.allViewControllers = [NSArray arrayWithObjects:self.browseRidesViewControllers, self.addRidesViewControllers, self.profileViewControllers, nil];
+    self.allViewControllers = [NSArray arrayWithObjects:self.timelineViewControllers, self.browseRidesViewControllers, self.addRidesViewControllers, self.profileViewControllers, nil];
 }
 
 -(void)initCellTitles {
-    self.browseRidesSection = [NSArray arrayWithObjects:@"Campus Rides", @"Activities", @"Existing Requests", nil];
-    self.addRidesSection = [NSArray arrayWithObjects:@"New Ride", @"New Ride Request", @"Search Rides", nil];
-    self.profileSection = [NSArray arrayWithObjects:@"Profile", @"All Rides", @"Settings", nil];
-    self.allMenuItems = [NSArray arrayWithObjects:self.browseRidesSection, self.addRidesSection, self.profileSection, nil];
+    self.timelineSection = [NSArray arrayWithObjects:@"Timeline", nil];
+    self.browseRidesSection = [NSArray arrayWithObjects:@"Campus Rides", @"Activity Rides", nil];
+    self.addRidesSection = [NSArray arrayWithObjects:@"New Ride/Request", @"Search Rides", nil];
+    self.profileSection = [NSArray arrayWithObjects:@"Profile", @"All Your Rides", nil];
+    self.allMenuItems = [NSArray arrayWithObjects:self.timelineSection, self.browseRidesSection, self.addRidesSection, self.profileSection, nil];
 }
 
 -(void)initCellIcons {
-    self.browseRidesIcons = [NSArray arrayWithObjects:@"CampusIcon", @"ActivityIcon", @"ListIcon", nil];
-    self.addRidesIcons = [NSArray arrayWithObjects:@"AddBlackIcon", @"QuestionIcon", @"RequestIcon", nil];
-    self.profileIcons = [NSArray arrayWithObjects:@"ProfileIcon", @"ScheduleIcon", @"SettingsIcon", nil];
-    self.allIcons = [NSArray arrayWithObjects:self.browseRidesIcons, self.addRidesIcons, self.profileIcons, nil];
+    self.timelineIcons = [NSArray arrayWithObjects:@"ProfileIcon", nil];
+    self.browseRidesIcons = [NSArray arrayWithObjects:@"CampusIcon", @"ActivityIcon", nil];
+    self.addRidesIcons = [NSArray arrayWithObjects:@"AddBlackIcon", @"QuestionIcon", nil];
+    self.profileIcons = [NSArray arrayWithObjects:@"ProfileIcon", @"ScheduleIcon", nil];
+    self.allIcons = [NSArray arrayWithObjects:self.timelineIcons, self.browseRidesIcons, self.addRidesIcons, self.profileIcons, nil];
 }
 
 -(void)initTableHeaderLabels {
-    self.headersLabels = [NSArray arrayWithObjects:@"BROWSE OFFERS", @"ACTIONS", @"YOUR ACCOUNT", nil];
+    self.headersLabels = [NSArray arrayWithObjects:@"", @"BROWSE OFFERS", @"ACTIONS", @"YOUR ACCOUNT", nil];
 }
 
 #pragma mark - view controller configuration
@@ -109,18 +117,19 @@
 
 -(void)addBackgroundToTableView {
     self.tableView.backgroundColor = [UIColor clearColor];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gradientBackground"]];
-    [self.view addSubview:imageView];
-    [self.view sendSubviewToBack:imageView];
+    self.view.backgroundColor = [UIColor colorWithRed:0.227 green:0.227 blue:0.227 alpha:1];
 }
 
 -(void)makeHeaderForTableView {
     UIView *menuTopHeaderView = [[[NSBundle mainBundle] loadNibNamed:@"MenuTopHeaderView" owner:self options:nil] firstObject];
     UILabel *initialsLabel = (UILabel *)[menuTopHeaderView viewWithTag:2];
     UILabel *usernameLabel = (UILabel *)[menuTopHeaderView viewWithTag:3];
+    UIButton *settingsButton = (UIButton *)[menuTopHeaderView viewWithTag:4];
     
     usernameLabel.text = [CurrentUser sharedInstance].user.firstName;
     initialsLabel.text = [[[CurrentUser sharedInstance].user.firstName substringToIndex:1] stringByAppendingString:[[CurrentUser sharedInstance].user.lastName substringToIndex:1]];
+    [settingsButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"SettingsIcon"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [settingsButton addTarget:self action:@selector(settingsButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     self.tableView.tableHeaderView = menuTopHeaderView;
 }
 
@@ -187,6 +196,9 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return 0;
+    }
     return 40;
 }
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -213,5 +225,11 @@
     }
 }
 
+
+-(void)settingsButtonPressed {
+    SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:settingsVC];
+    [self.sideBarController setCenterViewController:navController withCloseAnimation:YES completion:nil];
+}
 
 @end
