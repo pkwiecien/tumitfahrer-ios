@@ -8,8 +8,12 @@
 
 #import "TimelineViewController.h"
 #import "TimelineCell.h"
-#import "ParentPageViewController.h"
+#import "TimelinePageViewController.h"
 #import "LogoView.h"
+#import "ActivityStore.h"
+#import "Request.h"
+#import "Ride.h"
+#import "Rating.h"
 
 @interface TimelineViewController ()
 
@@ -32,7 +36,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     
-    UIEdgeInsets inset = UIEdgeInsetsMake(10, 0, 0, 0);
+    UIEdgeInsets inset = UIEdgeInsetsMake(10, 0, 10, 0);
     self.tableView.contentInset = inset;
     self.screenNumberLabel.text = [NSString stringWithFormat:@"Screen #%d", self.index];
 
@@ -40,7 +44,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return [[[ActivityStore sharedStore] recentActivities] count];
 }
 
 
@@ -50,6 +54,15 @@
     
     if(cell == nil){
         cell = [TimelineCell timelineCell];
+    }
+    
+    id result = [[[ActivityStore sharedStore] recentActivities] objectAtIndex:indexPath.row];
+    if([result isKindOfClass:[Rating class]]) {
+        cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"Rating received with type %d", [((Rating *)result).ratingType intValue]];
+    } else if([result isKindOfClass:[Request class]]) {
+        cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"Request received with type %@", ((Request *)result).requestedFrom];
+    } else {
+        cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"Ride added with id %d", ((Ride *)result).rideId];
     }
     
     cell.backgroundColor = [UIColor clearColor];

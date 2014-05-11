@@ -1,4 +1,4 @@
-//
+ //
 //  ParentPageViewController.m
 //  tumitfahrer
 //
@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
-#import "ParentPageViewController.h"
+#import "TimelinePageViewController.h"
 #import "TimelineViewController.h"
 #import "MMDrawerBarButtonItem.h"
 #import "LogoView.h"
@@ -14,7 +14,7 @@
 #import "LoginViewController.h"
 #import "ActivityStore.h"
 
-@interface ParentPageViewController () <TimelineViewControllerDelegate>
+@interface TimelinePageViewController () <TimelineViewControllerDelegate>
 
 @property NSArray *pageTitles;
 
@@ -22,7 +22,7 @@
 
 @end
 
-@implementation ParentPageViewController
+@implementation TimelinePageViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -55,7 +55,6 @@
     [self setupLeftMenuButton];
     [self setupNavigationBar];
     
-    [[ActivityStore sharedStore] fetchActivitiesFromWebservice:nil];
     // get current user
     NSString *emailLoggedInUser = [[NSUserDefaults standardUserDefaults] valueForKey:@"emailLoggedInUser"];
     

@@ -28,7 +28,7 @@
 #import "MMDrawerController.h"
 #import "MMDrawerVisualState.h"
 #import "TimelineViewController.h"
-#import "ParentPageViewController.h"
+#import "TimelinePageViewController.h"
 #import "ActivityMapping.h"
 
 @interface AppDelegate ()
@@ -129,7 +129,7 @@
     // RideRequestsViewController *rideRequestVC = [[RideRequestsViewController alloc] init];
     MenuViewController *leftMenu = [[MenuViewController alloc] init];
     
-    ParentPageViewController *parentVC = [[ParentPageViewController alloc] init];
+    TimelinePageViewController *parentVC = [[TimelinePageViewController alloc] init];
     TimelineViewController *timelineVC = [[TimelineViewController alloc] init];
     UINavigationController *navControler2 = [[UINavigationController alloc] initWithRootViewController:parentVC];
 

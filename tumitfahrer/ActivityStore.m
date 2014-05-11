@@ -9,10 +9,13 @@
 #import "ActivityStore.h"
 #import "Activity.h"
 #import "Ride.h"
+#import "Rating.h"
+#import "Request.h"
 
 @interface ActivityStore () <NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) Activity *activitiesResult;
+@property (nonatomic, strong) NSMutableArray *privateRecentActivities;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @end
@@ -49,19 +52,11 @@
 -(void)fetchActivitiesFromWebservice:(boolCompletionHandler)block {
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
     
     [objectManager getObjectsAtPath:API_ACTIVITIES parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        NSArray *activityArray = [mappingResult array];
-        for (Activity *activity in activityArray) {
-            NSLog(@"activity with id: %d", [activity.activityId intValue]);
-            NSLog(@"ride %d", [activity.rides count]);
-            for (Ride *ride in activity.rides) {
-                NSLog(@"activity ride: %d %@", ride.rideId, ride.departurePlace);
-            }
-        }
+        NSArray *array = [mappingResult array];
+        NSLog(@"returned %d", [array count]);
         block(YES);
-        
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);
         block(NO);
@@ -82,10 +77,6 @@
         [NSException raise:@"Fetch failed"
                     format:@"Reason: %@", [error localizedDescription]];
     }
-    Activity *activity = [fetchedObjects firstObject];
-    NSLog(@"all activities in core data: %d", [fetchedObjects count]);
-    NSLog(@"activy id: %d", [activity.activityId intValue]);
-    NSLog(@"rides: %d", [activity.rides count]);
     self.activitiesResult = [fetchedObjects firstObject];
 }
 
@@ -114,6 +105,63 @@
     }
     
     return self.fetchedResultsController;
+}
+
+-(NSArray *)recentActivities {
+    if(self.privateRecentActivities == nil) {
+        [self fetchActivitiesFromCoreData];
+        self.privateRecentActivities = [[NSMutableArray alloc] init];
+        int rideIndex = 0;
+        int ratingIndex = 0;
+        int requestsIndex = 0;
+        
+        NSArray *rides = [NSArray arrayWithArray:[self.activitiesResult.rides allObjects]];
+        NSArray *requests = [NSArray arrayWithArray:[self.activitiesResult.requests allObjects]];
+        NSArray *ratings = [NSArray arrayWithArray:[self.activitiesResult.ratings allObjects]];
+        while(rideIndex < [self.activitiesResult.rides count] || ratingIndex < [self.activitiesResult.ratings count] || requestsIndex < [self.activitiesResult.requests count]) {
+            // find the latest event from three arrays
+            NSMutableArray *comparedObjects = [[NSMutableArray alloc] init];
+            if(rideIndex < [rides count])
+                [comparedObjects addObject:[rides objectAtIndex:rideIndex]];
+            else if(requestsIndex < [requests count])
+                [comparedObjects addObject:[requests objectAtIndex:requestsIndex]];
+            else if(ratingIndex < [ratings count])
+                [comparedObjects addObject:[ratings objectAtIndex:ratingIndex]];
+            
+            id result = [self compareThree:comparedObjects];
+            
+            if([result isKindOfClass:[Ride class]]) {
+                rideIndex++;
+            } else if([result isKindOfClass:[Rating class]]) {
+                ratingIndex++;
+            } else {
+                requestsIndex++;
+            }
+            [self.privateRecentActivities addObject:result];
+        }
+    }
+    return self.privateRecentActivities;
+}
+
+-(id)compareThree:(NSArray *)elements {
+    id result = nil;
+    
+    if([elements count] == 1)
+        return [elements objectAtIndex:0];
+    else if([elements count] == 2) {
+        result = [[elements objectAtIndex:0] updatedAt] < [[elements objectAtIndex:1] updatedAt] ? [[elements objectAtIndex:0] updatedAt] : [[elements objectAtIndex:1] updatedAt];
+        return  result;
+    } else if([elements count] == 3){
+        
+        if([[elements objectAtIndex:0] updatedAt] < [[elements objectAtIndex:1] updatedAt])
+            result = [elements objectAtIndex:0];
+        
+        if ([result updatedAt] < [[elements objectAtIndex:2] updatedAt]) {
+            result = [elements objectAtIndex:2];
+        }
+    }
+    return result;
+    
 }
 
 

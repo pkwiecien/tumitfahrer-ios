@@ -13,5 +13,6 @@
 + (instancetype)sharedStore;
 -(void)fetchActivitiesFromWebservice:(boolCompletionHandler)block;
 -(NSFetchedResultsController *)fetchedResultsController;
+-(NSArray *)recentActivities;
 
 @end

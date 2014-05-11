@@ -8,6 +8,8 @@
 
 #import "ActivityMapping.h"
 #import "RideMapping.h"
+#import "RequestMapping.h"
+#import "RatingMapping.h"
 
 @implementation ActivityMapping
 
@@ -20,6 +22,10 @@
                                                       }];
     
     [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"rides" toKeyPath:@"rides" withMapping:[RideMapping generalRideMapping]]];
+    
+    [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"requests" toKeyPath:@"requests" withMapping:[RequestMapping requestMapping]]];
+    
+    [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"ratings" toKeyPath:@"ratings" withMapping:[RatingMapping ratingMapping]]];
     
     return activityMapping;
 }

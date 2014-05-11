@@ -10,7 +10,7 @@
 
 @class LogoView;
 
-@interface ParentPageViewController : UIViewController <UIPageViewControllerDataSource>
+@interface TimelinePageViewController : UIViewController <UIPageViewControllerDataSource>
 
 @property (strong, nonatomic) UIPageViewController *pageController;
 
