@@ -80,14 +80,6 @@ static int page = 0;
         [NSException raise:@"Fetch failed"
                     format:@"Reason: %@", [error localizedDescription]];
     }
-    
-//    for (Ride *ride in fetchedObjects) {
-//        NSLog(@"ride id: %d", ride.rideId);
-//    }
-//    
-//    for (Ride *ride in [CurrentUser sharedInstance].user.ridesAsDriver) {
-//        NSLog(@"user's ride with id: %d", ride.rideId);
-//    }
 
     if(contentType == ContentTypeCampusRides){
         self.campusRides =[[NSMutableArray alloc] initWithArray:fetchedObjects];
@@ -100,7 +92,6 @@ static int page = 0;
     }
 }
 
-// select ride from rides from ride inner join request where ride.id = request.ride_id and request.requested_from = user.id
 - (void)fetchUserRequestedRidesFromCoreData:(NSInteger)userId {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *e = [NSEntityDescription entityForName:@"Ride"

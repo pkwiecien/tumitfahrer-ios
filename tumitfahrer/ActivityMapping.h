@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ActivitiesMapping : NSObject
+@interface ActivityMapping : NSObject
 
 +(RKEntityMapping *)generalActivityMapping;
 +(RKResponseDescriptor *)getActivityResponseDescriptorWithMapping:(RKEntityMapping *)mapping;

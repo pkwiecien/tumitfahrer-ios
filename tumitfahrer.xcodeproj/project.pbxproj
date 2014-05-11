@@ -32,7 +32,7 @@
 		E50CCC21191E6A7E003A9490 /* LogoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50CCC20191E6A7E003A9490 /* LogoView.xib */; };
 		E50CCCC1191E7A94003A9490 /* ParentPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCBF191E7A94003A9490 /* ParentPageViewController.m */; };
 		E50CCCC2191E7A94003A9490 /* ParentPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50CCCC0191E7A94003A9490 /* ParentPageViewController.xib */; };
-		E50CCCC5191F6FAC003A9490 /* ActivitiesMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCC4191F6FAC003A9490 /* ActivitiesMapping.m */; };
+		E50CCCC5191F6FAC003A9490 /* ActivityMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCC4191F6FAC003A9490 /* ActivityMapping.m */; };
 		E50CCCD7191F719F003A9490 /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCD6191F719F003A9490 /* Ride.m */; };
 		E50CCCDA191F71C0003A9490 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCD9191F71C0003A9490 /* User.m */; };
 		E50CCCE3191F7256003A9490 /* Request.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCE2191F7256003A9490 /* Request.m */; };
@@ -41,6 +41,7 @@
 		E50CCCF2191F7380003A9490 /* RideSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCF1191F7380003A9490 /* RideSearch.m */; };
 		E50CCCF5191F7416003A9490 /* tumitfahrer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCF3191F7416003A9490 /* tumitfahrer.xcdatamodeld */; };
 		E50CCCFB191F7503003A9490 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCFA191F7503003A9490 /* Activity.m */; };
+		E50CCCFE191F7C74003A9490 /* ActivityStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCFD191F7C74003A9490 /* ActivityStore.m */; };
 		E50DB26B18F447B800E87E62 /* CurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB26A18F447B800E87E62 /* CurrentUser.m */; };
 		E50DB26F18F52E8500E87E62 /* StatusMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB26E18F52E8500E87E62 /* StatusMapping.m */; };
 		E50DB27218F5DFB200E87E62 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB27118F5DFB200E87E62 /* LocationController.m */; };
@@ -230,8 +231,8 @@
 		E50CCCBE191E7A94003A9490 /* ParentPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParentPageViewController.h; sourceTree = "<group>"; };
 		E50CCCBF191E7A94003A9490 /* ParentPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParentPageViewController.m; sourceTree = "<group>"; };
 		E50CCCC0191E7A94003A9490 /* ParentPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ParentPageViewController.xib; sourceTree = "<group>"; };
-		E50CCCC3191F6FAC003A9490 /* ActivitiesMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivitiesMapping.h; sourceTree = "<group>"; };
-		E50CCCC4191F6FAC003A9490 /* ActivitiesMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivitiesMapping.m; sourceTree = "<group>"; };
+		E50CCCC3191F6FAC003A9490 /* ActivityMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityMapping.h; sourceTree = "<group>"; };
+		E50CCCC4191F6FAC003A9490 /* ActivityMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityMapping.m; sourceTree = "<group>"; };
 		E50CCCD5191F719F003A9490 /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
 		E50CCCD6191F719F003A9490 /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
 		E50CCCD8191F71C0003A9490 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -247,6 +248,8 @@
 		E50CCCF4191F7416003A9490 /* tumitfahrer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = tumitfahrer.xcdatamodel; sourceTree = "<group>"; };
 		E50CCCF9191F7503003A9490 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
 		E50CCCFA191F7503003A9490 /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
+		E50CCCFC191F7C74003A9490 /* ActivityStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityStore.h; sourceTree = "<group>"; };
+		E50CCCFD191F7C74003A9490 /* ActivityStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityStore.m; sourceTree = "<group>"; };
 		E50DB26918F447B800E87E62 /* CurrentUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentUser.h; sourceTree = "<group>"; };
 		E50DB26A18F447B800E87E62 /* CurrentUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentUser.m; sourceTree = "<group>"; };
 		E50DB26D18F52E8500E87E62 /* StatusMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusMapping.h; sourceTree = "<group>"; };
@@ -568,6 +571,8 @@
 		E50DB26C18F52E5900E87E62 /* RKMappings */ = {
 			isa = PBXGroup;
 			children = (
+				E50CCCC3191F6FAC003A9490 /* ActivityMapping.h */,
+				E50CCCC4191F6FAC003A9490 /* ActivityMapping.m */,
 				E504D9EC190BCCE20036FFA8 /* DeviceMapping.h */,
 				E504D9ED190BCCE20036FFA8 /* DeviceMapping.m */,
 				E58B8724191511EA0032524A /* RequestMapping.h */,
@@ -578,8 +583,6 @@
 				E50DB28418F86F8800E87E62 /* SessionMapping.m */,
 				E50DB26D18F52E8500E87E62 /* StatusMapping.h */,
 				E50DB26E18F52E8500E87E62 /* StatusMapping.m */,
-				E50CCCC3191F6FAC003A9490 /* ActivitiesMapping.h */,
-				E50CCCC4191F6FAC003A9490 /* ActivitiesMapping.m */,
 				E50DB28018F86F8000E87E62 /* UserMapping.h */,
 				E50DB28118F86F8000E87E62 /* UserMapping.m */,
 			);
@@ -825,15 +828,15 @@
 		E59987C518E6DBCE00B01C62 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E50CCCF9191F7503003A9490 /* Activity.h */,
+				E50CCCFA191F7503003A9490 /* Activity.m */,
+				E50CCCFC191F7C74003A9490 /* ActivityStore.h */,
+				E50CCCFD191F7C74003A9490 /* ActivityStore.m */,
 				E50DB26918F447B800E87E62 /* CurrentUser.h */,
 				E50DB26A18F447B800E87E62 /* CurrentUser.m */,
 				E504D9E6190B02490036FFA8 /* Device.h */,
-				E50CCCF9191F7503003A9490 /* Activity.h */,
-				E50CCCFA191F7503003A9490 /* Activity.m */,
 				E504D9E7190B02490036FFA8 /* Device.m */,
 				E50CCCE4191F7256003A9490 /* Message.h */,
-				E50CCCF0191F7380003A9490 /* RideSearch.h */,
-				E50CCCF1191F7380003A9490 /* RideSearch.m */,
 				E50CCCE5191F7256003A9490 /* Message.m */,
 				E50CCCE7191F7256003A9490 /* Rating.h */,
 				E50CCCE8191F7256003A9490 /* Rating.m */,
@@ -841,6 +844,8 @@
 				E50CCCE2191F7256003A9490 /* Request.m */,
 				E50CCCD5191F719F003A9490 /* Ride.h */,
 				E50CCCD6191F719F003A9490 /* Ride.m */,
+				E50CCCF0191F7380003A9490 /* RideSearch.h */,
+				E50CCCF1191F7380003A9490 /* RideSearch.m */,
 				E5FA64231912299E00C04BFF /* RideSearchStore.h */,
 				E5FA64241912299E00C04BFF /* RideSearchStore.m */,
 				E50DB28918F8730400E87E62 /* RidesStore.h */,
@@ -1416,7 +1421,7 @@
 				E5DF641F18EB639600D53164 /* CampusRidesViewController.m in Sources */,
 				E504D9D0190A7FC50036FFA8 /* SPGooglePlacesAutocompletePlace.m in Sources */,
 				E599886218E84D9D00B01C62 /* MenuTableViewCell.m in Sources */,
-				E50CCCC5191F6FAC003A9490 /* ActivitiesMapping.m in Sources */,
+				E50CCCC5191F6FAC003A9490 /* ActivityMapping.m in Sources */,
 				E50CCCE6191F7256003A9490 /* Message.m in Sources */,
 				E50CCC1F191E6A6E003A9490 /* LogoView.m in Sources */,
 				E50CCCE3191F7256003A9490 /* Request.m in Sources */,
@@ -1465,6 +1470,7 @@
 				E59B9A4B1916A241008DE80B /* YourRidesViewController.m in Sources */,
 				E504D9D1190A7FC50036FFA8 /* SPGooglePlacesAutocompleteQuery.m in Sources */,
 				E59987D718E6ECF200B01C62 /* CustomTextField.m in Sources */,
+				E50CCCFE191F7C74003A9490 /* ActivityStore.m in Sources */,
 				E50DB26B18F447B800E87E62 /* CurrentUser.m in Sources */,
 				E50DB29418FA7A8800E87E62 /* FacultyManager.m in Sources */,
 				E504D9D3190A7FC50036FFA8 /* SPGooglePlacesPlaceDetailQuery.m in Sources */,

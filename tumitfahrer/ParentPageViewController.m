@@ -12,6 +12,7 @@
 #import "LogoView.h"
 #import "CurrentUser.h"
 #import "LoginViewController.h"
+#import "ActivityStore.h"
 
 @interface ParentPageViewController () <TimelineViewControllerDelegate>
 
@@ -54,7 +55,7 @@
     [self setupLeftMenuButton];
     [self setupNavigationBar];
     
-    
+    [[ActivityStore sharedStore] fetchActivitiesFromWebservice:nil];
     // get current user
     NSString *emailLoggedInUser = [[NSUserDefaults standardUserDefaults] valueForKey:@"emailLoggedInUser"];
     
