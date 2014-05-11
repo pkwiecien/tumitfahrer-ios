@@ -10,6 +10,9 @@
 
 @interface LogoView : UIView
 
-- (id)initWithFrame:(CGRect)frame titile:(NSString *)title;
+- (id)initWithFrame:(CGRect)frame title:(NSString *)title;
+
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 
 @end

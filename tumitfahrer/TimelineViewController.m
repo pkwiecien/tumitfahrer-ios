@@ -7,8 +7,8 @@
 //
 
 #import "TimelineViewController.h"
-#import "MMDrawerBarButtonItem.h"
 #import "TimelineCell.h"
+#import "ParentPageViewController.h"
 #import "LogoView.h"
 
 @interface TimelineViewController ()
@@ -28,30 +28,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setupLeftMenuButton];
-    [self setupNavigationBar];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
     
     UIEdgeInsets inset = UIEdgeInsetsMake(10, 0, 0, 0);
     self.tableView.contentInset = inset;
-}
+    self.screenNumberLabel.text = [NSString stringWithFormat:@"Screen #%d", self.index];
 
--(void)setupLeftMenuButton{
-    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
-    [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
-}
-
--(void)setupNavigationBar {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-
-    UIColor * barColor = [UIColor colorWithRed:0 green:0.384 blue:0.58 alpha:1];
-    [self.navigationController.navigationBar setBarTintColor:barColor];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    
-    LogoView *logo = [[LogoView alloc] initWithFrame:CGRectMake(0, 0, 200, 41) titile:@"Timeline"];
-    [self.navigationItem setTitleView:logo];
-    
-    
-
+    [self.delegate willAppearViewWithIndex:self.index];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -75,11 +60,6 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 80;
-}
-
-#pragma mark - Button Handlers
--(void)leftDrawerButtonPress:(id)sender{
-    [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
 @end

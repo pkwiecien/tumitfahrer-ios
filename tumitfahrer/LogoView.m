@@ -10,7 +10,7 @@
 
 @implementation LogoView
 
-- (id)initWithFrame:(CGRect)frame titile:(NSString *)title {
+- (id)initWithFrame:(CGRect)frame title:(NSString *)title {
     self = [super initWithFrame:frame];
     if (self) {
         NSArray *subviewArray = [[NSBundle mainBundle] loadNibNamed:@"LogoView" owner:self options:nil];

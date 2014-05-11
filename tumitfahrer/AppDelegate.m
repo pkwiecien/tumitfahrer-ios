@@ -28,6 +28,7 @@
 #import "MMDrawerController.h"
 #import "MMDrawerVisualState.h"
 #import "TimelineViewController.h"
+#import "ParentPageViewController.h"
 
 @interface AppDelegate ()
 
@@ -127,8 +128,9 @@
     // RideRequestsViewController *rideRequestVC = [[RideRequestsViewController alloc] init];
     MenuViewController *leftMenu = [[MenuViewController alloc] init];
     
+    ParentPageViewController *parentVC = [[ParentPageViewController alloc] init];
     TimelineViewController *timelineVC = [[TimelineViewController alloc] init];
-    UINavigationController *navControler2 = [[UINavigationController alloc] initWithRootViewController:timelineVC];
+    UINavigationController *navControler2 = [[UINavigationController alloc] initWithRootViewController:parentVC];
 
     self.drawerController = [[MMDrawerController alloc]
                              initWithCenterViewController:navControler2
@@ -138,7 +140,7 @@
     
     [self.drawerController setMaximumLeftDrawerWidth:280];
     [self.drawerController setRestorationIdentifier:@"MMDrawer"];
-    [self.drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+    [self.drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModePanningNavigationBar];
     [self.drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     [self.drawerController setDrawerVisualStateBlock:[MMDrawerVisualState slideAndScaleVisualStateBlock]];
     
