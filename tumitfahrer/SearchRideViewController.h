@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *destinationTextField;
 @property (weak, nonatomic) IBOutlet UITextField *dateTextField;
 @property (weak, nonatomic) IBOutlet UIButton *searchButton;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *rideTypeSegmentedControl;
 
 - (IBAction)searchButtonPressed:(id)sender;
 - (IBAction)dismissKeyboard:(id)sender;

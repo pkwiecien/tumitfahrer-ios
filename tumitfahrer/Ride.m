@@ -2,11 +2,12 @@
 //  Ride.m
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 5/6/14.
+//  Created by Pawel Kwiecien on 5/11/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
 #import "Ride.h"
+#import "Activity.h"
 #import "Request.h"
 #import "User.h"
 
@@ -35,5 +36,6 @@
 @dynamic driver;
 @dynamic passengers;
 @dynamic requests;
+@dynamic activities;
 
 @end

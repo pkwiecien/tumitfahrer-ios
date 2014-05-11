@@ -331,7 +331,7 @@ static int page = 0;
         
         NSLog(@"Number of requests: %d", (int)[ride.requests count]);
         for (Request *reques in [ride requests]) {
-            NSLog(@"Request: %d %@", reques.requestId, reques.requestedFrom);
+            NSLog(@"Request: %d %@", [reques.requestId intValue], reques.requestedFrom);
         }
     }
 }

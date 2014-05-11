@@ -14,6 +14,7 @@
 #import "LocationController.h"
 #import "RideSearchStore.h"
 #import "NavigationBarUtilities.h"
+#import "CurrentUser.h"
 
 @interface SearchRideViewController ()
 
@@ -56,7 +57,7 @@
         
         NSDictionary *queryParams;
         // add enum
-        queryParams = @{@"start_carpool": self.departureTextField.text, @"end_carpool": self.destinationTextField.text, @"ride_date":@"2012-02-02"};
+        queryParams = @{@"start_carpool": self.departureTextField.text, @"end_carpool": self.destinationTextField.text, @"ride_date":@"2012-02-02", @"user_id": [NSNumber numberWithInt:[CurrentUser sharedInstance].user.userId], @"ride_type": [NSNumber numberWithInt:self.rideTypeSegmentedControl.selectedSegmentIndex]};
         
         [objectManager postObject:nil path:API_SEARCH parameters:queryParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             

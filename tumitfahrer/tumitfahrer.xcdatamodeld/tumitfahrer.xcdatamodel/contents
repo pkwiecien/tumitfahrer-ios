@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C1021" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Activity" representedClassName="Activity" syncable="YES">
+        <attribute name="activityId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="ratings" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Rating" inverseName="activities" inverseEntity="Rating" syncable="YES"/>
+        <relationship name="requests" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Request" inverseName="activities" inverseEntity="Request" syncable="YES"/>
+        <relationship name="rides" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ride" inverseName="activities" inverseEntity="Ride" syncable="YES"/>
+    </entity>
     <entity name="Message" representedClassName="Message" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
@@ -15,6 +23,7 @@
         <attribute name="ratingType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="rideId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="activities" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="ratings" inverseEntity="Activity" syncable="YES"/>
         <relationship name="givenRating" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="ratingsGiven" inverseEntity="User" syncable="YES"/>
         <relationship name="receivedRating" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="ratingsReceived" inverseEntity="User" syncable="YES"/>
     </entity>
@@ -26,6 +35,7 @@
         <attribute name="requestId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="rideId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="activities" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="requests" inverseEntity="Activity" syncable="YES"/>
         <relationship name="requestedRide" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ride" inverseName="requests" inverseEntity="Ride" syncable="YES"/>
     </entity>
     <entity name="Ride" representedClassName="Ride" syncable="YES">
@@ -48,6 +58,7 @@
         <attribute name="rideId" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="rideType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="activities" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="rides" inverseEntity="Activity" syncable="YES"/>
         <relationship name="driver" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="ridesAsDriver" inverseEntity="User" syncable="YES"/>
         <relationship name="passengers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="ridesAsPassenger" inverseEntity="User" syncable="YES"/>
         <relationship name="requests" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Request" inverseName="requestedRide" inverseEntity="Request" syncable="YES"/>
@@ -74,10 +85,11 @@
         <relationship name="ridesAsPassenger" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Ride" inverseName="passengers" inverseEntity="Ride" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Message" positionX="0" positionY="0" width="128" height="150"/>
-        <element name="Rating" positionX="106" positionY="-99" width="128" height="150"/>
-        <element name="Request" positionX="18" positionY="-333" width="128" height="163"/>
-        <element name="Ride" positionX="-279" positionY="-175" width="128" height="373"/>
+        <element name="Activity" positionX="-72" positionY="-180" width="128" height="135"/>
+        <element name="Message" positionX="0" positionY="0" width="128" height="148"/>
+        <element name="Rating" positionX="106" positionY="-99" width="128" height="165"/>
+        <element name="Request" positionX="18" positionY="-333" width="128" height="178"/>
+        <element name="Ride" positionX="-279" positionY="-175" width="128" height="388"/>
         <element name="User" positionX="252" positionY="-40" width="128" height="328"/>
     </elements>
 </model>

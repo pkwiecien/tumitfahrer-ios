@@ -10,10 +10,14 @@
 #import "TimelineViewController.h"
 #import "MMDrawerBarButtonItem.h"
 #import "LogoView.h"
+#import "CurrentUser.h"
+#import "LoginViewController.h"
 
 @interface ParentPageViewController () <TimelineViewControllerDelegate>
 
 @property NSArray *pageTitles;
+
+// activity about new: rides (who add new activity ride, ride request, campus ride), who requests a ride, ride search, rating {activities : { activity_rides : { }, campus_ride: {}, ride_requests: {}, rating{}, }
 
 @end
 
@@ -49,6 +53,14 @@
     
     [self setupLeftMenuButton];
     [self setupNavigationBar];
+    
+    
+    // get current user
+    NSString *emailLoggedInUser = [[NSUserDefaults standardUserDefaults] valueForKey:@"emailLoggedInUser"];
+    
+    if (emailLoggedInUser != nil) {
+        [CurrentUser fetchUserFromCoreDataWithEmail:emailLoggedInUser];
+    }
 }
 
 -(void)setupLeftMenuButton{
@@ -68,6 +80,21 @@
     
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBarHidden = NO;
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    
+    NSLog(@"Current user: %@", [CurrentUser sharedInstance].user);
+    if([CurrentUser sharedInstance].user == nil)
+    {
+        [self showLoginScreen:NO];
+    }
+}
+
+-(void)showLoginScreen:(BOOL)animated
+{
+    LoginViewController *loginVC = [[LoginViewController alloc] init];
+    [self presentViewController:loginVC animated:animated completion:nil];
 }
 
 

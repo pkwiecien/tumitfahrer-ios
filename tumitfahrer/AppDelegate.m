@@ -29,6 +29,7 @@
 #import "MMDrawerVisualState.h"
 #import "TimelineViewController.h"
 #import "ParentPageViewController.h"
+#import "ActivitiesMapping.h"
 
 @interface AppDelegate ()
 
@@ -210,6 +211,8 @@
     [objectManager addResponseDescriptor:[RideMapping getRideSearchesResponseDescriptorWithMapping:getRideSearchesMapping]];
     RKEntityMapping *requestMapping = [RequestMapping requestMapping];
     [objectManager addResponseDescriptor:[RequestMapping postRequestResponseDescriptorWithMapping:requestMapping]];
+    RKEntityMapping *activitiesMapping = [ActivitiesMapping generalActivityMapping];
+    [objectManager addResponseDescriptor:[ActivitiesMapping getActivityResponseDescriptorWithMapping:activitiesMapping]];
 }
 
 -(void)setupObservers {

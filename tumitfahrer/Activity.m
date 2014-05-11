@@ -1,25 +1,24 @@
 //
-//  Rating.m
+//  Activity.m
 //  tumitfahrer
 //
 //  Created by Pawel Kwiecien on 5/11/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
-#import "Rating.h"
 #import "Activity.h"
-#import "User.h"
+#import "Rating.h"
+#import "Request.h"
+#import "Ride.h"
 
 
-@implementation Rating
+@implementation Activity
 
+@dynamic activityId;
 @dynamic createdAt;
-@dynamic ratingId;
-@dynamic ratingType;
-@dynamic rideId;
 @dynamic updatedAt;
-@dynamic givenRating;
-@dynamic receivedRating;
-@dynamic activities;
+@dynamic ratings;
+@dynamic requests;
+@dynamic rides;
 
 @end

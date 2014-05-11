@@ -245,7 +245,7 @@
             RKLogError(@"Load failed with error: %@", error);
         }];
     } else if(request != nil) {
-        [objectManager deleteObject:request path:[NSString stringWithFormat:@"/api/v2/rides/%d/requests/%d", self.ride.rideId, request.requestId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        [objectManager deleteObject:request path:[NSString stringWithFormat:@"/api/v2/rides/%d/requests/%d", self.ride.rideId, [request.requestId intValue]] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
 
             [KGStatusBar showSuccessWithStatus:@"Request canceled"];
             
@@ -316,7 +316,7 @@
 
 -(Request *)requestFoundInCoreData {
     for (Request *request in self.ride.requests) {
-        if (request.passengerId == [CurrentUser sharedInstance].user.userId) {
+        if ([request.passengerId intValue] == [CurrentUser sharedInstance].user.userId) {
             return request;
         }
     }

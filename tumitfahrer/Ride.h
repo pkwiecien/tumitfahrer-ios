@@ -2,14 +2,14 @@
 //  Ride.h
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 5/6/14.
+//  Created by Pawel Kwiecien on 5/11/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Request, User;
+@class Activity, Request, User;
 
 @interface Ride : NSManagedObject
 
@@ -35,9 +35,9 @@
 @property (nonatomic, retain) User *driver;
 @property (nonatomic, retain) NSSet *passengers;
 @property (nonatomic, retain) NSSet *requests;
+@property (nonatomic, retain) Activity *activities;
 
 @end
-
 
 @interface Ride (CoreDataGeneratedAccessors)
 

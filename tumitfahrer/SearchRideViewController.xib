@@ -9,6 +9,7 @@
                 <outlet property="dateTextField" destination="ljY-AS-Bsx" id="Nei-5H-cpR"/>
                 <outlet property="departureTextField" destination="sbm-97-fWT" id="ob0-z3-y0p"/>
                 <outlet property="destinationTextField" destination="E9i-fR-64W" id="mkx-mA-xYN"/>
+                <outlet property="rideTypeSegmentedControl" destination="NKL-ii-jY2" id="X9Q-LW-GRe"/>
                 <outlet property="searchButton" destination="yRh-2G-r7K" id="mTt-l2-3u3"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

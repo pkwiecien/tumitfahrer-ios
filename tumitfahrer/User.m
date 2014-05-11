@@ -2,7 +2,7 @@
 //  User.m
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 5/6/14.
+//  Created by Pawel Kwiecien on 5/11/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
