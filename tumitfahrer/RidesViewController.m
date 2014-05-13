@@ -10,6 +10,8 @@
 #import "MMDrawerBarButtonItem.h"
 #import "RidesCell.h"
 #import "RideDetailHeaderView.h"
+#import "Ride.h"
+#import "RideDetailViewController.h"
 
 @interface RidesViewController ()
 
@@ -17,11 +19,10 @@
 
 @implementation RidesViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+-(instancetype)initWithContentType:(ContentType)contentType {
+    self = [super init];
     if (self) {
-        // Custom initialization
+        self.RideType = contentType;
     }
     return self;
 }
@@ -29,13 +30,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    [[PanoramioUtilities sharedInstance] addObserver:self];
+    [[RidesStore sharedStore] addObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [self setupNavigationBar];
     [self setupLeftMenuButton];
     [self.delegate willAppearViewWithIndex:self.index];
+    [self.tableView reloadData];
 }
 
 -(void)setupNavigationBar {
@@ -60,7 +64,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 10;
+    return [[[RidesStore sharedStore] allRidesByType:self.RideType] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -91,15 +95,57 @@
         cell = [RidesCell ridesCell];
     }
     
+    Ride *ride = [[[RidesStore sharedStore] allRidesByType:self.RideType] objectAtIndex:indexPath.row];
+    if(ride.destinationImage == nil) {
+        cell.rideImageView.image = [UIImage imageNamed:@"PlaceholderImage"];
+    } else {
+        cell.rideImageView.image = [UIImage imageWithData:ride.destinationImage];
+    }
+    cell.rideImageView.clipsToBounds = YES;
+    cell.rideImageView.contentMode = UIViewContentModeScaleAspectFill;
+    
+    cell.directionsLabel.text = [ride.departurePlace stringByAppendingString:[NSString stringWithFormat:@" -> %@", ride.destination]];
+    [cell.directionsLabel sizeToFit];
+
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
+    rideDetailVC.ride = [[[RidesStore sharedStore] allRidesByType:self.RideType] objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:rideDetailVC animated:YES];
 }
 
 #pragma mark - Button Handlers
 -(void)leftDrawerButtonPress:(id)sender{
     [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+
+-(void)didReceivePhotoForRide:(NSInteger)rideId {
+    [self.tableView reloadData];
+}
+
+-(void)didReceivePhotoForCurrentLocation:(UIImage *)image
+{
+    [LocationController sharedInstance].currentLocationImage = image;
+}
+
+-(void)didRecieveRidesFromWebService:(NSArray *)rides
+{
+    for (Ride *ride in rides) {
+        NSLog(@"Ride: %@", ride);
+    }
+}
+
+-(void)loadNewElements {
+    [[RidesStore sharedStore] fetchNextRides:^(BOOL fetched) {
+        if (fetched) {
+            for (Ride *ride in [[RidesStore sharedStore] allRides]) {
+                NSLog(@"ride with id: %d", ride.rideId);
+                //[self.collectionView reloadData];
+            }
+        }
+    }];
 }
 
 @end

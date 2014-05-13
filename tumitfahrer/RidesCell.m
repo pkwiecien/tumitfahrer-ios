@@ -13,12 +13,21 @@
 +(RidesCell *)ridesCell {
     RidesCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"RidesCell" owner:self options:nil] objectAtIndex:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
     return cell;
 }
 
 - (void)awakeFromNib
 {
-    // Initialization code
+    [self.directionsLabel sizeToFit];
+    self.directionsLabel.backgroundColor = [UIColor whiteColor];
+    self.directionsLabel.alpha = 0.8;
+}
+
+-(void)setFrame:(CGRect)frame {
+    frame.origin.x += 10;
+    frame.size.width -= 2 * 10;
+    [super setFrame:frame];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

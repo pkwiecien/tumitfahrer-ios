@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PanoramioUtilities.h"
+#import "RidesStore.h"
 
 @protocol RidesViewControllerDelegate
 
@@ -14,10 +16,12 @@
 
 @end
 
-@interface RidesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface RidesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate,  PanoramioUtilitiesDelegate, RideStoreDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) id<RidesViewControllerDelegate> delegate;
 @property (assign, nonatomic) NSInteger index;
+@property (nonatomic, assign) ContentType RideType;
+
 
 @end

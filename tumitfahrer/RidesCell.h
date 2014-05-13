@@ -13,5 +13,8 @@
 +(RidesCell *)ridesCell;
 
 @property (weak, nonatomic) IBOutlet UIImageView *rideImageView;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *directionsLabel;
 
 @end
