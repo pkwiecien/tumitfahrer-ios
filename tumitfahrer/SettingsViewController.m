@@ -30,34 +30,25 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     [self makeButtons];
     self.tableView = [self makeTableView];
     [self.view addSubview:self.tableView];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
+-(void)viewWillAppear:(BOOL)animated {
     [self setupLeftMenuButton];
     [self setupNavigationBar];
 }
 
 -(void)setupNavigationBar {
-    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
-    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.227 green:0.227 blue:0.227 alpha:1]];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+
+    UINavigationController *navController = self.navigationController;
+    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor colorWithRed:0.227 green:0.227 blue:0.227 alpha:1]];
     self.title = @"Settings";
-    
-    NSDictionary * navBarTitleTextAttributes = @{ NSForegroundColorAttributeName : [UIColor whiteColor]};
-    self.navigationController.navigationBar.titleTextAttributes = navBarTitleTextAttributes;
-    
-    self.navigationController.navigationBar.translucent = NO;
-    self.navigationController.navigationBarHidden = NO;
-    self.view = [NavigationBarUtilities makeBackground:self.view];
 }
 
 -(void)setupLeftMenuButton{
@@ -100,18 +91,15 @@
 }
 
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.tableOptions count];;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *CellIdentifier = @"SettingsCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
@@ -122,7 +110,7 @@
     
     cell.textLabel.text = [self.tableOptions objectAtIndex:indexPath.row];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.textColor = [UIColor blackColor];
     cell.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];
     
@@ -134,13 +122,11 @@
     return cell;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 30.0f;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 60.0f;
 }
 
@@ -151,7 +137,7 @@
     label.text = @"TUMitfahrer";
     label.textAlignment = NSTextAlignmentCenter;
     [label setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:16.0]];//font size and style
-    [label setTextColor:[UIColor whiteColor]];
+    [label setTextColor:[UIColor blackColor]];
     
     CGRect resultFrame = CGRectMake(0.0f,
                                     0.0f,

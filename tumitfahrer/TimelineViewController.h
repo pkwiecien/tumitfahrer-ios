@@ -19,6 +19,5 @@
 @property (nonatomic, weak) id<TimelineViewControllerDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (assign, nonatomic) NSInteger index;
-@property (weak, nonatomic) IBOutlet UILabel *screenNumberLabel;
 
 @end

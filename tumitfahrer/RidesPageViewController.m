@@ -13,6 +13,8 @@
 #import "CustomBarButton.h"
 #import "RidesViewController.h"
 #import "NavigationBarUtilities.h"
+#import "AddRideViewController.h"
+#import "SearchRideViewController.h"
 
 @interface RidesPageViewController () <RidesViewControllerDelegate>
 
@@ -28,15 +30,17 @@
 -(instancetype)initWithContentType:(ContentType)contentType {
     self = [super init];
     if (self) {
-        self.pageTitles = [NSArray arrayWithObjects:@"All Campus Rides", @"Around you", @"Favourite destinations", nil];
+        NSArray *campusTitles = [NSArray arrayWithObjects:@"All Campus", @"Around you", @"Favourite destinations", nil];
+        NSArray *activityTitles = [NSArray arrayWithObjects:@"All Activity", @"Around you", @"Favourite destinations", nil];
+        self.pageTitles = [NSArray arrayWithObjects:campusTitles, activityTitles, nil];
+        
         self.pageColors = [NSArray arrayWithObjects:[UIColor colorWithRed:0 green:0.443 blue:0.737 alpha:1], [UIColor colorWithRed:0.008 green:0.4 blue:0.62 alpha:1], [UIColor colorWithRed:0 green:0.294 blue:0.459 alpha:1], nil];
         self.RideType = contentType;
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
@@ -47,7 +51,7 @@
     RidesViewController *initialViewController = [self viewControllerAtIndex:0];
     initialViewController.delegate = self;
     initialViewController.RideType = self.RideType;
-    
+
     NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
     
     [self.pageController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
@@ -55,10 +59,10 @@
     [self addChildViewController:self.pageController];
     [[self view] addSubview:[self.pageController view]];
     [self.pageController didMoveToParentViewController:self];
+    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    
     [self setupLeftMenuButton];
     [self setupNavigationBar];
 }
@@ -66,21 +70,21 @@
 -(void)setupLeftMenuButton{
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+    
+    UIBarButtonItem *btnSearch = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchButtonPressed)];
+    UIBarButtonItem *btnAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonPressed)];
+    [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:btnAdd, btnSearch, nil]];
 }
 
 -(void)setupNavigationBar {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     UINavigationController *navController = self.navigationController;
     [NavigationBarUtilities setupNavbar:&navController withColor:[self.pageColors objectAtIndex:0]];
+    self.navigationController.navigationBar.translucent = YES;
     
-    self.logo = [[LogoView alloc] initWithFrame:CGRectMake(0, 0, 200, 41) title:[self.pageTitles objectAtIndex:0]];
+    self.logo = [[LogoView alloc] initWithFrame:CGRectMake(0, 0, 200, 41) title:[[self.pageTitles objectAtIndex:self.RideType] objectAtIndex:0]];
     [self.navigationItem setTitleView:self.logo];
 }
-
--(void)mapButtonPressed {
-    
-}
-
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
     
@@ -93,7 +97,6 @@
     index--;
     
     return [self viewControllerAtIndex:index];
-    
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
@@ -113,20 +116,34 @@
     
     RidesViewController *ridesViewController = [[RidesViewController alloc] init];
     ridesViewController.index = index;
-    ridesViewController.delegate = self;
-    
+    ridesViewController.delegate = self;    
     return ridesViewController;
 }
 
 
 #pragma mark - Button Handlers
+
 -(void)leftDrawerButtonPress:(id)sender{
     [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
+-(void)searchButtonPressed {
+    SearchRideViewController *searchRideVC = [[SearchRideViewController alloc] init];
+    searchRideVC.SearchDisplayType = ShowAsModal;
+    UINavigationController *navBar = [[UINavigationController alloc] initWithRootViewController:searchRideVC];
+    [self.navigationController presentViewController:navBar animated:YES completion:nil];
+}
+
+-(void)addButtonPressed {
+    AddRideViewController *addRideVC = [[AddRideViewController alloc] init];
+    addRideVC.RideType = self.RideType;
+    addRideVC.RideDisplayType = ShowAsModal;
+    UINavigationController *navBar = [[UINavigationController alloc] initWithRootViewController:addRideVC];
+    [self.navigationController presentViewController:navBar animated:YES completion:nil];
+}
 
 -(void)willAppearViewWithIndex:(NSInteger)index {
-    self.logo.titleLabel.text = [self.pageTitles objectAtIndex:index];
+    self.logo.titleLabel.text = [[self.pageTitles objectAtIndex:self.RideType] objectAtIndex:index];
     self.logo.pageControl.currentPage = index;
     [self.navigationController.navigationBar setBarTintColor:[self.pageColors objectAtIndex:index]];
 }

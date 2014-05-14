@@ -862,8 +862,6 @@
 		E59987C418E6DBC300B01C62 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				E50CCD02191FADE2003A9490 /* New Browse Rides */,
-				E50CCC0C191E5288003A9490 /* Timeline */,
 				E5E2155A1907A92700B0B150 /* Add Ride */,
 				E5FA642819124F2500C04BFF /* Add Ride Request */,
 				E5DF641718EB569800D53164 /* Browse Ride */,
@@ -872,6 +870,7 @@
 				E599880718E7835F00B01C62 /* Left Menu */,
 				E59987CC18E6E3A100B01C62 /* Login */,
 				E59B9A4D1916AB88008DE80B /* Message List */,
+				E50CCD02191FADE2003A9490 /* New Browse Rides */,
 				E58889D81913832C0062D0DF /* New Ride Details */,
 				E51FD4FE18F086300098AD11 /* Profile */,
 				E59987F718E724F900B01C62 /* Register */,
@@ -879,6 +878,7 @@
 				E5FA641D191226F400C04BFF /* Ride Search Results */,
 				E5E2155B1907A92D00B0B150 /* Search Ride */,
 				E5DF640B18EB42D800D53164 /* Settings */,
+				E50CCC0C191E5288003A9490 /* Timeline */,
 				E59B9A471916A22A008DE80B /* Your Rides */,
 			);
 			name = ViewControllers;

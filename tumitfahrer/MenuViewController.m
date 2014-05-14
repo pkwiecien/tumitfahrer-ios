@@ -75,8 +75,9 @@
     
     // section 1 - view controllers
     AddRideViewController *addRideVC = [[AddRideViewController alloc] init];
-    addRideVC.DisplayType = ShowAsViewController;
+    addRideVC.RideDisplayType = ShowAsViewController;
     SearchRideViewController *searchRidesVC = [[SearchRideViewController alloc] init];
+    searchRidesVC.SearchDisplayType = ShowAsViewController;
     self.addRidesViewControllers = [NSArray arrayWithObjects: addRideVC, searchRidesVC, nil];
     
     // section 2 - view controllers

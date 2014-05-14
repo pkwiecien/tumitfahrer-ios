@@ -11,6 +11,7 @@
 
 @interface SearchRideViewController : UIViewController <RMDateSelectionViewControllerDelegate, UITextFieldDelegate>
 
+@property (nonatomic, assign) DisplayType SearchDisplayType;
 @property (weak, nonatomic) IBOutlet UITextField *departureTextField;
 @property (weak, nonatomic) IBOutlet UITextField *destinationTextField;
 @property (weak, nonatomic) IBOutlet UITextField *dateTextField;

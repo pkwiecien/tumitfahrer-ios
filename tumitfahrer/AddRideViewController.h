@@ -15,13 +15,8 @@
 
 @interface AddRideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MeetingPointDelegate, DestinationViewControllerDelegate, FreeSeatsCellDelegate>
 
-typedef enum showTypes : NSUInteger {
-    ShowAsModal = 0,
-    ShowAsViewController = 1,
-} AddRideDisplayType;
-
 @property (nonatomic, assign) ContentType RideType;
-@property (nonatomic, assign) AddRideDisplayType DisplayType;
+@property (nonatomic, assign) DisplayType RideDisplayType;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

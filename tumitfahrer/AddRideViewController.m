@@ -17,6 +17,7 @@
 #import "RidesStore.h"
 #import "NavigationBarUtilities.h"
 #import "MMDrawerBarButtonItem.h"
+#import "SearchRideViewController.h"
 
 @interface AddRideViewController () <NSFetchedResultsControllerDelegate>
 
@@ -49,12 +50,16 @@
     
     if(departurePlace!=nil)
         [self.tableValues replaceObjectAtIndex:0 withObject:departurePlace];
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.tableView reloadData];
     [self setupNavigationBar];
-    [self setupLeftMenuButton];
+    
+    if(self.RideDisplayType == ShowAsViewController)
+        [self setupLeftMenuButton];
 }
 
 -(void)setupLeftMenuButton{
@@ -74,11 +79,11 @@
     
     self.title = @"ADD RIDE";
     
-//    UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-//    [settingsView addTarget:self action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-//    [settingsView setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"DeleteIcon2"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-//    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
-//    [self.navigationItem setLeftBarButtonItem:settingsButton];
+    UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    [settingsView addTarget:self action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    [settingsView setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"DeleteIcon2"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
+    [self.navigationItem setLeftBarButtonItem:settingsButton];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

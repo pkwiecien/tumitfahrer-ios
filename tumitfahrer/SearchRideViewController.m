@@ -37,11 +37,16 @@
     UIColor *iOSgreenColor = [UIColor colorWithRed:0.298 green:0.851 blue:0.392 alpha:1]; /*#4cd964*/
     UIImage *greanButtonImage = [ActionManager colorImage:[UIImage imageNamed:@"blueButton"] withColor:iOSgreenColor];
     [self.searchButton setBackgroundImage:greanButtonImage forState:UIControlStateNormal];
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [self setupNavigationBar];
-    [self setupLeftMenuButton];
+
+    
+    if(self.SearchDisplayType == ShowAsViewController)
+        [self setupLeftMenuButton];
 }
 
 -(void)setupLeftMenuButton{
@@ -53,6 +58,12 @@
     UINavigationController *navController = self.navigationController;
     [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor colorWithRed:0 green:0.573 blue:0.271 alpha:1]];
     self.title = @"SEARCH RIDES";
+    
+    UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    [settingsView addTarget:self action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    [settingsView setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"DeleteIcon2"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
+    [self.navigationItem setLeftBarButtonItem:settingsButton];
 }
 
 - (IBAction)searchButtonPressed:(id)sender {
@@ -119,6 +130,10 @@
 
 - (IBAction)dismissKeyboard:(id)sender {
     [self.view endEditing:YES];
+}
+
+-(void)closeButtonPressed {
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Button Handlers

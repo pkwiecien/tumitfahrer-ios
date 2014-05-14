@@ -63,6 +63,7 @@
     if (emailLoggedInUser != nil) {
         [CurrentUser fetchUserFromCoreDataWithEmail:emailLoggedInUser];
     }
+    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -88,6 +89,7 @@
     UINavigationController *navController = self.navigationController;
     [NavigationBarUtilities setupNavbar:&navController withColor:[self.pageColors objectAtIndex:0]];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationController.navigationBar.translucent = YES;
     
     self.logo = [[LogoView alloc] initWithFrame:CGRectMake(0, 0, 200, 41) title:[self.pageTitles objectAtIndex:0]];
     [self.navigationItem setTitleView:self.logo];
