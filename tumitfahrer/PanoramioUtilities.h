@@ -28,11 +28,11 @@ typedef void(^photoUrlCompletionHandler)(NSURL *);
 
 - (void)addObserver:(id<PanoramioUtilitiesDelegate>) observer;
 - (void)notifyWithImage:(UIImage*)image;
--(void)notifyAllAboutNewImage:(UIImage *)image rideId:(NSInteger)rideId;
+- (void)notifyAllAboutNewImage:(UIImage *)image rideId:(NSInteger)rideId;
 - (void)removeObserver:(id<PanoramioUtilitiesDelegate>)observer;
 
 - (void)fetchPhotoForCurrentLocation:(CLLocation*)location;
 - (void)fetchPhotoForLocation:(CLLocation*)location rideId:(NSInteger)rideId;
--(void)fetchPhotoForLocation:(CLLocation *)location rideId:(NSInteger)rideId completionHandler:(photoUrlCompletionHandler)block;
+- (void)fetchPhotoForLocation:(CLLocation *)location rideId:(NSInteger)rideId completionHandler:(photoUrlCompletionHandler)block;
 
 @end

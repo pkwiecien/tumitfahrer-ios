@@ -173,17 +173,17 @@
     [cell setSelectedBackgroundView:bgColorView];
     
     if(indexPath.section == 0) {
-        cell.backgroundColor = [UIColor colorWithRed:0.059 green:0.216 blue:0.314 alpha:1];
-        cell.contentView.backgroundColor = [UIColor colorWithRed:0.059 green:0.216 blue:0.314 alpha:1];
+        cell.backgroundColor = [UIColor darkestBlue];
+        cell.contentView.backgroundColor = [UIColor darkestBlue];
     } else if(indexPath.section == 1) {
-        cell.backgroundColor = [UIColor colorWithRed:0 green:0.361 blue:0.588 alpha:1];
-        cell.contentView.backgroundColor = [UIColor colorWithRed:0 green:0.361 blue:0.588 alpha:1];
+        cell.backgroundColor = [UIColor darkerBlue];
+        cell.contentView.backgroundColor = [UIColor darkerBlue];
     } else if(indexPath.section == 2) {
-        cell.backgroundColor = [UIColor colorWithRed:0 green:0.463 blue:0.722 alpha:1];
-        cell.contentView.backgroundColor = [UIColor colorWithRed:0 green:0.463 blue:0.722 alpha:1];
+        cell.backgroundColor = [UIColor lighterBlue];
+        cell.contentView.backgroundColor = [UIColor lighterBlue];
     } else if(indexPath.section == 3) {
-        cell.backgroundColor = [UIColor colorWithRed:0.325 green:0.655 blue:0.835 alpha:1];
-        cell.contentView.backgroundColor = [UIColor colorWithRed:0.325 green:0.655 blue:0.835 alpha:1];
+        cell.backgroundColor = [UIColor lightestBlue];
+        cell.contentView.backgroundColor = [UIColor lightestBlue];
     }
     
     return cell;

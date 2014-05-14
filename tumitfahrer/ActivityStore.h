@@ -11,8 +11,9 @@
 @interface ActivityStore : NSObject
 
 + (instancetype)sharedStore;
--(void)fetchActivitiesFromWebservice:(boolCompletionHandler)block;
--(NSFetchedResultsController *)fetchedResultsController;
--(NSArray *)recentActivities;
+- (void)fetchActivitiesFromWebservice:(boolCompletionHandler)block;
+- (NSFetchedResultsController *)fetchedResultsController;
+- (NSArray *)recentActivities;
+- (void)loadAllActivities;
 
 @end

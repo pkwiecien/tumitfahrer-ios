@@ -18,7 +18,8 @@
 @interface TimelineViewController ()
 
 @property CGFloat previousScrollViewYOffset;
-
+@property UIRefreshControl *refreshControl;
+@property CGFloat navBarInitialHeight;
 @end
 
 @implementation TimelineViewController
@@ -40,10 +41,34 @@
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
     self.tableView.tableHeaderView = headerView;
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing timeline"];
+    self.refreshControl.backgroundColor = [UIColor grayColor];
+    [self.refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:self.refreshControl atIndex:0];
+    
+    [[ActivityStore sharedStore] fetchActivitiesFromWebservice:^(BOOL isFetched) {
+        if (isFetched) {
+            [[ActivityStore sharedStore] loadAllActivities];
+            [self.tableView reloadData];
+        }
+    }];
+    self.navBarInitialHeight = self.navigationController.navigationBar.frame.size.height;
+}
+
+- (void)handleRefresh:(id)sender {
+    [[ActivityStore sharedStore] fetchActivitiesFromWebservice:^(BOOL isFetched) {
+        if (isFetched) {
+            [self.tableView reloadData];
+            [self.refreshControl endRefreshing];
+        }
+    }];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.delegate willAppearViewWithIndex:self.index];
+    [self.tableView reloadData];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -59,6 +84,8 @@
         cell = [TimelineCell timelineCell];
     }
     
+    NSLog(@"index path: %d", indexPath.row);
+    NSLog(@"count: %d", [[[ActivityStore sharedStore] recentActivities] count]);
     id result = [[[ActivityStore sharedStore] recentActivities] objectAtIndex:indexPath.row];
     if([result isKindOfClass:[Rating class]]) {
         cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"Rating received with type %d", [((Rating *)result).ratingType intValue]];
@@ -81,7 +108,7 @@
 
 #pragma mark - scroll view methods
 // http://stackoverflow.com/questions/19819165/imitate-ios-7-facebook-hide-show-expanding-contracting-navigation-bar
-
+//
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGRect frame = self.navigationController.navigationBar.frame;
     CGFloat size = frame.size.height - 21;
@@ -90,7 +117,7 @@
     CGFloat scrollDiff = scrollOffset - self.previousScrollViewYOffset;
     CGFloat scrollHeight = scrollView.frame.size.height;
     CGFloat scrollContentSizeHeight = scrollView.contentSize.height + scrollView.contentInset.bottom;
-    
+
     if (scrollOffset <= -scrollView.contentInset.top) {
         frame.origin.y = 20;
         self.tableView.frame= CGRectMake(0, 20, [UIScreen mainScreen].bounds.size.width,[UIScreen mainScreen].bounds.size.height);
@@ -100,7 +127,7 @@
         frame.origin.y = MIN(20, MAX(-size, frame.origin.y - (frame.size.height * (scrollDiff / scrollHeight))));
         // frame.origin.y = MIN(20, MAX(-size, frame.origin.y - scrollDiff));
     }
-    
+
     [self.navigationController.navigationBar setFrame:frame];
     [self updateBarButtonItems:(1 - framePercentageHidden)];
     self.previousScrollViewYOffset = scrollOffset;
@@ -145,6 +172,10 @@
         [self.navigationController.navigationBar setFrame:frame];
         [self updateBarButtonItems:alpha];
     }];
+}
+
+-(void)reloadNavbar {
+    [self animateNavBarTo:self.navBarInitialHeight];
 }
 
 @end

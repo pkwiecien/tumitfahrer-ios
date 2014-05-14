@@ -19,6 +19,7 @@
 @interface RidesViewController ()
 
 @property CGFloat previousScrollViewYOffset;
+@property UIRefreshControl *refreshControl;
 
 @end
 
@@ -35,6 +36,21 @@
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
     self.tableView.tableHeaderView = headerView;
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing rides"];
+    self.refreshControl.backgroundColor = [UIColor grayColor];
+    [self.refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:self.refreshControl atIndex:0];
+}
+
+-(void)handleRefresh {
+    [[RidesStore sharedStore] fetchNextRides:^(BOOL fetched) {
+        if(fetched) {
+            [self.tableView reloadData];
+            [self.refreshControl endRefreshing];
+        }
+    }];
 }
 
 -(void)viewWillAppear:(BOOL)animated {

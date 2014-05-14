@@ -12,7 +12,6 @@
 #import "LogoView.h"
 #import "CurrentUser.h"
 #import "LoginViewController.h"
-#import "ActivityStore.h"
 #import "CustomBarButton.h"
 #import "NavigationBarUtilities.h"
 #import "TimelineMapViewController.h"
@@ -144,15 +143,10 @@
 }
 
 - (TimelineViewController *)viewControllerAtIndex:(NSUInteger)index {
-    
     TimelineViewController *timelineViewController = [[TimelineViewController alloc] init];
     timelineViewController.index = index;
     timelineViewController.delegate = self;
-    
-    self.title = [NSString stringWithFormat:@"Screen #%d", index];
-    
     return timelineViewController;
-    
 }
 
 

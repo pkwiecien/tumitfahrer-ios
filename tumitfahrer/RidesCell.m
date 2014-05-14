@@ -22,7 +22,7 @@
     cell.roleImageView.image = [ActionManager colorImage:[UIImage imageNamed:@"DriverIcon"] withColor:color];
     cell.timeLabel.textColor = color;
     cell.dateLabel.textColor = color;
-    cell.seatsLabel.textColor = color;
+    cell.seatsLabel.textColor = [UIColor whiteColor];
     cell.directionsLabel.textColor = color;
 
     return cell;

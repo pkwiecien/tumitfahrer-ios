@@ -135,7 +135,9 @@ static int page = 0;
     
     [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/rides?page=%d", page] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         block(YES);
-        page++;
+        if ([[mappingResult array] count] > 0) {
+            page++;
+        }
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);
         block(NO);

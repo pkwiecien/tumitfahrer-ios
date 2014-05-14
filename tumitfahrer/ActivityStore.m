@@ -22,10 +22,12 @@
 
 @implementation ActivityStore
 
+static int page = 0;
+
 -(instancetype)init {
     self = [super init];
     if (self) {
-        [self fetchActivitiesFromCoreData];
+        [self loadAllActivities];
         
         [self fetchActivitiesFromWebservice:^(BOOL resultsFetched) {
             if(resultsFetched) {
@@ -47,15 +49,50 @@
 
 -(void)loadAllActivities {
     [self fetchActivitiesFromCoreData];
+    [self reloadRecentActivities];
+}
+
+-(void)reloadRecentActivities {
+    self.privateRecentActivities = [[NSMutableArray alloc] init];
+    int rideIndex = 0;
+    int ratingIndex = 0;
+    int requestsIndex = 0;
+    
+    NSArray *rides = [NSArray arrayWithArray:[self.activitiesResult.rides allObjects]];
+    NSArray *requests = [NSArray arrayWithArray:[self.activitiesResult.requests allObjects]];
+    NSArray *ratings = [NSArray arrayWithArray:[self.activitiesResult.ratings allObjects]];
+    while(rideIndex < [self.activitiesResult.rides count] || ratingIndex < [self.activitiesResult.ratings count] || requestsIndex < [self.activitiesResult.requests count]) {
+        // find the latest event from three arrays
+        NSMutableArray *comparedObjects = [[NSMutableArray alloc] init];
+        if(rideIndex < [rides count])
+            [comparedObjects addObject:[rides objectAtIndex:rideIndex]];
+        else if(requestsIndex < [requests count])
+            [comparedObjects addObject:[requests objectAtIndex:requestsIndex]];
+        else if(ratingIndex < [ratings count])
+            [comparedObjects addObject:[ratings objectAtIndex:ratingIndex]];
+        
+        id result = [self compareThree:comparedObjects];
+        
+        if([result isKindOfClass:[Ride class]]) {
+            rideIndex++;
+        } else if([result isKindOfClass:[Rating class]]) {
+            ratingIndex++;
+        } else {
+            requestsIndex++;
+        }
+        [self.privateRecentActivities addObject:result];
+    }
 }
 
 -(void)fetchActivitiesFromWebservice:(boolCompletionHandler)block {
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
-    [objectManager getObjectsAtPath:API_ACTIVITIES parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/activities?page=%d", page] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         NSArray *array = [mappingResult array];
-        NSLog(@"returned %d", [array count]);
+        if ([array count] > 1) {
+            page++;
+        }
         block(YES);
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);
@@ -109,36 +146,7 @@
 
 -(NSArray *)recentActivities {
     if(self.privateRecentActivities == nil) {
-        [self fetchActivitiesFromCoreData];
-        self.privateRecentActivities = [[NSMutableArray alloc] init];
-        int rideIndex = 0;
-        int ratingIndex = 0;
-        int requestsIndex = 0;
-        
-        NSArray *rides = [NSArray arrayWithArray:[self.activitiesResult.rides allObjects]];
-        NSArray *requests = [NSArray arrayWithArray:[self.activitiesResult.requests allObjects]];
-        NSArray *ratings = [NSArray arrayWithArray:[self.activitiesResult.ratings allObjects]];
-        while(rideIndex < [self.activitiesResult.rides count] || ratingIndex < [self.activitiesResult.ratings count] || requestsIndex < [self.activitiesResult.requests count]) {
-            // find the latest event from three arrays
-            NSMutableArray *comparedObjects = [[NSMutableArray alloc] init];
-            if(rideIndex < [rides count])
-                [comparedObjects addObject:[rides objectAtIndex:rideIndex]];
-            else if(requestsIndex < [requests count])
-                [comparedObjects addObject:[requests objectAtIndex:requestsIndex]];
-            else if(ratingIndex < [ratings count])
-                [comparedObjects addObject:[ratings objectAtIndex:ratingIndex]];
-            
-            id result = [self compareThree:comparedObjects];
-            
-            if([result isKindOfClass:[Ride class]]) {
-                rideIndex++;
-            } else if([result isKindOfClass:[Rating class]]) {
-                ratingIndex++;
-            } else {
-                requestsIndex++;
-            }
-            [self.privateRecentActivities addObject:result];
-        }
+        [self loadAllActivities];
     }
     return self.privateRecentActivities;
 }

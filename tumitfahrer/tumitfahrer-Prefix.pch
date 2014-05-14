@@ -27,6 +27,7 @@
 // Make RestKit globally available
 #import <RestKit/RestKit.h>
 #import "UIViewController+SideBarController.h"
+#import "UIColor+LayoutColors.h"
 
 static NSString * const SALT = @"toj369sbz1f316sx";
 static NSString * const API_ADDRESS = @"http://tumitfahrer-staging.herokuapp.com";

@@ -160,6 +160,7 @@
 		E5FC44D6190D30FF00E8DB65 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E599880918E7836D00B01C62 /* MenuViewController.m */; };
 		E5FD9EC719234A8500902502 /* TimelineMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FD9EC519234A8500902502 /* TimelineMapViewController.m */; };
 		E5FD9EC819234A8500902502 /* TimelineMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FD9EC619234A8500902502 /* TimelineMapViewController.xib */; };
+		E5FD9ECD1923FA6C00902502 /* UIColor+LayoutColors.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FD9ECC1923FA6C00902502 /* UIColor+LayoutColors.m */; };
 		E5FDDBC618EDE9B100CE7B01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBC518EDE9B100CE7B01 /* MapKit.framework */; };
 		E5FDDBCB18EE79F900CE7B01 /* RideSearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FDDBC918EE79F900CE7B01 /* RideSearchResultsViewController.m */; };
 		E5FDDBCC18EE79F900CE7B01 /* RideSearchResultsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FDDBCA18EE79F900CE7B01 /* RideSearchResultsViewController.xib */; };
@@ -441,6 +442,8 @@
 		E5FD9EC419234A8500902502 /* TimelineMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineMapViewController.h; sourceTree = "<group>"; };
 		E5FD9EC519234A8500902502 /* TimelineMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineMapViewController.m; sourceTree = "<group>"; };
 		E5FD9EC619234A8500902502 /* TimelineMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimelineMapViewController.xib; sourceTree = "<group>"; };
+		E5FD9ECB1923FA6C00902502 /* UIColor+LayoutColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+LayoutColors.h"; sourceTree = "<group>"; };
+		E5FD9ECC1923FA6C00902502 /* UIColor+LayoutColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+LayoutColors.m"; sourceTree = "<group>"; };
 		E5FDDBC518EDE9B100CE7B01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E5FDDBC818EE79F900CE7B01 /* RideSearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideSearchResultsViewController.h; sourceTree = "<group>"; };
 		E5FDDBC918EE79F900CE7B01 /* RideSearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideSearchResultsViewController.m; sourceTree = "<group>"; };
@@ -558,6 +561,8 @@
 				6E4E133E1913F7BF00D0C453 /* UIApplication+GCovFlush.m */,
 				E50CCC12191E54F1003A9490 /* UIViewController+SideBarController.h */,
 				E50CCC13191E54F1003A9490 /* UIViewController+SideBarController.m */,
+				E5FD9ECB1923FA6C00902502 /* UIColor+LayoutColors.h */,
+				E5FD9ECC1923FA6C00902502 /* UIColor+LayoutColors.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -1544,6 +1549,7 @@
 				E504D9EB190B963E0036FFA8 /* JsonParser.m in Sources */,
 				E58889E4191394BB0062D0DF /* RideDetailHeaderView.m in Sources */,
 				E59B9A6E1916D346008DE80B /* EditProfileViewController.m in Sources */,
+				E5FD9ECD1923FA6C00902502 /* UIColor+LayoutColors.m in Sources */,
 				E599887818E8617100B01C62 /* HACollectionViewLargeLayout.m in Sources */,
 				E59B9A4B1916A241008DE80B /* YourRidesViewController.m in Sources */,
 				E504D9D1190A7FC50036FFA8 /* SPGooglePlacesAutocompleteQuery.m in Sources */,
