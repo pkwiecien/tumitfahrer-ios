@@ -158,6 +158,8 @@
 		E5FB4D5619191D0A006F4F5D /* CustomUILabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FB4D5519191D0A006F4F5D /* CustomUILabel.m */; };
 		E5FC44D5190CF83100E8DB65 /* MenuTopHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FC44D4190CF83100E8DB65 /* MenuTopHeaderView.xib */; };
 		E5FC44D6190D30FF00E8DB65 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E599880918E7836D00B01C62 /* MenuViewController.m */; };
+		E5FD9EC719234A8500902502 /* TimelineMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FD9EC519234A8500902502 /* TimelineMapViewController.m */; };
+		E5FD9EC819234A8500902502 /* TimelineMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FD9EC619234A8500902502 /* TimelineMapViewController.xib */; };
 		E5FDDBC618EDE9B100CE7B01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBC518EDE9B100CE7B01 /* MapKit.framework */; };
 		E5FDDBCB18EE79F900CE7B01 /* RideSearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FDDBC918EE79F900CE7B01 /* RideSearchResultsViewController.m */; };
 		E5FDDBCC18EE79F900CE7B01 /* RideSearchResultsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FDDBCA18EE79F900CE7B01 /* RideSearchResultsViewController.xib */; };
@@ -436,6 +438,9 @@
 		E5FB4D5419191D0A006F4F5D /* CustomUILabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomUILabel.h; sourceTree = "<group>"; };
 		E5FB4D5519191D0A006F4F5D /* CustomUILabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomUILabel.m; sourceTree = "<group>"; };
 		E5FC44D4190CF83100E8DB65 /* MenuTopHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuTopHeaderView.xib; sourceTree = "<group>"; };
+		E5FD9EC419234A8500902502 /* TimelineMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineMapViewController.h; sourceTree = "<group>"; };
+		E5FD9EC519234A8500902502 /* TimelineMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineMapViewController.m; sourceTree = "<group>"; };
+		E5FD9EC619234A8500902502 /* TimelineMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimelineMapViewController.xib; sourceTree = "<group>"; };
 		E5FDDBC518EDE9B100CE7B01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E5FDDBC818EE79F900CE7B01 /* RideSearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideSearchResultsViewController.h; sourceTree = "<group>"; };
 		E5FDDBC918EE79F900CE7B01 /* RideSearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideSearchResultsViewController.m; sourceTree = "<group>"; };
@@ -535,6 +540,7 @@
 		E50CCC0C191E5288003A9490 /* Timeline */ = {
 			isa = PBXGroup;
 			children = (
+				E5FD9EC319234A5A00902502 /* Map View Controller */,
 				E50CCCBD191E79F3003A9490 /* Page Controller */,
 				E50CCC1C191E6A5B003A9490 /* Logo View */,
 				E50CCC16191E586A003A9490 /* Timeline Cell */,
@@ -1229,6 +1235,16 @@
 			name = "Top Header View";
 			sourceTree = "<group>";
 		};
+		E5FD9EC319234A5A00902502 /* Map View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E5FD9EC419234A8500902502 /* TimelineMapViewController.h */,
+				E5FD9EC519234A8500902502 /* TimelineMapViewController.m */,
+				E5FD9EC619234A8500902502 /* TimelineMapViewController.xib */,
+			);
+			name = "Map View Controller";
+			sourceTree = "<group>";
+		};
 		E5FDDBE818EFF8C800CE7B01 /* Nib Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1368,6 +1384,7 @@
 				E5FA642719123AE500C04BFF /* RideSearchResultCell.xib in Resources */,
 				E5FA64331912647300C04BFF /* AddRideRequestViewController.xib in Resources */,
 				E504D9C3190A6C940036FFA8 /* DestinationViewController.xib in Resources */,
+				E5FD9EC819234A8500902502 /* TimelineMapViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1523,6 +1540,7 @@
 				E5FA64321912647300C04BFF /* AddRideRequestViewController.m in Sources */,
 				E50DB28B18F8730400E87E62 /* RidesStore.m in Sources */,
 				E50DB28818F8706500E87E62 /* RideMapping.m in Sources */,
+				E5FD9EC719234A8500902502 /* TimelineMapViewController.m in Sources */,
 				E504D9EB190B963E0036FFA8 /* JsonParser.m in Sources */,
 				E58889E4191394BB0062D0DF /* RideDetailHeaderView.m in Sources */,
 				E59B9A6E1916D346008DE80B /* EditProfileViewController.m in Sources */,

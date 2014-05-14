@@ -15,6 +15,7 @@
 #import "RideSearchStore.h"
 #import "NavigationBarUtilities.h"
 #import "CurrentUser.h"
+#import "MMDrawerBarButtonItem.h"
 
 @interface SearchRideViewController ()
 
@@ -39,13 +40,18 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    [self setupView];
+    [self setupNavigationBar];
+    [self setupLeftMenuButton];
 }
 
--(void)setupView {
-    self.view = [NavigationBarUtilities makeBackground:self.view];
+-(void)setupLeftMenuButton{
+    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
+    [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+}
+
+-(void)setupNavigationBar {
     UINavigationController *navController = self.navigationController;
-    [NavigationBarUtilities setupNavbar:&navController];
+    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor colorWithRed:0 green:0.573 blue:0.271 alpha:1]];
     self.title = @"SEARCH RIDES";
 }
 
@@ -113,6 +119,12 @@
 
 - (IBAction)dismissKeyboard:(id)sender {
     [self.view endEditing:YES];
+}
+
+#pragma mark - Button Handlers
+
+-(void)leftDrawerButtonPress:(id)sender{
+    [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
 @end

@@ -67,9 +67,10 @@
     self.timelineViewControllers = [NSArray arrayWithObjects:timelinePageVC, nil];
     
     // section 0 - view controllers
-    RidesPageViewController *campusRidesVC = [[RidesPageViewController alloc] init];
+    RidesPageViewController *campusRidesVC = [[RidesPageViewController alloc] initWithContentType:ContentTypeCampusRides];
+    RidesPageViewController *activityRidesVC = [[RidesPageViewController alloc] initWithContentType:ContentTypeActivityRides];
 //    BrowseRidesViewController *campusRidesVC = [[BrowseRidesViewController alloc] initWithContentType:ContentTypeCampusRides];
-    BrowseRidesViewController *activityRidesVC = [[BrowseRidesViewController alloc] initWithContentType:ContentTypeActivityRides];
+//    BrowseRidesViewController *activityRidesVC = [[BrowseRidesViewController alloc] initWithContentType:ContentTypeActivityRides];
     self.browseRidesViewControllers = [NSArray arrayWithObjects:campusRidesVC, activityRidesVC, nil];
     
     // section 1 - view controllers

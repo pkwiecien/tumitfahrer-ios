@@ -36,4 +36,12 @@
     (*navigationController).navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 }
 
++(void)setupNavbar:(UINavigationController **)navigationController withColor:(UIColor *)color{
+    [(*navigationController).navigationBar setBarTintColor:color];
+    (*navigationController).navigationBar.tintColor = [UIColor whiteColor];
+    (*navigationController).navigationBar.translucent = NO;
+    (*navigationController).navigationBarHidden = NO;
+    (*navigationController).navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+}
+
 @end

@@ -12,6 +12,7 @@
 #import "RideDetailHeaderView.h"
 #import "Ride.h"
 #import "RideDetailViewController.h"
+#import "NavigationBarUtilities.h"
 
 @interface RidesViewController ()
 
@@ -19,20 +20,15 @@
 
 @implementation RidesViewController
 
--(instancetype)initWithContentType:(ContentType)contentType {
-    self = [super init];
-    if (self) {
-        self.RideType = contentType;
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     [[PanoramioUtilities sharedInstance] addObserver:self];
     [[RidesStore sharedStore] addObserver:self];
+    
+    UIColor *customGrayColor = [UIColor colorWithRed:224/255.0 green:224/255.0 blue:224/255.0 alpha:1.0];
+    [self.view setBackgroundColor:customGrayColor];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -43,18 +39,10 @@
 }
 
 -(void)setupNavigationBar {
-    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
-    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.227 green:0.227 blue:0.227 alpha:1]];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    UINavigationController *navController = self.navigationController;
+    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor colorWithRed:0.227 green:0.227 blue:0.227 alpha:1]];
     self.title = @"Settings";
-    
-    NSDictionary * navBarTitleTextAttributes = @{ NSForegroundColorAttributeName : [UIColor whiteColor]};
-    self.navigationController.navigationBar.titleTextAttributes = navBarTitleTextAttributes;
-    
-    self.navigationController.navigationBar.translucent = NO;
-    self.navigationController.navigationBarHidden = NO;
 }
 
 -(void)setupLeftMenuButton{

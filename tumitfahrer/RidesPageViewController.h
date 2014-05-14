@@ -15,5 +15,8 @@
 @property (strong, nonatomic) UIPageViewController *pageController;
 
 @property (nonatomic, retain) LogoView *logo;
+@property (nonatomic, assign) ContentType RideType;
+
+-(instancetype)initWithContentType:(ContentType)contentType;
 
 @end

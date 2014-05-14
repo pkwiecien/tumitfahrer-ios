@@ -12,6 +12,7 @@
 #import "CurrentUser.h"
 #import "CustomBarButton.h"
 #import "RidesViewController.h"
+#import "NavigationBarUtilities.h"
 
 @interface RidesPageViewController () <RidesViewControllerDelegate>
 
@@ -24,15 +25,16 @@
 
 @implementation RidesPageViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+-(instancetype)initWithContentType:(ContentType)contentType {
+    self = [super init];
     if (self) {
         self.pageTitles = [NSArray arrayWithObjects:@"All Campus Rides", @"Around you", @"Favourite destinations", nil];
         self.pageColors = [NSArray arrayWithObjects:[UIColor colorWithRed:0 green:0.443 blue:0.737 alpha:1], [UIColor colorWithRed:0.008 green:0.4 blue:0.62 alpha:1], [UIColor colorWithRed:0 green:0.294 blue:0.459 alpha:1], nil];
+        self.RideType = contentType;
     }
     return self;
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -44,6 +46,7 @@
     
     RidesViewController *initialViewController = [self viewControllerAtIndex:0];
     initialViewController.delegate = self;
+    initialViewController.RideType = self.RideType;
     
     NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
     
@@ -67,15 +70,11 @@
 
 -(void)setupNavigationBar {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
-    [self.navigationController.navigationBar setBarTintColor:[self.pageColors objectAtIndex:0]];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    UINavigationController *navController = self.navigationController;
+    [NavigationBarUtilities setupNavbar:&navController withColor:[self.pageColors objectAtIndex:0]];
     
     self.logo = [[LogoView alloc] initWithFrame:CGRectMake(0, 0, 200, 41) title:[self.pageTitles objectAtIndex:0]];
     [self.navigationItem setTitleView:self.logo];
-    
-    self.navigationController.navigationBar.translucent = NO;
-    self.navigationController.navigationBarHidden = NO;
 }
 
 -(void)mapButtonPressed {

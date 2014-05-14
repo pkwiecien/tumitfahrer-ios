@@ -14,6 +14,8 @@
 #import "LoginViewController.h"
 #import "ActivityStore.h"
 #import "CustomBarButton.h"
+#import "NavigationBarUtilities.h"
+#import "TimelineMapViewController.h"
 
 @interface TimelinePageViewController () <TimelineViewControllerDelegate>
 
@@ -83,14 +85,12 @@
 -(void)setupNavigationBar {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
-    [self.navigationController.navigationBar setBarTintColor:[self.pageColors objectAtIndex:0]];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    UINavigationController *navController = self.navigationController;
+    [NavigationBarUtilities setupNavbar:&navController withColor:[self.pageColors objectAtIndex:0]];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
     
     self.logo = [[LogoView alloc] initWithFrame:CGRectMake(0, 0, 200, 41) title:[self.pageTitles objectAtIndex:0]];
     [self.navigationItem setTitleView:self.logo];
-    
-    self.navigationController.navigationBar.translucent = NO;
-    self.navigationController.navigationBarHidden = NO;
     
     // right button of the navigation bar
     CustomBarButton *mapButton = [[CustomBarButton alloc] initWithTitle:@"Map"];
@@ -100,7 +100,10 @@
 }
 
 -(void)mapButtonPressed {
-    
+    TimelineMapViewController *mapVC = [[TimelineMapViewController alloc] init];
+    mapVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self.navigationController pushViewController:mapVC animated:YES];
+//    [self presentViewController:mapVC animated:YES completion:nil];
 }
 
 -(void)showLoginScreen:(BOOL)animated

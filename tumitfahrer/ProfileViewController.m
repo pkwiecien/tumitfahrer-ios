@@ -11,6 +11,8 @@
 #import "ActionManager.h"
 #import "NavigationBarUtilities.h"
 #import "EditProfileViewController.h"
+#import "MMDrawerBarButtonItem.h"
+#import "CustomBarButton.h"
 
 @interface ProfileViewController ()
 
@@ -64,23 +66,25 @@
     [self.ratingButton setBackgroundImage:[ActionManager imageWithColor:self.customGrayColor] forState:UIControlStateSelected];
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
-    //[self setupNavbar];
-    [self setupView];
-    
+-(void)viewWillAppear:(BOOL)animated {
+    [self setupNavigationBar];
+    [self setupLeftMenuButton];
 }
 
--(void)setupView {
-    self.view = [NavigationBarUtilities makeBackground:self.view];
+-(void)setupLeftMenuButton{
+    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
+    [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+}
+
+-(void)setupNavigationBar {
     UINavigationController *navController = self.navigationController;
-    [NavigationBarUtilities setupNavbar:&navController];
-    self.title = @"PROFILE";
+    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor orangeColor]];
     
+    // right button of the navigation bar
     UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(displayEditProfilePage)];
     self.navigationItem.rightBarButtonItem = rightBarButton;
+
     self.title = @"PROFILE";
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 }
 
 -(void)displayEditProfilePage {
@@ -99,10 +103,15 @@
     [self.ratingButton setSelected:YES];
 }
 
-
--(void)resetButtons
-{
+-(void)resetButtons {
     [self.ridesButton setSelected:NO];
     [self.ratingButton setSelected:NO];
 }
+
+#pragma mark - Button Handlers
+
+-(void)leftDrawerButtonPress:(id)sender{
+    [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+
 @end

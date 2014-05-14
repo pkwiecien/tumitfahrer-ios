@@ -15,6 +15,7 @@
 #import "RideDetailViewController.h"
 #import "RidesStore.h"
 #import "CustomUILabel.h"
+#import "MMDrawerBarButtonItem.h"
 
 @interface YourRidesViewController ()
 
@@ -33,16 +34,21 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self setupView];
+    [self setupNavigationBar];
+    [self setupLeftMenuButton];
     [[CurrentUser sharedInstance] refreshUserRides];
     [self.tableView reloadData];
     [self checkIfAnyRides];
 }
 
--(void)setupView {
-    self.view = [NavigationBarUtilities makeBackground:self.view];
+-(void)setupLeftMenuButton{
+    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
+    [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+}
+
+-(void)setupNavigationBar {
     UINavigationController *navController = self.navigationController;
-    [NavigationBarUtilities setupNavbar:&navController];
+    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor orangeColor]];
     self.title = @"YOUR RIDES";
 }
 
@@ -109,6 +115,12 @@
     RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
     rideDetailVC.ride = [[[CurrentUser sharedInstance] userRides] objectAtIndex:indexPath.section];
     [self.navigationController pushViewController:rideDetailVC animated:YES];
+}
+
+#pragma mark - Button Handlers
+
+-(void)leftDrawerButtonPress:(id)sender{
+    [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
 @end
