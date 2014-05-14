@@ -137,6 +137,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     // set initally first row selected
     //NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
     //[self.tableView selectRowAtIndexPath:indexPath animated:YES  scrollPosition:UITableViewScrollPositionBottom];
