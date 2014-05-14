@@ -43,7 +43,6 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    
     [self.delegate willAppearViewWithIndex:self.index];
 }
 
