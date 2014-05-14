@@ -37,7 +37,7 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     UINavigationController *navController = self.navigationController;
-    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor colorWithRed:0.757 green:0.153 blue:0.176 alpha:1]];
+    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor colorWithRed:0.059 green:0.216 blue:0.314 alpha:1]];
     self.title = @"Timeline";
 }
 

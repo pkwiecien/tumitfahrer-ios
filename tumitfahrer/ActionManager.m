@@ -124,6 +124,20 @@
     return stringFromDate;
 }
 
++ (NSString *)timeStringFromDate:(NSDate*)date {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"HH:mm"];
+    NSString *stringFromDate = [formatter stringFromDate:date];
+    return stringFromDate;
+}
+
++ (NSString *)dateStringFromDate:(NSDate*)date {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *stringFromDate = [formatter stringFromDate:date];
+    return stringFromDate;
+}
+
 
 + (UIImage *)cropImage:(UIImage *)image newRect:(CGRect)rect {
     

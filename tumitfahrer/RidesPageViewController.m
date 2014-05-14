@@ -19,7 +19,7 @@
 @interface RidesPageViewController () <RidesViewControllerDelegate>
 
 @property NSArray *pageTitles;
-@property NSArray *pageColors;
+@property UIColor *pageColor;
 
 // activity about new: rides (who add new activity ride, ride request, campus ride), who requests a ride, ride search, rating {activities : { activity_rides : { }, campus_ride: {}, ride_requests: {}, rating{}, }
 
@@ -33,8 +33,7 @@
         NSArray *campusTitles = [NSArray arrayWithObjects:@"All Campus", @"Around you", @"Favourite destinations", nil];
         NSArray *activityTitles = [NSArray arrayWithObjects:@"All Activity", @"Around you", @"Favourite destinations", nil];
         self.pageTitles = [NSArray arrayWithObjects:campusTitles, activityTitles, nil];
-        
-        self.pageColors = [NSArray arrayWithObjects:[UIColor colorWithRed:0 green:0.443 blue:0.737 alpha:1], [UIColor colorWithRed:0.008 green:0.4 blue:0.62 alpha:1], [UIColor colorWithRed:0 green:0.294 blue:0.459 alpha:1], nil];
+        self.pageColor = [UIColor colorWithRed:0 green:0.361 blue:0.588 alpha:1];
         self.RideType = contentType;
     }
     return self;
@@ -79,7 +78,7 @@
 -(void)setupNavigationBar {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     UINavigationController *navController = self.navigationController;
-    [NavigationBarUtilities setupNavbar:&navController withColor:[self.pageColors objectAtIndex:0]];
+    [NavigationBarUtilities setupNavbar:&navController withColor:self.pageColor];
     self.navigationController.navigationBar.translucent = YES;
     
     self.logo = [[LogoView alloc] initWithFrame:CGRectMake(0, 0, 200, 41) title:[[self.pageTitles objectAtIndex:self.RideType] objectAtIndex:0]];
@@ -116,7 +115,8 @@
     
     RidesViewController *ridesViewController = [[RidesViewController alloc] init];
     ridesViewController.index = index;
-    ridesViewController.delegate = self;    
+    ridesViewController.delegate = self;
+    ridesViewController.RideType = self.RideType;
     return ridesViewController;
 }
 
@@ -145,7 +145,7 @@
 -(void)willAppearViewWithIndex:(NSInteger)index {
     self.logo.titleLabel.text = [[self.pageTitles objectAtIndex:self.RideType] objectAtIndex:index];
     self.logo.pageControl.currentPage = index;
-    [self.navigationController.navigationBar setBarTintColor:[self.pageColors objectAtIndex:index]];
+    [self.navigationController.navigationBar setBarTintColor:self.pageColor];
 }
 
 @end

@@ -56,7 +56,7 @@
 
 -(void)setupNavigationBar {
     UINavigationController *navController = self.navigationController;
-    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor colorWithRed:0 green:0.573 blue:0.271 alpha:1]];
+    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor colorWithRed:0 green:0.463 blue:0.722 alpha:1] ];
     self.title = @"SEARCH RIDES";
     
     UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];

@@ -44,8 +44,6 @@
 @property NSArray *allViewControllers;
 @property NSArray *allIcons;
 
-@property NSArray *headersLabels;
-
 @end
 
 @implementation MenuViewController
@@ -57,7 +55,6 @@
         [self initViewControllers];
         [self initCellTitles];
         [self initCellIcons];
-        [self initTableHeaderLabels];
     }
     return self;
 }
@@ -69,8 +66,6 @@
     // section 0 - view controllers
     RidesPageViewController *campusRidesVC = [[RidesPageViewController alloc] initWithContentType:ContentTypeCampusRides];
     RidesPageViewController *activityRidesVC = [[RidesPageViewController alloc] initWithContentType:ContentTypeActivityRides];
-//    BrowseRidesViewController *campusRidesVC = [[BrowseRidesViewController alloc] initWithContentType:ContentTypeCampusRides];
-//    BrowseRidesViewController *activityRidesVC = [[BrowseRidesViewController alloc] initWithContentType:ContentTypeActivityRides];
     self.browseRidesViewControllers = [NSArray arrayWithObjects:campusRidesVC, activityRidesVC, nil];
     
     // section 1 - view controllers
@@ -105,21 +100,16 @@
     self.allIcons = [NSArray arrayWithObjects:self.timelineIcons, self.browseRidesIcons, self.addRidesIcons, self.profileIcons, nil];
 }
 
--(void)initTableHeaderLabels {
-    self.headersLabels = [NSArray arrayWithObjects:@"", @"BROWSE OFFERS", @"ACTIONS", @"YOUR ACCOUNT", nil];
-}
-
 #pragma mark - view controller configuration
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addBackgroundToTableView];
-    [self makeHeaderForTableView];
 }
 
 -(void)addBackgroundToTableView {
     self.tableView.backgroundColor = [UIColor clearColor];
-    self.view.backgroundColor = [UIColor colorWithRed:0.227 green:0.227 blue:0.227 alpha:1];
+    self.view.backgroundColor = [UIColor colorWithRed:0.325 green:0.655 blue:0.835 alpha:1];
 }
 
 -(void)makeHeaderForTableView {
@@ -128,15 +118,22 @@
     UILabel *usernameLabel = (UILabel *)[menuTopHeaderView viewWithTag:3];
     UIButton *settingsButton = (UIButton *)[menuTopHeaderView viewWithTag:4];
     
+    NSLog(@"user name: %@", [CurrentUser sharedInstance].user.firstName);
     usernameLabel.text = [CurrentUser sharedInstance].user.firstName;
     initialsLabel.text = [[[CurrentUser sharedInstance].user.firstName substringToIndex:1] stringByAppendingString:[[CurrentUser sharedInstance].user.lastName substringToIndex:1]];
     [settingsButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"SettingsIcon"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
     [settingsButton addTarget:self action:@selector(settingsButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    menuTopHeaderView.backgroundColor = [UIColor colorWithRed:0.129 green:0.129 blue:0.129 alpha:1];
     self.tableView.tableHeaderView = menuTopHeaderView;
+    
+    UIView *topview = [[UIView alloc] initWithFrame:CGRectMake(0,-480,320,480)];
+    topview.backgroundColor = [UIColor colorWithRed:0.129 green:0.129 blue:0.129 alpha:1];
+    [self.tableView addSubview:topview];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self makeHeaderForTableView];
     
     // set initally first row selected
     //NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
@@ -168,14 +165,26 @@
     UIColor *almostWhiteColor = [UIColor colorWithRed:0.961 green:0.961 blue:0.961 alpha:0.8];
     UIImage *newImg = [ActionManager colorImage:[UIImage imageNamed:[[self.allIcons objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]] withColor:almostWhiteColor];
     cell.iconMenuImageView.image = newImg;
+    cell.menuLabel.highlightedTextColor = [UIColor whiteColor];
     // set background of cell to transparent
-    cell.backgroundColor = [UIColor clearColor];
-    cell.contentView.backgroundColor = [UIColor clearColor];
     // configure background of selected cell
     UIView *bgColorView = [[UIView alloc] init];
-    bgColorView.backgroundColor = [UIColor colorWithRed:70 green:30 blue:180 alpha:0.3];
-    bgColorView.layer.masksToBounds = YES;
+    bgColorView.backgroundColor = [UIColor clearColor];
     [cell setSelectedBackgroundView:bgColorView];
+    
+    if(indexPath.section == 0) {
+        cell.backgroundColor = [UIColor colorWithRed:0.059 green:0.216 blue:0.314 alpha:1];
+        cell.contentView.backgroundColor = [UIColor colorWithRed:0.059 green:0.216 blue:0.314 alpha:1];
+    } else if(indexPath.section == 1) {
+        cell.backgroundColor = [UIColor colorWithRed:0 green:0.361 blue:0.588 alpha:1];
+        cell.contentView.backgroundColor = [UIColor colorWithRed:0 green:0.361 blue:0.588 alpha:1];
+    } else if(indexPath.section == 2) {
+        cell.backgroundColor = [UIColor colorWithRed:0 green:0.463 blue:0.722 alpha:1];
+        cell.contentView.backgroundColor = [UIColor colorWithRed:0 green:0.463 blue:0.722 alpha:1];
+    } else if(indexPath.section == 3) {
+        cell.backgroundColor = [UIColor colorWithRed:0.325 green:0.655 blue:0.835 alpha:1];
+        cell.contentView.backgroundColor = [UIColor colorWithRed:0.325 green:0.655 blue:0.835 alpha:1];
+    }
     
     return cell;
 }
@@ -191,37 +200,15 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 50;
-}
-
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [self.headersLabels objectAtIndex:section];
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 0) {
-        return 0;
-    }
-    return 40;
-}
-- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 40)];
-    [headerView setBackgroundColor:[UIColor clearColor]];
-
-    UILabel *label= [[UILabel alloc]initWithFrame:CGRectMake(15,20,self.view.frame.size.width,20)];
-    label.backgroundColor = [UIColor clearColor];
-    label.text = [self.headersLabels objectAtIndex:section];
-    [label setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:16.0]];//font size and style
-    [label setTextColor:[UIColor whiteColor]];
-    
-    [headerView addSubview:label];
-    return headerView;
+    return 63;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UIViewController *viewController = [[self.allViewControllers objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     if(viewController) {
+        UITableViewCell *c = [self.tableView cellForRowAtIndexPath:indexPath];
+        c.textLabel.font = [UIFont boldSystemFontOfSize:14.0]; // for example
+        
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:viewController];
         
         [self.sideBarController setCenterViewController:nav withCloseAnimation:YES completion:nil];

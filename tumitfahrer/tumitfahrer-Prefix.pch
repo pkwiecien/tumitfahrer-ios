@@ -29,8 +29,8 @@
 #import "UIViewController+SideBarController.h"
 
 static NSString * const SALT = @"toj369sbz1f316sx";
-//static NSString * const API_ADDRESS = @"http://tumitfahrer-staging.herokuapp.com";
-static NSString * const API_ADDRESS = @"http://131.159.197.112:3000";
+static NSString * const API_ADDRESS = @"http://tumitfahrer-staging.herokuapp.com";
+// static NSString * const API_ADDRESS = @"http://131.159.197.112:3000";
 
 
 # pragma mark - Constants

@@ -48,7 +48,7 @@
 
 -(void)setupNavigationBar {
     UINavigationController *navController = self.navigationController;
-    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor orangeColor]];
+    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor colorWithRed:0.325 green:0.655 blue:0.835 alpha:1]];
     self.title = @"YOUR RIDES";
 }
 

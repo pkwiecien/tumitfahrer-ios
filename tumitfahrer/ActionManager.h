@@ -27,5 +27,7 @@
 
 // date formatter
 + (NSString *)stringFromDate:(NSDate*)date;
++ (NSString *)timeStringFromDate:(NSDate*)date;
++ (NSString *)dateStringFromDate:(NSDate*)date;
 
 @end

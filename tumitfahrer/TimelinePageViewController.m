@@ -20,7 +20,7 @@
 @interface TimelinePageViewController () <TimelineViewControllerDelegate>
 
 @property NSArray *pageTitles;
-@property NSArray *pageColors;
+@property UIColor *pageColor;
 
 // activity about new: rides (who add new activity ride, ride request, campus ride), who requests a ride, ride search, rating {activities : { activity_rides : { }, campus_ride: {}, ride_requests: {}, rating{}, }
 
@@ -33,7 +33,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.pageTitles = [NSArray arrayWithObjects:@"Timeline", @"Around you", @"Your activity", nil];
-        self.pageColors = [NSArray arrayWithObjects:[UIColor colorWithRed:0.757 green:0.153 blue:0.176 alpha:1], [UIColor colorWithRed:0.667 green:0.149 blue:0.188 alpha:1], [UIColor colorWithRed:0.529 green:0.122 blue:0.153 alpha:1] , nil];
+        self.pageColor = [UIColor colorWithRed:0.059 green:0.216 blue:0.314 alpha:1];
     }
     return self;
 }
@@ -69,6 +69,7 @@
 -(void)viewWillAppear:(BOOL)animated {
     
     NSLog(@"Current user: %@", [CurrentUser sharedInstance].user);
+    NSLog(@"his name: %@", [CurrentUser sharedInstance].user.firstName);
     if([CurrentUser sharedInstance].user == nil)
     {
         [self showLoginScreen:NO];
@@ -87,7 +88,7 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     UINavigationController *navController = self.navigationController;
-    [NavigationBarUtilities setupNavbar:&navController withColor:[self.pageColors objectAtIndex:0]];
+    [NavigationBarUtilities setupNavbar:&navController withColor:self.pageColor];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationController.navigationBar.translucent = YES;
     
@@ -164,7 +165,7 @@
 -(void)willAppearViewWithIndex:(NSInteger)index {
     self.logo.titleLabel.text = [self.pageTitles objectAtIndex:index];
     self.logo.pageControl.currentPage = index;
-    [self.navigationController.navigationBar setBarTintColor:[self.pageColors objectAtIndex:index]];
+    [self.navigationController.navigationBar setBarTintColor:self.pageColor];
 }
 
 @end

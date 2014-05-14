@@ -13,6 +13,8 @@
 #import "Ride.h"
 #import "RideDetailViewController.h"
 #import "NavigationBarUtilities.h"
+#import "ActionManager.h"
+#import "CurrentUser.h"
 
 @interface RidesViewController ()
 
@@ -78,9 +80,24 @@
     }
     cell.rideImageView.clipsToBounds = YES;
     cell.rideImageView.contentMode = UIViewContentModeScaleAspectFill;
+    cell.timeLabel.text = [ActionManager timeStringFromDate:[ride departureTime]];
+    cell.dateLabel.text = [ActionManager dateStringFromDate:[ride departureTime]];
+    if(ride.rideType == ContentTypeExistingRequests) {
+        cell.seatsView.backgroundColor = [UIColor orangeColor];
+        cell.roleImageView.image = [UIImage imageNamed:@"PassengerIcon"];
+    } else {
+        cell.seatsView.backgroundColor = [UIColor orangeColor];
+    }
+    if (ride.freeSeats == 1) {
+        cell.seatsLabel.text = @"1 seat left";
+    } else {
+        cell.seatsLabel.text = [NSString stringWithFormat:@"%d seats left", ride.freeSeats];
+    }
     
-    cell.directionsLabel.text = [ride.departurePlace stringByAppendingString:[NSString stringWithFormat:@" -> %@", ride.destination]];
-    [cell.directionsLabel sizeToFit];
+    NSString *departurePlace = [ride.departurePlace componentsSeparatedByString:@", "][0];
+    NSString *destination = [ride.destination componentsSeparatedByString:@", "][0];
+    
+    cell.directionsLabel.text = [departurePlace stringByAppendingString:[NSString stringWithFormat:@" -> %@", destination]];
     
     return cell;
 }
