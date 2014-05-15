@@ -15,6 +15,8 @@
 #import "CustomBarButton.h"
 #import "NavigationBarUtilities.h"
 #import "TimelineMapViewController.h"
+#import "UIViewController+ScrollingNavbar.h"
+#import "TestViewController.h"
 
 @interface TimelinePageViewController () <TimelineViewControllerDelegate>
 
@@ -62,7 +64,7 @@
     if (emailLoggedInUser != nil) {
         [CurrentUser fetchUserFromCoreDataWithEmail:emailLoggedInUser];
     }
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    //self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -78,6 +80,19 @@
     [self setupNavigationBar];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self showNavBarAnimated:NO];
+}
+
+- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView
+{
+	// This enables the user to scroll down the navbar by tapping the status bar.
+	[self performSelector:@selector(showNavbar) withObject:nil afterDelay:0.1];
+	
+	return YES;
+}
+
 -(void)setupLeftMenuButton{
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
@@ -89,7 +104,7 @@
     UINavigationController *navController = self.navigationController;
     [NavigationBarUtilities setupNavbar:&navController withColor:self.pageColor];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationController.navigationBar.translucent = YES;
+    self.navigationController.navigationBar.translucent = NO;
     
     self.logo = [[LogoView alloc] initWithFrame:CGRectMake(0, 0, 200, 41) title:[self.pageTitles objectAtIndex:0]];
     [self.navigationItem setTitleView:self.logo];
@@ -103,8 +118,10 @@
 
 -(void)mapButtonPressed {
     TimelineMapViewController *mapVC = [[TimelineMapViewController alloc] init];
-    mapVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self.navigationController pushViewController:mapVC animated:YES];
+//    mapVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+//    [self.navigationController pushViewController:mapVC animated:YES];
+    TestViewController *testVC = [[TestViewController alloc] init];
+    [self.navigationController pushViewController:testVC animated:YES];
 //    [self presentViewController:mapVC animated:YES completion:nil];
 }
 
@@ -160,6 +177,7 @@
     self.logo.titleLabel.text = [self.pageTitles objectAtIndex:index];
     self.logo.pageControl.currentPage = index;
     [self.navigationController.navigationBar setBarTintColor:self.pageColor];
+    self.view.frame = CGRectMake(0, self.view.frame.origin.y-50.0f, self.view.frame.size.width, self.view.frame.size.height+50.0f);
 }
 
 @end

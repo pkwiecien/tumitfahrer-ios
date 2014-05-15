@@ -26,3 +26,5 @@ pod 'NZCircularImageView'
 pod 'Vertigo'
 # pod: sidebar menu
 pod 'MMDrawerController'
+# pod: disapearing navbar
+pod 'AMScrollingNavbar'

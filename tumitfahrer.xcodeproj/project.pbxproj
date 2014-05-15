@@ -149,6 +149,8 @@
 		E5E215791908442100B0B150 /* SwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E215771908442100B0B150 /* SwitchTableViewCell.xib */; };
 		E5E2157F1908492200B0B150 /* FreeSeatsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2157D1908492200B0B150 /* FreeSeatsTableViewCell.m */; };
 		E5E215801908492200B0B150 /* FreeSeatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E2157E1908492200B0B150 /* FreeSeatsTableViewCell.xib */; };
+		E5F7F8E71925694B0001F1FE /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F7F8E51925694B0001F1FE /* TestViewController.m */; };
+		E5F7F8E81925694B0001F1FE /* TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5F7F8E61925694B0001F1FE /* TestViewController.xib */; };
 		E5FA64251912299E00C04BFF /* RideSearchStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FA64241912299E00C04BFF /* RideSearchStore.m */; };
 		E5FA642719123AE500C04BFF /* RideSearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FA642619123AE500C04BFF /* RideSearchResultCell.xib */; };
 		E5FA64321912647300C04BFF /* AddRideRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FA64301912647300C04BFF /* AddRideRequestViewController.m */; };
@@ -427,6 +429,9 @@
 		E5E2157C1908492200B0B150 /* FreeSeatsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreeSeatsTableViewCell.h; sourceTree = "<group>"; };
 		E5E2157D1908492200B0B150 /* FreeSeatsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreeSeatsTableViewCell.m; sourceTree = "<group>"; };
 		E5E2157E1908492200B0B150 /* FreeSeatsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FreeSeatsTableViewCell.xib; sourceTree = "<group>"; };
+		E5F7F8E41925694B0001F1FE /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		E5F7F8E51925694B0001F1FE /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
+		E5F7F8E61925694B0001F1FE /* TestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestViewController.xib; sourceTree = "<group>"; };
 		E5FA64231912299E00C04BFF /* RideSearchStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideSearchStore.h; sourceTree = "<group>"; };
 		E5FA64241912299E00C04BFF /* RideSearchStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideSearchStore.m; sourceTree = "<group>"; };
 		E5FA642619123AE500C04BFF /* RideSearchResultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RideSearchResultCell.xib; sourceTree = "<group>"; };
@@ -543,6 +548,7 @@
 		E50CCC0C191E5288003A9490 /* Timeline */ = {
 			isa = PBXGroup;
 			children = (
+				E5F7F8E3192569380001F1FE /* TestVC */,
 				E5FD9EC319234A5A00902502 /* Map View Controller */,
 				E50CCCBD191E79F3003A9490 /* Page Controller */,
 				E50CCC1C191E6A5B003A9490 /* Logo View */,
@@ -1201,6 +1207,16 @@
 			name = "Free Seats Cell";
 			sourceTree = "<group>";
 		};
+		E5F7F8E3192569380001F1FE /* TestVC */ = {
+			isa = PBXGroup;
+			children = (
+				E5F7F8E41925694B0001F1FE /* TestViewController.h */,
+				E5F7F8E51925694B0001F1FE /* TestViewController.m */,
+				E5F7F8E61925694B0001F1FE /* TestViewController.xib */,
+			);
+			name = TestVC;
+			sourceTree = "<group>";
+		};
 		E5FA641D191226F400C04BFF /* Ride Search Results */ = {
 			isa = PBXGroup;
 			children = (
@@ -1365,6 +1381,7 @@
 				E50CCC1B191E5885003A9490 /* TimelineCell.xib in Resources */,
 				E5FC44D5190CF83100E8DB65 /* MenuTopHeaderView.xib in Resources */,
 				E59B9A611916B7E4008DE80B /* YourRidesCell.xib in Resources */,
+				E5F7F8E81925694B0001F1FE /* TestViewController.xib in Resources */,
 				E59B9A5A1916B4B4008DE80B /* MessageCell.xib in Resources */,
 				E58889F61913E14A0062D0DF /* RideInformationCell.xib in Resources */,
 				E50CCC21191E6A7E003A9490 /* LogoView.xib in Resources */,
@@ -1550,6 +1567,7 @@
 				E58889E4191394BB0062D0DF /* RideDetailHeaderView.m in Sources */,
 				E59B9A6E1916D346008DE80B /* EditProfileViewController.m in Sources */,
 				E5FD9ECD1923FA6C00902502 /* UIColor+LayoutColors.m in Sources */,
+				E5F7F8E71925694B0001F1FE /* TestViewController.m in Sources */,
 				E599887818E8617100B01C62 /* HACollectionViewLargeLayout.m in Sources */,
 				E59B9A4B1916A241008DE80B /* YourRidesViewController.m in Sources */,
 				E504D9D1190A7FC50036FFA8 /* SPGooglePlacesAutocompleteQuery.m in Sources */,
