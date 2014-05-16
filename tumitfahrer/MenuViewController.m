@@ -86,7 +86,7 @@
 -(void)initCellTitles {
     self.timelineSection = [NSArray arrayWithObjects:@"Timeline", nil];
     self.browseRidesSection = [NSArray arrayWithObjects:@"Campus Rides", @"Activity Rides", nil];
-    self.addRidesSection = [NSArray arrayWithObjects:@"New Ride/Request", @"Search Rides", nil];
+    self.addRidesSection = [NSArray arrayWithObjects:@"Add Ride/Request", @"Search Rides", nil];
     self.profileSection = [NSArray arrayWithObjects:@"Profile", @"All Your Rides", nil];
     self.allMenuItems = [NSArray arrayWithObjects:self.timelineSection, self.browseRidesSection, self.addRidesSection, self.profileSection, nil];
 }

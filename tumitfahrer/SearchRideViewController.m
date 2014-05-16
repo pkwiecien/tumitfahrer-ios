@@ -34,17 +34,19 @@
     self.destinationTextField.delegate = self;
     self.dateTextField.delegate = self;
     
-    UIColor *iOSgreenColor = [UIColor colorWithRed:0.298 green:0.851 blue:0.392 alpha:1]; /*#4cd964*/
-    UIImage *greanButtonImage = [ActionManager colorImage:[UIImage imageNamed:@"blueButton"] withColor:iOSgreenColor];
+    [self.view setBackgroundColor:[UIColor customLightGray]];
+    UIImage *greanButtonImage = [ActionManager colorImage:[UIImage imageNamed:@"blueButton"] withColor:[UIColor lighterBlue]];
     [self.searchButton setBackgroundImage:greanButtonImage forState:UIControlStateNormal];
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.detailsView.backgroundColor = [UIColor lighterBlue];
+    self.detailsImageView.image = [ActionManager colorImage:[UIImage imageNamed:@"DetailsIcons"] withColor:[UIColor whiteColor]];
+    self.rideTypeSegmentedControl.tintColor = [UIColor lighterBlue];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [self setupNavigationBar];
 
-    
     if(self.SearchDisplayType == ShowAsViewController)
         [self setupLeftMenuButton];
 }
@@ -57,7 +59,7 @@
 -(void)setupNavigationBar {
     UINavigationController *navController = self.navigationController;
     [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor colorWithRed:0 green:0.463 blue:0.722 alpha:1] ];
-    self.title = @"SEARCH RIDES";
+    self.title = @"Search rides";
     
     UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     [settingsView addTarget:self action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];

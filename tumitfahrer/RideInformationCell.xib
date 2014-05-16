@@ -28,7 +28,7 @@
                         <rect key="frame" x="8" y="11" width="30" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="timeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="0by-3b-DdF">
+                    <imageView userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="TimeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="0by-3b-DdF">
                         <rect key="frame" x="11" y="121" width="25" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
@@ -82,8 +82,8 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="TimeIcon" width="600" height="600"/>
         <image name="departureIcon" width="600" height="600"/>
         <image name="destinationIcon" width="600" height="600"/>
-        <image name="timeIcon" width="1200" height="1200"/>
     </resources>
 </document>
