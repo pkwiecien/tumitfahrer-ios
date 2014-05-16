@@ -98,7 +98,7 @@
     cell.rideImageView.contentMode = UIViewContentModeScaleAspectFill;
     cell.timeLabel.text = [ActionManager timeStringFromDate:[ride departureTime]];
     cell.dateLabel.text = [ActionManager dateStringFromDate:[ride departureTime]];
-    if(ride.rideType == ContentTypeExistingRequests) {
+    if(ride.driver == nil) {
         cell.seatsView.backgroundColor = [UIColor orangeColor];
         cell.roleImageView.image = [UIImage imageNamed:@"PassengerIcon"];
     } else {

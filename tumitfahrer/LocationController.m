@@ -95,6 +95,22 @@
 
 # pragma mark - general functions
 
+
+-(void)fetchLocationForAddress:(NSString *)address completionHandler:(locationCompletionHandler)block {
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
+        if(error) {
+            block(nil);
+        } else {
+            CLPlacemark *aPlacemark = [placemarks firstObject];
+            
+            // Process the placemark.
+            CLLocation *location = [[CLLocation alloc] initWithLatitude:aPlacemark.location.coordinate.latitude longitude:aPlacemark.location.coordinate.longitude];
+            block(location);
+        }
+    }];
+}
+
 - (void)fetchLocationForAddress:(NSString *)address rideId:(NSInteger)rideId {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
@@ -107,7 +123,7 @@
     }];
 }
 
-- (void)fetchPhotoURLForAddress:(NSString *)address rideId:(NSInteger)rideId completionHandler:(locationCompletionHandler)block {
+- (void)fetchPhotoURLForAddress:(NSString *)address rideId:(NSInteger)rideId completionHandler:(locationAndUrlCompletionHandler)block {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
         

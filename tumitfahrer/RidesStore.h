@@ -26,7 +26,6 @@
 - (NSArray *)allRides;
 - (NSArray *)allCampusRides;
 - (NSArray *)allActivityRides;
-- (NSArray *)allRideRequests;
 - (NSArray *)allRidesByType:(ContentType)contentType;
 - (Ride *)getRideWithId:(NSInteger)rideId;
 - (Ride *)containsRideWithId:(NSInteger)rideId;

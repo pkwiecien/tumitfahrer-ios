@@ -14,14 +14,12 @@
 #import "Request.h"
 #import "Ride.h"
 #import "Rating.h"
-#import "UIViewController+ScrollingNavbar.h"
-
 
 @interface TimelineViewController ()
 
 @property CGFloat previousScrollViewYOffset;
 @property UIRefreshControl *refreshControl;
-@property CGFloat navBarInitialHeight;
+
 @end
 
 @implementation TimelineViewController
@@ -53,21 +51,6 @@
             [self.tableView reloadData];
         }
     }];
-    self.navBarInitialHeight = self.navigationController.navigationBar.frame.size.height;
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self showNavBarAnimated:NO];
-}
-
-- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView
-{
-	// This enables the user to scroll down the navbar by tapping the status bar.
-	[self performSelector:@selector(showNavbar) withObject:nil afterDelay:0.1];
-	
-	return YES;
 }
 
 - (void)handleRefresh:(id)sender {

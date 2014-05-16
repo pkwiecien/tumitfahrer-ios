@@ -16,7 +16,6 @@
 
 @property (nonatomic) NSMutableArray *campusRides;
 @property (nonatomic) NSMutableArray *activityRides;
-@property (nonatomic) NSMutableArray *rideRequests;
 @property (nonatomic) NSMutableArray *userRideRequests;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSMutableArray *observers;
@@ -33,6 +32,7 @@ static int page = 0;
         
         self.observers = [[NSMutableArray alloc] init];
         [self loadAllRides];
+        [self fetchLocationForUpdatedRides];
         
         [self fetchRidesFromWebservice:^(BOOL ridesFetched) {
             if(ridesFetched) {
@@ -47,7 +47,6 @@ static int page = 0;
 -(void)loadAllRides {
     [self fetchRidesFromCoreDataByType:ContentTypeActivityRides];
     [self fetchRidesFromCoreDataByType:ContentTypeCampusRides];
-    [self fetchRidesFromCoreDataByType:ContentTypeExistingRequests];
 }
 
 +(instancetype)sharedStore {
@@ -86,9 +85,6 @@ static int page = 0;
     }
     else if(contentType == ContentTypeActivityRides) {
         self.activityRides = [[NSMutableArray alloc] initWithArray:fetchedObjects];
-    }
-    else if(contentType == ContentTypeExistingRequests) {
-        self.rideRequests = [[NSMutableArray alloc] initWithArray:fetchedObjects];
     }
 }
 
@@ -171,16 +167,18 @@ static int page = 0;
     return self.fetchedResultsController;
 }
 
--(void)fetchLocationForAllRides {
-    for(Ride *ride in [self allRides]) {
-        [self fetchLocationForRide:ride];
-    }
-}
-
 -(void)fetchLocationForUpdatedRides {
     for(Ride *ride in [self allRides]) {
         if (ride.destinationLatitude == 0.0 || ride.destinationImage == nil) {
             [self fetchLocationForRide:ride];
+        }
+        if(ride.departureLatitude == 0.0) {
+            [[LocationController sharedInstance] fetchLocationForAddress:ride.departurePlace completionHandler:^(CLLocation *location) {
+                if (location != nil) {
+                    ride.departureLatitude = location.coordinate.latitude;
+                    ride.departureLongitude = location.coordinate.longitude;
+                }
+            }];
         }
     }
 }
@@ -205,9 +203,6 @@ static int page = 0;
             break;
         case ContentTypeCampusRides:
             [self.campusRides addObject:ride];
-            break;
-        case ContentTypeExistingRequests:
-            [self.rideRequests addObject:ride];
             break;
         default:
             break;
@@ -258,8 +253,6 @@ static int page = 0;
         [rides addObjectsFromArray:[self allActivityRides]];
     if([[self allCampusRides] count] > 0)
         [rides addObjectsFromArray:[self allCampusRides]];
-    if([[self allRideRequests] count] > 0)
-        [rides addObjectsFromArray:[self allRideRequests]];
     return rides;
 }
 
@@ -267,13 +260,8 @@ static int page = 0;
     switch (contentType) {
         case ContentTypeActivityRides:
             return self.allActivityRides;
-            break;
         case ContentTypeCampusRides:
             return self.campusRides;
-            break;
-        case ContentTypeExistingRequests:
-            return self.rideRequests;
-            break;
         default:
             return nil;
     }
@@ -291,13 +279,6 @@ static int page = 0;
         [self fetchRidesFromCoreDataByType:ContentTypeActivityRides];
     }
     return self.activityRides;
-}
-
--(NSArray *)allRideRequests {
-    if(!self.rideRequests) {
-        [self fetchRidesFromCoreDataByType:ContentTypeExistingRequests];
-    }
-    return self.rideRequests;
 }
 
 - (Ride *)getRideWithId:(NSInteger)rideId {

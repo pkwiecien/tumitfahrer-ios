@@ -20,7 +20,6 @@
 #import "SearchRideViewController.h"
 #import "AddRideViewController.h"
 #import "YourRidesViewController.h"
-#import "AddRideRequestViewController.h"
 #import "MMDrawerController.h"
 #import "TimelinePageViewController.h"
 #import "RidesPageViewController.h"

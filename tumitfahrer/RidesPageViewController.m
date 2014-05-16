@@ -15,6 +15,8 @@
 #import "NavigationBarUtilities.h"
 #import "AddRideViewController.h"
 #import "SearchRideViewController.h"
+#import "RidesStore.h"
+#import "Ride.h"
 
 @interface RidesPageViewController () <RidesViewControllerDelegate>
 
@@ -64,6 +66,10 @@
 -(void)viewWillAppear:(BOOL)animated {
     [self setupLeftMenuButton];
     [self setupNavigationBar];
+    
+    for (Ride *ride  in [[RidesStore sharedStore] allRides]) {
+        NSLog(@"ride with id: %d, departure place: %@ (%lf, %lf), destination: %@ (%lf, %lf)", ride.rideId, ride.departurePlace, ride.departureLatitude, ride.departureLongitude, ride.destination, ride.destinationLatitude, ride.destinationLongitude);
+    }
 }
 
 -(void)setupLeftMenuButton{

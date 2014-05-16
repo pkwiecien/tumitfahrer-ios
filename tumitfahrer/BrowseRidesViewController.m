@@ -86,9 +86,6 @@
         case ContentTypeCampusRides:
             self.contentTitle.text = @"Campus Rides";
             break;
-        case ContentTypeExistingRequests:
-            self.contentTitle.text = @"Existing Request";
-            break;
         default:
             break;
     }

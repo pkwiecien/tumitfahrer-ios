@@ -2,7 +2,7 @@
 //  Ride.h
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 5/11/14.
+//  Created by Pawel Kwiecien on 5/16/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
@@ -36,6 +36,8 @@
 @property (nonatomic, retain) NSSet *passengers;
 @property (nonatomic, retain) NSSet *requests;
 @property (nonatomic, retain) Activity *activities;
+@property (nonatomic) double departureLatitude;
+@property (nonatomic) double departureLongitude;
 
 @end
 
