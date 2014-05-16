@@ -17,6 +17,12 @@
 @property (nonatomic) NSMutableArray *campusRides;
 @property (nonatomic) NSMutableArray *activityRides;
 @property (nonatomic) NSMutableArray *userRideRequests;
+
+@property (nonatomic) NSMutableArray *privateCampusRidesNearby;
+@property (nonatomic) NSMutableArray *privateActivityRidesNearby;
+@property (nonatomic) NSMutableArray *privateActivityRidesFavorites;
+@property (nonatomic) NSMutableArray *privateCampusRidesFavorites;
+
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSMutableArray *observers;
 
@@ -79,7 +85,7 @@ static int page = 0;
         [NSException raise:@"Fetch failed"
                     format:@"Reason: %@", [error localizedDescription]];
     }
-
+    
     if(contentType == ContentTypeCampusRides){
         self.campusRides =[[NSMutableArray alloc] initWithArray:fetchedObjects];
     }
@@ -96,7 +102,7 @@ static int page = 0;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"ANY self.requests.passengerId = %d", userId];
     
     [request setPredicate:predicate];
-
+    
     request.entity = e;
     
     NSError *error;
@@ -256,12 +262,112 @@ static int page = 0;
     return rides;
 }
 
+
+- (void)reloadFavoriteRidesByType:(ContentType)rideType {
+    CLLocation *currentLocation = [LocationController sharedInstance].currentLocation;
+    
+    for (Ride *ride in [self allRidesByType:rideType]) {
+        CLLocation *departureLocation = [LocationController locationFromLongitude:ride.departureLongitude latitude:ride.departureLatitude];
+        CLLocation *destinationLocation = [LocationController locationFromLongitude:ride.destinationLongitude latitude:ride.destinationLatitude];
+        if ([LocationController isLocation:currentLocation nearbyAnotherLocation:departureLocation] || [LocationController isLocation:currentLocation nearbyAnotherLocation:destinationLocation]) {
+            [self addFavoriteRide:ride byType:rideType];
+        }
+    }
+}
+
+- (void)addFavoriteRide:(Ride*)ride byType:(ContentType)rideType {
+    if (rideType == ContentTypeActivityRides) {
+        [self.privateActivityRidesFavorites addObject:ride];
+    } else if(rideType == ContentTypeCampusRides) {
+        [self.privateCampusRidesFavorites addObject:ride];
+    }
+}
+
+- (void)reloadNearbyRidesByType:(ContentType)rideType {
+    CLLocation *currentLocation = [LocationController sharedInstance].currentLocation;
+    
+    for (Ride *ride in [self allRidesByType:rideType]) {
+        CLLocation *departureLocation = [LocationController locationFromLongitude:ride.departureLongitude latitude:ride.departureLatitude];
+        CLLocation *destinationLocation = [LocationController locationFromLongitude:ride.destinationLongitude latitude:ride.destinationLatitude];
+        if ([LocationController isLocation:currentLocation nearbyAnotherLocation:departureLocation] || [LocationController isLocation:currentLocation nearbyAnotherLocation:destinationLocation]) {
+            [self addNearbyRide:ride byType:rideType];
+        }
+    }
+}
+
+- (void)addNearbyRide:(Ride*)ride byType:(ContentType)rideType {
+    if (rideType == ContentTypeActivityRides) {
+        [self.privateActivityRidesNearby addObject:ride];
+    } else if(rideType == ContentTypeCampusRides) {
+        [self.privateCampusRidesNearby addObject:ride];
+    }
+}
+
+-(NSArray *)ridesNearbyByType:(ContentType)contentType {
+    if ([self allNearbyRidesByType:contentType] == nil) {
+        switch (contentType) {
+            case ContentTypeActivityRides:
+                self.privateActivityRidesNearby = [[NSMutableArray alloc] init];
+                break;
+            case ContentTypeCampusRides:
+                self.privateCampusRidesNearby = [[NSMutableArray alloc] init];
+                break;
+            default:
+                break;
+        }
+        [self reloadNearbyRidesByType:contentType];
+    }
+    
+    return [self allNearbyRidesByType:contentType];
+}
+
+-(NSArray *)favoriteRidesByType:(ContentType)contentType {
+    if ([self allFavoriteRidesByType:contentType] == nil) {
+        switch (contentType) {
+            case ContentTypeActivityRides:
+                self.privateActivityRidesFavorites = [[NSMutableArray alloc] init];
+                break;
+            case ContentTypeCampusRides:
+                self.privateCampusRidesFavorites = [[NSMutableArray alloc] init];
+                break;
+            default:
+                break;
+        }
+        [self reloadFavoriteRidesByType:contentType];
+    }
+    
+    return [self allFavoriteRidesByType:contentType];
+
+}
+
 -(NSArray *)allRidesByType:(ContentType)contentType {
     switch (contentType) {
         case ContentTypeActivityRides:
             return self.allActivityRides;
         case ContentTypeCampusRides:
             return self.campusRides;
+        default:
+            return nil;
+    }
+}
+
+-(NSArray *)allNearbyRidesByType:(ContentType)contentType {
+    switch (contentType) {
+        case ContentTypeActivityRides:
+            return self.privateActivityRidesNearby;
+        case ContentTypeCampusRides:
+            return self.privateCampusRidesNearby;
+        default:
+            return nil;
+    }
+}
+
+-(NSArray *)allFavoriteRidesByType:(ContentType)contentType {
+    switch (contentType) {
+        case ContentTypeActivityRides:
+            return self.privateActivityRidesFavorites;
+        case ContentTypeCampusRides:
+            return self.privateCampusRidesFavorites;
         default:
             return nil;
     }

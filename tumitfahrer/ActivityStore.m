@@ -11,11 +11,15 @@
 #import "Ride.h"
 #import "Rating.h"
 #import "Request.h"
+#import "LocationController.h"
+#import "CurrentUser.h"
 
 @interface ActivityStore () <NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) Activity *activitiesResult;
 @property (nonatomic, strong) NSMutableArray *privateRecentActivities;
+@property (nonatomic, strong) NSMutableArray *privateActivitiesNearby;
+@property (nonatomic, strong) NSMutableArray *privateMyRecentActivities;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @end
@@ -77,12 +81,54 @@ static int page = 0;
             rideIndex++;
         } else if([result isKindOfClass:[Rating class]]) {
             ratingIndex++;
-        } else {
+        } else if([result isKindOfClass:[Request class]]){
             requestsIndex++;
         }
         [self.privateRecentActivities addObject:result];
     }
 }
+
+- (void)reloadNearbyActivities {
+    self.privateActivitiesNearby = [[NSMutableArray alloc] init];
+    CLLocation *currentLocation = [LocationController sharedInstance].currentLocation;
+    
+    for (id activity in self.privateRecentActivities) {
+        Ride *ride = nil;
+        if ([activity isKindOfClass:[Ride class]]) {
+            ride = (Ride *)activity;
+        } else if([activity isKindOfClass:[Request class]]) {
+            ride = ((Request *)activity).requestedRide;
+        }
+        
+        if(ride != nil) {
+            CLLocation *departureLocation = [LocationController locationFromLongitude:ride.departureLongitude latitude:ride.departureLatitude];
+            CLLocation *destinationLocation = [LocationController locationFromLongitude:ride.destinationLongitude latitude:ride.destinationLatitude];
+            if([LocationController isLocation:currentLocation nearbyAnotherLocation:departureLocation] || [LocationController isLocation:currentLocation nearbyAnotherLocation:destinationLocation])
+            {
+                [self.privateActivitiesNearby addObject:activity];
+            }
+        }
+    }
+}
+
+
+- (void)reloadMyActivities {
+    self.privateMyRecentActivities = [[NSMutableArray alloc] init];
+    for (id activity in self.privateRecentActivities) {
+        if ([activity isKindOfClass:[Ride class]]) {
+            Ride *ride = (Ride *)activity;
+            if([[CurrentUser sharedInstance].user.ridesAsPassenger containsObject:ride]) {
+                [self.privateMyRecentActivities addObject:activity];
+            }
+        } else if([activity isKindOfClass:[Request class]]) {
+           Request *request = ((Request *)activity);
+            if ([request.passengerId intValue] == [CurrentUser sharedInstance].user.userId || (request.requestedRide.driver != nil && request.requestedRide.driver.userId == [CurrentUser sharedInstance].user.userId)) {
+                [self.privateMyRecentActivities addObject:activity];
+            }
+        }
+    }
+}
+
 
 -(void)fetchActivitiesFromWebservice:(boolCompletionHandler)block {
     
@@ -142,6 +188,22 @@ static int page = 0;
     }
     
     return self.fetchedResultsController;
+}
+
+-(NSArray *)recentActivitiesNearby {
+    if (self.privateActivitiesNearby == nil) {
+        [self loadAllActivities];
+        [self reloadNearbyActivities];
+    }
+    return self.privateActivitiesNearby;
+}
+
+-(NSArray *)myRecentActivities {
+    if(self.privateMyRecentActivities) {
+        [self loadAllActivities];
+        [self reloadMyActivities];
+    }
+    return self.myRecentActivities;
 }
 
 -(NSArray *)recentActivities {

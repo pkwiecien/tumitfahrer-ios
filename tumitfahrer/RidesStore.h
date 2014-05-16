@@ -27,6 +27,9 @@
 - (NSArray *)allCampusRides;
 - (NSArray *)allActivityRides;
 - (NSArray *)allRidesByType:(ContentType)contentType;
+- (NSArray *)ridesNearbyByType:(ContentType)contentType;
+- (NSArray *)favoriteRidesByType:(ContentType)contentType;
+
 - (Ride *)getRideWithId:(NSInteger)rideId;
 - (Ride *)containsRideWithId:(NSInteger)rideId;
 - (NSArray *)rideRequestForUserWithId:(NSInteger)userId;

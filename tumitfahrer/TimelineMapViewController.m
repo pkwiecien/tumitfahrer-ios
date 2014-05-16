@@ -38,7 +38,7 @@
     
     UINavigationController *navController = self.navigationController;
     [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor colorWithRed:0.059 green:0.216 blue:0.314 alpha:1]];
-    self.title = @"Timeline";
+    self.title = @"Timeline Map";
 }
 
 @end

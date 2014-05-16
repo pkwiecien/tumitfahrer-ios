@@ -105,7 +105,6 @@
     TimelineMapViewController *mapVC = [[TimelineMapViewController alloc] init];
     mapVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self.navigationController pushViewController:mapVC animated:YES];
-    [self presentViewController:mapVC animated:YES completion:nil];
 }
 
 -(void)showLoginScreen:(BOOL)animated

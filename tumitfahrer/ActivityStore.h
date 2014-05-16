@@ -14,6 +14,8 @@
 - (void)fetchActivitiesFromWebservice:(boolCompletionHandler)block;
 - (NSFetchedResultsController *)fetchedResultsController;
 - (NSArray *)recentActivities;
+- (NSArray *)recentActivitiesNearby;
+- (NSArray *)myRecentActivities;
 - (void)loadAllActivities;
 
 @end

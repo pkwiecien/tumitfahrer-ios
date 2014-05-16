@@ -9,6 +9,8 @@
 #import "LocationController.h"
 #import "PanoramioUtilities.h"
 
+#define NEARBY_THRESHOLD 1000
+
 @interface LocationController ()
 
 @property (nonatomic) BOOL isLocationFetched;
@@ -137,5 +139,18 @@
     }];
 }
 
+
++(BOOL)isLocation:(CLLocation *)location nearbyAnotherLocation:(CLLocation *)anotherLocation {
+    CLLocationDistance distance = [location distanceFromLocation:anotherLocation];
+    if (distance < NEARBY_THRESHOLD) {
+        return true;
+    }
+    return false;
+}
+
++ (CLLocation *)locationFromLongitude:(double)longitude latitude:(double)latitude {
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+    return location;
+}
 
 @end
