@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
-#import "RideDetailView.h"
+#import "HeaderContentView.h"
 
-@implementation RideDetailView
+@implementation HeaderContentView
 
 - (id)init
 {
@@ -82,9 +82,9 @@
     
     if(!self.rideDetailHeaderView){
         self.rideDetailFrame = CGRectMake(0.0f, -self.defaultimagePagerHeight * self.parallaxScrollFactor *2, self.tableView.frame.size.width, self.defaultimagePagerHeight + (self.defaultimagePagerHeight * self.parallaxScrollFactor * 4));
-        self.rideDetailHeaderView = [[RideDetailHeaderView alloc] initWithFrame:self.rideDetailFrame];
+        self.rideDetailHeaderView = [[HeaderImageView alloc] initWithFrame:self.rideDetailFrame];
         self.rideDetailHeaderView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        self.rideDetailHeaderView.selectedRide = self.selectedRide;
+        self.rideDetailHeaderView.selectedImageData = self.selectedImageData;
         [self insertSubview:self.rideDetailHeaderView belowSubview:self.tableView];
     }
     

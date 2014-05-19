@@ -115,8 +115,6 @@
         user.password = [ActionManager createSHA512:self.passwordTextField.text];
         [CurrentUser sharedInstance].user = user;
         
-        RKLogInfo(@"Load complete, current user %@ with id: %d!", [CurrentUser sharedInstance].user, [CurrentUser sharedInstance].user.userId);
-        
         NSError *error;
         if (![[CurrentUser sharedInstance].user.managedObjectContext saveToPersistentStore:&error]) {
             NSLog(@"Whoops");
@@ -126,9 +124,6 @@
         for (Ride *ride in [CurrentUser sharedInstance].user.ridesAsDriver) {
             NSLog(@"ride of user: %d %@", ride.rideId, ride.destination);
         }
-        
-        RKLogInfo(@"Load complete, current user %@ with id: %d!", [CurrentUser sharedInstance].user, [CurrentUser sharedInstance].user.userId);
-
         
         // check if fetch user has assigned a device token
         [self checkDeviceToken];

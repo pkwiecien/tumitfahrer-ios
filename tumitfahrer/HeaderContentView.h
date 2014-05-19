@@ -7,11 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RideDetailHeaderView.h"
+#import "HeaderImageView.h"
 
-@class Ride;
-
-@interface RideDetailView : UIView <UIScrollViewDelegate>
+@interface HeaderContentView : UIView <UIScrollViewDelegate>
 
 @property (nonatomic) CGFloat defaultimagePagerHeight;
 @property (nonatomic) CGFloat parallaxScrollFactor;
@@ -21,13 +19,13 @@
 @property (nonatomic, strong) UIColor *backgroundViewColor;
 
 @property (nonatomic, strong) UIView *headerView;
-@property (nonatomic, strong) RideDetailHeaderView *rideDetailHeaderView;
+@property (nonatomic, strong) HeaderImageView *rideDetailHeaderView;
 @property (nonatomic) CGRect rideDetailFrame;
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, weak) id<UITableViewDataSource> tableViewDataSource;
 @property (nonatomic, weak) id<UITableViewDelegate> tableViewDelegate;
 
-@property (nonatomic, strong) Ride *selectedRide;
+@property (nonatomic, strong) NSData *selectedImageData;
 
 @end

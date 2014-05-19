@@ -402,11 +402,10 @@ static int page = 0;
 - (void)printAllRides {
     for (Ride *ride in [self allRides]) {
         NSLog(@"Ride: %@", ride);
-        NSLog(@"Driver: %d %@", ride.driver.userId, ride.driver.firstName);
         NSLog(@"ride: %@", ride);
         NSLog(@"Number of passengers: %d", (int)[ride.passengers count]);
         for (User *user in [ride passengers]) {
-            NSLog(@"User: %d", user.userId);
+            NSLog(@"User: %d", [user.userId intValue]);
         }
         
         NSLog(@"Number of requests: %d", (int)[ride.requests count]);

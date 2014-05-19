@@ -9,16 +9,16 @@
 #define kOverlayWidth       50
 #define kOverlayHeight      15
 
-#import "RideDetailHeaderView.h"
+#import "HeaderImageView.h"
 #import "Ride.h"
 
-@interface RideDetailHeaderView () <UIScrollViewDelegate>
+@interface HeaderImageView () <UIScrollViewDelegate>
 {
     UIScrollView *_scrollView;
 }
 @end
 
-@implementation RideDetailHeaderView
+@implementation HeaderImageView
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -83,7 +83,7 @@
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:imageFrame];
     [imageView setBackgroundColor:[UIColor clearColor]];
     [imageView setTag:0];
-    [imageView setImage:[UIImage imageWithData:self.selectedRide.destinationImage]];
+    [imageView setImage:[UIImage imageWithData:self.selectedImageData]];
     
     [_scrollView addSubview:imageView];
 }

@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@class Ride;
-@interface RideDetailHeaderView : UIView
+@interface HeaderImageView : UIView
 
-@property (nonatomic, strong) Ride *selectedRide;
+@property (nonatomic, strong) NSData *selectedImageData;
 
 @end

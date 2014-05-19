@@ -8,19 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import "RideDetailView.h"
 #import "RideActionCell.h"
 #import "Ride.h"
 
-@class RideDetailView;
+@class HeaderContentView;
 
 @interface RideDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, DetailsMessagesChoiceCellDelegate>
 
-@property (nonatomic, strong) RideDetailView *rideDetail;
-@property (nonatomic, strong) MKMapView *map;
-@property (nonatomic, strong) Ride* ride;
-
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UILabel *headerViewLabel;
+@property (nonatomic, strong) HeaderContentView *rideDetail;
+
+@property (nonatomic, strong) MKMapView *map;
+@property (nonatomic, strong) Ride* ride;
 
 @end

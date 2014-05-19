@@ -108,9 +108,7 @@
     }
     
     User *user = (User *)[result firstObject];
-    NSLog(@"user with id: %d", user.userId);
     [user removeRidesAsDriverObject:ride];
-    
 }
 
 
@@ -138,7 +136,8 @@
 }
 
 - (NSURLRequest *)buildGetDeviceTokenRequest {
-    NSString *urlString = [API_ADDRESS stringByAppendingString:[NSString stringWithFormat:@"/api/v2/users/%d/devices", [CurrentUser sharedInstance].user.userId]];
+    
+    NSString *urlString = [API_ADDRESS stringByAppendingString:[NSString stringWithFormat:@"/api/v2/users/%@/devices", [CurrentUser sharedInstance].user.userId]];
     NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
@@ -152,7 +151,7 @@
         queryParams = @{@"platform": @"ios", @"token": [[Device sharedInstance] deviceToken], @"enabled":@"true"};
         NSDictionary *deviceParams = @{@"device": queryParams};
         
-        NSString *pathString = [NSString stringWithFormat:@"/api/v2/users/%d/devices", [CurrentUser sharedInstance].user.userId];
+        NSString *pathString = [NSString stringWithFormat:@"/api/v2/users/%@/devices", [CurrentUser sharedInstance].user.userId];
         [[RKObjectManager sharedManager] postObject:nil path:pathString parameters:deviceParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             NSLog(@"success");
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -164,7 +163,7 @@
 - (void)refreshUserRides {
     self.privateUserRides = [NSMutableArray arrayWithArray:[self.user.ridesAsDriver allObjects]];
     [self.privateUserRides addObjectsFromArray:[self.user.ridesAsPassenger allObjects]];
-    [self.privateUserRides addObjectsFromArray:[[RidesStore sharedStore] rideRequestForUserWithId:self.user.userId]];
+    [self.privateUserRides addObjectsFromArray:[[RidesStore sharedStore] rideRequestForUserWithId:[self.user.userId intValue]]];
 }
 
 - (NSMutableArray *)userRides {

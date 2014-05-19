@@ -68,7 +68,7 @@
     queryParams = @{@"password": encryptedPassword, @"password_confirmation": encryptedPassword, @"car": self.carTextField.text, @"phone_number":self.phoneNumberTextField.text};
     NSDictionary *userParams = @{@"user": queryParams};
     
-    [objectManager putObject:nil path:[NSString stringWithFormat:@"/api/v2/users/%d", [CurrentUser sharedInstance].user.userId] parameters:userParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    [objectManager putObject:nil path:[NSString stringWithFormat:@"/api/v2/users/%@", [CurrentUser sharedInstance].user.userId] parameters:userParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [CurrentUser sharedInstance].user.car = self.carTextField.text;
         [CurrentUser sharedInstance].user.password = encryptedPassword;
         [CurrentUser sharedInstance].user.phoneNumber = self.phoneNumberTextField.text;

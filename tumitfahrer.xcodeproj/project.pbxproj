@@ -33,7 +33,6 @@
 		E50CCCC1191E7A94003A9490 /* TimelinePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCBF191E7A94003A9490 /* TimelinePageViewController.m */; };
 		E50CCCC2191E7A94003A9490 /* TimelinePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50CCCC0191E7A94003A9490 /* TimelinePageViewController.xib */; };
 		E50CCCC5191F6FAC003A9490 /* ActivityMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCC4191F6FAC003A9490 /* ActivityMapping.m */; };
-		E50CCCDA191F71C0003A9490 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCD9191F71C0003A9490 /* User.m */; };
 		E50CCCE3191F7256003A9490 /* Request.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCE2191F7256003A9490 /* Request.m */; };
 		E50CCCE6191F7256003A9490 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCE5191F7256003A9490 /* Message.m */; };
 		E50CCCE9191F7256003A9490 /* Rating.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCE8191F7256003A9490 /* Rating.m */; };
@@ -78,11 +77,12 @@
 		E522BADB18AE13F600ECD375 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E522BABD18AE13F600ECD375 /* UIKit.framework */; };
 		E522BAE318AE13F600ECD375 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E522BAE118AE13F600ECD375 /* InfoPlist.strings */; };
 		E53D5D0018B14C39004016F8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E53D5CFF18B14C39004016F8 /* QuartzCore.framework */; };
+		E5644640192A8E1500F636A5 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E564463F192A8E1500F636A5 /* User.m */; };
 		E58889CD191291060062D0DF /* ActionManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E58889CC191291060062D0DF /* ActionManagerTests.m */; };
 		E58889DC191383570062D0DF /* RideDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E58889DA191383570062D0DF /* RideDetailViewController.m */; };
 		E58889DD191383570062D0DF /* RideDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E58889DB191383570062D0DF /* RideDetailViewController.xib */; };
-		E58889E1191385110062D0DF /* RideDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = E58889E0191385110062D0DF /* RideDetailView.m */; };
-		E58889E4191394BB0062D0DF /* RideDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E58889E3191394BB0062D0DF /* RideDetailHeaderView.m */; };
+		E58889E1191385110062D0DF /* HeaderContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = E58889E0191385110062D0DF /* HeaderContentView.m */; };
+		E58889E4191394BB0062D0DF /* HeaderImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E58889E3191394BB0062D0DF /* HeaderImageView.m */; };
 		E58889E81913C7010062D0DF /* UbertestersSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E58889E61913C7010062D0DF /* UbertestersSDK.framework */; };
 		E58889E91913C7010062D0DF /* UbertestersSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E58889E71913C7010062D0DF /* UbertestersSDKResources.bundle */; };
 		E58889F51913E14A0062D0DF /* RideInformationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E58889F31913E14A0062D0DF /* RideInformationCell.m */; };
@@ -246,8 +246,6 @@
 		E50CCCC0191E7A94003A9490 /* TimelinePageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimelinePageViewController.xib; sourceTree = "<group>"; };
 		E50CCCC3191F6FAC003A9490 /* ActivityMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityMapping.h; sourceTree = "<group>"; };
 		E50CCCC4191F6FAC003A9490 /* ActivityMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityMapping.m; sourceTree = "<group>"; };
-		E50CCCD8191F71C0003A9490 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		E50CCCD9191F71C0003A9490 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		E50CCCE1191F7256003A9490 /* Request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Request.h; sourceTree = "<group>"; };
 		E50CCCE2191F7256003A9490 /* Request.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Request.m; sourceTree = "<group>"; };
 		E50CCCE4191F7256003A9490 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
@@ -319,14 +317,16 @@
 		E522BAE018AE13F600ECD375 /* tumitfahrerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "tumitfahrerTests-Info.plist"; sourceTree = "<group>"; };
 		E522BAE218AE13F600ECD375 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E53D5CFF18B14C39004016F8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E564463E192A8E1500F636A5 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		E564463F192A8E1500F636A5 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		E58889CC191291060062D0DF /* ActionManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionManagerTests.m; sourceTree = "<group>"; };
 		E58889D9191383570062D0DF /* RideDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideDetailViewController.h; sourceTree = "<group>"; };
 		E58889DA191383570062D0DF /* RideDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideDetailViewController.m; sourceTree = "<group>"; };
 		E58889DB191383570062D0DF /* RideDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RideDetailViewController.xib; sourceTree = "<group>"; };
-		E58889DF191385110062D0DF /* RideDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideDetailView.h; sourceTree = "<group>"; };
-		E58889E0191385110062D0DF /* RideDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideDetailView.m; sourceTree = "<group>"; };
-		E58889E2191394BB0062D0DF /* RideDetailHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideDetailHeaderView.h; sourceTree = "<group>"; };
-		E58889E3191394BB0062D0DF /* RideDetailHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideDetailHeaderView.m; sourceTree = "<group>"; };
+		E58889DF191385110062D0DF /* HeaderContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderContentView.h; sourceTree = "<group>"; };
+		E58889E0191385110062D0DF /* HeaderContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderContentView.m; sourceTree = "<group>"; };
+		E58889E2191394BB0062D0DF /* HeaderImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderImageView.h; sourceTree = "<group>"; };
+		E58889E3191394BB0062D0DF /* HeaderImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderImageView.m; sourceTree = "<group>"; };
 		E58889E61913C7010062D0DF /* UbertestersSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UbertestersSDK.framework; sourceTree = "<group>"; };
 		E58889E71913C7010062D0DF /* UbertestersSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UbertestersSDKResources.bundle; sourceTree = "<group>"; };
 		E58889F21913E14A0062D0DF /* RideInformationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideInformationCell.h; sourceTree = "<group>"; };
@@ -663,6 +663,7 @@
 		E51FD4FE18F086300098AD11 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				E564463D192A89F900F636A5 /* Profile Header View */,
 				E59B9A621916D039008DE80B /* Edit Profile */,
 				E51FD4FF18F0864C0098AD11 /* ProfileViewController.h */,
 				E51FD50018F0864C0098AD11 /* ProfileViewController.m */,
@@ -777,6 +778,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		E564463D192A89F900F636A5 /* Profile Header View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Profile Header View";
+			sourceTree = "<group>";
+		};
 		E58889D81913832C0062D0DF /* New Ride Details */ = {
 			isa = PBXGroup;
 			children = (
@@ -797,10 +805,10 @@
 		E58889DE191384F40062D0DF /* Ride Detail View */ = {
 			isa = PBXGroup;
 			children = (
-				E58889E2191394BB0062D0DF /* RideDetailHeaderView.h */,
-				E58889E3191394BB0062D0DF /* RideDetailHeaderView.m */,
-				E58889DF191385110062D0DF /* RideDetailView.h */,
-				E58889E0191385110062D0DF /* RideDetailView.m */,
+				E58889E2191394BB0062D0DF /* HeaderImageView.h */,
+				E58889E3191394BB0062D0DF /* HeaderImageView.m */,
+				E58889DF191385110062D0DF /* HeaderContentView.h */,
+				E58889E0191385110062D0DF /* HeaderContentView.m */,
 			);
 			name = "Ride Detail View";
 			sourceTree = "<group>";
@@ -921,8 +929,8 @@
 				E5FA64241912299E00C04BFF /* RideSearchStore.m */,
 				E50DB28918F8730400E87E62 /* RidesStore.h */,
 				E50DB28A18F8730400E87E62 /* RidesStore.m */,
-				E50CCCD8191F71C0003A9490 /* User.h */,
-				E50CCCD9191F71C0003A9490 /* User.m */,
+				E564463E192A8E1500F636A5 /* User.h */,
+				E564463F192A8E1500F636A5 /* User.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1515,7 +1523,6 @@
 			files = (
 				E50CCCE9191F7256003A9490 /* Rating.m in Sources */,
 				E59B9A601916B7E4008DE80B /* YourRidesCell.m in Sources */,
-				E50CCCDA191F71C0003A9490 /* User.m in Sources */,
 				E5DF641B18EB56A600D53164 /* BrowseRidesViewController.m in Sources */,
 				E599887318E8616200B01C62 /* HATransitionLayout.m in Sources */,
 				E5FDDBCB18EE79F900CE7B01 /* RideSearchResultsViewController.m in Sources */,
@@ -1540,6 +1547,7 @@
 				E59987C918E6DBEA00B01C62 /* RideRequestsViewController.m in Sources */,
 				E50CCC1A191E5885003A9490 /* TimelineCell.m in Sources */,
 				E58B8726191511EA0032524A /* RequestMapping.m in Sources */,
+				E5644640192A8E1500F636A5 /* User.m in Sources */,
 				E5E2157F1908492200B0B150 /* FreeSeatsTableViewCell.m in Sources */,
 				E50CCCF5191F7416003A9490 /* tumitfahrer.xcdatamodeld in Sources */,
 				E5E215681907B82500B0B150 /* CustomBarButton.m in Sources */,
@@ -1576,7 +1584,7 @@
 				E50DB28818F8706500E87E62 /* RideMapping.m in Sources */,
 				E5FD9EC719234A8500902502 /* TimelineMapViewController.m in Sources */,
 				E504D9EB190B963E0036FFA8 /* JsonParser.m in Sources */,
-				E58889E4191394BB0062D0DF /* RideDetailHeaderView.m in Sources */,
+				E58889E4191394BB0062D0DF /* HeaderImageView.m in Sources */,
 				E59B9A6E1916D346008DE80B /* EditProfileViewController.m in Sources */,
 				E5FD9ECD1923FA6C00902502 /* UIColor+LayoutColors.m in Sources */,
 				E5F7F8E71925694B0001F1FE /* TestViewController.m in Sources */,
@@ -1598,7 +1606,7 @@
 				E59B9A591916B4B4008DE80B /* MessageCell.m in Sources */,
 				E599887218E8616200B01C62 /* HATransitionController.m in Sources */,
 				E5FDDBF118F0059D00CE7B01 /* ActionManager.m in Sources */,
-				E58889E1191385110062D0DF /* RideDetailView.m in Sources */,
+				E58889E1191385110062D0DF /* HeaderContentView.m in Sources */,
 				E50DB29818FA7D4100E87E62 /* Faculty.m in Sources */,
 				E50CCCF2191F7380003A9490 /* RideSearch.m in Sources */,
 				E504D9C2190A6C940036FFA8 /* DestinationViewController.m in Sources */,

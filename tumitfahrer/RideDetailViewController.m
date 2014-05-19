@@ -7,7 +7,6 @@
 //
 
 #import "RideDetailViewController.h"
-#import "RideDetailView.h"
 #import "RideInformationCell.h"
 #import "PassengersCell.h"
 #import "DriverCell.h"
@@ -20,6 +19,7 @@
 #import "Ride.h"
 #import "RidesStore.h"
 #import "RideNoticeCell.h"
+#import "HeaderContentView.h"
 
 @interface RideDetailViewController () <NSFetchedResultsControllerDelegate>
 
@@ -35,7 +35,7 @@
 {
     [super viewDidLoad];
 	
-    self.rideDetail = [[RideDetailView alloc] initWithFrame:self.view.bounds];
+    self.rideDetail = [[HeaderContentView alloc] initWithFrame:self.view.bounds];
     self.rideDetail.tableViewDataSource = self;
     self.rideDetail.tableViewDelegate = self;
     
@@ -60,7 +60,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    self.rideDetail.selectedRide = self.ride;
+    self.rideDetail.selectedImageData = self.ride.destinationImage;
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.headerViewLabel.text = [@"To " stringByAppendingString:self.ride.destination];
@@ -259,7 +259,7 @@
     } else {
         NSDictionary *queryParams;
         // add enum
-        NSString *userId = [NSString stringWithFormat:@"%d", [CurrentUser sharedInstance].user.userId];
+        NSString *userId = [NSString stringWithFormat:@"%@", [CurrentUser sharedInstance].user.userId];
         queryParams = @{@"passenger_id": userId, @"requested_from": self.ride.departurePlace, @"request_to":self.ride.destination};
         NSDictionary *requestParams = @{@"request": queryParams};
         
@@ -316,7 +316,7 @@
 
 -(Request *)requestFoundInCoreData {
     for (Request *request in self.ride.requests) {
-        if ([request.passengerId intValue] == [CurrentUser sharedInstance].user.userId) {
+        if (request.passengerId == [CurrentUser sharedInstance].user.userId) {
             return request;
         }
     }

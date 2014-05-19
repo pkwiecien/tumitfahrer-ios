@@ -13,6 +13,8 @@
 #import "EditProfileViewController.h"
 #import "MMDrawerBarButtonItem.h"
 #import "CustomBarButton.h"
+#import "HeaderContentView.h"
+
 
 @interface ProfileViewController ()
 
@@ -33,41 +35,22 @@
 {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor customLightGray]];
-
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    self.profileImageContentView = [[HeaderContentView alloc] initWithFrame:self.view.bounds];
+    self.profileImageContentView.tableViewDataSource = self;
+    self.profileImageContentView.tableViewDelegate = self;
     
-    // border
-    [self.profileView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-    [self.profileView.layer setBorderWidth:0.5f];
+    self.profileImageContentView.parallaxScrollFactor = 0.3; // little slower than normal.
     
-    // drop shadow
-    [self.profileView.layer setShadowColor:[UIColor blackColor].CGColor];
-    [self.profileView.layer setShadowOpacity:0.6];
-    [self.profileView.layer setShadowRadius:3.0];
-    [self.profileView.layer setShadowOffset:CGSizeMake(1.0, 1.0)];
+    [self.view addSubview:self.profileImageContentView];
     
-    // border
-    [self.tableView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-    [self.tableView.layer setBorderWidth:0.5f];
-    
-    // drop shadow
-    [self.tableView.layer setShadowColor:[UIColor blackColor].CGColor];
-    [self.tableView.layer setShadowOpacity:0.6];
-    [self.tableView.layer setShadowRadius:3.0];
-    [self.tableView.layer setShadowOffset:CGSizeMake(1.0, 1.0)];
-    
-    [self.ridesButton setSelected:YES];
-
-    [self.ridesButton setBackgroundImage:[ActionManager imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-    [self.ratingButton setBackgroundImage:[ActionManager imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-    
-    [self.ridesButton setBackgroundImage:[ActionManager imageWithColor:self.customGrayColor] forState:UIControlStateSelected];
-    [self.ratingButton setBackgroundImage:[ActionManager imageWithColor:self.customGrayColor] forState:UIControlStateSelected];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [self setupNavigationBar];
     [self setupLeftMenuButton];
+    self.profileImageContentView.selectedImageData = UIImagePNGRepresentation([UIImage imageNamed:@"Face"]);
 }
 
 -(void)setupLeftMenuButton{
@@ -82,7 +65,7 @@
     // right button of the navigation bar
     UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(displayEditProfilePage)];
     self.navigationItem.rightBarButtonItem = rightBarButton;
-
+    
     self.title = @"PROFILE";
 }
 
@@ -93,18 +76,34 @@
     [self.navigationController presentViewController:navBar animated:YES completion:nil];
 }
 
-- (IBAction)ridesButtonPressed:(id)sender {
-    [self resetButtons];
-    [self.ridesButton setSelected:YES];
-}
-- (IBAction)ratingButtonPressed:(id)sender {
-    [self resetButtons];
-    [self.ratingButton setSelected:YES];
+
+#pragma mark - UITableView
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50.0f;
 }
 
--(void)resetButtons {
-    [self.ridesButton setSelected:NO];
-    [self.ratingButton setSelected:NO];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 5;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reusable"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reusable"];
+    }
+    
+    cell.textLabel.text = @"Default cell";
+    
+    return cell;
 }
 
 #pragma mark - Button Handlers

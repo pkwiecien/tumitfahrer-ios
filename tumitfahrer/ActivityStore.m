@@ -122,7 +122,7 @@ static int page = 0;
             }
         } else if([activity isKindOfClass:[Request class]]) {
            Request *request = ((Request *)activity);
-            if ([request.passengerId intValue] == [CurrentUser sharedInstance].user.userId || (request.requestedRide.driver != nil && request.requestedRide.driver.userId == [CurrentUser sharedInstance].user.userId)) {
+            if (request.passengerId == [CurrentUser sharedInstance].user.userId || (request.requestedRide.driver != nil && request.requestedRide.driver.userId == [CurrentUser sharedInstance].user.userId)) {
                 [self.privateMyRecentActivities addObject:activity];
             }
         }

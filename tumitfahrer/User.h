@@ -2,7 +2,7 @@
 //  User.h
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 5/11/14.
+//  Created by Pawel Kwiecien on 5/19/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
@@ -23,9 +23,10 @@
 @property (nonatomic, retain) NSString * lastName;
 @property (nonatomic, retain) NSString * password;
 @property (nonatomic, retain) NSString * phoneNumber;
-@property (nonatomic, retain) NSDate * updatedAt;
-@property (nonatomic) int32_t userId;
 @property (nonatomic, retain) NSNumber * ratingAvg;
+@property (nonatomic, retain) NSDate * updatedAt;
+@property (nonatomic, retain) NSNumber * userId;
+@property (nonatomic, retain) NSData * profileImageData;
 @property (nonatomic, retain) NSSet *messagesReceived;
 @property (nonatomic, retain) NSSet *messagesSent;
 @property (nonatomic, retain) NSSet *ratingsGiven;
