@@ -52,10 +52,11 @@
     [self.view bringSubviewToFront:_headerView];
     
     UIButton *buttonBack = [UIButton buttonWithType:UIButtonTypeCustom];
-    buttonBack.frame = CGRectMake(10, 22, 40, 40);
-    [buttonBack setImage:[UIImage imageNamed:@"ArrowLeft"] forState:UIControlStateNormal];
+    buttonBack.frame = CGRectMake(10, 10, 40, 40);
+    [buttonBack setImage:[ActionManager colorImage:[UIImage imageNamed:@"ArrowLeft"]  withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
     [buttonBack addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buttonBack];
+    
     self.rideDetail.headerView = _headerView;
 }
 
@@ -218,8 +219,7 @@
 
 #pragma mark - Button actions
 
-- (void)back
-{
+- (void)back {
     [self.navigationController popViewControllerAnimated:YES];
 }
 

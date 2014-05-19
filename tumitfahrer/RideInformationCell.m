@@ -15,6 +15,7 @@
     
     RideInformationCell * cell = [[[NSBundle mainBundle] loadNibNamed:@"RideInformationCell" owner:self options:nil] objectAtIndex:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
     return cell;
 }
 

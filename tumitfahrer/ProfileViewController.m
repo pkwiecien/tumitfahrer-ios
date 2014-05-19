@@ -14,11 +14,15 @@
 #import "MMDrawerBarButtonItem.h"
 #import "CustomBarButton.h"
 #import "HeaderContentView.h"
-
+#import "GeneralInfoCell.h"
+#import "ProfileInfoCell.h"
+#import "CurrentUser.h"
 
 @interface ProfileViewController ()
 
-@property (nonatomic) UIColor *customGrayColor;
+@property (strong, nonatomic) NSMutableArray *cellDescriptions;
+@property (strong, nonatomic) NSMutableArray *cellImages;
+
 @end
 
 @implementation ProfileViewController
@@ -27,6 +31,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.cellImages = [[NSMutableArray alloc] initWithObjects:@"", [UIImage imageNamed:@"EmailIcon"], [UIImage imageNamed:@"PhoneIcon"], [UIImage imageNamed:@"CarIcon"], nil];
     }
     return self;
 }
@@ -45,37 +50,25 @@
     
     [self.view addSubview:self.profileImageContentView];
     
+    UIButton *buttonBack = [UIButton buttonWithType:UIButtonTypeCustom];
+    buttonBack.frame = CGRectMake(10, 10, 30, 30);
+    [buttonBack setImage:[ActionManager colorImage:[UIImage imageNamed:@"ArrowLeft"]  withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [buttonBack addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:buttonBack];
+    
+    UIButton *editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    editButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-40, 10, 30, 30);
+    [editButton setImage:[ActionManager colorImage:[UIImage imageNamed:@"EditIcon"]  withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [editButton addTarget:self action:@selector(displayEditProfilePage) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:editButton];
+    
+    self.cellDescriptions = [[NSMutableArray alloc] initWithObjects:@"", [CurrentUser sharedInstance].user.email, [CurrentUser sharedInstance].user.phoneNumber, [CurrentUser sharedInstance].user.car,  nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    [self setupNavigationBar];
-    [self setupLeftMenuButton];
     self.profileImageContentView.selectedImageData = UIImagePNGRepresentation([UIImage imageNamed:@"Face"]);
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
-
--(void)setupLeftMenuButton{
-    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
-    [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
-}
-
--(void)setupNavigationBar {
-    UINavigationController *navController = self.navigationController;
-    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor colorWithRed:0.325 green:0.655 blue:0.835 alpha:1] ];
-    
-    // right button of the navigation bar
-    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(displayEditProfilePage)];
-    self.navigationItem.rightBarButtonItem = rightBarButton;
-    
-    self.title = @"PROFILE";
-}
-
--(void)displayEditProfilePage {
-    
-    EditProfileViewController *editProfileVC = [[EditProfileViewController alloc] init];
-    UINavigationController *navBar = [[UINavigationController alloc] initWithRootViewController:editProfileVC];
-    [self.navigationController presentViewController:navBar animated:YES completion:nil];
-}
-
 
 #pragma mark - UITableView
 
@@ -86,7 +79,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 4;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -96,20 +89,42 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reusable"];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reusable"];
+    if (indexPath.row == 0) {
+        
+        GeneralInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GeneralInfoCell"];
+        
+        if(cell == nil){
+            cell = [GeneralInfoCell generalInfoCell];
+        }
+
+        cell.driverLabel.text = [NSString stringWithFormat:@"%d", [[CurrentUser sharedInstance].user.ridesAsDriver count]];
+        cell.passengerLabel.text = [NSString stringWithFormat:@"%d", [[CurrentUser sharedInstance].user.ridesAsPassenger count]];
+        cell.ratingLabel.text = [NSString stringWithFormat:@"%d", [[CurrentUser sharedInstance].user.ridesAsDriver count]];
+        
+        return cell;
+
+    } else {
+        ProfileInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProfileInfoCell"];
+        if (cell == nil) {
+            cell = [ProfileInfoCell profileInfoCell];
+        }
+        
+        cell.cellDescription.text = [self.cellDescriptions objectAtIndex:indexPath.row];
+        cell.cellImageView.image = [self.cellImages objectAtIndex:indexPath.row];
+        return cell;
     }
-    
-    cell.textLabel.text = @"Default cell";
-    
-    return cell;
 }
 
-#pragma mark - Button Handlers
+#pragma mark - Button handlers
 
--(void)leftDrawerButtonPress:(id)sender{
+- (void)back {
     [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+
+-(void)displayEditProfilePage {
+    EditProfileViewController *editProfileVC = [[EditProfileViewController alloc] init];
+    UINavigationController *navBar = [[UINavigationController alloc] initWithRootViewController:editProfileVC];
+    [self.navigationController presentViewController:navBar animated:YES completion:nil];
 }
 
 @end

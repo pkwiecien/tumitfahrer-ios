@@ -64,6 +64,7 @@
         self.tableView.dataSource = self.tableViewDataSource;
         self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
         UIViewAutoresizingFlexibleHeight;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         // Add scroll view KVO
         void *context = (__bridge void *)self;
