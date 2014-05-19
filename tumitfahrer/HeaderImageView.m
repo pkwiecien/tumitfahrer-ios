@@ -11,10 +11,12 @@
 
 #import "HeaderImageView.h"
 #import "Ride.h"
+#import "CircularImageView.h"
 
 @interface HeaderImageView () <UIScrollViewDelegate>
 {
     UIScrollView *_scrollView;
+    CGRect imageFrame;
 }
 @end
 
@@ -79,13 +81,27 @@
     [_scrollView setContentSize:CGSizeMake(_scrollView.frame.size.width,
                                            _scrollView.frame.size.height)];
     
-    CGRect imageFrame = CGRectMake(0, 0, _scrollView.frame.size.width, _scrollView.frame.size.height);
+    imageFrame = CGRectMake(0, 0, _scrollView.frame.size.width, _scrollView.frame.size.height);
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:imageFrame];
     [imageView setBackgroundColor:[UIColor clearColor]];
     [imageView setTag:0];
     [imageView setImage:[UIImage imageWithData:self.selectedImageData]];
     
     [_scrollView addSubview:imageView];
+    if (self.circularImage != nil) {
+        [self addCircularImage:self.circularImage];
+    }
+}
+
+- (void)addCircularImage:(UIImage *)image{
+
+    CircularImageView *smallImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(60, 60, 150, 150) image:image];
+    
+    double x = imageFrame.size.width/2-smallImageView.frame.size.width/2;
+    double y = imageFrame.size.height/2-smallImageView.frame.size.height/2;
+    
+    smallImageView.frame = CGRectMake(x, y, smallImageView.frame.size.width, smallImageView.frame.size.height);
+    [_scrollView addSubview:smallImageView];
 }
 
 

@@ -11,5 +11,6 @@
 @interface HeaderImageView : UIView
 
 @property (nonatomic, strong) NSData *selectedImageData;
+@property (nonatomic, strong) UIImage *circularImage;
 
 @end

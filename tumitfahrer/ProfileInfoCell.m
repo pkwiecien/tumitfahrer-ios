@@ -16,6 +16,7 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor customLightGray];
+    cell.contentView.backgroundColor = [UIColor customLightGray];
     
     return cell;
 }

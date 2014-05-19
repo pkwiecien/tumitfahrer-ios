@@ -20,11 +20,11 @@ pod 'SocketRocket'
 pod 'SVPullToRefresh'
 # pod: intro page
 pod 'EAIntroView'
-# pod: circular photo
-pod 'NZCircularImageView'
 # full screen image viewer with image zoom custom view controller transition
 pod 'Vertigo'
 # pod: sidebar menu
 pod 'MMDrawerController'
 # pod: disapearing navbar
 pod 'AMScrollingNavbar'
+# pod: blur images
+pod 'GPUImage'

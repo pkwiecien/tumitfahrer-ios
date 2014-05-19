@@ -84,6 +84,9 @@
     if(!self.rideDetailHeaderView){
         self.rideDetailFrame = CGRectMake(0.0f, -self.defaultimagePagerHeight * self.parallaxScrollFactor *2, self.tableView.frame.size.width, self.defaultimagePagerHeight + (self.defaultimagePagerHeight * self.parallaxScrollFactor * 4));
         self.rideDetailHeaderView = [[HeaderImageView alloc] initWithFrame:self.rideDetailFrame];
+        if (self.circularImage != nil) {
+            self.rideDetailHeaderView.circularImage  = self.circularImage;
+        }
         self.rideDetailHeaderView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         self.rideDetailHeaderView.selectedImageData = self.selectedImageData;
         [self insertSubview:self.rideDetailHeaderView belowSubview:self.tableView];

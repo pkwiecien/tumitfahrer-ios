@@ -27,5 +27,6 @@
 @property (nonatomic, weak) id<UITableViewDelegate> tableViewDelegate;
 
 @property (nonatomic, strong) NSData *selectedImageData;
+@property (nonatomic, strong) UIImage *circularImage;
 
 @end

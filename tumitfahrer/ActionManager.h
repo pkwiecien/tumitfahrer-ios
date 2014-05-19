@@ -17,6 +17,7 @@
 + (UIImage *)colorImage:(UIImage *)origImage withColor:(UIColor *)color;
 + (UIImage *)imageWithColor:(UIColor *)color;
 + (UIImage *)cropImage:(UIImage *)image newRect:(CGRect)rect;
++ (UIImage *)applyBlurFilterOnImage:(UIImage *)image;
 
 // encryption untilities
 + (NSString*)encodeBase64WithCredentials:(NSString*)credentials;

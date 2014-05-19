@@ -45,9 +45,8 @@
     self.profileImageContentView = [[HeaderContentView alloc] initWithFrame:self.view.bounds];
     self.profileImageContentView.tableViewDataSource = self;
     self.profileImageContentView.tableViewDelegate = self;
-    
     self.profileImageContentView.parallaxScrollFactor = 0.3; // little slower than normal.
-    
+    self.profileImageContentView.circularImage = [UIImage imageNamed:@"Face"];
     [self.view addSubview:self.profileImageContentView];
     
     UIButton *buttonBack = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -63,11 +62,14 @@
     [self.view addSubview:editButton];
     
     self.cellDescriptions = [[NSMutableArray alloc] initWithObjects:@"", [CurrentUser sharedInstance].user.email, [CurrentUser sharedInstance].user.phoneNumber, [CurrentUser sharedInstance].user.car,  nil];
+    
+    UIImage *bluredImage = [ActionManager applyBlurFilterOnImage:[UIImage imageNamed:@"Face"]];
+    self.profileImageContentView.selectedImageData = UIImagePNGRepresentation(bluredImage);
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    self.profileImageContentView.selectedImageData = UIImagePNGRepresentation([UIImage imageNamed:@"Face"]);
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
 }
 
 #pragma mark - UITableView

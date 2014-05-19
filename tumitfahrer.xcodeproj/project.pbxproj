@@ -82,6 +82,7 @@
 		E5644645192A96C000F636A5 /* ProfileInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5644643192A96C000F636A5 /* ProfileInfoCell.xib */; };
 		E564464A192A976B00F636A5 /* GeneralInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5644648192A976B00F636A5 /* GeneralInfoCell.m */; };
 		E564464B192A976B00F636A5 /* GeneralInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5644649192A976B00F636A5 /* GeneralInfoCell.xib */; };
+		E564464F192AB67200F636A5 /* CircularImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E564464E192AB67200F636A5 /* CircularImageView.m */; };
 		E58889CD191291060062D0DF /* ActionManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E58889CC191291060062D0DF /* ActionManagerTests.m */; };
 		E58889DC191383570062D0DF /* RideDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E58889DA191383570062D0DF /* RideDetailViewController.m */; };
 		E58889DD191383570062D0DF /* RideDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E58889DB191383570062D0DF /* RideDetailViewController.xib */; };
@@ -329,6 +330,8 @@
 		E5644647192A976B00F636A5 /* GeneralInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralInfoCell.h; sourceTree = "<group>"; };
 		E5644648192A976B00F636A5 /* GeneralInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralInfoCell.m; sourceTree = "<group>"; };
 		E5644649192A976B00F636A5 /* GeneralInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GeneralInfoCell.xib; sourceTree = "<group>"; };
+		E564464D192AB67200F636A5 /* CircularImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircularImageView.h; sourceTree = "<group>"; };
+		E564464E192AB67200F636A5 /* CircularImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularImageView.m; sourceTree = "<group>"; };
 		E58889CC191291060062D0DF /* ActionManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionManagerTests.m; sourceTree = "<group>"; };
 		E58889D9191383570062D0DF /* RideDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideDetailViewController.h; sourceTree = "<group>"; };
 		E58889DA191383570062D0DF /* RideDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideDetailViewController.m; sourceTree = "<group>"; };
@@ -1042,6 +1045,8 @@
 				E59B9A691916D072008DE80B /* NavigationBarUtilities.m */,
 				E50DB28F18F881BC00E87E62 /* PanoramioUtilities.h */,
 				E50DB29018F881BC00E87E62 /* PanoramioUtilities.m */,
+				E564464D192AB67200F636A5 /* CircularImageView.h */,
+				E564464E192AB67200F636A5 /* CircularImageView.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1580,6 +1585,7 @@
 				E5E215781908442100B0B150 /* SwitchTableViewCell.m in Sources */,
 				E51FD50218F0864C0098AD11 /* ProfileViewController.m in Sources */,
 				E5888A001913E37C0062D0DF /* DriverCell.m in Sources */,
+				E564464F192AB67200F636A5 /* CircularImageView.m in Sources */,
 				E599888418E88C5100B01C62 /* HAPaperCollectionViewController.m in Sources */,
 				E504D9E8190B02490036FFA8 /* Device.m in Sources */,
 				E58889FA1913E2B50062D0DF /* RideActionCell.m in Sources */,

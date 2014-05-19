@@ -8,6 +8,7 @@
 
 #import "ActionManager.h"
 #import <CommonCrypto/CommonDigest.h>
+#import <GPUImageiOSBlurFilter.h>
 
 @implementation ActionManager
 
@@ -72,6 +73,17 @@
     return image;
 }
 
++ (UIImage *)applyBlurFilterOnImage:(UIImage *)image {
+    // Create filter.
+    GPUImageiOSBlurFilter *blurFilter = [GPUImageiOSBlurFilter new];
+    blurFilter.blurRadiusInPixels = 2.0;
+    
+    // Apply filter.
+    UIImage *blurredSnapshotImage = [blurFilter imageByFilteringImage:image];
+    
+    return blurredSnapshotImage;
+}
+    
 
 #pragma mark - encryption
 
