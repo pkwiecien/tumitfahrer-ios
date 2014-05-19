@@ -115,7 +115,6 @@
 }
 
 - (void)dateSelectionViewControllerDidCancel:(RMDateSelectionViewController *)vc {
-    //Do something else
 }
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {

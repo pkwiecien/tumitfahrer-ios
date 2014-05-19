@@ -10,10 +10,11 @@
 #import "MeetingPointViewController.h"
 #import "DestinationViewController.h"
 #import "FreeSeatsTableViewCell.h"
+#import "RMDateSelectionViewController.h"
 
 @class DestinationViewController;
 
-@interface AddRideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MeetingPointDelegate, DestinationViewControllerDelegate, FreeSeatsCellDelegate>
+@interface AddRideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MeetingPointDelegate, DestinationViewControllerDelegate, FreeSeatsCellDelegate, RMDateSelectionViewControllerDelegate>
 
 @property (nonatomic, assign) ContentType RideType;
 @property (nonatomic, assign) DisplayType RideDisplayType;

@@ -131,6 +131,9 @@
 		E59B9A6E1916D346008DE80B /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59B9A6C1916D346008DE80B /* EditProfileViewController.m */; };
 		E59B9A6F1916D346008DE80B /* EditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59B9A6D1916D346008DE80B /* EditProfileViewController.xib */; };
 		E5DE44E51925E8420034AF6F /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DE44E41925E8420034AF6F /* Ride.m */; };
+		E5DE44E8192610E10034AF6F /* AddRideTableHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DE44E7192610E10034AF6F /* AddRideTableHeader.xib */; };
+		E5DE44ED192618270034AF6F /* DriverPassengerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DE44EB192618270034AF6F /* DriverPassengerCell.m */; };
+		E5DE44EE192618270034AF6F /* DriverPassengerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DE44EC192618270034AF6F /* DriverPassengerCell.xib */; };
 		E5DF641518EB548E00D53164 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DF641318EB548E00D53164 /* SettingsViewController.m */; };
 		E5DF641618EB548E00D53164 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DF641418EB548E00D53164 /* SettingsViewController.xib */; };
 		E5DF641B18EB56A600D53164 /* BrowseRidesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DF641918EB56A600D53164 /* BrowseRidesViewController.m */; };
@@ -400,6 +403,10 @@
 		E59B9A6D1916D346008DE80B /* EditProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileViewController.xib; sourceTree = "<group>"; };
 		E5DE44E31925E8420034AF6F /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
 		E5DE44E41925E8420034AF6F /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
+		E5DE44E7192610E10034AF6F /* AddRideTableHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddRideTableHeader.xib; sourceTree = "<group>"; };
+		E5DE44EA192618270034AF6F /* DriverPassengerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DriverPassengerCell.h; sourceTree = "<group>"; };
+		E5DE44EB192618270034AF6F /* DriverPassengerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DriverPassengerCell.m; sourceTree = "<group>"; };
+		E5DE44EC192618270034AF6F /* DriverPassengerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DriverPassengerCell.xib; sourceTree = "<group>"; };
 		E5DF641218EB548E00D53164 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		E5DF641318EB548E00D53164 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		E5DF641418EB548E00D53164 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
@@ -1112,6 +1119,24 @@
 			name = "Edit Profile";
 			sourceTree = "<group>";
 		};
+		E5DE44E6192610C10034AF6F /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				E5DE44E7192610E10034AF6F /* AddRideTableHeader.xib */,
+			);
+			name = Header;
+			sourceTree = "<group>";
+		};
+		E5DE44E9192617ED0034AF6F /* Driver/Passenger Cell */ = {
+			isa = PBXGroup;
+			children = (
+				E5DE44EA192618270034AF6F /* DriverPassengerCell.h */,
+				E5DE44EB192618270034AF6F /* DriverPassengerCell.m */,
+				E5DE44EC192618270034AF6F /* DriverPassengerCell.xib */,
+			);
+			name = "Driver/Passenger Cell";
+			sourceTree = "<group>";
+		};
 		E5DF640B18EB42D800D53164 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -1160,6 +1185,8 @@
 		E5E2155A1907A92700B0B150 /* Add Ride */ = {
 			isa = PBXGroup;
 			children = (
+				E5DE44E9192617ED0034AF6F /* Driver/Passenger Cell */,
+				E5DE44E6192610C10034AF6F /* Header */,
 				E504D9BE190A6C860036FFA8 /* Destination */,
 				E504D9B8190A585A0036FFA8 /* Meeting Point */,
 				E5E2157B1908490700B0B150 /* Free Seats Cell */,
@@ -1364,6 +1391,7 @@
 				E50CCC11191E529A003A9490 /* TimelineViewController.xib in Resources */,
 				E50CCC1B191E5885003A9490 /* TimelineCell.xib in Resources */,
 				E5FC44D5190CF83100E8DB65 /* MenuTopHeaderView.xib in Resources */,
+				E5DE44E8192610E10034AF6F /* AddRideTableHeader.xib in Resources */,
 				E59B9A611916B7E4008DE80B /* YourRidesCell.xib in Resources */,
 				E5F7F8E81925694B0001F1FE /* TestViewController.xib in Resources */,
 				E59B9A5A1916B4B4008DE80B /* MessageCell.xib in Resources */,
@@ -1390,6 +1418,7 @@
 				E5FA642719123AE500C04BFF /* RideSearchResultCell.xib in Resources */,
 				E504D9C3190A6C940036FFA8 /* DestinationViewController.xib in Resources */,
 				E5FD9EC819234A8500902502 /* TimelineMapViewController.xib in Resources */,
+				E5DE44EE192618270034AF6F /* DriverPassengerCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1523,6 +1552,7 @@
 				E50CCCC1191E7A94003A9490 /* TimelinePageViewController.m in Sources */,
 				E59B9A6A1916D072008DE80B /* NavigationBarUtilities.m in Sources */,
 				E50DB27218F5DFB200E87E62 /* LocationController.m in Sources */,
+				E5DE44ED192618270034AF6F /* DriverPassengerCell.m in Sources */,
 				E5FA64251912299E00C04BFF /* RideSearchStore.m in Sources */,
 				E50CCD11191FC324003A9490 /* RidesPageViewController.m in Sources */,
 				E5DF641518EB548E00D53164 /* SettingsViewController.m in Sources */,

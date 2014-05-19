@@ -10,12 +10,13 @@
 
 @protocol MeetingPointDelegate
 
--(void)selectedMeetingPoint:(NSString *)value;
+-(void)didSelectValue:(NSString *)value forIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
 @interface MeetingPointViewController : UIViewController
 
+@property (nonatomic, strong) NSIndexPath *indexPath;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (nonatomic, assign) id<MeetingPointDelegate> selectedValueDelegate;
 

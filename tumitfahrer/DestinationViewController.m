@@ -44,7 +44,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.searchBar becomeFirstResponder];
-    self.view = [NavigationBarUtilities makeBackground:self.view];
+    self.view.backgroundColor = [UIColor customLightGray];
 }
 
 -(void)saveButtonPressed {
@@ -73,7 +73,7 @@
     }
     
     cell.textLabel.font = [UIFont fontWithName:@"Helvetica-Thin" size:16.0];
-    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.textColor = [UIColor blackColor];
     cell.textLabel.text = [self placeAtIndexPath:indexPath].name;
     
     cell.backgroundColor = [UIColor clearColor];
