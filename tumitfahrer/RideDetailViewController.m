@@ -20,6 +20,7 @@
 #import "RidesStore.h"
 #import "RideNoticeCell.h"
 #import "HeaderContentView.h"
+#import "RideDetailMapViewController.h"
 
 @interface RideDetailViewController () <NSFetchedResultsControllerDelegate>
 
@@ -45,7 +46,7 @@
     [self.view bringSubviewToFront:_headerView];
     
     UIButton *buttonBack = [UIButton buttonWithType:UIButtonTypeCustom];
-    buttonBack.frame = CGRectMake(10, 10, 40, 40);
+    buttonBack.frame = CGRectMake(10, 22, 40, 40);
     [buttonBack setImage:[ActionManager colorImage:[UIImage imageNamed:@"ArrowLeft"]  withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
     [buttonBack addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buttonBack];
@@ -84,13 +85,11 @@
         return 100.0f; //cell for comments, in reality the height has to be adjustable
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 5;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
@@ -147,15 +146,16 @@
         if (cell == nil) {
             cell = [DriverCell driverCell];
         }
-        
         cell.driverNameLabel.text = self.ride.driver.firstName;
         cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [self.ride.driver.ratingAvg floatValue]];
-        if (self.ride.driver.car == nil || [self.ride.driver.car isEqualToString:@""]) {
-            cell.carLabel.text = @"Not specified";
-        } else {
-            cell.carLabel.text = self.ride.driver.car;
-        }
+
         cell.mapView.delegate = self;
+        UITapGestureRecognizer *mapTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mapViewTap)];
+        // Set required taps and number of touches
+        [mapTap setNumberOfTapsRequired:1];
+        [mapTap setNumberOfTouchesRequired:1];
+        // Add the gesture to the view
+        [cell.mapView addGestureRecognizer:mapTap];
         self.map = cell.mapView;
         
         return cell;
@@ -178,8 +178,7 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
@@ -383,13 +382,18 @@
     [self.map addOverlay:_routeOverlay];
 }
 
-- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
-{
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
     MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithPolyline:overlay];
     renderer.strokeColor = [UIColor redColor];
     renderer.lineWidth = 4.0;
     
     return  renderer;
+}
+
+-(void)mapViewTap {
+    RideDetailMapViewController *rideDetailMapVC = [[RideDetailMapViewController alloc] init];
+    rideDetailMapVC.selectedRide = self.ride;
+    [self.navigationController pushViewController:rideDetailMapVC animated:YES];
 }
 
 

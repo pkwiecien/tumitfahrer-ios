@@ -12,7 +12,6 @@
 #import "ForgotPasswordViewController.h"
 #import "ActionManager.h"
 #import "CurrentUser.h"
-#import "RideRequestsViewController.h"
 #import "Ride.h"
 #import "EAIntroView.h"
 

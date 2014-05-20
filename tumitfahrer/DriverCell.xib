@@ -38,6 +38,7 @@
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="driverNameLabel" destination="5Ac-1L-MgI" id="Aqb-zi-Wro"/>
                 <outlet property="driverRatingLabel" destination="Jnu-KX-P0b" id="ci1-WG-mLd"/>
                 <outlet property="mapView" destination="8rI-FN-vkQ" id="edW-1h-GSR"/>
             </connections>

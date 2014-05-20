@@ -76,6 +76,8 @@
 		E522BADB18AE13F600ECD375 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E522BABD18AE13F600ECD375 /* UIKit.framework */; };
 		E522BAE318AE13F600ECD375 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E522BAE118AE13F600ECD375 /* InfoPlist.strings */; };
 		E52EA4CE192B96A600E78B6D /* CvLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E52EA4CD192B96A600E78B6D /* CvLayout.m */; };
+		E52EA4D3192C019C00E78B6D /* RideDetailMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E52EA4D1192C019C00E78B6D /* RideDetailMapViewController.m */; };
+		E52EA4D4192C019C00E78B6D /* RideDetailMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E52EA4D2192C019C00E78B6D /* RideDetailMapViewController.xib */; };
 		E53D5D0018B14C39004016F8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E53D5CFF18B14C39004016F8 /* QuartzCore.framework */; };
 		E5644640192A8E1500F636A5 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E564463F192A8E1500F636A5 /* User.m */; };
 		E5644644192A96C000F636A5 /* ProfileInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5644642192A96C000F636A5 /* ProfileInfoCell.m */; };
@@ -102,8 +104,6 @@
 		E58B8726191511EA0032524A /* RequestMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E58B8725191511EA0032524A /* RequestMapping.m */; };
 		E58B872A19151F1B0032524A /* KGStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E58B872919151F1B0032524A /* KGStatusBar.m */; };
 		E58B872C191559B30032524A /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E58B872B191559B30032524A /* libicucore.dylib */; };
-		E59987C918E6DBEA00B01C62 /* RideRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987C718E6DBEA00B01C62 /* RideRequestsViewController.m */; };
-		E59987CA18E6DBEA00B01C62 /* RideRequestsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59987C818E6DBEA00B01C62 /* RideRequestsViewController.xib */; };
 		E59987D018E6E47F00B01C62 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987CE18E6E47F00B01C62 /* LoginViewController.m */; };
 		E59987D118E6E47F00B01C62 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59987CF18E6E47F00B01C62 /* LoginViewController.xib */; };
 		E59987D718E6ECF200B01C62 /* CustomTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987D618E6ECF200B01C62 /* CustomTextField.m */; };
@@ -117,12 +117,6 @@
 		E599881918E804E500B01C62 /* highway-nosound@2x.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E599881818E804E500B01C62 /* highway-nosound@2x.mp4 */; };
 		E599886218E84D9D00B01C62 /* MenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E599886018E84D9D00B01C62 /* MenuTableViewCell.m */; };
 		E599886318E84D9D00B01C62 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E599886118E84D9D00B01C62 /* MenuTableViewCell.xib */; };
-		E599887218E8616200B01C62 /* HATransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = E599886F18E8616200B01C62 /* HATransitionController.m */; };
-		E599887318E8616200B01C62 /* HATransitionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E599887118E8616200B01C62 /* HATransitionLayout.m */; };
-		E599887818E8617100B01C62 /* HACollectionViewLargeLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E599887518E8617100B01C62 /* HACollectionViewLargeLayout.m */; };
-		E599887918E8617100B01C62 /* HACollectionViewSmallLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E599887718E8617100B01C62 /* HACollectionViewSmallLayout.m */; };
-		E599888118E88A0000B01C62 /* NibCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E599888018E88A0000B01C62 /* NibCell.xib */; };
-		E599888418E88C5100B01C62 /* HAPaperCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E599888318E88C5100B01C62 /* HAPaperCollectionViewController.m */; };
 		E59B9A4B1916A241008DE80B /* YourRidesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59B9A491916A241008DE80B /* YourRidesViewController.m */; };
 		E59B9A4C1916A241008DE80B /* YourRidesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59B9A4A1916A241008DE80B /* YourRidesViewController.xib */; };
 		E59B9A601916B7E4008DE80B /* YourRidesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E59B9A5E1916B7E4008DE80B /* YourRidesCell.m */; };
@@ -310,6 +304,9 @@
 		E522BAE218AE13F600ECD375 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E52EA4CC192B96A600E78B6D /* CvLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CvLayout.h; sourceTree = "<group>"; };
 		E52EA4CD192B96A600E78B6D /* CvLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CvLayout.m; sourceTree = "<group>"; };
+		E52EA4D0192C019C00E78B6D /* RideDetailMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideDetailMapViewController.h; sourceTree = "<group>"; };
+		E52EA4D1192C019C00E78B6D /* RideDetailMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideDetailMapViewController.m; sourceTree = "<group>"; };
+		E52EA4D2192C019C00E78B6D /* RideDetailMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RideDetailMapViewController.xib; sourceTree = "<group>"; };
 		E53D5CFF18B14C39004016F8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E564463E192A8E1500F636A5 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		E564463F192A8E1500F636A5 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
@@ -350,9 +347,6 @@
 		E58B872819151F1B0032524A /* KGStatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGStatusBar.h; sourceTree = "<group>"; };
 		E58B872919151F1B0032524A /* KGStatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGStatusBar.m; sourceTree = "<group>"; };
 		E58B872B191559B30032524A /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
-		E59987C618E6DBEA00B01C62 /* RideRequestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideRequestsViewController.h; sourceTree = "<group>"; };
-		E59987C718E6DBEA00B01C62 /* RideRequestsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideRequestsViewController.m; sourceTree = "<group>"; };
-		E59987C818E6DBEA00B01C62 /* RideRequestsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RideRequestsViewController.xib; sourceTree = "<group>"; };
 		E59987CD18E6E47F00B01C62 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		E59987CE18E6E47F00B01C62 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		E59987CF18E6E47F00B01C62 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -373,17 +367,6 @@
 		E599885F18E84D9D00B01C62 /* MenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableViewCell.h; sourceTree = "<group>"; };
 		E599886018E84D9D00B01C62 /* MenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableViewCell.m; sourceTree = "<group>"; };
 		E599886118E84D9D00B01C62 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
-		E599886E18E8616200B01C62 /* HATransitionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HATransitionController.h; sourceTree = "<group>"; };
-		E599886F18E8616200B01C62 /* HATransitionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HATransitionController.m; sourceTree = "<group>"; };
-		E599887018E8616200B01C62 /* HATransitionLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HATransitionLayout.h; sourceTree = "<group>"; };
-		E599887118E8616200B01C62 /* HATransitionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HATransitionLayout.m; sourceTree = "<group>"; };
-		E599887418E8617100B01C62 /* HACollectionViewLargeLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HACollectionViewLargeLayout.h; sourceTree = "<group>"; };
-		E599887518E8617100B01C62 /* HACollectionViewLargeLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HACollectionViewLargeLayout.m; sourceTree = "<group>"; };
-		E599887618E8617100B01C62 /* HACollectionViewSmallLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HACollectionViewSmallLayout.h; sourceTree = "<group>"; };
-		E599887718E8617100B01C62 /* HACollectionViewSmallLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HACollectionViewSmallLayout.m; sourceTree = "<group>"; };
-		E599888018E88A0000B01C62 /* NibCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NibCell.xib; sourceTree = "<group>"; };
-		E599888218E88C5100B01C62 /* HAPaperCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HAPaperCollectionViewController.h; sourceTree = "<group>"; };
-		E599888318E88C5100B01C62 /* HAPaperCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HAPaperCollectionViewController.m; sourceTree = "<group>"; };
 		E59B9A481916A241008DE80B /* YourRidesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YourRidesViewController.h; sourceTree = "<group>"; };
 		E59B9A491916A241008DE80B /* YourRidesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YourRidesViewController.m; sourceTree = "<group>"; };
 		E59B9A4A1916A241008DE80B /* YourRidesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YourRidesViewController.xib; sourceTree = "<group>"; };
@@ -589,7 +572,7 @@
 			name = "Page Controller";
 			sourceTree = "<group>";
 		};
-		E50CCD02191FADE2003A9490 /* New Browse Rides */ = {
+		E50CCD02191FADE2003A9490 /* Browse Rides */ = {
 			isa = PBXGroup;
 			children = (
 				E50CCD13191FC32C003A9490 /* Page Controller */,
@@ -598,7 +581,7 @@
 				E50CCD04191FAE8A003A9490 /* RidesViewController.m */,
 				E50CCD05191FAE8A003A9490 /* RidesViewController.xib */,
 			);
-			name = "New Browse Rides";
+			name = "Browse Rides";
 			sourceTree = "<group>";
 		};
 		E50CCD08191FBD12003A9490 /* Ride Cell */ = {
@@ -763,6 +746,16 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		E52EA4CF192C016900E78B6D /* Map View */ = {
+			isa = PBXGroup;
+			children = (
+				E52EA4D0192C019C00E78B6D /* RideDetailMapViewController.h */,
+				E52EA4D1192C019C00E78B6D /* RideDetailMapViewController.m */,
+				E52EA4D2192C019C00E78B6D /* RideDetailMapViewController.xib */,
+			);
+			name = "Map View";
+			sourceTree = "<group>";
+		};
 		E5644646192A96C800F636A5 /* Profile Info Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -783,9 +776,10 @@
 			name = GeneralInfoCell;
 			sourceTree = "<group>";
 		};
-		E58889D81913832C0062D0DF /* New Ride Details */ = {
+		E58889D81913832C0062D0DF /* Ride Details */ = {
 			isa = PBXGroup;
 			children = (
+				E52EA4CF192C016900E78B6D /* Map View */,
 				E5FB4D401918DB1D006F4F5D /* Ride Notice */,
 				E5888A981914DFFB0062D0DF /* Chat Controller */,
 				E5888A021913E3F40062D0DF /* Passengers Cell */,
@@ -797,7 +791,7 @@
 				E58889DA191383570062D0DF /* RideDetailViewController.m */,
 				E58889DB191383570062D0DF /* RideDetailViewController.xib */,
 			);
-			name = "New Ride Details";
+			name = "Ride Details";
 			sourceTree = "<group>";
 		};
 		E58889DE191384F40062D0DF /* Ride Detail View */ = {
@@ -882,14 +876,13 @@
 			isa = PBXGroup;
 			children = (
 				E5E2155A1907A92700B0B150 /* Add Ride */,
+				E50CCD02191FADE2003A9490 /* Browse Rides */,
 				E59987FD18E72BD100B01C62 /* Forgot Password */,
 				E599880718E7835F00B01C62 /* Left Menu */,
 				E59987CC18E6E3A100B01C62 /* Login */,
-				E50CCD02191FADE2003A9490 /* New Browse Rides */,
-				E58889D81913832C0062D0DF /* New Ride Details */,
 				E51FD4FE18F086300098AD11 /* Profile */,
 				E59987F718E724F900B01C62 /* Register */,
-				E59987CB18E6DC2700B01C62 /* Ride Requests */,
+				E58889D81913832C0062D0DF /* Ride Details */,
 				E5FA641D191226F400C04BFF /* Ride Search Results */,
 				E5E2155B1907A92D00B0B150 /* Search Ride */,
 				E5DF640B18EB42D800D53164 /* Settings */,
@@ -928,17 +921,6 @@
 				E564463F192A8E1500F636A5 /* User.m */,
 			);
 			name = Model;
-			sourceTree = "<group>";
-		};
-		E59987CB18E6DC2700B01C62 /* Ride Requests */ = {
-			isa = PBXGroup;
-			children = (
-				E5FDDBE818EFF8C800CE7B01 /* Nib Cell */,
-				E59987C618E6DBEA00B01C62 /* RideRequestsViewController.h */,
-				E59987C718E6DBEA00B01C62 /* RideRequestsViewController.m */,
-				E59987C818E6DBEA00B01C62 /* RideRequestsViewController.xib */,
-			);
-			name = "Ride Requests";
 			sourceTree = "<group>";
 		};
 		E59987CC18E6E3A100B01C62 /* Login */ = {
@@ -1034,42 +1016,8 @@
 			children = (
 				E58B872719151F1B0032524A /* KGStatusBar */,
 				E504D9C7190A7FAC0036FFA8 /* GooglePlacesAutocomplete */,
-				E599886718E8610800B01C62 /* Paper */,
 			);
 			name = zLibraries;
-			sourceTree = "<group>";
-		};
-		E599886718E8610800B01C62 /* Paper */ = {
-			isa = PBXGroup;
-			children = (
-				E599888218E88C5100B01C62 /* HAPaperCollectionViewController.h */,
-				E599888318E88C5100B01C62 /* HAPaperCollectionViewController.m */,
-				E599886D18E8615300B01C62 /* Custom Layout */,
-				E599886C18E8613000B01C62 /* Transition */,
-			);
-			name = Paper;
-			sourceTree = "<group>";
-		};
-		E599886C18E8613000B01C62 /* Transition */ = {
-			isa = PBXGroup;
-			children = (
-				E599886E18E8616200B01C62 /* HATransitionController.h */,
-				E599886F18E8616200B01C62 /* HATransitionController.m */,
-				E599887018E8616200B01C62 /* HATransitionLayout.h */,
-				E599887118E8616200B01C62 /* HATransitionLayout.m */,
-			);
-			name = Transition;
-			sourceTree = "<group>";
-		};
-		E599886D18E8615300B01C62 /* Custom Layout */ = {
-			isa = PBXGroup;
-			children = (
-				E599887418E8617100B01C62 /* HACollectionViewLargeLayout.h */,
-				E599887518E8617100B01C62 /* HACollectionViewLargeLayout.m */,
-				E599887618E8617100B01C62 /* HACollectionViewSmallLayout.h */,
-				E599887718E8617100B01C62 /* HACollectionViewSmallLayout.m */,
-			);
-			name = "Custom Layout";
 			sourceTree = "<group>";
 		};
 		E59B9A471916A22A008DE80B /* Your Rides */ = {
@@ -1228,14 +1176,6 @@
 			name = "Map View Controller";
 			sourceTree = "<group>";
 		};
-		E5FDDBE818EFF8C800CE7B01 /* Nib Cell */ = {
-			isa = PBXGroup;
-			children = (
-				E599888018E88A0000B01C62 /* NibCell.xib */,
-			);
-			name = "Nib Cell";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1347,12 +1287,10 @@
 				E599881918E804E500B01C62 /* highway-nosound@2x.mp4 in Resources */,
 				E5888A011913E37C0062D0DF /* DriverCell.xib in Resources */,
 				E50CCCC2191E7A94003A9490 /* TimelinePageViewController.xib in Resources */,
-				E59987CA18E6DBEA00B01C62 /* RideRequestsViewController.xib in Resources */,
 				E5644645192A96C000F636A5 /* ProfileInfoCell.xib in Resources */,
 				E5FB4D3F1918DB18006F4F5D /* RideNoticeCell.xib in Resources */,
 				E522BAC418AE13F600ECD375 /* InfoPlist.strings in Resources */,
 				E59B9A4C1916A241008DE80B /* YourRidesViewController.xib in Resources */,
-				E599888118E88A0000B01C62 /* NibCell.xib in Resources */,
 				E599886318E84D9D00B01C62 /* MenuTableViewCell.xib in Resources */,
 				E50CCD07191FAE8A003A9490 /* RidesViewController.xib in Resources */,
 				E58889FB1913E2B50062D0DF /* RideActionCell.xib in Resources */,
@@ -1364,6 +1302,7 @@
 				E5FA642719123AE500C04BFF /* RideSearchResultCell.xib in Resources */,
 				E504D9C3190A6C940036FFA8 /* DestinationViewController.xib in Resources */,
 				E5FD9EC819234A8500902502 /* TimelineMapViewController.xib in Resources */,
+				E52EA4D4192C019C00E78B6D /* RideDetailMapViewController.xib in Resources */,
 				E5DE44EE192618270034AF6F /* DriverPassengerCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1461,7 +1400,6 @@
 			files = (
 				E50CCCE9191F7256003A9490 /* Rating.m in Sources */,
 				E59B9A601916B7E4008DE80B /* YourRidesCell.m in Sources */,
-				E599887318E8616200B01C62 /* HATransitionLayout.m in Sources */,
 				E5FDDBCB18EE79F900CE7B01 /* RideSearchResultsViewController.m in Sources */,
 				E50CCD06191FAE8A003A9490 /* RidesViewController.m in Sources */,
 				E59987D018E6E47F00B01C62 /* LoginViewController.m in Sources */,
@@ -1480,7 +1418,6 @@
 				E50CCC10191E529A003A9490 /* TimelineViewController.m in Sources */,
 				E5888A9B1914E01B0062D0DF /* ChatViewController.m in Sources */,
 				E50CCD01191F8968003A9490 /* RatingMapping.m in Sources */,
-				E59987C918E6DBEA00B01C62 /* RideRequestsViewController.m in Sources */,
 				E50CCC1A191E5885003A9490 /* TimelineCell.m in Sources */,
 				E58B8726191511EA0032524A /* RequestMapping.m in Sources */,
 				E5644640192A8E1500F636A5 /* User.m in Sources */,
@@ -1491,7 +1428,6 @@
 				E51FD50218F0864C0098AD11 /* ProfileViewController.m in Sources */,
 				E5888A001913E37C0062D0DF /* DriverCell.m in Sources */,
 				E564464F192AB67200F636A5 /* CircularImageView.m in Sources */,
-				E599888418E88C5100B01C62 /* HAPaperCollectionViewController.m in Sources */,
 				E504D9E8190B02490036FFA8 /* Device.m in Sources */,
 				E58889FA1913E2B50062D0DF /* RideActionCell.m in Sources */,
 				E50CCCC1191E7A94003A9490 /* TimelinePageViewController.m in Sources */,
@@ -1513,7 +1449,6 @@
 				E50DB29118F881BC00E87E62 /* PanoramioUtilities.m in Sources */,
 				E504D9EE190BCCE20036FFA8 /* DeviceMapping.m in Sources */,
 				E5DE44E51925E8420034AF6F /* Ride.m in Sources */,
-				E599887918E8617100B01C62 /* HACollectionViewSmallLayout.m in Sources */,
 				E599880118E72BF600B01C62 /* ForgotPasswordViewController.m in Sources */,
 				E59987FB18E7251000B01C62 /* RegisterViewController.m in Sources */,
 				E50DB28B18F8730400E87E62 /* RidesStore.m in Sources */,
@@ -1526,7 +1461,6 @@
 				E59B9A6E1916D346008DE80B /* EditProfileViewController.m in Sources */,
 				E5FD9ECD1923FA6C00902502 /* UIColor+LayoutColors.m in Sources */,
 				E5F7F8E71925694B0001F1FE /* TestViewController.m in Sources */,
-				E599887818E8617100B01C62 /* HACollectionViewLargeLayout.m in Sources */,
 				E59B9A4B1916A241008DE80B /* YourRidesViewController.m in Sources */,
 				E504D9D1190A7FC50036FFA8 /* SPGooglePlacesAutocompleteQuery.m in Sources */,
 				E59987D718E6ECF200B01C62 /* CustomTextField.m in Sources */,
@@ -1536,11 +1470,11 @@
 				E504D9D3190A7FC50036FFA8 /* SPGooglePlacesPlaceDetailQuery.m in Sources */,
 				E50DB26F18F52E8500E87E62 /* StatusMapping.m in Sources */,
 				E5FB4D3E1918DB18006F4F5D /* RideNoticeCell.m in Sources */,
+				E52EA4D3192C019C00E78B6D /* RideDetailMapViewController.m in Sources */,
 				E504D9D2190A7FC50036FFA8 /* SPGooglePlacesAutocompleteUtilities.m in Sources */,
 				E58889DC191383570062D0DF /* RideDetailViewController.m in Sources */,
 				E522BAC618AE13F600ECD375 /* main.m in Sources */,
 				E50DB28518F86F8800E87E62 /* SessionMapping.m in Sources */,
-				E599887218E8616200B01C62 /* HATransitionController.m in Sources */,
 				E5FDDBF118F0059D00CE7B01 /* ActionManager.m in Sources */,
 				E58889E1191385110062D0DF /* HeaderContentView.m in Sources */,
 				E50DB29818FA7D4100E87E62 /* Faculty.m in Sources */,

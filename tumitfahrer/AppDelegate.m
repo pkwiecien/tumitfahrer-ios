@@ -10,11 +10,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "AppDelegate.h"
 #import "LoginViewController.h"
-#import "RideRequestsViewController.h"
 #import "ForgotPasswordViewController.h"
 #import "MenuViewController.h"
-#import "HATransitionController.h"
-#import "HACollectionViewSmallLayout.h"
 #import "Device.h"
 #import "UserMapping.h"
 #import "SessionMapping.h"
@@ -29,6 +26,7 @@
 #import "TimelineViewController.h"
 #import "TimelinePageViewController.h"
 #import "ActivityMapping.h"
+#import "RidesStore.h"
 
 @interface AppDelegate ()
 
@@ -43,7 +41,12 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     // register app for receiving push notifications
-    [self setupPushNotifications];
+    //[self setupPushNotifications];
+    
+	// Let the device know we want to receive push notifications
+	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    
     [self setupNavigationController];
     [self setupRestKit];
     [self setupObservers];
