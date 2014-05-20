@@ -19,23 +19,6 @@
     return view;
 }
 
-// navigation controller is sent by reference
-+(void)setupNavbar:(UINavigationController**)navigationController {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-
-    double width = (*navigationController).navigationBar.frame.size.width;
-    double height = (*navigationController).navigationBar.frame.size.height;
-    
-    UIImage *croppedImage = [ActionManager cropImage:[UIImage imageNamed:@"gradientBackground"] newRect:CGRectMake(0, 0, width, height)];
-    [(*navigationController).navigationBar setBackgroundImage:croppedImage forBarMetrics:UIBarMetricsDefault];
-    (*navigationController).navigationBar.shadowImage = [UIImage new];
-    (*navigationController).navigationBar.translucent = NO;
-    (*navigationController).navigationBarHidden = NO;
-    
-    (*navigationController).navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
-}
-
 +(void)setupNavbar:(UINavigationController **)navigationController withColor:(UIColor *)color{
     [(*navigationController).navigationBar setBarTintColor:color];
     (*navigationController).navigationBar.tintColor = [UIColor whiteColor];

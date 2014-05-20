@@ -15,6 +15,8 @@
     
     RideActionCell * cell = [[[NSBundle mainBundle] loadNibNamed:@"RideActionCell" owner:self options:nil] objectAtIndex:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.backgroundColor = [UIColor customLightGray];
+    cell.contentView.backgroundColor = [UIColor customLightGray];
     
     return cell;
 }
@@ -39,12 +41,11 @@
 
 - (void)awakeFromNib
 {
-    UIColor *iOSgreenColor = [UIColor colorWithRed:0.298 green:0.851 blue:0.392 alpha:1];
-    [self.joinRideButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"GreenButtonEmpty"] withColor:iOSgreenColor] forState:UIControlStateNormal];
-    [self.joinRideButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"RoundedBox"] withColor:iOSgreenColor] forState:UIControlStateHighlighted];
+    [self.joinRideButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"blueButton"] withColor:[UIColor customGreen]] forState:UIControlStateNormal];
+    [self.joinRideButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"blueButton"] withColor:[UIColor customGreen]] forState:UIControlStateHighlighted];
 
-    [self.contactDriverButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"GreenButtonEmpty"] withColor:[UIColor orangeColor]] forState:UIControlStateNormal];
-    [self.contactDriverButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"RoundedBox"] withColor:[UIColor orangeColor]] forState:UIControlStateHighlighted];
+    [self.contactDriverButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"blueButton"] withColor:[UIColor orangeColor]] forState:UIControlStateNormal];
+    [self.contactDriverButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"blueButton"] withColor:[UIColor orangeColor]] forState:UIControlStateHighlighted];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

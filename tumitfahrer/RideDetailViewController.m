@@ -38,17 +38,10 @@
     self.rideDetail = [[HeaderContentView alloc] initWithFrame:self.view.bounds];
     self.rideDetail.tableViewDataSource = self;
     self.rideDetail.tableViewDelegate = self;
-    
-    self.rideDetail.parallaxScrollFactor = 0.3; // little slower than normal.
-    
+    self.rideDetail.parallaxScrollFactor = 0.3; // little slower than normal.    
     [self.view addSubview:self.rideDetail];
     
-    UIImage *croppedImage = [ActionManager cropImage:[UIImage imageNamed:@"gradientBackground"] newRect:CGRectMake(0, 0, 320, 65)];
-    UIImageView *imgView = [[UIImageView alloc] initWithImage:croppedImage];
-    imgView.frame = CGRectMake(0, 0, 320, 65);
-    _headerView.backgroundColor = [UIColor clearColor];
-    [_headerView addSubview:imgView];
-    [_headerView sendSubviewToBack:imgView];
+    _headerView.backgroundColor = [UIColor darkerBlue];
     [self.view bringSubviewToFront:_headerView];
     
     UIButton *buttonBack = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -80,13 +73,12 @@
         return 44.0f;
     }
     else if(indexPath.row == 2){
-        return 159.0f;
+        return 240.0f;
     }
     else if(indexPath.row == 3){
-        return 120.0f;
+        return 170.0f;
     }
     else if(indexPath.row == 4) {
-        //        return 124.0f*(1+(7-1)/3);
         return 100*(1+(self.ride.freeSeats-1)/3);
     }else
         return 100.0f; //cell for comments, in reality the height has to be adjustable
@@ -140,9 +132,14 @@
         }
         cell.departurePlaceLabel.text = self.ride.departurePlace;
         cell.destinationLabel.text = self.ride.destination;
-        cell.timeLabel.text = [ActionManager stringFromDate:self.ride.departureTime];
-        cell.mapView.delegate = self;
-        self.map = cell.mapView;
+        cell.timeLabel.text = [ActionManager timeStringFromDate:self.ride.departureTime];
+        cell.dateLabel.text = [ActionManager dateStringFromDate:self.ride.departureTime];
+        if (self.ride.driver.car == nil) {
+            cell.carLabel.text = @"Not specified";
+        } else {
+            cell.carLabel.text = self.ride.driver.car;
+        }
+        cell.informationLabel.text = self.ride.meetingPoint;
         
         return cell;
     } else if(indexPath.row == 3) {
@@ -158,6 +155,9 @@
         } else {
             cell.carLabel.text = self.ride.driver.car;
         }
+        cell.mapView.delegate = self;
+        self.map = cell.mapView;
+        
         return cell;
     } else if(indexPath.row == 4) {
         PassengersCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PassengersCell"];
@@ -181,11 +181,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    cell.contentView.backgroundColor = [UIColor whiteColor];
 }
 
 #pragma mark - LocationDetailViewDelegate
@@ -232,7 +227,7 @@
     // check if the user is not trying to send a request to himself
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     Request *request = [self requestFoundInCoreData];
-
+    
     if (self.ride.driver.userId == [CurrentUser sharedInstance].user.userId) {
         [objectManager deleteObject:self.ride path:[NSString stringWithFormat:@"/api/v2/rides/%d", self.ride.rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             
@@ -246,7 +241,7 @@
         }];
     } else if(request != nil) {
         [objectManager deleteObject:request path:[NSString stringWithFormat:@"/api/v2/rides/%d/requests/%d", self.ride.rideId, [request.requestId intValue]] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-
+            
             [KGStatusBar showSuccessWithStatus:@"Request canceled"];
             
             [self.ride removeRequestsObject:request];
@@ -266,7 +261,7 @@
         [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/rides/%d/requests", self.ride.rideId] parameters:requestParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             [KGStatusBar showSuccessWithStatus:@"Request was sent"];
             Request *rideRequest = (Request *)[mappingResult firstObject];
-          //  [[RidesStore sharedStore] addRideToUserRequests:ride];
+            //  [[RidesStore sharedStore] addRideToUserRequests:ride];
             NSLog(@"Ride request: %@", rideRequest);
             [self.ride addRequestsObject:rideRequest];
             [self.rideDetail.tableView reloadData];
@@ -339,7 +334,7 @@
 
 - (void)prepareDirections {
     MKDirectionsRequest *directionsRequest = [MKDirectionsRequest new];
-
+    
     // Make the destination
     CLLocationCoordinate2D destinationCoords = CLLocationCoordinate2DMake(self.ride.destinationLatitude, self.ride.destinationLongitude);
     MKPlacemark *destinationPlacemark = [[MKPlacemark alloc] initWithCoordinate:destinationCoords addressDictionary:nil];
@@ -349,7 +344,7 @@
     [geocoder geocodeAddressString:self.ride.departurePlace completionHandler:^(NSArray* placemarks, NSError* error){
         
         CLPlacemark *aPlacemark = [placemarks firstObject];
-                
+        
         // Make the destination
         CLLocationCoordinate2D sourceCoords = CLLocationCoordinate2DMake(aPlacemark.location.coordinate.latitude, aPlacemark.location.coordinate.longitude);
         MKPlacemark *sourcePlacemark = [[MKPlacemark alloc] initWithCoordinate:sourceCoords addressDictionary:nil];
@@ -393,7 +388,7 @@
     MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithPolyline:overlay];
     renderer.strokeColor = [UIColor redColor];
     renderer.lineWidth = 4.0;
-
+    
     return  renderer;
 }
 

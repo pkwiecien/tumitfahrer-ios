@@ -12,6 +12,7 @@
 
 + (RideNoticeCell *)rideNoticeCell;
 
+@property (weak, nonatomic) IBOutlet UIImageView *noticeImage;
 @property (weak, nonatomic) IBOutlet UILabel *noticeLabel;
 
 @end

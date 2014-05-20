@@ -7,26 +7,19 @@
 //
 
 #import "RideNoticeCell.h"
+#import "ActionManager.h"
 
 @implementation RideNoticeCell
 
-
 + (RideNoticeCell *)rideNoticeCell {
+    
     RideNoticeCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"RideNoticeCell" owner:self options:nil] objectAtIndex:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.backgroundColor = [UIColor darkerBlue];
+    cell.contentView.backgroundColor = [UIColor darkerBlue];
+    cell.noticeImage.image = [ActionManager colorImage:[UIImage imageNamed:@"DriverIcon"] withColor:[UIColor whiteColor]];
     
     return cell;
-}
-- (void)awakeFromNib
-{
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 @end

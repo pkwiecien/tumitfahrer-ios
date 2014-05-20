@@ -11,7 +11,6 @@
 @interface NavigationBarUtilities : NSObject
 
 + (UIView *)makeBackground:(UIView*)view;
-+ (void)setupNavbar:(UINavigationController**)navigationController;
 + (void)setupNavbar:(UINavigationController **)navigationController withColor:(UIColor *)color;
 
 @end

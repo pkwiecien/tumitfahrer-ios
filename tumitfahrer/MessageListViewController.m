@@ -30,8 +30,8 @@
 -(void)setupView {
     self.view = [NavigationBarUtilities makeBackground:self.view];
     UINavigationController *navController = self.navigationController;
-    [NavigationBarUtilities setupNavbar:&navController];
-    self.title = @"MESSAGES";
+    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor darkerBlue]];
+    self.title = @"Messages";
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
