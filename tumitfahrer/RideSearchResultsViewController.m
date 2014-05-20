@@ -44,10 +44,10 @@
 }
 
 -(void)setupView {
-    self.view = [NavigationBarUtilities makeBackground:self.view];
+    self.view.backgroundColor = [UIColor customLightGray];
     UINavigationController *navController = self.navigationController;
     [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor lighterBlue]];
-    self.title = @"Search results";
+    self.title = @"";
 }
 
 #pragma mark - Collection view

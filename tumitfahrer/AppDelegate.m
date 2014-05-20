@@ -16,7 +16,6 @@
 #import "HATransitionController.h"
 #import "HACollectionViewSmallLayout.h"
 #import "Device.h"
-#import "BrowseRidesViewController.h"
 #import "UserMapping.h"
 #import "SessionMapping.h"
 #import "RideMapping.h"

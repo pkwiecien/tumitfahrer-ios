@@ -11,14 +11,6 @@
 
 @implementation NavigationBarUtilities
 
-+(UIView *)makeBackground:(UIView*)view {
-    UIImageView *imgBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gradientBackground"]];
-    imgBackgroundView.frame = view.bounds;
-    [view addSubview:imgBackgroundView];
-    [view sendSubviewToBack:imgBackgroundView];
-    return view;
-}
-
 +(void)setupNavbar:(UINavigationController **)navigationController withColor:(UIColor *)color{
     [(*navigationController).navigationBar setBarTintColor:color];
     (*navigationController).navigationBar.tintColor = [UIColor whiteColor];
