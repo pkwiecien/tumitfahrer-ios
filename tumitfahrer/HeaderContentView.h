@@ -9,7 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "HeaderImageView.h"
 
+@protocol HeaderContentViewDelegate
+
+- (void)headerViewTapped;
+
+@end
+
 @interface HeaderContentView : UIView <UIScrollViewDelegate>
+
+@property (nonatomic, strong) id<HeaderContentViewDelegate> delegate;
 
 @property (nonatomic) CGFloat defaultimagePagerHeight;
 @property (nonatomic) CGFloat parallaxScrollFactor;

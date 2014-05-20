@@ -95,14 +95,22 @@
 
 - (void)addCircularImage:(UIImage *)image{
 
-    CircularImageView *smallImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(60, 60, 150, 150) image:image];
+    self.circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(60, 60, 150, 150) image:image];
     
-    double x = imageFrame.size.width/2-smallImageView.frame.size.width/2;
-    double y = imageFrame.size.height/2-smallImageView.frame.size.height/2;
+    double x = imageFrame.size.width/2-self.circularImageView.frame.size.width/2;
+    double y = imageFrame.size.height/2-self.circularImageView.frame.size.height/2;
     
-    smallImageView.frame = CGRectMake(x, y, smallImageView.frame.size.width, smallImageView.frame.size.height);
-    [_scrollView addSubview:smallImageView];
+    self.circularImageView.frame = CGRectMake(x, y, self.circularImageView.frame.size.width, self.circularImageView.frame.size.height);
+    [self.myButton addTarget:self action:@selector(showAction) forControlEvents:UIControlEventAllTouchEvents];
+    [_scrollView addSubview:self.circularImageView];
 }
 
+-(void)replaceImage:(UIImage *)image {
+    self.circularImageView.image = image;
+}
+
+-(void)showAction {
+    NSLog(@"button pressed");
+}
 
 @end

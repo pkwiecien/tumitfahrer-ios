@@ -78,6 +78,12 @@
         CGRect tableHeaderViewFrame = CGRectMake(0.0, 0.0, self.tableView.frame.size.width, self.defaultimagePagerHeight);
         UIView *tableHeaderView = [[UIView alloc] initWithFrame:tableHeaderViewFrame];
         tableHeaderView.backgroundColor = [UIColor clearColor];
+        UITapGestureRecognizer *headerViewTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerViewTapped)];
+        // Set required taps and number of touches
+        [headerViewTap setNumberOfTapsRequired:1];
+        [headerViewTap setNumberOfTouchesRequired:1];
+        [tableHeaderView addGestureRecognizer:headerViewTap];
+        
         self.tableView.tableHeaderView = tableHeaderView;
     }
     
@@ -170,8 +176,6 @@
         
     }
     
-    //NSLog(@"scrollOffset: %f",scrollOffset);
-    
     if(scrollOffset > _headerFade && _headerView.alpha == 0.0){ //make the header appear
         _headerView.alpha = 0;
         _headerView.hidden = NO;
@@ -194,6 +198,9 @@
     }
 }
 
+-(void)headerViewTapped {
+    [self.delegate headerViewTapped];
+}
 
 
 @end

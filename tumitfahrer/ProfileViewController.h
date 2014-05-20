@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HeaderContentView.h"
 
-@class HeaderContentView;
-
-@interface ProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface ProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, HeaderContentViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) HeaderContentView *profileImageContentView;
 

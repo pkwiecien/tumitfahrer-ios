@@ -183,6 +183,15 @@
     }
 }
 
+-(void)saveUserToPersisentStore {
+    NSManagedObjectContext *context = self.user.managedObjectContext;
+    NSError *error;
+    if (![context saveToPersistentStore:&error]) {
+        NSLog(@"delete error %@", [error localizedDescription]);
+    }
+
+}
+
 # pragma mark - Object to string
 
 -(NSString *)description {

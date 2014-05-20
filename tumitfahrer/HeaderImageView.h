@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class CircularImageView;
+
 @interface HeaderImageView : UIView
 
 @property (nonatomic, strong) NSData *selectedImageData;
 @property (nonatomic, strong) UIImage *circularImage;
+@property (nonatomic, strong) CircularImageView *circularImageView;
+@property (nonatomic, strong) UIButton *myButton;
+
+-(void)replaceImage:(UIImage *)image;
 
 @end

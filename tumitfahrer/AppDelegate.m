@@ -44,9 +44,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     // register app for receiving push notifications
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-
+    [self setupPushNotifications];
     [self setupNavigationController];
     [self setupRestKit];
     [self setupObservers];
@@ -119,7 +117,8 @@
 }
 
 -(void)setupPushNotifications {
-    
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 }
 
 -(void)setupNavigationController {
