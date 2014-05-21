@@ -12,6 +12,7 @@
 		6E4E133F1913F7BF00D0C453 /* UIApplication+GCovFlush.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4E133E1913F7BF00D0C453 /* UIApplication+GCovFlush.m */; };
 		6EB5C89A191CEFDA0026A886 /* FacultyManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5C899191CEFDA0026A886 /* FacultyManagerTests.m */; };
 		6EB5C89C191CF32A0026A886 /* LocationControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5C89B191CF32A0026A886 /* LocationControllerTests.m */; };
+		6EB7C1A7192CFDCD004AD7F5 /* CoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB7C1A6192CFDCD004AD7F5 /* CoreDataHelper.m */; };
 		6EC837D2192605AE00007017 /* CurrentUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EC837D1192605AE00007017 /* CurrentUserTests.m */; };
 		6EFC23801926343200AAF263 /* RideSearchStoreTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EFC237F1926343200AAF263 /* RideSearchStoreTest.m */; };
 		6EFC23821926447500AAF263 /* RideStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EFC23811926447500AAF263 /* RideStoreTests.m */; };
@@ -198,6 +199,8 @@
 		6E4E133E1913F7BF00D0C453 /* UIApplication+GCovFlush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+GCovFlush.m"; sourceTree = "<group>"; };
 		6EB5C899191CEFDA0026A886 /* FacultyManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacultyManagerTests.m; sourceTree = "<group>"; };
 		6EB5C89B191CF32A0026A886 /* LocationControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationControllerTests.m; sourceTree = "<group>"; };
+		6EB7C1A5192CFDCD004AD7F5 /* CoreDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataHelper.h; sourceTree = "<group>"; };
+		6EB7C1A6192CFDCD004AD7F5 /* CoreDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataHelper.m; sourceTree = "<group>"; };
 		6EC837D1192605AE00007017 /* CurrentUserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentUserTests.m; sourceTree = "<group>"; };
 		6EFC237F1926343200AAF263 /* RideSearchStoreTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideSearchStoreTest.m; sourceTree = "<group>"; };
 		6EFC23811926447500AAF263 /* RideStoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideStoreTests.m; sourceTree = "<group>"; };
@@ -742,6 +745,8 @@
 				6EC837D1192605AE00007017 /* CurrentUserTests.m */,
 				6EFC237F1926343200AAF263 /* RideSearchStoreTest.m */,
 				6EFC23811926447500AAF263 /* RideStoreTests.m */,
+				6EB7C1A5192CFDCD004AD7F5 /* CoreDataHelper.h */,
+				6EB7C1A6192CFDCD004AD7F5 /* CoreDataHelper.m */,
 			);
 			path = tumitfahrerTests;
 			sourceTree = "<group>";
@@ -1499,6 +1504,7 @@
 				6EB5C89C191CF32A0026A886 /* LocationControllerTests.m in Sources */,
 				6EFC23801926343200AAF263 /* RideSearchStoreTest.m in Sources */,
 				6EFC23821926447500AAF263 /* RideStoreTests.m in Sources */,
+				6EB7C1A7192CFDCD004AD7F5 /* CoreDataHelper.m in Sources */,
 				6E4E133C1913F7B300D0C453 /* XCTest+GCovFlush.m in Sources */,
 				6EC837D2192605AE00007017 /* CurrentUserTests.m in Sources */,
 				6EB5C89A191CEFDA0026A886 /* FacultyManagerTests.m in Sources */,

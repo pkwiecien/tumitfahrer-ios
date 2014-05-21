@@ -8,8 +8,6 @@
 
 #import <XCTest/XCTest.h>
 #import "LocationController.h"
-#import "RideRequestsViewController.h"
-#import <OCMock/OCMock.h>
 #import <CoreLocation/CoreLocation.h>
 
 @interface LocationControllerTests : XCTestCase<LocationControllerDelegate>
