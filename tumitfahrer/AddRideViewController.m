@@ -28,8 +28,8 @@
 @property (nonatomic, strong) NSMutableArray *shareValues;
 @property (nonatomic, strong) NSMutableArray *tableValue;
 @property (nonatomic, strong) NSMutableArray *tablePassengerValues;
+@property (nonatomic, strong) NSMutableArray *tableDriverValues;
 @property (nonatomic, strong) NSMutableArray *tablePlaceholders;
-@property (nonatomic, strong) NSMutableArray *tablePassengerPlaceholders;
 @property (nonatomic, strong) NSMutableArray *tableSectionHeaders;
 @property (nonatomic, strong) NSMutableArray *tableSectionIcons;
 
@@ -41,9 +41,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", @"Free Seats", @"Car", @"Meeting Point", nil];
-        self.tablePassengerPlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", nil];
         self.tableValue = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", @"", nil];
-        self.tablePassengerValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", nil];
         self.shareValues = [[NSMutableArray alloc] initWithObjects:@"Facebook", @"Email", nil];
         self.tableSectionIcons = [[NSMutableArray alloc] initWithObjects:[ActionManager colorImage:[UIImage imageNamed:@"DetailsIcons"] withColor:[UIColor whiteColor]], [ActionManager colorImage:[UIImage imageNamed:@"ShareIcon"] withColor:[UIColor whiteColor]], nil];
         self.tableSectionHeaders = [[NSMutableArray alloc] initWithObjects:@"Details", @"Share", nil];
@@ -70,12 +68,21 @@
 }
 
 -(void)initTables {
+    
     if(self.TableType == Passenger) {
+        if (self.tablePassengerValues != nil) {
+            self.tableValue = [NSMutableArray arrayWithArray:self.tablePassengerValues];
+        } else {
+            self.tableValue = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", nil];
+        }
         self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", nil];
-        self.tableValue = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", nil];
     } else {
+        if(self.tableDriverValues != nil) {
+            self.tableValue = [NSMutableArray arrayWithArray:self.tableDriverValues];
+        } else {
+            self.tableValue = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", @"", nil];
+        }
         self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", @"Free Seats", @"Car", @"Meeting Point", nil];
-        self.tableValue = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", @"", nil];
     }
 }
 
@@ -185,7 +192,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        if ([[self.tableValue objectAtIndex:indexPath.row] isEqualToString:@"Meeting Point"] || [[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Car"]) {
+        if ([[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Meeting Point"] || [[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Car"]) {
             MeetingPointViewController *meetingPointVC = [[MeetingPointViewController alloc] init];
             meetingPointVC.selectedValueDelegate = self;
             meetingPointVC.indexPath = indexPath;
@@ -331,6 +338,7 @@
 
 -(void)selectedDestination:(NSString *)destination indexPath:(NSIndexPath*)indexPath{
     [self.tableValue replaceObjectAtIndex:indexPath.row withObject:destination];
+    
 }
 
 -(void)stepperValueChanged:(NSInteger)stepperValue {
@@ -349,9 +357,17 @@
     } else {
         self.TableType = Driver;
     }
+    [self saveTableValues];
     [self initTables];
     [self.tableView reloadData];
-    // [self.tableView reloadData];
+}
+
+-(void)saveTableValues {
+    if (self.TableType == Driver) {
+        self.tablePassengerValues = [NSMutableArray arrayWithArray:self.tableValue];
+    } else {
+        self.tableDriverValues = [NSMutableArray arrayWithArray:self.tableValue];
+    }
 }
 
 @end

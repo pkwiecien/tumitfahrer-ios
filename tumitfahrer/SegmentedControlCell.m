@@ -28,7 +28,6 @@
     UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
     [self.delegate segmentedControlChangedToIndex:segmentedControl.selectedSegmentIndex];
     self.segmentedControl.selectedSegmentIndex = segmentedControl.selectedSegmentIndex;
-
 }
 
 @end
