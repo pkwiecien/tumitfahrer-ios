@@ -284,6 +284,7 @@
         
         [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"apiKey" value:[[CurrentUser sharedInstance] user].apiKey];
         
+    
         NSLog(@"user api key: %@", [CurrentUser sharedInstance].user.apiKey);
         [objectManager postObject:nil path:@"/api/v2/rides" parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             Ride *ride = (Ride *)[mappingResult firstObject];

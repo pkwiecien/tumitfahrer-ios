@@ -106,7 +106,7 @@
     
     Ride *ride = [[[RidesStore sharedStore] allRidesByType:self.RideType] objectAtIndex:indexPath.section];
     
-    UIImage *image = [_imageCache objectForKey:[NSNumber numberWithInteger:indexPath.section]];
+    UIImage *image = [_imageCache objectForKey:[NSNumber numberWithInteger:0]];
     if (image == nil) {
         if(ride.destinationImage == nil) {
             image = [UIImage imageNamed:@"PlaceholderImage"];
