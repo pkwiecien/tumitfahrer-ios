@@ -13,8 +13,20 @@
 
 @class HeaderContentView;
 
-@interface RideDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, DetailsMessagesChoiceCellDelegate>
+@interface RideDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, DetailsMessagesChoiceCellDelegate, UINavigationControllerDelegate>
 
+typedef enum {
+    ShouldDisplayNormally = 0,
+    ShouldShareRideOnFacebook
+} ShouldDisplayEnum;
+
+typedef enum {
+    GoBackNormally = 0,
+    GoBackToList
+} ShouldGoBackEnum;
+
+@property (nonatomic, assign) ShouldDisplayEnum displayEnum;
+@property (nonatomic, assign) ShouldGoBackEnum shouldGoBackEnum;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UILabel *headerViewLabel;
 @property (nonatomic, strong) HeaderContentView *rideDetail;

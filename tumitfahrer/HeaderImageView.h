@@ -18,5 +18,6 @@
 @property (nonatomic, strong) UIButton *myButton;
 
 -(void)replaceImage:(UIImage *)image;
+-(void)replaceMainImage:(UIImage *)image;
 
 @end

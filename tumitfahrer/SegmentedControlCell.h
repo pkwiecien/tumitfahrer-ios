@@ -20,5 +20,9 @@
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @property (nonatomic, strong) id <SementedControlCellDelegate> delegate;
+@property (nonatomic, strong) NSString *firstSegmentTitle;
+@property (nonatomic, strong) NSString *secondSegmentTitle;
+-(void)setFirstSegmentTitle:(NSString *)firstSegmentTitle secondSementTitle:(NSString *)secondSegmentTitle;
+-(void)addHandlerToSegmentedControl;
 
 @end

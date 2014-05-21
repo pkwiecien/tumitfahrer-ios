@@ -17,6 +17,7 @@
 {
     UIScrollView *_scrollView;
     CGRect imageFrame;
+    UIImageView *imageView;
 }
 @end
 
@@ -82,7 +83,7 @@
                                            _scrollView.frame.size.height)];
     
     imageFrame = CGRectMake(0, 0, _scrollView.frame.size.width, _scrollView.frame.size.height);
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:imageFrame];
+    imageView = [[UIImageView alloc] initWithFrame:imageFrame];
     [imageView setBackgroundColor:[UIColor clearColor]];
     [imageView setTag:0];
     [imageView setImage:[UIImage imageWithData:self.selectedImageData]];
@@ -107,6 +108,10 @@
 
 -(void)replaceImage:(UIImage *)image {
     self.circularImageView.image = image;
+}
+
+-(void)replaceMainImage:(UIImage *)image {
+    [imageView setImage:image];
 }
 
 -(void)showAction {

@@ -22,6 +22,10 @@
     [self setupNavbar];
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    self.textView.text = self.startText;
+}
+
 -(void)setupNavbar {
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     self.view.backgroundColor = [UIColor customLightGray];

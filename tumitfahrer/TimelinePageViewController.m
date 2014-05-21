@@ -15,6 +15,7 @@
 #import "CustomBarButton.h"
 #import "NavigationBarUtilities.h"
 #import "TimelineMapViewController.h"
+#import "MenuViewController.h"
 
 @interface TimelinePageViewController () <TimelineViewControllerDelegate>
 
@@ -151,6 +152,10 @@
 
 #pragma mark - Button Handlers
 -(void)leftDrawerButtonPress:(id)sender{
+    
+    MenuViewController *menu = (MenuViewController *)self.sideBarController.leftDrawerViewController;
+    NSIndexPath *ip = [NSIndexPath indexPathForRow:0 inSection:0];
+    [menu.tableView selectRowAtIndexPath:ip animated:NO scrollPosition:UITableViewScrollPositionMiddle];
     [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
