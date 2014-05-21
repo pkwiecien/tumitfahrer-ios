@@ -16,6 +16,12 @@
 
 @interface AddRideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MeetingPointDelegate, DestinationViewControllerDelegate, FreeSeatsCellDelegate, RMDateSelectionViewControllerDelegate>
 
+typedef enum {
+    Passenger = 0,
+    Driver = 1
+} TableTypeEnum;
+
+@property (nonatomic, assign) TableTypeEnum TableType;
 @property (nonatomic, assign) ContentType RideType;
 @property (nonatomic, assign) DisplayType RideDisplayType;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

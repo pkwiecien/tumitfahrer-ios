@@ -18,16 +18,17 @@
 #import "NavigationBarUtilities.h"
 #import "MMDrawerBarButtonItem.h"
 #import "SearchRideViewController.h"
-#import "DriverPassengerCell.h"
+#import "SegmentedControlCell.h"
 #import "KGStatusBar.h"
 #import "RideDetailViewController.h"
 
-@interface AddRideViewController () <NSFetchedResultsControllerDelegate>
+@interface AddRideViewController () <NSFetchedResultsControllerDelegate, SementedControlCellDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSMutableArray *shareValues;
-@property (nonatomic, strong) NSMutableArray *tableValues;
-@property (nonatomic, strong) NSMutableArray *tableDriverPlaceholders;
+@property (nonatomic, strong) NSMutableArray *tableValue;
+@property (nonatomic, strong) NSMutableArray *tablePassengerValues;
+@property (nonatomic, strong) NSMutableArray *tablePlaceholders;
 @property (nonatomic, strong) NSMutableArray *tablePassengerPlaceholders;
 @property (nonatomic, strong) NSMutableArray *tableSectionHeaders;
 @property (nonatomic, strong) NSMutableArray *tableSectionIcons;
@@ -39,9 +40,10 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.tableDriverPlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", @"Free Seats", @"Car", @"Meeting Point", nil];
-        self.tablePassengerPlaceholders = [[NSMutableArray alloc] initWithObjects:@"Departure", @"Destination", @"Time", nil];
-        self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", @"", nil];
+        self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", @"Free Seats", @"Car", @"Meeting Point", nil];
+        self.tablePassengerPlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", nil];
+        self.tableValue = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", @"", nil];
+        self.tablePassengerValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", nil];
         self.shareValues = [[NSMutableArray alloc] initWithObjects:@"Facebook", @"Email", nil];
         self.tableSectionIcons = [[NSMutableArray alloc] initWithObjects:[ActionManager colorImage:[UIImage imageNamed:@"DetailsIcons"] withColor:[UIColor whiteColor]], [ActionManager colorImage:[UIImage imageNamed:@"ShareIcon"] withColor:[UIColor whiteColor]], nil];
         self.tableSectionHeaders = [[NSMutableArray alloc] initWithObjects:@"Details", @"Share", nil];
@@ -53,18 +55,28 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self initTables];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     NSString *departurePlace = [LocationController sharedInstance].currentAddress;
     
     if(departurePlace!=nil)
-        [self.tableValues replaceObjectAtIndex:0 withObject:departurePlace];
+        [self.tableValue replaceObjectAtIndex:1 withObject:departurePlace];
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor customLightGray];
     
     UIView *headerView = [[[NSBundle mainBundle] loadNibNamed:@"AddRideTableHeader" owner:self options:nil] objectAtIndex:0];
     self.tableView.tableHeaderView = headerView;
-    
+}
+
+-(void)initTables {
+    if(self.TableType == Passenger) {
+        self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", nil];
+        self.tableValue = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", nil];
+    } else {
+        self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", @"Free Seats", @"Car", @"Meeting Point", nil];
+        self.tableValue = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", @"", nil];
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -82,7 +94,7 @@
 
 -(void)setupNavigationBar {
     UINavigationController *navController = self.navigationController;
-    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor colorWithRed:0 green:0.463 blue:0.722 alpha:1] ];
+    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor lighterBlue]];
     
     // right button of the navigation bar
     CustomBarButton *searchButton = [[CustomBarButton alloc] initWithTitle:@"Add"];
@@ -106,7 +118,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return [self.tableDriverPlaceholders count]; // plus one for the first row with selection of driver/passenger
+        return [self.tablePlaceholders count]; // plus one for the first row with selection of driver/passenger
     } else if (section == 1){
         return [self.shareValues count];
     }
@@ -126,9 +138,11 @@
     if (indexPath.section == 0) {
         
         if(indexPath.row == 0) {
-            DriverPassengerCell *cell = [DriverPassengerCell driverPassengerCell];
+            SegmentedControlCell *cell = [SegmentedControlCell segmentedControlCell];
+            cell.delegate = self;
+            cell.segmentedControl.selectedSegmentIndex = self.TableType;
             return cell;
-        } else if(indexPath.row == 4) {
+        } else if(self.TableType == Driver && indexPath.row == 4) {
             FreeSeatsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FreeSeatsTableViewCell"];
             
             if(cell == nil){
@@ -138,14 +152,14 @@
             cell.delegate = self;
             cell.backgroundColor = [UIColor clearColor];
             cell.contentView.backgroundColor = [UIColor clearColor];
-            cell.stepperLabelText.text = [self.tableDriverPlaceholders objectAtIndex:indexPath.row];
+            cell.stepperLabelText.text = [self.tablePlaceholders objectAtIndex:indexPath.row];
             return  cell;
         }
         
-        if (indexPath.row < [self.tableValues count] && [self.tableValues objectAtIndex:indexPath.row] != nil) {
-            cell.detailTextLabel.text = [self.tableValues objectAtIndex:indexPath.row];
+        if (indexPath.row < [self.tableValue count] && [self.tableValue objectAtIndex:indexPath.row] != nil) {
+            cell.detailTextLabel.text = [self.tableValue objectAtIndex:indexPath.row];
         }
-        cell.textLabel.text = [self.tableDriverPlaceholders objectAtIndex:indexPath.row];
+        cell.textLabel.text = [self.tablePlaceholders objectAtIndex:indexPath.row];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.textLabel.textColor = [UIColor blackColor];
         cell.backgroundColor = [UIColor clearColor];
@@ -171,19 +185,19 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        if ([[self.tableDriverPlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Meeting Point"] || [[self.tableDriverPlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Car"]) {
+        if ([[self.tableValue objectAtIndex:indexPath.row] isEqualToString:@"Meeting Point"] || [[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Car"]) {
             MeetingPointViewController *meetingPointVC = [[MeetingPointViewController alloc] init];
             meetingPointVC.selectedValueDelegate = self;
             meetingPointVC.indexPath = indexPath;
-            meetingPointVC.title = [self.tableDriverPlaceholders objectAtIndex:indexPath.row];
+            meetingPointVC.title = [self.tableValue objectAtIndex:indexPath.row];
             [self.navigationController pushViewController:meetingPointVC animated:YES];
         }
-        else if (([[self.tableDriverPlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Destination"]) || [[self.tableDriverPlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Departure"]) {
+        else if (([[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Destination"]) || [[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Departure"]) {
             DestinationViewController *destinationVC = [[DestinationViewController alloc] init];
             destinationVC.delegate = self;
             destinationVC.rideTableIndexPath = indexPath;
             [self.navigationController pushViewController:destinationVC animated:YES];
-        } else if([[self.tableDriverPlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Time"]) {
+        } else if([[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Time"]) {
             RMDateSelectionViewController *dateSelectionVC = [RMDateSelectionViewController dateSelectionController];
             dateSelectionVC.delegate = self;
             [dateSelectionVC show];
@@ -224,45 +238,47 @@
 }
 
 -(void)addRideButtonPressed {
-    RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    
-    NSDictionary *queryParams;
-    // add enum
-    NSString *departurePlace = [self.tableValues objectAtIndex:1];
-    NSString *destination = [self.tableValues objectAtIndex:2];
-    NSString *freeSeats = [self.tableValues objectAtIndex:4];
-    NSDate *departureTime = [self.tableValues objectAtIndex:5];
-    NSString *meetingPoint = [self.tableValues objectAtIndex:6];
-    if (!departurePlace || !destination || !meetingPoint || !departureTime) {
-        return;
+    if(self.TableType == Driver) {
+        RKObjectManager *objectManager = [RKObjectManager sharedManager];
+        
+        NSDictionary *queryParams;
+        // add enum
+        NSString *departurePlace = [self.tableValue objectAtIndex:1];
+        NSString *destination = [self.tableValue objectAtIndex:2];
+        NSString *freeSeats = [self.tableValue objectAtIndex:4];
+        NSDate *departureTime = [self.tableValue objectAtIndex:5];
+        NSString *meetingPoint = [self.tableValue objectAtIndex:6];
+        if (!departurePlace || !destination || !meetingPoint || !departureTime) {
+            return;
+        }
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
+        NSString *now = [formatter stringFromDate:departureTime];
+        
+        queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": now, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": [NSNumber numberWithInt:self.RideType]};
+        NSDictionary *rideParams = @{@"ride": queryParams};
+        
+        [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"apiKey" value:[[CurrentUser sharedInstance] user].apiKey];
+        
+        [objectManager postObject:nil path:@"/api/v2/rides" parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+            Ride *ride = (Ride *)[mappingResult firstObject];
+            [[RidesStore sharedStore] addRideToStore:ride];
+            [[LocationController sharedInstance] fetchLocationForAddress:ride.destination rideId:ride.rideId];
+            NSLog(@"Response: %@", operation.HTTPRequestOperation.responseString);
+            NSLog(@"This is ride: %@", ride);
+            NSLog(@"This is driver: %@", ride.driver);
+            [KGStatusBar showSuccessWithStatus:@"Ride added"];
+            RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
+            rideDetailVC.ride = ride;
+            if(self.RideDisplayType == ShowAsModal)
+                [self dismissViewControllerAnimated:YES completion:nil];
+            //else
+            //    [self.navigationController pushViewController:rideDetailVC animated:YES];
+        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+            [ActionManager showAlertViewWithTitle:[error localizedDescription]];
+            RKLogError(@"Load failed with error: %@", error);
+        }];
     }
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
-    NSString *now = [formatter stringFromDate:departureTime];
-    
-    queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": now, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": [NSNumber numberWithInt:self.RideType]};
-    NSDictionary *rideParams = @{@"ride": queryParams};
-    
-    [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"apiKey" value:[[CurrentUser sharedInstance] user].apiKey];
-    
-    [objectManager postObject:nil path:@"/api/v2/rides" parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        Ride *ride = (Ride *)[mappingResult firstObject];
-        [[RidesStore sharedStore] addRideToStore:ride];
-        [[LocationController sharedInstance] fetchLocationForAddress:ride.destination rideId:ride.rideId];
-        NSLog(@"Response: %@", operation.HTTPRequestOperation.responseString);
-        NSLog(@"This is ride: %@", ride);
-        NSLog(@"This is driver: %@", ride.driver);
-        [KGStatusBar showSuccessWithStatus:@"Ride added"];
-        RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
-        rideDetailVC.ride = ride;
-        if(self.RideDisplayType == ShowAsModal)
-            [self dismissViewControllerAnimated:YES completion:nil];
-        //else
-        //    [self.navigationController pushViewController:rideDetailVC animated:YES];
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        [ActionManager showAlertViewWithTitle:[error localizedDescription]];
-        RKLogError(@"Load failed with error: %@", error);
-    }];
 }
 
 -(void)closeButtonPressed {
@@ -298,7 +314,7 @@
 #pragma mark - RMDateSelectionViewController Delegates
 
 - (void)dateSelectionViewController:(RMDateSelectionViewController *)vc didSelectDate:(NSDate *)aDate {
-    [self.tableValues replaceObjectAtIndex:3 withObject:[ActionManager stringFromDate:aDate]];
+    [self.tableValue replaceObjectAtIndex:3 withObject:[ActionManager stringFromDate:aDate]];
     
     [self.tableView beginUpdates];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:3 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
@@ -310,21 +326,32 @@
 }
 
 -(void)didSelectValue:(NSString *)value forIndexPath:(NSIndexPath *)indexPath {
-    [self.tableValues replaceObjectAtIndex:indexPath.row withObject:value];
+    [self.tableValue replaceObjectAtIndex:indexPath.row withObject:value];
 }
 
 -(void)selectedDestination:(NSString *)destination indexPath:(NSIndexPath*)indexPath{
-    [self.tableValues replaceObjectAtIndex:indexPath.row withObject:destination];
+    [self.tableValue replaceObjectAtIndex:indexPath.row withObject:destination];
 }
 
 -(void)stepperValueChanged:(NSInteger)stepperValue {
-    [self.tableValues replaceObjectAtIndex:2 withObject:[NSNumber numberWithInt:(int)stepperValue]];
+    [self.tableValue replaceObjectAtIndex:2 withObject:[NSNumber numberWithInt:(int)stepperValue]];
 }
 
 #pragma mark - Button Handlers
 
 -(void)leftDrawerButtonPress:(id)sender{
     [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+
+-(void)segmentedControlChangedToIndex:(NSInteger)index {
+    if (index == 0) {
+        self.TableType = Passenger;
+    } else {
+        self.TableType = Driver;
+    }
+    [self initTables];
+    [self.tableView reloadData];
+    // [self.tableView reloadData];
 }
 
 @end
