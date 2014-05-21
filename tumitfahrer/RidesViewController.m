@@ -20,6 +20,7 @@
 
 @property CGFloat previousScrollViewYOffset;
 @property UIRefreshControl *refreshControl;
+@property NSCache *imageCache;
 
 @end
 
@@ -42,6 +43,8 @@
     self.refreshControl.backgroundColor = [UIColor grayColor];
     [self.refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
+    self.imageCache = [[NSCache alloc] init];
+    [self.imageCache setObject:[UIImage imageNamed:@"PassengerIcon"] forKey:@"PassengerIcon"];
 }
 
 -(void)handleRefresh {
@@ -52,10 +55,23 @@
         }
     }];
 }
+-(void)addToImageCache {
+    int counter = 0;
+    UIImage *placeholderImage = [UIImage imageNamed:@"PlaceholderImage"];
+    for (Ride *ride in [[RidesStore sharedStore] allRidesByType:self.RideType]) {
+        UIImage *image = [UIImage imageWithData:ride.destinationImage];
+        if (image == nil) {
+            image = placeholderImage;
+        }
+        [_imageCache setObject:image forKey:[NSNumber numberWithInteger:counter]];
+        counter++;
+    }
+}
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.tableView reloadData];
     [self.delegate willAppearViewWithIndex:self.index];
+    [self addToImageCache];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -89,18 +105,25 @@
     }
     
     Ride *ride = [[[RidesStore sharedStore] allRidesByType:self.RideType] objectAtIndex:indexPath.section];
-    if(ride.destinationImage == nil) {
-        cell.rideImageView.image = [UIImage imageNamed:@"PlaceholderImage"];
-    } else {
-        cell.rideImageView.image = [UIImage imageWithData:ride.destinationImage];
+    
+    UIImage *image = [_imageCache objectForKey:[NSNumber numberWithInteger:indexPath.section]];
+    if (image == nil) {
+        if(ride.destinationImage == nil) {
+            image = [UIImage imageNamed:@"PlaceholderImage"];
+        } else {
+            image = [UIImage imageWithData:ride.destinationImage];
+        }
+        [_imageCache setObject:image forKey:[NSNumber numberWithInteger:indexPath.section]];
     }
+    
+    cell.rideImageView.image = image;
     cell.rideImageView.clipsToBounds = YES;
     cell.rideImageView.contentMode = UIViewContentModeScaleAspectFill;
     cell.timeLabel.text = [ActionManager timeStringFromDate:[ride departureTime]];
     cell.dateLabel.text = [ActionManager dateStringFromDate:[ride departureTime]];
     if(ride.driver == nil) {
         cell.seatsView.backgroundColor = [UIColor orangeColor];
-        cell.roleImageView.image = [UIImage imageNamed:@"PassengerIcon"];
+        cell.roleImageView.image = [_imageCache objectForKey:@"PassengerIcon"];
     } else {
         cell.seatsView.backgroundColor = [UIColor orangeColor];
     }

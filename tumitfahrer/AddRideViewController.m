@@ -289,6 +289,8 @@
             Ride *ride = (Ride *)[mappingResult firstObject];
             [[RidesStore sharedStore] addRideToStore:ride];
             [[LocationController sharedInstance] fetchLocationForAddress:ride.destination rideId:ride.rideId];
+            self.tablePassengerValues = nil;
+            self.tableDriverValues = nil;
             NSLog(@"Response: %@", operation.HTTPRequestOperation.responseString);
             NSLog(@"This is ride: %@", ride);
             NSLog(@"This is driver: %@", ride.driver);
@@ -296,6 +298,7 @@
             RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
             rideDetailVC.ride = ride;
             rideDetailVC.displayEnum = ShouldShareRideOnFacebook;
+            rideDetailVC.shouldGoBackEnum = GoBackToList;
             if(self.RideDisplayType == ShowAsModal)
                 [self dismissViewControllerAnimated:YES completion:nil];
             else

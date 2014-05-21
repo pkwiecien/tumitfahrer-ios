@@ -17,6 +17,7 @@
 #import "SearchRideViewController.h"
 #import "RidesStore.h"
 #import "Ride.h"
+#import "MenuViewController.h"
 
 @interface RidesPageViewController () <RidesViewControllerDelegate>
 
@@ -130,6 +131,10 @@
 #pragma mark - Button Handlers
 
 -(void)leftDrawerButtonPress:(id)sender{
+    MenuViewController *menu = (MenuViewController *)self.sideBarController.leftDrawerViewController;
+    NSIndexPath *ip = [NSIndexPath indexPathForRow:self.RideType inSection:1];
+    [menu.tableView selectRowAtIndexPath:ip animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+    
     [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
