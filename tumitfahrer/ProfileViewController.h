@@ -7,16 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HeaderContentView.h"
 
-@interface ProfileViewController : UIViewController
+@interface ProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, HeaderContentViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *profileView;
-@property (weak, nonatomic) IBOutlet UILabel *ridesCountLabel;
-@property (weak, nonatomic) IBOutlet UIView *tableView;
-@property (weak, nonatomic) IBOutlet UIButton *ridesButton;
-@property (weak, nonatomic) IBOutlet UIButton *ratingButton;
-
-- (IBAction)ridesButtonPressed:(id)sender;
-- (IBAction)ratingButtonPressed:(id)sender;
+@property (nonatomic, strong) HeaderContentView *profileImageContentView;
 
 @end

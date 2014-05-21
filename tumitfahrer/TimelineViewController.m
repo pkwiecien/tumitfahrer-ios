@@ -80,8 +80,8 @@
         cell = [TimelineCell timelineCell];
     }
     
-    NSLog(@"index path: %d", indexPath.row);
-    NSLog(@"count: %d", [[[ActivityStore sharedStore] recentActivities] count]);
+    NSLog(@"index path: %ld", (long)indexPath.row);
+    NSLog(@"count: %lu", (unsigned long)(int)[[[ActivityStore sharedStore] recentActivities] count]);
     id result = [[[ActivityStore sharedStore] recentActivities] objectAtIndex:indexPath.row];
     if([result isKindOfClass:[Rating class]]) {
         cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"Rating received with type %d", [((Rating *)result).ratingType intValue]];

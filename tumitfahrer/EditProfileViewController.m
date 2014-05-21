@@ -10,6 +10,7 @@
 #import "NavigationBarUtilities.h"
 #import "ActionManager.h"
 #import "CurrentUser.h"
+#import "CustomBarButton.h"
 
 @interface EditProfileViewController ()
 
@@ -33,19 +34,30 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [self setupView];
+    [self configureColors];
 }
 
 -(void)setupView {
-    self.view = [NavigationBarUtilities makeBackground:self.view];
+    self.view.backgroundColor = [UIColor customLightGray];
     UINavigationController *navController = self.navigationController;
-    [NavigationBarUtilities setupNavbar:&navController];
-    self.title = @"EDIT PROFILE";
+    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor lightestBlue]];
+    self.title = @"Edit Profile";
     
     UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     [settingsView addTarget:self action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [settingsView setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"DeleteIcon2"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
     [self.navigationItem setLeftBarButtonItem:settingsButton];
+    
+    // right button of the navigation bar
+    CustomBarButton *saveButton = [[CustomBarButton alloc] initWithTitle:@"Save"];
+    [saveButton addTarget:self action:@selector(updateProfileButtonPressed) forControlEvents:UIControlEventTouchDown];
+    UIBarButtonItem *saveButtonItem = [[UIBarButtonItem alloc] initWithCustomView:saveButton];
+    self.navigationItem.rightBarButtonItem = saveButtonItem;
+}
+
+-(void)configureColors {
+    [self.updateButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"blueButton"] withColor:[UIColor lightestBlue]] forState:UIControlStateNormal];
 }
 
 -(void)closeButtonPressed {
@@ -56,7 +68,7 @@
     [self.view endEditing:YES];
 }
 
-- (IBAction)updateProfileButtonPressed:(id)sender {
+- (IBAction)updateProfileButtonPressed {
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[ActionManager encryptCredentialsWithEmail:[CurrentUser sharedInstance].user.email encryptedPassword:[CurrentUser sharedInstance].user.password]];
 
@@ -68,7 +80,7 @@
     queryParams = @{@"password": encryptedPassword, @"password_confirmation": encryptedPassword, @"car": self.carTextField.text, @"phone_number":self.phoneNumberTextField.text};
     NSDictionary *userParams = @{@"user": queryParams};
     
-    [objectManager putObject:nil path:[NSString stringWithFormat:@"/api/v2/users/%d", [CurrentUser sharedInstance].user.userId] parameters:userParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    [objectManager putObject:nil path:[NSString stringWithFormat:@"/api/v2/users/%@", [CurrentUser sharedInstance].user.userId] parameters:userParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [CurrentUser sharedInstance].user.car = self.carTextField.text;
         [CurrentUser sharedInstance].user.password = encryptedPassword;
         [CurrentUser sharedInstance].user.phoneNumber = self.phoneNumberTextField.text;

@@ -17,56 +17,25 @@
 
 @implementation MeetingPointViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    [self makeBackground];
     [self setupNavbar];
 }
 
 -(void)setupNavbar {
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    //    self.navigationController.navigationBar.shadowImage = [UIImage new];
-    self.navigationController.navigationBar.translucent = YES;
-    
-    // left button of the navigation bar
-    UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-    [settingsView addTarget:self action:@selector(saveButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [settingsView setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"ArrowLeftBlack"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
-    [self.navigationItem setLeftBarButtonItem:settingsButton];
+    self.view.backgroundColor = [UIColor customLightGray];
     
     // right button of the navigation bar
     CustomBarButton *searchButton = [[CustomBarButton alloc] initWithTitle:@"Save"];
     [searchButton addTarget:self action:@selector(saveButtonPressed) forControlEvents:UIControlEventTouchDown];
     UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
     self.navigationItem.rightBarButtonItem = searchButtonItem;
-    
-    self.navigationController.navigationBarHidden = NO;
-    self.title = @"Meeting point";
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 }
 
--(void)makeBackground {
-    UIImageView *imgBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gradientBackground"]];
-    imgBackgroundView.frame = self.view.bounds;
-    [self.view addSubview:imgBackgroundView];
-    [self.view sendSubviewToBack:imgBackgroundView];
-}
-
-- (void)saveButtonPressed
-{
-    [self.selectedValueDelegate selectedMeetingPoint:self.textView.text];
+- (void)saveButtonPressed {
+    [self.selectedValueDelegate didSelectValue:self.textView.text forIndexPath:self.indexPath];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
-@interface DriverCell : UITableViewCell
+@interface DriverCell : UITableViewCell<MKMapViewDelegate>
 
 + (DriverCell*)driverCell;
 
 @property (weak, nonatomic) IBOutlet UILabel *driverNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *driverRatingLabel;
-@property (weak, nonatomic) IBOutlet UILabel *carLabel;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @end

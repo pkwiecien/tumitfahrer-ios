@@ -48,27 +48,14 @@
     [super viewWillAppear:animated];
     [self scrollToBottomAnimated:NO];
     [self setupNavbar];
-    [self makeBackground];
-    
     //[self _reconnect];
-}
-
--(void)makeBackground {
-    [self setBackgroundColor:[UIColor clearColor]];
-    UIImageView *imgBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"gradientBackground"]];
-    imgBackgroundView.frame = self.view.bounds;
-    [self.view addSubview:imgBackgroundView];
-    [self.view sendSubviewToBack:imgBackgroundView];
 }
 
 -(void)setupNavbar {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    double width = self.navigationController.navigationBar.frame.size.width;
-    double height = self.navigationController.navigationBar.frame.size.height;
     
-    UIImage *croppedImage = [ActionManager cropImage:[UIImage imageNamed:@"gradientBackground"] newRect:CGRectMake(0, 0, width, height)];
-    [self.navigationController.navigationBar setBackgroundImage:croppedImage forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundColor:[UIColor darkerBlue]];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBarHidden = NO;

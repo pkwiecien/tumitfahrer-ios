@@ -11,22 +11,13 @@
 @implementation DriverCell
 
 + (DriverCell*)driverCell {
+    
     DriverCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"DriverCell" owner:self options:nil] objectAtIndex:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.backgroundColor = [UIColor darkerBlue];
+    cell.contentView.backgroundColor = [UIColor darkerBlue];
     
     return cell;
-}
-- (void)awakeFromNib
-{
-    // Initialization code
-}
-
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 @end

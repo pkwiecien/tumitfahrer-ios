@@ -9,7 +9,7 @@
 #import "RidesViewController.h"
 #import "MMDrawerBarButtonItem.h"
 #import "RidesCell.h"
-#import "RideDetailHeaderView.h"
+#import "HeaderImageView.h"
 #import "Ride.h"
 #import "RideDetailViewController.h"
 #import "NavigationBarUtilities.h"
