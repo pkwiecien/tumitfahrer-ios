@@ -28,3 +28,5 @@ pod 'MMDrawerController'
 pod 'AMScrollingNavbar'
 # pod: blur images
 pod 'GPUImage'
+# Facebook api for sharing rides
+pod 'Facebook-iOS-SDK'

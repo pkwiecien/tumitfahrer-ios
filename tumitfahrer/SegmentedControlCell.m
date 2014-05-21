@@ -16,18 +16,23 @@
     cell.backgroundColor = [UIColor customLightGray];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.segmentedControl.selectedSegmentIndex = 0;
-
+    
     return cell;
 }
 
-- (void)awakeFromNib {
+-(void)setFirstSegmentTitle:(NSString *)firstSegmentTitle secondSementTitle:(NSString *)secondSegmentTitle {
+    [self.segmentedControl setTitle:firstSegmentTitle forSegmentAtIndex:0];
+    [self.segmentedControl setTitle:secondSegmentTitle forSegmentAtIndex:1];
+}
+
+-(void)addHandlerToSegmentedControl {
     [self.segmentedControl addTarget:self action:@selector(pickOne:) forControlEvents:UIControlEventValueChanged];
 }
+
 
 -(void) pickOne:(id)sender{
     UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
     [self.delegate segmentedControlChangedToIndex:segmentedControl.selectedSegmentIndex];
-    self.segmentedControl.selectedSegmentIndex = segmentedControl.selectedSegmentIndex;
 }
 
 @end

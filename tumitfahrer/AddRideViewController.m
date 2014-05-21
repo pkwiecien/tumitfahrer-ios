@@ -21,6 +21,8 @@
 #import "SegmentedControlCell.h"
 #import "KGStatusBar.h"
 #import "RideDetailViewController.h"
+#import "LocationController.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface AddRideViewController () <NSFetchedResultsControllerDelegate, SementedControlCellDelegate>
 
@@ -40,8 +42,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", @"Free Seats", @"Car", @"Meeting Point", nil];
-        self.tableValue = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", @"", nil];
+        self.tableValue = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"1", @"", @"", @"", nil];
         self.shareValues = [[NSMutableArray alloc] initWithObjects:@"Facebook", @"Email", nil];
         self.tableSectionIcons = [[NSMutableArray alloc] initWithObjects:[ActionManager colorImage:[UIImage imageNamed:@"DetailsIcons"] withColor:[UIColor whiteColor]], [ActionManager colorImage:[UIImage imageNamed:@"ShareIcon"] withColor:[UIColor whiteColor]], nil];
         self.tableSectionHeaders = [[NSMutableArray alloc] initWithObjects:@"Details", @"Share", nil];
@@ -73,16 +74,16 @@
         if (self.tablePassengerValues != nil) {
             self.tableValue = [NSMutableArray arrayWithArray:self.tablePassengerValues];
         } else {
-            self.tableValue = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", nil];
+            self.tableValue = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", nil];
         }
-        self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", nil];
+        self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", @"", nil];
     } else {
         if(self.tableDriverValues != nil) {
             self.tableValue = [NSMutableArray arrayWithArray:self.tableDriverValues];
         } else {
-            self.tableValue = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", @"", nil];
+            self.tableValue = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", @"", @"", nil];
         }
-        self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", @"Free Seats", @"Car", @"Meeting Point", nil];
+        self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", @"Free Seats", @"Car", @"Meeting Point", @"", nil];
     }
 }
 
@@ -148,6 +149,8 @@
             SegmentedControlCell *cell = [SegmentedControlCell segmentedControlCell];
             cell.delegate = self;
             cell.segmentedControl.selectedSegmentIndex = self.TableType;
+            [cell setFirstSegmentTitle:@"Passenger" secondSementTitle:@"Driver"];
+            [cell addHandlerToSegmentedControl];
             return cell;
         } else if(self.TableType == Driver && indexPath.row == 4) {
             FreeSeatsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FreeSeatsTableViewCell"];
@@ -161,6 +164,10 @@
             cell.contentView.backgroundColor = [UIColor clearColor];
             cell.stepperLabelText.text = [self.tablePlaceholders objectAtIndex:indexPath.row];
             return  cell;
+        } else if(indexPath.row == [self.tableValue count]-1) {
+            SegmentedControlCell *cell = [SegmentedControlCell segmentedControlCell];
+            [cell setFirstSegmentTitle:@"Campus" secondSementTitle:@"Activity"];
+            return cell;
         }
         
         if (indexPath.row < [self.tableValue count] && [self.tableValue objectAtIndex:indexPath.row] != nil) {
@@ -197,6 +204,7 @@
             meetingPointVC.selectedValueDelegate = self;
             meetingPointVC.indexPath = indexPath;
             meetingPointVC.title = [self.tableValue objectAtIndex:indexPath.row];
+            meetingPointVC.startText = [self.tableValue objectAtIndex:indexPath.row];
             [self.navigationController pushViewController:meetingPointVC animated:YES];
         }
         else if (([[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Destination"]) || [[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Departure"]) {
@@ -252,21 +260,31 @@
         // add enum
         NSString *departurePlace = [self.tableValue objectAtIndex:1];
         NSString *destination = [self.tableValue objectAtIndex:2];
+        NSString *departureTime = [self.tableValue objectAtIndex:3];
         NSString *freeSeats = [self.tableValue objectAtIndex:4];
-        NSDate *departureTime = [self.tableValue objectAtIndex:5];
+        if (freeSeats.length == 0) {
+            freeSeats = @"1";
+        }
+        NSString *car = [self.tableValue objectAtIndex:5];
         NSString *meetingPoint = [self.tableValue objectAtIndex:6];
         if (!departurePlace || !destination || !meetingPoint || !departureTime) {
             return;
         }
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
-        NSString *now = [formatter stringFromDate:departureTime];
         
-        queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": now, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": [NSNumber numberWithInt:self.RideType]};
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"de_DE"]];
+        NSDate *dateString = [formatter dateFromString:departureTime];
+        [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
+        NSString *time = [formatter stringFromDate:dateString];
+        
+        queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": @"0"};
+        
         NSDictionary *rideParams = @{@"ride": queryParams};
         
         [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"apiKey" value:[[CurrentUser sharedInstance] user].apiKey];
         
+        NSLog(@"user api key: %@", [CurrentUser sharedInstance].user.apiKey);
         [objectManager postObject:nil path:@"/api/v2/rides" parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             Ride *ride = (Ride *)[mappingResult firstObject];
             [[RidesStore sharedStore] addRideToStore:ride];
@@ -277,10 +295,11 @@
             [KGStatusBar showSuccessWithStatus:@"Ride added"];
             RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
             rideDetailVC.ride = ride;
+            rideDetailVC.displayEnum = ShouldShareRideOnFacebook;
             if(self.RideDisplayType == ShowAsModal)
                 [self dismissViewControllerAnimated:YES completion:nil];
-            //else
-            //    [self.navigationController pushViewController:rideDetailVC animated:YES];
+            else
+                [self.navigationController pushViewController:rideDetailVC animated:YES];
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
             [ActionManager showAlertViewWithTitle:[error localizedDescription]];
             RKLogError(@"Load failed with error: %@", error);
@@ -321,7 +340,8 @@
 #pragma mark - RMDateSelectionViewController Delegates
 
 - (void)dateSelectionViewController:(RMDateSelectionViewController *)vc didSelectDate:(NSDate *)aDate {
-    [self.tableValue replaceObjectAtIndex:3 withObject:[ActionManager stringFromDate:aDate]];
+    NSString *dateString = [ActionManager stringFromDate:aDate];
+    [self.tableValue replaceObjectAtIndex:3 withObject:dateString];
     
     [self.tableView beginUpdates];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:3 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
@@ -342,7 +362,7 @@
 }
 
 -(void)stepperValueChanged:(NSInteger)stepperValue {
-    [self.tableValue replaceObjectAtIndex:2 withObject:[NSNumber numberWithInt:(int)stepperValue]];
+    [self.tableValue replaceObjectAtIndex:4 withObject:[[NSNumber numberWithInt:(int)stepperValue] stringValue]];
 }
 
 #pragma mark - Button Handlers

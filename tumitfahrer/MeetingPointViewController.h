@@ -16,6 +16,7 @@
 
 @interface MeetingPointViewController : UIViewController
 
+@property (nonatomic, strong) NSString *startText;
 @property (nonatomic, strong) NSIndexPath *indexPath;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (nonatomic, assign) id<MeetingPointDelegate> selectedValueDelegate;
