@@ -59,6 +59,12 @@ typedef enum contentTypes : NSUInteger {
     ContentTypeRideSearch = 3
 } ContentType;
 
+typedef enum timelineContentTypes : NSUInteger {
+    AllActivity = 0,
+    NearbyActivity = 1,
+    UserActivity = 2
+} TimelineContentType;
+
 typedef enum showTypes : NSUInteger {
     ShowAsModal = 0,
     ShowAsViewController = 1,

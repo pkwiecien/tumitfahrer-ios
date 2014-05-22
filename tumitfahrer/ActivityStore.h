@@ -13,9 +13,7 @@
 + (instancetype)sharedStore;
 - (void)fetchActivitiesFromWebservice:(boolCompletionHandler)block;
 - (NSFetchedResultsController *)fetchedResultsController;
-- (NSArray *)recentActivities;
-- (NSArray *)recentActivitiesNearby;
-- (NSArray *)myRecentActivities;
-- (void)loadAllActivities;
+- (NSArray *)recentActivitiesByType:(TimelineContentType)contentType;
+- (void)loadAllActivitiesFromCoreData;
 
 @end

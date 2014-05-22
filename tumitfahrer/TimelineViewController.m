@@ -47,7 +47,7 @@
     
     [[ActivityStore sharedStore] fetchActivitiesFromWebservice:^(BOOL isFetched) {
         if (isFetched) {
-            [[ActivityStore sharedStore] loadAllActivities];
+            [[ActivityStore sharedStore] loadAllActivitiesFromCoreData];
             [self.tableView reloadData];
         }
     }];
@@ -68,7 +68,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[[ActivityStore sharedStore] recentActivities] count];
+    return [[[ActivityStore sharedStore] recentActivitiesByType:self.index] count];
 }
 
 
@@ -81,8 +81,8 @@
     }
     
     NSLog(@"index path: %ld", (long)indexPath.row);
-    NSLog(@"count: %lu", (unsigned long)(int)[[[ActivityStore sharedStore] recentActivities] count]);
-    id result = [[[ActivityStore sharedStore] recentActivities] objectAtIndex:indexPath.row];
+    NSLog(@"count: %lu", (unsigned long)(int)[[[ActivityStore sharedStore] recentActivitiesByType:self.index] count]);
+    id result = [[[ActivityStore sharedStore] recentActivitiesByType:self.index] objectAtIndex:indexPath.row];
     if([result isKindOfClass:[Rating class]]) {
         cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"Rating received with type %d", [((Rating *)result).ratingType intValue]];
     } else if([result isKindOfClass:[Request class]]) {

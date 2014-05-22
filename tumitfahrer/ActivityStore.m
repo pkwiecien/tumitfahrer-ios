@@ -31,11 +31,11 @@ static int page = 0;
 -(instancetype)init {
     self = [super init];
     if (self) {
-        [self loadAllActivities];
+        [self loadAllActivitiesFromCoreData];
         
         [self fetchActivitiesFromWebservice:^(BOOL resultsFetched) {
             if(resultsFetched) {
-                [self loadAllActivities];
+                [self loadAllActivitiesFromCoreData];
             }
         }];
     }
@@ -51,12 +51,12 @@ static int page = 0;
     return activityStore;
 }
 
--(void)loadAllActivities {
+-(void)loadAllActivitiesFromCoreData {
     [self fetchActivitiesFromCoreData];
-    [self reloadRecentActivities];
+    [self sortRecentActivities];
 }
 
--(void)reloadRecentActivities {
+-(void)sortRecentActivities {
     self.privateRecentActivities = [[NSMutableArray alloc] init];
     int rideIndex = 0;
     int ratingIndex = 0;
@@ -121,7 +121,7 @@ static int page = 0;
                 [self.privateMyRecentActivities addObject:activity];
             }
         } else if([activity isKindOfClass:[Request class]]) {
-           Request *request = ((Request *)activity);
+            Request *request = ((Request *)activity);
             if (request.passengerId == [CurrentUser sharedInstance].user.userId || (request.requestedRide.driver != nil && request.requestedRide.driver.userId == [CurrentUser sharedInstance].user.userId)) {
                 [self.privateMyRecentActivities addObject:activity];
             }
@@ -129,6 +129,8 @@ static int page = 0;
     }
 }
 
+
+#pragma mark - fetch methods
 
 -(void)fetchActivitiesFromWebservice:(boolCompletionHandler)block {
     
@@ -190,27 +192,23 @@ static int page = 0;
     return self.fetchedResultsController;
 }
 
--(NSArray *)recentActivitiesNearby {
-    if (self.privateActivitiesNearby == nil) {
-        [self loadAllActivities];
-        [self reloadNearbyActivities];
-    }
-    return self.privateActivitiesNearby;
-}
+# pragma mark - helper functions
 
--(NSArray *)myRecentActivities {
-    if(self.privateMyRecentActivities) {
-        [self loadAllActivities];
-        [self reloadMyActivities];
+- (NSArray*)recentActivitiesByType:(TimelineContentType)contentType {
+    switch (contentType) {
+        case AllActivity:
+            return self.privateRecentActivities;
+        case UserActivity:
+            if (self.privateMyRecentActivities == nil) {
+                [self reloadMyActivities];
+            }
+            return self.privateMyRecentActivities;
+        case NearbyActivity:
+            if (self.privateActivitiesNearby == nil) {
+                [self reloadNearbyActivities];
+            }
+            return self.privateActivitiesNearby;
     }
-    return self.myRecentActivities;
-}
-
--(NSArray *)recentActivities {
-    if(self.privateRecentActivities == nil) {
-        [self loadAllActivities];
-    }
-    return self.privateRecentActivities;
 }
 
 -(id)compareThree:(NSArray *)elements {
