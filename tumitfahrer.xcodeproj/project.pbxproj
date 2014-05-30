@@ -26,6 +26,7 @@
 		E504D9E8190B02490036FFA8 /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9E7190B02490036FFA8 /* Device.m */; };
 		E504D9EB190B963E0036FFA8 /* JsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9EA190B963E0036FFA8 /* JsonParser.m */; };
 		E504D9EE190BCCE20036FFA8 /* DeviceMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9ED190BCCE20036FFA8 /* DeviceMapping.m */; };
+		E507C437193901B5005F1083 /* CustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = E507C436193901B5005F1083 /* CustomAnnotation.m */; };
 		E50CCC10191E529A003A9490 /* TimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCC0E191E529A003A9490 /* TimelineViewController.m */; };
 		E50CCC11191E529A003A9490 /* TimelineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50CCC0F191E529A003A9490 /* TimelineViewController.xib */; };
 		E50CCC14191E54F1003A9490 /* UIViewController+SideBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCC13191E54F1003A9490 /* UIViewController+SideBarController.m */; };
@@ -224,6 +225,8 @@
 		E504D9EA190B963E0036FFA8 /* JsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonParser.m; sourceTree = "<group>"; };
 		E504D9EC190BCCE20036FFA8 /* DeviceMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceMapping.h; sourceTree = "<group>"; };
 		E504D9ED190BCCE20036FFA8 /* DeviceMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceMapping.m; sourceTree = "<group>"; };
+		E507C435193901B5005F1083 /* CustomAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotation.h; sourceTree = "<group>"; };
+		E507C436193901B5005F1083 /* CustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotation.m; sourceTree = "<group>"; };
 		E50CCC0D191E529A003A9490 /* TimelineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineViewController.h; sourceTree = "<group>"; };
 		E50CCC0E191E529A003A9490 /* TimelineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineViewController.m; sourceTree = "<group>"; };
 		E50CCC0F191E529A003A9490 /* TimelineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimelineViewController.xib; sourceTree = "<group>"; };
@@ -947,6 +950,8 @@
 		E59987D418E6ECD800B01C62 /* UI Elements */ = {
 			isa = PBXGroup;
 			children = (
+				E507C435193901B5005F1083 /* CustomAnnotation.h */,
+				E507C436193901B5005F1083 /* CustomAnnotation.m */,
 				E59987D518E6ECF100B01C62 /* CustomTextField.h */,
 				E59987D618E6ECF200B01C62 /* CustomTextField.m */,
 				E5E215661907B82500B0B150 /* CustomBarButton.h */,
@@ -1485,6 +1490,7 @@
 				E504D9D2190A7FC50036FFA8 /* SPGooglePlacesAutocompleteUtilities.m in Sources */,
 				E58889DC191383570062D0DF /* RideDetailViewController.m in Sources */,
 				E522BAC618AE13F600ECD375 /* main.m in Sources */,
+				E507C437193901B5005F1083 /* CustomAnnotation.m in Sources */,
 				E50DB28518F86F8800E87E62 /* SessionMapping.m in Sources */,
 				E5FDDBF118F0059D00CE7B01 /* ActionManager.m in Sources */,
 				E58889E1191385110062D0DF /* HeaderContentView.m in Sources */,

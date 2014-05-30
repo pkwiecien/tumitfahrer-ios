@@ -106,7 +106,6 @@
             NSString *descr = [NSString stringWithFormat:@"New ride request to \n%@", destination];
             // iOS6 and above : Use NSAttributedStrings
             const CGFloat fontSize = 15;
-            UIFont *boldFont = [UIFont boldSystemFontOfSize:fontSize];
             UIFont *regularFont = [UIFont systemFontOfSize:fontSize];
             UIColor *foregroundColor = [UIColor blackColor];
             
@@ -114,9 +113,6 @@
             NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
                                    regularFont, NSFontAttributeName,
                                    foregroundColor, NSForegroundColorAttributeName, nil];
-            NSDictionary *subAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                                      boldFont, NSFontAttributeName, nil];
-            const NSRange range = NSMakeRange(descr.length - destination.length,descr.length);
             
             // Create the attributed string (text + attributes)
             NSMutableAttributedString *attributedText =

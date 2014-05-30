@@ -206,33 +206,6 @@
 
 #pragma mark - LocationDetailViewDelegate
 
-#pragma mark - MKMap View methods
-
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
-    if (annotation == mapView.userLocation)
-        return nil;
-    
-    static NSString *MyPinAnnotationIdentifier = @"Pin";
-    MKPinAnnotationView *pinView =
-    (MKPinAnnotationView *) [self.map dequeueReusableAnnotationViewWithIdentifier:MyPinAnnotationIdentifier];
-    if (!pinView){
-        MKAnnotationView *annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation
-                                                                        reuseIdentifier:MyPinAnnotationIdentifier];
-        
-        annotationView.image = [UIImage imageNamed:@"pin_map_blue"];
-        
-        return annotationView;
-        
-    }else{
-        
-        pinView.image = [UIImage imageNamed:@"pin_map_blue"];
-        
-        return pinView;
-    }
-    
-    return nil;
-}
-
 #pragma mark - Button actions
 
 - (void)back {
