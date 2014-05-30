@@ -71,6 +71,13 @@
     return responseDescriptor;
 }
 
++(RKResponseDescriptor *)getSingleRideResponseDescriptorWithMapping:(RKEntityMapping *)mapping {
+    // create response description for rides
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodGET pathPattern:@"/api/v2/rides/:rideId" keyPath:@"ride"                                                                                      statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    return responseDescriptor;
+}
+
 +(RKEntityMapping *)postRideMapping {
     
     RKEntityMapping *rideMapping = [self generalRideMapping];

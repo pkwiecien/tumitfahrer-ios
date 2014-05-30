@@ -44,4 +44,7 @@
 - (void)notifyAllAboutNewImageForRideId:(NSInteger)rideId;
 - (void)removeObserver:(id<RideStoreDelegate>)observer;
 
+- (void)fetchSingleRideFromWebserviceWithId:(NSInteger)rideId block:(boolCompletionHandler)block;
+- (Ride *)fetchRideFromCoreDataWithId:(NSInteger)rideId;
+
 @end

@@ -13,8 +13,7 @@
 #import "Ride.h"
 #import "CircularImageView.h"
 
-@interface HeaderImageView () <UIScrollViewDelegate>
-{
+@interface HeaderImageView () <UIScrollViewDelegate> {
     UIScrollView *_scrollView;
     CGRect imageFrame;
     UIImageView *imageView;
@@ -23,8 +22,7 @@
 
 @implementation HeaderImageView
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
         // Initialization code
         [self initialize];
@@ -32,34 +30,29 @@
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
+- (id)initWithCoder:(NSCoder *)aDecoder {
     if ((self = [super initWithCoder:aDecoder])) {
         // Initialization code
     }
     return self;
 }
 
-- (void) awakeFromNib
-{
+- (void) awakeFromNib {
     [super awakeFromNib];
 }
 
-- (void) layoutSubviews
-{
+- (void) layoutSubviews {
     [self initialize];
 }
 
 #pragma mark - General
-- (void) initialize
-{
+- (void) initialize {
     self.clipsToBounds = YES;
     [self initializeScrollView];
     [self loadData];
 }
 
-- (void) reloadData
-{
+- (void) reloadData {
     for (UIView *view in _scrollView.subviews)
         [view removeFromSuperview];
     

@@ -20,6 +20,7 @@
 #import "MMDrawerController.h"
 #import "TimelinePageViewController.h"
 #import "RidesPageViewController.h"
+#import "CircularImageView.h"
 
 @interface MenuViewController ()
 
@@ -120,6 +121,13 @@
     initialsLabel.text = [[[CurrentUser sharedInstance].user.firstName substringToIndex:1] stringByAppendingString:[[CurrentUser sharedInstance].user.lastName substringToIndex:1]];
     [settingsButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"SettingsIcon"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
     [settingsButton addTarget:self action:@selector(settingsButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    if([CurrentUser sharedInstance].user.profileImageData != nil) {
+        CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 30, 70, 70) image:[UIImage imageWithData:[CurrentUser sharedInstance].user.profileImageData]];
+        [menuTopHeaderView addSubview:circularImageView];
+    } else {
+        CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 30, 70, 70) image:[UIImage imageNamed:@"CircleBlue"]];
+        [menuTopHeaderView bringSubviewToFront:initialsLabel];
+    }
     menuTopHeaderView.backgroundColor = [UIColor colorWithRed:0.129 green:0.129 blue:0.129 alpha:1];
     self.tableView.tableHeaderView = menuTopHeaderView;
     

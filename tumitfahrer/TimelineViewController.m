@@ -16,6 +16,7 @@
 #import "Rating.h"
 #import "ActionManager.h"
 #import "RideDetailViewController.h"
+#import "RidesStore.h"
 
 @interface TimelineViewController ()
 
@@ -40,9 +41,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    UIColor *customGrayColor = [UIColor colorWithRed:224/255.0 green:224/255.0 blue:224/255.0 alpha:1.0];
-    [self.view setBackgroundColor:customGrayColor];
+    [self.view setBackgroundColor:[UIColor customLightGray]];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing timeline"];
@@ -95,16 +94,65 @@
     if([result isKindOfClass:[Rating class]]) {
         cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"Rating received with type %d", [((Rating *)result).ratingType intValue]];
     } else if([result isKindOfClass:[Request class]]) {
-        cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"Request received with type %@", ((Request *)result).requestedFrom];
+        cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"Request received for a ride to %@", ((Request *)result).requestedFrom];
         cell.iconImageView.image = self.passengerIconWhite;
     } else {
         Ride *ride = (Ride*)result;
 
+        NSArray* fullDestination = [ride.destination componentsSeparatedByString: @","];
+        NSString* destination = [fullDestination objectAtIndex:0];
+        
         if (ride.driver == nil) {
-            cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"New ride request to \n%@", ride.destination];
+            NSString *descr = [NSString stringWithFormat:@"New ride request to \n%@", destination];
+            // iOS6 and above : Use NSAttributedStrings
+            const CGFloat fontSize = 15;
+            UIFont *boldFont = [UIFont boldSystemFontOfSize:fontSize];
+            UIFont *regularFont = [UIFont systemFontOfSize:fontSize];
+            UIColor *foregroundColor = [UIColor blackColor];
+            
+            // Create the attributes
+            NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   regularFont, NSFontAttributeName,
+                                   foregroundColor, NSForegroundColorAttributeName, nil];
+            NSDictionary *subAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      boldFont, NSFontAttributeName, nil];
+            const NSRange range = NSMakeRange(descr.length - destination.length,descr.length);
+            
+            // Create the attributed string (text + attributes)
+            NSMutableAttributedString *attributedText =
+            [[NSMutableAttributedString alloc] initWithString:descr
+                                                   attributes:attrs];
+            //[attributedText setAttributes:subAttrs range:range];
+            
+            // Set it in our UILabel and we are done!
+            [cell.activityDescriptionLabel setAttributedText:attributedText];
+            [cell.activityDescriptionLabel sizeToFit];
             cell.iconImageView.image = self.passengerIconWhite;
         } else {
-            cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"New ride offer to \n%@", ride.destination];
+            // iOS6 and above : Use NSAttributedStrings
+            NSString *descr = [NSString stringWithFormat:@"New ride offer to: \n%@", destination];
+            const CGFloat fontSize = 15;
+            UIFont *boldFont = [UIFont boldSystemFontOfSize:fontSize];
+            UIFont *regularFont = [UIFont systemFontOfSize:fontSize];
+            UIColor *foregroundColor = [UIColor blackColor];
+            
+            // Create the attributes
+            NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   regularFont, NSFontAttributeName,
+                                   foregroundColor, NSForegroundColorAttributeName, nil];
+            NSDictionary *subAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      boldFont, NSFontAttributeName, nil];
+            //const NSRange range = NSMakeRange(a,b); // range of " 2012/10/14 ". Ideally this should not be hardcoded
+            
+            // Create the attributed string (text + attributes)
+            NSMutableAttributedString *attributedText =
+            [[NSMutableAttributedString alloc] initWithString:descr
+                                                   attributes:attrs];
+//            [attributedText setAttributes:subAttrs range:range];
+            
+            // Set it in our UILabel and we are done!
+            [cell.activityDescriptionLabel setAttributedText:attributedText];
+            [cell.activityDescriptionLabel sizeToFit];
             cell.iconImageView.image = self.driverIconWhite;
         }
     }
@@ -127,6 +175,24 @@
         RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
         rideDetailVC.ride = (Ride *)result;
         [self.navigationController pushViewController:rideDetailVC animated:YES];
+    } else if([result isKindOfClass:[Request class]]) {
+        Request *res = (Request *)result;
+        Ride *ride = [[RidesStore sharedStore] containsRideWithId:[res.rideId intValue]];
+        if (ride != nil) {
+            res.requestedRide = ride;
+            RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
+            rideDetailVC.ride = ride;
+            [self.navigationController pushViewController:rideDetailVC animated:YES];
+        } else {
+            [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:[res.rideId intValue] block:^(BOOL completed) {
+                if(completed) {
+                    RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
+                    Ride *ride = [[RidesStore sharedStore] fetchRideFromCoreDataWithId:[res.rideId intValue]];
+                    rideDetailVC.ride = ride;
+                    [self.navigationController pushViewController:rideDetailVC animated:YES];
+                }
+            }];
+        }
     }
 }
 

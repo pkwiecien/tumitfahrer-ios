@@ -19,4 +19,6 @@
 +(RKEntityMapping *)postRideMapping;
 +(RKResponseDescriptor *)postRideResponseDescriptorWithMapping:(RKEntityMapping *)mapping;
 
++(RKResponseDescriptor *)getSingleRideResponseDescriptorWithMapping:(RKEntityMapping *)mapping;
+
 @end

@@ -23,7 +23,6 @@
                                                       @"created_at": @"createdAt",
                                                       @"updated_at": @"updatedAt"
                                                       }];
-    
     return requestMapping;
 }
 

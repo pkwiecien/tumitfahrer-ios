@@ -115,6 +115,25 @@ static int page = 0;
     
 }
 
+- (Ride *)fetchRideFromCoreDataWithId:(NSInteger)rideId {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *e = [NSEntityDescription entityForName:@"Ride"
+                                         inManagedObjectContext:[RKManagedObjectStore defaultStore].
+                              mainQueueManagedObjectContext];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rideId = %d", rideId];
+    [request setPredicate:predicate];
+    
+    request.entity = e;
+    
+    NSError *error;
+    NSArray *fetchedObjects = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:&error];
+    if (!fetchedObjects) {
+        [NSException raise:@"Fetch failed"
+                    format:@"Reason: %@", [error localizedDescription]];
+    }
+    return [fetchedObjects firstObject];
+}
+
 -(NSArray *)rideRequestForUserWithId:(NSInteger)userId {
     [self fetchUserRequestedRidesFromCoreData:userId];
     return self.userRideRequests;
@@ -140,6 +159,19 @@ static int page = 0;
         if ([[mappingResult array] count] > 0) {
             page++;
         }
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        RKLogError(@"Load failed with error: %@", error);
+        block(NO);
+    }];
+}
+
+-(void)fetchSingleRideFromWebserviceWithId:(NSInteger)rideId block:(boolCompletionHandler)block {
+    
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
+    
+    [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/rides/%d", rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        block(YES);
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);
         block(NO);

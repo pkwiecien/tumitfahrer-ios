@@ -16,6 +16,7 @@
 #import "NavigationBarUtilities.h"
 #import "TimelineMapViewController.h"
 #import "MenuViewController.h"
+#import "ActionManager.h"
 
 @interface TimelinePageViewController () <TimelineViewControllerDelegate>
 
@@ -96,10 +97,13 @@
     [self.navigationItem setTitleView:self.logo];
     
     // right button of the navigation bar
-    CustomBarButton *mapButton = [[CustomBarButton alloc] initWithTitle:@"Map"];
-    [mapButton addTarget:self action:@selector(mapButtonPressed) forControlEvents:UIControlEventTouchDown];
-    UIBarButtonItem *mapButtonItem = [[UIBarButtonItem alloc] initWithCustomView:mapButton];
-    self.navigationItem.rightBarButtonItem = mapButtonItem;
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *backBtnImage = [ActionManager colorImage:[UIImage imageNamed:@"MapIcon"] withColor:[UIColor customLightGray]];
+    [backBtn setBackgroundImage:backBtnImage forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(mapButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    backBtn.frame = CGRectMake(0, 0, 40, 40);
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:backBtn] ;
+    self.navigationItem.rightBarButtonItem = backButton;
 }
 
 -(void)mapButtonPressed {

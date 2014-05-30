@@ -36,6 +36,7 @@
     self.tableView = [self makeTableView];
     [self.view addSubview:self.tableView];
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    [self.view setBackgroundColor:[UIColor customLightGray]];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
