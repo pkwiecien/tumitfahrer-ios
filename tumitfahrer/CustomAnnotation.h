@@ -21,4 +21,3 @@
 @property id annotationObject;
 
 @end
-g
