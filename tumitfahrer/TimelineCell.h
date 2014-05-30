@@ -12,9 +12,9 @@
 
 +(TimelineCell *)timelineCell;
 
+@property (retain, nonatomic) UILabel *activityDescriptionLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
-@property (retain, nonatomic) UILabel *activityDescriptionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *activityDetailLabel;
 
 @end

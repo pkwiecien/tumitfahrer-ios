@@ -14,11 +14,16 @@
 #import "Request.h"
 #import "Ride.h"
 #import "Rating.h"
+#import "ActionManager.h"
+#import "RideDetailViewController.h"
 
 @interface TimelineViewController ()
 
 @property CGFloat previousScrollViewYOffset;
 @property UIRefreshControl *refreshControl;
+@property UIImage *driverIconWhite;
+@property UIImage *passengerIconWhite;
+@property UIImage *requestIconWhite;
 
 @end
 
@@ -44,6 +49,7 @@
     self.refreshControl.backgroundColor = [UIColor grayColor];
     [self.refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
+    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     
     [[ActivityStore sharedStore] fetchActivitiesFromWebservice:^(BOOL isFetched) {
         if (isFetched) {
@@ -51,6 +57,9 @@
             [self.tableView reloadData];
         }
     }];
+    
+    self.driverIconWhite = [ActionManager colorImage:[UIImage imageNamed:@"DriverIcon"] withColor:[UIColor whiteColor]];
+    self.passengerIconWhite = [ActionManager colorImage:[UIImage imageNamed:@"PassengerIcon"] withColor:[UIColor whiteColor]];
 }
 
 - (void)handleRefresh:(id)sender {
@@ -87,14 +96,38 @@
         cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"Rating received with type %d", [((Rating *)result).ratingType intValue]];
     } else if([result isKindOfClass:[Request class]]) {
         cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"Request received with type %@", ((Request *)result).requestedFrom];
+        cell.iconImageView.image = self.passengerIconWhite;
     } else {
-        cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"Ride added with id %d", ((Ride *)result).rideId];
+        Ride *ride = (Ride*)result;
+
+        if (ride.driver == nil) {
+            cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"New ride request to \n%@", ride.destination];
+            cell.iconImageView.image = self.passengerIconWhite;
+        } else {
+            cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"New ride offer to \n%@", ride.destination];
+            cell.iconImageView.image = self.driverIconWhite;
+        }
     }
     
+    NSDate *now = [NSDate date];
+    NSCalendar *c = [NSCalendar currentCalendar];
+    NSDateComponents *components = [c components:NSDayCalendarUnit|NSHourCalendarUnit fromDate:[result updatedAt] toDate:now options:0];
+    cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d days %d hours ago", components.day, components.hour];
+
     cell.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];
     
     return  cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    id result = [[[ActivityStore sharedStore] recentActivitiesByType:self.index] objectAtIndex:indexPath.row];
+
+    if ([result isKindOfClass:[Ride class]]) {
+        RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
+        rideDetailVC.ride = (Ride *)result;
+        [self.navigationController pushViewController:rideDetailVC animated:YES];
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

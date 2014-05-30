@@ -154,6 +154,9 @@ static int page = 0;
     NSEntityDescription *e = [NSEntityDescription entityForName:@"Activity"
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
                               mainQueueManagedObjectContext];
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"updatedAt" ascending:NO];
+    request.sortDescriptors = @[descriptor];
+    
     request.entity = e;
     
     NSError *error;
@@ -165,8 +168,7 @@ static int page = 0;
     self.activitiesResult = [fetchedObjects firstObject];
 }
 
--(NSFetchedResultsController *)fetchedResultsController
-{
+-(NSFetchedResultsController *)fetchedResultsController {
     if (self.fetchedResultsController != nil) {
         return self.fetchedResultsController;
     }

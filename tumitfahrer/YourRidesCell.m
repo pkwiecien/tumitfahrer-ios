@@ -16,13 +16,8 @@
     
     cell.rideImage.layer.cornerRadius = 4.0;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.layer.cornerRadius = 4;
     cell.layer.borderColor = [UIColor blackColor].CGColor;
     cell.layer.borderWidth = 1.0f;
-    cell.layer.shadowColor = [UIColor blackColor].CGColor;
-    cell.layer.shadowRadius = 6.0f;
-    cell.layer.shadowOffset = CGSizeMake(2.0, 2.0);
-    cell.layer.shadowOpacity = 0.5;
     cell.backgroundColor = [UIColor clearColor];
     cell.layer.backgroundColor = [UIColor whiteColor].CGColor;
     // performance improvement

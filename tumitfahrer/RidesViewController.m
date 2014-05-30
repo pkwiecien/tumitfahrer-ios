@@ -16,21 +16,30 @@
 #import "ActionManager.h"
 #import "CurrentUser.h"
 
+#define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+
 @interface RidesViewController ()
 
 @property CGFloat previousScrollViewYOffset;
 @property UIRefreshControl *refreshControl;
 @property NSCache *imageCache;
+@property NSArray *cellsArray;
+
 
 @end
 
-@implementation RidesViewController
+@implementation RidesViewController {
+    NSOperationQueue *_backgroundOperationQueue;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [[PanoramioUtilities sharedInstance] addObserver:self];
     [[RidesStore sharedStore] addObserver:self];
+    if (!_backgroundOperationQueue) {
+        _backgroundOperationQueue = [[NSOperationQueue alloc] init];
+    }
     
     UIColor *customGrayColor = [UIColor colorWithRed:224/255.0 green:224/255.0 blue:224/255.0 alpha:1.0];
     [self.view setBackgroundColor:customGrayColor];
@@ -71,7 +80,7 @@
 -(void)viewWillAppear:(BOOL)animated {
     [self.tableView reloadData];
     [self.delegate willAppearViewWithIndex:self.index];
-    [self addToImageCache];
+    //[self addToImageCache];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -98,15 +107,16 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    RidesCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RidesCell"];
+    RidesCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"RidesCell"];
     
-    if(cell == nil){
+    if (cell == nil) {
         cell = [RidesCell ridesCell];
     }
     
+    
     Ride *ride = [[[RidesStore sharedStore] allRidesByType:self.RideType] objectAtIndex:indexPath.section];
     
-    UIImage *image = [_imageCache objectForKey:[NSNumber numberWithInteger:0]];
+    UIImage *image = [_imageCache objectForKey:[NSNumber numberWithInteger:indexPath.section]];
     if (image == nil) {
         if(ride.destinationImage == nil) {
             image = [UIImage imageNamed:@"PlaceholderImage"];
@@ -115,10 +125,10 @@
         }
         [_imageCache setObject:image forKey:[NSNumber numberWithInteger:indexPath.section]];
     }
-    
     cell.rideImageView.image = image;
     cell.rideImageView.clipsToBounds = YES;
     cell.rideImageView.contentMode = UIViewContentModeScaleAspectFill;
+    
     cell.timeLabel.text = [ActionManager timeStringFromDate:[ride departureTime]];
     cell.dateLabel.text = [ActionManager dateStringFromDate:[ride departureTime]];
     if(ride.driver == nil) {
