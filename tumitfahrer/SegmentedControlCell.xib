@@ -14,11 +14,11 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="JHT-eL-0Ya">
-                        <rect key="frame" x="49" y="8" width="223" height="29"/>
+                        <rect key="frame" x="35" y="8" width="251" height="29"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <segments>
-                            <segment title="Passenger"/>
-                            <segment title="Driver"/>
+                            <segment title="I am Passenger"/>
+                            <segment title="I am Driver"/>
                         </segments>
                         <color key="tintColor" red="0.0" green="0.46274509800000002" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
                     </segmentedControl>

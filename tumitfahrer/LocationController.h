@@ -20,6 +20,7 @@
 
 @interface LocationController : NSObject <CLLocationManagerDelegate>
 
+
 @property (nonatomic, strong) CLLocationManager* locationManager;
 @property (nonatomic, strong) CLLocation* currentLocation;
 @property (nonatomic, strong) UIImage *currentLocationImage;
@@ -42,5 +43,8 @@ typedef void(^locationCompletionHandler)(CLLocation *);
 
 + (BOOL)isLocation:(CLLocation *)location nearbyAnotherLocation:(CLLocation *)anotherLocation;
 + (CLLocation *)locationFromLongitude:(double)longitude latitude:(double)latitude;
+
+typedef void (^PlacemarkBlock)(CLPlacemark *placemark, NSError *error);
++ (void)resolveGecodePlaceToPlacemark:(PlacemarkBlock)block address:(NSString *)address;
 
 @end

@@ -103,7 +103,7 @@
         NSString* destination = [fullDestination objectAtIndex:0];
         
         if (ride.driver == nil) {
-            NSString *descr = [NSString stringWithFormat:@"New ride request to \n%@", destination];
+            NSString *descr = [NSString stringWithFormat:@"New ride request to: \n%@", destination];
             // iOS6 and above : Use NSAttributedStrings
             const CGFloat fontSize = 15;
             UIFont *regularFont = [UIFont systemFontOfSize:fontSize];

@@ -153,4 +153,18 @@
     return location;
 }
 
++ (void)resolveGecodePlaceToPlacemark:(PlacemarkBlock)block address:(NSString *)address{
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
+        if (error) {
+            block(nil, error);
+        } else {
+            CLPlacemark *placemark = [placemarks firstObject];
+            block(placemark, error);
+        }
+    }];
+}
+
+
+
 @end

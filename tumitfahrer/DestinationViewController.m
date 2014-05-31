@@ -17,6 +17,7 @@
 @interface DestinationViewController ()
 
 @property (nonatomic) UISearchBar *searchBar;
+@property (nonatomic, strong) NSMutableArray *predefinedDestinations;
 
 @end
 
@@ -27,18 +28,25 @@
     if (self) {
         searchQuery = [SPGooglePlacesAutocompleteQuery query];
         searchQuery.radius = 100.0;
+        self.predefinedDestinations = [NSMutableArray arrayWithObjects:@"Arcistraße, München", @"Garching-Hochbrück", @"Garching Forschungszentrum", nil];
     }
     return self;
 }
 
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.searchBar = [[UISearchBar alloc] init];
     self.searchBar.delegate = self;
     self.searchBar.showsCancelButton = NO;
     self.searchBar.placeholder = @"Search Address";
+    self.searchBar.tintColor = [UIColor blueColor];
+    NSDictionary *attributes =
+    [NSDictionary dictionaryWithObjectsAndKeys: [UIColor whiteColor], NSForegroundColorAttributeName, nil];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
+     setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
+     setTitleTextAttributes:attributes forState:UIControlStateHighlighted];
     self.navigationItem.titleView = self.searchBar;
 }
 
@@ -55,13 +63,24 @@
 #pragma mark UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (section == 0) {
+        return [self.predefinedDestinations count];
+    } else
     return [searchResultPlaces count];
 }
 
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return @"Abc";
+    } else
+        return @"Suggested rides";
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
 - (SPGooglePlacesAutocompletePlace *)placeAtIndexPath:(NSIndexPath *)indexPath {
-    for (NSString *val in searchResultPlaces) {
-        NSLog(@"search result: %@", val);
-    }
     return [searchResultPlaces objectAtIndex:indexPath.row];
 }
 
@@ -74,7 +93,12 @@
     
     cell.textLabel.font = [UIFont fontWithName:@"Helvetica-Thin" size:16.0];
     cell.textLabel.textColor = [UIColor blackColor];
-    cell.textLabel.text = [self placeAtIndexPath:indexPath].name;
+    
+    if (indexPath.section == 0) {
+        cell.textLabel.text = [self.predefinedDestinations objectAtIndex:indexPath.row];
+    } else {
+        cell.textLabel.text = [self placeAtIndexPath:indexPath].name;
+    }
     
     cell.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];
@@ -103,16 +127,22 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    SPGooglePlacesAutocompletePlace *place = [self placeAtIndexPath:indexPath];
-    NSLog(@"Place: %@", place);
-    [place resolveToPlacemark:^(CLPlacemark *placemark, NSString *addressString, NSError *error) {
-        if (error) {
-            SPPresentAlertViewWithErrorAndTitle(error, @"Could not map selected Place");
-        } else if (placemark) {
-            [self.delegate selectedDestination:addressString indexPath:self.rideTableIndexPath];
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-    }];
+    if (indexPath.section == 0) {
+        NSString *addressString = [self.predefinedDestinations objectAtIndex:indexPath.row];
+        [self.delegate selectedDestination:addressString indexPath:self.rideTableIndexPath];
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+       SPGooglePlacesAutocompletePlace *place = [self placeAtIndexPath:indexPath];
+        
+       [place resolveToPlacemark:^(CLPlacemark *placemark, NSString *addressString, NSError *error) {
+            if (error) {
+                SPPresentAlertViewWithErrorAndTitle(error, @"Could not map selected Place");
+            } else if (placemark) {
+                [self.delegate selectedDestination:addressString indexPath:self.rideTableIndexPath];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        }];
+    }
 }
 
 #pragma mark -
