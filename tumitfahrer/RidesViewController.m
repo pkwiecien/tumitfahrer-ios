@@ -25,7 +25,6 @@
 @property NSCache *imageCache;
 @property NSArray *cellsArray;
 
-
 @end
 
 @implementation RidesViewController {
@@ -37,9 +36,9 @@
     
     [[PanoramioUtilities sharedInstance] addObserver:self];
     [[RidesStore sharedStore] addObserver:self];
-    if (!_backgroundOperationQueue) {
-        _backgroundOperationQueue = [[NSOperationQueue alloc] init];
-    }
+//    if (!_backgroundOperationQueue) {
+//        _backgroundOperationQueue = [[NSOperationQueue alloc] init];
+//    }
     
     UIColor *customGrayColor = [UIColor colorWithRed:224/255.0 green:224/255.0 blue:224/255.0 alpha:1.0];
     [self.view setBackgroundColor:customGrayColor];
@@ -53,7 +52,7 @@
     [self.refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
     self.imageCache = [[NSCache alloc] init];
-    [self.imageCache setObject:[UIImage imageNamed:@"PassengerIcon"] forKey:@"PassengerIcon"];
+    [self.imageCache setObject:[ActionManager colorImage:[UIImage imageNamed:@"PassengerIcon"] withColor:[UIColor customLightGray]] forKey:@"PassengerIcon"];
 }
 
 -(void)handleRefresh {
@@ -78,9 +77,13 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    //
+   [self.delegate willAppearViewWithIndex:self.index];
+   [self addToImageCache];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
     [self.tableView reloadData];
-    [self.delegate willAppearViewWithIndex:self.index];
-    //[self addToImageCache];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -250,7 +253,6 @@
         if (fetched) {
             for (Ride *ride in [[RidesStore sharedStore] allRides]) {
                 NSLog(@"ride with id: %d", ride.rideId);
-                //[self.collectionView reloadData];
             }
         }
     }];

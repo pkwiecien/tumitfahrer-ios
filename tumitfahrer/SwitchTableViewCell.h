@@ -8,8 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SwitchTableViewCellDelegate
+
+-(void)switchChangedToStatus:(BOOL)status switchId:(NSInteger)switchId;
+
+@end
+
 @interface SwitchTableViewCell : UITableViewCell
 
+@property (nonatomic, strong) id <SwitchTableViewCellDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UILabel *switchCellTextLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *switchElement;
+@property (nonatomic, assign) NSInteger switchId;
+
+- (IBAction)switchChanged:(id)sender;
 
 @end

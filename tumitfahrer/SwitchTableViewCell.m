@@ -12,14 +12,15 @@
 
 - (void)awakeFromNib
 {
-    // Initialization code
+    
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+- (IBAction)switchChanged:(id)sender {
+    if ([sender isOn]) {
+        [self.delegate switchChangedToStatus:true switchId:self.switchId];
+    } else {
+        [self.delegate switchChangedToStatus:false switchId:self.switchId];
+    }
 }
 
 @end

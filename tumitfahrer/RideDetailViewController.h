@@ -16,11 +16,6 @@
 @interface RideDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, DetailsMessagesChoiceCellDelegate, UINavigationControllerDelegate>
 
 typedef enum {
-    ShouldDisplayNormally = 0,
-    ShouldShareRideOnFacebook
-} ShouldDisplayEnum;
-
-typedef enum {
     GoBackNormally = 0,
     GoBackToList
 } ShouldGoBackEnum;

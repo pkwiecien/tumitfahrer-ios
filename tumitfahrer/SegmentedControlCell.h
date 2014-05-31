@@ -10,7 +10,7 @@
 
 @protocol SementedControlCellDelegate
 
--(void)segmentedControlChangedToIndex:(NSInteger)index;
+-(void)segmentedControlChangedToIndex:(NSInteger)index segmentedControlId:(NSInteger)controlId;
 
 @end
 
@@ -22,6 +22,8 @@
 @property (nonatomic, strong) id <SementedControlCellDelegate> delegate;
 @property (nonatomic, strong) NSString *firstSegmentTitle;
 @property (nonatomic, strong) NSString *secondSegmentTitle;
+@property (nonatomic, assign) NSInteger controlId;
+
 -(void)setFirstSegmentTitle:(NSString *)firstSegmentTitle secondSementTitle:(NSString *)secondSegmentTitle;
 -(void)addHandlerToSegmentedControl;
 

@@ -21,13 +21,13 @@
 }
 
 -(void)awakeFromNib {
-    
     // activity description label
     self.activityDescriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 10, 250, 60)];
     self.activityDescriptionLabel.text = @"abc asd asddsa dsa asdadsasd asdasdads";
     self.activityDescriptionLabel.numberOfLines = 2;
     [self.activityDescriptionLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:15]];
     [self.activityDescriptionLabel sizeToFit];
+    self.activityDescriptionLabel.backgroundColor = [UIColor redColor];
     [self addSubview:self.activityDescriptionLabel];
 }
 

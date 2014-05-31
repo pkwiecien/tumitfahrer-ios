@@ -125,11 +125,12 @@
             cell = [RideNoticeCell rideNoticeCell];
         }
         
-        if(self.ride.driver.userId == [CurrentUser sharedInstance].user.userId) {
-            cell.noticeLabel.text = @"You are the driver";
-        }
-        else {
-            cell.noticeLabel.text = @"Send ride request to the driver";
+        if (self.ride.driver == nil) {
+            cell.noticeLabel.text = @"Ride Request";
+        } else if(self.ride.rideType == 0) {
+            cell.noticeLabel.text = @"Campus Ride";
+        } else {
+            cell.noticeLabel.text = @"Activity Ride";
         }
         return cell;
     }
@@ -216,7 +217,7 @@
         
         // Pop this controller and replace with another
         [navController popViewControllerAnimated:NO];
-        if (self.ride.rideType == ContentTypeActivityRides) {
+        if (self.ride.rideType == ContentTypeCampusRides) {
             RidesPageViewController *campusRidesVC = [[RidesPageViewController alloc] initWithContentType:ContentTypeCampusRides];
             [navController pushViewController:campusRidesVC animated:NO];
         } else {

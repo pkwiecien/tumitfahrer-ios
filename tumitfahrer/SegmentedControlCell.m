@@ -29,10 +29,9 @@
     [self.segmentedControl addTarget:self action:@selector(pickOne:) forControlEvents:UIControlEventValueChanged];
 }
 
-
 -(void) pickOne:(id)sender{
     UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
-    [self.delegate segmentedControlChangedToIndex:segmentedControl.selectedSegmentIndex];
+    [self.delegate segmentedControlChangedToIndex:segmentedControl.selectedSegmentIndex segmentedControlId:self.controlId];
 }
 
 @end

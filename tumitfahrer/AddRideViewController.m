@@ -24,7 +24,7 @@
 #import "LocationController.h"
 #import <FacebookSDK/FacebookSDK.h>
 
-@interface AddRideViewController () <NSFetchedResultsControllerDelegate, SementedControlCellDelegate>
+@interface AddRideViewController () <NSFetchedResultsControllerDelegate, SementedControlCellDelegate, SwitchTableViewCellDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSMutableArray *shareValues;
@@ -66,6 +66,8 @@
     
     UIView *headerView = [[[NSBundle mainBundle] loadNibNamed:@"AddRideTableHeader" owner:self options:nil] objectAtIndex:0];
     self.tableView.tableHeaderView = headerView;
+    self.RideType = ContentTypeCampusRides;
+    self.displayEnum = ShouldDisplayNormally;
 }
 
 -(void)initTables {
@@ -149,8 +151,9 @@
             SegmentedControlCell *cell = [SegmentedControlCell segmentedControlCell];
             cell.delegate = self;
             cell.segmentedControl.selectedSegmentIndex = self.TableType;
-            [cell setFirstSegmentTitle:@"Passenger" secondSementTitle:@"Driver"];
+            [cell setFirstSegmentTitle:@"I am Passenger" secondSementTitle:@"I am Driver"];
             [cell addHandlerToSegmentedControl];
+            cell.controlId = 0;
             return cell;
         } else if(self.TableType == Driver && indexPath.row == 4) {
             FreeSeatsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FreeSeatsTableViewCell"];
@@ -167,6 +170,10 @@
         } else if(indexPath.row == [self.tableValue count]-1) {
             SegmentedControlCell *cell = [SegmentedControlCell segmentedControlCell];
             [cell setFirstSegmentTitle:@"Campus" secondSementTitle:@"Activity"];
+            cell.segmentedControl.selectedSegmentIndex = self.RideType;
+            cell.delegate = self;
+            [cell addHandlerToSegmentedControl];
+            cell.controlId = 1;
             return cell;
         }
         
@@ -191,6 +198,9 @@
         switchCell.backgroundColor = [UIColor clearColor];
         switchCell.contentView.backgroundColor = [UIColor clearColor];
         switchCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        switchCell.switchId = indexPath.row;
+        switchCell.delegate = self;
+        
         return switchCell;
     }
     
@@ -253,62 +263,75 @@
 }
 
 -(void)addRideButtonPressed {
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    
+    NSDictionary *queryParams;
+    // add enum
+    NSString *departurePlace = [self.tableValue objectAtIndex:1];
+    NSString *destination = [self.tableValue objectAtIndex:2];
+    NSString *departureTime = [self.tableValue objectAtIndex:3];
+    
+    if (!departurePlace || departurePlace.length == 0) {
+        [ActionManager showAlertViewWithTitle:@"No departure time" description:@"To add a ride please specify the departure place"];
+        return;
+    } else if(!destination || destination.length == 0) {
+        [ActionManager showAlertViewWithTitle:@"No destination" description:@"To add a ride please specify the destination"];
+        return;
+    } else if(!departureTime || departureTime.length == 0) {
+        [ActionManager showAlertViewWithTitle:@"No departure time" description:@"To add a ride please specify the departure time"];
+        return;
+    }
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"de_DE"]];
+    NSDate *dateString = [formatter dateFromString:departureTime];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
+    NSString *time = [formatter stringFromDate:dateString];
+
+    NSDictionary *rideParams = nil;
     if(self.TableType == Driver) {
-        RKObjectManager *objectManager = [RKObjectManager sharedManager];
         
-        NSDictionary *queryParams;
-        // add enum
-        NSString *departurePlace = [self.tableValue objectAtIndex:1];
-        NSString *destination = [self.tableValue objectAtIndex:2];
-        NSString *departureTime = [self.tableValue objectAtIndex:3];
         NSString *freeSeats = [self.tableValue objectAtIndex:4];
         if (freeSeats.length == 0) {
             freeSeats = @"1";
         }
         NSString *car = [self.tableValue objectAtIndex:5];
         NSString *meetingPoint = [self.tableValue objectAtIndex:6];
-        if (!departurePlace || !destination || !meetingPoint || !departureTime) {
+        if (!meetingPoint) {
+            [ActionManager showAlertViewWithTitle:@"No meeting place" description:@"To add a ride please specify the meeting place"];
             return;
         }
         
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"de_DE"]];
-        NSDate *dateString = [formatter dateFromString:departureTime];
-        [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
-        NSString *time = [formatter stringFromDate:dateString];
+        queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": [NSNumber numberWithInt:self.RideType], @"driver":@"true"};
         
-        queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": @"0"};
+        rideParams = @{@"ride": queryParams};
+       
+    } else { // passenger
+        queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"ride_type": [NSNumber numberWithInt:self.RideType], @"passenger":@"true"};
         
-        NSDictionary *rideParams = @{@"ride": queryParams};
-        
-        [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"apiKey" value:[[CurrentUser sharedInstance] user].apiKey];
-        
-    
-        NSLog(@"user api key: %@", [CurrentUser sharedInstance].user.apiKey);
-        [objectManager postObject:nil path:@"/api/v2/rides" parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-            Ride *ride = (Ride *)[mappingResult firstObject];
-            [[RidesStore sharedStore] addRideToStore:ride];
-            [[LocationController sharedInstance] fetchLocationForAddress:ride.destination rideId:ride.rideId];
-            self.tablePassengerValues = nil;
-            self.tableDriverValues = nil;
-            NSLog(@"Response: %@", operation.HTTPRequestOperation.responseString);
-            NSLog(@"This is ride: %@", ride);
-            NSLog(@"This is driver: %@", ride.driver);
-            [KGStatusBar showSuccessWithStatus:@"Ride added"];
-            RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
-            rideDetailVC.ride = ride;
-            rideDetailVC.displayEnum = ShouldShareRideOnFacebook;
-            rideDetailVC.shouldGoBackEnum = GoBackToList;
-            if(self.RideDisplayType == ShowAsModal)
-                [self dismissViewControllerAnimated:YES completion:nil];
-            else
-                [self.navigationController pushViewController:rideDetailVC animated:YES];
-        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-            [ActionManager showAlertViewWithTitle:[error localizedDescription]];
-            RKLogError(@"Load failed with error: %@", error);
-        }];
+        rideParams = @{@"ride": queryParams};
     }
+    
+    [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"apiKey" value:[[CurrentUser sharedInstance] user].apiKey];
+
+    NSLog(@"user api key: %@", [CurrentUser sharedInstance].user.apiKey);
+    [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/users/%@/rides", [CurrentUser sharedInstance].user.userId] parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        Ride *ride = (Ride *)[mappingResult firstObject];
+        [[RidesStore sharedStore] addRideToStore:ride];
+        [[LocationController sharedInstance] fetchLocationForAddress:ride.destination rideId:ride.rideId];
+        self.tablePassengerValues = nil;
+        self.tableDriverValues = nil;
+        [KGStatusBar showSuccessWithStatus:@"Ride added"];
+        RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
+        rideDetailVC.ride = ride;
+        rideDetailVC.displayEnum = self.displayEnum;
+        rideDetailVC.shouldGoBackEnum = GoBackToList;
+        [self.navigationController pushViewController:rideDetailVC animated:YES];
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        [ActionManager showAlertViewWithTitle:[error localizedDescription]];
+        RKLogError(@"Load failed with error: %@", error);
+    }];
 }
 
 -(void)closeButtonPressed {
@@ -375,15 +398,23 @@
     [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
--(void)segmentedControlChangedToIndex:(NSInteger)index {
-    if (index == 0) {
-        self.TableType = Passenger;
-    } else {
-        self.TableType = Driver;
+-(void)segmentedControlChangedToIndex:(NSInteger)index segmentedControlId:(NSInteger)controlId{
+    if (controlId == 0) { // driver or passenger
+        if (index == 0) {
+            self.TableType = Passenger;
+        } else {
+            self.TableType = Driver;
+        }
+        [self saveTableValues];
+        [self initTables];
+        [self.tableView reloadData];
+    } else if(controlId == 1) { //ride type
+        if (index == 0) {
+            self.RideType = ContentTypeCampusRides;
+        } else {
+            self.RideType = ContentTypeActivityRides;
+        }
     }
-    [self saveTableValues];
-    [self initTables];
-    [self.tableView reloadData];
 }
 
 -(void)saveTableValues {
@@ -391,6 +422,20 @@
         self.tablePassengerValues = [NSMutableArray arrayWithArray:self.tableValue];
     } else {
         self.tableDriverValues = [NSMutableArray arrayWithArray:self.tableValue];
+    }
+}
+
+-(void)switchChangedToStatus:(BOOL)status switchId:(NSInteger)switchId {
+    if (switchId == 0) { // share on facebook
+        if (status) {
+            self.displayEnum = ShouldShareRideOnFacebook;
+        } else
+        {
+            self.displayEnum = ShouldDisplayNormally;
+        }
+    }
+    if (switchId == 1) { // go to email
+        
     }
 }
 

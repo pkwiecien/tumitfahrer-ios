@@ -21,6 +21,7 @@ typedef enum {
     Driver = 1
 } TableTypeEnum;
 
+@property (nonatomic, assign) ShouldDisplayEnum displayEnum;
 @property (nonatomic, assign) TableTypeEnum TableType;
 @property (nonatomic, assign) ContentType RideType;
 @property (nonatomic, assign) DisplayType RideDisplayType;
