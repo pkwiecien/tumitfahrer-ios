@@ -95,6 +95,9 @@
     
     if(self.RideDisplayType == ShowAsViewController)
         [self setupLeftMenuButton];
+    if (self.shouldClose) {
+        [self.navigationController dismissViewControllerAnimated:NO completion:nil];
+    }
 }
 
 -(void)setupLeftMenuButton{
@@ -323,11 +326,15 @@
         self.tablePassengerValues = nil;
         self.tableDriverValues = nil;
         [KGStatusBar showSuccessWithStatus:@"Ride added"];
-        RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
-        rideDetailVC.ride = ride;
-        rideDetailVC.displayEnum = self.displayEnum;
-        rideDetailVC.shouldGoBackEnum = GoBackToList;
-        [self.navigationController pushViewController:rideDetailVC animated:YES];
+        if (self.RideDisplayType == ShowAsModal) {
+            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+        } else {
+            RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
+            rideDetailVC.ride = ride;
+            rideDetailVC.displayEnum = self.displayEnum;
+            rideDetailVC.shouldGoBackEnum = GoBackToList;
+            [self.navigationController pushViewController:rideDetailVC animated:YES];
+        }
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [ActionManager showAlertViewWithTitle:[error localizedDescription]];
         RKLogError(@"Load failed with error: %@", error);

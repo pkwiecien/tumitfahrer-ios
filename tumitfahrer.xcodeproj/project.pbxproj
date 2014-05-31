@@ -28,6 +28,8 @@
 		E504D9EE190BCCE20036FFA8 /* DeviceMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9ED190BCCE20036FFA8 /* DeviceMapping.m */; };
 		E507C437193901B5005F1083 /* CustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = E507C436193901B5005F1083 /* CustomAnnotation.m */; };
 		E507C43A1939F717005F1083 /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E507C4391939F717005F1083 /* Ride.m */; };
+		E507C43F193A298D005F1083 /* RideRequestInformationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E507C43D193A298D005F1083 /* RideRequestInformationCell.m */; };
+		E507C440193A298D005F1083 /* RideRequestInformationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E507C43E193A298D005F1083 /* RideRequestInformationCell.xib */; };
 		E50CCC10191E529A003A9490 /* TimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCC0E191E529A003A9490 /* TimelineViewController.m */; };
 		E50CCC11191E529A003A9490 /* TimelineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50CCC0F191E529A003A9490 /* TimelineViewController.xib */; };
 		E50CCC14191E54F1003A9490 /* UIViewController+SideBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCC13191E54F1003A9490 /* UIViewController+SideBarController.m */; };
@@ -229,6 +231,9 @@
 		E507C436193901B5005F1083 /* CustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotation.m; sourceTree = "<group>"; };
 		E507C4381939F717005F1083 /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
 		E507C4391939F717005F1083 /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
+		E507C43C193A298D005F1083 /* RideRequestInformationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideRequestInformationCell.h; sourceTree = "<group>"; };
+		E507C43D193A298D005F1083 /* RideRequestInformationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideRequestInformationCell.m; sourceTree = "<group>"; };
+		E507C43E193A298D005F1083 /* RideRequestInformationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RideRequestInformationCell.xib; sourceTree = "<group>"; };
 		E50CCC0D191E529A003A9490 /* TimelineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineViewController.h; sourceTree = "<group>"; };
 		E50CCC0E191E529A003A9490 /* TimelineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineViewController.m; sourceTree = "<group>"; };
 		E50CCC0F191E529A003A9490 /* TimelineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimelineViewController.xib; sourceTree = "<group>"; };
@@ -524,6 +529,16 @@
 			name = GooglePlacesAutocomplete;
 			sourceTree = "<group>";
 		};
+		E507C43B193A2968005F1083 /* Ride Request Information Cell */ = {
+			isa = PBXGroup;
+			children = (
+				E507C43C193A298D005F1083 /* RideRequestInformationCell.h */,
+				E507C43D193A298D005F1083 /* RideRequestInformationCell.m */,
+				E507C43E193A298D005F1083 /* RideRequestInformationCell.xib */,
+			);
+			name = "Ride Request Information Cell";
+			sourceTree = "<group>";
+		};
 		E50CCC0C191E5288003A9490 /* Timeline */ = {
 			isa = PBXGroup;
 			children = (
@@ -793,6 +808,7 @@
 		E58889D81913832C0062D0DF /* Ride Details */ = {
 			isa = PBXGroup;
 			children = (
+				E507C43B193A2968005F1083 /* Ride Request Information Cell */,
 				E52EA4CF192C016900E78B6D /* Map View */,
 				E5FB4D401918DB1D006F4F5D /* Ride Notice */,
 				E5888A981914DFFB0062D0DF /* Chat Controller */,
@@ -1311,6 +1327,7 @@
 				E50CCD07191FAE8A003A9490 /* RidesViewController.xib in Resources */,
 				E58889FB1913E2B50062D0DF /* RideActionCell.xib in Resources */,
 				E5E215801908492200B0B150 /* FreeSeatsTableViewCell.xib in Resources */,
+				E507C440193A298D005F1083 /* RideRequestInformationCell.xib in Resources */,
 				E51FD50318F0864C0098AD11 /* ProfileViewController.xib in Resources */,
 				E5E215601907A94A00B0B150 /* AddRideViewController.xib in Resources */,
 				E5E215791908442100B0B150 /* SwitchTableViewCell.xib in Resources */,
@@ -1452,6 +1469,7 @@
 				E52EA4CE192B96A600E78B6D /* CvLayout.m in Sources */,
 				E50DB27218F5DFB200E87E62 /* LocationController.m in Sources */,
 				E5DE44ED192618270034AF6F /* SegmentedControlCell.m in Sources */,
+				E507C43F193A298D005F1083 /* RideRequestInformationCell.m in Sources */,
 				E5FA64251912299E00C04BFF /* RideSearchStore.m in Sources */,
 				E50CCD11191FC324003A9490 /* RidesPageViewController.m in Sources */,
 				E5DF641518EB548E00D53164 /* SettingsViewController.m in Sources */,

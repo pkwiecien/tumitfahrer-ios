@@ -31,7 +31,7 @@
 }
 
 +(UIColor *)customGreen {
-    return [UIColor colorWithRed:0.298 green:0.851 blue:0.392 alpha:1];
+    return [UIColor colorWithRed:76/255.0 green:217/255.0 blue:100/255.0 alpha:1];
 }
 
 @end

@@ -71,9 +71,9 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return @"Abc";
+        return @"TUM Campuses";
     } else
-        return @"Suggested rides";
+        return @"Other Locations";
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

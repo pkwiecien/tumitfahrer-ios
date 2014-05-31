@@ -54,7 +54,7 @@
     }
     
     // Set the data for this cell:
-    cell.textLabel.text = @"Abc";
+    cell.textLabel.text = @"TUM Campuses";
     cell.detailTextLabel.text = @"More text";
     
     // set the accessory view:

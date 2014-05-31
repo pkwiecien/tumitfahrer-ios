@@ -24,6 +24,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "AppDelegate.h"
 #import "RidesPageViewController.h"
+#import "RideRequestInformationCell.h"
 
 @interface RideDetailViewController () <NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate, RideStoreDelegate>
 
@@ -96,6 +97,9 @@
         return 44.0f;
     }
     else if(indexPath.row == 2){
+        if (self.ride.driver == nil) {
+            return 160.0f;
+        }
         return 240.0f;
     }
     else if(indexPath.row == 3){
@@ -108,6 +112,9 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (self.ride.driver == nil) {
+        return 4; // it's a ride request, so don't show passengers
+    }
     return 5;
 }
 
@@ -141,48 +148,85 @@
         if(cell == nil){
             cell = [RideActionCell detailsMessagesChoiceCell];
         }
-        
-        [self makeJoinButtonDescriptionForCell:cell];
-        
+        if (self.ride.driver == nil) {
+            [cell.joinRideButton setTitle:@"Offer a ride" forState:UIControlStateNormal];
+            [cell.contactDriverButton setTitle:@"Contact passenger" forState:UIControlStateNormal];
+        } else {
+            [self makeJoinButtonDescriptionForCell:cell];
+        }
         cell.delegate = self;
         return cell;
     }
     else if(indexPath.row == 2) {
-        RideInformationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideInformationCell"];
-        if(cell == nil){
-            cell = [RideInformationCell rideInformationCell];
-        }
-        cell.departurePlaceLabel.text = self.ride.departurePlace;
-        cell.destinationLabel.text = self.ride.destination;
-        cell.timeLabel.text = [ActionManager timeStringFromDate:self.ride.departureTime];
-        cell.dateLabel.text = [ActionManager dateStringFromDate:self.ride.departureTime];
-        if (self.ride.driver.car == nil) {
-            cell.carLabel.text = @"Not specified";
+        if (self.ride.driver != nil) {
+            RideInformationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideInformationCell"];
+            if(cell == nil){
+                cell = [RideInformationCell rideInformationCell];
+            }
+            cell.departurePlaceLabel.text = self.ride.departurePlace;
+            cell.destinationLabel.text = self.ride.destination;
+            cell.timeLabel.text = [ActionManager timeStringFromDate:self.ride.departureTime];
+            cell.dateLabel.text = [ActionManager dateStringFromDate:self.ride.departureTime];
+            if (self.ride.driver.car == nil) {
+                cell.carLabel.text = @"Not specified";
+            } else {
+                cell.carLabel.text = self.ride.driver.car;
+            }
+            cell.informationLabel.text = self.ride.meetingPoint;
+            
+            return cell;
         } else {
-            cell.carLabel.text = self.ride.driver.car;
+            RideRequestInformationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideRequestInformationCell"];
+            if(cell == nil){
+                cell = [RideRequestInformationCell rideRequestInformationCell];
+            }
+            cell.departurePlaceLabel.text = self.ride.departurePlace;
+            cell.destinationLabel.text = self.ride.destination;
+            cell.timeLabel.text = [ActionManager timeStringFromDate:self.ride.departureTime];
+            cell.dateLabel.text = [ActionManager dateStringFromDate:self.ride.departureTime];
+            
+            return cell;
         }
-        cell.informationLabel.text = self.ride.meetingPoint;
-        
-        return cell;
     } else if(indexPath.row == 3) {
-        DriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DriverCell"];
-        if (cell == nil) {
-            cell = [DriverCell driverCell];
+        if(self.ride.driver == nil) {
+            DriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DriverCell"];
+            if (cell == nil) {
+                cell = [DriverCell driverCell];
+            }
+            
+            //            cell.driverNameLabel.text = self.ride.req.firstName;
+            //            cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [self.ride.driver.ratingAvg floatValue]];
+            
+            cell.mapView.delegate = self;
+            UITapGestureRecognizer *mapTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mapViewTap)];
+            // Set required taps and number of touches
+            [mapTap setNumberOfTapsRequired:1];
+            [mapTap setNumberOfTouchesRequired:1];
+            // Add the gesture to the view
+            [cell.mapView addGestureRecognizer:mapTap];
+            self.map = cell.mapView;
+            
+            return cell;
+        } else {
+            DriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DriverCell"];
+            if (cell == nil) {
+                cell = [DriverCell driverCell];
+            }
+            cell.driverNameLabel.text = self.ride.driver.firstName;
+            cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [self.ride.driver.ratingAvg floatValue]];
+            
+            cell.mapView.delegate = self;
+            UITapGestureRecognizer *mapTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mapViewTap)];
+            // Set required taps and number of touches
+            [mapTap setNumberOfTapsRequired:1];
+            [mapTap setNumberOfTouchesRequired:1];
+            // Add the gesture to the view
+            [cell.mapView addGestureRecognizer:mapTap];
+            self.map = cell.mapView;
+            
+            return cell;
         }
-        cell.driverNameLabel.text = self.ride.driver.firstName;
-        cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [self.ride.driver.ratingAvg floatValue]];
-        
-        cell.mapView.delegate = self;
-        UITapGestureRecognizer *mapTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mapViewTap)];
-        // Set required taps and number of touches
-        [mapTap setNumberOfTapsRequired:1];
-        [mapTap setNumberOfTouchesRequired:1];
-        // Add the gesture to the view
-        [cell.mapView addGestureRecognizer:mapTap];
-        self.map = cell.mapView;
-        
-        return cell;
-    } else if(indexPath.row == 4) {
+    } else if(indexPath.row == 4 && self.ride.driver != nil) {
         PassengersCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PassengersCell"];
         if (cell == nil) {
             cell = [PassengersCell passengersCell];
@@ -213,16 +257,14 @@
     if (self.shouldGoBackEnum == GoBackNormally) {
         [self.navigationController popViewControllerAnimated:YES];
     } else {
-        UINavigationController *navController = self.navigationController;
-        
-        // Pop this controller and replace with another
-        [navController popViewControllerAnimated:NO];
         if (self.ride.rideType == ContentTypeCampusRides) {
             RidesPageViewController *campusRidesVC = [[RidesPageViewController alloc] initWithContentType:ContentTypeCampusRides];
-            [navController pushViewController:campusRidesVC animated:NO];
+            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:campusRidesVC];
+            [self.sideBarController setCenterViewController:navController  withCloseAnimation:YES completion:nil];
         } else {
             RidesPageViewController *activityRidesVC = [[RidesPageViewController alloc] initWithContentType:ContentTypeActivityRides];
-            [navController pushViewController:activityRidesVC animated:NO];
+            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:activityRidesVC];
+            [self.sideBarController setCenterViewController:navController withCloseAnimation:YES completion:nil];
         }
     }
 }
@@ -237,7 +279,7 @@
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     Request *request = [self requestFoundInCoreData];
     
-    if (self.ride.driver.userId == [CurrentUser sharedInstance].user.userId) {
+    if ([self.ride.driver.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
         [objectManager deleteObject:self.ride path:[NSString stringWithFormat:@"/api/v2/rides/%d", self.ride.rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             
             [[CurrentUser sharedInstance].user removeRidesAsDriverObject:self.ride];
@@ -260,6 +302,8 @@
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
             RKLogError(@"Load failed with error: %@", error);
         }];
+    } else if(self.ride.driver == nil) {
+        
     } else {
         NSDictionary *queryParams;
         // add enum
@@ -328,7 +372,7 @@
 }
 
 -(void)makeJoinButtonDescriptionForCell:(RideActionCell *)cell{
-    if(self.ride.driver.userId == [CurrentUser sharedInstance].user.userId) {
+    if([self.ride.driver.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
         [cell.joinRideButton setTitle:@"Delete ride" forState:UIControlStateNormal];
     } else if([self requestFoundInCoreData] != nil) {
         [cell.joinRideButton setTitle:@"Cancel request" forState:UIControlStateNormal];

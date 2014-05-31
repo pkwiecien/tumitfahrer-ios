@@ -140,7 +140,9 @@
     } else {
         cell.seatsView.backgroundColor = [UIColor orangeColor];
     }
-    if (ride.freeSeats == 1) {
+    if (ride.driver == nil) {
+        cell.seatsLabel.text = @"offer a ride";
+    } else if (ride.freeSeats == 1) {
         cell.seatsLabel.text = @"1 seat left";
     } else {
         cell.seatsLabel.text = [NSString stringWithFormat:@"%d seats left", ride.freeSeats];

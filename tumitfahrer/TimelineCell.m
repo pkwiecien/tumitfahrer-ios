@@ -27,7 +27,6 @@
     self.activityDescriptionLabel.numberOfLines = 2;
     [self.activityDescriptionLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:15]];
     [self.activityDescriptionLabel sizeToFit];
-    self.activityDescriptionLabel.backgroundColor = [UIColor redColor];
     [self addSubview:self.activityDescriptionLabel];
 }
 

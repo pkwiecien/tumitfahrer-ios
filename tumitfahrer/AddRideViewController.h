@@ -26,5 +26,6 @@ typedef enum {
 @property (nonatomic, assign) ContentType RideType;
 @property (nonatomic, assign) DisplayType RideDisplayType;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property BOOL shouldClose;
 
 @end
