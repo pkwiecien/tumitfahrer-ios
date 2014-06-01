@@ -64,7 +64,12 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    self.rideDetail.selectedImageData = self.ride.destinationImage;
+    if ([[self.ride.destination lowercaseString] rangeOfString:@"ikea"].location != NSNotFound) {
+        self.rideDetail.selectedImageData = UIImagePNGRepresentation([UIImage imageNamed:@"IkeaLogo"]);
+    }
+    else {
+        self.rideDetail.selectedImageData = self.ride.destinationImage;
+    }
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.headerViewLabel.text = [@"To " stringByAppendingString:self.ride.destination];
@@ -459,16 +464,11 @@
 -(void)didReceivePhotoForRide:(NSInteger)rideId {
     
     self.ride = [[RidesStore sharedStore] getRideWithId:rideId];
-    if (self.ride.destinationImage == nil) {
-        NSLog(@"destination image is null");
-    } else
-    {
-        NSLog(@"destination image is not null");
-    }
     UIImage *img = [UIImage imageWithData:self.ride.destinationImage];
-    [self.rideDetail.rideDetailHeaderView replaceMainImage:img];
+    if ([[self.ride.destination lowercaseString] rangeOfString:@"ikea"].location == NSNotFound) {
+        [self.rideDetail.rideDetailHeaderView replaceMainImage:img];
+    }
 }
-
 
 #pragma mark - Facebook sharing methods
 

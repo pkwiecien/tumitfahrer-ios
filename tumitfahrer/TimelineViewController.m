@@ -64,6 +64,7 @@
 - (void)handleRefresh:(id)sender {
     [[ActivityStore sharedStore] fetchActivitiesFromWebservice:^(BOOL isFetched) {
         if (isFetched) {
+            [[ActivityStore sharedStore] loadAllActivitiesFromCoreData];
             [self.tableView reloadData];
             [self.refreshControl endRefreshing];
         }
@@ -155,8 +156,16 @@
     
     NSDate *now = [NSDate date];
     NSCalendar *c = [NSCalendar currentCalendar];
-    NSDateComponents *components = [c components:NSDayCalendarUnit|NSHourCalendarUnit fromDate:[result updatedAt] toDate:now options:0];
-    cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d days %d hours ago", components.day, components.hour];
+    NSDateComponents *components = [c components:NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:[result updatedAt] toDate:now options:0];
+    if (components.day > 0) {
+        cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d days %d hours ago", components.day, components.hour];
+    } else if(components.hour > 0) {
+        cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d hours %d minutes ago", components.hour, components.minute];
+    } else if(components.minute > 0) {
+        cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d minutes ago", components.minute];
+    } else {
+        cell.activityDetailLabel.text = [NSString stringWithFormat:@"Added just now"];
+    }
 
     cell.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];

@@ -53,6 +53,8 @@ static int page = 0;
 
 -(void)loadAllActivitiesFromCoreData {
     [self fetchActivitiesFromCoreData];
+    [self reloadNearbyActivities];
+    [self reloadMyActivities];
     [self sortRecentActivities];
 }
 
@@ -101,8 +103,11 @@ static int page = 0;
         }
         
         if(ride != nil) {
+            NSLog(@"current ride: %d", ride.rideId);
+
             CLLocation *departureLocation = [LocationController locationFromLongitude:ride.departureLongitude latitude:ride.departureLatitude];
             CLLocation *destinationLocation = [LocationController locationFromLongitude:ride.destinationLongitude latitude:ride.destinationLatitude];
+            NSLog(@"Departure location: %f %f, destination: %f %f, ride: %f %f", departureLocation.coordinate.latitude, departureLocation.coordinate.longitude, destinationLocation.coordinate.latitude, departureLocation.coordinate.longitude, currentLocation.coordinate.latitude, currentLocation.coordinate.longitude);
             if([LocationController isLocation:currentLocation nearbyAnotherLocation:departureLocation] || [LocationController isLocation:currentLocation nearbyAnotherLocation:destinationLocation])
             {
                 [self.privateActivitiesNearby addObject:activity];

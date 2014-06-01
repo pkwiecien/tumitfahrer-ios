@@ -40,7 +40,7 @@
 
 - (NSURLRequest*)buildUrlRequestWithLocation:(CLLocation *)location {
     
-    NSString *urlString = [NSString stringWithFormat:@"http://www.panoramio.com/map/get_panoramas.php?set=public&from=0&to=1&minx=%f&miny=%f&maxx=%f&maxy=%f&size=medium&mapfilter=true", location.coordinate.longitude, location.coordinate.latitude, location.coordinate.longitude+0.02, location.coordinate.latitude+0.02];
+    NSString *urlString = [NSString stringWithFormat:@"http://www.panoramio.com/map/get_panoramas.php?set=public&from=0&to=1&minx=%f&miny=%f&maxx=%f&maxy=%f&size=medium&mapfilter=true", location.coordinate.longitude, location.coordinate.latitude, location.coordinate.longitude+0.005, location.coordinate.latitude+0.005];
     NSLog(@"request: %@", urlString);
     NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
@@ -93,13 +93,14 @@
             // parse json
             NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
             @try {
-                NSLog(@"request was: %@", [[self buildUrlRequestWithLocation:location] URL]);
-                NSLog(@"parsed object: %@", parsedObject);
-                NSLog(@"photo url: %@", parsedObject[@"photos"][0][@"photo_file_url"]);
-                NSURL *url = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];
-                
-                UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
-                [self notifyAllAboutNewImage:retrievedImage rideId:rideId];
+                if (parsedObject[@"photos"] == nil ||[parsedObject[@"photos"] count] == 0 || parsedObject[@"photos"][0] == nil) {
+                    
+                } else {
+                    NSURL *url = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];
+                    
+                    UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
+                    [self notifyAllAboutNewImage:retrievedImage rideId:rideId];
+                }
             }
             @catch (NSException *exception) {
                 NSLog(@"Photo could not be received for location: %@", location);
@@ -125,12 +126,12 @@
             // parse json
             NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
             @try {
-                NSLog(@"request was: %@", [[self buildUrlRequestWithLocation:location] URL]);
-                NSLog(@"parsed object: %@", parsedObject);
-                NSLog(@"photo url: %@", parsedObject[@"photos"][0][@"photo_file_url"]);
-                NSURL *imageUrl = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];
-                
-                block(imageUrl);
+                if (parsedObject[@"photos"] == nil ||[parsedObject[@"photos"] count] == 0 || parsedObject[@"photos"][0] == nil) {
+                    
+                } else {
+                    NSURL *imageUrl = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];
+                    block(imageUrl);
+                }
             }
             @catch (NSException *exception) {
                 NSLog(@"Photo could not be received for location: %@", location);

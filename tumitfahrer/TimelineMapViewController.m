@@ -39,7 +39,9 @@
     for (id result in [[ActivityStore sharedStore] recentActivitiesByType:0]) {
         if ([result isKindOfClass:[Ride class]]) {
             Ride *ride = (Ride *)result;
-            [self.mapView addAnnotation:[self createAnnotationWithRide:ride title:nil]];
+            if (ride != nil) {
+                [self.mapView addAnnotation:[self createAnnotationWithRide:ride title:nil]];
+            }
         } else if ([result isKindOfClass:[Request class]]) {
             Request *request = (Request *)result;
             Ride *ride = [[RidesStore sharedStore] containsRideWithId:[request.rideId intValue]];

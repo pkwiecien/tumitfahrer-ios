@@ -91,7 +91,7 @@
 }
 
 -(void)initCellIcons {
-    self.timelineIcons = [NSArray arrayWithObjects:@"ProfileIcon", nil];
+    self.timelineIcons = [NSArray arrayWithObjects:@"TimelineIcon", nil];
     self.browseRidesIcons = [NSArray arrayWithObjects:@"CampusIcon", @"ActivityIcon", nil];
     self.addRidesIcons = [NSArray arrayWithObjects:@"AddBlackIcon", @"QuestionIcon", nil];
     self.profileIcons = [NSArray arrayWithObjects:@"ProfileIcon", @"ScheduleIcon", nil];

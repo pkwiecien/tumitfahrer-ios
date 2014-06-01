@@ -53,7 +53,7 @@
     
     // Ubertersters SDK initialization
     //$(PROJECT_DIR)/Pods/build/Debug-iphoneos
-    [[Ubertesters shared] initializeWithOptions:UTOptionsManual];
+    //[[Ubertesters shared] initializeWithOptions:UTOptionsManual];
     
     // Load the FBLoginView class (needed for login)
     [FBLoginView class];

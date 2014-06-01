@@ -323,6 +323,12 @@
         Ride *ride = (Ride *)[mappingResult firstObject];
         [[RidesStore sharedStore] addRideToStore:ride];
         [[LocationController sharedInstance] fetchLocationForAddress:ride.destination rideId:ride.rideId];
+        [[LocationController sharedInstance] fetchLocationForAddress:ride.departurePlace completionHandler:^(CLLocation *location) {
+            if (location != nil) {
+                ride.departureLatitude = location.coordinate.latitude;
+                ride.departureLongitude = location.coordinate.longitude;
+            }
+        }];
         self.tablePassengerValues = nil;
         self.tableDriverValues = nil;
         [KGStatusBar showSuccessWithStatus:@"Ride added"];

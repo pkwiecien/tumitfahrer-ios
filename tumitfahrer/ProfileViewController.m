@@ -47,7 +47,7 @@
     self.profileImageContentView.tableViewDataSource = self;
     self.profileImageContentView.tableViewDelegate = self;
     self.profileImageContentView.parallaxScrollFactor = 0.3; // little slower than normal.
-    self.profileImageContentView.circularImage = [UIImage imageNamed:@"Face"];
+    self.profileImageContentView.circularImage = [UIImage imageNamed:@"MainCampusImage"];
     [self.view addSubview:self.profileImageContentView];
     
     UIButton *buttonBack = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -64,7 +64,7 @@
     
     self.cellDescriptions = [[NSMutableArray alloc] initWithObjects:@"", [CurrentUser sharedInstance].user.email, [CurrentUser sharedInstance].user.phoneNumber, [CurrentUser sharedInstance].user.car,  nil];
     
-    UIImage *bluredImage = [ActionManager applyBlurFilterOnImage:[UIImage imageNamed:@"Face"]];
+    UIImage *bluredImage = [ActionManager applyBlurFilterOnImage:[UIImage imageNamed:@"MainCampusImage"]];
     self.profileImageContentView.selectedImageData = UIImagePNGRepresentation(bluredImage);
     if ([CurrentUser sharedInstance].user.profileImageData != nil) {
         UIImage *profilePic = [UIImage imageWithData:[CurrentUser sharedInstance].user.profileImageData];
@@ -75,7 +75,7 @@
         }
         self.profileImageContentView.circularImage = profilePic;
     } else {
-        self.profileImageContentView.circularImage = [UIImage imageNamed:@"Face"];
+        self.profileImageContentView.circularImage = [UIImage imageNamed:@"CircleBlue"];
     }
 }
 

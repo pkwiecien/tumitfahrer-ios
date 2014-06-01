@@ -28,7 +28,7 @@
     if (self) {
         searchQuery = [SPGooglePlacesAutocompleteQuery query];
         searchQuery.radius = 100.0;
-        self.predefinedDestinations = [NSMutableArray arrayWithObjects:@"Arcistraße, München", @"Garching-Hochbrück", @"Garching Forschungszentrum", nil];
+        self.predefinedDestinations = [NSMutableArray arrayWithObjects:@"Arcistraße 21, München", @"Garching-Hochbrück", @"Garching Forschungszentrum", nil];
     }
     return self;
 }
