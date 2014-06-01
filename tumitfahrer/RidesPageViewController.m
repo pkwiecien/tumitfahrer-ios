@@ -51,8 +51,6 @@
     [[self.pageController view] setFrame:[[self view] bounds]];
     
     RidesViewController *initialViewController = [self viewControllerAtIndex:0];
-    initialViewController.delegate = self;
-    initialViewController.RideType = self.RideType;
 
     NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
     
@@ -68,9 +66,9 @@
     [self setupNavigationBar];
     [self setupLeftMenuButton];
     
-    for (Ride *ride  in [[RidesStore sharedStore] allRides]) {
-        NSLog(@"ride with id: %d, departure place: %@ (%lf, %lf), destination: %@ (%lf, %lf)", ride.rideId, ride.departurePlace, ride.departureLatitude, ride.departureLongitude, ride.destination, ride.destinationLatitude, ride.destinationLongitude);
-    }
+//    for (Ride *ride  in [[RidesStore sharedStore] allRides]) {
+//        NSLog(@"ride with id: %d, departure place: %@ (%lf, %lf), destination: %@ (%lf, %lf)", ride.rideId, ride.departurePlace, ride.departureLatitude, ride.departureLongitude, ride.destination, ride.destinationLatitude, ride.destinationLongitude);
+//    }
 }
 
 -(void)setupLeftMenuButton{

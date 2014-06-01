@@ -25,6 +25,7 @@
 #import "AppDelegate.h"
 #import "RidesPageViewController.h"
 #import "RideRequestInformationCell.h"
+#import "CircularImageView.h"
 
 @interface RideDetailViewController () <NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate, RideStoreDelegate>
 
@@ -155,8 +156,13 @@
             cell = [RideActionCell detailsMessagesChoiceCell];
         }
         if (self.ride.driver == nil) {
-            [cell.joinRideButton setTitle:@"Offer a ride" forState:UIControlStateNormal];
-            [cell.contactDriverButton setTitle:@"Contact passenger" forState:UIControlStateNormal];
+            if ([self.ride.rideOwnerId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+                [cell.joinRideButton setTitle:@"Delete request" forState:UIControlStateNormal];
+                [cell.contactDriverButton setTitle:@"Messages" forState:UIControlStateNormal];
+            } else {
+                [cell.joinRideButton setTitle:@"Offer a ride" forState:UIControlStateNormal];
+                [cell.contactDriverButton setTitle:@"Contact passenger" forState:UIControlStateNormal];
+            }
         } else {
             [self makeJoinButtonDescriptionForCell:cell];
         }
@@ -198,9 +204,16 @@
             DriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DriverCell"];
             if (cell == nil) {
                 cell = [DriverCell driverCell];
-            } if ([self.ride.rideOwnerId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+            }
+            
+            if ([self.ride.rideOwnerId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
                 cell.driverNameLabel.text = [CurrentUser sharedInstance].user.firstName;
                 cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [[CurrentUser sharedInstance].user.ratingAvg floatValue]];
+                CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageWithData:[CurrentUser sharedInstance].user.profileImageData]];
+                [cell addSubview:circularImageView];
+            } else {
+                CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageNamed:@"CircleBlue"]];
+                [cell addSubview:circularImageView];
             }
             
             cell.mapView.delegate = self;
@@ -217,6 +230,15 @@
             DriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DriverCell"];
             if (cell == nil) {
                 cell = [DriverCell driverCell];
+            }
+            if ([self.ride.rideOwnerId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+                cell.driverNameLabel.text = [CurrentUser sharedInstance].user.firstName;
+                cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [[CurrentUser sharedInstance].user.ratingAvg floatValue]];
+                CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageWithData:[CurrentUser sharedInstance].user.profileImageData]];
+                [cell addSubview:circularImageView];
+            } else {
+                CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageNamed:@"CircleBlue"]];
+                [cell addSubview:circularImageView];
             }
             cell.driverNameLabel.text = self.ride.driver.firstName;
             cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [self.ride.driver.ratingAvg floatValue]];
@@ -285,7 +307,7 @@
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     Request *request = [self requestFoundInCoreData];
     
-    if ([self.ride.driver.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+    if ([self.ride.driver.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] || [self.ride.rideOwnerId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
         [objectManager deleteObject:self.ride path:[NSString stringWithFormat:@"/api/v2/rides/%d", self.ride.rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             
             [[CurrentUser sharedInstance].user removeRidesAsDriverObject:self.ride];

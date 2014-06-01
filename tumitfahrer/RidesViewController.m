@@ -53,20 +53,41 @@
     [self.tableView insertSubview:self.refreshControl atIndex:0];
     self.imageCache = [[NSCache alloc] init];
     [self.imageCache setObject:[ActionManager colorImage:[UIImage imageNamed:@"PassengerIcon"] withColor:[UIColor customLightGray]] forKey:@"PassengerIcon"];
+    [self.imageCache setObject:[ActionManager colorImage:[UIImage imageNamed:@"DriverIcon"] withColor:[UIColor customLightGray]] forKey:@"DriverIcon"];
 }
 
 -(void)handleRefresh {
     [[RidesStore sharedStore] fetchNextRides:^(BOOL fetched) {
         if(fetched) {
+            [self addToImageCache];
             [self.tableView reloadData];
             [self.refreshControl endRefreshing];
         }
     }];
 }
+
+-(void)viewDidAppear:(BOOL)animated {
+    [[RidesStore sharedStore]  fetchRidesFromCoreDataByType:ContentTypeActivityRides];
+    [[RidesStore sharedStore] reloadRides:self.RideType];
+    [self.tableView reloadData];
+}
+
 -(void)addToImageCache {
     int counter = 0;
     UIImage *placeholderImage = [UIImage imageNamed:@"PlaceholderImage"];
-    for (Ride *ride in [[RidesStore sharedStore] allRidesByType:self.RideType]) {
+    NSArray *rides = nil;
+    switch (self.index) {
+        case 0:
+            rides = [[RidesStore sharedStore] allRidesByType:self.RideType];
+            break;
+        case 1:
+            rides = [[RidesStore sharedStore] ridesNearbyByType:self.RideType];
+            break;
+        case 2:
+            rides = [[RidesStore sharedStore] favoriteRidesByType:self.RideType];
+            break;
+    }
+    for (Ride *ride in rides) {
         UIImage *image = [UIImage imageWithData:ride.destinationImage];
         if (image == nil) {
             image = placeholderImage;
@@ -77,17 +98,21 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    //
    [self.delegate willAppearViewWithIndex:self.index];
    [self addToImageCache];
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    [self.tableView reloadData];
-}
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [[[RidesStore sharedStore] allRidesByType:self.RideType] count];
+    switch (self.index) {
+        case 0:
+            return [[[RidesStore sharedStore] allRidesByType:self.RideType] count];
+        case 1:
+            return  [[[RidesStore sharedStore] ridesNearbyByType:self.RideType] count];
+        case 2:
+            return [[[RidesStore sharedStore] favoriteRidesByType:self.RideType] count];
+        default:
+            return 0;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -116,8 +141,20 @@
         cell = [RidesCell ridesCell];
     }
     
-    
-    Ride *ride = [[[RidesStore sharedStore] allRidesByType:self.RideType] objectAtIndex:indexPath.section];
+    Ride *ride = nil;
+    switch (self.index) {
+        case 0:
+            ride = [[[RidesStore sharedStore] allRidesByType:self.RideType] objectAtIndex:indexPath.section];
+            break;
+        case 1:
+            ride = [[[RidesStore sharedStore] ridesNearbyByType:self.RideType] objectAtIndex:indexPath.section];
+            break;
+        case 2:
+            ride = [[[RidesStore sharedStore] favoriteRidesByType:self.RideType] objectAtIndex:indexPath.section];
+            break;
+        default:
+            return 0;
+    }
     
     UIImage *image = [_imageCache objectForKey:[NSNumber numberWithInteger:indexPath.section]];
     if (image == nil) {
@@ -144,6 +181,7 @@
         cell.roleImageView.image = [_imageCache objectForKey:@"PassengerIcon"];       
     } else {
         cell.seatsView.backgroundColor = [UIColor orangeColor];
+        cell.roleImageView.image = [_imageCache objectForKey:@"DriverIcon"];
     }
     if (ride.driver == nil) {
         cell.seatsLabel.text = @"offer a ride";
@@ -163,7 +201,19 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
-    rideDetailVC.ride = [[[RidesStore sharedStore] allRidesByType:self.RideType] objectAtIndex:indexPath.section];
+    switch (self.index) {
+        case 0:
+            rideDetailVC.ride = [[[RidesStore sharedStore] allRidesByType:self.RideType] objectAtIndex:indexPath.section];
+            break;
+        case 1:
+            rideDetailVC.ride = [[[RidesStore sharedStore] ridesNearbyByType:self.RideType] objectAtIndex:indexPath.section];
+            break;
+        case 2:
+            rideDetailVC.ride = [[[RidesStore sharedStore] favoriteRidesByType:self.RideType] objectAtIndex:indexPath.section];
+            break;
+        default:
+            return;
+    }
     [self.navigationController pushViewController:rideDetailVC animated:YES];
 }
 

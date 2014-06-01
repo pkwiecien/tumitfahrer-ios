@@ -47,4 +47,6 @@
 - (void)fetchSingleRideFromWebserviceWithId:(NSInteger)rideId block:(boolCompletionHandler)block;
 - (Ride *)fetchRideFromCoreDataWithId:(NSInteger)rideId;
 
+-(void)reloadRides:(ContentType)contentType;
+
 @end

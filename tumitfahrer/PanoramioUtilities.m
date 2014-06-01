@@ -12,6 +12,7 @@
 @interface PanoramioUtilities ()
 
 @property (nonatomic, strong) NSMutableArray *observers;
+@property (nonatomic, assign) NSInteger requestCounter;
 
 @end
 
@@ -21,6 +22,7 @@
     self = [super init];
     if (self) {
         self.observers = [[NSMutableArray alloc] init];
+        self.requestCounter = 1;
     }
     return self;
 }
@@ -40,7 +42,8 @@
 
 - (NSURLRequest*)buildUrlRequestWithLocation:(CLLocation *)location {
     
-    NSString *urlString = [NSString stringWithFormat:@"http://www.panoramio.com/map/get_panoramas.php?set=public&from=0&to=1&minx=%f&miny=%f&maxx=%f&maxy=%f&size=medium&mapfilter=true", location.coordinate.longitude, location.coordinate.latitude, location.coordinate.longitude+0.005, location.coordinate.latitude+0.005];
+    NSString *urlString = [NSString stringWithFormat:@"http://www.panoramio.com/map/get_panoramas.php?set=public&from=0&to=1&minx=%f&miny=%f&maxx=%f&maxy=%f&size=medium&mapfilter=true", location.coordinate.longitude, location.coordinate.latitude, location.coordinate.longitude+0.005*self.requestCounter, location.coordinate.latitude+0.005*self.requestCounter];
+    self.requestCounter++;
     NSLog(@"request: %@", urlString);
     NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
@@ -82,6 +85,11 @@
 }
 -(void)fetchPhotoForLocation:(CLLocation *)location rideId:(NSInteger)rideId {
     
+    if (self.requestCounter > 5) {
+        self.requestCounter = 1;
+        return;
+    }
+    
     [NSURLConnection sendAsynchronousRequest:[self buildUrlRequestWithLocation:location] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if (connectionError)
         {
@@ -98,11 +106,12 @@
             NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
             @try {
                 if (parsedObject[@"photos"] == nil ||[parsedObject[@"photos"] count] == 0 || parsedObject[@"photos"][0] == nil) {
-                    
+                    [self fetchPhotoForLocation:location rideId:rideId];
                 } else {
                     NSURL *url = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];
                     
                     UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
+                    self.requestCounter = 1;
                     [self notifyAllAboutNewImage:retrievedImage rideId:rideId];
                 }
             }
@@ -131,7 +140,6 @@
             NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
             @try {
                 if (parsedObject[@"photos"] == nil ||[parsedObject[@"photos"] count] == 0 || parsedObject[@"photos"][0] == nil) {
-                    
                 } else {
                     NSURL *imageUrl = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];
                     block(imageUrl);

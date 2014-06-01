@@ -13,10 +13,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="173"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CircleBlue" translatesAutoresizingMaskIntoConstraints="NO" id="p4y-Cv-OxX">
-                        <rect key="frame" x="20" y="25" width="91" height="91"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ac-1L-MgI">
                         <rect key="frame" x="40" y="124" width="51" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -44,7 +40,4 @@
             </connections>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="CircleBlue" width="98" height="98"/>
-    </resources>
 </document>

@@ -296,14 +296,15 @@ static int page = 0;
 
 
 - (void)reloadFavoriteRidesByType:(ContentType)rideType {
-    CLLocation *currentLocation = [LocationController sharedInstance].currentLocation;
-    
-    for (Ride *ride in [self allRidesByType:rideType]) {
-        CLLocation *departureLocation = [LocationController locationFromLongitude:ride.departureLongitude latitude:ride.departureLatitude];
-        CLLocation *destinationLocation = [LocationController locationFromLongitude:ride.destinationLongitude latitude:ride.destinationLatitude];
-        if ([LocationController isLocation:currentLocation nearbyAnotherLocation:departureLocation] || [LocationController isLocation:currentLocation nearbyAnotherLocation:destinationLocation]) {
-            [self addFavoriteRide:ride byType:rideType];
-        }
+    switch (rideType) {
+        case ContentTypeActivityRides:
+            self.privateActivityRidesFavorites = [[NSMutableArray alloc] init];
+            break;
+        case ContentTypeCampusRides:
+            self.privateCampusRidesFavorites = [[NSMutableArray alloc] init];
+            break;
+        default:
+            break;
     }
 }
 
@@ -316,6 +317,17 @@ static int page = 0;
 }
 
 - (void)reloadNearbyRidesByType:(ContentType)rideType {
+    switch (rideType) {
+        case ContentTypeActivityRides:
+            self.privateActivityRidesNearby = [[NSMutableArray alloc] init];
+            break;
+        case ContentTypeCampusRides:
+            self.privateCampusRidesNearby = [[NSMutableArray alloc] init];
+            break;
+        default:
+            break;
+    }
+
     CLLocation *currentLocation = [LocationController sharedInstance].currentLocation;
     
     for (Ride *ride in [self allRidesByType:rideType]) {
@@ -365,11 +377,15 @@ static int page = 0;
             default:
                 break;
         }
-        [self reloadFavoriteRidesByType:contentType];
     }
     
     return [self allFavoriteRidesByType:contentType];
 
+}
+
+-(void)reloadRides:(ContentType)contentType {
+    [self reloadFavoriteRidesByType:contentType];
+    [self reloadNearbyRidesByType:contentType];
 }
 
 -(NSArray *)allRidesByType:(ContentType)contentType {
