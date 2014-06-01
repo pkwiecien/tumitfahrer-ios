@@ -70,6 +70,7 @@
     else {
         self.rideDetail.selectedImageData = self.ride.destinationImage;
     }
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.headerViewLabel.text = [@"To " stringByAppendingString:self.ride.destination];
@@ -197,10 +198,10 @@
             DriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DriverCell"];
             if (cell == nil) {
                 cell = [DriverCell driverCell];
+            } if ([self.ride.rideOwnerId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+                cell.driverNameLabel.text = [CurrentUser sharedInstance].user.firstName;
+                cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [[CurrentUser sharedInstance].user.ratingAvg floatValue]];
             }
-            
-            //            cell.driverNameLabel.text = self.ride.req.firstName;
-            //            cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [self.ride.driver.ratingAvg floatValue]];
             
             cell.mapView.delegate = self;
             UITapGestureRecognizer *mapTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mapViewTap)];

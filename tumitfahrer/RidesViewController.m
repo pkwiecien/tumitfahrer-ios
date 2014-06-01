@@ -141,7 +141,7 @@
     cell.dateLabel.text = [ActionManager dateStringFromDate:[ride departureTime]];
     if(ride.driver == nil) {
         cell.seatsView.backgroundColor = [UIColor orangeColor];
-        cell.roleImageView.image = [_imageCache objectForKey:@"PassengerIcon"];
+        cell.roleImageView.image = [_imageCache objectForKey:@"PassengerIcon"];       
     } else {
         cell.seatsView.backgroundColor = [UIColor orangeColor];
     }

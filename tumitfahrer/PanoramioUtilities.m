@@ -61,17 +61,21 @@
             if (localError) {
                 return;
             }
-            
-            // parse json
-            NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
-            NSLog(@"photo url: %@", parsedObject[@"photos"][0][@"photo_file_url"]);
-            NSURL *url = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];
-            
-            UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
-            [LocationController sharedInstance].currentLocationImage = retrievedImage;
-            
-            // notify observers about retrieved image
-            [self notifyWithImage:retrievedImage];
+            @try {
+                // parse json
+                NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
+                NSLog(@"photo url: %@", parsedObject[@"photos"][0][@"photo_file_url"]);
+                NSURL *url = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];
+                
+                UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
+                [LocationController sharedInstance].currentLocationImage = retrievedImage;
+                
+                // notify observers about retrieved image
+                [self notifyWithImage:retrievedImage];
+            }
+            @catch (NSException *exception) {
+                NSLog(@"Photo could not be received for location: %@", location);
+            }
         }
     }];
     

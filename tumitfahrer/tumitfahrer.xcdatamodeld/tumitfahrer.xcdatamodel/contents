@@ -58,6 +58,7 @@
         <attribute name="realtimeDepartureTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="realtimeKm" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="rideId" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="rideOwnerId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="rideType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="activities" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="rides" inverseEntity="Activity" syncable="YES"/>
@@ -92,7 +93,7 @@
         <element name="Message" positionX="0" positionY="0" width="128" height="148"/>
         <element name="Rating" positionX="106" positionY="-99" width="128" height="165"/>
         <element name="Request" positionX="18" positionY="-333" width="128" height="178"/>
-        <element name="Ride" positionX="-279" positionY="-175" width="128" height="418"/>
+        <element name="Ride" positionX="-279" positionY="-175" width="128" height="433"/>
         <element name="User" positionX="252" positionY="-40" width="128" height="345"/>
     </elements>
 </model>

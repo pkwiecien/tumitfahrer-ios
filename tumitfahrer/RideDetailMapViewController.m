@@ -49,6 +49,9 @@
 -(void)viewWillAppear:(BOOL)animated {
     [self setupNavigationBar];
     [self prepareDirections];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
     [self zoomToFitMapAnnotations:self.mapView];
 }
 
@@ -115,16 +118,7 @@
     renderer.strokeColor = [UIColor redColor];
     renderer.lineWidth = 4.0;
     
-    CLLocationCoordinate2D track = CLLocationCoordinate2DMake(self.selectedRide.departureLatitude, self.selectedRide.departureLongitude);
-    MKCoordinateRegion region;
-    MKCoordinateSpan span = MKCoordinateSpanMake(1, 1);
-    region.span = span;
-    region.center = track;
-    
-    [self.mapView setRegion:region animated:TRUE];
-    [self.mapView regionThatFits:region];
-    
-    return  renderer;
+    return renderer;
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
