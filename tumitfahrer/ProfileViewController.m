@@ -62,8 +62,6 @@
     [editButton addTarget:self action:@selector(displayEditProfilePage) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:editButton];
     
-    self.cellDescriptions = [[NSMutableArray alloc] initWithObjects:@"", [CurrentUser sharedInstance].user.email, [CurrentUser sharedInstance].user.phoneNumber, [CurrentUser sharedInstance].user.car,  nil];
-    
     UIImage *bluredImage = [ActionManager applyBlurFilterOnImage:[UIImage imageNamed:@"MainCampusImage"]];
     self.profileImageContentView.selectedImageData = UIImagePNGRepresentation(bluredImage);
     if ([CurrentUser sharedInstance].user.profileImageData != nil) {
@@ -81,6 +79,19 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [self updateCellDescriptions];
+}
+
+-(void)updateCellDescriptions {
+    NSString *phoneNumber = @"Not defined";
+    if ([CurrentUser sharedInstance].user.phoneNumber != nil) {
+        phoneNumber = [CurrentUser sharedInstance].user.phoneNumber;
+    }
+    NSString *car = @"Not defined";
+    if ([CurrentUser sharedInstance].user.car != nil) {
+        car = [CurrentUser sharedInstance].user.car;
+    }
+    self.cellDescriptions = [[NSMutableArray alloc] initWithObjects:@"", [CurrentUser sharedInstance].user.email, phoneNumber, car,  nil];
 }
 
 -(void)oneFingerTwoTaps {
@@ -126,6 +137,7 @@
         
         cell.cellDescription.text = [self.cellDescriptions objectAtIndex:indexPath.row];
         cell.cellImageView.image = [self.cellImages objectAtIndex:indexPath.row];
+        
         return cell;
     }
 }
@@ -199,13 +211,13 @@
     [self.profileImageContentView.rideDetailHeaderView replaceImage:chosenImage];
     [CurrentUser sharedInstance].user.profileImageData = UIImageJPEGRepresentation(chosenImage, 1.0f);
     UIImage *profilePic = [UIImage imageWithData:[CurrentUser sharedInstance].user.profileImageData];
-
+    
     if(profilePic.imageOrientation == UIImageOrientationUp) {
         NSLog(@"image orientation up");
     } else {
         NSLog(@"image orientation different");
     }
-
+    
     [picker dismissViewControllerAnimated:YES completion:NULL];
     NSError *error;
     if (![[CurrentUser sharedInstance].user.managedObjectContext saveToPersistentStore:&error]) {

@@ -9,7 +9,6 @@
                 <outlet property="carTextField" destination="44b-vj-uJF" id="rc7-ob-wuk"/>
                 <outlet property="passwordTextField" destination="oG2-zz-zse" id="tNX-sk-EAI"/>
                 <outlet property="phoneNumberTextField" destination="DwJ-yL-1fx" id="g26-HL-Sxh"/>
-                <outlet property="updateButton" destination="fDR-H2-Y4x" id="yA6-LV-eY5"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -54,18 +53,6 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fDR-H2-Y4x">
-                    <rect key="frame" x="31" y="356" width="259" height="40"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <state key="normal" title="Update" backgroundImage="blueButton">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="updateProfileButtonPressed:" destination="-1" eventType="touchUpInside" id="DBb-U3-KuZ"/>
-                    </connections>
-                </button>
             </subviews>
             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
@@ -75,7 +62,4 @@
             </connections>
         </view>
     </objects>
-    <resources>
-        <image name="blueButton" width="488" height="97"/>
-    </resources>
 </document>

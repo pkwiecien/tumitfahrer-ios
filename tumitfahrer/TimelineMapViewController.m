@@ -169,4 +169,8 @@
     [mapView setRegion:region animated:YES];
 }
 
+-(void)dealloc {
+    self.mapView.delegate = nil;
+}
+
 @end

@@ -68,7 +68,7 @@
     [self.view endEditing:YES];
 }
 
-- (IBAction)updateProfileButtonPressed {
+- (void)updateProfileButtonPressed {
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[ActionManager encryptCredentialsWithEmail:[CurrentUser sharedInstance].user.email encryptedPassword:[CurrentUser sharedInstance].user.password]];
 

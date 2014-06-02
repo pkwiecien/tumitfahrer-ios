@@ -24,6 +24,8 @@
 @property UIRefreshControl *refreshControl;
 @property NSCache *imageCache;
 @property NSArray *cellsArray;
+@property UIImage *passengerIcon;
+@property UIImage *driverIcon;
 
 @end
 
@@ -36,9 +38,9 @@
     
     [[PanoramioUtilities sharedInstance] addObserver:self];
     [[RidesStore sharedStore] addObserver:self];
-//    if (!_backgroundOperationQueue) {
-//        _backgroundOperationQueue = [[NSOperationQueue alloc] init];
-//    }
+    //    if (!_backgroundOperationQueue) {
+    //        _backgroundOperationQueue = [[NSOperationQueue alloc] init];
+    //    }
     
     UIColor *customGrayColor = [UIColor colorWithRed:224/255.0 green:224/255.0 blue:224/255.0 alpha:1.0];
     [self.view setBackgroundColor:customGrayColor];
@@ -52,8 +54,9 @@
     [self.refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
     self.imageCache = [[NSCache alloc] init];
-    [self.imageCache setObject:[ActionManager colorImage:[UIImage imageNamed:@"PassengerIcon"] withColor:[UIColor customLightGray]] forKey:@"PassengerIcon"];
-    [self.imageCache setObject:[ActionManager colorImage:[UIImage imageNamed:@"DriverIcon"] withColor:[UIColor customLightGray]] forKey:@"DriverIcon"];
+    
+    self.passengerIcon = [ActionManager colorImage:[UIImage imageNamed:@"PassengerIcon"] withColor:[UIColor customLightGray]];
+    self.driverIcon =  [ActionManager colorImage:[UIImage imageNamed:@"DriverIcon"] withColor:[UIColor customLightGray]];
 }
 
 -(void)handleRefresh {
@@ -98,8 +101,8 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-   [self.delegate willAppearViewWithIndex:self.index];
-   [self addToImageCache];
+    [self addToImageCache];
+    [self.delegate willAppearViewWithIndex:self.index];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -178,10 +181,10 @@
     cell.dateLabel.text = [ActionManager dateStringFromDate:[ride departureTime]];
     if(ride.driver == nil) {
         cell.seatsView.backgroundColor = [UIColor orangeColor];
-        cell.roleImageView.image = [_imageCache objectForKey:@"PassengerIcon"];       
+        cell.roleImageView.image = self.passengerIcon;
     } else {
         cell.seatsView.backgroundColor = [UIColor orangeColor];
-        cell.roleImageView.image = [_imageCache objectForKey:@"DriverIcon"];
+        cell.roleImageView.image = self.driverIcon;
     }
     if (ride.driver == nil) {
         cell.seatsLabel.text = @"offer a ride";

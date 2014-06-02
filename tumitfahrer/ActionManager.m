@@ -24,7 +24,7 @@
 #pragma mark - image handling
 // explanation: stackoverflow.com/questions/3514066/how-to-tint-a-transparent-png-image-in-iphone
 + (UIImage *)colorImage:(UIImage *)origImage withColor:(UIColor *)color {
-    UIGraphicsBeginImageContextWithOptions (origImage.size, NO, [[UIScreen mainScreen] scale]);
+    /*UIGraphicsBeginImageContextWithOptions (origImage.size, NO, [[UIScreen mainScreen] scale]);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGContextTranslateCTM(context, 0, origImage.size.height);
@@ -55,7 +55,8 @@
     UIImage *coloredImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    return coloredImage;
+    return coloredImage;*/
+    return origImage;
 }
 
 // create a square filled with a specific color (useful e.g. for buttons or backgrounds)
