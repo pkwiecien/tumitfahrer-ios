@@ -83,7 +83,7 @@
     }];
     
 }
--(void)fetchPhotoForLocation:(CLLocation *)location rideId:(NSInteger)rideId {
+-(void)fetchPhotoForLocation:(CLLocation *)location rideId:(NSNumber *)rideId {
     
     if (self.requestCounter > 5) {
         self.requestCounter = 1;
@@ -122,7 +122,7 @@
     }];
 }
 
--(void)fetchPhotoForLocation:(CLLocation *)location rideId:(NSInteger)rideId completionHandler:(photoUrlCompletionHandler)block {
+-(void)fetchPhotoForLocation:(CLLocation *)location rideId:(NSNumber *)rideId completionHandler:(photoUrlCompletionHandler)block {
     
     [NSURLConnection sendAsynchronousRequest:[self buildUrlRequestWithLocation:location] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if (connectionError)
@@ -170,7 +170,7 @@
     }
 }
 
--(void)notifyAllAboutNewImage:(UIImage *)image rideId:(NSInteger)rideId {
+-(void)notifyAllAboutNewImage:(UIImage *)image rideId:(NSNumber *)rideId {
     for (id<PanoramioUtilitiesDelegate> observer in self.observers) {
         if ([observer respondsToSelector:@selector(didReceivePhotoForLocation:rideId:)]) {
             [observer didReceivePhotoForLocation:image rideId:rideId];

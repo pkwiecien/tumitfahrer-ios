@@ -94,12 +94,12 @@ static int page = 0;
     }
 }
 
-- (void)fetchUserRequestedRidesFromCoreData:(NSInteger)userId {
+- (void)fetchUserRequestedRidesFromCoreData:(NSNumber *)userId {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *e = [NSEntityDescription entityForName:@"Ride"
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
                               mainQueueManagedObjectContext];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"ANY self.requests.passengerId = %d", userId];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"ANY self.requests.passengerId = %@", userId];
     
     [request setPredicate:predicate];
     
@@ -115,12 +115,12 @@ static int page = 0;
     
 }
 
-- (Ride *)fetchRideFromCoreDataWithId:(NSInteger)rideId {
+- (Ride *)fetchRideFromCoreDataWithId:(NSNumber *)rideId {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *e = [NSEntityDescription entityForName:@"Ride"
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
                               mainQueueManagedObjectContext];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rideId = %d", rideId];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rideId = %@", rideId];
     [request setPredicate:predicate];
     
     request.entity = e;
@@ -134,7 +134,7 @@ static int page = 0;
     return [fetchedObjects firstObject];
 }
 
--(NSArray *)rideRequestForUserWithId:(NSInteger)userId {
+-(NSArray *)rideRequestForUserWithId:(NSNumber *)userId {
     [self fetchUserRequestedRidesFromCoreData:userId];
     return self.userRideRequests;
 }
@@ -165,12 +165,12 @@ static int page = 0;
     }];
 }
 
--(void)fetchSingleRideFromWebserviceWithId:(NSInteger)rideId block:(boolCompletionHandler)block {
+-(void)fetchSingleRideFromWebserviceWithId:(NSNumber *)rideId block:(boolCompletionHandler)block {
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
     
-    [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/rides/%d", rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/rides/%@", rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         block(YES);
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);
@@ -207,23 +207,23 @@ static int page = 0;
 
 -(void)fetchLocationForUpdatedRides {
     for(Ride *ride in [self allRides]) {
-        if (ride.destinationLatitude == 0.0 || ride.destinationImage == nil) {
+        if ([ride.destinationLatitude doubleValue]== 0.0 || ride.destinationImage == nil) {
             [self fetchLocationForRide:ride];
         }
-        if(ride.departureLatitude == 0.0) {
+        if([ride.departureLatitude doubleValue]== 0.0) {
             [[LocationController sharedInstance] fetchLocationForAddress:ride.departurePlace completionHandler:^(CLLocation *location) {
                 if (location != nil) {
-                    ride.departureLatitude = location.coordinate.latitude;
-                    ride.departureLongitude = location.coordinate.longitude;
+                    ride.departureLatitude = [NSNumber numberWithDouble:location.coordinate.latitude];
+                    ride.departureLongitude = [NSNumber numberWithDouble:location.coordinate.longitude];
                 }
             }];
         }
     }
 }
 
--(Ride *)containsRideWithId:(NSInteger)rideId {
+-(Ride *)containsRideWithId:(NSNumber *)rideId {
     for (Ride *ride in [self allRides]) {
-        if (ride.rideId == rideId) {
+        if ([ride.rideId isEqualToNumber:rideId]) {
             return ride;
         }
     }
@@ -235,7 +235,7 @@ static int page = 0;
 }
 
 -(void)addRideToStore:(Ride *)ride {
-    switch (ride.rideType) {
+    switch ([ride.rideType intValue]) {
         case ContentTypeActivityRides:
             [self.activityRides addObject:ride];
             break;
@@ -267,16 +267,16 @@ static int page = 0;
 
 # pragma mark - delegate methods
 
--(void)didReceiveLocationForAddress:(CLLocation *)location rideId:(NSInteger)rideId {
+-(void)didReceiveLocationForAddress:(CLLocation *)location rideId:(NSNumber *)rideId {
     Ride *ride = [self getRideWithId:rideId];
-    NSLog(@"ride id is: %d and fetched location lat: %f and destination was: %@", ride.rideId, location.coordinate.latitude, ride.destination);
+    NSLog(@"ride id is: %@ and fetched location lat: %f and destination was: %@", ride.rideId, location.coordinate.latitude, ride.destination);
     
-    ride.destinationLatitude = location.coordinate.latitude;
-    ride.destinationLongitude = location.coordinate.longitude;
+    ride.destinationLatitude = [NSNumber numberWithDouble:location.coordinate.latitude];
+    ride.destinationLongitude = [NSNumber numberWithDouble:location.coordinate.longitude];
     [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:location rideId:rideId];
 }
 
--(void)didReceivePhotoForLocation:(UIImage *)image rideId:(NSInteger)rideId{
+-(void)didReceivePhotoForLocation:(UIImage *)image rideId:(NSNumber *)rideId{
     Ride *ride = [self getRideWithId:rideId];
     ride.destinationImage = UIImagePNGRepresentation(image);
     [self notifyAllAboutNewImageForRideId:rideId];
@@ -331,8 +331,8 @@ static int page = 0;
     CLLocation *currentLocation = [LocationController sharedInstance].currentLocation;
     
     for (Ride *ride in [self allRidesByType:rideType]) {
-        CLLocation *departureLocation = [LocationController locationFromLongitude:ride.departureLongitude latitude:ride.departureLatitude];
-        CLLocation *destinationLocation = [LocationController locationFromLongitude:ride.destinationLongitude latitude:ride.destinationLatitude];
+        CLLocation *departureLocation = [LocationController locationFromLongitude:[ride.departureLongitude doubleValue] latitude:[ride.departureLatitude doubleValue]];
+        CLLocation *destinationLocation = [LocationController locationFromLongitude:[ride.destinationLongitude doubleValue] latitude:[ride.destinationLatitude doubleValue]];
         if ([LocationController isLocation:currentLocation nearbyAnotherLocation:departureLocation] || [LocationController isLocation:currentLocation nearbyAnotherLocation:destinationLocation]) {
             [self addNearbyRide:ride byType:rideType];
         }
@@ -435,12 +435,10 @@ static int page = 0;
     return self.activityRides;
 }
 
-- (Ride *)getRideWithId:(NSInteger)rideId {
+- (Ride *)getRideWithId:(NSNumber *)rideId {
     
     for (Ride *ride in [self allRides]) {
-        NSLog(@"Ride is %@", ride);
-        NSLog(@"ride id: %ld", (long)rideId);
-        if (ride.rideId == (int16_t)rideId) {
+        if ([ride.rideId isEqualToNumber:rideId]) {
             return ride;
         }
     }
@@ -469,7 +467,7 @@ static int page = 0;
     [self.observers addObject:observer];
 }
 
--(void)notifyAllAboutNewImageForRideId:(NSInteger)rideId {
+-(void)notifyAllAboutNewImageForRideId:(NSNumber *)rideId {
     for (id<RideStoreDelegate> observer in self.observers) {
         if ([observer respondsToSelector:@selector(didReceivePhotoForRide:)]) {
             [observer didReceivePhotoForRide:rideId];

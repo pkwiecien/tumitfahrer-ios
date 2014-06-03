@@ -129,7 +129,7 @@
             // iOS6 and above : Use NSAttributedStrings
             NSString *descr = [NSString stringWithFormat:@"New ride offer to: \n%@", destination];
             const CGFloat fontSize = 15;
-            UIFont *boldFont = [UIFont boldSystemFontOfSize:fontSize];
+            //UIFont *boldFont = [UIFont boldSystemFontOfSize:fontSize];
             UIFont *regularFont = [UIFont systemFontOfSize:fontSize];
             UIColor *foregroundColor = [UIColor blackColor];
             
@@ -137,8 +137,7 @@
             NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
                                    regularFont, NSFontAttributeName,
                                    foregroundColor, NSForegroundColorAttributeName, nil];
-            NSDictionary *subAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                                      boldFont, NSFontAttributeName, nil];
+            // NSDictionary *subAttrs = [NSDictionary dictionaryWithObjectsAndKeys: boldFont, NSFontAttributeName, nil];
             //const NSRange range = NSMakeRange(a,b); // range of " 2012/10/14 ". Ideally this should not be hardcoded
             
             // Create the attributed string (text + attributes)
@@ -182,17 +181,17 @@
         [self.navigationController pushViewController:rideDetailVC animated:YES];
     } else if([result isKindOfClass:[Request class]]) {
         Request *res = (Request *)result;
-        Ride *ride = [[RidesStore sharedStore] containsRideWithId:[res.rideId intValue]];
+        Ride *ride = [[RidesStore sharedStore] containsRideWithId:res.rideId];
         if (ride != nil) {
             res.requestedRide = ride;
             RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
             rideDetailVC.ride = ride;
             [self.navigationController pushViewController:rideDetailVC animated:YES];
         } else {
-            [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:[res.rideId intValue] block:^(BOOL completed) {
+            [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:res.rideId block:^(BOOL completed) {
                 if(completed) {
                     RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
-                    Ride *ride = [[RidesStore sharedStore] fetchRideFromCoreDataWithId:[res.rideId intValue]];
+                    Ride *ride = [[RidesStore sharedStore] fetchRideFromCoreDataWithId:res.rideId];
                     rideDetailVC.ride = ride;
                     [self.navigationController pushViewController:rideDetailVC animated:YES];
                 }

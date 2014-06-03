@@ -41,9 +41,9 @@
     return self.searchResults;
 }
 
--(RideSearch *)rideWithId:(NSInteger)rideId {
+-(RideSearch *)rideWithId:(NSNumber *)rideId {
     for (RideSearch *ride in self.searchResults) {
-        if (ride.rideId == rideId) {
+        if ([ride.rideId isEqualToNumber:rideId]) {
             return ride;
         }
     }

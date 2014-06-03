@@ -2,7 +2,7 @@
 //  Ride.h
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 6/1/14.
+//  Created by Pawel Kwiecien on 6/3/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
@@ -13,33 +13,26 @@
 
 @interface Ride : NSManagedObject
 
-@property (nonatomic) NSDate * createdAt;
+@property (nonatomic, retain) NSDate * createdAt;
+@property (nonatomic, retain) NSNumber * departureLatitude;
+@property (nonatomic, retain) NSNumber * departureLongitude;
 @property (nonatomic, retain) NSString * departurePlace;
-@property (nonatomic) NSDate * departureTime;
+@property (nonatomic, retain) NSDate * departureTime;
 @property (nonatomic, retain) NSString * destination;
 @property (nonatomic, retain) NSData * destinationImage;
-@property (nonatomic) double destinationLatitude;
-@property (nonatomic) double destinationLongitude;
-@property (nonatomic) float distance;
-@property (nonatomic) float duration;
-@property (nonatomic) int32_t freeSeats;
-@property (nonatomic) BOOL isFinished;
-@property (nonatomic) BOOL isPaid;
+@property (nonatomic, retain) NSNumber * destinationLatitude;
+@property (nonatomic, retain) NSNumber * destinationLongitude;
+@property (nonatomic, retain) NSNumber * freeSeats;
+@property (nonatomic, retain) NSNumber * isPaid;
 @property (nonatomic, retain) NSString * meetingPoint;
-@property (nonatomic) float price;
-@property (nonatomic) NSDate * realtimeDepartureTime;
-@property (nonatomic) float realtimeKm;
-@property (nonatomic) int32_t rideId;
-@property (nonatomic) NSDate * updatedAt;
-@property (nonatomic) int16_t rideType;
+@property (nonatomic, retain) NSNumber * price;
+@property (nonatomic, retain) NSNumber * rideId;
+@property (nonatomic, retain) NSNumber * rideType;
+@property (nonatomic, retain) NSDate * updatedAt;
+@property (nonatomic, retain) Activity *activities;
 @property (nonatomic, retain) User *driver;
 @property (nonatomic, retain) NSSet *passengers;
 @property (nonatomic, retain) NSSet *requests;
-@property (nonatomic, retain) Activity *activities;
-@property (nonatomic) double departureLatitude;
-@property (nonatomic) double departureLongitude;
-@property (nonatomic, retain) NSNumber * rideOwnerId;
-
 @end
 
 @interface Ride (CoreDataGeneratedAccessors)

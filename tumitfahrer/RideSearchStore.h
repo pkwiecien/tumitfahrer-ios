@@ -16,6 +16,6 @@
 
 - (void)addSearchResult:(RideSearch *)searchResult;
 - (NSArray *)allSearchResults;
-- (RideSearch *)rideWithId:(NSInteger)rideId;
+- (RideSearch *)rideWithId:(NSNumber *)rideId;
 
 @end

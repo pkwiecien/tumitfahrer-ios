@@ -113,7 +113,7 @@
         return 170.0f;
     }
     else if(indexPath.row == 4) {
-        return 100*(1+(self.ride.freeSeats-1)/3);
+        return 100*(1+([self.ride.freeSeats intValue]-1)/3);
     }else
         return 100.0f; //cell for comments, in reality the height has to be adjustable
 }
@@ -156,7 +156,7 @@
             cell = [RideActionCell detailsMessagesChoiceCell];
         }
         if (self.ride.driver == nil) {
-            if ([self.ride.rideOwnerId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+            if ([self.ride.driver.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
                 [cell.joinRideButton setTitle:@"Delete request" forState:UIControlStateNormal];
                 [cell.contactDriverButton setTitle:@"Messages" forState:UIControlStateNormal];
             } else {
@@ -206,7 +206,7 @@
                 cell = [DriverCell driverCell];
             }
             
-            if ([self.ride.rideOwnerId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+            if ([self.ride.driver.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
                 cell.driverNameLabel.text = [CurrentUser sharedInstance].user.firstName;
                 cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [[CurrentUser sharedInstance].user.ratingAvg floatValue]];
                 CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageWithData:[CurrentUser sharedInstance].user.profileImageData]];
@@ -231,7 +231,7 @@
             if (cell == nil) {
                 cell = [DriverCell driverCell];
             }
-            if ([self.ride.rideOwnerId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+            if ([self.ride.driver.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
                 cell.driverNameLabel.text = [CurrentUser sharedInstance].user.firstName;
                 cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [[CurrentUser sharedInstance].user.ratingAvg floatValue]];
                 CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageWithData:[CurrentUser sharedInstance].user.profileImageData]];
@@ -259,7 +259,7 @@
         if (cell == nil) {
             cell = [PassengersCell passengersCell];
         }
-        [cell drawCirlesWithPassengersNumber:[self.ride.passengers count] freeSeats:self.ride.freeSeats];
+        [cell drawCirlesWithPassengersNumber:[self.ride.passengers count] freeSeats:[self.ride.freeSeats intValue]];
         return cell;
     } else {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reusable"];
@@ -307,8 +307,8 @@
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     Request *request = [self requestFoundInCoreData];
     
-    if ([self.ride.driver.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] || [self.ride.rideOwnerId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
-        [objectManager deleteObject:self.ride path:[NSString stringWithFormat:@"/api/v2/rides/%d", self.ride.rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    if ([self.ride.driver.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] || [self.ride.driver.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+        [objectManager deleteObject:self.ride path:[NSString stringWithFormat:@"/api/v2/rides/%@", self.ride.rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             
             [[CurrentUser sharedInstance].user removeRidesAsDriverObject:self.ride];
             [[RidesStore sharedStore] deleteRideFromCoreData:self.ride];
@@ -319,7 +319,7 @@
             RKLogError(@"Load failed with error: %@", error);
         }];
     } else if(request != nil) {
-        [objectManager deleteObject:request path:[NSString stringWithFormat:@"/api/v2/rides/%d/requests/%d", self.ride.rideId, [request.requestId intValue]] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        [objectManager deleteObject:request path:[NSString stringWithFormat:@"/api/v2/rides/%@/requests/%d", self.ride.rideId, [request.requestId intValue]] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             
             [KGStatusBar showSuccessWithStatus:@"Request canceled"];
             
@@ -339,7 +339,7 @@
         queryParams = @{@"passenger_id": userId, @"requested_from": self.ride.departurePlace, @"request_to":self.ride.destination};
         NSDictionary *requestParams = @{@"request": queryParams};
         
-        [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/rides/%d/requests", self.ride.rideId] parameters:requestParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/rides/%@/requests", self.ride.rideId] parameters:requestParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             [KGStatusBar showSuccessWithStatus:@"Request was sent"];
             Request *rideRequest = (Request *)[mappingResult firstObject];
             //  [[RidesStore sharedStore] addRideToUserRequests:ride];
@@ -417,7 +417,7 @@
     MKDirectionsRequest *directionsRequest = [MKDirectionsRequest new];
     
     // Make the destination
-    CLLocationCoordinate2D destinationCoords = CLLocationCoordinate2DMake(self.ride.destinationLatitude, self.ride.destinationLongitude);
+    CLLocationCoordinate2D destinationCoords = CLLocationCoordinate2DMake([self.ride.destinationLatitude doubleValue], [self.ride.destinationLongitude doubleValue]);
     MKPlacemark *destinationPlacemark = [[MKPlacemark alloc] initWithCoordinate:destinationCoords addressDictionary:nil];
     MKMapItem *destination = [[MKMapItem alloc] initWithPlacemark:destinationPlacemark];
     
@@ -484,7 +484,7 @@
     
 }
 
--(void)didReceivePhotoForRide:(NSInteger)rideId {
+-(void)didReceivePhotoForRide:(NSNumber *)rideId {
     
     self.ride = [[RidesStore sharedStore] getRideWithId:rideId];
     UIImage *img = [UIImage imageWithData:self.ride.destinationImage];

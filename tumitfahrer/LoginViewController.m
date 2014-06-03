@@ -121,7 +121,7 @@
         
         // check if everything is OK with user rides as driver
         for (Ride *ride in [CurrentUser sharedInstance].user.ridesAsDriver) {
-            NSLog(@"ride of user: %d %@", ride.rideId, ride.destination);
+            NSLog(@"ride of user: %@ %@", ride.rideId, ride.destination);
         }
         
         // check if fetch user has assigned a device token

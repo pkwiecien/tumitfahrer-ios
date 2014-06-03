@@ -66,7 +66,7 @@
     
     UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:5];
     RideSearch *ride = [[[RideSearchStore sharedStore] allSearchResults] objectAtIndex:indexPath.row];
-    NSLog(@"currenlty ride: %d", ride.rideId);
+    NSLog(@"currenlty ride: %@", ride.rideId);
     if(ride.destinationImage == nil) {
         imageView.image = [UIImage imageNamed:@"PlaceholderImage"];
     } else {

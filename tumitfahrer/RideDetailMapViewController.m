@@ -32,8 +32,8 @@
     [super viewDidLoad];
     self.mapView.delegate = self;
     
-    CustomAnnotation *departureAnnotation = [self createAnnotationWithCoordinates:CLLocationCoordinate2DMake(self.selectedRide.departureLatitude, self.selectedRide.departureLongitude) title:@"Departure"];
-    CustomAnnotation *destinationAnnotation = [self createAnnotationWithCoordinates:CLLocationCoordinate2DMake(self.selectedRide.destinationLatitude, self.selectedRide.destinationLongitude) title:@"Destination"];
+    CustomAnnotation *departureAnnotation = [self createAnnotationWithCoordinates:CLLocationCoordinate2DMake([self.selectedRide.departureLatitude doubleValue], [self.selectedRide.departureLongitude doubleValue]) title:@"Departure"];
+    CustomAnnotation *destinationAnnotation = [self createAnnotationWithCoordinates:CLLocationCoordinate2DMake([self.selectedRide.destinationLatitude doubleValue], [self.selectedRide.destinationLongitude doubleValue]) title:@"Destination"];
     
     [self.mapView addAnnotation:departureAnnotation];
     [self.mapView addAnnotation:destinationAnnotation];
@@ -67,7 +67,7 @@
     MKDirectionsRequest *directionsRequest = [MKDirectionsRequest new];
     
     // Make the destination
-    CLLocationCoordinate2D destinationCoords = CLLocationCoordinate2DMake(self.selectedRide.destinationLatitude, self.selectedRide.destinationLongitude);
+    CLLocationCoordinate2D destinationCoords = CLLocationCoordinate2DMake([self.selectedRide.destinationLatitude doubleValue], [self.selectedRide.destinationLongitude doubleValue]);
     MKPlacemark *destinationPlacemark = [[MKPlacemark alloc] initWithCoordinate:destinationCoords addressDictionary:nil];
     MKMapItem *destination = [[MKMapItem alloc] initWithPlacemark:destinationPlacemark];
     

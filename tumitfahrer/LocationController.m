@@ -57,7 +57,7 @@
     }
 }
 
--(void)notifyAllAboutNewLocation:(CLLocation*)location rideWithRideId:(NSInteger)rideId {
+-(void)notifyAllAboutNewLocation:(CLLocation*)location rideWithRideId:(NSNumber *)rideId {
     for (id<LocationControllerDelegate> observer in self.observers) {
         if ([observer respondsToSelector:@selector(didReceiveLocationForAddress:rideId:)]) {
             [observer didReceiveLocationForAddress:location rideId:rideId];
@@ -113,7 +113,7 @@
     }];
 }
 
-- (void)fetchLocationForAddress:(NSString *)address rideId:(NSInteger)rideId {
+- (void)fetchLocationForAddress:(NSString *)address rideId:(NSNumber *)rideId {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
         
@@ -125,7 +125,7 @@
     }];
 }
 
-- (void)fetchPhotoURLForAddress:(NSString *)address rideId:(NSInteger)rideId completionHandler:(locationAndUrlCompletionHandler)block {
+- (void)fetchPhotoURLForAddress:(NSString *)address rideId:(NSNumber *)rideId completionHandler:(locationAndUrlCompletionHandler)block {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
         

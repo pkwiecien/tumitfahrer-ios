@@ -44,7 +44,7 @@
             }
         } else if ([result isKindOfClass:[Request class]]) {
             Request *request = (Request *)result;
-            Ride *ride = [[RidesStore sharedStore] containsRideWithId:[request.rideId intValue]];
+            Ride *ride = [[RidesStore sharedStore] containsRideWithId:request.rideId];
             if (ride != nil) {
                 [self.mapView addAnnotation:[self createAnnotationWithRide:ride title:@"Ride Request"]];
             }
@@ -66,7 +66,7 @@
     NSString *dest = [[ride.destination componentsSeparatedByString:@","] firstObject];
     //NSString *depart = [[ride.departurePlace componentsSeparatedByString:@", "] firstObject];
     rideAnnotation.subtitle = [NSString stringWithFormat:@"Ride to %@\nOn %@", dest, [ActionManager dateStringFromDate:ride.departureTime]];
-    rideAnnotation.coordinate = CLLocationCoordinate2DMake(ride.destinationLatitude, ride.destinationLongitude);
+    rideAnnotation.coordinate = CLLocationCoordinate2DMake([ride.destinationLatitude doubleValue], [ride.destinationLongitude doubleValue]);
     rideAnnotation.annotationObject = ride;
     return rideAnnotation;
 }
@@ -121,17 +121,17 @@
         [self.navigationController pushViewController:rideDetailVC animated:YES];
     } else if([result.annotationObject isKindOfClass:[Request class]]) {
         Request *res = (Request *)result.annotationObject;
-        Ride *ride = [[RidesStore sharedStore] containsRideWithId:[res.rideId intValue]];
+        Ride *ride = [[RidesStore sharedStore] containsRideWithId:res.rideId];
         if (ride != nil) {
             res.requestedRide = ride;
             RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
             rideDetailVC.ride = ride;
             [self.navigationController pushViewController:rideDetailVC animated:YES];
         } else {
-            [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:[res.rideId intValue] block:^(BOOL completed) {
+            [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:res.rideId block:^(BOOL completed) {
                 if(completed) {
                     RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
-                    Ride *ride = [[RidesStore sharedStore] fetchRideFromCoreDataWithId:[res.rideId intValue]];
+                    Ride *ride = [[RidesStore sharedStore] fetchRideFromCoreDataWithId:res.rideId];
                     rideDetailVC.ride = ride;
                     [self.navigationController pushViewController:rideDetailVC animated:YES];
                 }

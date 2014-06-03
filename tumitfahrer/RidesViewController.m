@@ -188,10 +188,10 @@
     }
     if (ride.driver == nil) {
         cell.seatsLabel.text = @"offer a ride";
-    } else if (ride.freeSeats == 1) {
+    } else if ([ride.freeSeats intValue] == 1) {
         cell.seatsLabel.text = @"1 seat left";
     } else {
-        cell.seatsLabel.text = [NSString stringWithFormat:@"%d seats left", ride.freeSeats];
+        cell.seatsLabel.text = [NSString stringWithFormat:@"%@ seats left", ride.freeSeats];
     }
     
     NSString *departurePlace = [ride.departurePlace componentsSeparatedByString:@", "][0];
@@ -292,7 +292,7 @@
 
 #pragma mark - Observers Handlers
 
--(void)didReceivePhotoForRide:(NSInteger)rideId {
+-(void)didReceivePhotoForRide:(NSNumber *)rideId {
     [self.tableView reloadData];
 }
 
@@ -312,7 +312,7 @@
     [[RidesStore sharedStore] fetchNextRides:^(BOOL fetched) {
         if (fetched) {
             for (Ride *ride in [[RidesStore sharedStore] allRides]) {
-                NSLog(@"ride with id: %d", ride.rideId);
+                NSLog(@"ride with id: %@", ride.rideId);
             }
         }
     }];

@@ -14,7 +14,7 @@
 @optional
 
 - (void)didReceiveCurrentLocation: (CLLocation*)location;
-- (void)didReceiveLocationForAddress: (CLLocation*)location rideId:(NSInteger)rideId;
+- (void)didReceiveLocationForAddress: (CLLocation*)location rideId:(NSNumber *)rideId;
 
 @end
 
@@ -31,14 +31,14 @@
 typedef void(^locationAndUrlCompletionHandler)(CLLocation *, NSURL *);
 typedef void(^locationCompletionHandler)(CLLocation *);
 
-- (void)fetchLocationForAddress:(NSString *)address rideId:(NSInteger)rideId;
-- (void)fetchPhotoURLForAddress:(NSString *)address rideId:(NSInteger)rideId completionHandler:(locationAndUrlCompletionHandler)block;
+- (void)fetchLocationForAddress:(NSString *)address rideId:(NSNumber *)rideId;
+- (void)fetchPhotoURLForAddress:(NSString *)address rideId:(NSNumber *)rideId completionHandler:(locationAndUrlCompletionHandler)block;
 - (void)fetchLocationForAddress:(NSString *)address completionHandler:(locationCompletionHandler)block;
 
 - (void)startUpdatingLocation;
 - (void)addObserver:(id<LocationControllerDelegate>) observer;
 - (void)notifyAllAboutNewCurrentLocation;
-- (void)notifyAllAboutNewLocation:(CLLocation*)location rideWithRideId:(NSInteger)rideId;
+- (void)notifyAllAboutNewLocation:(CLLocation*)location rideWithRideId:(NSNumber *)rideId;
 - (void)removeObserver:(id<LocationControllerDelegate>)observer;
 
 + (BOOL)isLocation:(CLLocation *)location nearbyAnotherLocation:(CLLocation *)anotherLocation;

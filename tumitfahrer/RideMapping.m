@@ -23,9 +23,7 @@
                                                       @"departure_time":@"departureTime",
                                                       @"free_seats":@"freeSeats",
                                                       @"duration":@"duration",
-                                                      @"distance":@"distance",
                                                       @"ride_type":@"rideType",
-                                                      @"ride_owner_id":@"rideOwnerId",
                                                       @"created_at": @"createdAt",
                                                       @"updated_at": @"updatedAt"
                                                       }];

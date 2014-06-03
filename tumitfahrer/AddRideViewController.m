@@ -300,18 +300,21 @@
             freeSeats = @"1";
         }
         NSString *car = [self.tableValue objectAtIndex:5];
+        if (!car) {
+            car = @"";
+        }
         NSString *meetingPoint = [self.tableValue objectAtIndex:6];
         if (!meetingPoint) {
             [ActionManager showAlertViewWithTitle:@"No meeting place" description:@"To add a ride please specify the meeting place"];
             return;
         }
         
-        queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": [NSNumber numberWithInt:self.RideType], @"driver":@"true"};
+        queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": [NSNumber numberWithInt:self.RideType], @"car": car, @"is_driving": [NSNumber numberWithBool:YES]};
         
         rideParams = @{@"ride": queryParams};
        
     } else { // passenger
-        queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"ride_type": [NSNumber numberWithInt:self.RideType], @"passenger":@"true"};
+        queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"ride_type": [NSNumber numberWithInt:self.RideType], @"is_driving": [NSNumber numberWithBool:NO]};
         
         rideParams = @{@"ride": queryParams};
     }
@@ -322,12 +325,12 @@
     [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/users/%@/rides", [CurrentUser sharedInstance].user.userId] parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         Ride *ride = (Ride *)[mappingResult firstObject];
         [[RidesStore sharedStore] addRideToStore:ride];
-        [[RidesStore sharedStore] reloadRides:ride.rideType];
+        [[RidesStore sharedStore] reloadRides:[ride.rideType intValue]];
         [[LocationController sharedInstance] fetchLocationForAddress:ride.destination rideId:ride.rideId];
         [[LocationController sharedInstance] fetchLocationForAddress:ride.departurePlace completionHandler:^(CLLocation *location) {
             if (location != nil) {
-                ride.departureLatitude = location.coordinate.latitude;
-                ride.departureLongitude = location.coordinate.longitude;
+                ride.departureLatitude = [NSNumber numberWithDouble:location.coordinate.latitude];
+                ride.departureLongitude = [NSNumber numberWithDouble:location.coordinate.longitude];
             }
         }];
         self.tablePassengerValues = nil;

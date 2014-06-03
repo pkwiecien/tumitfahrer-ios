@@ -21,7 +21,7 @@
 @property (nonatomic) int32_t freeSeats;
 @property (nonatomic, retain) NSString * meetingPoint;
 @property (nonatomic) float price;
-@property (nonatomic) int32_t rideId;
+@property (nonatomic) NSNumber * rideId;
 @property (nonatomic) int32_t driverId;
 @property (nonatomic) int32_t detour;
 @property (nonatomic) NSDate * updatedAt;
