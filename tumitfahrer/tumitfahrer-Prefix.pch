@@ -77,6 +77,8 @@ typedef enum {
 
 typedef void(^boolCompletionHandler)(BOOL);
 
+typedef void(^mutableArrayCompletionHandler)(NSMutableArray *);
+
 # pragma mark - API mapping for RestKit
 static NSString *API_USERS = @"/api/v2/users";
 static NSString *API_USERS_RIDES = @"/api/v2/users/:userId/rides";

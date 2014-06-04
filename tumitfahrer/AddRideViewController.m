@@ -325,14 +325,7 @@
     [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/users/%@/rides", [CurrentUser sharedInstance].user.userId] parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         Ride *ride = (Ride *)[mappingResult firstObject];
         [[RidesStore sharedStore] addRideToStore:ride];
-        [[RidesStore sharedStore] reloadRides:[ride.rideType intValue]];
-        [[LocationController sharedInstance] fetchLocationForAddress:ride.destination rideId:ride.rideId];
-        [[LocationController sharedInstance] fetchLocationForAddress:ride.departurePlace completionHandler:^(CLLocation *location) {
-            if (location != nil) {
-                ride.departureLatitude = [NSNumber numberWithDouble:location.coordinate.latitude];
-                ride.departureLongitude = [NSNumber numberWithDouble:location.coordinate.longitude];
-            }
-        }];
+        
         self.tablePassengerValues = nil;
         self.tableDriverValues = nil;
         [KGStatusBar showSuccessWithStatus:@"Ride added"];

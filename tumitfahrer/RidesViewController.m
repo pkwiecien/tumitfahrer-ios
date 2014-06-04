@@ -60,7 +60,7 @@
 }
 
 -(void)handleRefresh {
-    [[RidesStore sharedStore] fetchNextRides:^(BOOL fetched) {
+    [[RidesStore sharedStore] fetchNewRides:^(BOOL fetched) {
         if(fetched) {
             [self addToImageCache];
             [self.tableView reloadData];
@@ -71,7 +71,6 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     [[RidesStore sharedStore]  fetchRidesFromCoreDataByType:ContentTypeActivityRides];
-    [[RidesStore sharedStore] reloadRides:self.RideType];
     [self.tableView reloadData];
 }
 
@@ -309,7 +308,7 @@
 }
 
 -(void)loadNewElements {
-    [[RidesStore sharedStore] fetchNextRides:^(BOOL fetched) {
+    [[RidesStore sharedStore] fetchNewRides:^(BOOL fetched) {
         if (fetched) {
             for (Ride *ride in [[RidesStore sharedStore] allRides]) {
                 NSLog(@"ride with id: %@", ride.rideId);

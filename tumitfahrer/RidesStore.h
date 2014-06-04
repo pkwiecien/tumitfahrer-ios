@@ -24,8 +24,6 @@
 + (instancetype)sharedStore;
 
 - (NSArray *)allRides;
-- (NSArray *)allCampusRides;
-- (NSArray *)allActivityRides;
 - (NSArray *)allRidesByType:(ContentType)contentType;
 - (NSArray *)ridesNearbyByType:(ContentType)contentType;
 - (NSArray *)favoriteRidesByType:(ContentType)contentType;
@@ -34,8 +32,7 @@
 - (Ride *)containsRideWithId:(NSNumber *)rideId;
 - (NSArray *)rideRequestForUserWithId:(NSNumber *)userId;
 - (void)fetchRidesFromCoreDataByType:(ContentType)contentType;
-- (void)fetchRidesFromWebservice:(boolCompletionHandler)block;
-- (void)fetchNextRides:(boolCompletionHandler)block;
+- (void)fetchNewRides:(boolCompletionHandler)block;
 - (void)deleteRideFromCoreData:(Ride *)ride;
 - (void)deleteRideRequestFromCoreData:(Request *)request;
 
@@ -46,7 +43,5 @@
 
 - (void)fetchSingleRideFromWebserviceWithId:(NSNumber *)rideId block:(boolCompletionHandler)block;
 - (Ride *)fetchRideFromCoreDataWithId:(NSNumber *)rideId;
-
--(void)reloadRides:(ContentType)contentType;
 
 @end
