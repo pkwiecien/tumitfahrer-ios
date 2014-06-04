@@ -2,7 +2,7 @@
 //  Ride.h
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 6/3/14.
+//  Created by Pawel Kwiecien on 6/4/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
@@ -29,8 +29,9 @@
 @property (nonatomic, retain) NSNumber * rideId;
 @property (nonatomic, retain) NSNumber * rideType;
 @property (nonatomic, retain) NSDate * updatedAt;
+@property (nonatomic, retain) NSNumber * isRideRequest;
 @property (nonatomic, retain) Activity *activities;
-@property (nonatomic, retain) User *driver;
+@property (nonatomic, retain) User *rideOwner;
 @property (nonatomic, retain) NSSet *passengers;
 @property (nonatomic, retain) NSSet *requests;
 @end

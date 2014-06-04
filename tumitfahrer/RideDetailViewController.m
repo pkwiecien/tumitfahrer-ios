@@ -104,7 +104,7 @@
         return 44.0f;
     }
     else if(indexPath.row == 2){
-        if (self.ride.driver == nil) {
+        if ([self.ride.isRideRequest boolValue]) {
             return 160.0f;
         }
         return 240.0f;
@@ -119,7 +119,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.ride.driver == nil) {
+    if ([self.ride.isRideRequest boolValue]) {
         return 4; // it's a ride request, so don't show passengers
     }
     return 5;
@@ -139,7 +139,7 @@
             cell = [RideNoticeCell rideNoticeCell];
         }
         
-        if (self.ride.driver == nil) {
+        if ([self.ride.isRideRequest boolValue]) {
             cell.noticeLabel.text = @"Ride Request";
         } else if(self.ride.rideType == 0) {
             cell.noticeLabel.text = @"Campus Ride";
@@ -155,8 +155,8 @@
         if(cell == nil){
             cell = [RideActionCell detailsMessagesChoiceCell];
         }
-        if (self.ride.driver == nil) {
-            if ([self.ride.driver.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+        if ([self.ride.isRideRequest boolValue]) {
+            if ([self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
                 [cell.joinRideButton setTitle:@"Delete request" forState:UIControlStateNormal];
                 [cell.contactDriverButton setTitle:@"Messages" forState:UIControlStateNormal];
             } else {
@@ -170,7 +170,7 @@
         return cell;
     }
     else if(indexPath.row == 2) {
-        if (self.ride.driver != nil) {
+        if (![self.ride.isRideRequest boolValue]) {
             RideInformationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideInformationCell"];
             if(cell == nil){
                 cell = [RideInformationCell rideInformationCell];
@@ -179,10 +179,10 @@
             cell.destinationLabel.text = self.ride.destination;
             cell.timeLabel.text = [ActionManager timeStringFromDate:self.ride.departureTime];
             cell.dateLabel.text = [ActionManager dateStringFromDate:self.ride.departureTime];
-            if (self.ride.driver.car == nil) {
+            if (self.ride.rideOwner.car == nil) {
                 cell.carLabel.text = @"Not specified";
             } else {
-                cell.carLabel.text = self.ride.driver.car;
+                cell.carLabel.text = self.ride.rideOwner.car;
             }
             cell.informationLabel.text = self.ride.meetingPoint;
             
@@ -200,13 +200,13 @@
             return cell;
         }
     } else if(indexPath.row == 3) {
-        if(self.ride.driver == nil) {
+        if([self.ride.isRideRequest boolValue]) {
             DriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DriverCell"];
             if (cell == nil) {
                 cell = [DriverCell driverCell];
             }
             
-            if ([self.ride.driver.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+            if ([self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
                 cell.driverNameLabel.text = [CurrentUser sharedInstance].user.firstName;
                 cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [[CurrentUser sharedInstance].user.ratingAvg floatValue]];
                 CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageWithData:[CurrentUser sharedInstance].user.profileImageData]];
@@ -231,7 +231,7 @@
             if (cell == nil) {
                 cell = [DriverCell driverCell];
             }
-            if ([self.ride.driver.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+            if ([self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
                 cell.driverNameLabel.text = [CurrentUser sharedInstance].user.firstName;
                 cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [[CurrentUser sharedInstance].user.ratingAvg floatValue]];
                 CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageWithData:[CurrentUser sharedInstance].user.profileImageData]];
@@ -240,8 +240,8 @@
                 CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageNamed:@"CircleBlue"]];
                 [cell addSubview:circularImageView];
             }
-            cell.driverNameLabel.text = self.ride.driver.firstName;
-            cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [self.ride.driver.ratingAvg floatValue]];
+            cell.driverNameLabel.text = self.ride.rideOwner.firstName;
+            cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [self.ride.rideOwner.ratingAvg floatValue]];
             
             cell.mapView.delegate = self;
             UITapGestureRecognizer *mapTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mapViewTap)];
@@ -254,7 +254,7 @@
             
             return cell;
         }
-    } else if(indexPath.row == 4 && self.ride.driver != nil) {
+    } else if(indexPath.row == 4 && ![self.ride.isRideRequest boolValue]) {
         PassengersCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PassengersCell"];
         if (cell == nil) {
             cell = [PassengersCell passengersCell];
@@ -307,7 +307,7 @@
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     Request *request = [self requestFoundInCoreData];
     
-    if ([self.ride.driver.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] || [self.ride.driver.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+    if ([self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && ![self.ride.isRideRequest boolValue]) {
         [objectManager deleteObject:self.ride path:[NSString stringWithFormat:@"/api/v2/rides/%@", self.ride.rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             
             [[CurrentUser sharedInstance].user removeRidesAsDriverObject:self.ride];
@@ -330,7 +330,7 @@
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
             RKLogError(@"Load failed with error: %@", error);
         }];
-    } else if(self.ride.driver == nil) {
+    } else if([self.ride.isRideRequest boolValue]) {
         
     } else {
         NSDictionary *queryParams;
@@ -400,7 +400,7 @@
 }
 
 -(void)makeJoinButtonDescriptionForCell:(RideActionCell *)cell{
-    if([self.ride.driver.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+    if([self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && ![self.ride.isRideRequest boolValue]) {
         [cell.joinRideButton setTitle:@"Delete ride" forState:UIControlStateNormal];
     } else if([self requestFoundInCoreData] != nil) {
         [cell.joinRideButton setTitle:@"Cancel request" forState:UIControlStateNormal];

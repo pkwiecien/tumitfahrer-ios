@@ -179,14 +179,14 @@
     
     cell.timeLabel.text = [ActionManager timeStringFromDate:[ride departureTime]];
     cell.dateLabel.text = [ActionManager dateStringFromDate:[ride departureTime]];
-    if(ride.driver == nil) {
+    if([ride.isRideRequest boolValue]) {
         cell.seatsView.backgroundColor = [UIColor orangeColor];
         cell.roleImageView.image = self.passengerIcon;
     } else {
         cell.seatsView.backgroundColor = [UIColor orangeColor];
         cell.roleImageView.image = self.driverIcon;
     }
-    if (ride.driver == nil) {
+    if ([ride.isRideRequest boolValue]) {
         cell.seatsLabel.text = @"offer a ride";
     } else if ([ride.freeSeats intValue] == 1) {
         cell.seatsLabel.text = @"1 seat left";

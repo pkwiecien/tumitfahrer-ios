@@ -144,7 +144,7 @@
 		E5E215791908442100B0B150 /* SwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E215771908442100B0B150 /* SwitchTableViewCell.xib */; };
 		E5E2157F1908492200B0B150 /* FreeSeatsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2157D1908492200B0B150 /* FreeSeatsTableViewCell.m */; };
 		E5E215801908492200B0B150 /* FreeSeatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E2157E1908492200B0B150 /* FreeSeatsTableViewCell.xib */; };
-		E5F42050193E3917006FF856 /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F4204F193E3917006FF856 /* Ride.m */; };
+		E5F42056193F101C006FF856 /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F42055193F101C006FF856 /* Ride.m */; };
 		E5F7F8E71925694B0001F1FE /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F7F8E51925694B0001F1FE /* TestViewController.m */; };
 		E5F7F8E81925694B0001F1FE /* TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5F7F8E61925694B0001F1FE /* TestViewController.xib */; };
 		E5FA64251912299E00C04BFF /* RideSearchStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FA64241912299E00C04BFF /* RideSearchStore.m */; };
@@ -414,8 +414,8 @@
 		E5E2157C1908492200B0B150 /* FreeSeatsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreeSeatsTableViewCell.h; sourceTree = "<group>"; };
 		E5E2157D1908492200B0B150 /* FreeSeatsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreeSeatsTableViewCell.m; sourceTree = "<group>"; };
 		E5E2157E1908492200B0B150 /* FreeSeatsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FreeSeatsTableViewCell.xib; sourceTree = "<group>"; };
-		E5F4204E193E3917006FF856 /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
-		E5F4204F193E3917006FF856 /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
+		E5F42054193F101C006FF856 /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
+		E5F42055193F101C006FF856 /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
 		E5F7F8E41925694B0001F1FE /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		E5F7F8E51925694B0001F1FE /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		E5F7F8E61925694B0001F1FE /* TestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestViewController.xib; sourceTree = "<group>"; };
@@ -939,10 +939,10 @@
 				E50CCCE8191F7256003A9490 /* Rating.m */,
 				E50CCCE1191F7256003A9490 /* Request.h */,
 				E50CCCE2191F7256003A9490 /* Request.m */,
-				E5F4204E193E3917006FF856 /* Ride.h */,
-				E5F4204F193E3917006FF856 /* Ride.m */,
 				E50CCCF0191F7380003A9490 /* RideSearch.h */,
 				E50CCCF1191F7380003A9490 /* RideSearch.m */,
+				E5F42054193F101C006FF856 /* Ride.h */,
+				E5F42055193F101C006FF856 /* Ride.m */,
 				E5FA64231912299E00C04BFF /* RideSearchStore.h */,
 				E5FA64241912299E00C04BFF /* RideSearchStore.m */,
 				E50DB28918F8730400E87E62 /* RidesStore.h */,
@@ -1440,7 +1440,7 @@
 				6E4E133F1913F7BF00D0C453 /* UIApplication+GCovFlush.m in Sources */,
 				E5FC44D6190D30FF00E8DB65 /* MenuViewController.m in Sources */,
 				E50CCC14191E54F1003A9490 /* UIViewController+SideBarController.m in Sources */,
-				E5F42050193E3917006FF856 /* Ride.m in Sources */,
+				E5F42056193F101C006FF856 /* Ride.m in Sources */,
 				E504D9BC190A58710036FFA8 /* MeetingPointViewController.m in Sources */,
 				E504D9D0190A7FC50036FFA8 /* SPGooglePlacesAutocompletePlace.m in Sources */,
 				E599886218E84D9D00B01C62 /* MenuTableViewCell.m in Sources */,

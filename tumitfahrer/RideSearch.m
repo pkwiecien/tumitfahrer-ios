@@ -11,6 +11,6 @@
 @implementation RideSearch
 
 -(NSString *)description {
-    return [NSString stringWithFormat:@"Ride search result: id: %d, detour %d", self.rideId, self.detour];
+    return [NSString stringWithFormat:@"Ride search result: id: %@, detour %d", self.rideId, self.detour];
 }
 @end
