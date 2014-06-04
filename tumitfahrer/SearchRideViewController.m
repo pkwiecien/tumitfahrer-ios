@@ -88,19 +88,6 @@
             }
             RideSearchResultsViewController *searchResultsVC = [[RideSearchResultsViewController alloc] init];
             [self.navigationController pushViewController:searchResultsVC animated:YES];
-            
-            for (RideSearch *rideSearchResult in rides) {
-                [[LocationController sharedInstance] fetchPhotoURLForAddress:rideSearchResult.destination rideId:rideSearchResult.rideId completionHandler:^(CLLocation *location, NSURL * photoUrl) {
-                    RideSearch *ride = [[RideSearchStore sharedStore] rideWithId:rideSearchResult.rideId];
-                    ride.destinationLatitude = location.coordinate.latitude;
-                    ride.destinationLongitude = location.coordinate.longitude;
-                    UIImage *image =[[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:photoUrl]];
-                    if(image) {
-                        ride.destinationImage = UIImagePNGRepresentation(image);
-                    }
-                    [searchResultsVC reloadDataAtIndex:0];
-                }];
-            }
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
             [ActionManager showAlertViewWithTitle:[error localizedDescription]];
             RKLogError(@"Load failed with error: %@", error);

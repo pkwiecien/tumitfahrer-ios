@@ -147,8 +147,7 @@
     AddRideViewController *addRideVC = [[AddRideViewController alloc] init];
     addRideVC.RideType = self.RideType;
     addRideVC.RideDisplayType = ShowAsModal;
-    UINavigationController *navBar = [[UINavigationController alloc] initWithRootViewController:addRideVC];
-    [self.sideBarController.centerViewController presentViewController:navBar animated:YES completion:nil];
+    [self.navigationController pushViewControllerWithFade:addRideVC];
 }
 
 -(void)willAppearViewWithIndex:(NSInteger)index {

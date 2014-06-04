@@ -31,8 +31,6 @@ typedef void(^photoUrlCompletionHandler)(NSURL *);
 - (void)notifyAllAboutNewImage:(UIImage *)image rideId:(NSNumber *)rideId;
 - (void)removeObserver:(id<PanoramioUtilitiesDelegate>)observer;
 
-- (void)fetchPhotoForCurrentLocation:(CLLocation*)location;
-- (void)fetchPhotoForLocation:(CLLocation*)location rideId:(NSNumber *)rideId;
-- (void)fetchPhotoForLocation:(CLLocation *)location rideId:(NSNumber *)rideId completionHandler:(photoUrlCompletionHandler)block;
+- (void)fetchPhotoForLocation:(CLLocation *)location completionHandler:(photoUrlCompletionHandler)block;
 
 @end

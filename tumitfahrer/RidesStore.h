@@ -14,6 +14,8 @@
 
 @protocol RideStoreDelegate <NSObject>
 
+@optional
+
 - (void)didRecieveRidesFromWebService: (NSArray*)rides;
 - (void)didReceivePhotoForRide: (NSNumber *)rideId;
 

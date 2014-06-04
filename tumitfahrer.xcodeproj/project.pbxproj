@@ -90,6 +90,7 @@
 		E564464A192A976B00F636A5 /* GeneralInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5644648192A976B00F636A5 /* GeneralInfoCell.m */; };
 		E564464B192A976B00F636A5 /* GeneralInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5644649192A976B00F636A5 /* GeneralInfoCell.xib */; };
 		E564464F192AB67200F636A5 /* CircularImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E564464E192AB67200F636A5 /* CircularImageView.m */; };
+		E56FB776193F86BA00B6C398 /* UINavigationController+Fade.m in Sources */ = {isa = PBXBuildFile; fileRef = E56FB775193F86BA00B6C398 /* UINavigationController+Fade.m */; };
 		E58889CD191291060062D0DF /* ActionManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E58889CC191291060062D0DF /* ActionManagerTests.m */; };
 		E58889DC191383570062D0DF /* RideDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E58889DA191383570062D0DF /* RideDetailViewController.m */; };
 		E58889DD191383570062D0DF /* RideDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E58889DB191383570062D0DF /* RideDetailViewController.xib */; };
@@ -331,6 +332,8 @@
 		E5644649192A976B00F636A5 /* GeneralInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GeneralInfoCell.xib; sourceTree = "<group>"; };
 		E564464D192AB67200F636A5 /* CircularImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircularImageView.h; sourceTree = "<group>"; };
 		E564464E192AB67200F636A5 /* CircularImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularImageView.m; sourceTree = "<group>"; };
+		E56FB774193F86BA00B6C398 /* UINavigationController+Fade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+Fade.h"; sourceTree = "<group>"; };
+		E56FB775193F86BA00B6C398 /* UINavigationController+Fade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+Fade.m"; sourceTree = "<group>"; };
 		E58889CC191291060062D0DF /* ActionManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionManagerTests.m; sourceTree = "<group>"; };
 		E58889D9191383570062D0DF /* RideDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideDetailViewController.h; sourceTree = "<group>"; };
 		E58889DA191383570062D0DF /* RideDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideDetailViewController.m; sourceTree = "<group>"; };
@@ -563,6 +566,8 @@
 				E50CCC13191E54F1003A9490 /* UIViewController+SideBarController.m */,
 				E5FD9ECB1923FA6C00902502 /* UIColor+LayoutColors.h */,
 				E5FD9ECC1923FA6C00902502 /* UIColor+LayoutColors.m */,
+				E56FB774193F86BA00B6C398 /* UINavigationController+Fade.h */,
+				E56FB775193F86BA00B6C398 /* UINavigationController+Fade.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -1497,6 +1502,7 @@
 				E5F7F8E71925694B0001F1FE /* TestViewController.m in Sources */,
 				E59B9A4B1916A241008DE80B /* YourRidesViewController.m in Sources */,
 				E504D9D1190A7FC50036FFA8 /* SPGooglePlacesAutocompleteQuery.m in Sources */,
+				E56FB776193F86BA00B6C398 /* UINavigationController+Fade.m in Sources */,
 				E59987D718E6ECF200B01C62 /* CustomTextField.m in Sources */,
 				E50CCCFE191F7C74003A9490 /* ActivityStore.m in Sources */,
 				E50DB26B18F447B800E87E62 /* CurrentUser.m in Sources */,

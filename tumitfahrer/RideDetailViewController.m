@@ -75,8 +75,7 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.headerViewLabel.text = [@"To " stringByAppendingString:self.ride.destination];
-    [self printRequestsAndPassengers];
-    [self prepareDirections];
+    [self prepareMapDirections];
     
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     if (delegate.refererAppLink) {
@@ -378,18 +377,6 @@
     return self.fetchedResultsController;
 }
 
-- (void)printRequestsAndPassengers {
-    NSLog(@"Number of passengers: %d", (int)[self.ride.passengers count]);
-    for (User *user in [self.ride passengers]) {
-        NSLog(@"User: %@", user);
-    }
-    
-    NSLog(@"Number of requests: %d", (int)[self.ride.requests count]);
-    for (Request *reques in [self.ride requests]) {
-        NSLog(@"Request: %@", reques);
-    }
-}
-
 -(Request *)requestFoundInCoreData {
     for (Request *request in self.ride.requests) {
         if (request.passengerId == [CurrentUser sharedInstance].user.userId) {
@@ -413,7 +400,7 @@
 
 // method from: https://github.com/ShinobiControls/iOS7-day-by-day/blob/master/13-mapkit-directions/13-mapkit-directions.md
 
-- (void)prepareDirections {
+- (void)prepareMapDirections {
     MKDirectionsRequest *directionsRequest = [MKDirectionsRequest new];
     
     // Make the destination
@@ -476,12 +463,6 @@
     RideDetailMapViewController *rideDetailMapVC = [[RideDetailMapViewController alloc] init];
     rideDetailMapVC.selectedRide = self.ride;
     [self.navigationController pushViewController:rideDetailMapVC animated:YES];
-}
-
-
-#pragma mark - delegate methods of RidesStore
--(void)didRecieveRidesFromWebService:(NSArray *)rides {
-    
 }
 
 -(void)didReceivePhotoForRide:(NSNumber *)rideId {

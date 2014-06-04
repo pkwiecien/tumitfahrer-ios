@@ -93,10 +93,8 @@
     [self.tableView reloadData];
     [self setupNavigationBar];
     
-    if(self.RideDisplayType == ShowAsViewController)
+    if(self.RideDisplayType == ShowAsViewController) {
         [self setupLeftMenuButton];
-    if (self.shouldClose) {
-        [self.navigationController dismissViewControllerAnimated:NO completion:nil];
     }
 }
 
@@ -266,6 +264,7 @@
 }
 
 -(void)addRideButtonPressed {
+    
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
     NSDictionary *queryParams;
@@ -291,7 +290,7 @@
     NSDate *dateString = [formatter dateFromString:departureTime];
     [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
     NSString *time = [formatter stringFromDate:dateString];
-
+    
     NSDictionary *rideParams = nil;
     if(self.TableType == Driver) {
         
@@ -312,7 +311,7 @@
         queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": [NSNumber numberWithInt:self.RideType], @"car": car, @"is_driving": [NSNumber numberWithBool:YES]};
         
         rideParams = @{@"ride": queryParams};
-       
+        
     } else { // passenger
         queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"ride_type": [NSNumber numberWithInt:self.RideType], @"is_driving": [NSNumber numberWithBool:NO]};
         
@@ -320,7 +319,7 @@
     }
     
     [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"apiKey" value:[[CurrentUser sharedInstance] user].apiKey];
-
+    
     NSLog(@"user api key: %@", [CurrentUser sharedInstance].user.apiKey);
     [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/users/%@/rides", [CurrentUser sharedInstance].user.userId] parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         Ride *ride = (Ride *)[mappingResult firstObject];
@@ -330,15 +329,12 @@
         self.tableDriverValues = nil;
         [KGStatusBar showSuccessWithStatus:@"Ride added"];
         
-        if (self.RideDisplayType == ShowAsModal) {
-            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-        } else {
-            RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
-            rideDetailVC.ride = ride;
-            rideDetailVC.displayEnum = self.displayEnum;
-            rideDetailVC.shouldGoBackEnum = GoBackToList;
-            [self.navigationController pushViewController:rideDetailVC animated:YES];
-        }
+        RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
+        rideDetailVC.ride = ride;
+        rideDetailVC.displayEnum = self.displayEnum;
+        rideDetailVC.shouldGoBackEnum = GoBackToList;
+        [self.navigationController pushViewController:rideDetailVC animated:YES];
+        
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [ActionManager showAlertViewWithTitle:[error localizedDescription]];
         RKLogError(@"Load failed with error: %@", error);
@@ -346,7 +342,7 @@
 }
 
 -(void)closeButtonPressed {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerWithFade];
 }
 
 -(NSFetchedResultsController *)fetchedResultsController {

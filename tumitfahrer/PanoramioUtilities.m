@@ -51,39 +51,7 @@
     return urlRequest;
 }
 
--(void)fetchPhotoForCurrentLocation:(CLLocation *)location {
-    
-    [NSURLConnection sendAsynchronousRequest:[self buildUrlRequestWithLocation:location] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        if (connectionError)
-        {
-            NSLog(@"Error connecting data from server: %@", connectionError.localizedDescription);
-        } else {
-            NSLog(@"Response data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-            
-            NSError *localError = nil;
-            if (localError) {
-                return;
-            }
-            @try {
-                // parse json
-                NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
-                NSLog(@"photo url: %@", parsedObject[@"photos"][0][@"photo_file_url"]);
-                NSURL *url = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];
-                
-                UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
-                [LocationController sharedInstance].currentLocationImage = retrievedImage;
-                
-                // notify observers about retrieved image
-                [self notifyWithImage:retrievedImage];
-            }
-            @catch (NSException *exception) {
-                NSLog(@"Photo could not be received for location: %@", location);
-            }
-        }
-    }];
-    
-}
--(void)fetchPhotoForLocation:(CLLocation *)location rideId:(NSNumber *)rideId {
+-(void)fetchPhotoForLocation:(CLLocation *)location completionHandler:(photoUrlCompletionHandler)block {
     
     if (self.requestCounter > 5) {
         self.requestCounter = 1;
@@ -106,42 +74,12 @@
             NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
             @try {
                 if (parsedObject[@"photos"] == nil ||[parsedObject[@"photos"] count] == 0 || parsedObject[@"photos"][0] == nil) {
-                    [self fetchPhotoForLocation:location rideId:rideId];
-                } else {
-                    NSURL *url = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];
-                    
-                    UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
-                    self.requestCounter = 1;
-                    [self notifyAllAboutNewImage:retrievedImage rideId:rideId];
-                }
-            }
-            @catch (NSException *exception) {
-                NSLog(@"Photo could not be received for location: %@", location);
-            }
-        }
-    }];
-}
-
--(void)fetchPhotoForLocation:(CLLocation *)location rideId:(NSNumber *)rideId completionHandler:(photoUrlCompletionHandler)block {
-    
-    [NSURLConnection sendAsynchronousRequest:[self buildUrlRequestWithLocation:location] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        if (connectionError)
-        {
-            NSLog(@"Error connecting data from server: %@", connectionError.localizedDescription);
-        } else {
-            NSLog(@"Response data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-            
-            NSError *localError = nil;
-            if (localError) {
-                return;
-            }
-            
-            // parse json
-            NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
-            @try {
-                if (parsedObject[@"photos"] == nil ||[parsedObject[@"photos"] count] == 0 || parsedObject[@"photos"][0] == nil) {
+                    [self fetchPhotoForLocation:location completionHandler:^(NSURL * photoUrl) {
+                        block(photoUrl);
+                    }];
                 } else {
                     NSURL *imageUrl = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];
+                    self.requestCounter = 1;
                     block(imageUrl);
                 }
             }
@@ -153,10 +91,6 @@
 }
 
 # pragma mark - observer methods
-
--(void)didReceiveCurrentLocation:(CLLocation *)location {
-    [self fetchPhotoForCurrentLocation:location];
-}
 
 -(void)addObserver:(id<LocationControllerDelegate>)observer {
     [self.observers addObject:observer];

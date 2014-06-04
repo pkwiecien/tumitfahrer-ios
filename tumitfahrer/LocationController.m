@@ -125,20 +125,6 @@
     }];
 }
 
-- (void)fetchPhotoURLForAddress:(NSString *)address rideId:(NSNumber *)rideId completionHandler:(locationAndUrlCompletionHandler)block {
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
-        
-        CLPlacemark *aPlacemark = [placemarks firstObject];
-        
-        // Process the placemark.
-        CLLocation *location = [[CLLocation alloc] initWithLatitude:aPlacemark.location.coordinate.latitude longitude:aPlacemark.location.coordinate.longitude];
-        [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:location rideId:rideId completionHandler:^(NSURL *photoUrl) {
-            block(location, photoUrl);
-        }];
-    }];
-}
-
 
 +(BOOL)isLocation:(CLLocation *)location nearbyAnotherLocation:(CLLocation *)anotherLocation {
     CLLocationDistance distance = [location distanceFromLocation:anotherLocation];

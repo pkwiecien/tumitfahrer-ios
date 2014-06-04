@@ -33,7 +33,7 @@
 
 - (void)testFetchUserFromCoreDataWithEmailWithCorrectEmail
 {
-    NSString *email = @"tumitfahrer@gmail.com";
+    //NSString *email = @"tumitfahrer@gmail.com";
     // TODO @Dansen: fix test (you should not assume that such user is in Core Data, but rather create a mock object, add it to core data and then then test the method
     // XCTAssertTrue([CurrentUser fetchUserFromCoreDataWithEmail:email] , @"Couldn't fetch the user from given email %@", email);
 }
@@ -58,8 +58,8 @@
 
 - (void)testFetchUserFromCoreDataWithEmailAndPasswordWithCorrectPassword
 {
-    NSString *email = @"tumitfahrer@gmail.com";
-    NSString *password = [ActionManager createSHA512:@"123456"];
+    //NSString *email = @"tumitfahrer@gmail.com";
+    //NSString *password = [ActionManager createSHA512:@"123456"];
     // TODO @Dansen: fix test (you should not assume that such user is in Core Data, but rather create a mock object, add it to core data and then then test the method
     // XCTAssertTrue([CurrentUser fetchUserFromCoreDataWithEmail:email encryptedPassword:password] , @"Couldn't fetch the user from given email %@ and paasword %@", email, password);
 }

@@ -32,7 +32,6 @@ typedef void(^locationAndUrlCompletionHandler)(CLLocation *, NSURL *);
 typedef void(^locationCompletionHandler)(CLLocation *);
 
 - (void)fetchLocationForAddress:(NSString *)address rideId:(NSNumber *)rideId;
-- (void)fetchPhotoURLForAddress:(NSString *)address rideId:(NSNumber *)rideId completionHandler:(locationAndUrlCompletionHandler)block;
 - (void)fetchLocationForAddress:(NSString *)address completionHandler:(locationCompletionHandler)block;
 
 - (void)startUpdatingLocation;

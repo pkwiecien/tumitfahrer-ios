@@ -37,17 +37,24 @@ static int page = 0;
     self = [super init];
     if (self) {
         self.observers = [[NSMutableArray alloc] init];
-        [self loadAllRidesFromCoreData];
-        [self filterAllRides]; // categorize rides to rides around me and my rides
-        [self fetchLocationForAllRides];
+        [self initAllRidesFromCoreData];
+        
         [self fetchNewRides:^(BOOL fetched) {
-            
+            if (fetched) {
+                [self initAllRidesFromCoreData];
+            }
         }];
         
         // check asynchronously if the ride was removed from the database, and then remove it from core data as well
         // add a method that will send a list of id of rides in the db, and in return will get a list of rides that need to be deleted
     }
     return self;
+}
+
+-(void)initAllRidesFromCoreData {
+    [self loadAllRidesFromCoreData];
+    [self filterAllRides]; // categorize rides to rides around me and my rides
+    [self fetchLocationForAllRides];
 }
 
 -(void)loadAllRidesFromCoreData {
@@ -171,24 +178,15 @@ static int page = 0;
 }
 
 -(void)fetchNewRides:(boolCompletionHandler)block {
-    [self fetchNewRidesFromWebservice:^(NSMutableArray *rides) {
-        if(rides != nil && [rides count] > 0) {
-            block(YES);
-        }
-    }];
-}
-
-- (void)fetchNewRidesFromWebservice:(mutableArrayCompletionHandler)block {
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
     
     [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/rides?page=%d", page] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        NSMutableArray *rides = [[NSMutableArray alloc] initWithArray:[mappingResult array]];
         if ([[mappingResult array] count] > 0) {
             page++;
         }
-        block(rides);
+        block(YES);
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);
         block(NO);
@@ -249,6 +247,10 @@ static int page = 0;
 
 -(void)addRideToStore:(Ride *)ride {
     
+    if ([[RidesStore sharedStore].allRides containsObject:ride]) {
+        return;
+    }
+    
     int index = 0;
     if ([ride.rideType intValue] == ContentTypeCampusRides) {
         for (Ride *existingRide in [self campusRides]) {
@@ -273,9 +275,8 @@ static int page = 0;
     if ([self checkIfRideFavourite:ride]) {
         [self addFavoriteRide:ride];
     }
-    [self checkIfRideNearby:ride block:^(BOOL isNearby) {
-        [self addNearbyRide:ride];
-    }];
+    
+    [self fetchLocationForRide:ride];
 }
 
 -(void)deleteRideFromCoreData:(Ride *)ride {
@@ -320,10 +321,28 @@ static int page = 0;
 
 -(void)fetchLocationForAllRides {
     for(Ride *ride in [self allRides]) {
-        [self fetchLocationForRide:ride block:^(BOOL fetched) {
-            
-        }];
+        [self fetchLocationForRide:ride];
     }
+}
+
+-(void)fetchLocationForRide:(Ride *)ride {
+    [self fetchLocationForRide:ride block:^(BOOL locationFetched) {
+        if(locationFetched) {
+            if ([self checkIfRideNearby:ride]) {
+                [self addNearbyRide:ride];
+            }
+            CLLocation *location = [LocationController locationFromLongitude:[ride.destinationLongitude doubleValue] latitude:[ride.destinationLatitude doubleValue]];
+            if (ride.destinationImage == nil) {
+                [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:location completionHandler:^(NSURL *imageUrl) {
+                    UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:imageUrl]];
+                    ride.destinationImage = UIImagePNGRepresentation(retrievedImage);
+                    [self notifyAllAboutNewImageForRideId:ride.rideId];
+                }];
+            }
+        } else {
+            // can't retrieve location
+        }
+    }];
 }
 
 -(void)fetchLocationForRide:(Ride *)ride  block:(boolCompletionHandler)block {
@@ -333,7 +352,6 @@ static int page = 0;
             if (location != nil) {
                 ride.destinationLatitude = [NSNumber numberWithDouble:location.coordinate.latitude];
                 ride.destinationLongitude = [NSNumber numberWithDouble:location.coordinate.longitude];
-                [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:location rideId:ride.rideId];
             }
             
             if ([ride.departureLatitude doubleValue] == 0 || [ride.departureLongitude doubleValue] == 0) {
@@ -361,12 +379,6 @@ static int page = 0;
             block(YES);
         }
     }
-}
-
--(void)didReceivePhotoForLocation:(UIImage *)image rideId:(NSNumber *)rideId{
-    Ride *ride = [self getRideWithId:rideId];
-    ride.destinationImage = UIImagePNGRepresentation(image);
-    [self notifyAllAboutNewImageForRideId:rideId];
 }
 
 #pragma mark - utility functions
@@ -428,11 +440,9 @@ static int page = 0;
 - (void)filterNearbyRidesByType:(ContentType)rideType {
     
     for (Ride *ride in [self allRidesByType:rideType]) {
-        [self checkIfRideNearby:ride block:^(BOOL isNearby) {
-            if (isNearby) {
-                [self addNearbyRide:ride];
-            }
-        }];
+        if ([self checkIfRideNearby:ride]) {
+            [self addNearbyRide:ride];
+        }
     }
 }
 
@@ -468,22 +478,11 @@ static int page = 0;
     return nil;
 }
 
--(void)checkIfRideNearby:(Ride *)ride block:(boolCompletionHandler)isNearby{
-    
-    if ([ride.departureLatitude doubleValue] == 0 || [ride.destinationLatitude doubleValue] == 0) {
-        [self fetchLocationForRide:ride block:^(BOOL fetched) {
-            if ([self locationsNearbyForRide:ride]) {
-                isNearby(YES);
-            } else {
-                isNearby(NO);
-            }
-        }];
+-(BOOL)checkIfRideNearby:(Ride *)ride {
+    if ([self locationsNearbyForRide:ride]) {
+        return YES;
     } else {
-        if ([self locationsNearbyForRide:ride]) {
-            isNearby(YES);
-        } else {
-            isNearby(NO);
-        }
+        return NO;
     }
 }
 
