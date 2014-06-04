@@ -2,7 +2,7 @@
 //  User.h
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 5/19/14.
+//  Created by Pawel Kwiecien on 6/4/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
@@ -23,17 +23,16 @@
 @property (nonatomic, retain) NSString * lastName;
 @property (nonatomic, retain) NSString * password;
 @property (nonatomic, retain) NSString * phoneNumber;
+@property (nonatomic, retain) NSData * profileImageData;
 @property (nonatomic, retain) NSNumber * ratingAvg;
 @property (nonatomic, retain) NSDate * updatedAt;
 @property (nonatomic, retain) NSNumber * userId;
-@property (nonatomic, retain) NSData * profileImageData;
 @property (nonatomic, retain) NSSet *messagesReceived;
 @property (nonatomic, retain) NSSet *messagesSent;
 @property (nonatomic, retain) NSSet *ratingsGiven;
 @property (nonatomic, retain) NSSet *ratingsReceived;
-@property (nonatomic, retain) NSSet *ridesAsDriver;
+@property (nonatomic, retain) NSSet *ridesAsOwner;
 @property (nonatomic, retain) NSSet *ridesAsPassenger;
-
 @end
 
 @interface User (CoreDataGeneratedAccessors)
@@ -58,10 +57,10 @@
 - (void)addRatingsReceived:(NSSet *)values;
 - (void)removeRatingsReceived:(NSSet *)values;
 
-- (void)addRidesAsDriverObject:(Ride *)value;
-- (void)removeRidesAsDriverObject:(Ride *)value;
-- (void)addRidesAsDriver:(NSSet *)values;
-- (void)removeRidesAsDriver:(NSSet *)values;
+- (void)addRidesAsOwnerObject:(Ride *)value;
+- (void)removeRidesAsOwnerObject:(Ride *)value;
+- (void)addRidesAsOwner:(NSSet *)values;
+- (void)removeRidesAsOwner:(NSSet *)values;
 
 - (void)addRidesAsPassengerObject:(Ride *)value;
 - (void)removeRidesAsPassengerObject:(Ride *)value;

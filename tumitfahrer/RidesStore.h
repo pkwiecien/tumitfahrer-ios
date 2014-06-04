@@ -31,7 +31,7 @@
 - (Ride *)getRideWithId:(NSNumber *)rideId;
 - (Ride *)containsRideWithId:(NSNumber *)rideId;
 - (NSArray *)rideRequestForUserWithId:(NSNumber *)userId;
-- (void)fetchRidesFromCoreDataByType:(ContentType)contentType;
+- (void)loadRidesFromCoreDataByType:(ContentType)contentType;
 - (void)fetchNewRides:(boolCompletionHandler)block;
 - (void)deleteRideFromCoreData:(Ride *)ride;
 - (void)deleteRideRequestFromCoreData:(Request *)request;

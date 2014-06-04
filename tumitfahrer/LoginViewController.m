@@ -118,12 +118,7 @@
         if (![[CurrentUser sharedInstance].user.managedObjectContext saveToPersistentStore:&error]) {
             NSLog(@"Whoops");
         }
-        
-        // check if everything is OK with user rides as driver
-        for (Ride *ride in [CurrentUser sharedInstance].user.ridesAsDriver) {
-            NSLog(@"ride of user: %@ %@", ride.rideId, ride.destination);
-        }
-        
+                
         // check if fetch user has assigned a device token
         [self checkDeviceToken];
                 

@@ -16,6 +16,7 @@
 
 @property (nonatomic) NSMutableArray *privateCampusRides;
 @property (nonatomic) NSMutableArray *privateActivityRides;
+@property (nonatomic) NSMutableArray *privatePastRides;
 @property (nonatomic) NSMutableArray *userRideRequests;
 
 @property (nonatomic) NSMutableArray *privateCampusRidesNearby;
@@ -36,20 +37,22 @@ static int page = 0;
     self = [super init];
     if (self) {
         self.observers = [[NSMutableArray alloc] init];
-        [self loadAllRides];
+        [self loadAllRidesFromCoreData];
         [self filterAllRides]; // categorize rides to rides around me and my rides
         [self fetchLocationForAllRides];
+        [self fetchNewRides:^(BOOL fetched) {
+            
+        }];
         
-        [self fetchNewRides:nil];
-        
-        // check if the ride was removed from the database, and then remove it from core data as well
+        // check asynchronously if the ride was removed from the database, and then remove it from core data as well
+        // add a method that will send a list of id of rides in the db, and in return will get a list of rides that need to be deleted
     }
     return self;
 }
 
--(void)loadAllRides {
-    [self fetchRidesFromCoreDataByType:ContentTypeActivityRides];
-    [self fetchRidesFromCoreDataByType:ContentTypeCampusRides];
+-(void)loadAllRidesFromCoreData {
+    [self loadRidesFromCoreDataByType:ContentTypeActivityRides];
+    [self loadRidesFromCoreDataByType:ContentTypeCampusRides];
 }
 
 +(instancetype)sharedStore {
@@ -64,14 +67,14 @@ static int page = 0;
 #pragma mark - core data/webservice fetch methods
 
 // fetch all upcoming rides
--(void)fetchRidesFromCoreDataByType:(ContentType)contentType {
+-(void)loadRidesFromCoreDataByType:(ContentType)contentType {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *e = [NSEntityDescription entityForName:@"Ride"
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
                               mainQueueManagedObjectContext];
     NSPredicate *predicate;
     NSDate *now = [NSDate date];
-    predicate = [NSPredicate predicateWithFormat:@"(rideType = %d) AND (departureTime > %@))", contentType, now];
+    predicate = [NSPredicate predicateWithFormat:@"(rideType = %d) AND (departureTime > %@)", contentType, now];
     
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"departureTime" ascending:YES];
     request.sortDescriptors = @[descriptor];
@@ -96,9 +99,31 @@ static int page = 0;
     }
 }
 
-//TODO: add method for fetching all past rides
--(void)fetchPastRidesFromCoreDataByType:(ContentType)contentType {
+// fetch all past rides
+-(void)fetchPastRidesFromCoreDataByType {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *e = [NSEntityDescription entityForName:@"Ride"
+                                         inManagedObjectContext:[RKManagedObjectStore defaultStore].
+                              mainQueueManagedObjectContext];
+    NSPredicate *predicate;
+    NSDate *now = [NSDate date];
+    predicate = [NSPredicate predicateWithFormat:@"departureTime <= %@", now];
     
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"departureTime" ascending:NO];
+    request.sortDescriptors = @[descriptor];
+    
+    [request setPredicate:predicate];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    request.entity = e;
+    
+    NSError *error;
+    NSArray *fetchedObjects = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:&error];
+    if (!fetchedObjects) {
+        [NSException raise:@"Fetch failed"
+                    format:@"Reason: %@", [error localizedDescription]];
+    }
+    self.privatePastRides = [[NSMutableArray alloc] initWithArray:fetchedObjects];
 }
 
 - (void)fetchUserRequestedRidesFromCoreData:(NSNumber *)userId {
@@ -118,8 +143,7 @@ static int page = 0;
         [NSException raise:@"Fetch failed"
                     format:@"Reason: %@", [error localizedDescription]];
     }
-    self.userRideRequests = [NSMutableArray arrayWithArray:fetchedObjects];
-    
+    self.privatePastRides = [[NSMutableArray alloc] initWithArray:fetchedObjects];
 }
 
 - (Ride *)fetchRideFromCoreDataWithId:(NSNumber *)rideId {
@@ -143,15 +167,12 @@ static int page = 0;
 
 -(NSArray *)rideRequestForUserWithId:(NSNumber *)userId {
     [self fetchUserRequestedRidesFromCoreData:userId];
-    return self.userRideRequests;
+    return [self rideRequests];
 }
 
 -(void)fetchNewRides:(boolCompletionHandler)block {
     [self fetchNewRidesFromWebservice:^(NSMutableArray *rides) {
         if(rides != nil && [rides count] > 0) {
-            for (Ride *ride in rides) {
-                [self addRideToStore:ride];
-            }
             block(YES);
         }
     }];
@@ -163,11 +184,11 @@ static int page = 0;
     //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
     
     [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/rides?page=%d", page] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        NSMutableArray *rides = [NSMutableArray arrayWithArray:[mappingResult array]];
-        block(rides);
+        NSMutableArray *rides = [[NSMutableArray alloc] initWithArray:[mappingResult array]];
         if ([[mappingResult array] count] > 0) {
             page++;
         }
+        block(rides);
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);
         block(NO);
@@ -228,25 +249,33 @@ static int page = 0;
 
 -(void)addRideToStore:(Ride *)ride {
     
+    int index = 0;
     if ([ride.rideType intValue] == ContentTypeCampusRides) {
-        [self.privateCampusRides addObject:ride];
-        if ([self checkIfRideNearby:ride]) {
-            [self.privateCampusRidesNearby addObject:ride];
+        for (Ride *existingRide in [self campusRides]) {
+            if ([ride.departureTime compare:existingRide.departureTime] == NSOrderedAscending) {
+                break;
+            } else {
+                index++;
+            }
         }
-        if ([self checkIfRideFavourite:ride]) {
-            [self.privateCampusRidesFavorites addObject:ride];
-        }
+        [[self campusRides] insertObject:ride atIndex:index];
     } else {
-        [self.privateActivityRides addObject:ride];
-        if ([self checkIfRideFavourite:ride]) {
-            [self.privateActivityRidesFavorites addObject:ride];
+        for (Ride *existingRide in [self activityRides]) {
+            if (ride.departureTime < existingRide.departureTime) {
+                break;
+            } else {
+                index++;
+            }
         }
-        if ([self checkIfRideNearby:ride]) {
-            [self.privateActivityRidesNearby addObject:ride];
-        }
+        [[self activityRides] insertObject:ride atIndex:index];
     }
     
-    [self fetchLocationForRide:ride];
+    if ([self checkIfRideFavourite:ride]) {
+        [self addFavoriteRide:ride];
+    }
+    [self checkIfRideNearby:ride block:^(BOOL isNearby) {
+        [self addNearbyRide:ride];
+    }];
 }
 
 -(void)deleteRideFromCoreData:(Ride *)ride {
@@ -262,13 +291,13 @@ static int page = 0;
 
 -(void)deleteRideFromLocalStore:(Ride *)ride {
     if ([ride.rideType intValue] == ContentTypeCampusRides) {
-        [self.privateCampusRides removeObject:ride];
-        [self.privateCampusRidesFavorites removeObject:ride];
-        [self.privateCampusRidesNearby removeObject:ride];
+        [[self campusRides] removeObject:ride];
+        [[self campusRidesFavorites] removeObject:ride];
+        [[self campusRidesNearby] removeObject:ride];
     } else {
-        [self.privateActivityRides removeObject:ride];
-        [self.privateActivityRidesFavorites removeObject:ride];
-        [self.privateActivityRidesNearby removeObject:ride];
+        [[self activityRides] removeObject:ride];
+        [[self activityRidesFavorites] removeObject:ride];
+        [[self activityRidesNearby] removeObject:ride];
     }
 }
 
@@ -284,39 +313,54 @@ static int page = 0;
 }
 
 -(void)deleteRideRequestFromLocalStore:(Request *)request {
-    [self.userRideRequests removeObject:request];
+    [[self rideRequests] removeObject:request];
 }
 
 # pragma mark - location and delegate methods
 
 -(void)fetchLocationForAllRides {
     for(Ride *ride in [self allRides]) {
-        [self fetchLocationForRide:ride];
-    }
-}
-
--(void)fetchLocationForRide:(Ride *)ride {
-    if (ride.destinationLatitude ==nil || ride.destinationLongitude == nil) {
-        [[LocationController sharedInstance] fetchLocationForAddress:ride.destination rideId:ride.rideId];
-    }
-    
-    if (ride.departureLatitude == nil || ride.departureLongitude == nil) {
-        [[LocationController sharedInstance] fetchLocationForAddress:ride.departurePlace completionHandler:^(CLLocation *location) {
-            if (location != nil) {
-                ride.departureLatitude = [NSNumber numberWithDouble:location.coordinate.latitude];
-                ride.departureLongitude = [NSNumber numberWithDouble:location.coordinate.longitude];
-            }
+        [self fetchLocationForRide:ride block:^(BOOL fetched) {
+            
         }];
     }
 }
 
--(void)didReceiveLocationForAddress:(CLLocation *)location rideId:(NSNumber *)rideId {
-    Ride *ride = [self getRideWithId:rideId];
-    NSLog(@"ride id is: %@ and fetched location lat: %f and destination was: %@", ride.rideId, location.coordinate.latitude, ride.destination);
+-(void)fetchLocationForRide:(Ride *)ride  block:(boolCompletionHandler)block {
     
-    ride.destinationLatitude = [NSNumber numberWithDouble:location.coordinate.latitude];
-    ride.destinationLongitude = [NSNumber numberWithDouble:location.coordinate.longitude];
-    [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:location rideId:rideId];
+    if ([ride.destinationLatitude doubleValue] == 0 || [ride.destinationLongitude doubleValue] == 0) {
+        [[LocationController sharedInstance] fetchLocationForAddress:ride.destination completionHandler:^(CLLocation *location) {
+            if (location != nil) {
+                ride.destinationLatitude = [NSNumber numberWithDouble:location.coordinate.latitude];
+                ride.destinationLongitude = [NSNumber numberWithDouble:location.coordinate.longitude];
+                [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:location rideId:ride.rideId];
+            }
+            
+            if ([ride.departureLatitude doubleValue] == 0 || [ride.departureLongitude doubleValue] == 0) {
+                [[LocationController sharedInstance] fetchLocationForAddress:ride.departurePlace completionHandler:^(CLLocation *location) {
+                    if (location != nil) {
+                        ride.departureLatitude = [NSNumber numberWithDouble:location.coordinate.latitude];
+                        ride.departureLongitude = [NSNumber numberWithDouble:location.coordinate.longitude];
+                    }
+                    block(YES);
+                }];
+            } else {
+                block(YES);
+            }
+        }];
+    } else {
+        if ([ride.departureLatitude doubleValue] == 0 || [ride.departureLongitude doubleValue] == 0) {
+            [[LocationController sharedInstance] fetchLocationForAddress:ride.departurePlace completionHandler:^(CLLocation *location) {
+                if (location != nil) {
+                    ride.departureLatitude = [NSNumber numberWithDouble:location.coordinate.latitude];
+                    ride.departureLongitude = [NSNumber numberWithDouble:location.coordinate.longitude];
+                }
+                block(YES);
+            }];
+        } else {
+            block(YES);
+        }
+    }
 }
 
 -(void)didReceivePhotoForLocation:(UIImage *)image rideId:(NSNumber *)rideId{
@@ -329,10 +373,10 @@ static int page = 0;
 
 -(NSArray *)allRides {
     NSMutableArray *rides = [[NSMutableArray alloc] init];
-    if([self.privateActivityRides count] >0 )
-        [rides addObjectsFromArray:self.privateActivityRides];
-    if([self.privateCampusRides count] > 0)
-        [rides addObjectsFromArray:self.privateCampusRides];
+    if([[self activityRides] count] >0 )
+        [rides addObjectsFromArray:[self activityRides]];
+    if([[self campusRides] count] > 0)
+        [rides addObjectsFromArray:[self campusRides]];
     return rides;
 }
 
@@ -342,19 +386,35 @@ static int page = 0;
     // TODO: implement
 }
 
-- (void)addFavoriteRide:(Ride*)ride {
+- (NSInteger)addFavoriteRide:(Ride*)ride {
+    int index = 0;
     if ([ride.rideType intValue] == ContentTypeActivityRides) {
-        [self.privateActivityRidesFavorites addObject:ride];
+        for (Ride *existingRide in [self activityRidesFavorites]) {
+            if ([ride.departureTime compare:existingRide.departureTime] == NSOrderedAscending) {
+                break;
+            } else {
+                index++;
+            }
+        }
+        [[self activityRidesFavorites] insertObject:ride atIndex:index];
     } else if([ride.rideType intValue] == ContentTypeCampusRides) {
-        [self.privateCampusRidesFavorites addObject:ride];
+        for (Ride *existingRide in [self campusRidesFavorites]) {
+            if ([ride.departureTime compare:existingRide.departureTime] == NSOrderedAscending) {
+                break;
+            } else {
+                index++;
+            }
+        }
+        [[self campusRidesFavorites] insertObject:ride atIndex:index];
     }
+    return index;
 }
 
 -(NSArray *)favoriteRidesByType:(ContentType)contentType {
     if (contentType == ContentTypeActivityRides) {
-        return self.privateActivityRidesFavorites;
+        return [self activityRidesFavorites];
     } else if(contentType == ContentTypeCampusRides) {
-        return self.privateCampusRidesFavorites;
+        return [self campusRidesFavorites];
     }
     return nil;
 }
@@ -368,32 +428,68 @@ static int page = 0;
 - (void)filterNearbyRidesByType:(ContentType)rideType {
     
     for (Ride *ride in [self allRidesByType:rideType]) {
-        if ([self checkIfRideNearby:ride]) {
-            [self addNearbyRide:ride];
-        }
+        [self checkIfRideNearby:ride block:^(BOOL isNearby) {
+            if (isNearby) {
+                [self addNearbyRide:ride];
+            }
+        }];
     }
 }
 
 - (void)addNearbyRide:(Ride*)ride{
+    int index = 0;
     if ([ride.rideType intValue] == ContentTypeActivityRides) {
-        [self.privateActivityRidesNearby addObject:ride];
+        for (Ride *existingRide in [self activityRidesNearby]) {
+            if ([ride.departureTime compare:existingRide.departureTime] == NSOrderedAscending) {
+                break;
+            } else {
+                index++;
+            }
+        }
+        [[self activityRidesNearby] insertObject:ride atIndex:index];
     } else if([ride.rideType intValue] == ContentTypeCampusRides) {
-        [self.privateCampusRidesNearby addObject:ride];
+        for (Ride *existingRide in [self campusRidesNearby]) {
+            if ([ride.departureTime compare:existingRide.departureTime] == NSOrderedAscending) {
+                break;
+            } else {
+                index++;
+            }
+        }
+        [[self campusRidesNearby] insertObject:ride atIndex:index];
     }
 }
 
 -(NSArray *)ridesNearbyByType:(ContentType)contentType {
     if (contentType == ContentTypeActivityRides) {
-        return self.privateActivityRidesNearby;
+        return [self activityRidesNearby];
     } else if(contentType == ContentTypeCampusRides) {
-        return self.privateCampusRidesNearby;
+        return [self campusRidesNearby];
     }
     return nil;
 }
 
--(BOOL)checkIfRideNearby:(Ride *)ride {
-    CLLocation *currentLocation = [LocationController sharedInstance].currentLocation;
+-(void)checkIfRideNearby:(Ride *)ride block:(boolCompletionHandler)isNearby{
+    
+    if ([ride.departureLatitude doubleValue] == 0 || [ride.destinationLatitude doubleValue] == 0) {
+        [self fetchLocationForRide:ride block:^(BOOL fetched) {
+            if ([self locationsNearbyForRide:ride]) {
+                isNearby(YES);
+            } else {
+                isNearby(NO);
+            }
+        }];
+    } else {
+        if ([self locationsNearbyForRide:ride]) {
+            isNearby(YES);
+        } else {
+            isNearby(NO);
+        }
+    }
+}
 
+-(BOOL)locationsNearbyForRide:(Ride *)ride {
+    CLLocation *currentLocation = [LocationController sharedInstance].currentLocation;
+    
     CLLocation *departureLocation = [LocationController locationFromLongitude:[ride.departureLongitude doubleValue] latitude:[ride.departureLatitude doubleValue]];
     CLLocation *destinationLocation = [LocationController locationFromLongitude:[ride.destinationLongitude doubleValue] latitude:[ride.destinationLatitude doubleValue]];
     
@@ -418,9 +514,9 @@ static int page = 0;
 -(NSArray *)allRidesByType:(ContentType)contentType {
     switch (contentType) {
         case ContentTypeActivityRides:
-            return self.privateActivityRides;
+            return [self activityRides];
         case ContentTypeCampusRides:
-            return self.privateCampusRides;
+            return [self campusRides];
         default:
             return nil;
     }
@@ -473,43 +569,56 @@ static int page = 0;
 
 #pragma mark - getters with initializers
 
--(NSMutableArray *)privateActivityRides {
+-(NSMutableArray *)activityRides {
     if (self.privateActivityRides == nil) {
         self.privateActivityRides = [[NSMutableArray alloc] init];
     }
     return self.privateActivityRides;
 }
 
--(NSMutableArray *)privateCampusRides {
-    
+-(NSMutableArray *)campusRides {
     if (self.privateCampusRides == nil) {
         self.privateCampusRides = [[NSMutableArray alloc] init];
     }
     return self.privateCampusRides;
 }
 
--(NSMutableArray *)privateActivityRidesNearby {
+-(NSMutableArray *)pastRides {
+    if (self.privatePastRides == nil) {
+        self.privatePastRides = [[NSMutableArray alloc] init];
+    }
+    return self.privatePastRides;
+}
+
+-(NSMutableArray *)rideRequests {
+    if (self.userRideRequests == nil) {
+        self.userRideRequests = [[NSMutableArray alloc] init];
+    }
+    return self.userRideRequests;
+}
+
+-(NSMutableArray *)activityRidesNearby {
     if (self.privateActivityRidesNearby == nil) {
         self.privateActivityRidesNearby = [[NSMutableArray alloc] init];
     }
     return self.privateActivityRidesNearby;
 }
 
--(NSMutableArray *)privateActivityRidesFavorites {
+-(NSMutableArray *)activityRidesFavorites {
     if (self.privateActivityRidesFavorites == nil) {
         self.privateActivityRidesFavorites = [[NSMutableArray alloc] init];
     }
     return self.privateActivityRidesFavorites;
 }
 
--(NSMutableArray *)privateCampusRidesFavorites {
+-(NSMutableArray *)campusRidesFavorites {
     if (self.privateCampusRidesFavorites == nil) {
         self.privateCampusRidesFavorites = [[NSMutableArray alloc] init];
     }
     return self.privateCampusRidesFavorites;
 }
 
--(NSMutableArray *)privateCampusRidesNearby {
+-(NSMutableArray *)campusRidesNearby {
     if (self.privateCampusRidesNearby == nil) {
         self.privateCampusRidesNearby = [[NSMutableArray alloc] init];
     }

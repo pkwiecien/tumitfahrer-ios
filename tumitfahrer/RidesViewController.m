@@ -38,13 +38,8 @@
     
     [[PanoramioUtilities sharedInstance] addObserver:self];
     [[RidesStore sharedStore] addObserver:self];
-    //    if (!_backgroundOperationQueue) {
-    //        _backgroundOperationQueue = [[NSOperationQueue alloc] init];
-    //    }
     
-    UIColor *customGrayColor = [UIColor colorWithRed:224/255.0 green:224/255.0 blue:224/255.0 alpha:1.0];
-    [self.view setBackgroundColor:customGrayColor];
-    
+    [self.view setBackgroundColor:[UIColor customLightGray]];
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
     self.tableView.tableHeaderView = headerView;
     
@@ -69,27 +64,11 @@
     }];
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    [[RidesStore sharedStore]  fetchRidesFromCoreDataByType:ContentTypeActivityRides];
-    [self.tableView reloadData];
-}
-
 -(void)addToImageCache {
     int counter = 0;
     UIImage *placeholderImage = [UIImage imageNamed:@"PlaceholderImage"];
-    NSArray *rides = nil;
-    switch (self.index) {
-        case 0:
-            rides = [[RidesStore sharedStore] allRidesByType:self.RideType];
-            break;
-        case 1:
-            rides = [[RidesStore sharedStore] ridesNearbyByType:self.RideType];
-            break;
-        case 2:
-            rides = [[RidesStore sharedStore] favoriteRidesByType:self.RideType];
-            break;
-    }
-    for (Ride *ride in rides) {
+
+    for (Ride *ride in [self ridesForCurrentIndex]) {
         UIImage *image = [UIImage imageWithData:ride.destinationImage];
         if (image == nil) {
             image = placeholderImage;
@@ -102,19 +81,11 @@
 -(void)viewWillAppear:(BOOL)animated {
     [self addToImageCache];
     [self.delegate willAppearViewWithIndex:self.index];
+    [self.tableView reloadData];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    switch (self.index) {
-        case 0:
-            return [[[RidesStore sharedStore] allRidesByType:self.RideType] count];
-        case 1:
-            return  [[[RidesStore sharedStore] ridesNearbyByType:self.RideType] count];
-        case 2:
-            return [[[RidesStore sharedStore] favoriteRidesByType:self.RideType] count];
-        default:
-            return 0;
-    }
+    return [[self ridesForCurrentIndex] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -143,21 +114,7 @@
         cell = [RidesCell ridesCell];
     }
     
-    Ride *ride = nil;
-    switch (self.index) {
-        case 0:
-            ride = [[[RidesStore sharedStore] allRidesByType:self.RideType] objectAtIndex:indexPath.section];
-            break;
-        case 1:
-            ride = [[[RidesStore sharedStore] ridesNearbyByType:self.RideType] objectAtIndex:indexPath.section];
-            break;
-        case 2:
-            ride = [[[RidesStore sharedStore] favoriteRidesByType:self.RideType] objectAtIndex:indexPath.section];
-            break;
-        default:
-            return 0;
-    }
-    
+    Ride *ride = [[self ridesForCurrentIndex] objectAtIndex:indexPath.section];
     UIImage *image = [_imageCache objectForKey:[NSNumber numberWithInteger:indexPath.section]];
     if (image == nil) {
         if(ride.destinationImage == nil) {
@@ -203,19 +160,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
-    switch (self.index) {
-        case 0:
-            rideDetailVC.ride = [[[RidesStore sharedStore] allRidesByType:self.RideType] objectAtIndex:indexPath.section];
-            break;
-        case 1:
-            rideDetailVC.ride = [[[RidesStore sharedStore] ridesNearbyByType:self.RideType] objectAtIndex:indexPath.section];
-            break;
-        case 2:
-            rideDetailVC.ride = [[[RidesStore sharedStore] favoriteRidesByType:self.RideType] objectAtIndex:indexPath.section];
-            break;
-        default:
-            return;
-    }
+    rideDetailVC.ride = [[self ridesForCurrentIndex] objectAtIndex:indexPath.section];
     [self.navigationController pushViewController:rideDetailVC animated:YES];
 }
 
@@ -295,8 +240,7 @@
     [self.tableView reloadData];
 }
 
--(void)didReceivePhotoForCurrentLocation:(UIImage *)image
-{
+-(void)didReceivePhotoForCurrentLocation:(UIImage *)image {
     [LocationController sharedInstance].currentLocationImage = image;
 }
 
@@ -315,6 +259,19 @@
             }
         }
     }];
+}
+
+-(NSArray *)ridesForCurrentIndex {
+    switch (self.index) {
+        case 0:
+            return [[RidesStore sharedStore] allRidesByType:self.RideType];
+        case 1:
+            return [[RidesStore sharedStore] ridesNearbyByType:self.RideType];
+        case 2:
+            return [[RidesStore sharedStore] favoriteRidesByType:self.RideType];
+        default:
+            return 0;
+    }
 }
 
 @end

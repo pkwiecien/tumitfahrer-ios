@@ -31,7 +31,7 @@
                                                       @"updated_at": @"updatedAt"
                                                       }];
     
-    [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"driver" toKeyPath:@"driver" withMapping:[UserMapping userMapping]]];
+    [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"ride_owner" toKeyPath:@"rideOwner" withMapping:[UserMapping userMapping]]];
     
    [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"passengers" toKeyPath:@"passengers" withMapping:[UserMapping userMapping]]];
     

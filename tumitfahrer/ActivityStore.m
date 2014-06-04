@@ -120,10 +120,7 @@ static int page = 0;
     for (id activity in self.privateRecentActivities) {
         if ([activity isKindOfClass:[Ride class]]) {
             Ride *ride = (Ride *)activity;
-            for (Ride *ride in [CurrentUser sharedInstance].user.ridesAsDriver) {
-                NSLog(@"my ride: %@", ride);
-            }
-            if([[CurrentUser sharedInstance].user.ridesAsPassenger containsObject:ride] || [[CurrentUser sharedInstance].user.ridesAsDriver containsObject:ride]) {
+            if([[CurrentUser sharedInstance].user.ridesAsPassenger containsObject:ride] || [[CurrentUser sharedInstance].user.ridesAsOwner containsObject:ride]) {
                 [self.privateMyRecentActivities addObject:activity];
             }
         } else if([activity isKindOfClass:[Request class]]) {

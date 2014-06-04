@@ -124,9 +124,9 @@
             cell = [GeneralInfoCell generalInfoCell];
         }
         
-        cell.driverLabel.text = [NSString stringWithFormat:@"%d", (int)[[CurrentUser sharedInstance].user.ridesAsDriver count]];
+        cell.driverLabel.text = [NSString stringWithFormat:@"%d", (int)[[CurrentUser sharedInstance].user.ridesAsOwner count]];
         cell.passengerLabel.text = [NSString stringWithFormat:@"%d", (int)[[CurrentUser sharedInstance].user.ridesAsPassenger count]];
-        cell.ratingLabel.text = [NSString stringWithFormat:@"%d", (int)[[CurrentUser sharedInstance].user.ridesAsDriver count]];
+        cell.ratingLabel.text = [NSString stringWithFormat:@"%d", (int)[CurrentUser sharedInstance].user.ratingAvg];
         return cell;
         
     } else {

@@ -310,9 +310,9 @@
     if ([self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && ![self.ride.isRideRequest boolValue]) {
         [objectManager deleteObject:self.ride path:[NSString stringWithFormat:@"/api/v2/rides/%@", self.ride.rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             
-            [[CurrentUser sharedInstance].user removeRidesAsDriverObject:self.ride];
+            [[CurrentUser sharedInstance].user removeRidesAsOwnerObject:self.ride];
             [[RidesStore sharedStore] deleteRideFromCoreData:self.ride];
-            [[RidesStore sharedStore] fetchRidesFromCoreDataByType:ContentTypeCampusRides];
+            [[RidesStore sharedStore] loadRidesFromCoreDataByType:ContentTypeCampusRides];
             
             [self.navigationController popViewControllerAnimated:YES];
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {

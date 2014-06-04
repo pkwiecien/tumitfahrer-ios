@@ -2,7 +2,7 @@
 //  User.m
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 5/19/14.
+//  Created by Pawel Kwiecien on 6/4/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
@@ -24,15 +24,15 @@
 @dynamic lastName;
 @dynamic password;
 @dynamic phoneNumber;
+@dynamic profileImageData;
 @dynamic ratingAvg;
 @dynamic updatedAt;
 @dynamic userId;
-@dynamic profileImageData;
 @dynamic messagesReceived;
 @dynamic messagesSent;
 @dynamic ratingsGiven;
 @dynamic ratingsReceived;
-@dynamic ridesAsDriver;
+@dynamic ridesAsOwner;
 @dynamic ridesAsPassenger;
 
 @end

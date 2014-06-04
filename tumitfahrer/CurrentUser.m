@@ -108,7 +108,7 @@
     }
     
     User *user = (User *)[result firstObject];
-    [user removeRidesAsDriverObject:ride];
+    [user removeRidesAsOwnerObject:ride];
 }
 
 
@@ -161,7 +161,7 @@
 }
 
 - (void)refreshUserRides {
-    self.privateUserRides = [NSMutableArray arrayWithArray:[self.user.ridesAsDriver allObjects]];
+    self.privateUserRides = [NSMutableArray arrayWithArray:[self.user.ridesAsOwner allObjects]];
     [self.privateUserRides addObjectsFromArray:[self.user.ridesAsPassenger allObjects]];
     [self.privateUserRides addObjectsFromArray:[[RidesStore sharedStore] rideRequestForUserWithId:self.user.userId]];
 }

@@ -329,6 +329,7 @@
         self.tablePassengerValues = nil;
         self.tableDriverValues = nil;
         [KGStatusBar showSuccessWithStatus:@"Ride added"];
+        
         if (self.RideDisplayType == ShowAsModal) {
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];
         } else {

@@ -22,7 +22,7 @@
 
 
 @property (nonatomic, strong) CLLocationManager* locationManager;
-@property (nonatomic, strong) CLLocation* currentLocation;
+@property (nonatomic, strong) CLLocation* currentLocation; // todo add getting network location
 @property (nonatomic, strong) UIImage *currentLocationImage;
 @property (nonatomic, strong) NSString *currentAddress;
 
