@@ -21,7 +21,7 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     self.rideSearch = [[RideSearch alloc]init];
-    [self.rideSearch setRideId:12];
+    [self.rideSearch setRideId:[NSNumber numberWithInt:12]];
     //ride.departureTime
     [self.rideSearch setDeparturePlace:@"garching"];
     [self.rideSearch setDestination:@"munich"];
@@ -40,7 +40,7 @@
 
 - (void)testRideWithCorrectId
 {
-    NSInteger rideId = 34;
+    NSNumber *rideId = [NSNumber numberWithInt:34];
     RideSearch *result = [[RideSearchStore sharedStore]rideWithId:rideId];
     XCTAssertEqual(result.driverId,0, @"Ride is empty with ride id %ld",(long)rideId);
 }
@@ -48,7 +48,7 @@
 
 - (void)testRideWithInCorrectId
 {
-    NSInteger rideId = -1;
+    NSNumber *rideId = [NSNumber numberWithInt:-1];
     RideSearch *result = [[RideSearchStore sharedStore]rideWithId:rideId];
     XCTAssertNil(result, @"Ride is empty with ride id %ld",(long)rideId);
 }
@@ -57,7 +57,7 @@
 {
     
     RideSearch *expected = [[RideSearchStore sharedStore] rideWithId:self.rideSearch.rideId];
-    XCTAssertEqual(self.rideSearch.destination, expected.destination, "Fetch the wrong ride with ride ids are %d ,%d",self.rideSearch.rideId,expected.rideId);
+    XCTAssertEqual(self.rideSearch.destination, expected.destination, "Fetch the wrong ride with ride ids are %@ ,%@",self.rideSearch.rideId,expected.rideId);
 }
 
 - (void)testAllSearchResult

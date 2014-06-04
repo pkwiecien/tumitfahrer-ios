@@ -26,22 +26,22 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     self.campusRide = [NSEntityDescription insertNewObjectForEntityForName:@"Ride" inManagedObjectContext:[CoreDataHelper managedObjectContextForTests]];
-    [self.campusRide setRideId:12];
+    [self.campusRide setRideId:[NSNumber numberWithInt:12]];
     //ride.departureTime
     [self.campusRide setDeparturePlace:@"garching"];
     [self.campusRide setDestination:@"munich"];
-    [self.campusRide setFreeSeats:2];
+    [self.campusRide setFreeSeats:[NSNumber numberWithInt:2]];
     [self.campusRide setMeetingPoint:@"fmi"];
     [self.campusRide setRideType:0];
     
     self.activityRide = [NSEntityDescription insertNewObjectForEntityForName:@"Ride" inManagedObjectContext:[CoreDataHelper managedObjectContextForTests]];
-    [self.activityRide setRideId:13];
+    [self.activityRide setRideId:[NSNumber numberWithInt:13]];
     //ride.departureTime
     [self.activityRide setDeparturePlace:@"garching"];
     [self.activityRide setDestination:@"berlin"];
-    [self.activityRide setFreeSeats:5];
+    [self.activityRide setFreeSeats:[NSNumber numberWithInt:5]];
     [self.activityRide setMeetingPoint:@"fmi"];
-    [self.activityRide setRideType:1];
+    [self.activityRide setRideType:[NSNumber numberWithInt:1]];
     
     [[RidesStore sharedStore] addRideToStore:self.campusRide];
     [[RidesStore sharedStore] addRideToStore:self.activityRide];
@@ -77,10 +77,9 @@
 //    XCTAssertTrue([[[RidesStore sharedStore] ] count]>0, "Could not fetch the correct rides");
 //}
 
-- (void)testGetRideWithId
-{
-    Ride *expected = [[RidesStore sharedStore] getRideWithId:12];
-    XCTAssertEqual(self.campusRide.destination, expected.destination, "Fetch the wrong ride with ride ids are %d ,%d",self.campusRide.rideId,expected.rideId);
+- (void)testGetRideWithId {
+    Ride *expected = [[RidesStore sharedStore] getRideWithId:[NSNumber numberWithInt:12]];
+    XCTAssertEqual(self.campusRide.destination, expected.destination, "Fetch the wrong ride with ride ids are %@ ,%@",self.campusRide.rideId,expected.rideId);
 }
 
 //- (void)testDeleteRideFromCoreData
@@ -91,11 +90,9 @@
 //    XCTAssertNil(expected, "Fail to delete ride with id %ld",(long)rideId);
 //}
 
-- (void)testContainsRideWithId
-{
-    NSInteger rideId = 13;
-    Ride *expected = [[RidesStore sharedStore]containsRideWithId:rideId];
-    XCTAssertNotNil(expected, "All rides do not contain ride with id %ld",(long)rideId);
+- (void)testContainsRideWithId {
+    Ride *expected = [[RidesStore sharedStore]containsRideWithId:[NSNumber numberWithInt:13]];
+    XCTAssertNotNil(expected, "All rides do not contain ride with id %@", expected.rideId);
 }
 
 - (void)testRidesNearbyByTypeWithActivityRides
