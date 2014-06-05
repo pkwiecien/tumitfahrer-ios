@@ -17,9 +17,9 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor lightestBlue];
-    cell.driverImageView.image = [ActionManager colorImage:[UIImage imageNamed:@"DriverIcon"] withColor:[UIColor whiteColor]];
-    cell.passengerImageView.image = [ActionManager colorImage:[UIImage imageNamed:@"PassengerIcon"] withColor:[UIColor whiteColor]];
-    cell.ratingImageView.image = [ActionManager colorImage:[UIImage imageNamed:@"StarIcon"] withColor:[UIColor whiteColor]];
+    cell.driverImageView.image = [UIImage imageNamed:@"DriverIconBig"];
+    cell.passengerImageView.image = [UIImage imageNamed:@"PassengerIconMiddle"];
+    cell.ratingImageView.image = [UIImage imageNamed:@"RatingIconBig"];
     
     return cell;
 }

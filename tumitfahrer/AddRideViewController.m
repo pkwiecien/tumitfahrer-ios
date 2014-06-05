@@ -44,7 +44,7 @@
     if (self) {
         self.tableValue = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"1", @"", @"", @"", nil];
         self.shareValues = [[NSMutableArray alloc] initWithObjects:@"Facebook", @"Email", nil];
-        self.tableSectionIcons = [[NSMutableArray alloc] initWithObjects:[ActionManager colorImage:[UIImage imageNamed:@"DetailsIcons"] withColor:[UIColor whiteColor]], [ActionManager colorImage:[UIImage imageNamed:@"ShareIcon"] withColor:[UIColor whiteColor]], nil];
+        self.tableSectionIcons = [[NSMutableArray alloc] initWithObjects:[UIImage imageNamed:@"DetailsIcon"], [UIImage imageNamed:@"ShareIcon"], nil];
         self.tableSectionHeaders = [[NSMutableArray alloc] initWithObjects:@"Details", @"Share", nil];
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
     }
@@ -114,10 +114,9 @@
     self.navigationItem.rightBarButtonItem = searchButtonItem;
     
     self.title = @"Add ride";
-    
-    UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
     [settingsView addTarget:self action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [settingsView setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"DeleteIcon2"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [settingsView setBackgroundImage:[UIImage imageNamed:@"DeleteIcon"] forState:UIControlStateNormal];
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
     [self.navigationItem setLeftBarButtonItem:settingsButton];
 }
@@ -129,7 +128,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return [self.tablePlaceholders count]; // plus one for the first row with selection of driver/passenger
+        return [self.tablePlaceholders count];
     } else if (section == 1){
         return [self.shareValues count];
     }

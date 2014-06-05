@@ -2,12 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "EditIcon.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "EditIcon.png"
+      "filename" : "EditIcon@2x.png"
     }
   ],
   "info" : {

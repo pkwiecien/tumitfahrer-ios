@@ -20,4 +20,8 @@
     return cell;
 }
 
+-(void)dealloc {
+    self.mapView.delegate = nil;
+}
+
 @end

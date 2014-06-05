@@ -43,9 +43,9 @@
     [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor lightestBlue]];
     self.title = @"Edit Profile";
     
-    UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
     [settingsView addTarget:self action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [settingsView setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"DeleteIcon2"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [settingsView setBackgroundImage:[UIImage imageNamed:@"DeleteIcon"] forState:UIControlStateNormal];
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
     [self.navigationItem setLeftBarButtonItem:settingsButton];
     
@@ -57,7 +57,7 @@
 }
 
 -(void)configureColors {
-    [self.updateButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"blueButton"] withColor:[UIColor lightestBlue]] forState:UIControlStateNormal];
+    [self.updateButton setBackgroundImage:[UIImage imageNamed:@"BlueButton"] forState:UIControlStateNormal];
 }
 
 -(void)closeButtonPressed {

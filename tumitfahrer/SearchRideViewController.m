@@ -35,12 +35,12 @@
     self.dateTextField.delegate = self;
     
     [self.view setBackgroundColor:[UIColor customLightGray]];
-    UIImage *greanButtonImage = [ActionManager colorImage:[UIImage imageNamed:@"blueButton"] withColor:[UIColor lighterBlue]];
+    UIImage *greanButtonImage = [UIImage imageNamed:@"BlueButton"];
     [self.searchButton setBackgroundImage:greanButtonImage forState:UIControlStateNormal];
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.detailsView.backgroundColor = [UIColor lighterBlue];
-    self.detailsImageView.image = [ActionManager colorImage:[UIImage imageNamed:@"DetailsIcons"] withColor:[UIColor whiteColor]];
+    self.detailsImageView.image = [UIImage imageNamed:@"DetailsIcon"];
     self.rideTypeSegmentedControl.tintColor = [UIColor lighterBlue];
 }
 
@@ -58,12 +58,12 @@
 
 -(void)setupNavigationBar {
     UINavigationController *navController = self.navigationController;
-    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor colorWithRed:0 green:0.463 blue:0.722 alpha:1] ];
+    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor lighterBlue]];
     self.title = @"Search rides";
     
-    UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
     [settingsView addTarget:self action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [settingsView setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"DeleteIcon2"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [settingsView setBackgroundImage:[UIImage imageNamed:@"DeleteIcon"] forState:UIControlStateNormal];
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
     [self.navigationItem setLeftBarButtonItem:settingsButton];
 }

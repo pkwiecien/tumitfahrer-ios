@@ -31,7 +31,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.cellImages = [[NSMutableArray alloc] initWithObjects:@"", [UIImage imageNamed:@"EmailIcon"], [UIImage imageNamed:@"PhoneIcon"], [UIImage imageNamed:@"CarIcon"], nil];
+        self.cellImages = [[NSMutableArray alloc] initWithObjects:@"", [UIImage imageNamed:@"EmailIconBlack"], [UIImage imageNamed:@"PhoneIconBlack"], [UIImage imageNamed:@"CarIconBlack"], nil];
     }
     return self;
 }
@@ -47,22 +47,22 @@
     self.profileImageContentView.tableViewDataSource = self;
     self.profileImageContentView.tableViewDelegate = self;
     self.profileImageContentView.parallaxScrollFactor = 0.3; // little slower than normal.
-    self.profileImageContentView.circularImage = [UIImage imageNamed:@"MainCampusImage"];
+    self.profileImageContentView.circularImage = [UIImage imageNamed:@"MainCampus"];
     [self.view addSubview:self.profileImageContentView];
     
     UIButton *buttonBack = [UIButton buttonWithType:UIButtonTypeCustom];
     buttonBack.frame = CGRectMake(10, 10, 30, 30);
-    [buttonBack setImage:[ActionManager colorImage:[UIImage imageNamed:@"ArrowLeft"]  withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [buttonBack setImage:[UIImage imageNamed:@"BackIcon"] forState:UIControlStateNormal];
     [buttonBack addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buttonBack];
     
     UIButton *editButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    editButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-40, 10, 30, 30);
-    [editButton setImage:[ActionManager colorImage:[UIImage imageNamed:@"EditIcon"]  withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    editButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-40, 10, 25, 25);
+    [editButton setImage:[UIImage imageNamed:@"EditIcon"] forState:UIControlStateNormal];
     [editButton addTarget:self action:@selector(displayEditProfilePage) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:editButton];
     
-    UIImage *bluredImage = [ActionManager applyBlurFilterOnImage:[UIImage imageNamed:@"MainCampusImage"]];
+    UIImage *bluredImage = [ActionManager applyBlurFilterOnImage:[UIImage imageNamed:@"MainCampus"]];
     self.profileImageContentView.selectedImageData = UIImagePNGRepresentation(bluredImage);
     if ([CurrentUser sharedInstance].user.profileImageData != nil) {
         UIImage *profilePic = [UIImage imageWithData:[CurrentUser sharedInstance].user.profileImageData];
@@ -73,7 +73,7 @@
         }
         self.profileImageContentView.circularImage = profilePic;
     } else {
-        self.profileImageContentView.circularImage = [UIImage imageNamed:@"CircleBlue"];
+//        self.profileImageContentView.circularImage = [UIImage imageNamed:@"CircleBlue"];
     }
 }
 

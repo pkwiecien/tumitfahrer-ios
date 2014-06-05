@@ -16,7 +16,6 @@
     NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:objectNotation options:NSJSONReadingMutableContainers error:&localError];
     
     if (localError != nil) {
-        error = localError;
         return nil;
     }
     NSArray *devices = parsedObject[@"devices"];

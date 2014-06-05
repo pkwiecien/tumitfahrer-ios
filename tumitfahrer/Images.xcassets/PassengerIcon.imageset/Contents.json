@@ -2,12 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "PassengerIcon.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "PassengerIcon.png"
+      "filename" : "PassengerIcon@2x.png"
     }
   ],
   "info" : {

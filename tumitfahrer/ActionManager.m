@@ -24,7 +24,7 @@
 #pragma mark - image handling
 // explanation: stackoverflow.com/questions/3514066/how-to-tint-a-transparent-png-image-in-iphone
 + (UIImage *)colorImage:(UIImage *)origImage withColor:(UIColor *)color {
-    /*UIGraphicsBeginImageContextWithOptions (origImage.size, NO, [[UIScreen mainScreen] scale]);
+    UIGraphicsBeginImageContextWithOptions (origImage.size, NO, [[UIScreen mainScreen] scale]);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGContextTranslateCTM(context, 0, origImage.size.height);
@@ -55,8 +55,7 @@
     UIImage *coloredImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    return coloredImage;*/
-    return origImage;
+    return coloredImage;
 }
 
 // create a square filled with a specific color (useful e.g. for buttons or backgrounds)
@@ -150,21 +149,5 @@
     NSString *stringFromDate = [formatter stringFromDate:date];
     return stringFromDate;
 }
-
-
-+ (UIImage *)cropImage:(UIImage *)image newRect:(CGRect)rect {
-    
-    UIImage *originalImage = [UIImage imageNamed:@"gradientBackground"];
-    float widthFactor = rect.size.width * (originalImage.size.width/rect.size.width);
-    float heightFactor = rect.size.height * (originalImage.size.height/rect.size.height);
-    float factorX = rect.origin.x * (originalImage.size.width/rect.size.width);
-    float factorY = rect.origin.y * (originalImage.size.height/rect.size.height);
-    
-    CGRect factoredRect = CGRectMake(factorX,factorY,widthFactor,heightFactor);
-    UIImage *cropImage = [UIImage imageWithCGImage:CGImageCreateWithImageInRect([originalImage CGImage], factoredRect)];
-    
-    return cropImage;
-}
-
 
 @end

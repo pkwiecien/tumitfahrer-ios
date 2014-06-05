@@ -91,9 +91,9 @@
 }
 
 -(void)initCellIcons {
-    self.timelineIcons = [NSArray arrayWithObjects:@"TimelineIcon", nil];
+    self.timelineIcons = [NSArray arrayWithObjects:@"NewsFeedIcon", nil];
     self.browseRidesIcons = [NSArray arrayWithObjects:@"CampusIcon", @"ActivityIcon", nil];
-    self.addRidesIcons = [NSArray arrayWithObjects:@"AddBlackIcon", @"QuestionIcon", nil];
+    self.addRidesIcons = [NSArray arrayWithObjects:@"AddIcon", @"SearchIcon", nil];
     self.profileIcons = [NSArray arrayWithObjects:@"ProfileIcon", @"ScheduleIcon", nil];
     self.allIcons = [NSArray arrayWithObjects:self.timelineIcons, self.browseRidesIcons, self.addRidesIcons, self.profileIcons, nil];
 }
@@ -119,14 +119,14 @@
     NSLog(@"user name: %@", [CurrentUser sharedInstance].user.firstName);
     usernameLabel.text = [CurrentUser sharedInstance].user.firstName;
     initialsLabel.text = [[[CurrentUser sharedInstance].user.firstName substringToIndex:1] stringByAppendingString:[[CurrentUser sharedInstance].user.lastName substringToIndex:1]];
-    [settingsButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"SettingsIcon"] withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [settingsButton setBackgroundImage:[UIImage imageNamed:@"SettingsIcon"] forState:UIControlStateNormal];
     [settingsButton addTarget:self action:@selector(settingsButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     if([CurrentUser sharedInstance].user.profileImageData != nil) {
         CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 30, 70, 70) image:[UIImage imageWithData:[CurrentUser sharedInstance].user.profileImageData]];
         [menuTopHeaderView addSubview:circularImageView];
     } else {
         CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 30, 70, 70) image:[UIImage imageNamed:@"CircleBlue"]];
-        [menuTopHeaderView bringSubviewToFront:initialsLabel];
+        [menuTopHeaderView addSubview:circularImageView];
     }
     menuTopHeaderView.backgroundColor = [UIColor colorWithRed:0.129 green:0.129 blue:0.129 alpha:1];
     self.tableView.tableHeaderView = menuTopHeaderView;
@@ -167,8 +167,7 @@
     
     cell.menuLabel.text = [[self.allMenuItems objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     // add icon to the cell
-    UIColor *almostWhiteColor = [UIColor colorWithRed:0.961 green:0.961 blue:0.961 alpha:0.8];
-    UIImage *newImg = [ActionManager colorImage:[UIImage imageNamed:[[self.allIcons objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]] withColor:almostWhiteColor];
+    UIImage *newImg = [UIImage imageNamed:[[self.allIcons objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]];
     cell.iconMenuImageView.image = newImg;
     cell.menuLabel.highlightedTextColor = [UIColor whiteColor];
     // set background of cell to transparent

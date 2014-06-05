@@ -16,10 +16,10 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     UIColor *color = [UIColor colorWithRed:0.808 green:0.808 blue:0.808 alpha:1];
     
-    cell.timeImageView.image = [ActionManager colorImage:[UIImage imageNamed:@"TimeIcon"] withColor:color];
-    cell.calendarImageView.image = [ActionManager colorImage:[UIImage imageNamed:@"CalendarIcon"] withColor:color];
+    cell.timeImageView.image = [UIImage imageNamed:@"TimeIcon"];
+    cell.calendarImageView.image = [UIImage imageNamed:@"CalendarIcon"];
     cell.roleView.backgroundColor = [UIColor colorWithRed:0 green:0.361 blue:0.588 alpha:1];
-    cell.roleImageView.image = [ActionManager colorImage:[UIImage imageNamed:@"DriverIcon"] withColor:color];
+    cell.roleImageView.image = [UIImage imageNamed:@"DriverIcon"];
     cell.timeLabel.textColor = color;
     cell.dateLabel.textColor = color;
     cell.seatsLabel.textColor = [UIColor whiteColor];

@@ -57,8 +57,8 @@
         }
     }];
     
-    self.driverIconWhite = [ActionManager colorImage:[UIImage imageNamed:@"DriverIcon"] withColor:[UIColor whiteColor]];
-    self.passengerIconWhite = [ActionManager colorImage:[UIImage imageNamed:@"PassengerIcon"] withColor:[UIColor whiteColor]];
+    self.driverIconWhite = [UIImage imageNamed:@"DriverIcon"];
+    self.passengerIconWhite = [UIImage imageNamed:@"PassengerIconBig"];
 }
 
 - (void)handleRefresh:(id)sender {

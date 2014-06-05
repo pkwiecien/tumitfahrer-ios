@@ -59,10 +59,10 @@
 
 -(void)makeButtons
 {
-    UIImage *orangeButtonImage = [ActionManager colorImage:[UIImage imageNamed:@"blueButton"] withColor:[UIColor orangeColor]];
+    UIImage *orangeButtonImage = [ActionManager colorImage:[UIImage imageNamed:@"BlueButton"] withColor:[UIColor orangeColor]];
     [self.sendFeedbackButton setBackgroundImage:orangeButtonImage forState:UIControlStateNormal];
     
-    UIImage *grayButtonImage = [ActionManager colorImage:[UIImage imageNamed:@"blueButton"] withColor:[UIColor grayColor]];
+    UIImage *grayButtonImage = [ActionManager colorImage:[UIImage imageNamed:@"BlueButton"] withColor:[UIColor grayColor]];
     [self.logoutButton setBackgroundImage:grayButtonImage forState:UIControlStateNormal];
 }
 

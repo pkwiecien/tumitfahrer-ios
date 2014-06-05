@@ -17,7 +17,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor darkerBlue];
     cell.contentView.backgroundColor = [UIColor darkerBlue];
-    cell.noticeImage.image = [ActionManager colorImage:[UIImage imageNamed:@"DriverIcon"] withColor:[UIColor whiteColor]];
+    cell.noticeImage.image = [UIImage imageNamed:@"DriverIcon"];
     
     return cell;
 }

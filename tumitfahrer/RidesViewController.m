@@ -125,11 +125,6 @@
         [_imageCache setObject:image forKey:[NSNumber numberWithInteger:indexPath.section]];
     }
     cell.rideImageView.image = image;
-    
-    if ([[ride.destination lowercaseString] rangeOfString:@"ikea"].location != NSNotFound) {
-        cell.rideImageView.image = [UIImage imageNamed:@"IkeaLogo"];
-    }
-    
     cell.rideImageView.clipsToBounds = YES;
     cell.rideImageView.contentMode = UIViewContentModeScaleAspectFill;
     
@@ -272,6 +267,10 @@
         default:
             return 0;
     }
+}
+
+-(void)dealloc {
+    [self.imageCache removeAllObjects];
 }
 
 @end

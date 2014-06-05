@@ -55,9 +55,9 @@
     buttonWithImage.frame = CGRectMake(posX, posY, 60, 60);
     UIImage *circleImage;
     if (type == 0) {
-        circleImage = [ActionManager colorImage:[UIImage imageNamed:@"CircleBlue"] withColor:[UIColor blueColor]];
+        circleImage = [UIImage imageNamed:@"CircleBlue"];
     } else {
-        circleImage = [ActionManager colorImage:[UIImage imageNamed:@"CircleBlue"] withColor:[UIColor grayColor]];
+        circleImage = [UIImage imageNamed:@"CircleBlue"];
     }
     [buttonWithImage setImage:circleImage forState:UIControlStateNormal];
     [buttonWithImage setTag:tag];

@@ -41,11 +41,11 @@
 
 - (void)awakeFromNib
 {
-    [self.joinRideButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"blueButton"] withColor:[UIColor customGreen]] forState:UIControlStateNormal];
-    [self.joinRideButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"blueButton"] withColor:[UIColor customGreen]] forState:UIControlStateHighlighted];
+    [self.joinRideButton setBackgroundImage:[UIImage imageNamed:@"BlueButton"] forState:UIControlStateNormal];
+    [self.joinRideButton setBackgroundImage:[UIImage imageNamed:@"BlueButton"] forState:UIControlStateHighlighted];
 
-    [self.contactDriverButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"blueButton"] withColor:[UIColor orangeColor]] forState:UIControlStateNormal];
-    [self.contactDriverButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"blueButton"] withColor:[UIColor orangeColor]] forState:UIControlStateHighlighted];
+    [self.contactDriverButton setBackgroundImage:[UIImage imageNamed:@"BlueButton"] forState:UIControlStateNormal];
+    [self.contactDriverButton setBackgroundImage:[UIImage imageNamed:@"BlueButton"] forState:UIControlStateHighlighted];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

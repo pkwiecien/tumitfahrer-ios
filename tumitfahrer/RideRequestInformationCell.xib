@@ -13,19 +13,19 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="158"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="departureIcon" translatesAutoresizingMaskIntoConstraints="NO" id="lbf-6e-cMc">
+                    <imageView userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DepartureIconBlack" translatesAutoresizingMaskIntoConstraints="NO" id="lbf-6e-cMc">
                         <rect key="frame" x="15" y="23" width="25" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CalendarIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Voc-jg-jkN">
+                    <imageView userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CalendarIconBlack" translatesAutoresizingMaskIntoConstraints="NO" id="Voc-jg-jkN">
                         <rect key="frame" x="15" y="113" width="25" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="TimeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="dm4-8z-2Q1">
+                    <imageView userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="TimeIconBlack" translatesAutoresizingMaskIntoConstraints="NO" id="dm4-8z-2Q1">
                         <rect key="frame" x="173" y="113" width="25" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="destinationIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Jgh-WA-DKf">
+                    <imageView userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DestinationIconBlack" translatesAutoresizingMaskIntoConstraints="NO" id="Jgh-WA-DKf">
                         <rect key="frame" x="15" y="68" width="25" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
@@ -67,9 +67,9 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="CalendarIcon" width="600" height="600"/>
-        <image name="TimeIcon" width="600" height="600"/>
-        <image name="departureIcon" width="600" height="600"/>
-        <image name="destinationIcon" width="600" height="600"/>
+        <image name="CalendarIconBlack" width="25" height="25"/>
+        <image name="DepartureIconBlack" width="25" height="25"/>
+        <image name="DestinationIconBlack" width="16" height="25"/>
+        <image name="TimeIconBlack" width="25" height="25"/>
     </resources>
 </document>

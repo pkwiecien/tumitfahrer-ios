@@ -56,8 +56,8 @@
     [[RidesStore sharedStore] addObserver:self];
     
     UIButton *buttonBack = [UIButton buttonWithType:UIButtonTypeCustom];
-    buttonBack.frame = CGRectMake(10, 22, 40, 40);
-    [buttonBack setImage:[ActionManager colorImage:[UIImage imageNamed:@"ArrowLeft"]  withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    buttonBack.frame = CGRectMake(10, 25, 30, 30);
+    [buttonBack setImage:[UIImage imageNamed:@"BackIcon"] forState:UIControlStateNormal];
     [buttonBack addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buttonBack];
     
@@ -65,12 +65,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    if ([[self.ride.destination lowercaseString] rangeOfString:@"ikea"].location != NSNotFound) {
-        self.rideDetail.selectedImageData = UIImagePNGRepresentation([UIImage imageNamed:@"IkeaLogo"]);
-    }
-    else {
-        self.rideDetail.selectedImageData = self.ride.destinationImage;
-    }
+    self.rideDetail.selectedImageData = self.ride.destinationImage;
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -469,9 +464,11 @@
     
     self.ride = [[RidesStore sharedStore] getRideWithId:rideId];
     UIImage *img = [UIImage imageWithData:self.ride.destinationImage];
-    if ([[self.ride.destination lowercaseString] rangeOfString:@"ikea"].location == NSNotFound) {
-        [self.rideDetail.rideDetailHeaderView replaceMainImage:img];
-    }
+    [self.rideDetail.rideDetailHeaderView replaceMainImage:img];
+}
+
+-(void)dealloc {
+    self.map.delegate = nil;
 }
 
 #pragma mark - Facebook sharing methods

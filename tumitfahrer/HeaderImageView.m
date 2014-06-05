@@ -60,8 +60,7 @@
 }
 
 #pragma mark - ScrollView Initialization
-- (void) initializeScrollView
-{
+- (void) initializeScrollView {
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
     _scrollView.delegate = self;
     _scrollView.showsHorizontalScrollIndicator = NO;
@@ -70,8 +69,7 @@
     [self addSubview:_scrollView];
 }
 
-- (void) loadData
-{
+- (void) loadData {
     [_scrollView setContentSize:CGSizeMake(_scrollView.frame.size.width,
                                            _scrollView.frame.size.height)];
     
