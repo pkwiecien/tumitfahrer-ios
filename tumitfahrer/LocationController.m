@@ -9,7 +9,6 @@
 #import "LocationController.h"
 #import "PanoramioUtilities.h"
 
-#define NEARBY_THRESHOLD 1000
 
 @interface LocationController ()
 
@@ -126,9 +125,9 @@
 }
 
 
-+(BOOL)isLocation:(CLLocation *)location nearbyAnotherLocation:(CLLocation *)anotherLocation {
++(BOOL)isLocation:(CLLocation *)location nearbyAnotherLocation:(CLLocation *)anotherLocation thresholdInMeters:(NSInteger)thresholdInMeters{
     CLLocationDistance distance = [location distanceFromLocation:anotherLocation];
-    if (distance < NEARBY_THRESHOLD) {
+    if (distance < thresholdInMeters) {
         return true;
     }
     return false;

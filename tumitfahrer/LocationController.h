@@ -40,7 +40,7 @@ typedef void(^locationCompletionHandler)(CLLocation *);
 - (void)notifyAllAboutNewLocation:(CLLocation*)location rideWithRideId:(NSNumber *)rideId;
 - (void)removeObserver:(id<LocationControllerDelegate>)observer;
 
-+ (BOOL)isLocation:(CLLocation *)location nearbyAnotherLocation:(CLLocation *)anotherLocation;
++ (BOOL)isLocation:(CLLocation *)location nearbyAnotherLocation:(CLLocation *)anotherLocation thresholdInMeters:(NSInteger)thresholdInMeters;
 + (CLLocation *)locationFromLongitude:(double)longitude latitude:(double)latitude;
 
 typedef void (^PlacemarkBlock)(CLPlacemark *placemark, NSError *error);

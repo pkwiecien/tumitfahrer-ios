@@ -106,7 +106,7 @@ static int page = 0;
             CLLocation *departureLocation = [LocationController locationFromLongitude:[ride.departureLongitude doubleValue] latitude:[ride.departureLatitude doubleValue]];
             CLLocation *destinationLocation = [LocationController locationFromLongitude:[ride.destinationLongitude doubleValue] latitude:[ride.destinationLatitude doubleValue]];
             NSLog(@"Departure location: %f %f, destination: %f %f, ride: %f %f", departureLocation.coordinate.latitude, departureLocation.coordinate.longitude, destinationLocation.coordinate.latitude, departureLocation.coordinate.longitude, currentLocation.coordinate.latitude, currentLocation.coordinate.longitude);
-            if([LocationController isLocation:currentLocation nearbyAnotherLocation:departureLocation] || [LocationController isLocation:currentLocation nearbyAnotherLocation:destinationLocation])
+            if([LocationController isLocation:currentLocation nearbyAnotherLocation:departureLocation thresholdInMeters:1000] || [LocationController isLocation:currentLocation nearbyAnotherLocation:destinationLocation thresholdInMeters:1000])
             {
                 [self.privateActivitiesNearby addObject:activity];
             }

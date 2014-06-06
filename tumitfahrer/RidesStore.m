@@ -27,6 +27,8 @@
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSMutableArray *observers;
 
+@property (nonatomic, strong) CLLocation *lastLocation;
+
 @end
 
 @implementation RidesStore
@@ -283,6 +285,15 @@ static int page = 0;
     }];
 }
 
+
+-(void)saveToPersistentStore:(Ride *)ride {
+    NSManagedObjectContext *context = ride.managedObjectContext;
+    NSError *error;
+    if (![context saveToPersistentStore:&error]) {
+        NSLog(@"delete error %@", [error localizedDescription]);
+    }
+}
+
 -(void)deleteRideFromCoreData:(Ride *)ride {
     NSManagedObjectContext *context = ride.managedObjectContext;
     [context deleteObject:ride];
@@ -342,11 +353,7 @@ static int page = 0;
                 ride.destinationLongitude = [NSNumber numberWithDouble:location.coordinate.longitude];
                 
                 if (ride.destinationImage == nil) {
-                    [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:location completionHandler:^(NSURL *imageUrl) {
-                        UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:imageUrl]];
-                        ride.destinationImage = UIImagePNGRepresentation(retrievedImage);
-                        [self notifyAllAboutNewImageForRideId:ride.rideId];
-                    }];
+                    [self fetchImageForCurrentRide:ride];
                 }
             }
             
@@ -377,6 +384,16 @@ static int page = 0;
     }
 }
 
+
+-(void)fetchImageForCurrentRide:(Ride *)ride {
+    CLLocation *location = [LocationController locationFromLongitude:[ride.destinationLongitude doubleValue] latitude:[ride.destinationLatitude doubleValue]];
+    [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:location completionHandler:^(NSURL *imageUrl) {
+        UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:imageUrl]];
+        ride.destinationImage = UIImagePNGRepresentation(retrievedImage);
+        [self saveToPersistentStore:ride];
+        [self notifyAllAboutNewImageForRideId:ride.rideId];
+    }];
+}
 #pragma mark - utility functions
 
 -(NSArray *)allRides {
@@ -509,7 +526,7 @@ static int page = 0;
     CLLocation *departureLocation = [LocationController locationFromLongitude:[ride.departureLongitude doubleValue] latitude:[ride.departureLatitude doubleValue]];
     CLLocation *destinationLocation = [LocationController locationFromLongitude:[ride.destinationLongitude doubleValue] latitude:[ride.destinationLatitude doubleValue]];
     
-    if ([LocationController isLocation:currentLocation nearbyAnotherLocation:departureLocation] || [LocationController isLocation:currentLocation nearbyAnotherLocation:destinationLocation]) {
+    if ([LocationController isLocation:currentLocation nearbyAnotherLocation:departureLocation thresholdInMeters:1000] || [LocationController isLocation:currentLocation nearbyAnotherLocation:destinationLocation thresholdInMeters:1000]) {
         return YES;
     }
     return NO;
@@ -579,8 +596,15 @@ static int page = 0;
 }
 
 -(void)didReceiveCurrentLocation:(CLLocation *)location {
+    if (self.lastLocation == nil) {
+        self.lastLocation = location;
+    }
+    
     // check here if previous location is away from current location more than 10km
-    [self filterAllRides];
+    if(![LocationController isLocation:location nearbyAnotherLocation:self.lastLocation thresholdInMeters:10*1000]) {
+        self.lastLocation = location;
+        [self filterAllRides];
+    }
 }
 
 -(void)removeObserver:(id<RideStoreDelegate>)observer {
