@@ -13,9 +13,6 @@
 +(RKEntityMapping *)generalRideMapping;
 +(RKResponseDescriptor *)getRidesResponseDescriptorWithMapping:(RKEntityMapping *)mapping;
 
-+(RKObjectMapping*)getRideSearchesMapping;
-+(RKResponseDescriptor *)getRideSearchesResponseDescriptorWithMapping:(RKObjectMapping *)mapping;
-
 +(RKEntityMapping *)postRideMapping;
 +(RKResponseDescriptor *)postRideResponseDescriptorWithMapping:(RKEntityMapping *)mapping;
 

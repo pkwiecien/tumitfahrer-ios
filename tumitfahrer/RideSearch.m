@@ -2,15 +2,22 @@
 //  RideSearch.m
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 5/1/14.
+//  Created by Pawel Kwiecien on 6/6/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
 #import "RideSearch.h"
+#import "Activity.h"
+
 
 @implementation RideSearch
 
--(NSString *)description {
-    return [NSString stringWithFormat:@"Ride search result: id: %@, detour %d", self.rideId, self.detour];
-}
+@dynamic rideSearchId;
+@dynamic userId;
+@dynamic departurePlace;
+@dynamic destination;
+@dynamic departureTime;
+@dynamic rideType;
+@dynamic activity;
+
 @end

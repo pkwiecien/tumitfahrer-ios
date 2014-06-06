@@ -44,7 +44,7 @@
     
     [[ActivityStore sharedStore] fetchActivitiesFromWebservice:^(BOOL isFetched) {
         if (isFetched) {
-            [[ActivityStore sharedStore] loadAllActivitiesFromCoreData];
+            [[ActivityStore sharedStore] initAllActivitiesFromCoreData];
             [self.tableView reloadData];
         }
     }];
@@ -56,7 +56,7 @@
 - (void)handleRefresh:(id)sender {
     [[ActivityStore sharedStore] fetchActivitiesFromWebservice:^(BOOL isFetched) {
         if (isFetched) {
-            [[ActivityStore sharedStore] loadAllActivitiesFromCoreData];
+            [[ActivityStore sharedStore] initAllActivitiesFromCoreData];
             [self.tableView reloadData];
             [self.refreshControl endRefreshing];
         }

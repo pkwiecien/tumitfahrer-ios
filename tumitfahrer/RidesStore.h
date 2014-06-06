@@ -33,15 +33,15 @@
 - (Ride *)getRideWithId:(NSNumber *)rideId;
 - (Ride *)containsRideWithId:(NSNumber *)rideId;
 - (NSArray *)rideRequestForUserWithId:(NSNumber *)userId;
-- (void)loadRidesFromCoreDataByType:(ContentType)contentType;
 - (void)fetchNewRides:(boolCompletionHandler)block;
 - (void)deleteRideFromCoreData:(Ride *)ride;
 - (void)deleteRideRequestFromCoreData:(Request *)request;
 
 - (void)addRideToStore:(Ride*)ride;
+- (void)addRideRequestToStore:(Request *)request;
 - (void)addObserver:(id<RideStoreDelegate>) observer;
-- (void)notifyAllAboutNewImageForRideId:(NSNumber *)rideId;
 - (void)removeObserver:(id<RideStoreDelegate>)observer;
+- (void)notifyAllAboutNewImageForRideId:(NSNumber *)rideId;
 
 - (void)fetchSingleRideFromWebserviceWithId:(NSNumber *)rideId block:(boolCompletionHandler)block;
 - (Ride *)fetchRideFromCoreDataWithId:(NSNumber *)rideId;

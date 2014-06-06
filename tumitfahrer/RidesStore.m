@@ -36,6 +36,15 @@
 
 static int page = 0;
 
++(instancetype)sharedStore {
+    static RidesStore *ridesStore = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        ridesStore = [[self alloc] init];
+    });
+    return ridesStore;
+}
+
 -(instancetype)init {
     self = [super init];
     if (self) {
@@ -62,15 +71,6 @@ static int page = 0;
 -(void)loadAllRidesFromCoreData {
     [self loadRidesFromCoreDataByType:ContentTypeActivityRides];
     [self loadRidesFromCoreDataByType:ContentTypeCampusRides];
-}
-
-+(instancetype)sharedStore {
-    static RidesStore *ridesStore = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        ridesStore = [[self alloc] init];
-    });
-    return ridesStore;
 }
 
 #pragma mark - core data/webservice fetch methods
@@ -271,7 +271,7 @@ static int page = 0;
 
 -(void)addRideToStore:(Ride *)ride {
     
-    if ([[RidesStore sharedStore].allRides containsObject:ride]) {
+    if ([[self allRides] containsObject:ride]) {
         return;
     }
     
@@ -305,6 +305,22 @@ static int page = 0;
             [self addNearbyRide:ride];
         }
     }];
+}
+
+-(void)addRideRequestToStore:(Request *)request {
+    if ([[self rideRequests] containsObject:request]) {
+        return;
+    }
+    
+    int index = 0;
+        for (Request *existingRequests in [self rideRequests]) {
+            if ([request.requestedRide.departureTime compare:existingRequests.requestedRide.departureTime] == NSOrderedAscending) {
+                break;
+            } else {
+                index++;
+            }
+        }
+        [[self rideRequests] insertObject:request atIndex:index];
 }
 
 #pragma mark - utility functions

@@ -14,6 +14,6 @@
 - (void)fetchActivitiesFromWebservice:(boolCompletionHandler)block;
 - (NSFetchedResultsController *)fetchedResultsController;
 - (NSArray *)recentActivitiesByType:(TimelineContentType)contentType;
-- (void)loadAllActivitiesFromCoreData;
+- (void)initAllActivitiesFromCoreData;
 
 @end

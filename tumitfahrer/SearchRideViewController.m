@@ -10,7 +10,6 @@
 #import "ActionManager.h"
 #import "CustomBarButton.h"
 #import "RideSearch.h"
-#import "RideSearchResultsViewController.h"
 #import "LocationController.h"
 #import "RideSearchStore.h"
 #import "NavigationBarUtilities.h"
@@ -86,8 +85,7 @@
             for (RideSearch *rideSearchResult in rides) {
                 [[RideSearchStore sharedStore] addSearchResult:rideSearchResult];
             }
-            RideSearchResultsViewController *searchResultsVC = [[RideSearchResultsViewController alloc] init];
-            [self.navigationController pushViewController:searchResultsVC animated:YES];
+
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
             [ActionManager showAlertViewWithTitle:[error localizedDescription]];
             RKLogError(@"Load failed with error: %@", error);

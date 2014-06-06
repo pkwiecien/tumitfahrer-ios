@@ -306,7 +306,6 @@
             
             [[CurrentUser sharedInstance].user removeRidesAsOwnerObject:self.ride];
             [[RidesStore sharedStore] deleteRideFromCoreData:self.ride];
-            [[RidesStore sharedStore] loadRidesFromCoreDataByType:ContentTypeCampusRides];
             
             [self.navigationController popViewControllerAnimated:YES];
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -330,13 +329,13 @@
         NSDictionary *queryParams;
         // add enum
         NSString *userId = [NSString stringWithFormat:@"%@", [CurrentUser sharedInstance].user.userId];
-        queryParams = @{@"passenger_id": userId, @"requested_from": self.ride.departurePlace, @"request_to":self.ride.destination};
+        queryParams = @{@"passenger_id": userId};
         NSDictionary *requestParams = @{@"request": queryParams};
         
         [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/rides/%@/requests", self.ride.rideId] parameters:requestParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             [KGStatusBar showSuccessWithStatus:@"Request was sent"];
             Request *rideRequest = (Request *)[mappingResult firstObject];
-            //  [[RidesStore sharedStore] addRideToUserRequests:ride];
+            [[RidesStore sharedStore] addRideRequestToStore:rideRequest];
             NSLog(@"Ride request: %@", rideRequest);
             [self.ride addRequestsObject:rideRequest];
             [self.rideDetail.tableView reloadData];

@@ -9,15 +9,15 @@
 #import "ActivityStore.h"
 #import "Activity.h"
 #import "Ride.h"
-#import "Rating.h"
+#import "RideSearch.h"
 #import "Request.h"
 #import "LocationController.h"
 #import "CurrentUser.h"
 
 @interface ActivityStore () <NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, strong) Activity *activitiesResult;
-@property (nonatomic, strong) NSMutableArray *privateRecentActivities;
+@property (nonatomic, strong) Activity *privateActivity;
+@property (nonatomic, strong) NSMutableArray *privateAllRecentActivities;
 @property (nonatomic, strong) NSMutableArray *privateActivitiesNearby;
 @property (nonatomic, strong) NSMutableArray *privateMyRecentActivities;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
@@ -28,20 +28,6 @@
 
 static int page = 0;
 
--(instancetype)init {
-    self = [super init];
-    if (self) {
-        [self loadAllActivitiesFromCoreData];
-        
-        [self fetchActivitiesFromWebservice:^(BOOL resultsFetched) {
-            if(resultsFetched) {
-                [self loadAllActivitiesFromCoreData];
-            }
-        }];
-    }
-    return self;
-}
-
 +(instancetype)sharedStore {
     static ActivityStore *activityStore = nil;
     static dispatch_once_t onceToken;
@@ -51,50 +37,54 @@ static int page = 0;
     return activityStore;
 }
 
--(void)loadAllActivitiesFromCoreData {
-    [self fetchActivitiesFromCoreData];
-    [self reloadNearbyActivities];
-    [self reloadMyActivities];
-    [self sortRecentActivities];
-}
-
--(void)sortRecentActivities {
-    self.privateRecentActivities = [[NSMutableArray alloc] init];
-    int rideIndex = 0;
-    int ratingIndex = 0;
-    int requestsIndex = 0;
-    
-    NSArray *rides = [NSArray arrayWithArray:[self.activitiesResult.rides allObjects]];
-    NSArray *requests = [NSArray arrayWithArray:[self.activitiesResult.requests allObjects]];
-    NSArray *ratings = [NSArray arrayWithArray:[self.activitiesResult.ratings allObjects]];
-    while(rideIndex < [self.activitiesResult.rides count] || ratingIndex < [self.activitiesResult.ratings count] || requestsIndex < [self.activitiesResult.requests count]) {
-        // find the latest event from three arrays
-        NSMutableArray *comparedObjects = [[NSMutableArray alloc] init];
-        if(rideIndex < [rides count])
-            [comparedObjects addObject:[rides objectAtIndex:rideIndex]];
-        else if(requestsIndex < [requests count])
-            [comparedObjects addObject:[requests objectAtIndex:requestsIndex]];
-        else if(ratingIndex < [ratings count])
-            [comparedObjects addObject:[ratings objectAtIndex:ratingIndex]];
+-(instancetype)init {
+    self = [super init];
+    if (self) {
+        [self initAllActivitiesFromCoreData];
         
-        id result = [self compareThree:comparedObjects];
-        
-        if([result isKindOfClass:[Ride class]]) {
-            rideIndex++;
-        } else if([result isKindOfClass:[Rating class]]) {
-            ratingIndex++;
-        } else if([result isKindOfClass:[Request class]]){
-            requestsIndex++;
-        }
-        [self.privateRecentActivities addObject:result];
+        [self fetchActivitiesFromWebservice:^(BOOL resultsFetched) {
+            if(resultsFetched) {
+                [self initAllActivitiesFromCoreData];
+            }
+        }];
     }
+    return self;
 }
 
-- (void)reloadNearbyActivities {
-    self.privateActivitiesNearby = [[NSMutableArray alloc] init];
+-(void)initAllActivitiesFromCoreData {
+    [self fetchActivitiesFromCoreData];
+    [self sortActivities];
+    [self filterAllActivities];
+}
+
+-(void)filterAllActivities {
+    [self filterNearbyActivities];
+    [self filterMyActivities];
+}
+
+-(void)sortActivities {
+    NSMutableArray *array = [[NSMutableArray alloc] initWithArray:[self.privateActivity.rides allObjects]];
+    if ([self.privateActivity.rideSearches count] > 0) {
+        [array addObjectsFromArray:[self.privateActivity.rideSearches allObjects]];
+    }
+    if ([self.privateActivity.requests count] > 0) {
+        [array addObjectsFromArray:[self.privateActivity.requests allObjects]];
+    }
+    
+    NSArray *sortedArray;
+    sortedArray = [array sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        NSDate *first = [a createdAt];
+        NSDate *second = [b createdAt];
+        return [first compare:second] == NSOrderedDescending;
+    }];
+    self.privateAllRecentActivities = [[NSMutableArray alloc] initWithArray:sortedArray];
+}
+
+
+-(void)filterNearbyActivities {
     CLLocation *currentLocation = [LocationController sharedInstance].currentLocation;
     
-    for (id activity in self.privateRecentActivities) {
+    for (id activity in self.privateAllRecentActivities) {
         Ride *ride = nil;
         if ([activity isKindOfClass:[Ride class]]) {
             ride = (Ride *)activity;
@@ -114,10 +104,9 @@ static int page = 0;
     }
 }
 
-
-- (void)reloadMyActivities {
+-(void)filterMyActivities {
     self.privateMyRecentActivities = [[NSMutableArray alloc] init];
-    for (id activity in self.privateRecentActivities) {
+    for (id activity in self.privateAllRecentActivities) {
         if ([activity isKindOfClass:[Ride class]]) {
             Ride *ride = (Ride *)activity;
             if([[CurrentUser sharedInstance].user.ridesAsPassenger containsObject:ride] || [[CurrentUser sharedInstance].user.ridesAsOwner containsObject:ride]) {
@@ -132,7 +121,6 @@ static int page = 0;
     }
 }
 
-
 #pragma mark - fetch methods
 
 -(void)fetchActivitiesFromWebservice:(boolCompletionHandler)block {
@@ -140,8 +128,8 @@ static int page = 0;
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
     [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/activities?page=%d", page] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        NSArray *array = [mappingResult array];
-        if ([array count] > 1) {
+        Activity *activity = [mappingResult firstObject];
+        if (activity != nil && (activity.rides.count > 0 || activity.rideSearches.count > 0 || activity.requests.count > 0)) {
             page++;
         }
         block(YES);
@@ -157,9 +145,6 @@ static int page = 0;
     NSEntityDescription *e = [NSEntityDescription entityForName:@"Activity"
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
                               mainQueueManagedObjectContext];
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"updatedAt" ascending:NO];
-    request.sortDescriptors = @[descriptor];
-    
     request.entity = e;
     
     NSError *error;
@@ -168,7 +153,7 @@ static int page = 0;
         [NSException raise:@"Fetch failed"
                     format:@"Reason: %@", [error localizedDescription]];
     }
-    self.activitiesResult = [fetchedObjects firstObject];
+    self.privateActivity = [fetchedObjects firstObject];
 }
 
 -(NSFetchedResultsController *)fetchedResultsController {
@@ -202,39 +187,35 @@ static int page = 0;
 - (NSArray*)recentActivitiesByType:(TimelineContentType)contentType {
     switch (contentType) {
         case AllActivity:
-            return self.privateRecentActivities;
+            return [self allRecentActivities];
         case UserActivity:
-            if (self.privateMyRecentActivities == nil) {
-                [self reloadMyActivities];
-            }
-            return self.privateMyRecentActivities;
+            return [self myRecentActivities];
         case NearbyActivity:
-            if (self.privateActivitiesNearby == nil) {
-                [self reloadNearbyActivities];
-            }
-            return self.privateActivitiesNearby;
+            return [self activitiesNearby];
     }
 }
 
--(id)compareThree:(NSArray *)elements {
-    id result = nil;
-    
-    if([elements count] == 1)
-        return [elements objectAtIndex:0];
-    else if([elements count] == 2) {
-        result = [[elements objectAtIndex:0] updatedAt] < [[elements objectAtIndex:1] updatedAt] ? [[elements objectAtIndex:0] updatedAt] : [[elements objectAtIndex:1] updatedAt];
-        return  result;
-    } else if([elements count] == 3){
-        
-        if([[elements objectAtIndex:0] updatedAt] < [[elements objectAtIndex:1] updatedAt])
-            result = [elements objectAtIndex:0];
-        
-        if ([result updatedAt] < [[elements objectAtIndex:2] updatedAt]) {
-            result = [elements objectAtIndex:2];
-        }
+#pragma mark - getters with initializers
+
+-(NSMutableArray *)myRecentActivities {
+    if (self.privateMyRecentActivities == nil) {
+        self.privateMyRecentActivities = [[NSMutableArray alloc] init];
     }
-    return result;
-    
+    return self.privateMyRecentActivities;
+}
+
+-(NSMutableArray *)activitiesNearby {
+    if (self.privateActivitiesNearby == nil) {
+        self.privateActivitiesNearby = [[NSMutableArray alloc] init];
+    }
+    return self.privateActivitiesNearby;
+}
+
+-(NSMutableArray *)allRecentActivities {
+    if (self.privateAllRecentActivities == nil) {
+        self.privateAllRecentActivities = [[NSMutableArray alloc] init];
+    }
+    return self.privateAllRecentActivities;
 }
 
 

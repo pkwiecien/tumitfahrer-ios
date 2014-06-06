@@ -53,33 +53,6 @@
     return responseDescriptor;
 }
 
-+(RKObjectMapping*)getRideSearchesMapping {
-    
-    RKObjectMapping *rideMapping = [RKObjectMapping mappingForClass:[RideSearch class]];
-    
-    [rideMapping addAttributeMappingsFromDictionary:@{@"id": @"rideId",
-                                                      @"departure_place": @"departurePlace",
-                                                      @"destination": @"destination",
-                                                      @"meeting_point":@"meetingPoint",
-                                                      @"departure_time":@"departureTime",
-                                                      @"free_seats":@"freeSeats",
-                                                      @"detour":@"detour",
-                                                      @"driver_id":@"driverId",
-                                                      @"ride_type":@"rideType",
-                                                      @"created_at": @"createdAt",
-                                                      @"updated_at": @"updatedAt"
-                                                      }];
-    
-    return rideMapping;
-}
-
-+(RKResponseDescriptor *)getRideSearchesResponseDescriptorWithMapping:(RKObjectMapping *)mapping {
-    
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodPOST pathPattern:API_SEARCH keyPath:@"rides"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
-    
-    return responseDescriptor;
-}
-
 +(RKResponseDescriptor *)getRidesResponseDescriptorWithMapping:(RKEntityMapping *)mapping {
     // create response description for rides
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodGET pathPattern:API_RIDES keyPath:@"rides"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];

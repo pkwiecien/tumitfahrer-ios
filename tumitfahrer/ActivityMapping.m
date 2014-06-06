@@ -9,23 +9,20 @@
 #import "ActivityMapping.h"
 #import "RideMapping.h"
 #import "RequestMapping.h"
-#import "RatingMapping.h"
+#import "RideSearchMapping.h"
 
 @implementation ActivityMapping
 
 +(RKEntityMapping *)generalActivityMapping {
     RKEntityMapping *activityMapping = [RKEntityMapping mappingForEntityForName:@"Activity" inManagedObjectStore:[[RKObjectManager sharedManager] managedObjectStore]];
     activityMapping.identificationAttributes = @[@"activityId"];
-    [activityMapping addAttributeMappingsFromDictionary:@{@"id": @"activityId",
-                                                      @"created_at": @"createdAt",
-                                                      @"updated_at": @"updatedAt"
-                                                      }];
+    [activityMapping addAttributeMappingsFromDictionary:@{@"id": @"activityId"}];
     
     [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"rides" toKeyPath:@"rides" withMapping:[RideMapping generalRideMapping]]];
     
     [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"requests" toKeyPath:@"requests" withMapping:[RequestMapping requestMapping]]];
     
-    [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"ratings" toKeyPath:@"ratings" withMapping:[RatingMapping ratingMapping]]];
+    [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"ride_searches" toKeyPath:@"rideSearches" withMapping:[RideSearchMapping generalRideSearchMapping]]];
     
     return activityMapping;
 }

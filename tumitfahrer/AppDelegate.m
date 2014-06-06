@@ -208,8 +208,6 @@
     [objectManager addResponseDescriptor:[DeviceMapping postDeviceResponseDescriptorWithMapping:postDeviceTokenMapping]];
     RKEntityMapping *postRideMapping = [RideMapping postRideMapping];
     [objectManager addResponseDescriptorsFromArray:@[[RideMapping postRideResponseDescriptorWithMapping:postRideMapping]]];
-    RKObjectMapping *getRideSearchesMapping = [RideMapping getRideSearchesMapping];
-    [objectManager addResponseDescriptor:[RideMapping getRideSearchesResponseDescriptorWithMapping:getRideSearchesMapping]];
     RKEntityMapping *requestMapping = [RequestMapping requestMapping];
     [objectManager addResponseDescriptor:[RequestMapping postRequestResponseDescriptorWithMapping:requestMapping]];
     RKEntityMapping *activitiesMapping = [ActivityMapping generalActivityMapping];

@@ -2,12 +2,13 @@
 //  RideSearchStore.m
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 5/1/14.
+//  Created by Pawel Kwiecien on 6/6/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
 #import "RideSearchStore.h"
 #import "RideSearch.h"
+
 @interface RideSearchStore ()
 
 @property (nonatomic) NSMutableArray *searchResults;
@@ -41,13 +42,5 @@
     return self.searchResults;
 }
 
--(RideSearch *)rideWithId:(NSNumber *)rideId {
-    for (RideSearch *ride in self.searchResults) {
-        if ([ride.rideId isEqualToNumber:rideId]) {
-            return ride;
-        }
-    }
-    return nil;
-}
-
 @end
+
