@@ -66,7 +66,7 @@
 
 -(void)addToImageCache {
     int counter = 0;
-    UIImage *placeholderImage = [UIImage imageNamed:@"PlaceholderImage"];
+    UIImage *placeholderImage = [UIImage imageNamed:@"MainCampus"];
 
     for (Ride *ride in [self ridesForCurrentIndex]) {
         UIImage *image = [UIImage imageWithData:ride.destinationImage];

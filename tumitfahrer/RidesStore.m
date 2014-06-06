@@ -53,8 +53,8 @@ static int page = 0;
 
 -(void)initAllRidesFromCoreData {
     [self loadAllRidesFromCoreData];
-    [self filterAllRides]; // categorize rides to rides around me and my rides
     [self fetchLocationForAllRides];
+    [self filterAllRides]; // categorize rides to rides around me and my rides
 }
 
 -(void)loadAllRidesFromCoreData {
@@ -276,7 +276,11 @@ static int page = 0;
         [self addFavoriteRide:ride];
     }
     
-    [self fetchLocationForRide:ride];
+    [self checkIfRideNearby:ride block:^(BOOL isNearby) {
+        if (isNearby) {
+            [self addNearbyRide:ride];
+        }
+    }];
 }
 
 -(void)deleteRideFromCoreData:(Ride *)ride {
@@ -321,37 +325,29 @@ static int page = 0;
 
 -(void)fetchLocationForAllRides {
     for(Ride *ride in [self allRides]) {
-        [self fetchLocationForRide:ride];
+        [self fetchLocationForRide:ride block:^(BOOL fetched) {}];
     }
 }
 
--(void)fetchLocationForRide:(Ride *)ride {
-    [self fetchLocationForRide:ride block:^(BOOL locationFetched) {
-        if(locationFetched) {
-            if ([self checkIfRideNearby:ride]) {
-                [self addNearbyRide:ride];
-            }
-            CLLocation *location = [LocationController locationFromLongitude:[ride.destinationLongitude doubleValue] latitude:[ride.destinationLatitude doubleValue]];
-            if (ride.destinationImage == nil) {
-                [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:location completionHandler:^(NSURL *imageUrl) {
-                    UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:imageUrl]];
-                    ride.destinationImage = UIImagePNGRepresentation(retrievedImage);
-                    [self notifyAllAboutNewImageForRideId:ride.rideId];
-                }];
-            }
-        } else {
-            // can't retrieve location
-        }
-    }];
-}
-
 -(void)fetchLocationForRide:(Ride *)ride  block:(boolCompletionHandler)block {
-    
-    if ([ride.destinationLatitude doubleValue] == 0 || [ride.destinationLongitude doubleValue] == 0) {
+    if ([ride.destinationLatitude doubleValue] != 0 && [ride.departureLatitude doubleValue] != 0) {
+        block(YES);
+    }
+    else if ([ride.destinationLatitude doubleValue] == 0 || [ride.destinationLongitude doubleValue] == 0) {
         [[LocationController sharedInstance] fetchLocationForAddress:ride.destination completionHandler:^(CLLocation *location) {
+            
+            // todo: refactor and make it easier
             if (location != nil) {
                 ride.destinationLatitude = [NSNumber numberWithDouble:location.coordinate.latitude];
                 ride.destinationLongitude = [NSNumber numberWithDouble:location.coordinate.longitude];
+                
+                if (ride.destinationImage == nil) {
+                    [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:location completionHandler:^(NSURL *imageUrl) {
+                        UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:imageUrl]];
+                        ride.destinationImage = UIImagePNGRepresentation(retrievedImage);
+                        [self notifyAllAboutNewImageForRideId:ride.rideId];
+                    }];
+                }
             }
             
             if ([ride.departureLatitude doubleValue] == 0 || [ride.departureLongitude doubleValue] == 0) {
@@ -440,15 +436,20 @@ static int page = 0;
 - (void)filterNearbyRidesByType:(ContentType)rideType {
     
     for (Ride *ride in [self allRidesByType:rideType]) {
-        if ([self checkIfRideNearby:ride]) {
-            [self addNearbyRide:ride];
-        }
+        [self checkIfRideNearby:ride block:^(BOOL isNearby) {
+            if (isNearby) {
+                [self addNearbyRide:ride];
+            }
+        }];
     }
 }
 
 - (void)addNearbyRide:(Ride*)ride{
     int index = 0;
     if ([ride.rideType intValue] == ContentTypeActivityRides) {
+        if ([[self activityRidesNearby] containsObject:ride]) {
+            return;
+        }
         for (Ride *existingRide in [self activityRidesNearby]) {
             if ([ride.departureTime compare:existingRide.departureTime] == NSOrderedAscending) {
                 break;
@@ -458,6 +459,9 @@ static int page = 0;
         }
         [[self activityRidesNearby] insertObject:ride atIndex:index];
     } else if([ride.rideType intValue] == ContentTypeCampusRides) {
+        if ([[self campusRidesNearby] containsObject:ride]) {
+            return;
+        }
         for (Ride *existingRide in [self campusRidesNearby]) {
             if ([ride.departureTime compare:existingRide.departureTime] == NSOrderedAscending) {
                 break;
@@ -478,16 +482,29 @@ static int page = 0;
     return nil;
 }
 
--(BOOL)checkIfRideNearby:(Ride *)ride {
-    if ([self locationsNearbyForRide:ride]) {
-        return YES;
-    } else {
+-(BOOL)locationExists:(Ride *)ride {
+    if ([ride.destinationLatitude doubleValue] == 0 || [ride.departureLatitude doubleValue] == 0) {
         return NO;
     }
+    return YES;
+}
+
+-(void)checkIfRideNearby:(Ride *)ride block:(boolCompletionHandler)block{
+    [self fetchLocationForRide:ride block:^(BOOL fetched) {
+        if ([self locationsNearbyForRide:ride]) {
+            block(YES);
+        } else {
+            block(NO);
+        }
+    }];
+    
 }
 
 -(BOOL)locationsNearbyForRide:(Ride *)ride {
     CLLocation *currentLocation = [LocationController sharedInstance].currentLocation;
+    if (currentLocation == nil) {
+        return NO;
+    }
     
     CLLocation *departureLocation = [LocationController locationFromLongitude:[ride.departureLongitude doubleValue] latitude:[ride.departureLatitude doubleValue]];
     CLLocation *destinationLocation = [LocationController locationFromLongitude:[ride.destinationLongitude doubleValue] latitude:[ride.destinationLatitude doubleValue]];
@@ -559,6 +576,11 @@ static int page = 0;
             [observer didReceivePhotoForRide:rideId];
         }
     }
+}
+
+-(void)didReceiveCurrentLocation:(CLLocation *)location {
+    // check here if previous location is away from current location more than 10km
+    [self filterAllRides];
 }
 
 -(void)removeObserver:(id<RideStoreDelegate>)observer {
