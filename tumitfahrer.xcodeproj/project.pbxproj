@@ -130,6 +130,7 @@
 		E59B9A6A1916D072008DE80B /* NavigationBarUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E59B9A691916D072008DE80B /* NavigationBarUtilities.m */; };
 		E59B9A6E1916D346008DE80B /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59B9A6C1916D346008DE80B /* EditProfileViewController.m */; };
 		E59B9A6F1916D346008DE80B /* EditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59B9A6D1916D346008DE80B /* EditProfileViewController.xib */; };
+		E5A9BE0E19421F2C0072E9B0 /* IdsMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A9BE0D19421F2C0072E9B0 /* IdsMapping.m */; };
 		E5DE44E8192610E10034AF6F /* AddRideTableHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DE44E7192610E10034AF6F /* AddRideTableHeader.xib */; };
 		E5DE44ED192618270034AF6F /* SegmentedControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DE44EB192618270034AF6F /* SegmentedControlCell.m */; };
 		E5DE44EE192618270034AF6F /* SegmentedControlCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DE44EC192618270034AF6F /* SegmentedControlCell.xib */; };
@@ -394,6 +395,8 @@
 		E59B9A6B1916D346008DE80B /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
 		E59B9A6C1916D346008DE80B /* EditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
 		E59B9A6D1916D346008DE80B /* EditProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileViewController.xib; sourceTree = "<group>"; };
+		E5A9BE0C19421F2C0072E9B0 /* IdsMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdsMapping.h; sourceTree = "<group>"; };
+		E5A9BE0D19421F2C0072E9B0 /* IdsMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdsMapping.m; sourceTree = "<group>"; };
 		E5DE44E7192610E10034AF6F /* AddRideTableHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddRideTableHeader.xib; sourceTree = "<group>"; };
 		E5DE44EA192618270034AF6F /* SegmentedControlCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentedControlCell.h; sourceTree = "<group>"; };
 		E5DE44EB192618270034AF6F /* SegmentedControlCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentedControlCell.m; sourceTree = "<group>"; };
@@ -641,6 +644,8 @@
 				E50CCCC4191F6FAC003A9490 /* ActivityMapping.m */,
 				E504D9EC190BCCE20036FFA8 /* DeviceMapping.h */,
 				E504D9ED190BCCE20036FFA8 /* DeviceMapping.m */,
+				E5A9BE0C19421F2C0072E9B0 /* IdsMapping.h */,
+				E5A9BE0D19421F2C0072E9B0 /* IdsMapping.m */,
 				E50CCCFF191F8968003A9490 /* RatingMapping.h */,
 				E50CCD00191F8968003A9490 /* RatingMapping.m */,
 				E58B8724191511EA0032524A /* RequestMapping.h */,
@@ -1469,6 +1474,7 @@
 				E564464F192AB67200F636A5 /* CircularImageView.m in Sources */,
 				E504D9E8190B02490036FFA8 /* Device.m in Sources */,
 				E58889FA1913E2B50062D0DF /* RideActionCell.m in Sources */,
+				E5A9BE0E19421F2C0072E9B0 /* IdsMapping.m in Sources */,
 				E50CCCC1191E7A94003A9490 /* TimelinePageViewController.m in Sources */,
 				E59B9A6A1916D072008DE80B /* NavigationBarUtilities.m in Sources */,
 				E52EA4CE192B96A600E78B6D /* CvLayout.m in Sources */,

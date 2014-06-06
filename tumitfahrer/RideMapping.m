@@ -10,6 +10,7 @@
 #import "UserMapping.h"
 #import "RideSearch.h"
 #import "RequestMapping.h"
+#import "IdsMapping.h"
 
 @implementation RideMapping
 
@@ -37,6 +38,19 @@
     
     [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"requests" toKeyPath:@"requests" withMapping:[RequestMapping requestMapping]]];
     return rideMapping;
+}
+
++(RKObjectMapping*)getRideIds {
+    RKObjectMapping *responseMapping = [RKObjectMapping mappingForClass:[IdsMapping class]];
+    [responseMapping addAttributeMappingsFromDictionary:@{@"ids":@"ids"}];
+    return responseMapping;
+}
+
++(RKResponseDescriptor *)getRideIdsresponseDescriptorWithMapping:(RKObjectMapping *)mapping {
+    // create response description for user's session
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodGET                                                                                       pathPattern:@"/api/v2/rides/ids"                                                                                           keyPath:nil                                                                                     statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    return responseDescriptor;
 }
 
 +(RKObjectMapping*)getRideSearchesMapping {

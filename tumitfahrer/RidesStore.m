@@ -11,6 +11,7 @@
 #import "User.h"
 #import "Request.h"
 #import "CurrentUser.h"
+#import "IdsMapping.h"
 
 @interface RidesStore () <NSFetchedResultsControllerDelegate>
 
@@ -47,6 +48,7 @@ static int page = 0;
             }
         }];
         
+        [self checkIfRidesExistInWebservice];
         // check asynchronously if the ride was removed from the database, and then remove it from core data as well
         // add a method that will send a list of id of rides in the db, and in return will get a list of rides that need to be deleted
     }
@@ -244,6 +246,28 @@ static int page = 0;
     return nil;
 }
 
+-(void)checkIfRidesExistInWebservice {
+    
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
+    
+    [objectManager getObjectsAtPath:@"/api/v2/rides/ids" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        IdsMapping *mapping = [mappingResult firstObject];
+        [self compareRides:mapping.ids];
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        RKLogError(@"Load failed with error: %@", error);
+    }];
+}
+
+-(void)compareRides:(NSSet *)rideIds {
+    NSArray *rides = [self allRides];
+    for (Ride *ride in rides) {
+        if (![rideIds containsObject:ride.rideId]) {
+            [self deleteRideFromCoreData:ride];
+        }
+    }
+}
+
 
 # pragma mark - add and delete methods
 
@@ -295,13 +319,13 @@ static int page = 0;
 }
 
 -(void)deleteRideFromCoreData:(Ride *)ride {
+    [self deleteRideFromLocalStore:ride];
+
     NSManagedObjectContext *context = ride.managedObjectContext;
     [context deleteObject:ride];
     NSError *error;
     if (![context saveToPersistentStore:&error]) {
         NSLog(@"delete error %@", [error localizedDescription]);
-    } else {
-        [self deleteRideFromLocalStore:ride];
     }
 }
 
@@ -384,7 +408,6 @@ static int page = 0;
     }
 }
 
-
 -(void)fetchImageForCurrentRide:(Ride *)ride {
     CLLocation *location = [LocationController locationFromLongitude:[ride.destinationLongitude doubleValue] latitude:[ride.destinationLatitude doubleValue]];
     [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:location completionHandler:^(NSURL *imageUrl) {
@@ -394,6 +417,7 @@ static int page = 0;
         [self notifyAllAboutNewImageForRideId:ride.rideId];
     }];
 }
+
 #pragma mark - utility functions
 
 -(NSArray *)allRides {

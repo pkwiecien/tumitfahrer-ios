@@ -214,6 +214,9 @@
     [objectManager addResponseDescriptor:[RequestMapping postRequestResponseDescriptorWithMapping:requestMapping]];
     RKEntityMapping *activitiesMapping = [ActivityMapping generalActivityMapping];
     [objectManager addResponseDescriptor:[ActivityMapping getActivityResponseDescriptorWithMapping:activitiesMapping]];
+    
+    RKObjectMapping *getRidesIdsMapping = [RideMapping getRideIds];
+    [objectManager addResponseDescriptor:[RideMapping getRideIdsresponseDescriptorWithMapping:getRidesIdsMapping]];
 }
 
 -(void)setupObservers {
