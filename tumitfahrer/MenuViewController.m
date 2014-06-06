@@ -16,7 +16,7 @@
 #import "CurrentUser.h"
 #import "SearchRideViewController.h"
 #import "AddRideViewController.h"
-#import "YourRidesViewController.h"
+#import "YourRidesPageViewController.h"
 #import "MMDrawerController.h"
 #import "TimelinePageViewController.h"
 #import "RidesPageViewController.h"
@@ -75,8 +75,8 @@
     
     // section 2 - view controllers
     ProfileViewController *profileVC = [[ProfileViewController alloc] init];
-    YourRidesViewController *yourRidesVC = [[YourRidesViewController alloc] init];
-    self.profileViewControllers = [NSArray arrayWithObjects:profileVC, yourRidesVC, nil];
+    YourRidesPageViewController *yourRidesPageVC = [[YourRidesPageViewController alloc] init];
+    self.profileViewControllers = [NSArray arrayWithObjects:profileVC, yourRidesPageVC, nil];
     
     // add all sections to view controllers
     self.allViewControllers = [NSArray arrayWithObjects:self.timelineViewControllers, self.browseRidesViewControllers, self.addRidesViewControllers, self.profileViewControllers, nil];

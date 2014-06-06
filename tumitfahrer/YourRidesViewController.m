@@ -20,6 +20,8 @@
 @interface YourRidesViewController ()
 
 @property (nonatomic, retain) UILabel *zeroRidesLabel;
+@property CGFloat previousScrollViewYOffset;
+@property UIRefreshControl *refreshControl;
 
 @end
 
@@ -30,10 +32,13 @@
 {
     [super viewDidLoad];
     [self prepareZeroRidesLabel];
+    [self.view setBackgroundColor:[UIColor customLightGray]];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self.delegate willAppearViewWithIndex:self.index];
+
     [self setupNavigationBar];
     [self setupLeftMenuButton];
     [[CurrentUser sharedInstance] refreshUserRides];
@@ -49,7 +54,6 @@
 -(void)setupNavigationBar {
     UINavigationController *navController = self.navigationController;
     [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor lightestBlue]];
-    self.title = @"YOUR RIDES";
 }
 
 -(void)prepareZeroRidesLabel {

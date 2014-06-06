@@ -34,7 +34,7 @@
     self = [super init];
     if (self) {
         NSArray *campusTitles = [NSArray arrayWithObjects:@"All Campus", @"Around you", @"Favourite destinations", nil];
-        NSArray *activityTitles = [NSArray arrayWithObjects:@"All Activity", @"Around you", @"Favourite destinations", nil];
+        NSArray *activityTitles = [NSArray arrayWithObjects:@"All Activity", @"Around you", @"Favourites", nil];
         self.pageTitles = [NSArray arrayWithObjects:campusTitles, activityTitles, nil];
         self.pageColor = [UIColor colorWithRed:0 green:0.361 blue:0.588 alpha:1];
         self.RideType = contentType;

@@ -1,13 +1,13 @@
- //
-//  ParentPageViewController.m
+//
+//  YourRidesPageViewController.m
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 5/10/14.
+//  Created by Pawel Kwiecien on 6/6/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
-#import "TimelinePageViewController.h"
-#import "TimelineViewController.h"
+#import "YourRidesPageViewController.h"
+#import "YourRidesViewController.h"
 #import "MMDrawerBarButtonItem.h"
 #import "LogoView.h"
 #import "CurrentUser.h"
@@ -18,7 +18,7 @@
 #import "MenuViewController.h"
 #import "ActionManager.h"
 
-@interface TimelinePageViewController () <TimelineViewControllerDelegate>
+@interface YourRidesPageViewController () <YourRidesViewControllerDelegate>
 
 @property NSArray *pageTitles;
 
@@ -26,17 +26,16 @@
 
 @end
 
-@implementation TimelinePageViewController
+@implementation YourRidesPageViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.pageTitles = [NSArray arrayWithObjects:@"Timeline", @"Around you", @"Your activity", nil];
+        self.pageTitles = [NSArray arrayWithObjects:@"Organised rides", @"Upcoming rides", @"Past rides", nil];
     }
     return self;
 }
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -46,7 +45,7 @@
     self.pageController.dataSource = self;
     [[self.pageController view] setFrame:[[self view] bounds]];
     
-    TimelineViewController *initialViewController = [self viewControllerAtIndex:0];
+    YourRidesViewController *initialViewController = [self viewControllerAtIndex:0];
     initialViewController.delegate = self;
     
     NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
@@ -56,24 +55,9 @@
     [self addChildViewController:self.pageController];
     [[self view] addSubview:[self.pageController view]];
     [self.pageController didMoveToParentViewController:self];
-    
-    // get current user
-    NSString *emailLoggedInUser = [[NSUserDefaults standardUserDefaults] valueForKey:@"emailLoggedInUser"];
-    
-    if (emailLoggedInUser != nil) {
-        [CurrentUser fetchUserFromCoreDataWithEmail:emailLoggedInUser];
-    }
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    
-    NSLog(@"Current user: %@", [CurrentUser sharedInstance].user);
-    NSLog(@"his name: %@", [CurrentUser sharedInstance].user.firstName);
-    if([CurrentUser sharedInstance].user == nil)
-    {
-        [self showLoginScreen:NO];
-    }
-    
     [self setupLeftMenuButton];
     [self setupNavigationBar];
 }
@@ -87,44 +71,20 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     UINavigationController *navController = self.navigationController;
-    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor darkestBlue]];
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
+    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor lightestBlue]];
     self.navigationController.navigationBar.translucent = NO;
     
     self.logo = [[LogoView alloc] initWithFrame:CGRectMake(0, 0, 200, 41) title:[self.pageTitles objectAtIndex:0]];
     [self.navigationItem setTitleView:self.logo];
-    
-    // right button of the navigation bar
-    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *backBtnImage = [ActionManager colorImage:[UIImage imageNamed:@"MapIcon"] withColor:[UIColor customLightGray]];
-    [backBtn setBackgroundImage:backBtnImage forState:UIControlStateNormal];
-    [backBtn addTarget:self action:@selector(mapButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    backBtn.frame = CGRectMake(0, 0, 40, 40);
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:backBtn] ;
-    self.navigationItem.rightBarButtonItem = backButton;
 }
-
--(void)mapButtonPressed {
-    TimelineMapViewController *mapVC = [[TimelineMapViewController alloc] init];
-    mapVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self.navigationController pushViewController:mapVC animated:YES];
-}
-
--(void)showLoginScreen:(BOOL)animated
-{
-    LoginViewController *loginVC = [[LoginViewController alloc] init];
-    [self presentViewController:loginVC animated:animated completion:nil];
-}
-
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
     
-    NSUInteger index = [(TimelineViewController *)viewController index];
+    NSUInteger index = [(YourRidesViewController *)viewController index];
     
     if (index == 0) {
         return nil;
     }
-    
     index--;
     
     return [self viewControllerAtIndex:index];
@@ -133,10 +93,9 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
     
-    NSUInteger index = [(TimelineViewController *)viewController index];
+    NSUInteger index = [(YourRidesViewController *)viewController index];
     
     index++;
-    
     if (index == 3) {
         return nil;
     }
@@ -144,11 +103,11 @@
     return [self viewControllerAtIndex:index];
 }
 
-- (TimelineViewController *)viewControllerAtIndex:(NSUInteger)index {
-    TimelineViewController *timelineViewController = [[TimelineViewController alloc] init];
-    timelineViewController.index = index;
-    timelineViewController.delegate = self;
-    return timelineViewController;
+- (YourRidesViewController *)viewControllerAtIndex:(NSUInteger)index {
+    YourRidesViewController *yourRidesViewController = [[YourRidesViewController alloc] init];
+    yourRidesViewController.index = index;
+    yourRidesViewController.delegate = self;
+    return yourRidesViewController;
 }
 
 
@@ -166,7 +125,7 @@
 -(void)willAppearViewWithIndex:(NSInteger)index {
     self.logo.titleLabel.text = [self.pageTitles objectAtIndex:index];
     self.logo.pageControl.currentPage = index;
-    [self.navigationController.navigationBar setBarTintColor:[UIColor darkestBlue]];
+    [self.navigationController.navigationBar setBarTintColor:[UIColor lightestBlue]];
 }
 
 @end

@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol YourRidesViewControllerDelegate
+
+-(void)willAppearViewWithIndex:(NSInteger)index;
+
+@end
+
 @interface YourRidesViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, weak) id<YourRidesViewControllerDelegate> delegate;
+@property (assign, nonatomic) NSInteger index;
 
 @end

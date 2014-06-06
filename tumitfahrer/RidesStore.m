@@ -40,24 +40,22 @@ static int page = 0;
     self = [super init];
     if (self) {
         self.observers = [[NSMutableArray alloc] init];
-        [self initAllRidesFromCoreData];
+        [self initAllRidesFromCoreData]; // load rides from core data
         
-        [self fetchNewRides:^(BOOL fetched) {
+        [self fetchNewRides:^(BOOL fetched) { // try to load latest rides from webservice
             if (fetched) {
                 [self initAllRidesFromCoreData];
             }
         }];
         
+        // check if the ride was removed from the database, and then remove it from core data as well
         [self checkIfRidesExistInWebservice];
-        // check asynchronously if the ride was removed from the database, and then remove it from core data as well
-        // add a method that will send a list of id of rides in the db, and in return will get a list of rides that need to be deleted
     }
     return self;
 }
 
 -(void)initAllRidesFromCoreData {
     [self loadAllRidesFromCoreData];
-    [self fetchLocationForAllRides];
     [self filterAllRides]; // categorize rides to rides around me and my rides
 }
 
@@ -309,124 +307,18 @@ static int page = 0;
     }];
 }
 
-
--(void)saveToPersistentStore:(Ride *)ride {
-    NSManagedObjectContext *context = ride.managedObjectContext;
-    NSError *error;
-    if (![context saveToPersistentStore:&error]) {
-        NSLog(@"delete error %@", [error localizedDescription]);
-    }
-}
-
--(void)deleteRideFromCoreData:(Ride *)ride {
-    [self deleteRideFromLocalStore:ride];
-
-    NSManagedObjectContext *context = ride.managedObjectContext;
-    [context deleteObject:ride];
-    NSError *error;
-    if (![context saveToPersistentStore:&error]) {
-        NSLog(@"delete error %@", [error localizedDescription]);
-    }
-}
-
--(void)deleteRideFromLocalStore:(Ride *)ride {
-    if ([ride.rideType intValue] == ContentTypeCampusRides) {
-        [[self campusRides] removeObject:ride];
-        [[self campusRidesFavorites] removeObject:ride];
-        [[self campusRidesNearby] removeObject:ride];
-    } else {
-        [[self activityRides] removeObject:ride];
-        [[self activityRidesFavorites] removeObject:ride];
-        [[self activityRidesNearby] removeObject:ride];
-    }
-}
-
--(void)deleteRideRequestFromCoreData:(Request *)request {
-    NSManagedObjectContext *context = request.managedObjectContext;
-    [context deleteObject:request];
-    NSError *error;
-    if (![context saveToPersistentStore:&error]) {
-        NSLog(@"delete error %@", [error localizedDescription]);
-    } else {
-        [self deleteRideRequestFromLocalStore:request];
-    }
-}
-
--(void)deleteRideRequestFromLocalStore:(Request *)request {
-    [[self rideRequests] removeObject:request];
-}
-
-# pragma mark - location and delegate methods
-
--(void)fetchLocationForAllRides {
-    for(Ride *ride in [self allRides]) {
-        [self fetchLocationForRide:ride block:^(BOOL fetched) {}];
-    }
-}
-
--(void)fetchLocationForRide:(Ride *)ride  block:(boolCompletionHandler)block {
-    if ([ride.destinationLatitude doubleValue] != 0 && [ride.departureLatitude doubleValue] != 0) {
-        block(YES);
-    }
-    else if ([ride.destinationLatitude doubleValue] == 0 || [ride.destinationLongitude doubleValue] == 0) {
-        [[LocationController sharedInstance] fetchLocationForAddress:ride.destination completionHandler:^(CLLocation *location) {
-            
-            // todo: refactor and make it easier
-            if (location != nil) {
-                ride.destinationLatitude = [NSNumber numberWithDouble:location.coordinate.latitude];
-                ride.destinationLongitude = [NSNumber numberWithDouble:location.coordinate.longitude];
-                
-                if (ride.destinationImage == nil) {
-                    [self fetchImageForCurrentRide:ride];
-                }
-            }
-            
-            if ([ride.departureLatitude doubleValue] == 0 || [ride.departureLongitude doubleValue] == 0) {
-                [[LocationController sharedInstance] fetchLocationForAddress:ride.departurePlace completionHandler:^(CLLocation *location) {
-                    if (location != nil) {
-                        ride.departureLatitude = [NSNumber numberWithDouble:location.coordinate.latitude];
-                        ride.departureLongitude = [NSNumber numberWithDouble:location.coordinate.longitude];
-                    }
-                    block(YES);
-                }];
-            } else {
-                block(YES);
-            }
-        }];
-    } else {
-        if ([ride.departureLatitude doubleValue] == 0 || [ride.departureLongitude doubleValue] == 0) {
-            [[LocationController sharedInstance] fetchLocationForAddress:ride.departurePlace completionHandler:^(CLLocation *location) {
-                if (location != nil) {
-                    ride.departureLatitude = [NSNumber numberWithDouble:location.coordinate.latitude];
-                    ride.departureLongitude = [NSNumber numberWithDouble:location.coordinate.longitude];
-                }
-                block(YES);
-            }];
-        } else {
-            block(YES);
-        }
-    }
-}
-
--(void)fetchImageForCurrentRide:(Ride *)ride {
-    CLLocation *location = [LocationController locationFromLongitude:[ride.destinationLongitude doubleValue] latitude:[ride.destinationLatitude doubleValue]];
-    [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:location completionHandler:^(NSURL *imageUrl) {
-        UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:imageUrl]];
-        ride.destinationImage = UIImagePNGRepresentation(retrievedImage);
-        [self saveToPersistentStore:ride];
-        [self notifyAllAboutNewImageForRideId:ride.rideId];
-    }];
-}
-
 #pragma mark - utility functions
 
--(NSArray *)allRides {
-    NSMutableArray *rides = [[NSMutableArray alloc] init];
-    if([[self activityRides] count] >0 )
-        [rides addObjectsFromArray:[self activityRides]];
-    if([[self campusRides] count] > 0)
-        [rides addObjectsFromArray:[self campusRides]];
-    return rides;
+# pragma mark - filter functions
+
+-(void)filterAllRides {
+    [self filterRidesByType:ContentTypeActivityRides];
+    [self filterRidesByType:ContentTypeCampusRides];
+}
+
+-(void)filterRidesByType:(ContentType)contentType {
+    [self filterFavoriteRidesByType:contentType];
+    [self filterNearbyRidesByType:contentType];
 }
 
 #pragma mark - favorite rides
@@ -474,6 +366,7 @@ static int page = 0;
 }
 
 #pragma mark - nearby rides
+
 - (void)filterNearbyRidesByType:(ContentType)rideType {
     
     for (Ride *ride in [self allRidesByType:rideType]) {
@@ -485,6 +378,7 @@ static int page = 0;
     }
 }
 
+// add nearby ride to the array with nearby rides. Rides are ordered by departure place, so in the loop determine the right location
 - (void)addNearbyRide:(Ride*)ride{
     int index = 0;
     if ([ride.rideType intValue] == ContentTypeActivityRides) {
@@ -524,7 +418,7 @@ static int page = 0;
 }
 
 -(BOOL)locationExists:(Ride *)ride {
-    if ([ride.destinationLatitude doubleValue] == 0 || [ride.departureLatitude doubleValue] == 0) {
+    if ([ride.destinationLatitude doubleValue] == 0 || [ride.departureLatitude doubleValue] == 0 || [ride.departureLongitude doubleValue] == 0 || [ride.destinationLongitude doubleValue] == 0) {
         return NO;
     }
     return YES;
@@ -532,16 +426,70 @@ static int page = 0;
 
 -(void)checkIfRideNearby:(Ride *)ride block:(boolCompletionHandler)block{
     [self fetchLocationForRide:ride block:^(BOOL fetched) {
-        if ([self locationsNearbyForRide:ride]) {
+        if ([self isCurrentLocationNearbyRide:ride]) {
             block(YES);
         } else {
             block(NO);
         }
     }];
-    
 }
 
--(BOOL)locationsNearbyForRide:(Ride *)ride {
+# pragma mark - location and delegate methods
+
+-(void)fetchLocationForRide:(Ride *)ride  block:(boolCompletionHandler)block {
+    
+    if ([self locationExists:ride]) {
+        block(YES);
+    }
+    else if ([ride.destinationLatitude doubleValue] == 0) {
+        [[LocationController sharedInstance] fetchLocationForAddress:ride.destination completionHandler:^(CLLocation *location) {
+            
+            if (location != nil) {
+                ride.destinationLatitude = [NSNumber numberWithDouble:location.coordinate.latitude];
+                ride.destinationLongitude = [NSNumber numberWithDouble:location.coordinate.longitude];
+                if (ride.destinationImage == nil) {
+                    [self fetchImageForCurrentRide:ride];
+                }
+            }
+            
+            if ([ride.departureLatitude doubleValue] == 0) {
+                [[LocationController sharedInstance] fetchLocationForAddress:ride.departurePlace completionHandler:^(CLLocation *location) {
+                    if (location != nil) {
+                        ride.departureLatitude = [NSNumber numberWithDouble:location.coordinate.latitude];
+                        ride.departureLongitude = [NSNumber numberWithDouble:location.coordinate.longitude];
+                    }
+                    block(YES);
+                }];
+            } else {
+                block(YES);
+            }
+        }];
+    } else {
+        if ([ride.departureLatitude doubleValue] == 0 || [ride.departureLongitude doubleValue] == 0) {
+            [[LocationController sharedInstance] fetchLocationForAddress:ride.departurePlace completionHandler:^(CLLocation *location) {
+                if (location != nil) {
+                    ride.departureLatitude = [NSNumber numberWithDouble:location.coordinate.latitude];
+                    ride.departureLongitude = [NSNumber numberWithDouble:location.coordinate.longitude];
+                }
+                block(YES);
+            }];
+        } else {
+            block(YES);
+        }
+    }
+}
+
+-(void)fetchImageForCurrentRide:(Ride *)ride {
+    CLLocation *location = [LocationController locationFromLongitude:[ride.destinationLongitude doubleValue] latitude:[ride.destinationLatitude doubleValue]];
+    [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:location completionHandler:^(NSURL *imageUrl) {
+        UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:imageUrl]];
+        ride.destinationImage = UIImagePNGRepresentation(retrievedImage);
+        [self saveToPersistentStore:ride];
+        [self notifyAllAboutNewImageForRideId:ride.rideId];
+    }];
+}
+
+-(BOOL)isCurrentLocationNearbyRide:(Ride *)ride {
     CLLocation *currentLocation = [LocationController sharedInstance].currentLocation;
     if (currentLocation == nil) {
         return NO;
@@ -556,16 +504,15 @@ static int page = 0;
     return NO;
 }
 
-# pragma mark - filter functions
+# pragma mark - all rides functions
 
--(void)filterAllRides {
-    [self filterRidesByType:ContentTypeActivityRides];
-    [self filterRidesByType:ContentTypeCampusRides];
-}
-
--(void)filterRidesByType:(ContentType)contentType {
-    [self filterFavoriteRidesByType:contentType];
-    [self filterNearbyRidesByType:contentType];
+-(NSArray *)allRides {
+    NSMutableArray *rides = [[NSMutableArray alloc] init];
+    if([[self activityRides] count] >0 )
+        [rides addObjectsFromArray:[self activityRides]];
+    if([[self campusRides] count] > 0)
+        [rides addObjectsFromArray:[self campusRides]];
+    return rides;
 }
 
 -(NSArray *)allRidesByType:(ContentType)contentType {
@@ -587,22 +534,6 @@ static int page = 0;
         }
     }
     return nil;
-}
-
-- (void)printAllRides {
-    for (Ride *ride in [self allRides]) {
-        NSLog(@"Ride: %@", ride);
-        NSLog(@"ride: %@", ride);
-        NSLog(@"Number of passengers: %d", (int)[ride.passengers count]);
-        for (User *user in [ride passengers]) {
-            NSLog(@"User: %d", [user.userId intValue]);
-        }
-        
-        NSLog(@"Number of requests: %d", (int)[ride.requests count]);
-        for (Request *reques in [ride requests]) {
-            NSLog(@"Request: %d %@", [reques.requestId intValue], reques.requestedFrom);
-        }
-    }
 }
 
 # pragma mark - observer methods
@@ -635,6 +566,53 @@ static int page = 0;
     [self.observers removeObject:observer];
 }
 
+# pragma mark - persistent store methods
+
+-(void)saveToPersistentStore:(Ride *)ride {
+    NSManagedObjectContext *context = ride.managedObjectContext;
+    NSError *error;
+    if (![context saveToPersistentStore:&error]) {
+        NSLog(@"delete error %@", [error localizedDescription]);
+    }
+}
+
+-(void)deleteRideFromCoreData:(Ride *)ride {
+    [self deleteRideFromLocalStore:ride];
+    
+    NSManagedObjectContext *context = ride.managedObjectContext;
+    [context deleteObject:ride];
+    NSError *error;
+    if (![context saveToPersistentStore:&error]) {
+        NSLog(@"delete error %@", [error localizedDescription]);
+    }
+}
+
+-(void)deleteRideFromLocalStore:(Ride *)ride {
+    if ([ride.rideType intValue] == ContentTypeCampusRides) {
+        [[self campusRides] removeObject:ride];
+        [[self campusRidesFavorites] removeObject:ride];
+        [[self campusRidesNearby] removeObject:ride];
+    } else {
+        [[self activityRides] removeObject:ride];
+        [[self activityRidesFavorites] removeObject:ride];
+        [[self activityRidesNearby] removeObject:ride];
+    }
+}
+
+-(void)deleteRideRequestFromCoreData:(Request *)request {
+    NSManagedObjectContext *context = request.managedObjectContext;
+    [context deleteObject:request];
+    NSError *error;
+    if (![context saveToPersistentStore:&error]) {
+        NSLog(@"delete error %@", [error localizedDescription]);
+    } else {
+        [self deleteRideRequestFromLocalStore:request];
+    }
+}
+
+-(void)deleteRideRequestFromLocalStore:(Request *)request {
+    [[self rideRequests] removeObject:request];
+}
 
 #pragma mark - getters with initializers
 

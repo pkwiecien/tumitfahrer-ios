@@ -131,6 +131,8 @@
 		E59B9A6E1916D346008DE80B /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59B9A6C1916D346008DE80B /* EditProfileViewController.m */; };
 		E59B9A6F1916D346008DE80B /* EditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59B9A6D1916D346008DE80B /* EditProfileViewController.xib */; };
 		E5A9BE0E19421F2C0072E9B0 /* IdsMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A9BE0D19421F2C0072E9B0 /* IdsMapping.m */; };
+		E5A9BE18194236CD0072E9B0 /* YourRidesPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A9BE16194236CD0072E9B0 /* YourRidesPageViewController.m */; };
+		E5A9BE19194236CD0072E9B0 /* YourRidesPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5A9BE17194236CD0072E9B0 /* YourRidesPageViewController.xib */; };
 		E5DE44E8192610E10034AF6F /* AddRideTableHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DE44E7192610E10034AF6F /* AddRideTableHeader.xib */; };
 		E5DE44ED192618270034AF6F /* SegmentedControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DE44EB192618270034AF6F /* SegmentedControlCell.m */; };
 		E5DE44EE192618270034AF6F /* SegmentedControlCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DE44EC192618270034AF6F /* SegmentedControlCell.xib */; };
@@ -397,6 +399,9 @@
 		E59B9A6D1916D346008DE80B /* EditProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileViewController.xib; sourceTree = "<group>"; };
 		E5A9BE0C19421F2C0072E9B0 /* IdsMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdsMapping.h; sourceTree = "<group>"; };
 		E5A9BE0D19421F2C0072E9B0 /* IdsMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdsMapping.m; sourceTree = "<group>"; };
+		E5A9BE15194236CD0072E9B0 /* YourRidesPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YourRidesPageViewController.h; sourceTree = "<group>"; };
+		E5A9BE16194236CD0072E9B0 /* YourRidesPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YourRidesPageViewController.m; sourceTree = "<group>"; };
+		E5A9BE17194236CD0072E9B0 /* YourRidesPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YourRidesPageViewController.xib; sourceTree = "<group>"; };
 		E5DE44E7192610E10034AF6F /* AddRideTableHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddRideTableHeader.xib; sourceTree = "<group>"; };
 		E5DE44EA192618270034AF6F /* SegmentedControlCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentedControlCell.h; sourceTree = "<group>"; };
 		E5DE44EB192618270034AF6F /* SegmentedControlCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentedControlCell.m; sourceTree = "<group>"; };
@@ -1065,6 +1070,7 @@
 		E59B9A471916A22A008DE80B /* Your Rides */ = {
 			isa = PBXGroup;
 			children = (
+				E5A9BE14194236980072E9B0 /* Page Control */,
 				E59B9A5C1916B661008DE80B /* Your Rides Cell */,
 				E59B9A481916A241008DE80B /* YourRidesViewController.h */,
 				E59B9A491916A241008DE80B /* YourRidesViewController.m */,
@@ -1091,6 +1097,16 @@
 				E59B9A6D1916D346008DE80B /* EditProfileViewController.xib */,
 			);
 			name = "Edit Profile";
+			sourceTree = "<group>";
+		};
+		E5A9BE14194236980072E9B0 /* Page Control */ = {
+			isa = PBXGroup;
+			children = (
+				E5A9BE15194236CD0072E9B0 /* YourRidesPageViewController.h */,
+				E5A9BE16194236CD0072E9B0 /* YourRidesPageViewController.m */,
+				E5A9BE17194236CD0072E9B0 /* YourRidesPageViewController.xib */,
+			);
+			name = "Page Control";
 			sourceTree = "<group>";
 		};
 		E5DE44E6192610C10034AF6F /* Header */ = {
@@ -1317,6 +1333,7 @@
 				E5888A071913E4070062D0DF /* PassengersCell.xib in Resources */,
 				E58889DD191383570062D0DF /* RideDetailViewController.xib in Resources */,
 				E522BAD218AE13F600ECD375 /* Images.xcassets in Resources */,
+				E5A9BE19194236CD0072E9B0 /* YourRidesPageViewController.xib in Resources */,
 				E50CCC11191E529A003A9490 /* TimelineViewController.xib in Resources */,
 				E50CCC1B191E5885003A9490 /* TimelineCell.xib in Resources */,
 				E5FC44D5190CF83100E8DB65 /* MenuTopHeaderView.xib in Resources */,
@@ -1489,6 +1506,7 @@
 				E58889F51913E14A0062D0DF /* RideInformationCell.m in Sources */,
 				E58B872A19151F1B0032524A /* KGStatusBar.m in Sources */,
 				E522BACA18AE13F600ECD375 /* AppDelegate.m in Sources */,
+				E5A9BE18194236CD0072E9B0 /* YourRidesPageViewController.m in Sources */,
 				E5FB4D5619191D0A006F4F5D /* CustomUILabel.m in Sources */,
 				E5E2155F1907A94A00B0B150 /* AddRideViewController.m in Sources */,
 				E50CCD0C191FBD5A003A9490 /* RidesCell.m in Sources */,
