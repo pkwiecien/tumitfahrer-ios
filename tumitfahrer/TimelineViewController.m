@@ -18,7 +18,7 @@
 #import "RideDetailViewController.h"
 #import "RidesStore.h"
 
-@interface TimelineViewController ()
+@interface TimelineViewController () <ActivityStoreDelegate>
 
 @property CGFloat previousScrollViewYOffset;
 @property UIRefreshControl *refreshControl;
@@ -41,14 +41,7 @@
     [self.refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];
-    
-    [[ActivityStore sharedStore] fetchActivitiesFromWebservice:^(BOOL isFetched) {
-        if (isFetched) {
-            [[ActivityStore sharedStore] initAllActivitiesFromCoreData];
-            [self.tableView reloadData];
-        }
-    }];
-    
+    [ActivityStore sharedStore].delegate = self;
     self.driverIconWhite = [UIImage imageNamed:@"DriverIcon"];
     self.passengerIconWhite = [UIImage imageNamed:@"PassengerIconBig"];
 }
@@ -149,9 +142,9 @@
     NSCalendar *c = [NSCalendar currentCalendar];
     NSDateComponents *components = [c components:NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:[result updatedAt] toDate:now options:0];
     if (components.day > 0) {
-        cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d days %d hours ago", components.day, components.hour];
+        cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d days ago", components.day];
     } else if(components.hour > 0) {
-        cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d hours %d minutes ago", components.hour, components.minute];
+        cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d hours ago", components.hour];
     } else if(components.minute > 0) {
         cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d minutes ago", components.minute];
     } else {
@@ -194,6 +187,10 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 80;
+}
+
+-(void)didRecieveActivitiesFromWebService {
+    [self.tableView reloadData];
 }
 
 @end

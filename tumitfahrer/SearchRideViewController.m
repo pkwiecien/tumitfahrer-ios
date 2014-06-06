@@ -119,7 +119,7 @@
 }
 
 -(void)closeButtonPressed {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerWithFade];
 }
 
 #pragma mark - Button Handlers

@@ -65,10 +65,6 @@
 -(void)viewWillAppear:(BOOL)animated {
     [self setupNavigationBar];
     [self setupLeftMenuButton];
-    
-//    for (Ride *ride  in [[RidesStore sharedStore] allRides]) {
-//        NSLog(@"ride with id: %d, departure place: %@ (%lf, %lf), destination: %@ (%lf, %lf)", ride.rideId, ride.departurePlace, ride.departureLatitude, ride.departureLongitude, ride.destination, ride.destinationLatitude, ride.destinationLongitude);
-//    }
 }
 
 -(void)setupLeftMenuButton{
@@ -139,8 +135,7 @@
 -(void)searchButtonPressed {
     SearchRideViewController *searchRideVC = [[SearchRideViewController alloc] init];
     searchRideVC.SearchDisplayType = ShowAsModal;
-    UINavigationController *navBar = [[UINavigationController alloc] initWithRootViewController:searchRideVC];
-    [self.sideBarController.centerViewController presentViewController:navBar animated:YES completion:nil];
+    [self.navigationController pushViewControllerWithFade:searchRideVC];
 }
 
 -(void)addButtonPressed {

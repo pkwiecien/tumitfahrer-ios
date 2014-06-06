@@ -7,10 +7,21 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LocationController.h"
 
-@interface ActivityStore : NSObject
+@protocol ActivityStoreDelegate <NSObject>
+
+@optional
+
+- (void)didRecieveActivitiesFromWebService;
+
+@end
+
+@interface ActivityStore : NSObject <LocationControllerDelegate>
 
 + (instancetype)sharedStore;
+@property (nonatomic, strong) id <ActivityStoreDelegate> delegate;
+
 - (void)fetchActivitiesFromWebservice:(boolCompletionHandler)block;
 - (NSFetchedResultsController *)fetchedResultsController;
 - (NSArray *)recentActivitiesByType:(TimelineContentType)contentType;

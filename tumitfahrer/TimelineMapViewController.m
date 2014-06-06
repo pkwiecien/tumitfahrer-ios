@@ -36,7 +36,7 @@
     [super viewDidLoad];
     self.mapView.delegate = self;
     
-    for (id result in [[ActivityStore sharedStore] recentActivitiesByType:0]) {
+    for (id result in [[ActivityStore sharedStore] recentActivitiesByType:AllActivity]) {
         if ([result isKindOfClass:[Ride class]]) {
             Ride *ride = (Ride *)result;
             if (ride != nil) {

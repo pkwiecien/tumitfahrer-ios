@@ -81,7 +81,6 @@
         self.isLocationFetched = YES;
         [self notifyAllAboutNewCurrentLocation];
         
-        
         CLGeocoder *geocoder = [[CLGeocoder alloc] init];
         [geocoder reverseGeocodeLocation:self.currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
             if (error == nil && [placemarks count] > 0)

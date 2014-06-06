@@ -110,13 +110,9 @@
     return yourRidesViewController;
 }
 
-
 #pragma mark - Button Handlers
+
 -(void)leftDrawerButtonPress:(id)sender{
-    
-    MenuViewController *menu = (MenuViewController *)self.sideBarController.leftDrawerViewController;
-    NSIndexPath *ip = [NSIndexPath indexPathForRow:0 inSection:0];
-    [menu.tableView selectRowAtIndexPath:ip animated:NO scrollPosition:UITableViewScrollPositionMiddle];
     [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 

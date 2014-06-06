@@ -25,7 +25,7 @@
 - (instancetype)initWithFrame:(CGRect)frame placeholderText:(NSString*)placeholderText customIcon:(UIImage *)customIcon returnKeyType:(UIReturnKeyType)returnKeyType keyboardType:(UIKeyboardType)keyboardType shouldStartWithCapital:(BOOL)shouldStartWithCapital {
     self = [super initWithFrame:frame];
     if (self) {
-        self.background = [UIImage imageNamed:@"inputTextBox"];
+        self.background = [UIImage imageNamed:@"InputTextBox"];
         self.font = [UIFont systemFontOfSize:15];
         self.textColor = [UIColor whiteColor];
         self.isEditable = true;

@@ -27,6 +27,7 @@
 #import "TimelinePageViewController.h"
 #import "ActivityMapping.h"
 #import "RidesStore.h"
+#import "ActivityStore.h"
 
 @interface AppDelegate ()
 
@@ -220,8 +221,8 @@
 -(void)setupObservers {
     // for getting location of a specific photo
     [[LocationController sharedInstance] addObserver:[PanoramioUtilities sharedInstance]];
-    // for getting location for a specific ride
     [[LocationController sharedInstance] addObserver:[RidesStore sharedStore]];
+    [[LocationController sharedInstance] addObserver:[ActivityStore sharedStore]];
     // for getting images for a specific location
     [[PanoramioUtilities sharedInstance] addObserver:[RidesStore sharedStore]];
 }

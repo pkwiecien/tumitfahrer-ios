@@ -30,7 +30,7 @@
     if (self) {
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
         
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RoadBackground"]];
         [self prepareInputFields];
         [self preparePickerView];
         

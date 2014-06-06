@@ -26,7 +26,6 @@
     transition.subtype = kCATransitionFromTop;
     [self.view.layer addAnimation:transition forKey:kCATransition];
     return [self popViewControllerAnimated:NO];
-    
 }
 
 @end
