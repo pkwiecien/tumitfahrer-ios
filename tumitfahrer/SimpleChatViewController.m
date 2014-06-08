@@ -6,22 +6,23 @@
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
-#import "ChatViewController.h"
+#import "SimpleChatViewController.h"
 #import "JSMessage.h"
 #import "ActionManager.h"
 #import "Message.h"
 #import "User.h"
 #import "CurrentUser.h"
+#import "WebserviceRequest.h"
+#import "Ride.h"
 
-@interface ChatViewController () 
+@interface SimpleChatViewController ()
 
-@property (nonatomic, strong) User *receiver;
+@property (nonatomic, strong) NSNumber *receiverId;
+@property (nonatomic, strong) NSMutableArray *conversationArray;
 
 @end
 
-@implementation ChatViewController {
-    SRWebSocket *_webSocket;
-}
+@implementation SimpleChatViewController
 
 - (void)viewDidLoad
 {
@@ -34,10 +35,6 @@
     
     self.title = @"Messages";
     self.messageInputView.textView.placeHolder = @"New Message";
-
-//    self.avatars = [[NSDictionary alloc] initWithObjectsAndKeys:
-//                    [JSAvatarImageFactory avatarImageNamed:@"futureAvatar1" croppedToCircle:YES], kSubtitleMe,
-//                    [JSAvatarImageFactory avatarImageNamed:@"futureAvatar2" croppedToCircle:YES], kSubtitleDriver,nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -45,7 +42,19 @@
     [super viewWillAppear:animated];
     [self scrollToBottomAnimated:NO];
     [self setupNavbar];
-    //[self _reconnect];
+    if ([self.conversation.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+        self.receiverId = self.conversation.otherUserId;
+    } else {
+        self.receiverId = self.conversation.userId;
+    }
+    
+    NSArray *sortedArray = [[self.conversation.messages allObjects] sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        NSDate *first = [a createdAt];
+        NSDate *second = [b createdAt];
+        return [first compare:second] == NSOrderedDescending;
+    }];
+    
+    self.conversationArray = [NSMutableArray arrayWithArray:sortedArray];
 }
 
 -(void)setupNavbar {
@@ -62,64 +71,61 @@
     } else {
         self.title = @"Messages";
     }
-
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
-}
-
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-	[super viewDidDisappear:animated];
     
-    _webSocket.delegate = nil;
-    [_webSocket close];
-    _webSocket = nil;
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+    
+    UIBarButtonItem *refreshButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonPressed)];
+    [self.navigationItem setRightBarButtonItem:refreshButtonItem];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.conversation.messages count];
+    return [self.conversationArray count];
 }
 
 #pragma mark - Messages view delegate: REQUIRED
 
-- (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date
-{
-    if ((self.conversation.messages.count - 1) % 2) {
-        [JSMessageSoundEffect playMessageSentSound];
-    }
-    else {
-        // for demo purposes only, mimicing received messages
-        [JSMessageSoundEffect playMessageReceivedSound];
-    }
+- (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date {
     
-//    [self.conversation.messages addObject:[[JSMessage alloc] initWithText:text sender:sender date:date]];
+    [JSMessageSoundEffect playMessageSentSound];
     
-    [self finishSend];
-    [self scrollToBottomAnimated:YES];
+    [WebserviceRequest postMessageForConversation:self.conversation message:text senderId:[CurrentUser sharedInstance].user.userId receiverId:self.receiverId rideId:self.conversation.ride.rideId block:^(Message *result) {
+        if (result!=nil) {
+            [self inserObject:result];
+        }
+        [self finishSend];
+        [self scrollToBottomAnimated:YES];
+    }];
 }
 
-- (JSBubbleMessageType)messageTypeForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return (indexPath.row % 2) ? JSBubbleMessageTypeIncoming : JSBubbleMessageTypeOutgoing;
+-(void)inserObject:(Message *)message {
+    message.conversation = self.conversation;
+    [self.conversation addMessagesObject:message];
+    [self.conversationArray addObject:message];
+}
+
+- (JSBubbleMessageType)messageTypeForRowAtIndexPath:(NSIndexPath *)indexPath {
+    Message *message = [self.conversationArray objectAtIndex:indexPath.row];
+    if ([message.senderId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+        return JSBubbleMessageTypeOutgoing;
+    }
+    return JSBubbleMessageTypeIncoming;
 }
 
 - (UIImageView *)bubbleImageViewWithType:(JSBubbleMessageType)type
-                       forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row % 2) {
+                       forRowAtIndexPath:(NSIndexPath *)indexPath {
+    Message *message = [self.conversationArray objectAtIndex:indexPath.row];
+    if ([message.senderId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
         return [JSBubbleImageViewFactory bubbleImageViewForType:type
-                                                          color:[UIColor js_bubbleLightGrayColor]];
+                                                          color:[UIColor js_bubbleBlueColor]];
     }
-    
     return [JSBubbleImageViewFactory bubbleImageViewForType:type
-                                                      color:[UIColor js_bubbleBlueColor]];
+                                                      color:[UIColor js_bubbleLightGrayColor]];
 }
 
-- (JSMessageInputViewStyle)inputViewStyle
-{
+- (JSMessageInputViewStyle)inputViewStyle {
     return JSMessageInputViewStyleFlat;
 }
 
@@ -187,7 +193,7 @@
 #pragma mark - Messages view data source: REQUIRED
 
 - (JSMessage *)messageForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Message *message = [[self.conversation.messages allObjects ]objectAtIndex:indexPath.row];
+    Message *message = [self.conversationArray objectAtIndex:indexPath.row];
     JSMessage *jsMessage = [[JSMessage alloc] initWithText:message.content sender:[CurrentUser sharedInstance].user.firstName date:message.createdAt];
     
     return jsMessage ;
@@ -199,55 +205,8 @@
     return [[UIImageView alloc] initWithImage:image];
 }
 
-# pragma mark - websocket - for complete implementation see SocketRocket demo
-
-- (void)_reconnect;
-{
-    _webSocket.delegate = nil;
-    [_webSocket close];
+-(void)refreshButtonPressed {
     
-    _webSocket = [[SRWebSocket alloc] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"ws://192.168.0.102:9000/chat"]]];
-    _webSocket.delegate = self;
-    
-    self.title = @"Opening Connection...";
-    [_webSocket open];
 }
-
-- (void)reconnect:(id)sender;
-{
-    [self _reconnect];
-}
-
-#pragma mark - SRWebSocketDelegate
-
-- (void)webSocketDidOpen:(SRWebSocket *)webSocket;
-{
-    NSLog(@"Websocket Connected");
-    self.title = @"Connected!";
-}
-
-- (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error;
-{
-    NSLog(@":( Websocket Failed With Error %@", error);
-    
-    self.title = @"Connection Failed! (see logs)";
-    _webSocket = nil;
-}
-
-- (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message;
-{
-    NSLog(@"Received \"%@\"", message);
-    //[_messages addObject:[[TCMessage alloc] initWithMessage:message fromMe:NO]];
-    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:self.conversation.messages.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
-    [self.tableView scrollRectToVisible:self.tableView.tableFooterView.frame animated:YES];
-}
-
-- (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean;
-{
-    NSLog(@"WebSocket closed");
-    self.title = @"Connection Closed! (see logs)";
-    _webSocket = nil;
-}
-
 
 @end

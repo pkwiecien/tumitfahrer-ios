@@ -29,6 +29,7 @@
 #import "RidesStore.h"
 #import "ActivityStore.h"
 #import "ConversationMapping.h"
+#import "MessageMapping.h"
 
 @interface AppDelegate ()
 
@@ -216,6 +217,8 @@
     
     RKEntityMapping *conversationsMapping = [ConversationMapping conversationMapping];
     [objectManager addResponseDescriptor:[ConversationMapping getConversationsResponseDescriptorWithMapping:conversationsMapping]];
+    RKEntityMapping *postMessageMapping =[MessageMapping messageMapping];
+    [objectManager addResponseDescriptor:[MessageMapping postMessageResponseDescriptorWithMapping:postMessageMapping]];
     
     RKObjectMapping *getRidesIdsMapping = [RideMapping getRideIds];
     [objectManager addResponseDescriptor:[RideMapping getRideIdsresponseDescriptorWithMapping:getRidesIdsMapping]];

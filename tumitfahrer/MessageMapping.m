@@ -22,7 +22,15 @@
                                                         @"created_at": @"createdAt",
                                                         @"updated_at": @"updatedAt"
                                                         }];
+
     return mapping;
+}
+
++ (RKResponseDescriptor *)postMessageResponseDescriptorWithMapping:(RKEntityMapping*)mapping {
+    // create response description for user's session
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodPOST                                                                                       pathPattern:API_RIDES_CONVERSATIONS_MES                                                                                           keyPath:@"message"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    return responseDescriptor;
 }
 
 @end

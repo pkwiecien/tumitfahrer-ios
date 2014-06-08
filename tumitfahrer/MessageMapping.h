@@ -11,5 +11,6 @@
 @interface MessageMapping : NSObject
 
 +(RKEntityMapping *)messageMapping;
++ (RKResponseDescriptor *)postMessageResponseDescriptorWithMapping:(RKEntityMapping*)mapping;
 
 @end

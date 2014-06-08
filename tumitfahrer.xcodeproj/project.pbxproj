@@ -177,7 +177,8 @@
 		E5FEF31D1944B5B200E326BB /* ConversationMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF31C1944B5B200E326BB /* ConversationMapping.m */; };
 		E5FEF3231944BC3F00E326BB /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3221944BC3F00E326BB /* Ride.m */; };
 		E5FEF32C1944C4AC00E326BB /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF32B1944C4AC00E326BB /* Message.m */; };
-		E5FEF3351944C66400E326BB /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3341944C66400E326BB /* Conversation.m */; };
+		E5FEF33D1944CEA500E326BB /* SimpleChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF33C1944CEA500E326BB /* SimpleChatViewController.m */; };
+		E5FEF3411944EDFD00E326BB /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3401944EDFD00E326BB /* Conversation.m */; };
 		F34633546DAF4A39967E863E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAEC5882914944C4B8E2DE24 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -471,8 +472,10 @@
 		E5FEF3221944BC3F00E326BB /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
 		E5FEF32A1944C4AC00E326BB /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		E5FEF32B1944C4AC00E326BB /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
-		E5FEF3331944C66400E326BB /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
-		E5FEF3341944C66400E326BB /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
+		E5FEF33B1944CEA500E326BB /* SimpleChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleChatViewController.h; sourceTree = "<group>"; };
+		E5FEF33C1944CEA500E326BB /* SimpleChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleChatViewController.m; sourceTree = "<group>"; };
+		E5FEF33F1944EDFD00E326BB /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
+		E5FEF3401944EDFD00E326BB /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -919,13 +922,13 @@
 			name = "Passengers Cell";
 			sourceTree = "<group>";
 		};
-		E5888A981914DFFB0062D0DF /* Single Chat */ = {
+		E5888A981914DFFB0062D0DF /* Single Chat Websockets */ = {
 			isa = PBXGroup;
 			children = (
 				E5888A991914E01B0062D0DF /* ChatViewController.h */,
 				E5888A9A1914E01B0062D0DF /* ChatViewController.m */,
 			);
-			name = "Single Chat";
+			name = "Single Chat Websockets";
 			sourceTree = "<group>";
 		};
 		E58B872719151F1B0032524A /* KGStatusBar */ = {
@@ -965,8 +968,8 @@
 				E5FEF2EC1944508900E326BB /* Activity.m */,
 				E50CCCFC191F7C74003A9490 /* ActivityStore.h */,
 				E50CCCFD191F7C74003A9490 /* ActivityStore.m */,
-				E5FEF3331944C66400E326BB /* Conversation.h */,
-				E5FEF3341944C66400E326BB /* Conversation.m */,
+				E5FEF33F1944EDFD00E326BB /* Conversation.h */,
+				E5FEF3401944EDFD00E326BB /* Conversation.m */,
 				E50DB26918F447B800E87E62 /* CurrentUser.h */,
 				E50DB26A18F447B800E87E62 /* CurrentUser.m */,
 				E504D9E6190B02490036FFA8 /* Device.h */,
@@ -1256,8 +1259,9 @@
 		E5FEF2EE194475D000E326BB /* Messages */ = {
 			isa = PBXGroup;
 			children = (
+				E5FEF33E1944CEB900E326BB /* Single Chat No Websockets */,
 				E5FEF2F919447A4300E326BB /* Message List Cell */,
-				E5888A981914DFFB0062D0DF /* Single Chat */,
+				E5888A981914DFFB0062D0DF /* Single Chat Websockets */,
 				E5FEF2EF1944766300E326BB /* MessagesOverviewViewController.h */,
 				E5FEF2F01944766300E326BB /* MessagesOverviewViewController.m */,
 				E5FEF2F11944766300E326BB /* MessagesOverviewViewController.xib */,
@@ -1273,6 +1277,15 @@
 				E5FEF2F619447A3B00E326BB /* MessageListCell.xib */,
 			);
 			name = "Message List Cell";
+			sourceTree = "<group>";
+		};
+		E5FEF33E1944CEB900E326BB /* Single Chat No Websockets */ = {
+			isa = PBXGroup;
+			children = (
+				E5FEF33B1944CEA500E326BB /* SimpleChatViewController.h */,
+				E5FEF33C1944CEA500E326BB /* SimpleChatViewController.m */,
+			);
+			name = "Single Chat No Websockets";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1526,6 +1539,7 @@
 				E5E215681907B82500B0B150 /* CustomBarButton.m in Sources */,
 				E5E215781908442100B0B150 /* SwitchTableViewCell.m in Sources */,
 				E51FD50218F0864C0098AD11 /* ProfileViewController.m in Sources */,
+				E5FEF3411944EDFD00E326BB /* Conversation.m in Sources */,
 				E5888A001913E37C0062D0DF /* DriverCell.m in Sources */,
 				E564464F192AB67200F636A5 /* CircularImageView.m in Sources */,
 				E5FEF32C1944C4AC00E326BB /* Message.m in Sources */,
@@ -1549,9 +1563,9 @@
 				E522BACA18AE13F600ECD375 /* AppDelegate.m in Sources */,
 				E5A9BE18194236CD0072E9B0 /* YourRidesPageViewController.m in Sources */,
 				E5FB4D5619191D0A006F4F5D /* CustomUILabel.m in Sources */,
+				E5FEF33D1944CEA500E326BB /* SimpleChatViewController.m in Sources */,
 				E5E2155F1907A94A00B0B150 /* AddRideViewController.m in Sources */,
 				E50CCD0C191FBD5A003A9490 /* RidesCell.m in Sources */,
-				E5FEF3351944C66400E326BB /* Conversation.m in Sources */,
 				E5FEF3231944BC3F00E326BB /* Ride.m in Sources */,
 				E50DB29118F881BC00E87E62 /* PanoramioUtilities.m in Sources */,
 				E504D9EE190BCCE20036FFA8 /* DeviceMapping.m in Sources */,

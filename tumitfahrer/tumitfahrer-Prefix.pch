@@ -82,6 +82,7 @@ typedef void(^mutableArrayCompletionHandler)(NSMutableArray *);
 typedef void(^arrayCompletionHandler)(NSArray *);
 
 # pragma mark - API mapping for RestKit
+
 static NSString *API_USERS = @"/api/v2/users";
 static NSString *API_USERS_RIDES = @"/api/v2/users/:userId/rides";
 static NSString *API_USERS_DEVICES = @"/api/v2/users/:userId/devices";
@@ -89,6 +90,7 @@ static NSString *API_SESSIONS = @"/api/v2/sessions";
 static NSString *API_RIDES = @"/api/v2/rides";
 static NSString *API_RIDES_REQUESTS = @"/api/v2/rides/:rideId/requests";
 static NSString *API_RIDES_CONVERSATIONS = @"/api/v2/rides/:rideId/conversations";
+static NSString *API_RIDES_CONVERSATIONS_MES = @"/api/v2/rides/:rideId/conversations/:conversationId/messages";
 static NSString *API_SEARCH = @"/api/v2/search";
 static NSString *API_ACTIVITIES = @"/api/v2/activities";
 

@@ -17,6 +17,7 @@
 #import "User.h"
 #import "Message.h"
 #import "ActionManager.h"
+#import "SimpleChatViewController.h"
 
 @interface MessagesOverviewViewController ()
 
@@ -36,7 +37,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     
-    [WebserviceRequest getMessagesforRideId:[self.ride.rideId intValue] block:^(BOOL fetched) {
+    [WebserviceRequest getConversationsForRideId:[self.ride.rideId intValue] block:^(BOOL fetched) {
         if (fetched) {
             [self reloadTable];
         }
@@ -89,7 +90,7 @@
     User *otherUser = [CurrentUser getuserWithId:otherUserId];
     cell.passengerNameLabel.text = [NSString stringWithFormat:@"%@ %@", otherUser.firstName, otherUser.lastName] ;
     
-    Message *lastMesage = [conversation.messages lastObject];
+    Message *lastMesage = [[conversation.messages allObjects] lastObject];
     cell.lastMessageLabel.text = lastMesage.content;
     cell.lastMessageDateLabel.text = [ActionManager dateStringFromDate:lastMesage.createdAt];
     
@@ -97,7 +98,12 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    ChatViewController *chatVC = [[ChatViewController alloc] init];
+    /*ChatViewController *chatVC = [[ChatViewController alloc] init];
+    Conversation *conversation = [self.conversations objectAtIndex:indexPath.row];
+    chatVC.conversation = conversation;
+    [self.navigationController pushViewController:chatVC animated:YES];
+    */
+    SimpleChatViewController *chatVC = [[SimpleChatViewController alloc] init];
     Conversation *conversation = [self.conversations objectAtIndex:indexPath.row];
     chatVC.conversation = conversation;
     [self.navigationController pushViewController:chatVC animated:YES];
@@ -105,6 +111,15 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 85;
+}
+
+- (IBAction)contactAllPassengersButtonPressed:(id)sender {
+    /*ChatViewController *chatVC = [[ChatViewController alloc] init];
+    [self.navigationController pushViewController:chatVC animated:YES];
+     */
+    SimpleChatViewController *chatVC = [[SimpleChatViewController alloc] init];
+    [self.navigationController pushViewController:chatVC animated:YES];
+
 }
 
 @end

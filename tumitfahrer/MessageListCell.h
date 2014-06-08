@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface MessageListCell : UITableViewCell
-
 +(MessageListCell *)messageListCell;
 
 @property (weak, nonatomic) IBOutlet UILabel *passengerNameLabel;
