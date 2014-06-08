@@ -17,6 +17,7 @@
 #import "ActionManager.h"
 #import "RideDetailViewController.h"
 #import "RidesStore.h"
+#import "RideSearch.h"
 
 @interface TimelineViewController () <ActivityStoreDelegate>
 
@@ -50,7 +51,6 @@
     [[ActivityStore sharedStore] fetchActivitiesFromWebservice:^(BOOL isFetched) {
         if (isFetched) {
             [[ActivityStore sharedStore] initAllActivitiesFromCoreData];
-            [self.tableView reloadData];
             [self.refreshControl endRefreshing];
         }
     }];
@@ -77,12 +77,14 @@
     NSLog(@"index path: %ld", (long)indexPath.row);
     NSLog(@"count: %lu", (unsigned long)(int)[[[ActivityStore sharedStore] recentActivitiesByType:self.index] count]);
     id result = [[[ActivityStore sharedStore] recentActivitiesByType:self.index] objectAtIndex:indexPath.row];
-    if([result isKindOfClass:[Rating class]]) {
-        cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"Rating received with type %d", [((Rating *)result).ratingType intValue]];
-    } else if([result isKindOfClass:[Request class]]) {
+    
+    if([result isKindOfClass:[Request class]]) {
         cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"Request received for a ride to %@", ((Request *)result).requestedFrom];
         cell.iconImageView.image = self.passengerIconWhite;
-    } else {
+    } else if ([result isKindOfClass:[RideSearch class]]) {
+        cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"User searched for a ride to %@", ((RideSearch *)result).destination];
+        cell.iconImageView.image = self.passengerIconWhite;
+    } else if([result isKindOfClass:[Ride class]]) {
         Ride *ride = (Ride*)result;
 
         NSArray* fullDestination = [ride.destination componentsSeparatedByString: @","];
@@ -138,7 +140,7 @@
         }
     }
     
-    NSDate *now = [NSDate date];
+    NSDate *now = [ActionManager currentDate];
     NSCalendar *c = [NSCalendar currentCalendar];
     NSDateComponents *components = [c components:NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:[result updatedAt] toDate:now options:0];
     if (components.day > 0) {

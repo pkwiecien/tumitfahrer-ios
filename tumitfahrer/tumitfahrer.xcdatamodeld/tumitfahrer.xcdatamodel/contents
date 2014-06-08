@@ -59,11 +59,13 @@
         <relationship name="rideOwner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="ridesAsOwner" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="RideSearch" representedClassName="RideSearch" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="departurePlace" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="departureTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="destination" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="rideSearchId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="rideType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="activity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="rideSearches" inverseEntity="Activity" syncable="YES"/>
     </entity>
@@ -90,12 +92,12 @@
         <relationship name="ridesAsPassenger" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Ride" inverseName="passengers" inverseEntity="Ride" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Activity" positionX="-72" positionY="-180" width="128" height="103"/>
+        <element name="Activity" positionX="-72" positionY="-180" width="128" height="105"/>
         <element name="Message" positionX="0" positionY="0" width="128" height="148"/>
         <element name="Rating" positionX="106" positionY="-99" width="128" height="150"/>
         <element name="Request" positionX="18" positionY="-333" width="128" height="178"/>
         <element name="Ride" positionX="-279" positionY="-175" width="128" height="358"/>
+        <element name="RideSearch" positionX="-72" positionY="-180" width="128" height="178"/>
         <element name="User" positionX="252" positionY="-40" width="128" height="343"/>
-        <element name="RideSearch" positionX="-72" positionY="-180" width="128" height="148"/>
     </elements>
 </model>

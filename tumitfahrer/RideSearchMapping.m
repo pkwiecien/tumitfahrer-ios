@@ -18,7 +18,7 @@
                                                         @"departure_place":@"departurePlace",
                                                         @"destination":@"destination",
                                                         @"departure_time":@"departureTime",
-                                                        @"ride_type":@"ride_type",
+                                                        @"ride_type":@"rideType",
                                                         @"created_at": @"createdAt",
                                                         @"updated_at": @"updatedAt"
                                                         }];

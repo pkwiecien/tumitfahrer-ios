@@ -12,6 +12,7 @@
 #import "Request.h"
 #import "CurrentUser.h"
 #import "IdsMapping.h"
+#import "ActionManager.h"
 
 @interface RidesStore () <NSFetchedResultsControllerDelegate>
 
@@ -82,7 +83,7 @@ static int page = 0;
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
                               mainQueueManagedObjectContext];
     NSPredicate *predicate;
-    NSDate *now = [NSDate date];
+    NSDate *now = [ActionManager currentDate];
     predicate = [NSPredicate predicateWithFormat:@"(rideType = %d) AND (departureTime > %@)", contentType, now];
     
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"departureTime" ascending:YES];
@@ -115,7 +116,7 @@ static int page = 0;
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
                               mainQueueManagedObjectContext];
     NSPredicate *predicate;
-    NSDate *now = [NSDate date];
+    NSDate *now = [ActionManager currentDate];
     predicate = [NSPredicate predicateWithFormat:@"departureTime <= %@", now];
     
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"departureTime" ascending:NO];

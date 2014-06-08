@@ -23,7 +23,6 @@
                                                       @"meeting_point":@"meetingPoint",
                                                       @"departure_time":@"departureTime",
                                                       @"free_seats":@"freeSeats",
-                                                      @"duration":@"duration",
                                                       @"ride_type":@"rideType",
                                                       @"is_ride_request":@"isRideRequest",
                                                       @"price":@"price",

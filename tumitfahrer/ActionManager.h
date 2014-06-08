@@ -30,4 +30,7 @@
 + (NSString *)timeStringFromDate:(NSDate*)date;
 + (NSString *)dateStringFromDate:(NSDate*)date;
 
+// current time in local time zone
++ (NSDate *)currentDate;
+
 @end

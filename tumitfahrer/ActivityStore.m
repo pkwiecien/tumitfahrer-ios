@@ -13,10 +13,13 @@
 #import "Request.h"
 #import "LocationController.h"
 #import "CurrentUser.h"
+#import "RidesStore.h"
+#import "ActionManager.h"
+#import <RestKit/RestKit.h>
 
 @interface ActivityStore () <NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, strong) Activity *privateActivity;
+@property (nonatomic, strong) NSMutableArray *privateActivityArray;
 @property (nonatomic, strong) NSMutableArray *privateAllRecentActivities;
 @property (nonatomic, strong) NSMutableArray *privateActivitiesNearby;
 @property (nonatomic, strong) NSMutableArray *privateMyRecentActivities;
@@ -68,12 +71,25 @@ static int page = 0;
 }
 
 -(NSMutableArray *)getSortedActivities {
-    NSMutableArray *array = [[NSMutableArray alloc] initWithArray:[self.privateActivity.rides allObjects]];
-    if ([self.privateActivity.rideSearches count] > 0) {
-        [array addObjectsFromArray:[self.privateActivity.rideSearches allObjects]];
-    }
-    if ([self.privateActivity.requests count] > 0) {
-        [array addObjectsFromArray:[self.privateActivity.requests allObjects]];
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    NSDate *now = [ActionManager currentDate];
+    
+    for (Activity *activity in self.privateActivityArray) {
+        for (Ride *ride in activity.rides) {
+            if ([now compare:ride.departureTime] == NSOrderedAscending) {
+                [array addObject:ride];
+                [[RidesStore sharedStore] addRideToStore:ride];
+            }
+        }
+        for (Request *request in activity.requests) {
+            if ([now compare:request.requestedRide.departureTime] == NSOrderedAscending) {
+                [array addObject:request];
+                [[RidesStore sharedStore] addRideRequestToStore:request];
+            }
+        }
+        if ([activity.rideSearches count] > 0) {
+            [array addObjectsFromArray:[activity.rideSearches allObjects]];
+        }
     }
     
     NSArray *sortedArray;
@@ -144,6 +160,10 @@ static int page = 0;
 
 -(void)filterMyActivities {
 
+    if ([CurrentUser sharedInstance].user == nil) {
+        return;
+    }
+    
     for (id activity in [self allRecentActivities]) {
         if ([activity isKindOfClass:[Ride class]]) {
             Ride *ride = (Ride *)activity;
@@ -202,7 +222,13 @@ static int page = 0;
         [NSException raise:@"Fetch failed"
                     format:@"Reason: %@", [error localizedDescription]];
     }
-    self.privateActivity = [fetchedObjects firstObject];
+    
+    self.privateActivityArray = [[NSMutableArray alloc] init];
+    for (int i = 0; i <= page; i++) {
+        if (i < [fetchedObjects count] && [fetchedObjects objectAtIndex:i] != nil) {
+            [self.privateActivityArray addObject:[fetchedObjects objectAtIndex:i]];
+        }
+    }
 }
 
 -(NSFetchedResultsController *)fetchedResultsController {
