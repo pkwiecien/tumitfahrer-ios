@@ -14,16 +14,14 @@
 +(RidesCell *)ridesCell {
     RidesCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"RidesCell" owner:self options:nil] objectAtIndex:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    UIColor *color = [UIColor colorWithRed:0.808 green:0.808 blue:0.808 alpha:1];
-    
-    cell.timeImageView.image = [UIImage imageNamed:@"TimeIcon"];
-    cell.calendarImageView.image = [UIImage imageNamed:@"CalendarIcon"];
+    UIColor *grayColor = [UIColor colorWithRed:0.808 green:0.808 blue:0.808 alpha:1];
     cell.roleView.backgroundColor = [UIColor colorWithRed:0 green:0.361 blue:0.588 alpha:1];
     cell.roleImageView.image = [UIImage imageNamed:@"DriverIcon"];
-    cell.timeLabel.textColor = color;
-    cell.dateLabel.textColor = color;
+    cell.timeLabel.textColor = grayColor;
+    cell.dateLabel.textColor = grayColor;
     cell.seatsLabel.textColor = [UIColor whiteColor];
-    cell.directionsLabel.textColor = color;
+    cell.destinationLabel.textColor = grayColor;
+    cell.directionsLabel.textColor = grayColor;
 
     return cell;
 }

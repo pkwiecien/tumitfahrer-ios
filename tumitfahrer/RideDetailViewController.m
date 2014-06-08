@@ -10,7 +10,7 @@
 #import "RideInformationCell.h"
 #import "PassengersCell.h"
 #import "DriverCell.h"
-#import "ChatViewController.h"
+#import "MessagesOverviewViewController.h"
 #import "ActionManager.h"
 #import "User.h"
 #import "Request.h"
@@ -292,8 +292,8 @@
 }
 
 -(void)contactDriverButtonPressed {
-    ChatViewController *chatVC = [[ChatViewController alloc] init];
-    [self.navigationController pushViewController:chatVC animated:YES];
+    MessagesOverviewViewController *messageOverviewVC = [[MessagesOverviewViewController alloc] init];
+    [self.navigationController pushViewController:messageOverviewVC animated:YES];
 }
 
 -(void)joinRideButtonPressed {

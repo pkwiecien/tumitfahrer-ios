@@ -145,10 +145,8 @@
         cell.seatsLabel.text = [NSString stringWithFormat:@"%@ seats left", ride.freeSeats];
     }
     
-    NSString *departurePlace = [ride.departurePlace componentsSeparatedByString:@", "][0];
-    NSString *destination = [ride.destination componentsSeparatedByString:@", "][0];
-    
-    cell.directionsLabel.text = [departurePlace stringByAppendingString:[NSString stringWithFormat:@" -> %@", destination]];
+    cell.directionsLabel.text = [ride.departurePlace componentsSeparatedByString:@", "][0];
+    cell.destinationLabel.text = [ride.destination componentsSeparatedByString:@", "][0];
     
     return cell;
 }

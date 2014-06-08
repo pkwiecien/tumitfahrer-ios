@@ -66,11 +66,8 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    
-    NSLog(@"Current user: %@", [CurrentUser sharedInstance].user);
-    NSLog(@"his name: %@", [CurrentUser sharedInstance].user.firstName);
-    if([CurrentUser sharedInstance].user == nil)
-    {
+    // check if current user exists
+    if([CurrentUser sharedInstance].user == nil) {
         [self showLoginScreen:NO];
     }
     
@@ -89,6 +86,7 @@
     UINavigationController *navController = self.navigationController;
     [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor darkestBlue]];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
+
     self.navigationController.navigationBar.translucent = NO;
     
     self.logo = [[LogoView alloc] initWithFrame:CGRectMake(0, 0, 200, 41) title:[self.pageTitles objectAtIndex:0]];

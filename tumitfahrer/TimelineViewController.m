@@ -45,6 +45,12 @@
     [ActivityStore sharedStore].delegate = self;
     self.driverIconWhite = [UIImage imageNamed:@"DriverIcon"];
     self.passengerIconWhite = [UIImage imageNamed:@"PassengerIconBig"];
+
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [self.delegate willAppearViewWithIndex:self.index];
+    [self.tableView reloadData];
 }
 
 - (void)handleRefresh:(id)sender {
@@ -56,15 +62,9 @@
     }];
 }
 
--(void)viewWillAppear:(BOOL)animated {
-    [self.delegate willAppearViewWithIndex:self.index];
-    [self.tableView reloadData];
-}
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [[[ActivityStore sharedStore] recentActivitiesByType:self.index] count];
 }
-
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -190,6 +190,8 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 80;
 }
+
+#pragma mark - delegate methods
 
 -(void)didRecieveActivitiesFromWebService {
     [self.tableView reloadData];

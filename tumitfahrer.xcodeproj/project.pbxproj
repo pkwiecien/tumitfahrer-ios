@@ -170,6 +170,8 @@
 		E5FDDBE718EFDD4F00CE7B01 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBE618EFDD4F00CE7B01 /* CoreMotion.framework */; };
 		E5FDDBF118F0059D00CE7B01 /* ActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FDDBF018F0059D00CE7B01 /* ActionManager.m */; };
 		E5FEF2ED1944508900E326BB /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF2EC1944508900E326BB /* Activity.m */; };
+		E5FEF2F21944766300E326BB /* MessagesOverviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF2F01944766300E326BB /* MessagesOverviewViewController.m */; };
+		E5FEF2F31944766300E326BB /* MessagesOverviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FEF2F11944766300E326BB /* MessagesOverviewViewController.xib */; };
 		F34633546DAF4A39967E863E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAEC5882914944C4B8E2DE24 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -451,6 +453,9 @@
 		E5FDDBF018F0059D00CE7B01 /* ActionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionManager.m; sourceTree = "<group>"; };
 		E5FEF2EB1944508900E326BB /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
 		E5FEF2EC1944508900E326BB /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
+		E5FEF2EF1944766300E326BB /* MessagesOverviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesOverviewViewController.h; sourceTree = "<group>"; };
+		E5FEF2F01944766300E326BB /* MessagesOverviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesOverviewViewController.m; sourceTree = "<group>"; };
+		E5FEF2F11944766300E326BB /* MessagesOverviewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagesOverviewViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -821,7 +826,6 @@
 				E507C43B193A2968005F1083 /* Ride Request Information Cell */,
 				E52EA4CF192C016900E78B6D /* Map View */,
 				E5FB4D401918DB1D006F4F5D /* Ride Notice */,
-				E5888A981914DFFB0062D0DF /* Chat Controller */,
 				E5888A021913E3F40062D0DF /* Passengers Cell */,
 				E58889FC1913E3630062D0DF /* Driver Cell */,
 				E58889F11913E0890062D0DF /* Ride Information Cell */,
@@ -894,13 +898,13 @@
 			name = "Passengers Cell";
 			sourceTree = "<group>";
 		};
-		E5888A981914DFFB0062D0DF /* Chat Controller */ = {
+		E5888A981914DFFB0062D0DF /* Single Chat */ = {
 			isa = PBXGroup;
 			children = (
 				E5888A991914E01B0062D0DF /* ChatViewController.h */,
 				E5888A9A1914E01B0062D0DF /* ChatViewController.m */,
 			);
-			name = "Chat Controller";
+			name = "Single Chat";
 			sourceTree = "<group>";
 		};
 		E58B872719151F1B0032524A /* KGStatusBar */ = {
@@ -920,6 +924,7 @@
 				E59987FD18E72BD100B01C62 /* Forgot Password */,
 				E599880718E7835F00B01C62 /* Left Menu */,
 				E59987CC18E6E3A100B01C62 /* Login */,
+				E5FEF2EE194475D000E326BB /* Messages */,
 				E51FD4FE18F086300098AD11 /* Profile */,
 				E59987F718E724F900B01C62 /* Register */,
 				E58889D81913832C0062D0DF /* Ride Details */,
@@ -1223,6 +1228,17 @@
 			name = "Map View Controller";
 			sourceTree = "<group>";
 		};
+		E5FEF2EE194475D000E326BB /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				E5888A981914DFFB0062D0DF /* Single Chat */,
+				E5FEF2EF1944766300E326BB /* MessagesOverviewViewController.h */,
+				E5FEF2F01944766300E326BB /* MessagesOverviewViewController.m */,
+				E5FEF2F11944766300E326BB /* MessagesOverviewViewController.xib */,
+			);
+			name = Messages;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1341,6 +1357,7 @@
 				E599886318E84D9D00B01C62 /* MenuTableViewCell.xib in Resources */,
 				E50CCD07191FAE8A003A9490 /* RidesViewController.xib in Resources */,
 				E58889FB1913E2B50062D0DF /* RideActionCell.xib in Resources */,
+				E5FEF2F31944766300E326BB /* MessagesOverviewViewController.xib in Resources */,
 				E5E215801908492200B0B150 /* FreeSeatsTableViewCell.xib in Resources */,
 				E507C440193A298D005F1083 /* RideRequestInformationCell.xib in Resources */,
 				E51FD50318F0864C0098AD11 /* ProfileViewController.xib in Resources */,
@@ -1484,6 +1501,7 @@
 				E5DE44ED192618270034AF6F /* SegmentedControlCell.m in Sources */,
 				E507C43F193A298D005F1083 /* RideRequestInformationCell.m in Sources */,
 				E50CCD11191FC324003A9490 /* RidesPageViewController.m in Sources */,
+				E5FEF2F21944766300E326BB /* MessagesOverviewViewController.m in Sources */,
 				E5DF641518EB548E00D53164 /* SettingsViewController.m in Sources */,
 				E5888A061913E4070062D0DF /* PassengersCell.m in Sources */,
 				E5A9BE28194256310072E9B0 /* RideSearchStore.m in Sources */,
