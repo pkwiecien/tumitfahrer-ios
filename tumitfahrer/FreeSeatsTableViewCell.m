@@ -17,8 +17,7 @@
     return cell;
 }
 
-- (void)awakeFromNib
-{
+- (void)awakeFromNib {
     self.stepper.value = 1;
     self.stepper.maximumValue = 8;
     self.stepper.minimumValue = 1;

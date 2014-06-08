@@ -15,10 +15,17 @@
 #import "NavigationBarUtilities.h"
 #import "CurrentUser.h"
 #import "MMDrawerBarButtonItem.h"
+#import "SegmentedControlCell.h"
+#import "SearchItemCell.h"
+#import "ButtonCell.h"
+#import "DestinationViewController.h"
 
-@interface SearchRideViewController ()
+@interface SearchRideViewController () <SementedControlCellDelegate, DestinationViewControllerDelegate, RMDateSelectionViewControllerDelegate>
 
 @property (nonatomic) UIColor *customGrayColor;
+@property (nonatomic, assign) NSInteger searchType;
+@property (nonatomic, strong) NSDictionary *searchValues;
+@property (nonatomic, strong) NSArray *icons;
 
 @end
 
@@ -29,23 +36,17 @@
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
-    self.departureTextField.delegate = self;
-    self.destinationTextField.delegate = self;
-    self.dateTextField.delegate = self;
-    
+    self.searchValues = @{@"departure_place": @"", @"destination": @"", @"departure_time": @"", @"is_driver": [NSNumber numberWithBool:FALSE]};
+    self.icons = @[[UIImage imageNamed:@"DepartureIconBlack"], [UIImage imageNamed:@"DestinationIconBlack"], [UIImage imageNamed:@"CalendarIconBlack"]];
     [self.view setBackgroundColor:[UIColor customLightGray]];
-    UIImage *greanButtonImage = [UIImage imageNamed:@"BlueButton"];
-    [self.searchButton setBackgroundImage:greanButtonImage forState:UIControlStateNormal];
     
-    self.edgesForExtendedLayout = UIRectEdgeNone;
-    self.detailsView.backgroundColor = [UIColor lighterBlue];
-    self.detailsImageView.image = [UIImage imageNamed:@"DetailsIcon"];
-    self.rideTypeSegmentedControl.tintColor = [UIColor lighterBlue];
+    UIView *headerView = [[[NSBundle mainBundle] loadNibNamed:@"AddRideTableHeader" owner:self options:nil] objectAtIndex:0];
+    self.tableView.tableHeaderView = headerView;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [self setupNavigationBar];
-
+    
     if(self.SearchDisplayType == ShowAsViewController)
         [self setupLeftMenuButton];
 }
@@ -67,17 +68,98 @@
     [self.navigationItem setLeftBarButtonItem:settingsButton];
 }
 
-- (IBAction)searchButtonPressed:(id)sender {
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 5;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     
-    if (self.departureTextField.text.length >0 && self.departureTextField.text.length>0 && self.dateTextField.text != nil) {
+    if(cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
+    }
+    
+    if (indexPath.row == 0) {
+        
+        SegmentedControlCell *cell = [SegmentedControlCell segmentedControlCell];
+        cell.delegate = self;
+        [cell setFirstSegmentTitle:@"I am Passenger" secondSementTitle:@"I am Driver"];
+        [cell addHandlerToSegmentedControl];
+        cell.controlId = 0;
+        return cell;
+    } else if(indexPath.row < 4) {
+        SearchItemCell *cell = [SearchItemCell searchItemCell];
+        cell.searchItemImageView.image = [self.icons objectAtIndex:(indexPath.row-1)];
+        cell.index = indexPath.row -1;
+        cell.searchItemTextField.tag = indexPath.row-1;
+        return cell;
+    } else if(indexPath.row == 4) {
+        ButtonCell *cell = [ButtonCell buttonCell];
+        [cell.cellButton addTarget:self action:@selector(searchButtonPressed) forControlEvents:UIControlEventAllEvents];
+        return cell;
+    }
+ 
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(indexPath.row <=2) {
+        DestinationViewController *destinationVC = [[DestinationViewController alloc] init];
+        destinationVC.rideTableIndexPath = indexPath;
+        destinationVC.delegate = self;
+        [self.navigationController pushViewController:destinationVC animated:YES];
+    } else if (indexPath.row == 3) {
+        RMDateSelectionViewController *dateSelectionVC = [RMDateSelectionViewController dateSelectionController];
+        dateSelectionVC.delegate = self;
+        [dateSelectionVC show];
+    }
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 40.0)];
+    headerView.backgroundColor = [UIColor lighterBlue];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 8, 20, 20)];
+    imageView.image = [UIImage imageNamed:@"DetailsIcon"];
+    [headerView addSubview:imageView];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(40, 10, 10, 10)];
+    label.text = @"Details";
+    label.textColor = [UIColor whiteColor];
+    [label sizeToFit];
+    [headerView addSubview:label];
+    return headerView;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 40.0f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 5) {
+        return 60;
+    }
+    return 44;
+}
+
+-(void)searchButtonPressed {
+    NSString *destination = self.searchValues[@"destination"];
+    NSString *departurePlace = self.searchValues[@"departure_place"];
+    NSString *departureTime = self.searchValues[@"departure_time"];
+    
+    if (departurePlace.length >0 && destination.length>0 && departureTime.length > 0) {
         
         RKObjectManager *objectManager = [RKObjectManager sharedManager];
         
-        NSDictionary *queryParams;
         // add enum
-        queryParams = @{@"start_carpool": self.departureTextField.text, @"end_carpool": self.destinationTextField.text, @"ride_date":@"2012-02-02", @"user_id": [CurrentUser sharedInstance].user.userId, @"ride_type": [NSNumber numberWithInt:self.rideTypeSegmentedControl.selectedSegmentIndex]};
+//        queryParams = @{@"start_carpool": self.departureTextField.text, @"end_carpool": self.destinationTextField.text, @"ride_date":@"2012-02-02", @"user_id": [CurrentUser sharedInstance].user.userId, @"ride_type": [NSNumber numberWithInt:self.rideTypeSegmentedControl.selectedSegmentIndex]};
         
-        [objectManager postObject:nil path:API_SEARCH parameters:queryParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        [objectManager postObject:nil path:API_SEARCH parameters:self.searchValues success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             
             NSLog(@"Response: %@", operation.HTTPRequestOperation.responseString);
             NSArray* rides = [mappingResult array];
@@ -85,7 +167,7 @@
             for (RideSearch *rideSearchResult in rides) {
                 [[RideSearchStore sharedStore] addSearchResult:rideSearchResult];
             }
-
+            
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
             [ActionManager showAlertViewWithTitle:[error localizedDescription]];
             RKLogError(@"Load failed with error: %@", error);
@@ -93,17 +175,8 @@
     }
 }
 
-#pragma mark - RMDateSelectionViewController Delegates
-
-- (void)dateSelectionViewController:(RMDateSelectionViewController *)vc didSelectDate:(NSDate *)aDate {
-    self.dateTextField.text = [ActionManager stringFromDate:aDate];
-}
-
-- (void)dateSelectionViewControllerDidCancel:(RMDateSelectionViewController *)vc {
-}
-
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    if(textField.tag ==3) {
+    if(textField.tag == 3) {
         [self dismissKeyboard:nil];
         RMDateSelectionViewController *dateSelectionVC = [RMDateSelectionViewController dateSelectionController];
         dateSelectionVC.delegate = self;
@@ -126,6 +199,29 @@
 
 -(void)leftDrawerButtonPress:(id)sender{
     [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+
+-(void)selectedDestination:(NSString *)destination indexPath:(NSIndexPath *)indexPath {
+    
+}
+
+#pragma mark - RMDateSelectionViewController Delegates
+
+- (void)dateSelectionViewController:(RMDateSelectionViewController *)vc didSelectDate:(NSDate *)aDate {
+    NSString *dateString = [ActionManager stringFromDate:aDate];
+    [self.searchValues setValue:dateString forKey:@"departure_time"];
+    
+    [self.tableView beginUpdates];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:3 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
+}
+
+- (void)dateSelectionViewControllerDidCancel:(RMDateSelectionViewController *)vc {
+    
+}
+
+-(void)segmentedControlChangedToIndex:(NSInteger)index segmentedControlId:(NSInteger)controlId {
+    self.searchType = index;
 }
 
 @end

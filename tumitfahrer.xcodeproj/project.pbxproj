@@ -179,6 +179,10 @@
 		E5FEF32C1944C4AC00E326BB /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF32B1944C4AC00E326BB /* Message.m */; };
 		E5FEF33D1944CEA500E326BB /* SimpleChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF33C1944CEA500E326BB /* SimpleChatViewController.m */; };
 		E5FEF3411944EDFD00E326BB /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3401944EDFD00E326BB /* Conversation.m */; };
+		E5FEF3451944F57A00E326BB /* SearchItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3431944F57A00E326BB /* SearchItemCell.m */; };
+		E5FEF3461944F57A00E326BB /* SearchItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FEF3441944F57A00E326BB /* SearchItemCell.xib */; };
+		E5FEF34B1944F93300E326BB /* ButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3491944F93300E326BB /* ButtonCell.m */; };
+		E5FEF34C1944F93300E326BB /* ButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FEF34A1944F93300E326BB /* ButtonCell.xib */; };
 		F34633546DAF4A39967E863E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAEC5882914944C4B8E2DE24 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -476,6 +480,12 @@
 		E5FEF33C1944CEA500E326BB /* SimpleChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleChatViewController.m; sourceTree = "<group>"; };
 		E5FEF33F1944EDFD00E326BB /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
 		E5FEF3401944EDFD00E326BB /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
+		E5FEF3421944F57A00E326BB /* SearchItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchItemCell.h; sourceTree = "<group>"; };
+		E5FEF3431944F57A00E326BB /* SearchItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchItemCell.m; sourceTree = "<group>"; };
+		E5FEF3441944F57A00E326BB /* SearchItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchItemCell.xib; sourceTree = "<group>"; };
+		E5FEF3481944F93300E326BB /* ButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonCell.h; sourceTree = "<group>"; };
+		E5FEF3491944F93300E326BB /* ButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonCell.m; sourceTree = "<group>"; };
+		E5FEF34A1944F93300E326BB /* ButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ButtonCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1184,6 +1194,8 @@
 		E5E2155B1907A92D00B0B150 /* Search Ride */ = {
 			isa = PBXGroup;
 			children = (
+				E5FEF34D1944F93700E326BB /* Button Cell */,
+				E5FEF3471944F57D00E326BB /* Search Item Cell */,
 				E5E215611907A95F00B0B150 /* SearchRideViewController.h */,
 				E5E215621907A95F00B0B150 /* SearchRideViewController.m */,
 				E5E215631907A95F00B0B150 /* SearchRideViewController.xib */,
@@ -1288,6 +1300,26 @@
 			name = "Single Chat No Websockets";
 			sourceTree = "<group>";
 		};
+		E5FEF3471944F57D00E326BB /* Search Item Cell */ = {
+			isa = PBXGroup;
+			children = (
+				E5FEF3421944F57A00E326BB /* SearchItemCell.h */,
+				E5FEF3431944F57A00E326BB /* SearchItemCell.m */,
+				E5FEF3441944F57A00E326BB /* SearchItemCell.xib */,
+			);
+			name = "Search Item Cell";
+			sourceTree = "<group>";
+		};
+		E5FEF34D1944F93700E326BB /* Button Cell */ = {
+			isa = PBXGroup;
+			children = (
+				E5FEF3481944F93300E326BB /* ButtonCell.h */,
+				E5FEF3491944F93300E326BB /* ButtonCell.m */,
+				E5FEF34A1944F93300E326BB /* ButtonCell.xib */,
+			);
+			name = "Button Cell";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1385,6 +1417,7 @@
 				E59B9A6F1916D346008DE80B /* EditProfileViewController.xib in Resources */,
 				E5888A071913E4070062D0DF /* PassengersCell.xib in Resources */,
 				E58889DD191383570062D0DF /* RideDetailViewController.xib in Resources */,
+				E5FEF3461944F57A00E326BB /* SearchItemCell.xib in Resources */,
 				E522BAD218AE13F600ECD375 /* Images.xcassets in Resources */,
 				E5A9BE19194236CD0072E9B0 /* YourRidesPageViewController.xib in Resources */,
 				E50CCC11191E529A003A9490 /* TimelineViewController.xib in Resources */,
@@ -1414,6 +1447,7 @@
 				E5E215601907A94A00B0B150 /* AddRideViewController.xib in Resources */,
 				E5E215791908442100B0B150 /* SwitchTableViewCell.xib in Resources */,
 				E50CCD0D191FBD5A003A9490 /* RidesCell.xib in Resources */,
+				E5FEF34C1944F93300E326BB /* ButtonCell.xib in Resources */,
 				E504D9C3190A6C940036FFA8 /* DestinationViewController.xib in Resources */,
 				E5FD9EC819234A8500902502 /* TimelineMapViewController.xib in Resources */,
 				E52EA4D4192C019C00E78B6D /* RideDetailMapViewController.xib in Resources */,
@@ -1517,6 +1551,7 @@
 				E50CCD06191FAE8A003A9490 /* RidesViewController.m in Sources */,
 				E59987D018E6E47F00B01C62 /* LoginViewController.m in Sources */,
 				E50DB28218F86F8000E87E62 /* UserMapping.m in Sources */,
+				E5FEF34B1944F93300E326BB /* ButtonCell.m in Sources */,
 				6E4E133F1913F7BF00D0C453 /* UIApplication+GCovFlush.m in Sources */,
 				E5FC44D6190D30FF00E8DB65 /* MenuViewController.m in Sources */,
 				E50CCC14191E54F1003A9490 /* UIViewController+SideBarController.m in Sources */,
@@ -1590,6 +1625,7 @@
 				E50DB26B18F447B800E87E62 /* CurrentUser.m in Sources */,
 				E50DB29418FA7A8800E87E62 /* FacultyManager.m in Sources */,
 				E5A9BE2E194275920072E9B0 /* RideSearch.m in Sources */,
+				E5FEF3451944F57A00E326BB /* SearchItemCell.m in Sources */,
 				E504D9D3190A7FC50036FFA8 /* SPGooglePlacesPlaceDetailQuery.m in Sources */,
 				E50DB26F18F52E8500E87E62 /* StatusMapping.m in Sources */,
 				E5FEF3021944A9AD00E326BB /* WebserviceRequest.m in Sources */,

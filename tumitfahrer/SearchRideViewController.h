@@ -9,18 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "RMDateSelectionViewController.h"
 
-@interface SearchRideViewController : UIViewController <RMDateSelectionViewControllerDelegate, UITextFieldDelegate>
+@interface SearchRideViewController : UIViewController <RMDateSelectionViewControllerDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, assign) DisplayType SearchDisplayType;
-@property (weak, nonatomic) IBOutlet UITextField *departureTextField;
-@property (weak, nonatomic) IBOutlet UITextField *destinationTextField;
-@property (weak, nonatomic) IBOutlet UITextField *dateTextField;
-@property (weak, nonatomic) IBOutlet UIButton *searchButton;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *rideTypeSegmentedControl;
-@property (weak, nonatomic) IBOutlet UIView *detailsView;
-@property (weak, nonatomic) IBOutlet UIImageView *detailsImageView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-- (IBAction)searchButtonPressed:(id)sender;
 - (IBAction)dismissKeyboard:(id)sender;
 
 @end
