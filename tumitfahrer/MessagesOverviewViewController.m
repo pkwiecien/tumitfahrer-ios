@@ -10,8 +10,17 @@
 #import "MMDrawerBarButtonItem.h"
 #import "NavigationBarUtilities.h"
 #import "ChatViewController.h"
+#import "MessageListCell.h"
+#import "WebserviceRequest.h"
+#import "Conversation.h"
+#import "CurrentUser.h"
+#import "User.h"
+#import "Message.h"
+#import "ActionManager.h"
 
 @interface MessagesOverviewViewController ()
+
+@property (nonatomic, strong) NSMutableArray *conversations;
 
 @end
 
@@ -22,10 +31,23 @@
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     self.tableView.delegate = self;
+    self.tableView.separatorInset = UIEdgeInsetsZero;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    
+    [WebserviceRequest getMessagesforRideId:[self.ride.rideId intValue] block:^(BOOL fetched) {
+        if (fetched) {
+            [self reloadTable];
+        }
+    }];
+    
     [self setupNavigationBar];
+}
+
+-(void)reloadTable {
+    self.conversations = [NSMutableArray arrayWithArray:[self.ride.conversations allObjects]];
+    [self.tableView reloadData];
 }
 
 -(void)setupLeftMenuButton{
@@ -35,7 +57,7 @@
 
 -(void)setupNavigationBar {
     UINavigationController *navController = self.navigationController;
-    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor lighterBlue]];
+    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor darkerBlue]];
     self.title = @"Messages Overview";
 }
 
@@ -46,24 +68,43 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return [self.conversations count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MessageCell"];
+    MessageListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MessageListCell"];
     
     if(cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"MessageCell"];
+        cell = [MessageListCell messageListCell];
     }
-    cell.detailTextLabel.text = @"cell";
+    Conversation *conversation = [self.conversations objectAtIndex:indexPath.section];
+    NSNumber *otherUserId = nil;
+    if ([conversation.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+        otherUserId = conversation.otherUserId;
+    } else {
+        otherUserId = conversation.userId;
+    }
+    User *otherUser = [CurrentUser getuserWithId:otherUserId];
+    cell.passengerNameLabel.text = [NSString stringWithFormat:@"%@ %@", otherUser.firstName, otherUser.lastName] ;
+    
+    Message *lastMesage = [conversation.messages lastObject];
+    cell.lastMessageLabel.text = lastMesage.content;
+    cell.lastMessageDateLabel.text = [ActionManager dateStringFromDate:lastMesage.createdAt];
+    
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     ChatViewController *chatVC = [[ChatViewController alloc] init];
+    Conversation *conversation = [self.conversations objectAtIndex:indexPath.row];
+    chatVC.conversation = conversation;
     [self.navigationController pushViewController:chatVC animated:YES];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 85;
 }
 
 @end

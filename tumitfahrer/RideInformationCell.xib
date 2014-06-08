@@ -91,10 +91,10 @@
     </objects>
     <resources>
         <image name="CalendarIconBlack" width="25" height="25"/>
-        <image name="CarIconBlack" width="318" height="161"/>
+        <image name="CarIconBlack" width="25" height="25"/>
         <image name="DepartureIconBlack" width="25" height="25"/>
         <image name="DestinationIconBlack" width="16" height="25"/>
-        <image name="InfoIconBlack" width="318" height="161"/>
+        <image name="InfoIconBlack" width="25" height="25"/>
         <image name="TimeIconBlack" width="25" height="25"/>
     </resources>
 </document>

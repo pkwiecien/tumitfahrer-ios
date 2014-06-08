@@ -2,12 +2,13 @@
 //  Ride.m
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 6/4/14.
+//  Created by Pawel Kwiecien on 6/8/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
 #import "Ride.h"
 #import "Activity.h"
+#import "Conversation.h"
 #import "Request.h"
 #import "User.h"
 
@@ -25,15 +26,16 @@
 @dynamic destinationLongitude;
 @dynamic freeSeats;
 @dynamic isPaid;
+@dynamic isRideRequest;
 @dynamic meetingPoint;
 @dynamic price;
 @dynamic rideId;
 @dynamic rideType;
 @dynamic updatedAt;
-@dynamic isRideRequest;
 @dynamic activities;
-@dynamic rideOwner;
 @dynamic passengers;
 @dynamic requests;
+@dynamic rideOwner;
+@dynamic conversations;
 
 @end

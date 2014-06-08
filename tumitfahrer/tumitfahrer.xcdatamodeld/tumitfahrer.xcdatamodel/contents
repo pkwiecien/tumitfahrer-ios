@@ -6,14 +6,22 @@
         <relationship name="rides" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ride" inverseName="activities" inverseEntity="Ride" syncable="YES"/>
         <relationship name="rideSearches" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RideSearch" inverseName="activity" inverseEntity="RideSearch" syncable="YES"/>
     </entity>
+    <entity name="Conversation" representedClassName="Conversation" syncable="YES">
+        <attribute name="conversationId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="otherUserId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Message" inverseName="conversation" inverseEntity="Message" syncable="YES"/>
+        <relationship name="ride" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ride" inverseName="conversations" inverseEntity="Ride" syncable="YES"/>
+    </entity>
     <entity name="Message" representedClassName="Message" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="isSeen" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="messageId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="receiverId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="senderId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
-        <relationship name="receivedMessage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="messagesReceived" inverseEntity="User" syncable="YES"/>
-        <relationship name="sentMessage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="messagesSent" inverseEntity="User" syncable="YES"/>
+        <relationship name="conversation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="messages" inverseEntity="Conversation" syncable="YES"/>
     </entity>
     <entity name="Rating" representedClassName="Rating" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
@@ -54,6 +62,7 @@
         <attribute name="rideType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="activities" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="rides" inverseEntity="Activity" syncable="YES"/>
+        <relationship name="conversations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Conversation" inverseName="ride" inverseEntity="Conversation" syncable="YES"/>
         <relationship name="passengers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="ridesAsPassenger" inverseEntity="User" syncable="YES"/>
         <relationship name="requests" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Request" inverseName="requestedRide" inverseEntity="Request" syncable="YES"/>
         <relationship name="rideOwner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="ridesAsOwner" inverseEntity="User" syncable="YES"/>
@@ -84,8 +93,6 @@
         <attribute name="ratingAvg" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
-        <relationship name="messagesReceived" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="receivedMessage" inverseEntity="Message" syncable="YES"/>
-        <relationship name="messagesSent" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="sentMessage" inverseEntity="Message" syncable="YES"/>
         <relationship name="ratingsGiven" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Rating" inverseName="givenRating" inverseEntity="Rating" syncable="YES"/>
         <relationship name="ratingsReceived" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Rating" inverseName="receivedRating" inverseEntity="Rating" syncable="YES"/>
         <relationship name="ridesAsOwner" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Ride" inverseName="rideOwner" inverseEntity="Ride" syncable="YES"/>
@@ -93,11 +100,12 @@
     </entity>
     <elements>
         <element name="Activity" positionX="-72" positionY="-180" width="128" height="105"/>
-        <element name="Message" positionX="0" positionY="0" width="128" height="148"/>
+        <element name="Message" positionX="0" positionY="0" width="128" height="163"/>
         <element name="Rating" positionX="106" positionY="-99" width="128" height="150"/>
         <element name="Request" positionX="18" positionY="-333" width="128" height="178"/>
-        <element name="Ride" positionX="-279" positionY="-175" width="128" height="358"/>
+        <element name="Ride" positionX="-279" positionY="-175" width="128" height="373"/>
         <element name="RideSearch" positionX="-72" positionY="-180" width="128" height="178"/>
-        <element name="User" positionX="252" positionY="-40" width="128" height="343"/>
+        <element name="User" positionX="252" positionY="-40" width="128" height="313"/>
+        <element name="Conversation" positionX="-72" positionY="-180" width="128" height="118"/>
     </elements>
 </model>

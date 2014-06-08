@@ -26,6 +26,7 @@
 #import "RidesPageViewController.h"
 #import "RideRequestInformationCell.h"
 #import "CircularImageView.h"
+#import "WebserviceRequest.h"
 
 @interface RideDetailViewController () <NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate, RideStoreDelegate>
 
@@ -292,8 +293,12 @@
 }
 
 -(void)contactDriverButtonPressed {
-    MessagesOverviewViewController *messageOverviewVC = [[MessagesOverviewViewController alloc] init];
-    [self.navigationController pushViewController:messageOverviewVC animated:YES];
+    if ([[self.ride.rideOwner userId] isEqualToValue:[CurrentUser sharedInstance].user.userId]) {
+        MessagesOverviewViewController *messageOverviewVC = [[MessagesOverviewViewController alloc] init];
+        messageOverviewVC.ride = self.ride;
+        [self.navigationController pushViewController:messageOverviewVC animated:YES];
+    } else {
+    }
 }
 
 -(void)joinRideButtonPressed {

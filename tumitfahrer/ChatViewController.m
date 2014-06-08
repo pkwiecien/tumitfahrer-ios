@@ -9,12 +9,13 @@
 #import "ChatViewController.h"
 #import "JSMessage.h"
 #import "ActionManager.h"
-
-#define kSubtitleMe @"Me"
-#define kSubtitleDriver @"Driver"
+#import "Message.h"
+#import "User.h"
+#import "CurrentUser.h"
 
 @interface ChatViewController () 
 
+@property (nonatomic, strong) User *receiver;
 
 @end
 
@@ -33,17 +34,13 @@
     
     self.title = @"Messages";
     self.messageInputView.textView.placeHolder = @"New Message";
-    self.sender = @"Jobs";
 
-    self.messages = [[NSMutableArray alloc] initWithObjects:[[JSMessage alloc] initWithText:@"Chat will be handled by websockets. Functionality coming soon (once it's implemented on the server side)..." sender:kSubtitleMe date:[NSDate distantPast]], nil];
-    
-    self.avatars = [[NSDictionary alloc] initWithObjectsAndKeys:
-                    [JSAvatarImageFactory avatarImageNamed:@"futureAvatar1" croppedToCircle:YES], kSubtitleMe,
-                    [JSAvatarImageFactory avatarImageNamed:@"futureAvatar2" croppedToCircle:YES], kSubtitleDriver,nil];
+//    self.avatars = [[NSDictionary alloc] initWithObjectsAndKeys:
+//                    [JSAvatarImageFactory avatarImageNamed:@"futureAvatar1" croppedToCircle:YES], kSubtitleMe,
+//                    [JSAvatarImageFactory avatarImageNamed:@"futureAvatar2" croppedToCircle:YES], kSubtitleDriver,nil];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     [super viewWillAppear:animated];
     [self scrollToBottomAnimated:NO];
@@ -78,23 +75,22 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.messages.count;
+    return [self.conversation.messages count];
 }
 
 #pragma mark - Messages view delegate: REQUIRED
 
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date
 {
-    if ((self.messages.count - 1) % 2) {
+    if ((self.conversation.messages.count - 1) % 2) {
         [JSMessageSoundEffect playMessageSentSound];
     }
     else {
         // for demo purposes only, mimicing received messages
         [JSMessageSoundEffect playMessageReceivedSound];
-        sender = kSubtitleDriver;
     }
     
-    [self.messages addObject:[[JSMessage alloc] initWithText:text sender:sender date:date]];
+//    [self.conversation.messages addObject:[[JSMessage alloc] initWithText:text sender:sender date:date]];
     
     [self finishSend];
     [self scrollToBottomAnimated:YES];
@@ -173,23 +169,23 @@
 
 //  *** Implement to prevent auto-scrolling when message is added
 //
-- (BOOL)shouldPreventScrollToBottomWhileUserScrolling
-{
+- (BOOL)shouldPreventScrollToBottomWhileUserScrolling {
     return YES;
 }
 
 // *** Implemnt to enable/disable pan/tap todismiss keyboard
 //
-- (BOOL)allowsPanToDismissKeyboard
-{
+- (BOOL)allowsPanToDismissKeyboard {
     return YES;
 }
 
 #pragma mark - Messages view data source: REQUIRED
 
-- (JSMessage *)messageForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [self.messages objectAtIndex:indexPath.row];
+- (JSMessage *)messageForRowAtIndexPath:(NSIndexPath *)indexPath {
+    Message *message = [self.conversation.messages objectAtIndex:indexPath.row];
+    JSMessage *jsMessage = [[JSMessage alloc] initWithText:message.content sender:[CurrentUser sharedInstance].user.firstName date:message.createdAt];
+    
+    return jsMessage ;
 }
 
 - (UIImageView *)avatarImageViewForRowAtIndexPath:(NSIndexPath *)indexPath sender:(NSString *)sender
@@ -237,7 +233,7 @@
 {
     NSLog(@"Received \"%@\"", message);
     //[_messages addObject:[[TCMessage alloc] initWithMessage:message fromMe:NO]];
-    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:_messages.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:self.conversation.messages.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
     [self.tableView scrollRectToVisible:self.tableView.tableFooterView.frame animated:YES];
 }
 

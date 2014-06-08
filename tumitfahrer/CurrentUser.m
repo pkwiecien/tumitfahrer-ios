@@ -173,6 +173,25 @@
     return  self.privateUserRides;
 }
 
++ (User *)getuserWithId:(NSNumber *)userId {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *e = [NSEntityDescription entityForName:@"User"
+                                         inManagedObjectContext:[RKManagedObjectStore defaultStore].
+                              mainQueueManagedObjectContext];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userId = %@", userId];
+    [request setPredicate:predicate];
+    
+    request.entity = e;
+    
+    NSError *error;
+    NSArray *fetchedObjects = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:&error];
+    if (!fetchedObjects) {
+        [NSException raise:@"Fetch failed"
+                    format:@"Reason: %@", [error localizedDescription]];
+    }
+    return (User *)[fetchedObjects firstObject];
+}
+
 -(void)saveToPersisentStore {
     
     NSManagedObjectContext *context = self.user.managedObjectContext;
@@ -189,7 +208,7 @@
     if (![context saveToPersistentStore:&error]) {
         NSLog(@"delete error %@", [error localizedDescription]);
     }
-
+    
 }
 
 # pragma mark - Object to string

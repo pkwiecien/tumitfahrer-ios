@@ -2,14 +2,14 @@
 //  User.h
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 6/4/14.
+//  Created by Pawel Kwiecien on 6/8/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Message, Rating, Ride;
+@class Rating, Ride;
 
 @interface User : NSManagedObject
 
@@ -27,8 +27,6 @@
 @property (nonatomic, retain) NSNumber * ratingAvg;
 @property (nonatomic, retain) NSDate * updatedAt;
 @property (nonatomic, retain) NSNumber * userId;
-@property (nonatomic, retain) NSSet *messagesReceived;
-@property (nonatomic, retain) NSSet *messagesSent;
 @property (nonatomic, retain) NSSet *ratingsGiven;
 @property (nonatomic, retain) NSSet *ratingsReceived;
 @property (nonatomic, retain) NSSet *ridesAsOwner;
@@ -36,16 +34,6 @@
 @end
 
 @interface User (CoreDataGeneratedAccessors)
-
-- (void)addMessagesReceivedObject:(Message *)value;
-- (void)removeMessagesReceivedObject:(Message *)value;
-- (void)addMessagesReceived:(NSSet *)values;
-- (void)removeMessagesReceived:(NSSet *)values;
-
-- (void)addMessagesSentObject:(Message *)value;
-- (void)removeMessagesSentObject:(Message *)value;
-- (void)addMessagesSent:(NSSet *)values;
-- (void)removeMessagesSent:(NSSet *)values;
 
 - (void)addRatingsGivenObject:(Rating *)value;
 - (void)removeRatingsGivenObject:(Rating *)value;

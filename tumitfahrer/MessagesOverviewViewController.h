@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Ride.h"
 
 @interface MessagesOverviewViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) Ride* ride;
 
 @end

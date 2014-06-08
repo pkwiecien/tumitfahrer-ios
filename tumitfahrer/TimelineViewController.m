@@ -74,8 +74,6 @@
         cell = [TimelineCell timelineCell];
     }
     
-    NSLog(@"index path: %ld", (long)indexPath.row);
-    NSLog(@"count: %lu", (unsigned long)(int)[[[ActivityStore sharedStore] recentActivitiesByType:self.index] count]);
     id result = [[[ActivityStore sharedStore] recentActivitiesByType:self.index] objectAtIndex:indexPath.row];
     
     if([result isKindOfClass:[Request class]]) {

@@ -25,5 +25,6 @@
 - (void)deleteRide:(Ride *)ride forUserId:(NSInteger)userId;
 - (void)saveToPersisentStore;
 - (void)saveUserToPersisentStore;
++ (User *)getuserWithId:(NSNumber *)userId;
 
 @end
