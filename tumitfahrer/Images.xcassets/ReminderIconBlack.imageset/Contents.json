@@ -2,12 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "ReminderIconBlack.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "TimelineIcon.png"
+      "filename" : "ReminderIconBlack@2x.png"
     }
   ],
   "info" : {

@@ -36,9 +36,9 @@
     if (self) {
         self.headers = [[NSArray alloc] initWithObjects:@"Feedback", @"Other", nil];
         self.actionOptions = [[NSArray alloc] initWithObjects:@"Send Feedback", @"Report a problem", nil];
-        self.actionIcons = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"TimeIconBlack"], [UIImage imageNamed:@"TimeIconBlack"], nil];
+        self.actionIcons = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"FeedbackIconBlack"], [UIImage imageNamed:@"ProblemIconBlack"], nil];
         self.readOptions = [[NSArray alloc] initWithObjects:@"Reminder", @"Privacy", @"Licenses", nil];
-        self.readIcons = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"TimeIconBlack"], [UIImage imageNamed:@"TimeIconBlack"], [UIImage imageNamed:@"TimeIconBlack"], [UIImage imageNamed:@"TimeIconBlack"], nil];
+        self.readIcons = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"ReminderIconBlack"], [UIImage imageNamed:@"PrivacyIconBlack"], [UIImage imageNamed:@"LicenseIconBlack"], [UIImage imageNamed:@"TimeIconBlack"], nil];
         self.tableValues = [[NSArray alloc] initWithObjects:self.actionOptions, self.readOptions, nil];
         self.tableIcons = [[NSArray alloc] initWithObjects:self.actionIcons, self.readIcons, nil];
     }
