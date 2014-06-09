@@ -308,6 +308,15 @@ static int page = 0;
     }];
 }
 
++(void)initRide:(Ride *)ride index:(NSInteger)index block:(completionHandlerWithIndex)block{
+    [[RidesStore sharedStore] fetchLocationForRide:ride block:^(BOOL fetched) {
+        if (fetched) {
+            block(index);
+        } else {
+            block(-1);
+        }
+    }];
+}
 -(void)addRideRequestToStore:(Request *)request {
     if ([[self rideRequests] containsObject:request]) {
         return;

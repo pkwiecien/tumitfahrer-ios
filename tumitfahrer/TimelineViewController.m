@@ -80,7 +80,13 @@
         cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"Request received for a ride to %@", ((Request *)result).requestedFrom];
         cell.iconImageView.image = self.passengerIconWhite;
     } else if ([result isKindOfClass:[RideSearch class]]) {
-        cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"User searched for a ride to %@", ((RideSearch *)result).destination];
+        RideSearch *search = ((RideSearch *)result);
+        if (search.destination == nil || search.destination.length == 0) {
+            cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"User searched for a ride from %@", search.departurePlace];
+        } else {
+            cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"User searched for a ride to %@", search.destination];
+        }
+        
         cell.iconImageView.image = self.passengerIconWhite;
     } else if([result isKindOfClass:[Ride class]]) {
         Ride *ride = (Ride*)result;

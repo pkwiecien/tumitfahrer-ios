@@ -16,8 +16,6 @@
 #import "ActionManager.h"
 #import "CurrentUser.h"
 
-#define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-
 @interface RidesViewController ()
 
 @property CGFloat previousScrollViewYOffset;
@@ -29,9 +27,7 @@
 
 @end
 
-@implementation RidesViewController {
-    NSOperationQueue *_backgroundOperationQueue;
-}
+@implementation RidesViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,6 +38,8 @@
     [self.view setBackgroundColor:[UIColor customLightGray]];
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
     self.tableView.tableHeaderView = headerView;
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
+    self.tableView.tableFooterView = footerView;
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing rides"];
@@ -66,7 +64,7 @@
 
 -(void)addToImageCache {
     int counter = 0;
-    UIImage *placeholderImage = [UIImage imageNamed:@"MainCampus"];
+    UIImage *placeholderImage = [UIImage imageNamed:@"Placeholder"];
 
     for (Ride *ride in [self ridesForCurrentIndex]) {
         UIImage *image = [UIImage imageWithData:ride.destinationImage];
@@ -118,7 +116,7 @@
     UIImage *image = [_imageCache objectForKey:[NSNumber numberWithInteger:indexPath.section]];
     if (image == nil) {
         if(ride.destinationImage == nil) {
-            image = [UIImage imageNamed:@"PlaceholderImage"];
+            image = [UIImage imageNamed:@"Placeholder"];
         } else {
             image = [UIImage imageWithData:ride.destinationImage];
         }

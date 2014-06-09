@@ -40,7 +40,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     [super viewWillAppear:animated];
-    [self scrollToBottomAnimated:NO];
     [self setupNavbar];
     if ([self.conversation.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
         self.receiverId = self.conversation.otherUserId;
@@ -55,6 +54,9 @@
     }];
     
     self.conversationArray = [NSMutableArray arrayWithArray:sortedArray];
+    
+    // scroll to bottom before the view appears
+    [self.tableView setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
 }
 
 -(void)setupNavbar {

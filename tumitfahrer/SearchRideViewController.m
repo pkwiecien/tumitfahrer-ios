@@ -8,9 +8,7 @@
 
 #import "SearchRideViewController.h"
 #import "ActionManager.h"
-#import "CustomBarButton.h"
 #import "RideSearch.h"
-#import "LocationController.h"
 #import "RideSearchStore.h"
 #import "NavigationBarUtilities.h"
 #import "CurrentUser.h"
@@ -19,8 +17,9 @@
 #import "SliderCell.h"
 #import "ButtonCell.h"
 #import "DestinationViewController.h"
+#import "SearchResultViewController.h"
 
-@interface SearchRideViewController () <SementedControlCellDelegate, DestinationViewControllerDelegate, RMDateSelectionViewControllerDelegate, SliderCellDelegate>
+@interface SearchRideViewController () <SementedControlCellDelegate, DestinationViewControllerDelegate, RMDateSelectionViewControllerDelegate, SliderCellDelegate, ButtonCellDelegate>
 
 @property (nonatomic) UIColor *customGrayColor;
 @property (nonatomic, assign) NSInteger searchType;
@@ -113,7 +112,7 @@
         return cell;
     } else if(indexPath.row == 6) {
         ButtonCell *cell = [ButtonCell buttonCell];
-        [cell.cellButton addTarget:self action:@selector(searchButtonPressed) forControlEvents:UIControlEventAllEvents];
+        cell.delegate = self;
         return cell;
     }
     
@@ -142,7 +141,7 @@
     return 44;
 }
 
--(void)searchButtonPressed {
+-(void)buttonSelected {
     // TODO: add enum
     NSString *departurePlace = [self.tableValue objectAtIndex:1];
     NSString *departurePlaceThreshold = [self.tableValue objectAtIndex:2];
@@ -164,23 +163,12 @@
         [ActionManager showAlertViewWithTitle:@"No data" description:@"All search fields can't be empty"];
         return;
     }
-    RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
-    NSDictionary *queryParams = @{@"departure_place": departurePlace, @"departure_place_threshold" : departurePlaceThreshold, @"destination": destination, @"destination_threshold":destinationThreshold, @"departure_time": time, @"is_driving": [NSNumber numberWithBool:self.searchType]};
+    NSDictionary *queryParams = @{@"departure_place": departurePlace, @"departure_place_threshold" : departurePlaceThreshold, @"destination": destination, @"destination_threshold":destinationThreshold, @"departure_time": time, @"ride_type": [NSNumber numberWithBool:self.searchType]};
     
-    [objectManager postObject:nil path:API_SEARCH parameters:queryParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        
-        NSLog(@"Response: %@", operation.HTTPRequestOperation.responseString);
-        NSArray* rides = [mappingResult array];
-        
-        for (RideSearch *rideSearchResult in rides) {
-            [[RideSearchStore sharedStore] addSearchResult:rideSearchResult];
-        }
-        
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        [ActionManager showAlertViewWithTitle:[error localizedDescription]];
-        RKLogError(@"Load failed with error: %@", error);
-    }];
+    SearchResultViewController *searchResultVC = [[SearchResultViewController alloc] init];
+    searchResultVC.queryParams = queryParams;
+    [self.navigationController pushViewController:searchResultVC animated:YES];
 }
 
 - (IBAction)dismissKeyboard:(id)sender {

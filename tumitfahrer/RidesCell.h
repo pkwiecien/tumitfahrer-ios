@@ -23,5 +23,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *seatsLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *timeImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *calendarImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *gradientImageView;
 
 @end

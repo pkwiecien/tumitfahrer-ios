@@ -183,6 +183,9 @@
 		E5FEF3461944F57A00E326BB /* SliderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FEF3441944F57A00E326BB /* SliderCell.xib */; };
 		E5FEF34B1944F93300E326BB /* ButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3491944F93300E326BB /* ButtonCell.m */; };
 		E5FEF34C1944F93300E326BB /* ButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FEF34A1944F93300E326BB /* ButtonCell.xib */; };
+		E5FEF3511945A02300E326BB /* SearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF34F1945A02300E326BB /* SearchResultViewController.m */; };
+		E5FEF3521945A02300E326BB /* SearchResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FEF3501945A02300E326BB /* SearchResultViewController.xib */; };
+		E5FEF3551945AA1100E326BB /* SearchResultMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3541945AA1100E326BB /* SearchResultMapping.m */; };
 		F34633546DAF4A39967E863E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAEC5882914944C4B8E2DE24 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -486,6 +489,11 @@
 		E5FEF3481944F93300E326BB /* ButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonCell.h; sourceTree = "<group>"; };
 		E5FEF3491944F93300E326BB /* ButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonCell.m; sourceTree = "<group>"; };
 		E5FEF34A1944F93300E326BB /* ButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ButtonCell.xib; sourceTree = "<group>"; };
+		E5FEF34E1945A02300E326BB /* SearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultViewController.h; sourceTree = "<group>"; };
+		E5FEF34F1945A02300E326BB /* SearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultViewController.m; sourceTree = "<group>"; };
+		E5FEF3501945A02300E326BB /* SearchResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchResultViewController.xib; sourceTree = "<group>"; };
+		E5FEF3531945AA1100E326BB /* SearchResultMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMapping.h; sourceTree = "<group>"; };
+		E5FEF3541945AA1100E326BB /* SearchResultMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultMapping.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -691,6 +699,8 @@
 				E50DB28718F8706500E87E62 /* RideMapping.m */,
 				E5A9BE23194253390072E9B0 /* RideSearchMapping.h */,
 				E5A9BE24194253390072E9B0 /* RideSearchMapping.m */,
+				E5FEF3531945AA1100E326BB /* SearchResultMapping.h */,
+				E5FEF3541945AA1100E326BB /* SearchResultMapping.m */,
 				E50DB28318F86F8800E87E62 /* SessionMapping.h */,
 				E50DB28418F86F8800E87E62 /* SessionMapping.m */,
 				E50DB26D18F52E8500E87E62 /* StatusMapping.h */,
@@ -1236,6 +1246,9 @@
 		E5FA641D191226F400C04BFF /* Ride Search Results */ = {
 			isa = PBXGroup;
 			children = (
+				E5FEF34E1945A02300E326BB /* SearchResultViewController.h */,
+				E5FEF34F1945A02300E326BB /* SearchResultViewController.m */,
+				E5FEF3501945A02300E326BB /* SearchResultViewController.xib */,
 			);
 			name = "Ride Search Results";
 			sourceTree = "<group>";
@@ -1408,6 +1421,7 @@
 				E599880218E72BF600B01C62 /* ForgotPasswordViewController.xib in Resources */,
 				E5E215651907A95F00B0B150 /* SearchRideViewController.xib in Resources */,
 				E58889E91913C7010062D0DF /* UbertestersSDKResources.bundle in Resources */,
+				E5FEF3521945A02300E326BB /* SearchResultViewController.xib in Resources */,
 				E59987FC18E7251000B01C62 /* RegisterViewController.xib in Resources */,
 				E599880C18E7836D00B01C62 /* MenuViewController.xib in Resources */,
 				E59987D118E6E47F00B01C62 /* LoginViewController.xib in Resources */,
@@ -1557,6 +1571,7 @@
 				E50CCC14191E54F1003A9490 /* UIViewController+SideBarController.m in Sources */,
 				E504D9BC190A58710036FFA8 /* MeetingPointViewController.m in Sources */,
 				E504D9D0190A7FC50036FFA8 /* SPGooglePlacesAutocompletePlace.m in Sources */,
+				E5FEF3511945A02300E326BB /* SearchResultViewController.m in Sources */,
 				E599886218E84D9D00B01C62 /* MenuTableViewCell.m in Sources */,
 				E50CCCC5191F6FAC003A9490 /* ActivityMapping.m in Sources */,
 				E50CCC1F191E6A6E003A9490 /* LogoView.m in Sources */,
@@ -1606,6 +1621,7 @@
 				E504D9EE190BCCE20036FFA8 /* DeviceMapping.m in Sources */,
 				E5FEF3051944ABF300E326BB /* MessageMapping.m in Sources */,
 				E599880118E72BF600B01C62 /* ForgotPasswordViewController.m in Sources */,
+				E5FEF3551945AA1100E326BB /* SearchResultMapping.m in Sources */,
 				E59987FB18E7251000B01C62 /* RegisterViewController.m in Sources */,
 				E50DB28B18F8730400E87E62 /* RidesStore.m in Sources */,
 				E50DB28818F8706500E87E62 /* RideMapping.m in Sources */,

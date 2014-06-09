@@ -30,6 +30,7 @@
 #import "ActivityStore.h"
 #import "ConversationMapping.h"
 #import "MessageMapping.h"
+#import "SearchResultMapping.h"
 
 @interface AppDelegate ()
 
@@ -222,6 +223,8 @@
     
     RKObjectMapping *getRidesIdsMapping = [RideMapping getRideIds];
     [objectManager addResponseDescriptor:[RideMapping getRideIdsresponseDescriptorWithMapping:getRidesIdsMapping]];
+    
+    [objectManager addResponseDescriptor:[SearchResultMapping postSearchResponseDescriptorWithMapping:generalRidesMapping]];
 }
 
 -(void)setupObservers {

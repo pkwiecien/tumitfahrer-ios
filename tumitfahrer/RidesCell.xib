@@ -98,6 +98,7 @@
                 <outlet property="dateLabel" destination="qUX-LK-RET" id="ftm-qk-og5"/>
                 <outlet property="destinationLabel" destination="M6E-tQ-kF9" id="4vq-Tw-MKN"/>
                 <outlet property="directionsLabel" destination="8c9-e0-6NP" id="Y3b-1O-dls"/>
+                <outlet property="gradientImageView" destination="1ui-xF-wQS" id="9tO-4W-Nep"/>
                 <outlet property="rideImageView" destination="HMM-gZ-ehe" id="8Mu-n4-k5a"/>
                 <outlet property="roleImageView" destination="jPY-ND-ATQ" id="JhB-pa-LcX"/>
                 <outlet property="roleView" destination="Hy5-St-7PM" id="63D-La-3i8"/>

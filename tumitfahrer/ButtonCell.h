@@ -8,9 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ButtonCellDelegate
+
+-(void)buttonSelected;
+
+@end
+
 @interface ButtonCell : UITableViewCell
 
 +(ButtonCell *)buttonCell;
 @property (weak, nonatomic) IBOutlet UIButton *cellButton;
+@property (nonatomic, strong) id <ButtonCellDelegate> delegate;
+- (IBAction)buttonPressed:(id)sender;
 
 @end

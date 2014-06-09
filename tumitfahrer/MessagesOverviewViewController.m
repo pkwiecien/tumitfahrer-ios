@@ -37,13 +37,19 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     
+    if (self.conversations == nil || self.conversations.count == 0) {
+        [self fetchConversations];
+    }
+    
+    [self setupNavigationBar];
+}
+
+-(void)fetchConversations {
     [WebserviceRequest getConversationsForRideId:[self.ride.rideId intValue] block:^(BOOL fetched) {
         if (fetched) {
             [self reloadTable];
         }
     }];
-    
-    [self setupNavigationBar];
 }
 
 -(void)reloadTable {
@@ -60,6 +66,9 @@
     UINavigationController *navController = self.navigationController;
     [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor darkerBlue]];
     self.title = @"Messages Overview";
+    
+    UIBarButtonItem *refreshButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonPressed)];
+    [self.navigationItem setRightBarButtonItem:refreshButtonItem];
 }
 
 #pragma mark - Button Handlers
@@ -120,6 +129,10 @@
     SimpleChatViewController *chatVC = [[SimpleChatViewController alloc] init];
     [self.navigationController pushViewController:chatVC animated:YES];
 
+}
+
+-(void)refreshButtonPressed {
+    [self fetchConversations];
 }
 
 @end

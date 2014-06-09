@@ -75,6 +75,8 @@ typedef enum {
     ShouldShareRideOnFacebook
 } ShouldDisplayEnum;
 
+typedef void(^completionHandlerWithIndex)(NSInteger);
+
 typedef void(^boolCompletionHandler)(BOOL);
 
 typedef void(^mutableArrayCompletionHandler)(NSMutableArray *);

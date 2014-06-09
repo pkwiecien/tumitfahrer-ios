@@ -20,4 +20,7 @@
     return cell;
 }
 
+- (IBAction)buttonPressed:(id)sender {
+    [self.delegate buttonSelected];
+}
 @end

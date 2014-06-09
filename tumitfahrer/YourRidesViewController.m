@@ -107,7 +107,7 @@
     cell.departureTimeLabel.text = [ActionManager stringFromDate:ride.departureTime];
     
     if(ride.destinationImage == nil) {
-        cell.rideImage.image = [UIImage imageNamed:@"PlaceholderImage"];
+        cell.rideImage.image = [UIImage imageNamed:@"Placeholder"];
     } else {
         cell.rideImage.image = [UIImage imageWithData:ride.destinationImage];;
     }
