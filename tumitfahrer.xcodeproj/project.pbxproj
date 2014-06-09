@@ -186,6 +186,14 @@
 		E5FEF3511945A02300E326BB /* SearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF34F1945A02300E326BB /* SearchResultViewController.m */; };
 		E5FEF3521945A02300E326BB /* SearchResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FEF3501945A02300E326BB /* SearchResultViewController.xib */; };
 		E5FEF3551945AA1100E326BB /* SearchResultMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3541945AA1100E326BB /* SearchResultMapping.m */; };
+		E5FEF35E1945E4EC00E326BB /* PrivacyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF35C1945E4EC00E326BB /* PrivacyViewController.m */; };
+		E5FEF35F1945E4EC00E326BB /* PrivacyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FEF35D1945E4EC00E326BB /* PrivacyViewController.xib */; };
+		E5FEF3631945E5BC00E326BB /* ReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3611945E5BC00E326BB /* ReminderViewController.m */; };
+		E5FEF3641945E5BC00E326BB /* ReminderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FEF3621945E5BC00E326BB /* ReminderViewController.xib */; };
+		E5FEF3681945E5CD00E326BB /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3661945E5CD00E326BB /* FeedbackViewController.m */; };
+		E5FEF3691945E5CD00E326BB /* FeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FEF3671945E5CD00E326BB /* FeedbackViewController.xib */; };
+		E5FEF36E1946005600E326BB /* TimePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF36C1946005600E326BB /* TimePickerCell.m */; };
+		E5FEF36F1946005600E326BB /* TimePickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FEF36D1946005600E326BB /* TimePickerCell.xib */; };
 		F34633546DAF4A39967E863E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAEC5882914944C4B8E2DE24 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -494,6 +502,18 @@
 		E5FEF3501945A02300E326BB /* SearchResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchResultViewController.xib; sourceTree = "<group>"; };
 		E5FEF3531945AA1100E326BB /* SearchResultMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultMapping.h; sourceTree = "<group>"; };
 		E5FEF3541945AA1100E326BB /* SearchResultMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultMapping.m; sourceTree = "<group>"; };
+		E5FEF35B1945E4EC00E326BB /* PrivacyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivacyViewController.h; sourceTree = "<group>"; };
+		E5FEF35C1945E4EC00E326BB /* PrivacyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivacyViewController.m; sourceTree = "<group>"; };
+		E5FEF35D1945E4EC00E326BB /* PrivacyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrivacyViewController.xib; sourceTree = "<group>"; };
+		E5FEF3601945E5BC00E326BB /* ReminderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderViewController.h; sourceTree = "<group>"; };
+		E5FEF3611945E5BC00E326BB /* ReminderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderViewController.m; sourceTree = "<group>"; };
+		E5FEF3621945E5BC00E326BB /* ReminderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderViewController.xib; sourceTree = "<group>"; };
+		E5FEF3651945E5CD00E326BB /* FeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackViewController.h; sourceTree = "<group>"; };
+		E5FEF3661945E5CD00E326BB /* FeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackViewController.m; sourceTree = "<group>"; };
+		E5FEF3671945E5CD00E326BB /* FeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedbackViewController.xib; sourceTree = "<group>"; };
+		E5FEF36B1946005600E326BB /* TimePickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerCell.h; sourceTree = "<group>"; };
+		E5FEF36C1946005600E326BB /* TimePickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePickerCell.m; sourceTree = "<group>"; };
+		E5FEF36D1946005600E326BB /* TimePickerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimePickerCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1178,6 +1198,9 @@
 		E5DF640B18EB42D800D53164 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				E5FEF35A1945E4C500E326BB /* Feedback */,
+				E5FEF3591945E4B300E326BB /* Privacy */,
+				E5FEF3571945E43100E326BB /* Reminder */,
 				E5DF641218EB548E00D53164 /* SettingsViewController.h */,
 				E5DF641318EB548E00D53164 /* SettingsViewController.m */,
 				E5DF641418EB548E00D53164 /* SettingsViewController.xib */,
@@ -1333,6 +1356,47 @@
 			name = "Button Cell";
 			sourceTree = "<group>";
 		};
+		E5FEF3571945E43100E326BB /* Reminder */ = {
+			isa = PBXGroup;
+			children = (
+				E5FEF36A1946004000E326BB /* Time Picker Cell */,
+				E5FEF3601945E5BC00E326BB /* ReminderViewController.h */,
+				E5FEF3611945E5BC00E326BB /* ReminderViewController.m */,
+				E5FEF3621945E5BC00E326BB /* ReminderViewController.xib */,
+			);
+			name = Reminder;
+			sourceTree = "<group>";
+		};
+		E5FEF3591945E4B300E326BB /* Privacy */ = {
+			isa = PBXGroup;
+			children = (
+				E5FEF35B1945E4EC00E326BB /* PrivacyViewController.h */,
+				E5FEF35C1945E4EC00E326BB /* PrivacyViewController.m */,
+				E5FEF35D1945E4EC00E326BB /* PrivacyViewController.xib */,
+			);
+			name = Privacy;
+			sourceTree = "<group>";
+		};
+		E5FEF35A1945E4C500E326BB /* Feedback */ = {
+			isa = PBXGroup;
+			children = (
+				E5FEF3651945E5CD00E326BB /* FeedbackViewController.h */,
+				E5FEF3661945E5CD00E326BB /* FeedbackViewController.m */,
+				E5FEF3671945E5CD00E326BB /* FeedbackViewController.xib */,
+			);
+			name = Feedback;
+			sourceTree = "<group>";
+		};
+		E5FEF36A1946004000E326BB /* Time Picker Cell */ = {
+			isa = PBXGroup;
+			children = (
+				E5FEF36B1946005600E326BB /* TimePickerCell.h */,
+				E5FEF36C1946005600E326BB /* TimePickerCell.m */,
+				E5FEF36D1946005600E326BB /* TimePickerCell.xib */,
+			);
+			name = "Time Picker Cell";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1419,6 +1483,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E599880218E72BF600B01C62 /* ForgotPasswordViewController.xib in Resources */,
+				E5FEF3691945E5CD00E326BB /* FeedbackViewController.xib in Resources */,
 				E5E215651907A95F00B0B150 /* SearchRideViewController.xib in Resources */,
 				E58889E91913C7010062D0DF /* UbertestersSDKResources.bundle in Resources */,
 				E5FEF3521945A02300E326BB /* SearchResultViewController.xib in Resources */,
@@ -1436,6 +1501,7 @@
 				E5A9BE19194236CD0072E9B0 /* YourRidesPageViewController.xib in Resources */,
 				E50CCC11191E529A003A9490 /* TimelineViewController.xib in Resources */,
 				E50CCC1B191E5885003A9490 /* TimelineCell.xib in Resources */,
+				E5FEF3641945E5BC00E326BB /* ReminderViewController.xib in Resources */,
 				E5FC44D5190CF83100E8DB65 /* MenuTopHeaderView.xib in Resources */,
 				E5DE44E8192610E10034AF6F /* AddRideTableHeader.xib in Resources */,
 				E59B9A611916B7E4008DE80B /* YourRidesCell.xib in Resources */,
@@ -1452,6 +1518,7 @@
 				E59B9A4C1916A241008DE80B /* YourRidesViewController.xib in Resources */,
 				E599886318E84D9D00B01C62 /* MenuTableViewCell.xib in Resources */,
 				E5FEF2F819447A3B00E326BB /* MessageListCell.xib in Resources */,
+				E5FEF36F1946005600E326BB /* TimePickerCell.xib in Resources */,
 				E50CCD07191FAE8A003A9490 /* RidesViewController.xib in Resources */,
 				E58889FB1913E2B50062D0DF /* RideActionCell.xib in Resources */,
 				E5FEF2F31944766300E326BB /* MessagesOverviewViewController.xib in Resources */,
@@ -1463,6 +1530,7 @@
 				E50CCD0D191FBD5A003A9490 /* RidesCell.xib in Resources */,
 				E5FEF34C1944F93300E326BB /* ButtonCell.xib in Resources */,
 				E504D9C3190A6C940036FFA8 /* DestinationViewController.xib in Resources */,
+				E5FEF35F1945E4EC00E326BB /* PrivacyViewController.xib in Resources */,
 				E5FD9EC819234A8500902502 /* TimelineMapViewController.xib in Resources */,
 				E52EA4D4192C019C00E78B6D /* RideDetailMapViewController.xib in Resources */,
 				E5DE44EE192618270034AF6F /* SegmentedControlCell.xib in Resources */,
@@ -1593,6 +1661,7 @@
 				E5888A001913E37C0062D0DF /* DriverCell.m in Sources */,
 				E564464F192AB67200F636A5 /* CircularImageView.m in Sources */,
 				E5FEF32C1944C4AC00E326BB /* Message.m in Sources */,
+				E5FEF35E1945E4EC00E326BB /* PrivacyViewController.m in Sources */,
 				E504D9E8190B02490036FFA8 /* Device.m in Sources */,
 				E58889FA1913E2B50062D0DF /* RideActionCell.m in Sources */,
 				E5A9BE0E19421F2C0072E9B0 /* IdsMapping.m in Sources */,
@@ -1606,9 +1675,11 @@
 				E5DF641518EB548E00D53164 /* SettingsViewController.m in Sources */,
 				E5888A061913E4070062D0DF /* PassengersCell.m in Sources */,
 				E5A9BE28194256310072E9B0 /* RideSearchStore.m in Sources */,
+				E5FEF3681945E5CD00E326BB /* FeedbackViewController.m in Sources */,
 				E5FEF31D1944B5B200E326BB /* ConversationMapping.m in Sources */,
 				E5E215641907A95F00B0B150 /* SearchRideViewController.m in Sources */,
 				E58889F51913E14A0062D0DF /* RideInformationCell.m in Sources */,
+				E5FEF36E1946005600E326BB /* TimePickerCell.m in Sources */,
 				E58B872A19151F1B0032524A /* KGStatusBar.m in Sources */,
 				E522BACA18AE13F600ECD375 /* AppDelegate.m in Sources */,
 				E5A9BE18194236CD0072E9B0 /* YourRidesPageViewController.m in Sources */,
@@ -1630,6 +1701,7 @@
 				E504D9EB190B963E0036FFA8 /* JsonParser.m in Sources */,
 				E5644644192A96C000F636A5 /* ProfileInfoCell.m in Sources */,
 				E58889E4191394BB0062D0DF /* HeaderImageView.m in Sources */,
+				E5FEF3631945E5BC00E326BB /* ReminderViewController.m in Sources */,
 				E59B9A6E1916D346008DE80B /* EditProfileViewController.m in Sources */,
 				E5FD9ECD1923FA6C00902502 /* UIColor+LayoutColors.m in Sources */,
 				E5F7F8E71925694B0001F1FE /* TestViewController.m in Sources */,

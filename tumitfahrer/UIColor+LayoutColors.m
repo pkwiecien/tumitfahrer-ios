@@ -34,4 +34,8 @@
     return [UIColor colorWithRed:76/255.0 green:217/255.0 blue:100/255.0 alpha:1];
 }
 
++(UIColor *)customDarkGray {
+    return [UIColor colorWithRed:0.227 green:0.227 blue:0.227 alpha:1];
+}
+
 @end

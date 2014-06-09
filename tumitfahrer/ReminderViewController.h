@@ -1,14 +1,14 @@
 //
-//  CampusRidesViewController.h
+//  ReminderViewController.h
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 4/1/14.
+//  Created by Pawel Kwiecien on 6/9/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface SettingsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface ReminderViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 

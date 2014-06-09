@@ -16,5 +16,5 @@
 + (UIColor *)darkestBlue;
 + (UIColor *)customLightGray;
 + (UIColor *)customGreen;
-
++ (UIColor *)customDarkGray;
 @end

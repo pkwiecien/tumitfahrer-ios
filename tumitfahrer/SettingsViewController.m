@@ -12,10 +12,19 @@
 #import "NavigationBarUtilities.h"
 #import "LogoView.h"
 #import "MMDrawerBarButtonItem.h"
+#import "PrivacyViewController.h"
+#import "ReminderViewController.h"
+#import "FeedbackViewController.h"
 
 @interface SettingsViewController ()
 
-@property (nonatomic, strong) NSArray *tableOptions;
+@property (nonatomic, strong) NSArray *headers;
+@property (nonatomic, strong) NSArray *readOptions;
+@property (nonatomic, strong) NSArray *readIcons;
+@property (nonatomic, strong) NSArray *actionOptions;
+@property (nonatomic, strong) NSArray *actionIcons;
+@property (nonatomic, strong) NSArray *tableValues;
+@property (nonatomic, strong) NSArray *tableIcons;
 
 @end
 
@@ -25,18 +34,23 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.tableOptions = [[NSArray alloc] initWithObjects:@"Reminder", @"Help", @"Contribution", @"Report a problem", nil];
+        self.headers = [[NSArray alloc] initWithObjects:@"Feedback", @"Other", nil];
+        self.actionOptions = [[NSArray alloc] initWithObjects:@"Send Feedback", @"Report a problem", nil];
+        self.actionIcons = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"TimeIconBlack"], [UIImage imageNamed:@"TimeIconBlack"], nil];
+        self.readOptions = [[NSArray alloc] initWithObjects:@"Reminder", @"Privacy", @"Licenses", nil];
+        self.readIcons = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"TimeIconBlack"], [UIImage imageNamed:@"TimeIconBlack"], [UIImage imageNamed:@"TimeIconBlack"], [UIImage imageNamed:@"TimeIconBlack"], nil];
+        self.tableValues = [[NSArray alloc] initWithObjects:self.actionOptions, self.readOptions, nil];
+        self.tableIcons = [[NSArray alloc] initWithObjects:self.actionIcons, self.readIcons, nil];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self makeButtons];
-    self.tableView = [self makeTableView];
-    [self.view addSubview:self.tableView];
-    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self.view setBackgroundColor:[UIColor customLightGray]];
+    
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
+    self.tableView.tableFooterView = footerView;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -48,8 +62,12 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
     UINavigationController *navController = self.navigationController;
-    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor colorWithRed:0.227 green:0.227 blue:0.227 alpha:1]];
+    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor customDarkGray]];
     self.title = @"Settings";
+    
+    UIBarButtonItem *refreshButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"LogoutIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(logoutButtonPressed:)];
+
+    [self.navigationItem setRightBarButtonItem:refreshButtonItem];
 }
 
 -(void)setupLeftMenuButton{
@@ -57,47 +75,12 @@
     [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
 }
 
--(void)makeButtons
-{
-    UIImage *orangeButtonImage = [ActionManager colorImage:[UIImage imageNamed:@"BlueButton"] withColor:[UIColor orangeColor]];
-    [self.sendFeedbackButton setBackgroundImage:orangeButtonImage forState:UIControlStateNormal];
-    
-    UIImage *grayButtonImage = [ActionManager colorImage:[UIImage imageNamed:@"BlueButton"] withColor:[UIColor grayColor]];
-    [self.logoutButton setBackgroundImage:grayButtonImage forState:UIControlStateNormal];
-}
-
--(UITableView*)makeTableView
-{
-    CGFloat x = 0;
-    CGFloat y = 150;
-    CGFloat width = self.view.frame.size.width;
-    CGFloat height = TableSingleRowHeight*([self.tableOptions count]+1)+TableFooterHeight+TableHeaderHeight;
-    CGRect tableFrame = CGRectMake(x, y, width, height);
-    
-    UITableView *tableView = [[UITableView alloc]initWithFrame:tableFrame style:UITableViewStylePlain];
-    
-    tableView.rowHeight = TableSingleRowHeight;
-    tableView.sectionFooterHeight = TableFooterHeight;
-    tableView.sectionHeaderHeight = TableHeaderHeight;
-    tableView.scrollEnabled = YES;
-    tableView.showsVerticalScrollIndicator = YES;
-    tableView.userInteractionEnabled = YES;
-    tableView.bounces = NO;
-    tableView.backgroundColor = [UIColor clearColor];
-    
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    
-    return tableView;
-}
-
-
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.tableOptions count];;
+    return [[self.tableValues objectAtIndex:section] count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -106,64 +89,51 @@
     
     if(cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    cell.textLabel.text = [self.tableOptions objectAtIndex:indexPath.row];
+    cell.textLabel.text = [[self.tableValues objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.textColor = [UIColor blackColor];
     cell.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];
-    
-    UIView *bgColorView = [[UIView alloc] init];
-    bgColorView.backgroundColor = [UIColor colorWithRed:70 green:30 blue:180 alpha:0.3];
-    bgColorView.layer.masksToBounds = YES;
-    [cell setSelectedBackgroundView:bgColorView];
+    cell.imageView.image = [[self.tableIcons objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     
     return cell;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 30.0f;
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(indexPath.section == 0) {
+        FeedbackViewController *feedbackVC = [[FeedbackViewController alloc] init];
+        if (indexPath.row == 0) {
+            feedbackVC.title = @"Send Feedback";
+        } else if(indexPath.row == 1) {
+            feedbackVC.title = @"Report Problem";
+        }
+        [self.navigationController pushViewController:feedbackVC animated:YES];
+    } else if (indexPath.section == 1 && indexPath.row == 0) {
+        ReminderViewController *reminderVC = [[ReminderViewController alloc] init];
+        [self.navigationController pushViewController:reminderVC animated:YES];
+    }
+    else if (indexPath.section == 1 && indexPath.row == 1) {
+        PrivacyViewController *privacyVC = [[PrivacyViewController alloc] init];
+        [self.navigationController pushViewController:privacyVC animated:YES];
+    } else if(indexPath.section == 1 && indexPath.row == 2) {
+        
+        // TODO: add licenses
+        PrivacyViewController *privacyVC = [[PrivacyViewController alloc] init];
+        [self.navigationController pushViewController:privacyVC animated:YES];
+    }
+    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 60.0f;
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return [self.headers objectAtIndex:section];
 }
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    
-    UILabel *label= [[UILabel alloc]initWithFrame:CGRectMake(0,0,self.view.frame.size.width,40)];
-    label.backgroundColor = [UIColor clearColor];
-    label.text = @"TUMitfahrer";
-    label.textAlignment = NSTextAlignmentCenter;
-    [label setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:16.0]];//font size and style
-    [label setTextColor:[UIColor blackColor]];
-    
-    CGRect resultFrame = CGRectMake(0.0f,
-                                    0.0f,
-                                    label.frame.size.width,
-                                    label.frame.size.height);
-    UIView *result = [[UIView alloc] initWithFrame:resultFrame];
-    [result addSubview:label];
-    
-    return result;
-}
-
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    return @"GENERAL";
-}
-
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView * headerView = [[UIView alloc] init];
-    headerView.backgroundColor = [UIColor clearColor];
-    return headerView;
-}
-
 
 - (IBAction)sendFeedbackButtonPressed:(id)sender {
 }
+
 - (IBAction)logoutButtonPressed:(id)sender {
     
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"emailLoggedInUser"];

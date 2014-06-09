@@ -218,7 +218,6 @@
     }
 }
 
-
 -(void)settingsButtonPressed {
     SettingsViewController *settingsVC = [[SettingsViewController alloc] init];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:settingsVC];

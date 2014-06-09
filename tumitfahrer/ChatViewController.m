@@ -13,7 +13,7 @@
 #import "User.h"
 #import "CurrentUser.h"
 
-@interface ChatViewController () 
+@interface ChatViewController ()
 
 @property (nonatomic, strong) User *receiver;
 
@@ -34,10 +34,10 @@
     
     self.title = @"Messages";
     self.messageInputView.textView.placeHolder = @"New Message";
-
-//    self.avatars = [[NSDictionary alloc] initWithObjectsAndKeys:
-//                    [JSAvatarImageFactory avatarImageNamed:@"futureAvatar1" croppedToCircle:YES], kSubtitleMe,
-//                    [JSAvatarImageFactory avatarImageNamed:@"futureAvatar2" croppedToCircle:YES], kSubtitleDriver,nil];
+    
+    //    self.avatars = [[NSDictionary alloc] initWithObjectsAndKeys:
+    //                    [JSAvatarImageFactory avatarImageNamed:@"futureAvatar1" croppedToCircle:YES], kSubtitleMe,
+    //                    [JSAvatarImageFactory avatarImageNamed:@"futureAvatar2" croppedToCircle:YES], kSubtitleDriver,nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -62,7 +62,7 @@
     } else {
         self.title = @"Messages";
     }
-
+    
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 }
 
@@ -95,7 +95,7 @@
         [JSMessageSoundEffect playMessageReceivedSound];
     }
     
-//    [self.conversation.messages addObject:[[JSMessage alloc] initWithText:text sender:sender date:date]];
+    //    [self.conversation.messages addObject:[[JSMessage alloc] initWithText:text sender:sender date:date]];
     
     [self finishSend];
     [self scrollToBottomAnimated:YES];
