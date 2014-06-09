@@ -2,7 +2,7 @@
 //  Activity.h
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 6/8/14.
+//  Created by Pawel Kwiecien on 6/9/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 

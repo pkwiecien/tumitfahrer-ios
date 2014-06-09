@@ -16,6 +16,7 @@
 #import "RideDetailViewController.h"
 #import "Request.h"
 #import "RidesStore.h"
+#import "RideSearch.h"
 
 @interface TimelineMapViewController ()
 
@@ -49,6 +50,9 @@
                 [self.mapView addAnnotation:[self createAnnotationWithRide:ride title:@"Ride Request"]];
             }
             // TODO fetch ride from core data/webservice if not exist
+        } else if([result isKindOfClass:[Request class]]) {
+            RideSearch *rideSearh = (RideSearch *)result;
+            
         }
     }
 }
@@ -68,6 +72,20 @@
     rideAnnotation.subtitle = [NSString stringWithFormat:@"Ride to %@\nOn %@", dest, [ActionManager dateStringFromDate:ride.departureTime]];
     rideAnnotation.coordinate = CLLocationCoordinate2DMake([ride.destinationLatitude doubleValue], [ride.destinationLongitude doubleValue]);
     rideAnnotation.annotationObject = ride;
+    return rideAnnotation;
+}
+
+
+-(CustomAnnotation *)createAnnotationWithRideSearch:(RideSearch *)rideSearch title:(NSString *)title {
+    CustomAnnotation *rideAnnotation = [[CustomAnnotation alloc] init];
+    if (title!=nil) {
+        rideAnnotation.title = title;
+    }
+    NSString *dest = [[rideSearch.destination componentsSeparatedByString:@","] firstObject];
+    //NSString *depart = [[ride.departurePlace componentsSeparatedByString:@", "] firstObject];
+    rideAnnotation.subtitle = [NSString stringWithFormat:@"Ride search to %@\nOn %@", dest, [ActionManager dateStringFromDate:rideSearch.departureTime]];
+    rideAnnotation.coordinate = CLLocationCoordinate2DMake([rideSearch.destinationLatitude doubleValue], [rideSearch.destinationLongitude doubleValue]);
+
     return rideAnnotation;
 }
 

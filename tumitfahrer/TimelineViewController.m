@@ -45,7 +45,7 @@
     [ActivityStore sharedStore].delegate = self;
     self.driverIconWhite = [UIImage imageNamed:@"DriverIcon"];
     self.passengerIconWhite = [UIImage imageNamed:@"PassengerIconBig"];
-
+    [[ActivityStore sharedStore] initAllActivitiesFromCoreData];
 }
 
 -(void)viewWillAppear:(BOOL)animated {

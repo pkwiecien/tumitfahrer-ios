@@ -9,7 +9,6 @@
 #import "SearchRideViewController.h"
 #import "ActionManager.h"
 #import "RideSearch.h"
-#import "RideSearchStore.h"
 #import "NavigationBarUtilities.h"
 #import "CurrentUser.h"
 #import "MMDrawerBarButtonItem.h"

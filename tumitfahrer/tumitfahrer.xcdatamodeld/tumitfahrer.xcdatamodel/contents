@@ -69,9 +69,13 @@
     </entity>
     <entity name="RideSearch" representedClassName="RideSearch" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="departureLatitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="departureLongitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="departurePlace" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="departureTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="destination" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="destinationLatitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="destinationLongitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="rideSearchId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="rideType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
@@ -104,7 +108,7 @@
         <element name="Rating" positionX="106" positionY="-99" width="128" height="150"/>
         <element name="Request" positionX="18" positionY="-333" width="128" height="178"/>
         <element name="Ride" positionX="-279" positionY="-175" width="128" height="373"/>
-        <element name="RideSearch" positionX="-72" positionY="-180" width="128" height="178"/>
+        <element name="RideSearch" positionX="-72" positionY="-180" width="128" height="238"/>
         <element name="User" positionX="252" positionY="-40" width="128" height="313"/>
         <element name="Conversation" positionX="-72" positionY="-180" width="128" height="118"/>
     </elements>

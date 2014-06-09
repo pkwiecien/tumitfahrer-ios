@@ -31,7 +31,7 @@
 
 @implementation ActivityStore
 
-static int page = 0;
+static int activity_id = 0;
 
 +(instancetype)sharedStore {
     static ActivityStore *activityStore = nil;
@@ -59,15 +59,28 @@ static int page = 0;
 -(void)initAllActivitiesFromCoreData {
     [self fetchActivitiesFromCoreData];
     self.privateAllRecentActivities = [self getSortedActivities];
+    [self filterAllActivities];
+    
+    self.privateActivitiesNearby = [self sortActivitiesWithArray:self.privateActivitiesNearby];
+    self.privateMyRecentActivities = [self sortActivitiesWithArray:self.privateMyRecentActivities];
     if ([self.privateAllRecentActivities count] > 0) {
         [self.delegate didRecieveActivitiesFromWebService];
     }
-    [self filterAllActivities];
 }
 
 -(void)filterAllActivities {
     [self filterNearbyActivities];
     [self filterMyActivities];
+}
+
+-(NSMutableArray *)sortActivitiesWithArray:(NSMutableArray *)array {
+    NSArray *sortedArray;
+    sortedArray = [array sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        NSDate *first = [a createdAt];
+        NSDate *second = [b createdAt];
+        return [first compare:second] == NSOrderedAscending;
+    }];
+    return [[NSMutableArray alloc] initWithArray:sortedArray];
 }
 
 -(NSMutableArray *)getSortedActivities {
@@ -76,29 +89,25 @@ static int page = 0;
     
     for (Activity *activity in self.privateActivityArray) {
         for (Ride *ride in activity.rides) {
-            if ([now compare:ride.departureTime] == NSOrderedAscending) {
+            if ([now compare:ride.departureTime] == NSOrderedAscending && ![array containsObject:ride]) {
                 [array addObject:ride];
                 [[RidesStore sharedStore] addRideToStore:ride];
             }
         }
         for (Request *request in activity.requests) {
-            if ([now compare:request.requestedRide.departureTime] == NSOrderedAscending) {
+            if ([now compare:request.requestedRide.departureTime] == NSOrderedAscending && ![array containsObject:request])  {
                 [array addObject:request];
                 [[RidesStore sharedStore] addRideRequestToStore:request];
             }
         }
-        if ([activity.rideSearches count] > 0) {
-            [array addObjectsFromArray:[activity.rideSearches allObjects]];
+        for (RideSearch *rideSearch in activity.rideSearches) {
+            if (![array containsObject:rideSearch]) {
+                [array addObject:rideSearch];
+            }
         }
     }
     
-    NSArray *sortedArray;
-    sortedArray = [array sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-        NSDate *first = [a createdAt];
-        NSDate *second = [b createdAt];
-        return [first compare:second] == NSOrderedAscending;
-    }];
-    return [[NSMutableArray alloc] initWithArray:sortedArray];
+    return [self sortActivitiesWithArray:array];
 }
 
 # pragma mark - filter nearby activities
@@ -121,18 +130,22 @@ static int page = 0;
         }
         
         if(ride != nil) {
-            CLLocation *departureLocation = [LocationController locationFromLongitude:[ride.departureLongitude doubleValue] latitude:[ride.departureLatitude doubleValue]];
-            CLLocation *destinationLocation = [LocationController locationFromLongitude:[ride.destinationLongitude doubleValue] latitude:[ride.destinationLatitude doubleValue]];
-
-            if([LocationController isLocation:currentLocation nearbyAnotherLocation:departureLocation thresholdInMeters:1000] || [LocationController isLocation:currentLocation nearbyAnotherLocation:destinationLocation thresholdInMeters:1000])
-            {
-                [self addNearbyActivity:activity];
-            }
+            [RidesStore initRide:ride block:^(BOOL fetched) {
+                CLLocation *departureLocation = [LocationController locationFromLongitude:[ride.departureLongitude doubleValue] latitude:[ride.departureLatitude doubleValue]];
+                CLLocation *destinationLocation = [LocationController locationFromLongitude:[ride.destinationLongitude doubleValue] latitude:[ride.destinationLatitude doubleValue]];
+                
+                if([LocationController isLocation:currentLocation nearbyAnotherLocation:departureLocation thresholdInMeters:1000] || [LocationController isLocation:currentLocation nearbyAnotherLocation:destinationLocation thresholdInMeters:1000])
+                {
+                    [self addNearbyActivity:activity];
+                }
+            }];
+            
         } else if(rideSearch != nil) {
             [[LocationController sharedInstance] fetchLocationForAddress:rideSearch.departurePlace completionHandler:^(CLLocation *location) {
                 if (location!=nil) {
                     if([LocationController isLocation:currentLocation nearbyAnotherLocation:location thresholdInMeters:1000])
                     {
+                        
                         [self addNearbyActivity:activity];
                     }
                 }
@@ -159,7 +172,7 @@ static int page = 0;
 # pragma mark - filter my activities
 
 -(void)filterMyActivities {
-
+    
     if ([CurrentUser sharedInstance].user == nil) {
         return;
     }
@@ -196,10 +209,10 @@ static int page = 0;
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
-    [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/activities?page=%d", page] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/activities?activity_id=%d", activity_id] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         Activity *activity = [mappingResult firstObject];
         if (activity != nil && (activity.rides.count > 0 || activity.rideSearches.count > 0 || activity.requests.count > 0)) {
-            page++;
+            activity_id++;
         }
         block(YES);
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -224,7 +237,7 @@ static int page = 0;
     }
     
     self.privateActivityArray = [[NSMutableArray alloc] init];
-    for (int i = 0; i <= page; i++) {
+    for (int i = 0; i <= activity_id; i++) {
         if (i < [fetchedObjects count] && [fetchedObjects objectAtIndex:i] != nil) {
             [self.privateActivityArray addObject:[fetchedObjects objectAtIndex:i]];
         }

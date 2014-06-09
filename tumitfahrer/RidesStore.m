@@ -35,7 +35,7 @@
 
 @implementation RidesStore
 
-static int page = 0;
+static int activity_id = 0;
 
 +(instancetype)sharedStore {
     static RidesStore *ridesStore = nil;
@@ -185,9 +185,9 @@ static int page = 0;
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
     
-    [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/rides?page=%d", page] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/rides?page=%d", activity_id] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         if ([[mappingResult array] count] > 0) {
-            page++;
+            activity_id++;
         }
         block(YES);
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -308,6 +308,16 @@ static int page = 0;
     }];
 }
 
++(void)initRide:(Ride *)ride block:(boolCompletionHandler)block{
+    [[RidesStore sharedStore] fetchLocationForRide:ride block:^(BOOL fetched) {
+        if (fetched) {
+            block(YES);
+        } else {
+            block(NO);
+        }
+    }];
+}
+
 +(void)initRide:(Ride *)ride index:(NSInteger)index block:(completionHandlerWithIndex)block{
     [[RidesStore sharedStore] fetchLocationForRide:ride block:^(BOOL fetched) {
         if (fetched) {
@@ -317,6 +327,7 @@ static int page = 0;
         }
     }];
 }
+
 -(void)addRideRequestToStore:(Request *)request {
     if ([[self rideRequests] containsObject:request]) {
         return;
@@ -453,6 +464,9 @@ static int page = 0;
 -(void)checkIfRideNearby:(Ride *)ride block:(boolCompletionHandler)block{
     [self fetchLocationForRide:ride block:^(BOOL fetched) {
         if ([self isCurrentLocationNearbyRide:ride]) {
+            if (ride.destinationImage == nil) {
+                [self fetchImageForCurrentRide:ride];
+            }
             block(YES);
         } else {
             block(NO);

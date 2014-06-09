@@ -16,7 +16,8 @@
 +(RKEntityMapping *)generalActivityMapping {
     RKEntityMapping *activityMapping = [RKEntityMapping mappingForEntityForName:@"Activity" inManagedObjectStore:[[RKObjectManager sharedManager] managedObjectStore]];
     activityMapping.identificationAttributes = @[@"activityId"];
-    [activityMapping addAttributeMappingsFromDictionary:@{@"id": @"activityId"}];
+    [activityMapping addAttributeMappingsFromDictionary:@{@"id": @"activityId"
+                                                          }];
     
     [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"rides" toKeyPath:@"rides" withMapping:[RideMapping generalRideMapping]]];
     
