@@ -16,32 +16,34 @@
 #import "CurrentUser.h"
 #import "MMDrawerBarButtonItem.h"
 #import "SegmentedControlCell.h"
-#import "SearchItemCell.h"
+#import "SliderCell.h"
 #import "ButtonCell.h"
 #import "DestinationViewController.h"
 
-@interface SearchRideViewController () <SementedControlCellDelegate, DestinationViewControllerDelegate, RMDateSelectionViewControllerDelegate>
+@interface SearchRideViewController () <SementedControlCellDelegate, DestinationViewControllerDelegate, RMDateSelectionViewControllerDelegate, SliderCellDelegate>
 
 @property (nonatomic) UIColor *customGrayColor;
 @property (nonatomic, assign) NSInteger searchType;
-@property (nonatomic, strong) NSDictionary *searchValues;
-@property (nonatomic, strong) NSArray *icons;
+@property (nonatomic, strong) NSMutableArray *tableValue;
+@property (nonatomic, strong) NSMutableArray *tablePlaceholders;
 
 @end
 
 @implementation SearchRideViewController
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.tableValue = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"1", @"", @"", @"", nil];
+        self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"", @"Destination", @"", @"Time", @"", nil];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
-    self.searchValues = @{@"departure_place": @"", @"destination": @"", @"departure_time": @"", @"is_driver": [NSNumber numberWithBool:FALSE]};
-    self.icons = @[[UIImage imageNamed:@"DepartureIconBlack"], [UIImage imageNamed:@"DestinationIconBlack"], [UIImage imageNamed:@"CalendarIconBlack"]];
     [self.view setBackgroundColor:[UIColor customLightGray]];
-    
-    UIView *headerView = [[[NSBundle mainBundle] loadNibNamed:@"AddRideTableHeader" owner:self options:nil] objectAtIndex:0];
-    self.tableView.tableHeaderView = headerView;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -73,118 +75,112 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return 7;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    
+    NSString *CellIdentifier = @"GeneralCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if(cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
     
     if (indexPath.row == 0) {
-        
         SegmentedControlCell *cell = [SegmentedControlCell segmentedControlCell];
         cell.delegate = self;
-        [cell setFirstSegmentTitle:@"I am Passenger" secondSementTitle:@"I am Driver"];
+        [cell setFirstSegmentTitle:@"Campus Ride" secondSementTitle:@"Activity Ride"];
         [cell addHandlerToSegmentedControl];
         cell.controlId = 0;
         return cell;
-    } else if(indexPath.row < 4) {
-        SearchItemCell *cell = [SearchItemCell searchItemCell];
-        cell.searchItemImageView.image = [self.icons objectAtIndex:(indexPath.row-1)];
-        cell.index = indexPath.row -1;
-        cell.searchItemTextField.tag = indexPath.row-1;
+    } else if(indexPath.row ==  1 || indexPath.row == 3 || indexPath.row == 5) {
+        
+        if (indexPath.row < [self.tableValue count] && [self.tableValue objectAtIndex:indexPath.row] != nil) {
+            cell.detailTextLabel.text = [self.tableValue objectAtIndex:indexPath.row];
+        }
+        cell.textLabel.text = [self.tablePlaceholders objectAtIndex:indexPath.row];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.textLabel.textColor = [UIColor blackColor];
+        cell.backgroundColor = [UIColor whiteColor];
+        cell.contentView.backgroundColor = [UIColor clearColor];
+        
+    } else if(indexPath.row == 2 || indexPath.row == 4) {
+        SliderCell *cell = [SliderCell sliderCell];
+        cell.delegate = self;
+        cell.indexPath = indexPath;
         return cell;
-    } else if(indexPath.row == 4) {
+    } else if(indexPath.row == 6) {
         ButtonCell *cell = [ButtonCell buttonCell];
         [cell.cellButton addTarget:self action:@selector(searchButtonPressed) forControlEvents:UIControlEventAllEvents];
         return cell;
     }
- 
+    
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(indexPath.row <=2) {
+    if(indexPath.row == 1 || indexPath.row == 3) {
         DestinationViewController *destinationVC = [[DestinationViewController alloc] init];
         destinationVC.rideTableIndexPath = indexPath;
         destinationVC.delegate = self;
         [self.navigationController pushViewController:destinationVC animated:YES];
-    } else if (indexPath.row == 3) {
+    } else if (indexPath.row == 5) {
         RMDateSelectionViewController *dateSelectionVC = [RMDateSelectionViewController dateSelectionController];
         dateSelectionVC.delegate = self;
         [dateSelectionVC show];
     }
 }
 
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 40.0)];
-    headerView.backgroundColor = [UIColor lighterBlue];
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 8, 20, 20)];
-    imageView.image = [UIImage imageNamed:@"DetailsIcon"];
-    [headerView addSubview:imageView];
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(40, 10, 10, 10)];
-    label.text = @"Details";
-    label.textColor = [UIColor whiteColor];
-    [label sizeToFit];
-    [headerView addSubview:label];
-    return headerView;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 40.0f;
-}
-
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 5) {
+    if (indexPath.row == 2 || indexPath.row == 4) {
+        return 100;
+    } else if(indexPath.row == 6) {
         return 60;
     }
     return 44;
 }
 
 -(void)searchButtonPressed {
-    NSString *destination = self.searchValues[@"destination"];
-    NSString *departurePlace = self.searchValues[@"departure_place"];
-    NSString *departureTime = self.searchValues[@"departure_time"];
+    // TODO: add enum
+    NSString *departurePlace = [self.tableValue objectAtIndex:1];
+    NSString *departurePlaceThreshold = [self.tableValue objectAtIndex:2];
+    NSString *destination = [self.tableValue objectAtIndex:3];
+    NSString *destinationThreshold = [self.tableValue objectAtIndex:4];
+    NSString *departureTime = [self.tableValue objectAtIndex:5];
     
-    if (departurePlace.length >0 && destination.length>0 && departureTime.length > 0) {
-        
-        RKObjectManager *objectManager = [RKObjectManager sharedManager];
-        
-        // add enum
-//        queryParams = @{@"start_carpool": self.departureTextField.text, @"end_carpool": self.destinationTextField.text, @"ride_date":@"2012-02-02", @"user_id": [CurrentUser sharedInstance].user.userId, @"ride_type": [NSNumber numberWithInt:self.rideTypeSegmentedControl.selectedSegmentIndex]};
-        
-        [objectManager postObject:nil path:API_SEARCH parameters:self.searchValues success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-            
-            NSLog(@"Response: %@", operation.HTTPRequestOperation.responseString);
-            NSArray* rides = [mappingResult array];
-            
-            for (RideSearch *rideSearchResult in rides) {
-                [[RideSearchStore sharedStore] addSearchResult:rideSearchResult];
-            }
-            
-        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-            [ActionManager showAlertViewWithTitle:[error localizedDescription]];
-            RKLogError(@"Load failed with error: %@", error);
-        }];
+    NSString *time = nil;
+    if (departureTime != nil && departureTime.length > 0) {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"de_DE"]];
+        NSDate *dateString = [formatter dateFromString:departureTime];
+        [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
+        time = [formatter stringFromDate:dateString];
     }
-}
-
--(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    if(textField.tag == 3) {
-        [self dismissKeyboard:nil];
-        RMDateSelectionViewController *dateSelectionVC = [RMDateSelectionViewController dateSelectionController];
-        dateSelectionVC.delegate = self;
-        
-        [dateSelectionVC show];
-        return false;
+    
+    if (departurePlace.length == 0 && destination.length == 0 && departureTime.length == 0) {
+        [ActionManager showAlertViewWithTitle:@"No data" description:@"All search fields can't be empty"];
+        return;
     }
-    return true;
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    
+    NSDictionary *queryParams = @{@"departure_place": departurePlace, @"departure_place_threshold" : departurePlaceThreshold, @"destination": destination, @"destination_threshold":destinationThreshold, @"departure_time": time, @"is_driving": [NSNumber numberWithBool:self.searchType]};
+    
+    [objectManager postObject:nil path:API_SEARCH parameters:queryParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        
+        NSLog(@"Response: %@", operation.HTTPRequestOperation.responseString);
+        NSArray* rides = [mappingResult array];
+        
+        for (RideSearch *rideSearchResult in rides) {
+            [[RideSearchStore sharedStore] addSearchResult:rideSearchResult];
+        }
+        
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        [ActionManager showAlertViewWithTitle:[error localizedDescription]];
+        RKLogError(@"Load failed with error: %@", error);
+    }];
 }
 
 - (IBAction)dismissKeyboard:(id)sender {
@@ -201,18 +197,26 @@
     [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
--(void)selectedDestination:(NSString *)destination indexPath:(NSIndexPath *)indexPath {
-    
+#pragma mark - RMDateSelectionViewController Delegates
+
+-(void)didSelectValue:(NSString *)value forIndexPath:(NSIndexPath *)indexPath {
+    [self.tableValue replaceObjectAtIndex:indexPath.row withObject:value];
 }
 
-#pragma mark - RMDateSelectionViewController Delegates
+-(void)selectedDestination:(NSString *)destination indexPath:(NSIndexPath*)indexPath{
+    [self.tableValue replaceObjectAtIndex:indexPath.row withObject:destination];
+    
+    [self.tableView beginUpdates];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
+}
 
 - (void)dateSelectionViewController:(RMDateSelectionViewController *)vc didSelectDate:(NSDate *)aDate {
     NSString *dateString = [ActionManager stringFromDate:aDate];
-    [self.searchValues setValue:dateString forKey:@"departure_time"];
+    [self.tableValue replaceObjectAtIndex:5 withObject:dateString];
     
     [self.tableView beginUpdates];
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:3 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:5 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView endUpdates];
 }
 
@@ -222,6 +226,10 @@
 
 -(void)segmentedControlChangedToIndex:(NSInteger)index segmentedControlId:(NSInteger)controlId {
     self.searchType = index;
+}
+
+-(void)sliderChangedToValue:(NSInteger)value indexPath:(NSIndexPath *)indexPath {
+    [self.tableValue replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithInt:value]];
 }
 
 @end

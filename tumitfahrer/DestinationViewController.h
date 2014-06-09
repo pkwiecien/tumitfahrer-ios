@@ -22,6 +22,7 @@
     NSArray *searchResultPlaces;
     SPGooglePlacesAutocompleteQuery *searchQuery;
 }
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) id <DestinationViewControllerDelegate> delegate;
 @property (nonatomic) NSIndexPath *rideTableIndexPath;
