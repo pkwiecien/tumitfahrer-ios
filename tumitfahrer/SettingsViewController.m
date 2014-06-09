@@ -24,6 +24,8 @@
 @property (nonatomic, strong) NSArray *readIcons;
 @property (nonatomic, strong) NSArray *actionOptions;
 @property (nonatomic, strong) NSArray *actionIcons;
+@property (nonatomic, strong) NSArray *contactOptions;
+@property (nonatomic, strong) NSArray *contactIcons;
 @property (nonatomic, strong) NSArray *tableValues;
 @property (nonatomic, strong) NSArray *tableIcons;
 
@@ -35,13 +37,15 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.headers = [[NSArray alloc] initWithObjects:@"Feedback", @"Other", nil];
+        self.headers = [[NSArray alloc] initWithObjects:@"Feedback", @"General", @"About TUMitfahrer", nil];
         self.actionOptions = [[NSArray alloc] initWithObjects:@"Send Feedback", @"Report a problem", nil];
         self.actionIcons = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"FeedbackIconBlack"], [UIImage imageNamed:@"ProblemIconBlack"], nil];
         self.readOptions = [[NSArray alloc] initWithObjects:@"Reminder", @"Privacy", @"Licenses", @"Carsharing", nil];
         self.readIcons = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"ReminderIconBlack"], [UIImage imageNamed:@"PrivacyIconBlack"], [UIImage imageNamed:@"LicenseIconBlack"], [UIImage imageNamed:@"CarIconBlack"], nil];
-        self.tableValues = [[NSArray alloc] initWithObjects:self.actionOptions, self.readOptions, nil];
-        self.tableIcons = [[NSArray alloc] initWithObjects:self.actionIcons, self.readIcons, nil];
+        self.contactOptions = [[NSArray alloc] initWithObjects:@"About TUMitfahrer", @"Team", @"Contact us", nil];
+        self.contactIcons = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"InfoIconBlack"], [UIImage imageNamed:@"TeamIconBlack"], [UIImage imageNamed:@"EmailIconBlackSmall"], nil];
+        self.tableValues = [[NSArray alloc] initWithObjects:self.actionOptions, self.readOptions, self.contactOptions, nil];
+        self.tableIcons = [[NSArray alloc] initWithObjects:self.actionIcons, self.readIcons, self.contactIcons, nil];
     }
     return self;
 }
@@ -77,7 +81,7 @@
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -110,6 +114,8 @@
             feedbackVC.title = @"Send Feedback";
         } else if(indexPath.row == 1) {
             feedbackVC.title = @"Report Problem";
+        } else if(indexPath.row == 2) {
+            feedbackVC.title = @"Mail to TUMitfahrer";
         }
         [self.navigationController pushViewController:feedbackVC animated:YES];
     } else if (indexPath.section == 1 && indexPath.row == 0) {
@@ -128,6 +134,10 @@
         CarsharingViewController *carsharingVC = [[CarsharingViewController alloc] init];
         carsharingVC.title = @"Carsharing";
         [self.navigationController pushViewController:carsharingVC animated:YES];
+    } else if (indexPath.section == 2 && indexPath.row == 2) {
+        FeedbackViewController *feedbackVC = [[FeedbackViewController alloc] init];
+        feedbackVC.title = @"Contact us";
+        [self.navigationController pushViewController:feedbackVC animated:YES];
     }
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
