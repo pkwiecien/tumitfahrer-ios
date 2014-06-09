@@ -193,6 +193,8 @@
 		E5FEF36F1946005600E326BB /* TimePickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FEF36D1946005600E326BB /* TimePickerCell.xib */; };
 		E5FEF3721946181B00E326BB /* RideSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3711946181B00E326BB /* RideSearch.m */; };
 		E5FEF3781946299500E326BB /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3771946299500E326BB /* Activity.m */; };
+		E5FEF37D19463D6800E326BB /* CarsharingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF37B19463D6800E326BB /* CarsharingViewController.m */; };
+		E5FEF37E19463D6800E326BB /* CarsharingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FEF37C19463D6800E326BB /* CarsharingViewController.xib */; };
 		F34633546DAF4A39967E863E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAEC5882914944C4B8E2DE24 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -511,6 +513,9 @@
 		E5FEF3711946181B00E326BB /* RideSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideSearch.m; sourceTree = "<group>"; };
 		E5FEF3761946299500E326BB /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
 		E5FEF3771946299500E326BB /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
+		E5FEF37A19463D6800E326BB /* CarsharingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarsharingViewController.h; sourceTree = "<group>"; };
+		E5FEF37B19463D6800E326BB /* CarsharingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarsharingViewController.m; sourceTree = "<group>"; };
+		E5FEF37C19463D6800E326BB /* CarsharingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarsharingViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1193,6 +1198,7 @@
 		E5DF640B18EB42D800D53164 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				E5FEF37919463D5700E326BB /* Carsharing */,
 				E5FEF35A1945E4C500E326BB /* Feedback */,
 				E5FEF3591945E4B300E326BB /* Privacy */,
 				E5FEF3571945E43100E326BB /* Reminder */,
@@ -1392,6 +1398,16 @@
 			name = "Time Picker Cell";
 			sourceTree = "<group>";
 		};
+		E5FEF37919463D5700E326BB /* Carsharing */ = {
+			isa = PBXGroup;
+			children = (
+				E5FEF37A19463D6800E326BB /* CarsharingViewController.h */,
+				E5FEF37B19463D6800E326BB /* CarsharingViewController.m */,
+				E5FEF37C19463D6800E326BB /* CarsharingViewController.xib */,
+			);
+			name = Carsharing;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1510,6 +1526,7 @@
 				E5644645192A96C000F636A5 /* ProfileInfoCell.xib in Resources */,
 				E5FB4D3F1918DB18006F4F5D /* RideNoticeCell.xib in Resources */,
 				E522BAC418AE13F600ECD375 /* InfoPlist.strings in Resources */,
+				E5FEF37E19463D6800E326BB /* CarsharingViewController.xib in Resources */,
 				E59B9A4C1916A241008DE80B /* YourRidesViewController.xib in Resources */,
 				E599886318E84D9D00B01C62 /* MenuTableViewCell.xib in Resources */,
 				E5FEF2F819447A3B00E326BB /* MessageListCell.xib in Resources */,
@@ -1702,6 +1719,7 @@
 				E5F7F8E71925694B0001F1FE /* TestViewController.m in Sources */,
 				E59B9A4B1916A241008DE80B /* YourRidesViewController.m in Sources */,
 				E504D9D1190A7FC50036FFA8 /* SPGooglePlacesAutocompleteQuery.m in Sources */,
+				E5FEF37D19463D6800E326BB /* CarsharingViewController.m in Sources */,
 				E56FB776193F86BA00B6C398 /* UINavigationController+Fade.m in Sources */,
 				E59987D718E6ECF200B01C62 /* CustomTextField.m in Sources */,
 				E50CCCFE191F7C74003A9490 /* ActivityStore.m in Sources */,

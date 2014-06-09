@@ -15,6 +15,7 @@
 #import "PrivacyViewController.h"
 #import "ReminderViewController.h"
 #import "FeedbackViewController.h"
+#import "CarsharingViewController.h"
 
 @interface SettingsViewController ()
 
@@ -37,8 +38,8 @@
         self.headers = [[NSArray alloc] initWithObjects:@"Feedback", @"Other", nil];
         self.actionOptions = [[NSArray alloc] initWithObjects:@"Send Feedback", @"Report a problem", nil];
         self.actionIcons = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"FeedbackIconBlack"], [UIImage imageNamed:@"ProblemIconBlack"], nil];
-        self.readOptions = [[NSArray alloc] initWithObjects:@"Reminder", @"Privacy", @"Licenses", nil];
-        self.readIcons = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"ReminderIconBlack"], [UIImage imageNamed:@"PrivacyIconBlack"], [UIImage imageNamed:@"LicenseIconBlack"], [UIImage imageNamed:@"TimeIconBlack"], nil];
+        self.readOptions = [[NSArray alloc] initWithObjects:@"Reminder", @"Privacy", @"Licenses", @"Carsharing", nil];
+        self.readIcons = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"ReminderIconBlack"], [UIImage imageNamed:@"PrivacyIconBlack"], [UIImage imageNamed:@"LicenseIconBlack"], [UIImage imageNamed:@"CarIconBlack"], nil];
         self.tableValues = [[NSArray alloc] initWithObjects:self.actionOptions, self.readOptions, nil];
         self.tableIcons = [[NSArray alloc] initWithObjects:self.actionIcons, self.readIcons, nil];
     }
@@ -123,6 +124,10 @@
         // TODO: add licenses
         PrivacyViewController *privacyVC = [[PrivacyViewController alloc] init];
         [self.navigationController pushViewController:privacyVC animated:YES];
+    } else if (indexPath.section == 1 && indexPath.row == 3) {
+        CarsharingViewController *carsharingVC = [[CarsharingViewController alloc] init];
+        carsharingVC.title = @"Carsharing";
+        [self.navigationController pushViewController:carsharingVC animated:YES];
     }
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
