@@ -9,6 +9,7 @@
 #import "WebserviceRequest.h"
 #import "Message.h"
 #import "Conversation.h"
+#import "CurrentUser.h"
 
 @implementation WebserviceRequest
 
@@ -36,6 +37,21 @@
         Message *message = [mappingResult firstObject];
         block(message);
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        block(nil);
+    }];
+}
+
++(void)getPastRidesForCurrentUserWithBlock:(arrayCompletionHandler)block{
+    
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    
+    NSString *requestString = [NSString stringWithFormat:@"/api/v2/users/%@/rides?past=true", [CurrentUser sharedInstance].user.userId];
+    
+    [objectManager getObjectsAtPath:requestString parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        NSArray *rides = [mappingResult array];
+        block(rides);
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        RKLogError(@"Load failed with error: %@", error);
         block(nil);
     }];
 }

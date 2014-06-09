@@ -19,5 +19,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) id<YourRidesViewControllerDelegate> delegate;
 @property (assign, nonatomic) NSInteger index;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *refreshControl;
 
 @end

@@ -67,11 +67,20 @@ static int activity_id = 0;
 -(void)initAllRidesFromCoreData {
     [self loadAllRidesFromCoreData];
     [self filterAllRides]; // categorize rides to rides around me and my rides
+    [self checkPhotoForEachRide];
 }
 
 -(void)loadAllRidesFromCoreData {
     [self loadRidesFromCoreDataByType:ContentTypeActivityRides];
     [self loadRidesFromCoreDataByType:ContentTypeCampusRides];
+}
+
+-(void)checkPhotoForEachRide {
+    for (Ride *ride in [self allRides]) {
+        if (ride.destinationImage == nil) {
+            [self fetchImageForCurrentRide:ride];
+        }
+    }
 }
 
 #pragma mark - core data/webservice fetch methods
@@ -141,7 +150,8 @@ static int activity_id = 0;
     NSEntityDescription *e = [NSEntityDescription entityForName:@"Ride"
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
                               mainQueueManagedObjectContext];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"ANY self.requests.passengerId = %@", userId];
+    NSDate *now = [ActionManager currentDate];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(ANY self.requests.passengerId = %@) AND (departureTime <= %@)", userId, now];
     
     [request setPredicate:predicate];
     
@@ -464,9 +474,6 @@ static int activity_id = 0;
 -(void)checkIfRideNearby:(Ride *)ride block:(boolCompletionHandler)block{
     [self fetchLocationForRide:ride block:^(BOOL fetched) {
         if ([self isCurrentLocationNearbyRide:ride]) {
-            if (ride.destinationImage == nil) {
-                [self fetchImageForCurrentRide:ride];
-            }
             block(YES);
         } else {
             block(NO);

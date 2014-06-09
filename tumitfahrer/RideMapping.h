@@ -21,4 +21,5 @@
 +(RKObjectMapping*)getRideIds;
 +(RKResponseDescriptor *)getRideIdsresponseDescriptorWithMapping:(RKObjectMapping *)mapping;
 
++(RKResponseDescriptor *)getSimpleRidesResponseDescriptorWithMapping:(RKEntityMapping *)mapping;
 @end

@@ -16,12 +16,13 @@
 #import "RidesStore.h"
 #import "CustomUILabel.h"
 #import "MMDrawerBarButtonItem.h"
+#import "WebserviceRequest.h"
 
 @interface YourRidesViewController ()
 
 @property (nonatomic, retain) UILabel *zeroRidesLabel;
 @property CGFloat previousScrollViewYOffset;
-@property UIRefreshControl *refreshControl;
+@property (nonatomic, strong) NSArray *pastRides;
 
 @end
 
@@ -33,17 +34,19 @@
     [super viewDidLoad];
     [self prepareZeroRidesLabel];
     [self.view setBackgroundColor:[UIColor customLightGray]];
+    
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
+    self.tableView.tableFooterView = footerView;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.delegate willAppearViewWithIndex:self.index];
-
+    
     [self setupNavigationBar];
     [self setupLeftMenuButton];
-    [[CurrentUser sharedInstance] refreshUserRides];
-    [self.tableView reloadData];
     [self checkIfAnyRides];
+    [self.tableView reloadData];
 }
 
 -(void)setupLeftMenuButton{
@@ -61,16 +64,61 @@
 }
 
 -(void)checkIfAnyRides {
-    if ([[[CurrentUser sharedInstance] userRides] count] == 0) {
+    if ([[self ridesForCurrentIndex] count] == 0) {
         [self.view addSubview:self.zeroRidesLabel];
     } else {
         [self.zeroRidesLabel removeFromSuperview];
     }
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return [[[CurrentUser sharedInstance] userRides] count];
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return [[self ridesForCurrentIndex] count];
+}
+
+-(NSArray *)ridesForCurrentIndex {
+    NSDate *now = [ActionManager currentDate];
+    if (self.index == 0) {
+        NSMutableArray *organisedRides = [[NSMutableArray alloc] init];
+        for (Ride *ride in [CurrentUser sharedInstance].user.ridesAsOwner) {
+            if ([ride.departureTime compare:now] == NSOrderedDescending) {
+                [organisedRides addObject:ride];
+            }
+        }
+        return organisedRides;
+    } else if(self.index == 1) {
+        NSMutableArray *rides = [[NSMutableArray alloc] init];
+        for (Ride *ride in [CurrentUser sharedInstance].user.ridesAsPassenger) {
+            if ([ride.departureTime compare:now] == NSOrderedDescending) {
+                [rides addObject:ride];
+            }
+        }
+        for (Ride *ride in [CurrentUser sharedInstance].user.ridesAsOwner) {
+            if (![ride.isRideRequest boolValue] && [ride.departureTime compare:now] == NSOrderedDescending) {
+                [rides addObject:ride];
+            }
+        }
+        return rides;
+    } else  if(self.index == 2) {
+        if (self.pastRides == nil || self.pastRides.count == 0) {
+            
+            [self.refreshControl startAnimating];
+            
+            [WebserviceRequest getPastRidesForCurrentUserWithBlock:^(NSArray * fetchedRides) {
+                [self initPastRidesWithRides:fetchedRides];
+                [self.refreshControl stopAnimating];
+                [self.zeroRidesLabel removeFromSuperview];
+            }];
+        } else {
+            [self.zeroRidesLabel removeFromSuperview];
+            return self.pastRides;
+        }
+    }
+    return nil;
+}
+
+-(void)initPastRidesWithRides:(NSArray *)fetchedRides {
+    self.pastRides = [NSArray arrayWithArray:fetchedRides];
+    [self.tableView reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -100,8 +148,8 @@
     if(cell == nil){
         cell = [YourRidesCell yourRidesCell];
     }
-
-    Ride *ride = [[[CurrentUser sharedInstance] userRides] objectAtIndex:indexPath.section];
+    
+    Ride *ride = [[self ridesForCurrentIndex] objectAtIndex:indexPath.section];
     cell.departurePlaceLabel.text = ride.departurePlace;
     cell.destinationLabel.text = ride.destination;
     cell.departureTimeLabel.text = [ActionManager stringFromDate:ride.departureTime];
@@ -117,7 +165,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
-    rideDetailVC.ride = [[[CurrentUser sharedInstance] userRides] objectAtIndex:indexPath.section];
+    rideDetailVC.ride = [[self ridesForCurrentIndex] objectAtIndex:indexPath.section];
     [self.navigationController pushViewController:rideDetailVC animated:YES];
 }
 

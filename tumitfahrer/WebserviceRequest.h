@@ -18,4 +18,6 @@ typedef void(^messageCompletionHandler)(Message *);
 
 +(void)postMessageForConversation:(Conversation *)conversation message:(NSString *)message senderId:(NSNumber *)senderId receiverId:(NSNumber *)receiverId rideId:(NSNumber *)rideId block:(messageCompletionHandler)block;
 
++(void)getPastRidesForCurrentUserWithBlock:(arrayCompletionHandler)block;
+
 @end

@@ -167,9 +167,7 @@
 }
 
 - (NSMutableArray *)userRides {
-    if(self.privateUserRides == nil) {
-        [self refreshUserRides];
-    }
+    [self refreshUserRides];
     return  self.privateUserRides;
 }
 
