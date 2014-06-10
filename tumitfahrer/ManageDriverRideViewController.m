@@ -8,6 +8,7 @@
 
 #import "ManageDriverRideViewController.h"
 #import "NavigationBarUtilities.h"
+#import "Ride.h"
 
 @interface ManageDriverRideViewController ()
 
@@ -26,6 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setupNavigationBar];
 }
 
 -(void)setupNavigationBar {

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class Ride;
+
 @interface ManageDriverRideViewController : UIViewController
+
+@property (nonatomic, strong) Ride* ride;
 
 @end

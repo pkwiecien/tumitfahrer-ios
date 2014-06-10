@@ -12,8 +12,6 @@
 #import "FreeSeatsTableViewCell.h"
 #import "RMDateSelectionViewController.h"
 
-@class DestinationViewController;
-
 @interface AddRideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MeetingPointDelegate, DestinationViewControllerDelegate, FreeSeatsCellDelegate, RMDateSelectionViewControllerDelegate>
 
 typedef enum {
@@ -26,6 +24,7 @@ typedef enum {
 @property (nonatomic, assign) ContentType RideType;
 @property (nonatomic, assign) DisplayType RideDisplayType;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) NSMutableArray *tableValues;
 @property BOOL shouldClose;
 
 @end

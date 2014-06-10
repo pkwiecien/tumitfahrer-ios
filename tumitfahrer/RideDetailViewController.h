@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import "RideActionCell.h"
+#import "DriverActionCell.h"
 #import "Ride.h"
 
 @class HeaderContentView;
 
-@interface RideDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, RideActionCellDelegate, UINavigationControllerDelegate>
+@interface RideDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, DriverActionCellDelegate, UINavigationControllerDelegate>
 
 typedef enum {
     GoBackNormally = 0,
