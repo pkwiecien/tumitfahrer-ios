@@ -23,7 +23,7 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
-                            <action selector="joinButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Koa-eT-Lik"/>
+                            <action selector="offerRideButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="A5Z-76-hQB"/>
                         </connections>
                     </button>
                 </subviews>

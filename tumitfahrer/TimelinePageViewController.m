@@ -21,6 +21,7 @@
 @interface TimelinePageViewController () <TimelineViewControllerDelegate>
 
 @property NSArray *pageTitles;
+@property NSInteger currentIndex;
 
 // activity about new: rides (who add new activity ride, ride request, campus ride), who requests a ride, ride search, rating {activities : { activity_rides : { }, campus_ride: {}, ride_requests: {}, rating{}, }
 
@@ -45,8 +46,9 @@
     
     self.pageController.dataSource = self;
     [[self.pageController view] setFrame:[[self view] bounds]];
-    
-    TimelineViewController *initialViewController = [self viewControllerAtIndex:0];
+
+    self.currentIndex = 0;
+    TimelineViewController *initialViewController = [self viewControllerAtIndex:self.currentIndex];
     initialViewController.delegate = self;
     
     NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
@@ -105,6 +107,7 @@
 -(void)mapButtonPressed {
     TimelineMapViewController *mapVC = [[TimelineMapViewController alloc] init];
     mapVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    mapVC.contentType = self.currentIndex;
     [self.navigationController pushViewController:mapVC animated:YES];
 }
 
@@ -164,6 +167,7 @@
 -(void)willAppearViewWithIndex:(NSInteger)index {
     self.logo.titleLabel.text = [self.pageTitles objectAtIndex:index];
     self.logo.pageControl.currentPage = index;
+    self.currentIndex = index;
     [self.navigationController.navigationBar setBarTintColor:[UIColor darkestBlue]];
 }
 

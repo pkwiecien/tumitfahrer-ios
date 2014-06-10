@@ -12,5 +12,6 @@
 @interface TimelineMapViewController : UIViewController<MKMapViewDelegate, CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (assign, nonatomic) TimelineContentType contentType;
 
 @end

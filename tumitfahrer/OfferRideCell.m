@@ -18,20 +18,8 @@
     return cell;
 }
 
-- (void)awakeFromNib
-{
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
-
-- (IBAction)joinButtonPressed:(id)sender {
-    [self.delegate  joinOfferRideCellButtonPressed];
+- (IBAction)offerRideButtonPressed:(id)sender {
+    [self.delegate  offerRideButtonPressed];
 }
 
 @end

@@ -34,6 +34,8 @@
 #import "SimpleChatViewController.h"
 #import "EditRequestViewController.h"
 #import "EditRideViewController.h"
+#import "AddRideViewController.h"
+#import "ActivityStore.h"
 
 @interface RideDetailViewController () <NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, RequestorActionCellDelegate, JoinDriverCellDelegate, OfferRideCellDelegate>
 
@@ -73,6 +75,12 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    
+    if (self.ride.rideOwner == nil) {
+        [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:self.ride.rideId block:^(BOOL fetched) {
+            [self.rideDetail.tableView reloadData];
+        }];
+    }
     if (self.ride.destinationImage == nil) {
         [RidesStore initRide:self.ride block:^(BOOL fetched) {
             
@@ -157,8 +165,16 @@
         return cell;
     }
     else if(indexPath.row == 1) {
-        
-        if ([[CurrentUser sharedInstance].user.userId isEqualToNumber:self.ride.rideOwner.userId]) {
+        if (self.ride.rideOwner == nil) {
+            JoinDriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JoinDriverCell"];
+            if(cell == nil){
+                cell = [JoinDriverCell joinDriverCell];
+            }
+            
+            cell.delegate = self;
+            return cell;
+        }
+        else if ([[CurrentUser sharedInstance].user.userId isEqualToNumber:self.ride.rideOwner.userId]) {
             
             if ([self.ride.isRideRequest boolValue]) { // ride request of the ride owner
                 RequestorActionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RequestorActionCell"];
@@ -209,7 +225,7 @@
             cell.destinationLabel.text = self.ride.destination;
             cell.timeLabel.text = [ActionManager timeStringFromDate:self.ride.departureTime];
             cell.dateLabel.text = [ActionManager dateStringFromDate:self.ride.departureTime];
-            if (self.ride.rideOwner.car == nil) {
+            if (self.ride.rideOwner == nil || self.ride.rideOwner.car == nil) {
                 cell.carLabel.text = @"Not specified";
             } else {
                 cell.carLabel.text = self.ride.rideOwner.car;
@@ -236,7 +252,10 @@
                 cell = [DriverCell driverCell];
             }
             
-            if ([self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+            if (self.ride.rideOwner == nil) {
+                
+            }
+            else if ([self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
                 cell.driverNameLabel.text = [CurrentUser sharedInstance].user.firstName;
                 cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [[CurrentUser sharedInstance].user.ratingAvg floatValue]];
                 CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageWithData:[CurrentUser sharedInstance].user.profileImageData]];
@@ -261,17 +280,21 @@
             if (cell == nil) {
                 cell = [DriverCell driverCell];
             }
-            if ([self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+            if (self.ride.rideOwner == nil) {
+                
+            }
+            else if ([self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
                 cell.driverNameLabel.text = [CurrentUser sharedInstance].user.firstName;
                 cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [[CurrentUser sharedInstance].user.ratingAvg floatValue]];
                 CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageWithData:[CurrentUser sharedInstance].user.profileImageData]];
                 [cell addSubview:circularImageView];
+                
+                cell.driverNameLabel.text = self.ride.rideOwner.firstName;
+                cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [self.ride.rideOwner.ratingAvg floatValue]];
             } else {
                 CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageNamed:@"CircleBlue"]];
                 [cell addSubview:circularImageView];
             }
-            cell.driverNameLabel.text = self.ride.rideOwner.firstName;
-            cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [self.ride.rideOwner.ratingAvg floatValue]];
             
             cell.mapView.delegate = self;
             UITapGestureRecognizer *mapTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mapViewTap)];
@@ -591,14 +614,17 @@
 }
 
 -(void)deleteDriverActionCellButtonPressed {
-    
+    [self deleteRide:self.ride];
+}
+
+-(void)deleteRide:(Ride *)ride {
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
     [objectManager deleteObject:self.ride path:[NSString stringWithFormat:@"/api/v2/rides/%@", self.ride.rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         
         [[CurrentUser sharedInstance].user removeRidesAsOwnerObject:self.ride];
         [[RidesStore sharedStore] deleteRideFromCoreData:self.ride];
-        
+
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);
@@ -626,7 +652,7 @@
 }
 
 -(void)deleteRequestorActionCellButtonPressed {
-    
+    [self deleteRide:self.ride];
 }
 
 #pragma mark - join driver cell
@@ -671,14 +697,16 @@
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
             RKLogError(@"Load failed with error: %@", error);
         }];
-        
     }
 }
 
 #pragma mark - offer ride cell
 
--(void)joinOfferRideCellButtonPressed {
-    
+-(void)offerRideButtonPressed {
+    AddRideViewController *addRideVC = [[AddRideViewController alloc] init];
+    addRideVC.RideType = [self.ride.rideType intValue];
+    addRideVC.RideDisplayType = ShowAsViewController;
+    [self.navigationController pushViewController:addRideVC animated:YES];
 }
 
 @end

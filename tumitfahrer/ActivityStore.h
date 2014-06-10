@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "LocationController.h"
 
+@class Ride;
+
 @protocol ActivityStoreDelegate <NSObject>
 
 @optional
@@ -26,5 +28,6 @@
 - (NSFetchedResultsController *)fetchedResultsController;
 - (NSArray *)recentActivitiesByType:(TimelineContentType)contentType;
 - (void)initAllActivitiesFromCoreData;
+- (void)deleteRideFromActivites:(Ride *)ride;
 
 @end

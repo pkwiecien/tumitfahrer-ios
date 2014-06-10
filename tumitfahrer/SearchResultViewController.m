@@ -48,10 +48,17 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    [self.tableView reloadData];
+
     if (self.searchResults == nil || self.searchResults.count == 0) {
         [self fetchResults];
+    } else {
+        for (Ride *ride in self.searchResults) {
+            if (ride == nil) {
+                [self.searchResults removeObject:ride];
+            }
+        }
     }
+    [self.tableView reloadData];
     [self setupNavigationBar];
 }
 

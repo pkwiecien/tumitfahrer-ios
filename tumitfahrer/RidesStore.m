@@ -13,6 +13,7 @@
 #import "CurrentUser.h"
 #import "IdsMapping.h"
 #import "ActionManager.h"
+#import "ActivityStore.h"
 
 @interface RidesStore () <NSFetchedResultsControllerDelegate>
 
@@ -615,6 +616,7 @@ static int activity_id = 0;
 
 -(void)deleteRideFromCoreData:(Ride *)ride {
     [self deleteRideFromLocalStore:ride];
+    [[ActivityStore sharedStore] deleteRideFromActivites:ride];
     
     NSManagedObjectContext *context = ride.managedObjectContext;
     [context deleteObject:ride];

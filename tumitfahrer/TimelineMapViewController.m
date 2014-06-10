@@ -20,6 +20,14 @@
 
 @interface TimelineMapViewController ()
 
+typedef enum {
+    Departure = 0,
+    Destination = 1
+} LocationTypeEnum;
+
+@property (nonatomic, strong) UISegmentedControl *navBarSegmentedControl;
+@property (nonatomic, assign) LocationTypeEnum locationTypeEnum;
+
 @end
 
 @implementation TimelineMapViewController
@@ -36,8 +44,22 @@
 {
     [super viewDidLoad];
     self.mapView.delegate = self;
+    self.locationTypeEnum = Departure;
     
-    for (id result in [[ActivityStore sharedStore] recentActivitiesByType:AllActivity]) {
+    [self addSegmentedControlToNavBar];
+    [self initAnnotations];
+}
+
+-(void)addSegmentedControlToNavBar {
+    self.navBarSegmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Departure", @"Destination", nil]];
+    [self.navBarSegmentedControl sizeToFit];
+    self.navBarSegmentedControl.selectedSegmentIndex = 0;
+    [self.navBarSegmentedControl addTarget:self action:@selector(segmentedControlChanged) forControlEvents:UIControlEventValueChanged];
+    self.navigationItem.titleView = self.navBarSegmentedControl;
+}
+
+-(void)initAnnotations {
+    for (id result in [[ActivityStore sharedStore] recentActivitiesByType:self.contentType]) {
         if ([result isKindOfClass:[Ride class]]) {
             Ride *ride = (Ride *)result;
             if (ride != nil) {
@@ -50,11 +72,37 @@
                 [self.mapView addAnnotation:[self createAnnotationWithRide:ride title:@"Ride Request"]];
             }
             // TODO fetch ride from core data/webservice if not exist
-        } else if([result isKindOfClass:[Request class]]) {
+        } else if([result isKindOfClass:[RideSearch class]]) {
             RideSearch *rideSearch = (RideSearch *)result;
-            [self.mapView addAnnotation:[self createAnnotationWithRideSearch:rideSearch title:@"Ride Search"]];
+            if (self.locationTypeEnum == Destination) {
+                if ([rideSearch.destinationLatitude doubleValue] == 0 || [rideSearch.destinationLongitude doubleValue] == 0) {
+                    [[LocationController sharedInstance] fetchLocationForAddress:rideSearch.destination completionHandler:^(CLLocation *location) {
+                        rideSearch.destinationLongitude = [NSNumber numberWithDouble:location.coordinate.longitude];
+                        rideSearch.destinationLatitude = [NSNumber numberWithDouble:location.coordinate.latitude];
+                        [self.mapView addAnnotation:[self createAnnotationWithRideSearch:rideSearch title:@"Ride Search"]];
+                        
+                    }];
+                } else {
+                    [self.mapView addAnnotation:[self createAnnotationWithRideSearch:rideSearch title:@"Ride Search"]];
+                }
+            } else {
+                if ([rideSearch.departureLongitude doubleValue] == 0 || [rideSearch.departureLongitude doubleValue] == 0) {
+                    [[LocationController sharedInstance] fetchLocationForAddress:rideSearch.departurePlace completionHandler:^(CLLocation *location) {
+                        rideSearch.departureLongitude = [NSNumber numberWithDouble:location.coordinate.longitude];
+                        rideSearch.departureLatitude = [NSNumber numberWithDouble:location.coordinate.latitude];
+                        [self.mapView addAnnotation:[self createAnnotationWithRideSearch:rideSearch title:@"Ride Search"]];
+                    }];
+                } else {
+                    [self.mapView addAnnotation:[self createAnnotationWithRideSearch:rideSearch title:@"Ride Search"]];
+                }
+            }
         }
     }
+    [self zoomToFitMapAnnotations:self.mapView];
+}
+
+-(void)removeAllAnnoations {
+    [self.mapView removeAnnotations:self.mapView.annotations];
 }
 
 - (CustomAnnotation *)createAnnotationWithRide:(Ride *)ride title:(NSString *)title {
@@ -67,10 +115,16 @@
     } else {
         rideAnnotation.title = @"Activity Ride";
     }
-    NSString *dest = [[ride.destination componentsSeparatedByString:@","] firstObject];
-    //NSString *depart = [[ride.departurePlace componentsSeparatedByString:@", "] firstObject];
-    rideAnnotation.subtitle = [NSString stringWithFormat:@"Ride to %@\nOn %@", dest, [ActionManager dateStringFromDate:ride.departureTime]];
-    rideAnnotation.coordinate = CLLocationCoordinate2DMake([ride.destinationLatitude doubleValue], [ride.destinationLongitude doubleValue]);
+    if (self.locationTypeEnum == Departure) {
+        NSString *depart = [[ride.departurePlace componentsSeparatedByString:@","] firstObject];
+        rideAnnotation.subtitle = [NSString stringWithFormat:@"Ride from %@\nOn %@", depart, [ActionManager dateStringFromDate:ride.departureTime]];
+        rideAnnotation.coordinate = CLLocationCoordinate2DMake([ride.departureLatitude doubleValue], [ride.departureLongitude doubleValue]);
+        
+    } else {
+        NSString *dest = [[ride.destination componentsSeparatedByString:@","] firstObject];
+        rideAnnotation.subtitle = [NSString stringWithFormat:@"Ride to %@\nOn %@", dest, [ActionManager dateStringFromDate:ride.departureTime]];
+        rideAnnotation.coordinate = CLLocationCoordinate2DMake([ride.destinationLatitude doubleValue], [ride.destinationLongitude doubleValue]);
+    }
     rideAnnotation.annotationObject = ride;
     return rideAnnotation;
 }
@@ -81,17 +135,21 @@
     if (title!=nil) {
         rideAnnotation.title = title;
     }
-    NSString *dest = [[rideSearch.destination componentsSeparatedByString:@","] firstObject];
-    //NSString *depart = [[ride.departurePlace componentsSeparatedByString:@", "] firstObject];
-    rideAnnotation.subtitle = [NSString stringWithFormat:@"Ride search to %@\nOn %@", dest, [ActionManager dateStringFromDate:rideSearch.departureTime]];
-    rideAnnotation.coordinate = CLLocationCoordinate2DMake([rideSearch.destinationLatitude doubleValue], [rideSearch.destinationLongitude doubleValue]);
-
+    if (self.locationTypeEnum == Departure) {
+        NSString *dest = [[rideSearch.departurePlace componentsSeparatedByString:@","] firstObject];
+        rideAnnotation.subtitle = [NSString stringWithFormat:@"Ride search from %@\nOn %@", dest, [ActionManager dateStringFromDate:rideSearch.departureTime]];
+        rideAnnotation.coordinate = CLLocationCoordinate2DMake([rideSearch.departureLatitude doubleValue], [rideSearch.departureLongitude doubleValue]);
+    } else {
+        NSString *dest = [[rideSearch.destination componentsSeparatedByString:@","] firstObject];
+        rideAnnotation.subtitle = [NSString stringWithFormat:@"Ride search to %@\nOn %@", dest, [ActionManager dateStringFromDate:rideSearch.departureTime]];
+        rideAnnotation.coordinate = CLLocationCoordinate2DMake([rideSearch.destinationLatitude doubleValue], [rideSearch.destinationLongitude doubleValue]);
+    }
+    
     return rideAnnotation;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [self setupNavigationBar];
-    [self zoomToFitMapAnnotations:self.mapView];
 }
 
 -(void)setupNavigationBar {
@@ -189,6 +247,17 @@
 
 -(void)dealloc {
     self.mapView.delegate = nil;
+}
+
+-(void)segmentedControlChanged {
+    if([self.navBarSegmentedControl selectedSegmentIndex] == 0) {
+        self.locationTypeEnum = Departure;
+    } else {
+        self.locationTypeEnum = Destination;
+    }
+    
+    [self removeAllAnnoations];
+    [self initAnnotations];
 }
 
 @end

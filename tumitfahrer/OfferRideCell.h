@@ -11,7 +11,7 @@
 
 @protocol OfferRideCellDelegate <NSObject>
 
-- (void)joinOfferRideCellButtonPressed;
+- (void)offerRideButtonPressed;
 
 @end
 
@@ -21,7 +21,7 @@
 
 @property (nonatomic, strong) id<OfferRideCellDelegate> delegate;
 
-- (IBAction)joinButtonPressed:(id)sender;
+- (IBAction)offerRideButtonPressed:(id)sender;
 
 
 @end

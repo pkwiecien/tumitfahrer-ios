@@ -138,6 +138,10 @@
 
 -(void)addRideButtonPressed {
     
+    
+    [ActionManager showAlertViewWithTitle:@"Under construction" description:@"I'm working on it right now :)"];
+    return;
+    
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
     NSDictionary *queryParams;

@@ -161,6 +161,8 @@
 
 -(void)addRideButtonPressed {
     
+    [ActionManager showAlertViewWithTitle:@"Under construction" description:@"I'm working on it right now :)"];
+    return;
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
     NSDictionary *queryParams;
@@ -210,7 +212,7 @@
     [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"apiKey" value:[[CurrentUser sharedInstance] user].apiKey];
     
     NSLog(@"user api key: %@", [CurrentUser sharedInstance].user.apiKey);
-    [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/users/%@/rides", [CurrentUser sharedInstance].user.userId] parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    [objectManager putObject:nil path:[NSString stringWithFormat:@"/api/v2/users/%@/rides", [CurrentUser sharedInstance].user.userId] parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         Ride *ride = (Ride *)[mappingResult firstObject];
         [[RidesStore sharedStore] addRideToStore:ride];
         

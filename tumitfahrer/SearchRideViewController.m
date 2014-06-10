@@ -148,6 +148,10 @@
     NSString *destinationThreshold = [self.tableValue objectAtIndex:4];
     NSString *departureTime = [self.tableValue objectAtIndex:5];
     
+    if ((departurePlace == nil || departurePlace.length == 0) && (destination == nil || destination.length == 0) ) {
+        [ActionManager showAlertViewWithTitle:@"Invalid search" description:@"Please specify departure and destination place"];
+        return;
+    }
     NSString *time = nil;
     if (departureTime != nil && departureTime.length > 0) {
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];

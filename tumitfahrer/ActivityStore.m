@@ -11,7 +11,6 @@
 #import "Ride.h"
 #import "RideSearch.h"
 #import "Request.h"
-#import "LocationController.h"
 #import "CurrentUser.h"
 #import "RidesStore.h"
 #import "ActionManager.h"
@@ -293,6 +292,13 @@ static int activity_id = 0;
         self.lastLocation = location;
         [self filterNearbyActivities];
     }
+}
+
+
+-(void)deleteRideFromActivites:(Ride *)ride {
+    [[self allRecentActivities] removeObject:ride];
+    [[self activitiesNearby] removeObject:ride];
+    [[self myRecentActivities] removeObject:ride];
 }
 
 #pragma mark - getters with initializers
