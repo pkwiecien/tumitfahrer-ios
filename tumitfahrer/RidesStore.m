@@ -573,16 +573,6 @@ static int activity_id = 0;
     }
 }
 
-- (Ride *)getRideWithId:(NSNumber *)rideId {
-    
-    for (Ride *ride in [self allRides]) {
-        if ([ride.rideId isEqualToNumber:rideId]) {
-            return ride;
-        }
-    }
-    return nil;
-}
-
 # pragma mark - observer methods
 
 -(void)addObserver:(id<RideStoreDelegate>)observer {
@@ -718,6 +708,12 @@ static int activity_id = 0;
     }
     return self.privateCampusRidesNearby;
     
+}
+
+-(void)dealloc {
+    for (id<RideStoreDelegate> observer in self.observers) {
+        [self removeObserver:observer];
+    }
 }
 
 @end

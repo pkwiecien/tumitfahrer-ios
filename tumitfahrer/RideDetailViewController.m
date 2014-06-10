@@ -27,8 +27,10 @@
 #import "RideRequestInformationCell.h"
 #import "CircularImageView.h"
 #import "WebserviceRequest.h"
+#import "ManageDriverRideViewController.h"
+#import "ManageRequestViewController.h"
 
-@interface RideDetailViewController () <NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate, RideStoreDelegate>
+@interface RideDetailViewController () <NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) MKRoute *currentRoute;
@@ -66,7 +68,13 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    self.rideDetail.selectedImageData = self.ride.destinationImage;
+    if (self.ride.destinationImage == nil) {
+        [RidesStore initRide:self.ride block:^(BOOL fetched) {
+            
+        }];
+    } else {
+        self.rideDetail.selectedImageData = self.ride.destinationImage;
+    }
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -152,7 +160,7 @@
         }
         if ([self.ride.isRideRequest boolValue]) {
             if ([self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
-                [cell.joinRideButton setTitle:@"Delete request" forState:UIControlStateNormal];
+                [cell.joinRideButton setTitle:@"Manage request" forState:UIControlStateNormal];
                 [cell.contactDriverButton setTitle:@"Messages" forState:UIControlStateNormal];
             } else {
                 [cell.joinRideButton setTitle:@"Offer a ride" forState:UIControlStateNormal];
@@ -292,7 +300,7 @@
     }
 }
 
--(void)contactDriverButtonPressed {
+-(void)secondButtonPressed {
     if ([[self.ride.rideOwner userId] isEqualToValue:[CurrentUser sharedInstance].user.userId]) {
         MessagesOverviewViewController *messageOverviewVC = [[MessagesOverviewViewController alloc] init];
         messageOverviewVC.ride = self.ride;
@@ -301,21 +309,21 @@
     }
 }
 
--(void)joinRideButtonPressed {
+-(void)firstButtonPressed {
     // check if the user is not trying to send a request to himself
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     Request *request = [self requestFoundInCoreData];
     
-    if ([self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && ![self.ride.isRideRequest boolValue]) {
-        [objectManager deleteObject:self.ride path:[NSString stringWithFormat:@"/api/v2/rides/%@", self.ride.rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-            
-            [[CurrentUser sharedInstance].user removeRidesAsOwnerObject:self.ride];
-            [[RidesStore sharedStore] deleteRideFromCoreData:self.ride];
-            
-            [self.navigationController popViewControllerAnimated:YES];
-        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-            RKLogError(@"Load failed with error: %@", error);
-        }];
+    if ([self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+        
+        if ([self.ride.isRideRequest boolValue]) {
+            ManageRequestViewController *manageRideVC = [[ManageRequestViewController alloc] init];
+            manageRideVC.ride = self.ride;
+            [self.navigationController pushViewController:manageRideVC animated:YES];
+        } else {
+            ManageDriverRideViewController *manageRideVC = [[ManageDriverRideViewController alloc] init];
+            [self.navigationController pushViewController:manageRideVC animated:YES];
+        }
     } else if(request != nil) {
         [objectManager deleteObject:request path:[NSString stringWithFormat:@"/api/v2/rides/%@/requests/%d", self.ride.rideId, [request.requestId intValue]] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             
@@ -328,8 +336,6 @@
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
             RKLogError(@"Load failed with error: %@", error);
         }];
-    } else if([self.ride.isRideRequest boolValue]) {
-        
     } else {
         NSDictionary *queryParams;
         // add enum
@@ -465,13 +471,12 @@
 }
 
 -(void)didReceivePhotoForRide:(NSNumber *)rideId {
-    
-    self.ride = [[RidesStore sharedStore] getRideWithId:rideId];
     UIImage *img = [UIImage imageWithData:self.ride.destinationImage];
     [self.rideDetail.rideDetailHeaderView replaceMainImage:img];
 }
 
 -(void)dealloc {
+    [[RidesStore sharedStore] removeObserver:self];
     self.map.delegate = nil;
 }
 

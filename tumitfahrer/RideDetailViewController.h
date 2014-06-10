@@ -13,7 +13,7 @@
 
 @class HeaderContentView;
 
-@interface RideDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, DetailsMessagesChoiceCellDelegate, UINavigationControllerDelegate>
+@interface RideDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, RideActionCellDelegate, UINavigationControllerDelegate>
 
 typedef enum {
     GoBackNormally = 0,

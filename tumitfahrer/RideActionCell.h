@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol DetailsMessagesChoiceCellDelegate <NSObject>
+@protocol RideActionCellDelegate <NSObject>
 
-- (void)contactDriverButtonPressed;
-- (void)joinRideButtonPressed;
+- (void)firstButtonPressed;
+- (void)secondButtonPressed;
 
 @end
 
@@ -21,7 +21,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *joinRideButton;
 @property (weak, nonatomic) IBOutlet UIButton *contactDriverButton;
-@property (nonatomic, strong) id<DetailsMessagesChoiceCellDelegate> delegate;
+@property (nonatomic, strong) id<RideActionCellDelegate> delegate;
 
 - (IBAction)contactDriverButtonPressed:(id)sender;
 - (IBAction)joinRideButtonPressed:(id)sender;

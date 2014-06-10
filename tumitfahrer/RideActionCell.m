@@ -22,11 +22,11 @@
 }
 
 - (IBAction)contactDriverButtonPressed:(id)sender {
-    [self.delegate contactDriverButtonPressed];
+    [self.delegate secondButtonPressed];
 }
 
 - (IBAction)joinRideButtonPressed:(id)sender {
-    [self.delegate joinRideButtonPressed];
+    [self.delegate firstButtonPressed];
 }
 
 
