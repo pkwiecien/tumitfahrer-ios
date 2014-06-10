@@ -47,11 +47,6 @@
     self.backgroundViewColor = [UIColor clearColor];
 }
 
-- (void)dealloc
-{
-	[self.tableView removeObserver:self forKeyPath:@"contentOffset"];
-}
-
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -202,5 +197,9 @@
     [self.delegate headerViewTapped];
 }
 
+- (void)dealloc {
+	[self.tableView removeObserver:self forKeyPath:@"contentOffset"];
+    self.delegate = nil;
+}
 
 @end

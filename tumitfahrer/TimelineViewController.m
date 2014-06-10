@@ -201,4 +201,8 @@
     [self.tableView reloadData];
 }
 
+-(void)dealloc {
+    self.delegate = nil;
+}
+
 @end

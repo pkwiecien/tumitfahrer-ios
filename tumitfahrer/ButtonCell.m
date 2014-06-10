@@ -23,4 +23,9 @@
 - (IBAction)buttonPressed:(id)sender {
     [self.delegate buttonSelected];
 }
+
+-(void)dealloc {
+    self.delegate = nil;
+}
+
 @end

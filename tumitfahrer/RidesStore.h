@@ -30,7 +30,7 @@
 - (NSArray *)ridesNearbyByType:(ContentType)contentType;
 - (NSArray *)favoriteRidesByType:(ContentType)contentType;
 
-+(void)initRide:(Ride *)ride block:(boolCompletionHandler)block;
++ (void)initRide:(Ride *)ride block:(boolCompletionHandler)block;
 + (void)initRide:(Ride *)ride index:(NSInteger)index block:(completionHandlerWithIndex)block;
 - (Ride *)getRideWithId:(NSNumber *)rideId;
 - (Ride *)containsRideWithId:(NSNumber *)rideId;
@@ -47,5 +47,8 @@
 
 - (void)fetchSingleRideFromWebserviceWithId:(NSNumber *)rideId block:(boolCompletionHandler)block;
 - (Ride *)fetchRideFromCoreDataWithId:(NSNumber *)rideId;
+- (void)fetchPastRidesFromCoreData;
+- (NSMutableArray *)pastRides;
+
 
 @end

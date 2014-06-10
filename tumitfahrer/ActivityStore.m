@@ -318,5 +318,9 @@ static int activity_id = 0;
     return self.privateAllRecentActivities;
 }
 
+-(void)dealloc {
+    self.delegate = nil;
+}
+
 
 @end

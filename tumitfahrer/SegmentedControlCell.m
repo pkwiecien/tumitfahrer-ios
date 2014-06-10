@@ -34,4 +34,8 @@
     [self.delegate segmentedControlChangedToIndex:segmentedControl.selectedSegmentIndex segmentedControlId:self.controlId];
 }
 
+-(void)dealloc {
+    self.delegate = nil;
+}
+
 @end

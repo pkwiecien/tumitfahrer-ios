@@ -10,9 +10,17 @@
 
 @class LogoView;
 
+@protocol YourRidesPageViewControllerDelegate
+
+-(void)pastRidesLoaded:(NSArray *)rides;
+
+@end
+
+
 @interface YourRidesPageViewController : UIViewController <UIPageViewControllerDataSource>
 
 @property (strong, nonatomic) UIPageViewController *pageController;
+@property (nonatomic, weak) id<YourRidesPageViewControllerDelegate> delegate;
 
 @property (nonatomic, retain) LogoView *logo;
 

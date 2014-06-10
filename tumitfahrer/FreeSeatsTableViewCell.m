@@ -34,4 +34,8 @@
     [self.delegate stepperValueChanged:value];
 }
 
+-(void)dealloc {
+    self.delegate = nil;
+}
+
 @end

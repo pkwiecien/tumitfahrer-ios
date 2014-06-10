@@ -211,4 +211,8 @@
     
 }
 
+-(void)dealloc {
+    self.delegate = nil;
+}
+
 @end

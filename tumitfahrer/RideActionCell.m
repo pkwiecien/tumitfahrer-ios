@@ -48,4 +48,8 @@
     [self.contactDriverButton setBackgroundImage:[UIImage imageNamed:@"BlueButton"] forState:UIControlStateHighlighted];
 }
 
+-(void)dealloc {
+    self.delegate = nil;
+}
+
 @end

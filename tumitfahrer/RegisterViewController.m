@@ -138,12 +138,6 @@
     self.pickerView.delegate = self;
     self.pickerView.dataSource = self;
     self.pickerView.backgroundColor = [UIColor colorWithRed:70 green:30 blue:180 alpha:0.6];
-
-    // alternative to pickerView:didSelect
-//    UITapGestureRecognizer *tapGesture =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pickerViewTapGestureRecognized:)];
-//    tapGesture.cancelsTouchesInView = NO;
-//    tapGesture.delegate = self;
-//    [self.pickerView addGestureRecognizer:tapGesture];
 }
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
@@ -167,20 +161,6 @@
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     return [[FacultyManager sharedInstance] nameOfFacultyAtIndex:row];
 }
-
-/*
-- (void)pickerViewTapGestureRecognized:(UITapGestureRecognizer*)gestureRecognizer {
-    CGPoint touchPoint = [gestureRecognizer locationInView:gestureRecognizer.view.superview];
-    
-    CGRect frame = self.pickerView.frame;
-    CGRect selectorFrame = CGRectInset( frame, 0.0, self.pickerView.bounds.size.height * 0.85 / 2.0 );
-    
-    if( CGRectContainsPoint( selectorFrame, touchPoint) )
-    {
-        self.departmentNameTextField.text = [[FacultyManager sharedInstance] nameOfFacultyAtIndex:[self.pickerView selectedRowInComponent:0]];
-        self.pickerView.hidden = YES;
-    }
-} */
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     self.departmentNameTextField.text = [[FacultyManager sharedInstance] nameOfFacultyAtIndex:[self.pickerView selectedRowInComponent:0]];

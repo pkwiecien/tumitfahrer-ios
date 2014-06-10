@@ -119,7 +119,7 @@ static int activity_id = 0;
 }
 
 // fetch all past rides
--(void)fetchPastRidesFromCoreDataByType {
+-(void)fetchPastRidesFromCoreData {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *e = [NSEntityDescription entityForName:@"Ride"
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].

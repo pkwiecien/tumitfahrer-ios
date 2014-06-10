@@ -183,5 +183,9 @@
     [self.searchBar resignFirstResponder];
 }
 
+-(void)dealloc {
+    self.delegate = nil;
+    self.searchBar.delegate = nil;
+}
 
 @end

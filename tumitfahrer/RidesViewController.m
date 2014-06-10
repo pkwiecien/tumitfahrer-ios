@@ -267,6 +267,7 @@
 
 -(void)dealloc {
     [self.imageCache removeAllObjects];
+    self.delegate = nil;
 }
 
 @end

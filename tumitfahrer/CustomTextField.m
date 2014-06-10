@@ -155,4 +155,8 @@
     return YES;
 }
 
+-(void)dealloc {
+    self.delegate = nil;
+}
+
 @end

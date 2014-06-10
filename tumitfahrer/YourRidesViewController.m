@@ -23,20 +23,30 @@
 @property (nonatomic, retain) UILabel *zeroRidesLabel;
 @property CGFloat previousScrollViewYOffset;
 @property (nonatomic, strong) NSArray *pastRides;
+@property UIImage *passengerIcon;
+@property UIImage *driverIcon;
 
 @end
 
 @implementation YourRidesViewController
 
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     [self prepareZeroRidesLabel];
     [self.view setBackgroundColor:[UIColor customLightGray]];
     
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
     self.tableView.tableFooterView = footerView;
+    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+    
+    CGRect frame = CGRectMake (120.0, 185.0, 80, 80);
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithFrame:frame];
+    self.activityIndicatorView.color = [UIColor redColor];
+    [self.view addSubview:self.activityIndicatorView];
+    [[RidesStore sharedStore] fetchPastRidesFromCoreData];
+    self.passengerIcon = [UIImage imageNamed:@"PassengerIconBlack"];
+    self.driverIcon = [UIImage imageNamed:@"DriverIconBlack"];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -61,6 +71,7 @@
 
 -(void)prepareZeroRidesLabel {
     self.zeroRidesLabel = [[CustomUILabel alloc] initInMiddle:CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height) text:@"You don't have any rides" viewWithNavigationBar:self.navigationController.navigationBar];
+    self.zeroRidesLabel.textColor = [UIColor blackColor];
 }
 
 -(void)checkIfAnyRides {
@@ -69,10 +80,6 @@
     } else {
         [self.zeroRidesLabel removeFromSuperview];
     }
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [[self ridesForCurrentIndex] count];
 }
 
 -(NSArray *)ridesForCurrentIndex {
@@ -99,18 +106,16 @@
         }
         return rides;
     } else  if(self.index == 2) {
-        if (self.pastRides == nil || self.pastRides.count == 0) {
-            
-            [self.refreshControl startAnimating];
+        if ([[RidesStore sharedStore] pastRides].count == 0) {
+            [self startActivityIndicator];
             
             [WebserviceRequest getPastRidesForCurrentUserWithBlock:^(NSArray * fetchedRides) {
                 [self initPastRidesWithRides:fetchedRides];
-                [self.refreshControl stopAnimating];
+                [self stopActivityIndicator];
                 [self.zeroRidesLabel removeFromSuperview];
             }];
         } else {
-            [self.zeroRidesLabel removeFromSuperview];
-            return self.pastRides;
+            return [[RidesStore sharedStore] pastRides];
         }
     }
     return nil;
@@ -121,18 +126,12 @@
     [self.tableView reloadData];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 1;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 30.0f;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [[self ridesForCurrentIndex] count];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100.0f;
+    return 130.0f;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
@@ -149,15 +148,16 @@
         cell = [YourRidesCell yourRidesCell];
     }
     
-    Ride *ride = [[self ridesForCurrentIndex] objectAtIndex:indexPath.section];
+    Ride *ride = [[self ridesForCurrentIndex] objectAtIndex:indexPath.row];
     cell.departurePlaceLabel.text = ride.departurePlace;
     cell.destinationLabel.text = ride.destination;
     cell.departureTimeLabel.text = [ActionManager stringFromDate:ride.departureTime];
-    
-    if(ride.destinationImage == nil) {
-        cell.rideImage.image = [UIImage imageNamed:@"Placeholder"];
+    if ([ride.isRideRequest boolValue]) {
+        cell.driverImageView.image = self.passengerIcon;
+        cell.driverLabel.text = @"Ride request";
     } else {
-        cell.rideImage.image = [UIImage imageWithData:ride.destinationImage];;
+        cell.driverImageView.image = self.driverIcon;
+        cell.driverLabel.text = @"You are a driver";
     }
     
     return cell;
@@ -165,7 +165,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
-    rideDetailVC.ride = [[self ridesForCurrentIndex] objectAtIndex:indexPath.section];
+    rideDetailVC.ride = [[self ridesForCurrentIndex] objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:rideDetailVC animated:YES];
 }
 
@@ -173,6 +173,18 @@
 
 -(void)leftDrawerButtonPress:(id)sender{
     [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+
+- (void)startActivityIndicator {
+    [self.activityIndicatorView startAnimating];
+}
+
+- (void)stopActivityIndicator {
+    [self.activityIndicatorView stopAnimating];
+}
+
+-(void)dealloc {
+    self.delegate = nil;
 }
 
 @end

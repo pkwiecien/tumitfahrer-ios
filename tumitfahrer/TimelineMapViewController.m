@@ -51,8 +51,8 @@
             }
             // TODO fetch ride from core data/webservice if not exist
         } else if([result isKindOfClass:[Request class]]) {
-            RideSearch *rideSearh = (RideSearch *)result;
-            
+            RideSearch *rideSearch = (RideSearch *)result;
+            [self.mapView addAnnotation:[self createAnnotationWithRideSearch:rideSearch title:@"Ride Search"]];
         }
     }
 }
