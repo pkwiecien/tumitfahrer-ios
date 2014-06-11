@@ -334,7 +334,7 @@
 		E51FD51218F3B6D10098AD11 /* libxpc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxpc.dylib; path = usr/lib/system/libxpc.dylib; sourceTree = SDKROOT; };
 		E51FD51418F3B6E00098AD11 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		E51FD51618F3B6EA0098AD11 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		E522BAB618AE13F600ECD375 /* tumitfahrer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tumitfahrer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E522BAB618AE13F600ECD375 /* TUMitfahrer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TUMitfahrer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E522BAB918AE13F600ECD375 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E522BABB18AE13F600ECD375 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		E522BABD18AE13F600ECD375 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -790,7 +790,7 @@
 		E522BAB718AE13F600ECD375 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E522BAB618AE13F600ECD375 /* tumitfahrer.app */,
+				E522BAB618AE13F600ECD375 /* TUMitfahrer.app */,
 				E522BAD718AE13F600ECD375 /* tumitfahrerTests.xctest */,
 			);
 			name = Products;
@@ -1532,7 +1532,7 @@
 			);
 			name = TUMitfahrer;
 			productName = tumitfahrer;
-			productReference = E522BAB618AE13F600ECD375 /* tumitfahrer.app */;
+			productReference = E522BAB618AE13F600ECD375 /* TUMitfahrer.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E522BAD618AE13F600ECD375 /* tumitfahrerTests */ = {

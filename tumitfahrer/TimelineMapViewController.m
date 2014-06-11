@@ -116,6 +116,7 @@ typedef enum {
         rideAnnotation.title = @"Activity Ride";
     }
     if (self.locationTypeEnum == Departure) {
+
         NSString *depart = [[ride.departurePlace componentsSeparatedByString:@","] firstObject];
         rideAnnotation.subtitle = [NSString stringWithFormat:@"Ride from %@\nOn %@", depart, [ActionManager dateStringFromDate:ride.departureTime]];
         rideAnnotation.coordinate = CLLocationCoordinate2DMake([ride.departureLatitude doubleValue], [ride.departureLongitude doubleValue]);
@@ -125,6 +126,7 @@ typedef enum {
         rideAnnotation.subtitle = [NSString stringWithFormat:@"Ride to %@\nOn %@", dest, [ActionManager dateStringFromDate:ride.departureTime]];
         rideAnnotation.coordinate = CLLocationCoordinate2DMake([ride.destinationLatitude doubleValue], [ride.destinationLongitude doubleValue]);
     }
+    rideAnnotation.rideMode = [ride.isRideRequest intValue];
     rideAnnotation.annotationObject = ride;
     return rideAnnotation;
 }
@@ -144,6 +146,7 @@ typedef enum {
         rideAnnotation.subtitle = [NSString stringWithFormat:@"Ride search to %@\nOn %@", dest, [ActionManager dateStringFromDate:rideSearch.departureTime]];
         rideAnnotation.coordinate = CLLocationCoordinate2DMake([rideSearch.destinationLatitude doubleValue], [rideSearch.destinationLongitude doubleValue]);
     }
+    rideAnnotation.rideMode = RideRequest;
     
     return rideAnnotation;
 }
@@ -167,15 +170,15 @@ typedef enum {
     
     static NSString *pinIdentifier = @"pinIndentifier";
     
-    MKPinAnnotationView *pinView = (MKPinAnnotationView *)
+    MKAnnotationView *pinView = (MKAnnotationView *)
     [self.mapView dequeueReusableAnnotationViewWithIdentifier:pinIdentifier];
     if (pinView == nil)
     {
         // if an existing pin view was not available, create one
-        MKPinAnnotationView *customPinView = [[MKPinAnnotationView alloc]
+        MKAnnotationView *customPinView = [[MKAnnotationView alloc]
                                               initWithAnnotation:annotation reuseIdentifier:pinIdentifier];
-        customPinView.pinColor = MKPinAnnotationColorRed;
-        customPinView.animatesDrop = YES;
+        
+        customPinView.image = [self pinForAnnoation:annotation];
         customPinView.canShowCallout = YES;
         UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         [rightButton addTarget:self action:@selector(showDetails) forControlEvents:UIControlEventTouchUpInside];
@@ -185,7 +188,19 @@ typedef enum {
     else {
         pinView.annotation = annotation;
     }
+    
+    pinView.image = [self pinForAnnoation:annotation];
+    
     return pinView;
+}
+
+-(UIImage *)pinForAnnoation:(id <MKAnnotation>)annotation {
+    CustomAnnotation *anno = (CustomAnnotation *)annotation;
+    if (anno.rideMode == RideOffer) {
+        return [UIImage imageNamed:@"BlueDriverPin"];
+    } else {
+        return [UIImage imageNamed:@"BluePassengerPin"];
+    }
 }
 
 -(void)showDetails {

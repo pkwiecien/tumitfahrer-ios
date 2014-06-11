@@ -10,6 +10,6 @@
 
 @implementation CustomAnnotation
 
-@synthesize coordinate, title, subtitle, annotationObject;
+@synthesize coordinate, title, subtitle, annotationObject, rideMode;
 
 @end
