@@ -10,17 +10,17 @@
 #import "ProfileViewController.h"
 #import "ActionManager.h"
 #import "NavigationBarUtilities.h"
-#import "EditProfileViewController.h"
 #import "MMDrawerBarButtonItem.h"
 #import "CustomBarButton.h"
 #import "GeneralInfoCell.h"
-#import "ProfileInfoCell.h"
 #import "CurrentUser.h"
+#import "EditProfileFieldViewController.h"
 
 @interface ProfileViewController ()
 
-@property (strong, nonatomic) NSMutableArray *cellDescriptions;
-@property (strong, nonatomic) NSMutableArray *cellImages;
+@property (strong, nonatomic) NSArray *cellDescriptions;
+@property (strong, nonatomic) NSArray *cellImages;
+@property (strong, nonatomic) NSArray *editDescriptions;
 @property (nonatomic) UIImagePickerController *imagePickerController;
 
 @end
@@ -31,7 +31,9 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.cellImages = [[NSMutableArray alloc] initWithObjects:@"", [UIImage imageNamed:@"EmailIconBlack"], [UIImage imageNamed:@"PhoneIconBlack"], [UIImage imageNamed:@"CarIconBlack"], nil];
+        
+        self.cellImages = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"ProfileIconBlack"], [UIImage imageNamed:@"ProfileIconBlack"], [UIImage imageNamed:@"EmailIconBlackSmall"], [UIImage imageNamed:@"PhoneIconBlack"], [UIImage imageNamed:@"CarIconBlack"], [UIImage imageNamed:@"PasswordIconBlack"],  nil];
+        self.editDescriptions = [NSArray arrayWithObjects:@"First Name",@"Last Name", @"Email", @"Phone", @"Car", @"Password", @"Department", nil];
     }
     return self;
 }
@@ -48,6 +50,7 @@
     self.profileImageContentView.tableViewDelegate = self;
     self.profileImageContentView.parallaxScrollFactor = 0.3; // little slower than normal.
     self.profileImageContentView.circularImage = [UIImage imageNamed:@"MainCampus"];
+    self.profileImageContentView.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:self.profileImageContentView];
     
     UIButton *buttonBack = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -57,9 +60,9 @@
     [self.view addSubview:buttonBack];
     
     UIButton *editButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    editButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-40, 10, 25, 25);
-    [editButton setImage:[UIImage imageNamed:@"EditIcon"] forState:UIControlStateNormal];
-    [editButton addTarget:self action:@selector(displayEditProfilePage) forControlEvents:UIControlEventTouchUpInside];
+    editButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-40, 10, 33, 25);
+    [editButton setImage:[UIImage imageNamed:@"CameraIcon"] forState:UIControlStateNormal];
+    [editButton addTarget:self action:@selector(headerViewTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:editButton];
     
     UIImage *bluredImage = [ActionManager applyBlurFilterOnImage:[UIImage imageNamed:@"MainCampus"]];
@@ -80,6 +83,7 @@
 -(void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [self updateCellDescriptions];
+    [self.profileImageContentView.tableView reloadData];
 }
 
 -(void)updateCellDescriptions {
@@ -91,7 +95,8 @@
     if ([CurrentUser sharedInstance].user.car != nil) {
         car = [CurrentUser sharedInstance].user.car;
     }
-    self.cellDescriptions = [[NSMutableArray alloc] initWithObjects:@"", [CurrentUser sharedInstance].user.email, phoneNumber, car,  nil];
+    
+    self.cellDescriptions = [[NSArray alloc] initWithObjects:[CurrentUser sharedInstance].user.firstName, [CurrentUser sharedInstance].user.lastName, [CurrentUser sharedInstance].user.email, phoneNumber, car, @"●●●●●●",  nil];
 }
 
 -(void)oneFingerTwoTaps {
@@ -101,22 +106,25 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50.0f;
+    return 44;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 4;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (section == 0) {
+        return 1;
+    }
+    else
+        return [self.cellDescriptions count];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
+    if (indexPath.section == 0) {
         
         GeneralInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GeneralInfoCell"];
         
@@ -129,17 +137,36 @@
         cell.ratingLabel.text = [NSString stringWithFormat:@"%d", (int)[CurrentUser sharedInstance].user.ratingAvg];
         return cell;
         
-    } else {
-        ProfileInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProfileInfoCell"];
-        if (cell == nil) {
-            cell = [ProfileInfoCell profileInfoCell];
-        }
+    } else{
+        NSString *CellIdentifier = @"GeneralCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         
-        cell.cellDescription.text = [self.cellDescriptions objectAtIndex:indexPath.row];
-        cell.cellImageView.image = [self.cellImages objectAtIndex:indexPath.row];
+        if(cell == nil)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
+        cell.imageView.image = [self.cellImages objectAtIndex:indexPath.row];
+        cell.textLabel.text = [self.cellDescriptions objectAtIndex:indexPath.row];
+        cell.backgroundColor = [UIColor customLightGray];
+        if (![[self.cellDescriptions objectAtIndex:indexPath.row] isEqualToString:[CurrentUser sharedInstance].user.email]) {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
         
         return cell;
     }
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.profileImageContentView.tableView deselectRowAtIndexPath:indexPath animated:NO];
+
+    if ([[self.cellDescriptions objectAtIndex:indexPath.row] isEqualToString:[CurrentUser sharedInstance].user.email]) {
+        return;
+    }
+    
+    EditProfileFieldViewController *editProfileVC = [[EditProfileFieldViewController alloc] init];
+    editProfileVC.title = [self.editDescriptions objectAtIndex:indexPath.row];
+    editProfileVC.initialDescription = [self.cellDescriptions objectAtIndex:indexPath.row];
+    editProfileVC.updatedFiled = indexPath.row;
+    [self.navigationController pushViewController:editProfileVC animated:YES];
 }
 
 #pragma mark - Button handlers
@@ -148,16 +175,10 @@
     [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
--(void)displayEditProfilePage {
-    EditProfileViewController *editProfileVC = [[EditProfileViewController alloc] init];
-    UINavigationController *navBar = [[UINavigationController alloc] initWithRootViewController:editProfileVC];
-    [self.navigationController presentViewController:navBar animated:YES completion:nil];
-}
-
 -(void)headerViewTapped {
     UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Change profile picture:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
-                            @"Take photo",
-                            @"Select photo",
+                            @"Take a photo",
+                            @"Select a photo",
                             nil];
     popup.tag = 1;
     [popup showInView:[UIApplication sharedApplication].keyWindow];
@@ -184,7 +205,8 @@
     }
 }
 
-- (void)takePhoto {UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+- (void)takePhoto {
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.modalPresentationStyle = UIModalPresentationFullScreen;
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
@@ -207,17 +229,8 @@
     
     UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
     self.profileImageContentView.rideDetailHeaderView.circularImage = chosenImage;
-    NSLog(@"car: %@", [CurrentUser sharedInstance].user.car);
     [self.profileImageContentView.rideDetailHeaderView replaceImage:chosenImage];
     [CurrentUser sharedInstance].user.profileImageData = UIImageJPEGRepresentation(chosenImage, 1.0f);
-    UIImage *profilePic = [UIImage imageWithData:[CurrentUser sharedInstance].user.profileImageData];
-    
-    if(profilePic.imageOrientation == UIImageOrientationUp) {
-        NSLog(@"image orientation up");
-    } else {
-        NSLog(@"image orientation different");
-    }
-    
     [picker dismissViewControllerAnimated:YES completion:NULL];
     NSError *error;
     if (![[CurrentUser sharedInstance].user.managedObjectContext saveToPersistentStore:&error]) {
