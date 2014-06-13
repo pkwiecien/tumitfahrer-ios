@@ -2,7 +2,7 @@
 //  Ride.h
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 6/8/14.
+//  Created by Pawel Kwiecien on 6/13/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
@@ -31,13 +31,18 @@
 @property (nonatomic, retain) NSNumber * rideType;
 @property (nonatomic, retain) NSDate * updatedAt;
 @property (nonatomic, retain) Activity *activities;
+@property (nonatomic, retain) NSSet *conversations;
 @property (nonatomic, retain) NSSet *passengers;
 @property (nonatomic, retain) NSSet *requests;
 @property (nonatomic, retain) User *rideOwner;
-@property (nonatomic, retain) NSSet *conversations;
 @end
 
 @interface Ride (CoreDataGeneratedAccessors)
+
+- (void)addConversationsObject:(Conversation *)value;
+- (void)removeConversationsObject:(Conversation *)value;
+- (void)addConversations:(NSSet *)values;
+- (void)removeConversations:(NSSet *)values;
 
 - (void)addPassengersObject:(User *)value;
 - (void)removePassengersObject:(User *)value;
@@ -48,10 +53,5 @@
 - (void)removeRequestsObject:(Request *)value;
 - (void)addRequests:(NSSet *)values;
 - (void)removeRequests:(NSSet *)values;
-
-- (void)addConversationsObject:(Conversation *)value;
-- (void)removeConversationsObject:(Conversation *)value;
-- (void)addConversations:(NSSet *)values;
-- (void)removeConversations:(NSSet *)values;
 
 @end

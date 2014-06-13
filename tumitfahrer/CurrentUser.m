@@ -40,7 +40,15 @@
     return currentUser;
 }
 
-+ (BOOL)fetchUserFromCoreDataWithEmail:(NSString *)email {
+-(void)initCurrentUser:(User *)user {
+    self.user = user;
+    [[RidesStore sharedStore] fetchRidesForCurrentUser:^(BOOL fetched) {
+        // initializer ride requests, even if could not fetch rides for current user
+        [[RidesStore sharedStore] initUserRequests];
+    }];
+}
+
+- (BOOL)fetchUserFromCoreDataWithEmail:(NSString *)email {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *e = [NSEntityDescription entityForName:@"User"
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
@@ -59,13 +67,13 @@
     
     User *user = (User *)[result firstObject];
     if(user) {
-        [CurrentUser sharedInstance].user = user;
+        [self initCurrentUser:user];
         return true;
     }
     return false;
     
 }
-+ (BOOL)fetchUserFromCoreDataWithEmail:(NSString *)email encryptedPassword:(NSString *)encryptedPassword{
+- (BOOL)fetchUserFromCoreDataWithEmail:(NSString *)email encryptedPassword:(NSString *)encryptedPassword{
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *e = [NSEntityDescription entityForName:@"User"
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
@@ -84,7 +92,7 @@
     
     User *user = (User *)[result firstObject];
     if(user) {
-        [CurrentUser sharedInstance].user = user;
+        [self initCurrentUser:user];
         return true;
     }
     return false;
@@ -171,7 +179,7 @@
     return  self.privateUserRides;
 }
 
-+ (User *)getuserWithId:(NSNumber *)userId {
++ (User *)getUserWithIdFromCoreData:(NSNumber *)userId {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *e = [NSEntityDescription entityForName:@"User"
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
@@ -207,6 +215,10 @@
         NSLog(@"delete error %@", [error localizedDescription]);
     }
     
+}
+
+-(NSArray *)requests {
+    return [[RidesStore sharedStore] currentUserRequestedRides];
 }
 
 # pragma mark - Object to string

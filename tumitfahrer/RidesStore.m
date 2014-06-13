@@ -56,6 +56,7 @@ static int activity_id = 0;
         [self fetchNewRides:^(BOOL fetched) { // try to load latest rides from webservice
             if (fetched) {
                 [self initAllRidesFromCoreData];
+               // [self initUserRequests];
             }
         }];
         
@@ -69,6 +70,12 @@ static int activity_id = 0;
     [self loadAllRidesFromCoreData];
     [self filterAllRides]; // categorize rides to rides around me and my rides
     [self checkPhotoForEachRide];
+}
+
+-(void)initUserRequests {
+    if ([CurrentUser sharedInstance].user != nil) {
+        [self fetchUserRequestedRidesFromCoreData:[CurrentUser sharedInstance].user.userId];
+    }
 }
 
 -(void)loadAllRidesFromCoreData {
@@ -152,10 +159,11 @@ static int activity_id = 0;
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
                               mainQueueManagedObjectContext];
     NSDate *now = [ActionManager currentDate];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(ANY self.requests.passengerId = %@) AND (departureTime <= %@)", userId, now];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(ANY self.requests.passengerId = %@) AND (departureTime >= %@)", userId, now];
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"departureTime" ascending:NO];
     
+    request.sortDescriptors = @[descriptor];
     [request setPredicate:predicate];
-    
     request.entity = e;
     
     NSError *error;
@@ -164,7 +172,7 @@ static int activity_id = 0;
         [NSException raise:@"Fetch failed"
                     format:@"Reason: %@", [error localizedDescription]];
     }
-    self.privatePastRides = [[NSMutableArray alloc] initWithArray:fetchedObjects];
+    self.userRideRequests = [[NSMutableArray alloc] initWithArray:fetchedObjects];
 }
 
 - (Ride *)fetchRideFromCoreDataWithId:(NSNumber *)rideId {
@@ -189,6 +197,18 @@ static int activity_id = 0;
 -(NSArray *)rideRequestForUserWithId:(NSNumber *)userId {
     [self fetchUserRequestedRidesFromCoreData:userId];
     return [self rideRequests];
+}
+
+-(void)fetchRidesForCurrentUser:(boolCompletionHandler)block {
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
+    
+    [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/users/%@/rides", [CurrentUser sharedInstance].user.userId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        block(YES);
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        RKLogError(@"Load failed with error: %@", error);
+        block(NO);
+    }];
 }
 
 -(void)fetchNewRides:(boolCompletionHandler)block {
@@ -220,8 +240,7 @@ static int activity_id = 0;
     }];
 }
 
--(NSFetchedResultsController *)fetchedResultsController
-{
+-(NSFetchedResultsController *)fetchedResultsController {
     if (self.fetchedResultsController != nil) {
         return self.fetchedResultsController;
     }
@@ -651,6 +670,13 @@ static int activity_id = 0;
 
 -(void)deleteRideRequestFromLocalStore:(Request *)request {
     [[self rideRequests] removeObject:request];
+}
+
+-(NSArray *)currentUserRequestedRides {
+    if ([self userRideRequests] == nil) {
+        [self initUserRequests];
+    }
+    return [self userRideRequests];
 }
 
 #pragma mark - getters with initializers

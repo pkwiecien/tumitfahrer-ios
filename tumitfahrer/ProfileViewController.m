@@ -17,6 +17,7 @@
 #import "EditProfileFieldViewController.h"
 #import "FacultyManager.h"
 #import "EditDepartmentViewController.h"
+#import "RidesStore.h"
 
 @interface ProfileViewController ()
 
@@ -34,7 +35,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-        self.cellImages = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"ProfileIconBlack"], [UIImage imageNamed:@"ProfileIconBlack"], [UIImage imageNamed:@"EmailIconBlackSmall"], [UIImage imageNamed:@"PhoneIconBlack"], [UIImage imageNamed:@"CarIconBlack"], [UIImage imageNamed:@"PasswordIconBlack"],  [UIImage imageNamed:@"CarIconBlack"], nil];
+        self.cellImages = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"ProfileIconBlack"], [UIImage imageNamed:@"ProfileIconBlack"], [UIImage imageNamed:@"EmailIconBlackSmall"], [UIImage imageNamed:@"PhoneIconBlackSmall"], [UIImage imageNamed:@"CarIconBlack"], [UIImage imageNamed:@"PasswordIconBlackMedium"],  [UIImage imageNamed:@"CampusIconBlack"], nil];
         self.editDescriptions = [NSArray arrayWithObjects:@"First Name",@"Last Name", @"Email", @"Phone", @"Car", @"Password", @"Department", nil];
     }
     return self;
@@ -80,6 +81,7 @@
     } else {
         //        self.profileImageContentView.circularImage = [UIImage imageNamed:@"CircleBlue"];
     }
+    [[RidesStore sharedStore] fetchPastRidesFromCoreData];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -135,9 +137,11 @@
             cell = [GeneralInfoCell generalInfoCell];
         }
         
-        cell.driverLabel.text = [NSString stringWithFormat:@"%d", (int)[[CurrentUser sharedInstance].user.ridesAsOwner count]];
+        NSInteger ridesAsOwner = [[CurrentUser sharedInstance].user.ridesAsOwner count] + [[[RidesStore sharedStore] pastRides] count];
+
+        cell.driverLabel.text = [NSString stringWithFormat:@"%d", ridesAsOwner];
         cell.passengerLabel.text = [NSString stringWithFormat:@"%d", (int)[[CurrentUser sharedInstance].user.ridesAsPassenger count]];
-        cell.ratingLabel.text = [NSString stringWithFormat:@"%d", (int)[CurrentUser sharedInstance].user.ratingAvg];
+        cell.ratingLabel.text = [NSString stringWithFormat:@"%d %%", (int)[CurrentUser sharedInstance].user.ratingAvg];
         return cell;
         
     } else{

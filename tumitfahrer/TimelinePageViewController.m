@@ -63,7 +63,7 @@
     NSString *emailLoggedInUser = [[NSUserDefaults standardUserDefaults] valueForKey:@"emailLoggedInUser"];
     
     if (emailLoggedInUser != nil) {
-        [CurrentUser fetchUserFromCoreDataWithEmail:emailLoggedInUser];
+        [[CurrentUser sharedInstance] fetchUserFromCoreDataWithEmail:emailLoggedInUser];
     }
 }
 

@@ -32,6 +32,7 @@
 
 + (void)initRide:(Ride *)ride block:(boolCompletionHandler)block;
 + (void)initRide:(Ride *)ride index:(NSInteger)index block:(completionHandlerWithIndex)block;
+- (void)initUserRequests;
 - (Ride *)containsRideWithId:(NSNumber *)rideId;
 - (NSArray *)rideRequestForUserWithId:(NSNumber *)userId;
 - (void)fetchNewRides:(boolCompletionHandler)block;
@@ -48,5 +49,7 @@
 - (Ride *)fetchRideFromCoreDataWithId:(NSNumber *)rideId;
 - (void)fetchPastRidesFromCoreData;
 - (NSMutableArray *)pastRides;
+- (NSArray *)currentUserRequestedRides;
+- (void)fetchRidesForCurrentUser:(boolCompletionHandler)block ;
 
 @end

@@ -32,7 +32,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.pageTitles = [NSArray arrayWithObjects:@"Organised rides", @"Upcoming rides", @"Past rides", nil];
+        self.pageTitles = [NSArray arrayWithObjects:@"Your offers", @"Upcoming others", @"Past rides", nil];
     }
     return self;
 }

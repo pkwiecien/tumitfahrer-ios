@@ -22,9 +22,10 @@
 
 @property (nonatomic, retain) UILabel *zeroRidesLabel;
 @property CGFloat previousScrollViewYOffset;
-@property (nonatomic, strong) NSArray *pastRides;
 @property UIImage *passengerIcon;
 @property UIImage *driverIcon;
+@property (nonatomic, strong) NSMutableArray *arrayWithSections;
+@property (nonatomic, strong) NSMutableArray *arrayWithHeaders;
 
 @end
 
@@ -44,7 +45,6 @@
     self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithFrame:frame];
     self.activityIndicatorView.color = [UIColor redColor];
     [self.view addSubview:self.activityIndicatorView];
-    [[RidesStore sharedStore] fetchPastRidesFromCoreData];
     self.passengerIcon = [UIImage imageNamed:@"PassengerIconBlack"];
     self.driverIcon = [UIImage imageNamed:@"DriverIconBlack"];
 }
@@ -55,8 +55,10 @@
     
     [self setupNavigationBar];
     [self setupLeftMenuButton];
-    [self checkIfAnyRides];
+    [self initRidesForCurrentSection];
+    [self initTitlesForCurrentSection];
     [self.tableView reloadData];
+    [self checkIfAnyRides];
 }
 
 -(void)setupLeftMenuButton{
@@ -75,39 +77,64 @@
 }
 
 -(void)checkIfAnyRides {
-    if ([[self ridesForCurrentIndex] count] == 0) {
+    if ([self.arrayWithSections count] == 0) {
         [self.view addSubview:self.zeroRidesLabel];
     } else {
         [self.zeroRidesLabel removeFromSuperview];
     }
 }
 
--(NSArray *)ridesForCurrentIndex {
-    NSDate *now = [ActionManager currentDate];
-    if (self.index == 0) {
-        NSMutableArray *organisedRides = [[NSMutableArray alloc] init];
-        for (Ride *ride in [CurrentUser sharedInstance].user.ridesAsOwner) {
-            if ([ride.departureTime compare:now] == NSOrderedDescending) {
-                [organisedRides addObject:ride];
-            }
-        }
-        return organisedRides;
+-(void)initTitlesForCurrentSection {
+    if(self.index == 0) {
+        self.arrayWithHeaders = [[NSMutableArray alloc] initWithObjects:@"Rides as a Driver", @"Ride Requests", nil];
     } else if(self.index == 1) {
-        NSMutableArray *rides = [[NSMutableArray alloc] init];
-        for (Ride *ride in [CurrentUser sharedInstance].user.ridesAsPassenger) {
-            if ([ride.departureTime compare:now] == NSOrderedDescending) {
-                [rides addObject:ride];
-            }
-        }
+        self.arrayWithHeaders = [[NSMutableArray alloc] initWithObjects:@"Confirmed Rides as Passenger", @"Pending Ride Requests", nil];
+    } else if(self.index == 2) {
+        self.arrayWithHeaders = [[NSMutableArray alloc] initWithObjects:@"Past Rides", nil];
+    }
+}
+
+-(void)initRidesForCurrentSection {
+    NSDate *now = [ActionManager currentDate];
+    self.arrayWithSections = [[NSMutableArray alloc] init];
+    
+    if (self.index == 0) {
+        NSMutableArray *ridesAsOwner = [[NSMutableArray alloc] init];
+        NSMutableArray *rideRequests = [[NSMutableArray alloc] init];
+        
         for (Ride *ride in [CurrentUser sharedInstance].user.ridesAsOwner) {
             if (![ride.isRideRequest boolValue] && [ride.departureTime compare:now] == NSOrderedDescending) {
-                [rides addObject:ride];
+                [ridesAsOwner addObject:ride];
+            } else if([ride.isRideRequest boolValue] && [ride.departureTime compare:now] == NSOrderedDescending) {
+                [rideRequests addObject:ride];
             }
         }
-        return rides;
+        [self.arrayWithSections addObject:ridesAsOwner];
+        [self.arrayWithSections addObject:rideRequests];
+    } else if(self.index == 1) {
+
+        NSMutableArray *ridesAsPassenger = [[NSMutableArray alloc] init];
+        // should be: confirmed rides as passenger, pending requests
+        for (Ride *ride in [CurrentUser sharedInstance].user.ridesAsPassenger) {
+            if ([ride.departureTime compare:now] == NSOrderedDescending) {
+                [ridesAsPassenger addObject:ride];
+            }
+        }
+        
+        NSMutableArray *requestedRides = [[NSMutableArray alloc] init];
+        for(Ride *ride in [[CurrentUser sharedInstance] requests]) {
+            if ([ride.departureTime compare:now] == NSOrderedDescending) {
+                [requestedRides addObject:ride];
+            }
+        }
+        
+        [self.arrayWithSections addObject:ridesAsPassenger];
+        [self.arrayWithSections addObject:requestedRides];
+        
     } else  if(self.index == 2) {
+        [[RidesStore sharedStore] fetchPastRidesFromCoreData];
+
         if ([[RidesStore sharedStore] pastRides].count == 0) {
-            [self startActivityIndicator];
             
             [WebserviceRequest getPastRidesForCurrentUserWithBlock:^(NSArray * fetchedRides) {
                 [self initPastRidesWithRides:fetchedRides];
@@ -115,19 +142,26 @@
                 [self.zeroRidesLabel removeFromSuperview];
             }];
         } else {
-            return [[RidesStore sharedStore] pastRides];
+            self.arrayWithSections = [NSMutableArray arrayWithObject:[[RidesStore sharedStore] pastRides]];
         }
     }
-    return nil;
 }
 
 -(void)initPastRidesWithRides:(NSArray *)fetchedRides {
-    self.pastRides = [NSArray arrayWithArray:fetchedRides];
+    self.arrayWithSections = [NSMutableArray arrayWithObject:fetchedRides];
     [self.tableView reloadData];
 }
 
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return [self.arrayWithSections count];
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return [self.arrayWithHeaders objectAtIndex:section];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[self ridesForCurrentIndex] count];
+    return [[self.arrayWithSections objectAtIndex:section] count];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -148,16 +182,23 @@
         cell = [YourRidesCell yourRidesCell];
     }
     
-    Ride *ride = [[self ridesForCurrentIndex] objectAtIndex:indexPath.row];
+    Ride *ride = [[self.arrayWithSections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     cell.departurePlaceLabel.text = ride.departurePlace;
     cell.destinationLabel.text = ride.destination;
     cell.departureTimeLabel.text = [ActionManager stringFromDate:ride.departureTime];
-    if ([ride.isRideRequest boolValue]) {
+    
+    if ([ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && [ride.isRideRequest boolValue]) {
+        cell.driverImageView.image = self.passengerIcon;
+        cell.driverLabel.text = @"Your request";
+    } else if([ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && ![ride.isRideRequest boolValue]) {
+        cell.driverImageView.image = self.driverIcon;
+        cell.driverLabel.text = @"You are a driver";
+    } else if (![ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && [ride.isRideRequest boolValue]) {
         cell.driverImageView.image = self.passengerIcon;
         cell.driverLabel.text = @"Ride request";
     } else {
         cell.driverImageView.image = self.driverIcon;
-        cell.driverLabel.text = @"You are a driver";
+        cell.driverLabel.text = @"Ride offer";
     }
     
     return cell;
@@ -165,7 +206,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
-    rideDetailVC.ride = [[self ridesForCurrentIndex] objectAtIndex:indexPath.row];
+    rideDetailVC.ride = [[self.arrayWithSections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:rideDetailVC animated:YES];
 }
 

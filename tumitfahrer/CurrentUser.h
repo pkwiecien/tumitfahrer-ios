@@ -15,8 +15,8 @@
 
 @property (nonatomic, strong) User *user;
 
-+ (BOOL)fetchUserFromCoreDataWithEmail:(NSString *)email encryptedPassword:(NSString *)encryptedPassword;
-+ (BOOL)fetchUserFromCoreDataWithEmail:(NSString *)email;
+- (BOOL)fetchUserFromCoreDataWithEmail:(NSString *)email encryptedPassword:(NSString *)encryptedPassword;
+- (BOOL)fetchUserFromCoreDataWithEmail:(NSString *)email;
 
 - (void)hasDeviceTokenInWebservice:(boolCompletionHandler)block;
 - (void)sendDeviceTokenToWebservice;
@@ -25,6 +25,7 @@
 - (void)deleteRide:(Ride *)ride forUserId:(NSInteger)userId;
 - (void)saveToPersisentStore;
 - (void)saveUserToPersisentStore;
-+ (User *)getuserWithId:(NSNumber *)userId;
-
++ (User *)getUserWithIdFromCoreData:(NSNumber *)userId;
+- (NSArray *)requests;
+- (void)initCurrentUser:(User *)user;
 @end

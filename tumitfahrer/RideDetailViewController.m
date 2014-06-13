@@ -165,54 +165,40 @@
         return cell;
     }
     else if(indexPath.row == 1) {
-        if (self.ride.rideOwner == nil) {
+        if (![self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && ![self.ride.isRideRequest boolValue]) {
             JoinDriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JoinDriverCell"];
             if(cell == nil){
                 cell = [JoinDriverCell joinDriverCell];
+            }
+            cell.delegate = self;
+            return cell;
+        } else if(![self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && [self.ride.isRideRequest boolValue]) {
+            OfferRideCell *cell = [tableView dequeueReusableCellWithIdentifier:@"OfferRideCell"];
+            if(cell == nil){
+                cell = [OfferRideCell offerRideCell];
             }
             
             cell.delegate = self;
             return cell;
         }
-        else if ([[CurrentUser sharedInstance].user.userId isEqualToNumber:self.ride.rideOwner.userId]) {
+        else if ([[CurrentUser sharedInstance].user.userId isEqualToNumber:self.ride.rideOwner.userId]&& [self.ride.isRideRequest boolValue]) {
             
-            if ([self.ride.isRideRequest boolValue]) { // ride request of the ride owner
-                RequestorActionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RequestorActionCell"];
-                if(cell == nil){
-                    cell = [RequestorActionCell requestorActionCell];
-                }
-                
-                cell.delegate = self;
-                return cell;
-                
-            } else { // ride organised by the owner
-                DriverActionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailsMessagesChoiceCell"];
-                if(cell == nil){
-                    cell = [DriverActionCell driverActionCell];
-                }
-                
-                cell.delegate = self;
-                return cell;
+            RequestorActionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RequestorActionCell"];
+            if(cell == nil){
+                cell = [RequestorActionCell requestorActionCell];
             }
+            
+            cell.delegate = self;
+            return cell;
+            
         } else {
-            
-            if([self.ride.isRideRequest boolValue]) { // is ride request of other person
-                OfferRideCell *cell = [tableView dequeueReusableCellWithIdentifier:@"OfferRideCell"];
-                if(cell == nil){
-                    cell = [OfferRideCell offerRideCell];
-                }
-                
-                cell.delegate = self;
-                return cell;
-            } else { // is ride organised by the other person
-                JoinDriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JoinDriverCell"];
-                if(cell == nil){
-                    cell = [JoinDriverCell joinDriverCell];
-                }
-                
-                cell.delegate = self;
-                return cell;
+            DriverActionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailsMessagesChoiceCell"];
+            if(cell == nil){
+                cell = [DriverActionCell driverActionCell];
             }
+            
+            cell.delegate = self;
+            return cell;
         }
     }
     else if(indexPath.row == 2) {
@@ -624,7 +610,7 @@
         
         [[CurrentUser sharedInstance].user removeRidesAsOwnerObject:self.ride];
         [[RidesStore sharedStore] deleteRideFromCoreData:self.ride];
-
+        
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);

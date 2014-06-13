@@ -45,7 +45,7 @@
     [self.facultyArray addObject:[[Faculty alloc] initWithName:@"Mathematics" facultyId:6]];
     [self.facultyArray addObject:[[Faculty alloc] initWithName:@"Mechnical Engineering" facultyId:7]];
     [self.facultyArray addObject:[[Faculty alloc] initWithName:@"Medicine" facultyId:8]];
-    [self.facultyArray addObject:[[Faculty alloc] initWithName:@"Phisics" facultyId:9]];
+    [self.facultyArray addObject:[[Faculty alloc] initWithName:@"Physics" facultyId:9]];
     [self.facultyArray addObject:[[Faculty alloc] initWithName:@"Sport and Health Science" facultyId:10]];
     [self.facultyArray addObject:[[Faculty alloc] initWithName:@"TUM School of Education" facultyId:11]];
     [self.facultyArray addObject:[[Faculty alloc] initWithName:@"TUM School of Management" facultyId:12]];

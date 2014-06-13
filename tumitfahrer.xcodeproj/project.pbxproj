@@ -39,7 +39,6 @@
 		E50CCCC1191E7A94003A9490 /* TimelinePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCBF191E7A94003A9490 /* TimelinePageViewController.m */; };
 		E50CCCC2191E7A94003A9490 /* TimelinePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50CCCC0191E7A94003A9490 /* TimelinePageViewController.xib */; };
 		E50CCCC5191F6FAC003A9490 /* ActivityMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCC4191F6FAC003A9490 /* ActivityMapping.m */; };
-		E50CCCE3191F7256003A9490 /* Request.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCE2191F7256003A9490 /* Request.m */; };
 		E50CCCE9191F7256003A9490 /* Rating.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCE8191F7256003A9490 /* Rating.m */; };
 		E50CCCF5191F7416003A9490 /* tumitfahrer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCF3191F7416003A9490 /* tumitfahrer.xcdatamodeld */; };
 		E50CCCFE191F7C74003A9490 /* ActivityStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E50CCCFD191F7C74003A9490 /* ActivityStore.m */; };
@@ -83,6 +82,9 @@
 		E526B5AD194A488B006D3527 /* CustomIOS7AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = E526B5AC194A488B006D3527 /* CustomIOS7AlertView.m */; };
 		E526B5B1194AC8D9006D3527 /* EditDepartmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E526B5AF194AC8D9006D3527 /* EditDepartmentViewController.m */; };
 		E526B5B2194AC8D9006D3527 /* EditDepartmentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E526B5B0194AC8D9006D3527 /* EditDepartmentViewController.xib */; };
+		E526B5BE194AEDEF006D3527 /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E526B5BD194AEDEF006D3527 /* Ride.m */; };
+		E526B5C1194AEDF0006D3527 /* Request.m in Sources */ = {isa = PBXBuildFile; fileRef = E526B5C0194AEDF0006D3527 /* Request.m */; };
+		E526B5C4194AEDF0006D3527 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E526B5C3194AEDF0006D3527 /* User.m */; };
 		E52EA4D3192C019C00E78B6D /* RideDetailMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E52EA4D1192C019C00E78B6D /* RideDetailMapViewController.m */; };
 		E52EA4D4192C019C00E78B6D /* RideDetailMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E52EA4D2192C019C00E78B6D /* RideDetailMapViewController.xib */; };
 		E53D5D0018B14C39004016F8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E53D5CFF18B14C39004016F8 /* QuartzCore.framework */; };
@@ -171,9 +173,7 @@
 		E5FEF2F819447A3B00E326BB /* MessageListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FEF2F619447A3B00E326BB /* MessageListCell.xib */; };
 		E5FEF3021944A9AD00E326BB /* WebserviceRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3011944A9AD00E326BB /* WebserviceRequest.m */; };
 		E5FEF3051944ABF300E326BB /* MessageMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3041944ABF300E326BB /* MessageMapping.m */; };
-		E5FEF3111944B4D600E326BB /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3101944B4D600E326BB /* User.m */; };
 		E5FEF31D1944B5B200E326BB /* ConversationMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF31C1944B5B200E326BB /* ConversationMapping.m */; };
-		E5FEF3231944BC3F00E326BB /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3221944BC3F00E326BB /* Ride.m */; };
 		E5FEF32C1944C4AC00E326BB /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF32B1944C4AC00E326BB /* Message.m */; };
 		E5FEF33D1944CEA500E326BB /* SimpleChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF33C1944CEA500E326BB /* SimpleChatViewController.m */; };
 		E5FEF3411944EDFD00E326BB /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3401944EDFD00E326BB /* Conversation.m */; };
@@ -287,8 +287,6 @@
 		E50CCCC0191E7A94003A9490 /* TimelinePageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimelinePageViewController.xib; sourceTree = "<group>"; };
 		E50CCCC3191F6FAC003A9490 /* ActivityMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityMapping.h; sourceTree = "<group>"; };
 		E50CCCC4191F6FAC003A9490 /* ActivityMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityMapping.m; sourceTree = "<group>"; };
-		E50CCCE1191F7256003A9490 /* Request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Request.h; sourceTree = "<group>"; };
-		E50CCCE2191F7256003A9490 /* Request.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Request.m; sourceTree = "<group>"; };
 		E50CCCE7191F7256003A9490 /* Rating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rating.h; sourceTree = "<group>"; };
 		E50CCCE8191F7256003A9490 /* Rating.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rating.m; sourceTree = "<group>"; };
 		E50CCCF4191F7416003A9490 /* tumitfahrer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = tumitfahrer.xcdatamodel; sourceTree = "<group>"; };
@@ -358,6 +356,12 @@
 		E526B5AE194AC8D9006D3527 /* EditDepartmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditDepartmentViewController.h; sourceTree = "<group>"; };
 		E526B5AF194AC8D9006D3527 /* EditDepartmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDepartmentViewController.m; sourceTree = "<group>"; };
 		E526B5B0194AC8D9006D3527 /* EditDepartmentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditDepartmentViewController.xib; sourceTree = "<group>"; };
+		E526B5BC194AEDEF006D3527 /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
+		E526B5BD194AEDEF006D3527 /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
+		E526B5BF194AEDF0006D3527 /* Request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Request.h; sourceTree = "<group>"; };
+		E526B5C0194AEDF0006D3527 /* Request.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Request.m; sourceTree = "<group>"; };
+		E526B5C2194AEDF0006D3527 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		E526B5C3194AEDF0006D3527 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		E52EA4D0192C019C00E78B6D /* RideDetailMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideDetailMapViewController.h; sourceTree = "<group>"; };
 		E52EA4D1192C019C00E78B6D /* RideDetailMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideDetailMapViewController.m; sourceTree = "<group>"; };
 		E52EA4D2192C019C00E78B6D /* RideDetailMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RideDetailMapViewController.xib; sourceTree = "<group>"; };
@@ -489,12 +493,8 @@
 		E5FEF3011944A9AD00E326BB /* WebserviceRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebserviceRequest.m; sourceTree = "<group>"; };
 		E5FEF3031944ABF300E326BB /* MessageMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageMapping.h; sourceTree = "<group>"; };
 		E5FEF3041944ABF300E326BB /* MessageMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageMapping.m; sourceTree = "<group>"; };
-		E5FEF30F1944B4D600E326BB /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		E5FEF3101944B4D600E326BB /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		E5FEF31B1944B5B200E326BB /* ConversationMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationMapping.h; sourceTree = "<group>"; };
 		E5FEF31C1944B5B200E326BB /* ConversationMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationMapping.m; sourceTree = "<group>"; };
-		E5FEF3211944BC3F00E326BB /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
-		E5FEF3221944BC3F00E326BB /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
 		E5FEF32A1944C4AC00E326BB /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		E5FEF32B1944C4AC00E326BB /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		E5FEF33B1944CEA500E326BB /* SimpleChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleChatViewController.h; sourceTree = "<group>"; };
@@ -1075,16 +1075,16 @@
 				E5FEF32B1944C4AC00E326BB /* Message.m */,
 				E50CCCE7191F7256003A9490 /* Rating.h */,
 				E50CCCE8191F7256003A9490 /* Rating.m */,
-				E50CCCE1191F7256003A9490 /* Request.h */,
-				E50CCCE2191F7256003A9490 /* Request.m */,
-				E5FEF3211944BC3F00E326BB /* Ride.h */,
-				E5FEF3221944BC3F00E326BB /* Ride.m */,
 				E5FEF3701946181B00E326BB /* RideSearch.h */,
 				E5FEF3711946181B00E326BB /* RideSearch.m */,
 				E50DB28918F8730400E87E62 /* RidesStore.h */,
 				E50DB28A18F8730400E87E62 /* RidesStore.m */,
-				E5FEF30F1944B4D600E326BB /* User.h */,
-				E5FEF3101944B4D600E326BB /* User.m */,
+				E526B5BC194AEDEF006D3527 /* Ride.h */,
+				E526B5BD194AEDEF006D3527 /* Ride.m */,
+				E526B5BF194AEDF0006D3527 /* Request.h */,
+				E526B5C0194AEDF0006D3527 /* Request.m */,
+				E526B5C2194AEDF0006D3527 /* User.h */,
+				E526B5C3194AEDF0006D3527 /* User.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1780,14 +1780,13 @@
 				E5FEF3831946EBE800E326BB /* ManageDriverRideViewController.m in Sources */,
 				E5FEF3511945A02300E326BB /* SearchResultViewController.m in Sources */,
 				E599886218E84D9D00B01C62 /* MenuTableViewCell.m in Sources */,
+				E526B5C1194AEDF0006D3527 /* Request.m in Sources */,
 				E50CCCC5191F6FAC003A9490 /* ActivityMapping.m in Sources */,
 				E50CCC1F191E6A6E003A9490 /* LogoView.m in Sources */,
-				E50CCCE3191F7256003A9490 /* Request.m in Sources */,
 				E50CCC10191E529A003A9490 /* TimelineViewController.m in Sources */,
 				E5888A9B1914E01B0062D0DF /* ChatViewController.m in Sources */,
 				E50CCD01191F8968003A9490 /* RatingMapping.m in Sources */,
 				E5FEF2F719447A3B00E326BB /* MessageListCell.m in Sources */,
-				E5FEF3111944B4D600E326BB /* User.m in Sources */,
 				E50CCC1A191E5885003A9490 /* TimelineCell.m in Sources */,
 				E5FEF3A41946FCF000E326BB /* JoinDriverCell.m in Sources */,
 				E58B8726191511EA0032524A /* RequestMapping.m in Sources */,
@@ -1820,6 +1819,7 @@
 				E5FEF3681945E5CD00E326BB /* FeedbackViewController.m in Sources */,
 				E5FEF31D1944B5B200E326BB /* ConversationMapping.m in Sources */,
 				E5E215641907A95F00B0B150 /* SearchRideViewController.m in Sources */,
+				E526B5C4194AEDF0006D3527 /* User.m in Sources */,
 				E58889F51913E14A0062D0DF /* RideInformationCell.m in Sources */,
 				E5FEF36E1946005600E326BB /* TimePickerCell.m in Sources */,
 				E58B872A19151F1B0032524A /* KGStatusBar.m in Sources */,
@@ -1829,7 +1829,6 @@
 				E5FEF33D1944CEA500E326BB /* SimpleChatViewController.m in Sources */,
 				E5E2155F1907A94A00B0B150 /* AddRideViewController.m in Sources */,
 				E50CCD0C191FBD5A003A9490 /* RidesCell.m in Sources */,
-				E5FEF3231944BC3F00E326BB /* Ride.m in Sources */,
 				E50DB29118F881BC00E87E62 /* PanoramioUtilities.m in Sources */,
 				E504D9EE190BCCE20036FFA8 /* DeviceMapping.m in Sources */,
 				E5FEF3051944ABF300E326BB /* MessageMapping.m in Sources */,
@@ -1845,6 +1844,7 @@
 				E58889E4191394BB0062D0DF /* HeaderImageView.m in Sources */,
 				E5FEF3631945E5BC00E326BB /* ReminderViewController.m in Sources */,
 				E5FD9ECD1923FA6C00902502 /* UIColor+LayoutColors.m in Sources */,
+				E526B5BE194AEDEF006D3527 /* Ride.m in Sources */,
 				E5F7F8E71925694B0001F1FE /* TestViewController.m in Sources */,
 				E59B9A4B1916A241008DE80B /* YourRidesViewController.m in Sources */,
 				E504D9D1190A7FC50036FFA8 /* SPGooglePlacesAutocompleteQuery.m in Sources */,

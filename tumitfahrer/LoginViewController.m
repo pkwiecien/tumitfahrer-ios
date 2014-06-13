@@ -93,7 +93,7 @@
 - (IBAction)loginButtonPressed:(id)sender {
     
     // firstly check if the user was previously stored in core data
-    if ([CurrentUser fetchUserFromCoreDataWithEmail:self.emailTextField.text encryptedPassword:[ActionManager createSHA512:self.passwordTextField.text]] ) {
+    if ([[CurrentUser sharedInstance] fetchUserFromCoreDataWithEmail:self.emailTextField.text encryptedPassword:[ActionManager createSHA512:self.passwordTextField.text]] ) {
         // user fetched successfully from core data
         [self storeCurrentUserInDefaults];
 //        [[SlideNavigationController sharedInstance] popToRootViewControllerAnimated:NO];
@@ -112,7 +112,7 @@
     [objectManager postObject:nil path:@"/api/v2/sessions" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         User *user = (User *)[mappingResult firstObject];
         user.password = [ActionManager createSHA512:self.passwordTextField.text];
-        [CurrentUser sharedInstance].user = user;
+        [[CurrentUser sharedInstance] initCurrentUser:user];
         
         NSError *error;
         if (![[CurrentUser sharedInstance].user.managedObjectContext saveToPersistentStore:&error]) {
