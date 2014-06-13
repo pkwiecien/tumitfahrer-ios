@@ -561,7 +561,7 @@
 }
 
 -(void)joinJoinDriverCellButtonPressed {
-    Request *request = [self requestFoundInCoreData];
+    Request *request = [[RidesStore sharedStore] rideRequestInCoreData:[CurrentUser sharedInstance].user.userId];
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
@@ -574,10 +574,10 @@
         
         [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/rides/%@/requests", self.ride.rideId] parameters:requestParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             [KGStatusBar showSuccessWithStatus:@"Request was sent"];
+            
             Request *rideRequest = (Request *)[mappingResult firstObject];
-            [[RidesStore sharedStore] addRideRequestToStore:rideRequest];
-            NSLog(@"Ride request: %@", rideRequest);
-            [self.ride addRequestsObject:rideRequest];
+            [[RidesStore sharedStore] addRideRequestToStore:rideRequest forRide:self.ride];
+            
             [self.rideDetail.tableView reloadData];
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
             [ActionManager showAlertViewWithTitle:[error localizedDescription]];
@@ -588,8 +588,7 @@
             
             [KGStatusBar showSuccessWithStatus:@"Request canceled"];
             
-            [self.ride removeRequestsObject:request];
-            [[RidesStore sharedStore] deleteRideRequestFromCoreData:request];
+            [[RidesStore sharedStore] deleteRideRequest:request];
             
             [self.rideDetail.tableView reloadData];
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {

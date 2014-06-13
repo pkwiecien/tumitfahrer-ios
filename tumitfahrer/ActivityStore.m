@@ -96,7 +96,7 @@ static int activity_id = 0;
         for (Request *request in activity.requests) {
             if ([now compare:request.requestedRide.departureTime] == NSOrderedAscending && ![array containsObject:request])  {
                 [array addObject:request];
-                [[RidesStore sharedStore] addRideRequestToStore:request];
+//                [[RidesStore sharedStore] addRideRequestToStore:request];
             }
         }
         for (RideSearch *rideSearch in activity.rideSearches) {

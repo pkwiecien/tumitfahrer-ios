@@ -171,7 +171,7 @@
 - (void)refreshUserRides {
     self.privateUserRides = [NSMutableArray arrayWithArray:[self.user.ridesAsOwner allObjects]];
     [self.privateUserRides addObjectsFromArray:[self.user.ridesAsPassenger allObjects]];
-    [self.privateUserRides addObjectsFromArray:[[RidesStore sharedStore] rideRequestForUserWithId:self.user.userId]];
+    [self.privateUserRides addObjectsFromArray:[[RidesStore sharedStore] rideRequestsForUserWithId:self.user.userId]];
 }
 
 - (NSMutableArray *)userRides {

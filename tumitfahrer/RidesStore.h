@@ -34,13 +34,13 @@
 + (void)initRide:(Ride *)ride index:(NSInteger)index block:(completionHandlerWithIndex)block;
 - (void)initUserRequests;
 - (Ride *)containsRideWithId:(NSNumber *)rideId;
-- (NSArray *)rideRequestForUserWithId:(NSNumber *)userId;
+- (NSArray *)rideRequestsForUserWithId:(NSNumber *)userId;
 - (void)fetchNewRides:(boolCompletionHandler)block;
 - (void)deleteRideFromCoreData:(Ride *)ride;
-- (void)deleteRideRequestFromCoreData:(Request *)request;
+- (void)deleteRideRequest:(Request *)request;
 
 - (void)addRideToStore:(Ride*)ride;
-- (void)addRideRequestToStore:(Request *)request;
+- (void)addRideRequestToStore:(Request *)request forRide:(Ride *)ride;
 - (void)addObserver:(id<RideStoreDelegate>) observer;
 - (void)removeObserver:(id<RideStoreDelegate>)observer;
 - (void)notifyAllAboutNewImageForRideId:(NSNumber *)rideId;
@@ -55,6 +55,7 @@
 - (BOOL)addPassengerForRideId:(NSNumber *)rideId requestor:(User *)requestor;
 - (BOOL)removeRequestForRide:(NSNumber *)rideId requestor:(User *)requestor;
 - (BOOL)removePassengerForRide:(NSNumber *)rideId passenger:(User *)passenger;
-
+- (void)saveToPersistentStore:(Ride *)ride;
+- (Request *)rideRequestInCoreData:(NSNumber *)userId;
 
 @end

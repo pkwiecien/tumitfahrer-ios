@@ -20,7 +20,6 @@
 @property (nonatomic) NSMutableArray *privateCampusRides;
 @property (nonatomic) NSMutableArray *privateActivityRides;
 @property (nonatomic) NSMutableArray *privatePastRides;
-@property (nonatomic) NSMutableArray *userRideRequests;
 @property (nonatomic) NSMutableArray *privateRideRequests;
 
 @property (nonatomic) NSMutableArray *privateCampusRidesNearby;
@@ -156,14 +155,12 @@ static int activity_id = 0;
 
 - (void)fetchUserRequestedRidesFromCoreData:(NSNumber *)userId {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *e = [NSEntityDescription entityForName:@"Ride"
+    NSEntityDescription *e = [NSEntityDescription entityForName:@"Request"
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
                               mainQueueManagedObjectContext];
     NSDate *now = [ActionManager currentDate];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(ANY self.requests.passengerId = %@) AND (departureTime >= %@)", userId, now];
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"departureTime" ascending:NO];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(passengerId = %@) AND (self.requestedRide.departureTime >= %@)", userId, now];
     
-    request.sortDescriptors = @[descriptor];
     [request setPredicate:predicate];
     request.entity = e;
     
@@ -173,7 +170,7 @@ static int activity_id = 0;
         [NSException raise:@"Fetch failed"
                     format:@"Reason: %@", [error localizedDescription]];
     }
-    self.userRideRequests = [[NSMutableArray alloc] initWithArray:fetchedObjects];
+    self.privateRideRequests = [[NSMutableArray alloc] initWithArray:fetchedObjects];
 }
 
 - (Ride *)fetchRideFromCoreDataWithId:(NSNumber *)rideId {
@@ -195,9 +192,18 @@ static int activity_id = 0;
     return [fetchedObjects firstObject];
 }
 
--(NSArray *)rideRequestForUserWithId:(NSNumber *)userId {
+-(NSArray *)rideRequestsForUserWithId:(NSNumber *)userId {
     [self fetchUserRequestedRidesFromCoreData:userId];
     return [self rideRequests];
+}
+
+-(Request *)rideRequestInCoreData:(NSNumber *)userId {
+    for (Request *request in [self rideRequestsForUserWithId:userId]) {
+        if ([request.passengerId isEqualToNumber:userId]) {
+            return request;
+        }
+    }
+    return nil;
 }
 
 -(void)fetchRidesForCurrentUser:(boolCompletionHandler)block {
@@ -359,19 +365,29 @@ static int activity_id = 0;
     }];
 }
 
+-(void)addRideRequestToStore:(Request *)request forRide:(Ride *)ride {
+    
+    // save to core data
+    [ride addRequestsObject:request];
+    [self saveToPersistentStore:ride];
+    
+}
+
 -(void)addRideRequestToStore:(Request *)request {
     if ([[self rideRequests] containsObject:request]) {
         return;
     }
     
     int index = 0;
-    for (Request *existingRequests in [self rideRequests]) {
-        if ([request.requestedRide.departureTime compare:existingRequests.requestedRide.departureTime] == NSOrderedAscending) {
+    for (Request *existingRequest in [self rideRequests]) {
+        if ([request.requestedRide.departureTime compare:existingRequest.requestedRide.departureTime] == NSOrderedAscending) {
             break;
         } else {
             index++;
         }
     }
+    
+    // add to local store
     [[self rideRequests] insertObject:request atIndex:index];
 }
 
@@ -658,7 +674,7 @@ static int activity_id = 0;
     }
 }
 
--(void)deleteRideRequestFromCoreData:(Request *)request {
+-(void)deleteRideRequest:(Request *)request {
     NSManagedObjectContext *context = request.managedObjectContext;
     [context deleteObject:request];
     NSError *error;
@@ -674,10 +690,10 @@ static int activity_id = 0;
 }
 
 -(NSArray *)currentUserRequestedRides {
-    if ([self userRideRequests] == nil) {
+    if ([self rideRequests] == nil) {
         [self initUserRequests];
     }
-    return [self userRideRequests];
+    return [self rideRequests];
 }
 
 -(Request *)getRequestForPassengerWithId:(NSNumber *)passengerId ride:(Ride *)ride{
@@ -752,13 +768,6 @@ static int activity_id = 0;
         self.privateRideRequests = [[NSMutableArray alloc] init];
     }
     return self.privateRideRequests;
-}
-
--(NSMutableArray *)userRideRequests {
-    if (self.userRideRequests == nil) {
-        self.userRideRequests = [[NSMutableArray alloc] init];
-    }
-    return self.userRideRequests;
 }
 
 -(NSMutableArray *)activityRidesNearby {
