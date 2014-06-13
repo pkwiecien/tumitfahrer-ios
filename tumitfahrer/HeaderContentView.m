@@ -74,6 +74,13 @@
         UIView *tableHeaderView = nil;
         if (self.shouldDisplayGradient) {
             tableHeaderView = [[[NSBundle mainBundle] loadNibNamed:@"HeaderLabelsView" owner:self options:nil] objectAtIndex:0];;
+            self.mapButton = (UIButton *)[tableHeaderView viewWithTag:14];
+            self.editButton = (UIButton *)[tableHeaderView viewWithTag:15];
+            self.departureLabel = (UILabel *)[tableHeaderView viewWithTag:10];
+            self.destinationLabel = (UILabel *)[tableHeaderView viewWithTag:11];
+            self.calendarLabel = (UILabel *)[tableHeaderView viewWithTag:12];
+            self.timeLabel = (UILabel *)[tableHeaderView viewWithTag:13];
+            [self.delegate initFields];
         } else {
             CGRect tableHeaderViewFrame = CGRectMake(0.0, 0.0, self.tableView.frame.size.width, self.defaultimagePagerHeight);
             tableHeaderView = [[UIView alloc] initWithFrame:tableHeaderViewFrame];
@@ -197,6 +204,14 @@
 
 -(void)headerViewTapped {
     [self.delegate headerViewTapped];
+}
+
+-(void)mapButtonPressed {
+    [self.delegate mapButtonTapped];
+}
+
+-(void)editButtonPressed {
+    [self.delegate editButtonTapped];
 }
 
 - (void)dealloc {

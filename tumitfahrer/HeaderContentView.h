@@ -8,10 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "HeaderImageView.h"
+#import "Ride.h"
 
 @protocol HeaderContentViewDelegate
 
 - (void)headerViewTapped;
+
+@optional
+
+-(void)mapButtonTapped;
+-(void)editButtonTapped;
+-(void)initFields;
 
 @end
 
@@ -38,5 +45,12 @@
 @property (nonatomic, strong) UIImage *circularImage;
 
 @property (nonatomic, assign) BOOL shouldDisplayGradient;
+
+@property (nonatomic, strong) UIButton *mapButton;
+@property (nonatomic, strong) UIButton *editButton;
+@property (nonatomic, strong) UILabel *departureLabel;
+@property (nonatomic, strong) UILabel *destinationLabel;
+@property (nonatomic, strong) UILabel *timeLabel;
+@property (nonatomic, strong) UILabel *calendarLabel;
 
 @end

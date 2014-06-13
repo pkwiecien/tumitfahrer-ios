@@ -14,7 +14,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *noticeImage;
 @property (weak, nonatomic) IBOutlet UILabel *noticeLabel;
-@property (weak, nonatomic) IBOutlet UIButton *mapButton;
+@property (weak, nonatomic) IBOutlet UIButton *editButton;
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 - (IBAction)refreshButtonPressed:(id)sender;
 

@@ -38,11 +38,12 @@
 #import "ActivityStore.h"
 #import "RequestorCell.h"
 
-@interface RideDetailViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, RequestorActionCellDelegate, JoinDriverCellDelegate, OfferRideCellDelegate, RequestorCellDelegate, PassengersCellDelegate>
+@interface RideDetailViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, RequestorActionCellDelegate, JoinDriverCellDelegate, OfferRideCellDelegate, RequestorCellDelegate, PassengersCellDelegate, HeaderContentViewDelegate>
 
 @property (strong, nonatomic) NSDictionary *backLinkInfo;
 @property (weak, nonatomic) UIView *backLinkView;
 @property (weak, nonatomic) UILabel *backLinkLabel;
+@property (strong, nonatomic) NSArray *headerTitles;
 
 @end
 
@@ -69,6 +70,7 @@
     
     self.rideDetail.shouldDisplayGradient = YES;
     self.rideDetail.headerView = _headerView;
+    self.rideDetail.delegate = self;
 }
 
 -(void)refreshRideButtonPressed {
@@ -117,12 +119,16 @@
     
     if (![self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && [self.ride.isRideRequest boolValue]) {
         self.rideTypeEnum = CurrentUserIsNotRideOwnerAndRequests;
+        self.headerTitles = [NSArray arrayWithObjects:@"Request Details", @"Passenger",@"", nil];
     } else if(![self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && ![self.ride.isRideRequest boolValue]) {
         self.rideTypeEnum = CurrentUserIsNotRideOwnerAndDriver;
+        self.headerTitles = [NSArray arrayWithObjects:@"Details", @"Driver", @"",nil];
     } else if([self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && ![self.ride.isRideRequest boolValue]) {
         self.rideTypeEnum = CurrentUserIsRideOwnerAndDriver;
+        self.headerTitles = [NSArray arrayWithObjects:@"Your car", @"Passengers", @"Requests", @"", nil];
     } else {
         self.rideTypeEnum = CurrentUserIsRideOwnerAndRequests;
+        self.headerTitles = [NSArray arrayWithObjects:@"Request Details", @"Passenger", @"", nil];
     }
 }
 
@@ -130,45 +136,86 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == 0){
+    if(indexPath.section == 0 && [self.ride.isRideRequest boolValue]){
         return 44.0f;
-    } else if(indexPath.section == 1){
-        return 44.0f;
-    } else if(indexPath.section == 2){
-        if ([self.ride.isRideRequest boolValue]) {
-            return 160.0f;
+    } else if(indexPath.section == 0 && ![self.ride.isRideRequest boolValue]){
+        return 100.0f;
+    }
+    
+    if (self.rideTypeEnum == CurrentUserIsRideOwnerAndDriver) {
+        if (indexPath.section == 1) {
+            return 60;
+        } else if(indexPath.section == 2) {
+            return 60;
+        } else if(indexPath.section == 3){
+            return 44;
         }
-        return 240.0f;
-    } else if(indexPath.section == 3){
-        return 170.0f;
-    } else if(indexPath.section == 4) {
-        return 60;
-    } else
-        return 100.0f; //cell for comments, in reality the height has to be adjustable
+    } else if(self.rideTypeEnum == CurrentUserIsRideOwnerAndRequests) {
+        return 44;
+    } else if(self.rideTypeEnum == CurrentUserIsNotRideOwnerAndDriver) {
+        return 44;
+    } else {
+        return 44;
+    }
+ 
+    return 44;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section < 4) {
+    if (section == 0) {
         return 1;
-    } else if(section == 4) {
-        return [self.ride.passengers count];
-    } else if(section == 5) {
-        return [self.ride.requests count];
     }
+    
+    if (self.rideTypeEnum == CurrentUserIsRideOwnerAndDriver) {
+        if (section == 1) {
+            return [self.ride.passengers count];
+        } else if(section == 2) {
+            return [self.ride.requests count];
+        } else if(section == 3){
+            return 1;
+        }
+    } else if(self.rideTypeEnum == CurrentUserIsRideOwnerAndRequests) {
+        return 1;
+    } else if(self.rideTypeEnum == CurrentUserIsNotRideOwnerAndDriver) {
+        return 1;
+    } else {
+        return 1;
+    }
+    
     return 1;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (self.rideTypeEnum == CurrentUserIsRideOwnerAndDriver) {
-        return 6;
+        return 3;
     } else if(self.rideTypeEnum == CurrentUserIsRideOwnerAndRequests) {
-        return 4;
+        return 2;
     } else if(self.rideTypeEnum == CurrentUserIsNotRideOwnerAndDriver) {
-        return 4;
+        return 2;
     } else {
-        return 4;
+        return 2;
     }
 }
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == [self.headerTitles count]) {
+        return 0;
+    }
+    return 44;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    RideNoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideNoticeCell"];
+    if(cell == nil){
+        cell = [RideNoticeCell rideNoticeCell];
+    }
+    cell.noticeLabel.text = [self.headerTitles objectAtIndex:section];
+    [cell.refreshButton addTarget:self action:@selector(refreshRideButtonPressed) forControlEvents:UIControlEventTouchDown];
+    [cell.editButton addTarget:self action:@selector(editButtonTapped) forControlEvents:UIControlEventTouchDown];
+
+    return cell;
+}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -179,70 +226,12 @@
     
     generalCell.textLabel.text = @"Default cell";
     
-    if (indexPath.section == 0) {
-        
-        RideNoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideNoticeCell"];
-        if(cell == nil){
-            cell = [RideNoticeCell rideNoticeCell];
-        }
-        if ([self.ride.isRideRequest boolValue]) {
-            cell.noticeLabel.text = @"Ride Request";
-        } else if(self.ride.rideType == 0) {
-            cell.noticeLabel.text = @"Campus Ride";
-        } else {
-            cell.noticeLabel.text = @"Activity Ride";
-        }
-        [cell.refreshButton addTarget:self action:@selector(refreshRideButtonPressed) forControlEvents:UIControlEventTouchDown];
-        [cell.mapButton addTarget:self action:@selector(mapViewTap) forControlEvents:UIControlEventTouchDown];
-        return cell;
-    }
-    else if(indexPath.section == 1) {
-        if (self.rideTypeEnum == CurrentUserIsNotRideOwnerAndDriver) {
-            JoinDriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JoinDriverCell"];
-            if(cell == nil){
-                cell = [JoinDriverCell joinDriverCell];
-            }
-            cell.delegate = self;
-            return cell;
-        } else if(self.rideTypeEnum == CurrentUserIsNotRideOwnerAndRequests) {
-            OfferRideCell *cell = [tableView dequeueReusableCellWithIdentifier:@"OfferRideCell"];
-            if(cell == nil){
-                cell = [OfferRideCell offerRideCell];
-            }
-            
-            cell.delegate = self;
-            return cell;
-        }
-        else if (self.rideTypeEnum == CurrentUserIsRideOwnerAndRequests) {
-            
-            RequestorActionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RequestorActionCell"];
-            if(cell == nil){
-                cell = [RequestorActionCell requestorActionCell];
-            }
-            
-            cell.delegate = self;
-            return cell;
-            
-        } else {
-            DriverActionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailsMessagesChoiceCell"];
-            if(cell == nil){
-                cell = [DriverActionCell driverActionCell];
-            }
-            
-            cell.delegate = self;
-            return cell;
-        }
-    }
-    else if(indexPath.section == 2) {
+    if(indexPath.section == 0) {
         if (![self.ride.isRideRequest boolValue]) {
             RideInformationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideInformationCell"];
             if(cell == nil){
                 cell = [RideInformationCell rideInformationCell];
             }
-            cell.departurePlaceLabel.text = self.ride.departurePlace;
-            cell.destinationLabel.text = self.ride.destination;
-            cell.timeLabel.text = [ActionManager timeStringFromDate:self.ride.departureTime];
-            cell.dateLabel.text = [ActionManager dateStringFromDate:self.ride.departureTime];
             if (self.ride.rideOwner == nil || self.ride.rideOwner.car == nil) {
                 cell.carLabel.text = @"Not specified";
             } else {
@@ -256,61 +245,90 @@
             if(cell == nil){
                 cell = [RideRequestInformationCell rideRequestInformationCell];
             }
-            cell.departurePlaceLabel.text = self.ride.departurePlace;
-            cell.destinationLabel.text = self.ride.destination;
-            cell.timeLabel.text = [ActionManager timeStringFromDate:self.ride.departureTime];
-            cell.dateLabel.text = [ActionManager dateStringFromDate:self.ride.departureTime];
+            cell.requestInfoLabel.text = self.ride.departurePlace;
+            return cell;
+        }
+    }
+
+    if (self.rideTypeEnum == CurrentUserIsRideOwnerAndDriver) {
+        if (indexPath.section == 1) { // show passengers
+            PassengersCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PassengersCell"];
+            if (cell == nil) {
+                cell = [PassengersCell passengersCell];
+            }
+            cell.indexPath = indexPath;
+            cell.delegate = self;
+            
+            User *user =[[self.ride.passengers allObjects] objectAtIndex:indexPath.row];
+            cell.passengerName.text = user.firstName;
+            cell.user = user;
+            cell.rideId = self.ride.rideId;
+            return cell;
+        } else if(indexPath.section == 2) { // show requests
+            RequestorCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RequestorCell"];
+            if (cell == nil) {
+                cell = [RequestorCell requestorCell];
+            }
+            cell.rideId = self.ride.rideId;
+            cell.indexPath = indexPath;
+            cell.delegate = self;
+            
+            Request *request =[[self.ride.requests allObjects] objectAtIndex:indexPath.row];
+            [WebserviceRequest getUserWithId:request.passengerId block:^(User * user) {
+                if (user != nil) {
+                    cell.request = request;
+                    cell.user = user;
+                    [self.rideDetail.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+                }
+            }];
+            return cell;
+        } else {         // show delete button
+            return generalCell;
+        }
+
+    } else if(self.rideTypeEnum == CurrentUserIsRideOwnerAndRequests) {
+        // show delete request button
+
+    } else if(self.rideTypeEnum == CurrentUserIsNotRideOwnerAndDriver) {
+        
+        if (indexPath.section == 1) { // show driver
+            DriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DriverCell"];
+            if (cell == nil) {
+                cell = [DriverCell driverCell];
+            }
+            
+            if (self.ride.rideOwner != nil) {
+                cell.driverNameLabel.text = self.ride.rideOwner.firstName;
+                cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [self.ride.rideOwner.ratingAvg floatValue]];
+                CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageWithData:self.ride.rideOwner.profileImageData]];
+                [cell addSubview:circularImageView];
+            }
             
             return cell;
         }
-    } else if(indexPath.section == 3) {
+        // show leave button
         
-        DriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DriverCell"];
-        if (cell == nil) {
-            cell = [DriverCell driverCell];
-        }
-        
-        if (self.ride.rideOwner != nil) {
-            cell.driverNameLabel.text = self.ride.rideOwner.firstName;
-            cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [self.ride.rideOwner.ratingAvg floatValue]];
-            CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageWithData:self.ride.rideOwner.profileImageData]];
-            [cell addSubview:circularImageView];
-        }
-        
-        return cell;
-    } else if(indexPath.section == 4) { // passenger cell
-        
-        PassengersCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PassengersCell"];
-        if (cell == nil) {
-            cell = [PassengersCell passengersCell];
-        }
-        cell.indexPath = indexPath;
-        
-        User *user =[[self.ride.passengers allObjects] objectAtIndex:indexPath.row];
-        cell.passengerName.text = user.firstName;
-        cell.user = user;
-        cell.rideId = self.ride.rideId;
-        return cell;
-    } else { // request cell
-        
-        RequestorCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RequestorCell"];
-        if (cell == nil) {
-            cell = [RequestorCell requestorCell];
-        }
-        cell.rideId = self.ride.rideId;
-        cell.indexPath = indexPath;
-        cell.delegate = self;
-        
-        Request *request =[[self.ride.requests allObjects] objectAtIndex:indexPath.row];
-        [WebserviceRequest getUserWithId:request.passengerId block:^(User * user) {
-            if (user != nil) {
-                cell.request = request;
-                cell.user = user;
-                [self.rideDetail.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+    } else {
+        if (indexPath.section == 1) { // show passenger aka driver
+            DriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DriverCell"];
+            if (cell == nil) {
+                cell = [DriverCell driverCell];
             }
-        }];
-        return cell;
+            
+            if (self.ride.rideOwner != nil) {
+                cell.driverNameLabel.text = self.ride.rideOwner.firstName;
+                cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [self.ride.rideOwner.ratingAvg floatValue]];
+                CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageWithData:self.ride.rideOwner.profileImageData]];
+                [cell addSubview:circularImageView];
+            }
+            
+            return cell;
+        }
+        
+        // show offer a ride
     }
+    
+    return generalCell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -347,12 +365,6 @@
 }
 
 #pragma mark - map view methods
-
--(void)mapViewTap {
-    RideDetailMapViewController *rideDetailMapVC = [[RideDetailMapViewController alloc] init];
-    rideDetailMapVC.selectedRide = self.ride;
-    [self.navigationController pushViewController:rideDetailMapVC animated:YES];
-}
 
 -(void)didReceivePhotoForRide:(NSNumber *)rideId {
     UIImage *img = [UIImage imageWithData:self.ride.destinationImage];
@@ -625,4 +637,28 @@
         [self.rideDetail.tableView reloadData];
     }
 }
+
+-(void)headerViewTapped {
+    
+}
+
+-(void)editButtonTapped {
+    
+}
+
+-(void)mapButtonTapped {
+    RideDetailMapViewController *rideDetailMapVC = [[RideDetailMapViewController alloc] init];
+    rideDetailMapVC.selectedRide = self.ride;
+    [self.navigationController pushViewController:rideDetailMapVC animated:YES];
+}
+
+-(void)initFields {
+    [self.rideDetail.mapButton addTarget:self action:@selector(mapButtonTapped) forControlEvents:UIControlEventTouchDown];
+    [self.rideDetail.editButton addTarget:self action:@selector(editButtonTapped) forControlEvents:UIControlEventTouchDown];
+    self.rideDetail.departureLabel.text = self.ride.departurePlace;
+    self.rideDetail.destinationLabel.text = self.ride.destination;
+    self.rideDetail.timeLabel.text = [ActionManager timeStringFromDate:self.ride.departureTime];
+    self.rideDetail.calendarLabel.text = [ActionManager dateStringFromDate:self.ride.departureTime];
+}
+
 @end
