@@ -12,14 +12,17 @@
 #import "CurrentUser.h"
 #import "LoginViewController.h"
 #import "FacultyManager.h"
+#import "CustomIOS7AlertView.h"
 
-@interface RegisterViewController () <NSFetchedResultsControllerDelegate>
+@interface RegisterViewController () <NSFetchedResultsControllerDelegate,CustomIOS7AlertViewDelegate>
 
 @property (nonatomic, strong) CustomTextField *emailTextField;
 @property (nonatomic, strong) CustomTextField *firstNameTextField;
 @property (nonatomic, strong) CustomTextField *lastNameTextField;
 @property (nonatomic, strong) CustomTextField *departmentNameTextField;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) CustomIOS7AlertView *alertView;
+
 
 @end
 
@@ -42,12 +45,22 @@
         [self.view addSubview:self.lastNameTextField];
         [self.view addSubview:self.departmentNameTextField];
         [self.view addSubview:self.pickerView];
+
+        self.alertView  = [[CustomIOS7AlertView alloc] init];
+
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self.alertView setContainerView:[self createPickerView]];
+    
+    // Modify the parameters
+    [self.alertView setButtonTitles:[NSMutableArray arrayWithObjects:@"Close", @"Select", nil]];
+    [self.alertView setDelegate:self];
+    [self.alertView setUseMotionEffects:true];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -76,6 +89,15 @@
 }
 
 - (IBAction)registerButtonPressed:(id)sender {
+    NSString *email = [[self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *firstName = [[self.firstNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *lastName = [[self.lastNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    if (email.length < 6 || firstName.length < 3 || lastName.length < 2) {
+        [ActionManager showAlertViewWithTitle:@"Invalid input" description:@"Input too short"];
+        return;
+    }
+
     // send a register request to the backend
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
@@ -168,6 +190,23 @@
 
 -(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
     return 35.0f;
+}
+
+
+
+- (UIView *)createPickerView {
+    UIView *demoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 290, 200)];
+    demoView.backgroundColor = [UIColor greenColor];
+    
+    return demoView;
+}
+
+
+-(void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        
+    }
+    [alertView close];
 }
 
 @end

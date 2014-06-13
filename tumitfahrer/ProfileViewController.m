@@ -15,6 +15,8 @@
 #import "GeneralInfoCell.h"
 #import "CurrentUser.h"
 #import "EditProfileFieldViewController.h"
+#import "FacultyManager.h"
+#import "EditDepartmentViewController.h"
 
 @interface ProfileViewController ()
 
@@ -32,7 +34,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-        self.cellImages = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"ProfileIconBlack"], [UIImage imageNamed:@"ProfileIconBlack"], [UIImage imageNamed:@"EmailIconBlackSmall"], [UIImage imageNamed:@"PhoneIconBlack"], [UIImage imageNamed:@"CarIconBlack"], [UIImage imageNamed:@"PasswordIconBlack"],  nil];
+        self.cellImages = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"ProfileIconBlack"], [UIImage imageNamed:@"ProfileIconBlack"], [UIImage imageNamed:@"EmailIconBlackSmall"], [UIImage imageNamed:@"PhoneIconBlack"], [UIImage imageNamed:@"CarIconBlack"], [UIImage imageNamed:@"PasswordIconBlack"],  [UIImage imageNamed:@"CarIconBlack"], nil];
         self.editDescriptions = [NSArray arrayWithObjects:@"First Name",@"Last Name", @"Email", @"Phone", @"Car", @"Password", @"Department", nil];
     }
     return self;
@@ -76,7 +78,7 @@
         }
         self.profileImageContentView.circularImage = profilePic;
     } else {
-//        self.profileImageContentView.circularImage = [UIImage imageNamed:@"CircleBlue"];
+        //        self.profileImageContentView.circularImage = [UIImage imageNamed:@"CircleBlue"];
     }
 }
 
@@ -96,7 +98,8 @@
         car = [CurrentUser sharedInstance].user.car;
     }
     
-    self.cellDescriptions = [[NSArray alloc] initWithObjects:[CurrentUser sharedInstance].user.firstName, [CurrentUser sharedInstance].user.lastName, [CurrentUser sharedInstance].user.email, phoneNumber, car, @"●●●●●●",  nil];
+    NSString *department = [NSString stringWithFormat:@"%@", [[FacultyManager sharedInstance] nameOfFacultyAtIndex:[[CurrentUser sharedInstance].user.department intValue]]];
+    self.cellDescriptions = [[NSArray alloc] initWithObjects:[CurrentUser sharedInstance].user.firstName, [CurrentUser sharedInstance].user.lastName, [CurrentUser sharedInstance].user.email, phoneNumber, car, @"●●●●●●", department, nil];
 }
 
 -(void)oneFingerTwoTaps {
@@ -156,17 +159,22 @@
     }
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.profileImageContentView.tableView deselectRowAtIndexPath:indexPath animated:NO];
-
-    if ([[self.cellDescriptions objectAtIndex:indexPath.row] isEqualToString:[CurrentUser sharedInstance].user.email]) {
-        return;
-    }
     
-    EditProfileFieldViewController *editProfileVC = [[EditProfileFieldViewController alloc] init];
-    editProfileVC.title = [self.editDescriptions objectAtIndex:indexPath.row];
-    editProfileVC.initialDescription = [self.cellDescriptions objectAtIndex:indexPath.row];
-    editProfileVC.updatedFiled = indexPath.row;
-    [self.navigationController pushViewController:editProfileVC animated:YES];
+    [self.profileImageContentView.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
+    if (indexPath.section == 0 || [[self.cellDescriptions objectAtIndex:indexPath.row] isEqualToString:[CurrentUser sharedInstance].user.email]) {
+        // do nothing
+    } else if(indexPath.row == [self.cellDescriptions count]-1) {
+        EditDepartmentViewController *editDepartmentVC = [[EditDepartmentViewController alloc] init];
+        editDepartmentVC.title = @"Department";
+        [self.navigationController pushViewController:editDepartmentVC animated:YES];
+    } else {
+        EditProfileFieldViewController *editProfileVC = [[EditProfileFieldViewController alloc] init];
+        editProfileVC.title = [self.editDescriptions objectAtIndex:indexPath.row];
+        editProfileVC.initialDescription = [self.cellDescriptions objectAtIndex:indexPath.row];
+        editProfileVC.updatedFiled = indexPath.row;
+        [self.navigationController pushViewController:editProfileVC animated:YES];
+    }
 }
 
 #pragma mark - Button handlers

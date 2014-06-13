@@ -80,8 +80,9 @@
 		E522BAE318AE13F600ECD375 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E522BAE118AE13F600ECD375 /* InfoPlist.strings */; };
 		E526B5A1194A1D07006D3527 /* EditProfileFieldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E526B59F194A1D07006D3527 /* EditProfileFieldViewController.m */; };
 		E526B5A2194A1D07006D3527 /* EditProfileFieldViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E526B5A0194A1D07006D3527 /* EditProfileFieldViewController.xib */; };
-		E526B5A8194A34A2006D3527 /* EditDepartmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E526B5A6194A34A2006D3527 /* EditDepartmentViewController.m */; };
-		E526B5A9194A34A2006D3527 /* EditDepartmentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E526B5A7194A34A2006D3527 /* EditDepartmentViewController.xib */; };
+		E526B5AD194A488B006D3527 /* CustomIOS7AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = E526B5AC194A488B006D3527 /* CustomIOS7AlertView.m */; };
+		E526B5B1194AC8D9006D3527 /* EditDepartmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E526B5AF194AC8D9006D3527 /* EditDepartmentViewController.m */; };
+		E526B5B2194AC8D9006D3527 /* EditDepartmentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E526B5B0194AC8D9006D3527 /* EditDepartmentViewController.xib */; };
 		E52EA4D3192C019C00E78B6D /* RideDetailMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E52EA4D1192C019C00E78B6D /* RideDetailMapViewController.m */; };
 		E52EA4D4192C019C00E78B6D /* RideDetailMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E52EA4D2192C019C00E78B6D /* RideDetailMapViewController.xib */; };
 		E53D5D0018B14C39004016F8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E53D5CFF18B14C39004016F8 /* QuartzCore.framework */; };
@@ -352,9 +353,11 @@
 		E526B59E194A1D07006D3527 /* EditProfileFieldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileFieldViewController.h; sourceTree = "<group>"; };
 		E526B59F194A1D07006D3527 /* EditProfileFieldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileFieldViewController.m; sourceTree = "<group>"; };
 		E526B5A0194A1D07006D3527 /* EditProfileFieldViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileFieldViewController.xib; sourceTree = "<group>"; };
-		E526B5A5194A34A2006D3527 /* EditDepartmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditDepartmentViewController.h; sourceTree = "<group>"; };
-		E526B5A6194A34A2006D3527 /* EditDepartmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDepartmentViewController.m; sourceTree = "<group>"; };
-		E526B5A7194A34A2006D3527 /* EditDepartmentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditDepartmentViewController.xib; sourceTree = "<group>"; };
+		E526B5AB194A488B006D3527 /* CustomIOS7AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOS7AlertView.h; sourceTree = "<group>"; };
+		E526B5AC194A488B006D3527 /* CustomIOS7AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOS7AlertView.m; sourceTree = "<group>"; };
+		E526B5AE194AC8D9006D3527 /* EditDepartmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditDepartmentViewController.h; sourceTree = "<group>"; };
+		E526B5AF194AC8D9006D3527 /* EditDepartmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDepartmentViewController.m; sourceTree = "<group>"; };
+		E526B5B0194AC8D9006D3527 /* EditDepartmentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditDepartmentViewController.xib; sourceTree = "<group>"; };
 		E52EA4D0192C019C00E78B6D /* RideDetailMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideDetailMapViewController.h; sourceTree = "<group>"; };
 		E52EA4D1192C019C00E78B6D /* RideDetailMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideDetailMapViewController.m; sourceTree = "<group>"; };
 		E52EA4D2192C019C00E78B6D /* RideDetailMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RideDetailMapViewController.xib; sourceTree = "<group>"; };
@@ -899,11 +902,20 @@
 		E526B5A4194A2FF7006D3527 /* Edit Department */ = {
 			isa = PBXGroup;
 			children = (
-				E526B5A5194A34A2006D3527 /* EditDepartmentViewController.h */,
-				E526B5A6194A34A2006D3527 /* EditDepartmentViewController.m */,
-				E526B5A7194A34A2006D3527 /* EditDepartmentViewController.xib */,
+				E526B5AE194AC8D9006D3527 /* EditDepartmentViewController.h */,
+				E526B5AF194AC8D9006D3527 /* EditDepartmentViewController.m */,
+				E526B5B0194AC8D9006D3527 /* EditDepartmentViewController.xib */,
 			);
 			name = "Edit Department";
+			sourceTree = "<group>";
+		};
+		E526B5AA194A487C006D3527 /* Custom Alert View */ = {
+			isa = PBXGroup;
+			children = (
+				E526B5AB194A488B006D3527 /* CustomIOS7AlertView.h */,
+				E526B5AC194A488B006D3527 /* CustomIOS7AlertView.m */,
+			);
+			name = "Custom Alert View";
 			sourceTree = "<group>";
 		};
 		E52EA4CF192C016900E78B6D /* Map View */ = {
@@ -1172,6 +1184,7 @@
 		E599886618E860FA00B01C62 /* zLibraries */ = {
 			isa = PBXGroup;
 			children = (
+				E526B5AA194A487C006D3527 /* Custom Alert View */,
 				E58B872719151F1B0032524A /* KGStatusBar */,
 				E504D9C7190A7FAC0036FFA8 /* GooglePlacesAutocomplete */,
 			);
@@ -1618,6 +1631,7 @@
 				E50CCC11191E529A003A9490 /* TimelineViewController.xib in Resources */,
 				E50CCC1B191E5885003A9490 /* TimelineCell.xib in Resources */,
 				E5FEF3641945E5BC00E326BB /* ReminderViewController.xib in Resources */,
+				E526B5B2194AC8D9006D3527 /* EditDepartmentViewController.xib in Resources */,
 				E5FC44D5190CF83100E8DB65 /* MenuTopHeaderView.xib in Resources */,
 				E5DE44E8192610E10034AF6F /* AddRideTableHeader.xib in Resources */,
 				E59B9A611916B7E4008DE80B /* YourRidesCell.xib in Resources */,
@@ -1635,7 +1649,6 @@
 				E59B9A4C1916A241008DE80B /* YourRidesViewController.xib in Resources */,
 				E599886318E84D9D00B01C62 /* MenuTableViewCell.xib in Resources */,
 				E526B5A2194A1D07006D3527 /* EditProfileFieldViewController.xib in Resources */,
-				E526B5A9194A34A2006D3527 /* EditDepartmentViewController.xib in Resources */,
 				E5FEF2F819447A3B00E326BB /* MessageListCell.xib in Resources */,
 				E5FEF36F1946005600E326BB /* TimePickerCell.xib in Resources */,
 				E50CCD07191FAE8A003A9490 /* RidesViewController.xib in Resources */,
@@ -1762,6 +1775,7 @@
 				E50CCC14191E54F1003A9490 /* UIViewController+SideBarController.m in Sources */,
 				E504D9BC190A58710036FFA8 /* MeetingPointViewController.m in Sources */,
 				E504D9D0190A7FC50036FFA8 /* SPGooglePlacesAutocompletePlace.m in Sources */,
+				E526B5B1194AC8D9006D3527 /* EditDepartmentViewController.m in Sources */,
 				E5FEF3A91946FD0000E326BB /* OfferRideCell.m in Sources */,
 				E5FEF3831946EBE800E326BB /* ManageDriverRideViewController.m in Sources */,
 				E5FEF3511945A02300E326BB /* SearchResultViewController.m in Sources */,
@@ -1786,6 +1800,7 @@
 				E5888A001913E37C0062D0DF /* DriverCell.m in Sources */,
 				E564464F192AB67200F636A5 /* CircularImageView.m in Sources */,
 				E5FEF32C1944C4AC00E326BB /* Message.m in Sources */,
+				E526B5AD194A488B006D3527 /* CustomIOS7AlertView.m in Sources */,
 				E5FEF35E1945E4EC00E326BB /* PrivacyViewController.m in Sources */,
 				E504D9E8190B02490036FFA8 /* Device.m in Sources */,
 				E5FEF3781946299500E326BB /* Activity.m in Sources */,
@@ -1856,7 +1871,6 @@
 				E5A9BE25194253390072E9B0 /* RideSearchMapping.m in Sources */,
 				E50DB29818FA7D4100E87E62 /* Faculty.m in Sources */,
 				E504D9C2190A6C940036FFA8 /* DestinationViewController.m in Sources */,
-				E526B5A8194A34A2006D3527 /* EditDepartmentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
