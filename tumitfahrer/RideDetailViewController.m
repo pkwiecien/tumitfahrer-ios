@@ -36,12 +36,9 @@
 #import "EditRideViewController.h"
 #import "AddRideViewController.h"
 #import "ActivityStore.h"
+#import "RequestorCell.h"
 
-@interface RideDetailViewController () <NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, RequestorActionCellDelegate, JoinDriverCellDelegate, OfferRideCellDelegate>
-
-@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
-@property (nonatomic, strong) MKRoute *currentRoute;
-@property (nonatomic, strong) MKPolyline *routeOverlay;
+@interface RideDetailViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, RequestorActionCellDelegate, JoinDriverCellDelegate, OfferRideCellDelegate, RequestorCellDelegate>
 
 @property (strong, nonatomic) NSDictionary *backLinkInfo;
 @property (weak, nonatomic) UIView *backLinkView;
@@ -51,8 +48,7 @@
 
 @implementation RideDetailViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 	
     self.rideDetail = [[HeaderContentView alloc] initWithFrame:self.view.bounds];
@@ -71,6 +67,7 @@
     [buttonBack addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buttonBack];
     
+    self.rideDetail.shouldDisplayGradient = YES;
     self.rideDetail.headerView = _headerView;
 }
 
@@ -92,7 +89,6 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.headerViewLabel.text = [@"To " stringByAppendingString:self.ride.destination];
-    [self prepareMapDirections];
     
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     if (delegate.refererAppLink) {
@@ -100,6 +96,7 @@
         [self _showBackLink];
     }
     delegate.refererAppLink = nil;
+    [self initRideTypeEnum];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -109,52 +106,78 @@
     }
 }
 
+-(void)initRideTypeEnum {
+    
+    if (![self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && [self.ride.isRideRequest boolValue]) {
+        self.rideTypeEnum = CurrentUserIsNotRideOwnerAndRequests;
+    } else if(![self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && ![self.ride.isRideRequest boolValue]) {
+        self.rideTypeEnum = CurrentUserIsNotRideOwnerAndDriver;
+    } else if([self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && ![self.ride.isRideRequest boolValue]) {
+        self.rideTypeEnum = CurrentUserIsRideOwnerAndDriver;
+    } else {
+        self.rideTypeEnum = CurrentUserIsRideOwnerAndRequests;
+    }
+}
+
 #pragma mark - UITableView
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row == 0){
+    if(indexPath.section == 0){
         return 44.0f;
-    }
-    else if(indexPath.row == 1){
+    } else if(indexPath.section == 1){
         return 44.0f;
-    }
-    else if(indexPath.row == 2){
+    } else if(indexPath.section == 2){
         if ([self.ride.isRideRequest boolValue]) {
             return 160.0f;
         }
         return 240.0f;
-    }
-    else if(indexPath.row == 3){
+    } else if(indexPath.section == 3){
         return 170.0f;
-    }
-    else if(indexPath.row == 4) {
-        return 100*(1+([self.ride.freeSeats intValue]-1)/3);
-    }else
+    } else if(indexPath.section == 4) {
+        return 60;
+    } else
         return 100.0f; //cell for comments, in reality the height has to be adjustable
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ([self.ride.isRideRequest boolValue]) {
-        return 4; // it's a ride request, so don't show passengers
+    if (section < 4) {
+        return 1;
+    } else if(section == 4) {
+        return [self.ride.passengers count];
+    } else if(section == 5) {
+        return [self.ride.requests count];
     }
-    return 5;
+    return 1;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    if (self.rideTypeEnum == CurrentUserIsRideOwnerAndDriver) {
+        return 6;
+    } else if(self.rideTypeEnum == CurrentUserIsRideOwnerAndRequests) {
+        return 4;
+    } else if(self.rideTypeEnum == CurrentUserIsNotRideOwnerAndDriver) {
+        return 6;
+    } else {
+        return 4;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
+    UITableViewCell *generalCell = [tableView dequeueReusableCellWithIdentifier:@"reusable"];
+    if (!generalCell) {
+        generalCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reusable"];
+    }
+    
+    generalCell.textLabel.text = @"Default cell";
+    
+    if (indexPath.section == 0) {
         
         RideNoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideNoticeCell"];
-        
         if(cell == nil){
             cell = [RideNoticeCell rideNoticeCell];
         }
-        
         if ([self.ride.isRideRequest boolValue]) {
             cell.noticeLabel.text = @"Ride Request";
         } else if(self.ride.rideType == 0) {
@@ -162,17 +185,18 @@
         } else {
             cell.noticeLabel.text = @"Activity Ride";
         }
+        [cell.mapButton addTarget:self action:@selector(mapViewTap) forControlEvents:UIControlEventTouchDown];
         return cell;
     }
-    else if(indexPath.row == 1) {
-        if (![self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && ![self.ride.isRideRequest boolValue]) {
+    else if(indexPath.section == 1) {
+        if (self.rideTypeEnum == CurrentUserIsNotRideOwnerAndDriver) {
             JoinDriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JoinDriverCell"];
             if(cell == nil){
                 cell = [JoinDriverCell joinDriverCell];
             }
             cell.delegate = self;
             return cell;
-        } else if(![self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && [self.ride.isRideRequest boolValue]) {
+        } else if(self.rideTypeEnum == CurrentUserIsNotRideOwnerAndRequests) {
             OfferRideCell *cell = [tableView dequeueReusableCellWithIdentifier:@"OfferRideCell"];
             if(cell == nil){
                 cell = [OfferRideCell offerRideCell];
@@ -181,7 +205,7 @@
             cell.delegate = self;
             return cell;
         }
-        else if ([[CurrentUser sharedInstance].user.userId isEqualToNumber:self.ride.rideOwner.userId]&& [self.ride.isRideRequest boolValue]) {
+        else if (self.rideTypeEnum == CurrentUserIsRideOwnerAndRequests) {
             
             RequestorActionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RequestorActionCell"];
             if(cell == nil){
@@ -201,7 +225,7 @@
             return cell;
         }
     }
-    else if(indexPath.row == 2) {
+    else if(indexPath.section == 2) {
         if (![self.ride.isRideRequest boolValue]) {
             RideInformationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideInformationCell"];
             if(cell == nil){
@@ -231,35 +255,19 @@
             
             return cell;
         }
-    } else if(indexPath.row == 3) {
+    } else if(indexPath.section == 3) {
         if([self.ride.isRideRequest boolValue]) {
             DriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DriverCell"];
             if (cell == nil) {
                 cell = [DriverCell driverCell];
             }
             
-            if (self.ride.rideOwner == nil) {
-                
-            }
-            else if ([self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
-                cell.driverNameLabel.text = [CurrentUser sharedInstance].user.firstName;
-                cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [[CurrentUser sharedInstance].user.ratingAvg floatValue]];
-                CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageWithData:[CurrentUser sharedInstance].user.profileImageData]];
-                [cell addSubview:circularImageView];
-            } else {
-                CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageNamed:@"CircleBlue"]];
+            if (self.ride.rideOwner != nil) {
+                cell.driverNameLabel.text = self.ride.rideOwner.firstName;
+                cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [self.ride.rideOwner.ratingAvg floatValue]];
+                CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageWithData:self.ride.rideOwner.profileImageData]];
                 [cell addSubview:circularImageView];
             }
-            
-            cell.mapView.delegate = self;
-            UITapGestureRecognizer *mapTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mapViewTap)];
-            // Set required taps and number of touches
-            [mapTap setNumberOfTapsRequired:1];
-            [mapTap setNumberOfTouchesRequired:1];
-            // Add the gesture to the view
-            [cell.mapView addGestureRecognizer:mapTap];
-            self.map = cell.mapView;
-            
             return cell;
         } else {
             DriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DriverCell"];
@@ -282,32 +290,35 @@
                 [cell addSubview:circularImageView];
             }
             
-            cell.mapView.delegate = self;
-            UITapGestureRecognizer *mapTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mapViewTap)];
-            // Set required taps and number of touches
-            [mapTap setNumberOfTapsRequired:1];
-            [mapTap setNumberOfTouchesRequired:1];
-            // Add the gesture to the view
-            [cell.mapView addGestureRecognizer:mapTap];
-            self.map = cell.mapView;
-            
             return cell;
         }
-    } else if(indexPath.row == 4 && ![self.ride.isRideRequest boolValue]) {
+    } else if(indexPath.section == 4) { // passenger cell
+        
         PassengersCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PassengersCell"];
         if (cell == nil) {
             cell = [PassengersCell passengersCell];
         }
-        [cell drawCirlesWithPassengersNumber:[self.ride.passengers count] freeSeats:[self.ride.freeSeats intValue]];
+        cell.indexPath = indexPath;
+
+        User *user =[[self.ride.passengers allObjects] objectAtIndex:indexPath.row];
+        cell.passengerName.text = user.firstName;
+        cell.user = user;
         return cell;
-    } else {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reusable"];
-        if (!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reusable"];
+    } else { // request cell
+
+        RequestorCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RequestorCell"];
+        if (cell == nil) {
+            cell = [RequestorCell requestorCell];
         }
+        cell.rideId = self.ride.rideId;
+        cell.indexPath = indexPath;
+        cell.delegate = self;
         
-        cell.textLabel.text = @"Default cell";
-        
+        Request *request =[[self.ride.requests allObjects] objectAtIndex:indexPath.row];
+        [WebserviceRequest getUserWithId:request.passengerId block:^(User * user) {
+            cell.user = user;
+            [self.rideDetail.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }];
         return cell;
     }
 }
@@ -336,31 +347,6 @@
     }
 }
 
--(NSFetchedResultsController *)fetchedResultsController {
-    if (self.fetchedResultsController != nil) {
-        return self.fetchedResultsController;
-    }
-    
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Request"];
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO];
-    fetchRequest.sortDescriptors = @[descriptor];
-    NSError *error = nil;
-    
-    // Setup fetched results
-    self.fetchedResultsController = [[NSFetchedResultsController alloc]
-                                     initWithFetchRequest:fetchRequest
-                                     managedObjectContext:[RKManagedObjectStore defaultStore].
-                                     mainQueueManagedObjectContext
-                                     sectionNameKeyPath:nil cacheName:@"Request"];
-    self.fetchedResultsController.delegate = self;
-    
-    if (![self.fetchedResultsController performFetch:&error]) {
-        [ActionManager showAlertViewWithTitle:[error localizedDescription]];
-    }
-    
-    return self.fetchedResultsController;
-}
-
 -(Request *)requestFoundInCoreData {
     for (Request *request in self.ride.requests) {
         if (request.passengerId == [CurrentUser sharedInstance].user.userId) {
@@ -371,67 +357,6 @@
 }
 
 #pragma mark - map view methods
-
-// method from: https://github.com/ShinobiControls/iOS7-day-by-day/blob/master/13-mapkit-directions/13-mapkit-directions.md
-
-- (void)prepareMapDirections {
-    MKDirectionsRequest *directionsRequest = [MKDirectionsRequest new];
-    
-    // Make the destination
-    CLLocationCoordinate2D destinationCoords = CLLocationCoordinate2DMake([self.ride.destinationLatitude doubleValue], [self.ride.destinationLongitude doubleValue]);
-    MKPlacemark *destinationPlacemark = [[MKPlacemark alloc] initWithCoordinate:destinationCoords addressDictionary:nil];
-    MKMapItem *destination = [[MKMapItem alloc] initWithPlacemark:destinationPlacemark];
-    
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    [geocoder geocodeAddressString:self.ride.departurePlace completionHandler:^(NSArray* placemarks, NSError* error){
-        
-        CLPlacemark *aPlacemark = [placemarks firstObject];
-        
-        // Make the destination
-        CLLocationCoordinate2D sourceCoords = CLLocationCoordinate2DMake(aPlacemark.location.coordinate.latitude, aPlacemark.location.coordinate.longitude);
-        MKPlacemark *sourcePlacemark = [[MKPlacemark alloc] initWithCoordinate:sourceCoords addressDictionary:nil];
-        MKMapItem *source = [[MKMapItem alloc] initWithPlacemark:sourcePlacemark];
-        [self.map setCenterCoordinate:sourceCoords];
-        // Set the source and destination on the request
-        [directionsRequest setSource:source];
-        [directionsRequest setDestination:destination];
-        
-        MKDirections *directions = [[MKDirections alloc] initWithRequest:directionsRequest];
-        
-        [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
-            // Now handle the result
-            if (error) {
-                NSLog(@"There was an error getting your directions");
-                return;
-            }
-            
-            // So there wasn't an error - let's plot those routes
-            _currentRoute = [response.routes firstObject];
-            [self plotRouteOnMap:_currentRoute];
-        }];
-    }];
-}
-
-- (void)plotRouteOnMap:(MKRoute *)route
-{
-    if(_routeOverlay) {
-        [self.map removeOverlay:_routeOverlay];
-    }
-    
-    // Update the ivar
-    _routeOverlay = route.polyline;
-    
-    // Add it to the map
-    [self.map addOverlay:_routeOverlay];
-}
-
-- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
-    MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithPolyline:overlay];
-    renderer.strokeColor = [UIColor redColor];
-    renderer.lineWidth = 4.0;
-    
-    return  renderer;
-}
 
 -(void)mapViewTap {
     RideDetailMapViewController *rideDetailMapVC = [[RideDetailMapViewController alloc] init];
@@ -446,7 +371,6 @@
 
 -(void)dealloc {
     [[RidesStore sharedStore] removeObserver:self];
-    self.map.delegate = nil;
 }
 
 #pragma mark - Facebook sharing methods
@@ -693,6 +617,12 @@
     addRideVC.RideType = [self.ride.rideType intValue];
     addRideVC.RideDisplayType = ShowAsViewController;
     [self.navigationController pushViewController:addRideVC animated:YES];
+}
+
+-(void)moveRequestorToPassengersFromIndexPath:(NSIndexPath *)indexPath requestor:(User *)requestor {
+    if ([[RidesStore sharedStore] addPassengerForRideId:self.ride.rideId requestor:requestor]) {
+        [self.rideDetail.tableView reloadData];
+    }
 }
 
 @end

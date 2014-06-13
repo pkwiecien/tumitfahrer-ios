@@ -14,5 +14,6 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *noticeImage;
 @property (weak, nonatomic) IBOutlet UILabel *noticeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *mapButton;
 
 @end

@@ -37,4 +37,6 @@
 @property (nonatomic, strong) NSData *selectedImageData;
 @property (nonatomic, strong) UIImage *circularImage;
 
+@property (nonatomic, assign) BOOL shouldDisplayGradient;
+
 @end

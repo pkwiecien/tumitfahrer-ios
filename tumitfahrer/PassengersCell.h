@@ -7,11 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "User.h"
 
 @interface PassengersCell : UITableViewCell
 
 +(PassengersCell*)passengersCell;
 
-- (void)drawCirlesWithPassengersNumber:(NSInteger)passengers freeSeats:(NSInteger)freeSeats;
+@property (nonatomic, strong) User *user;
+
+@property (weak, nonatomic) IBOutlet UILabel *passengerName;
+@property (weak, nonatomic) IBOutlet UIImageView *passengerImage;
+@property (weak, nonatomic) IBOutlet UIButton *passengerContact;
+@property (weak, nonatomic) IBOutlet UIButton *passengerAccept;
+@property (nonatomic, strong) NSIndexPath *indexPath;
+
+- (IBAction)passengerAcceptButtonPressed:(id)sender;
 
 @end

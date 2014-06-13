@@ -45,6 +45,7 @@
     self.autoresizesSubviews = YES;
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.backgroundViewColor = [UIColor clearColor];
+    self.shouldDisplayGradient = NO;
 }
 
 - (void)layoutSubviews
@@ -70,8 +71,13 @@
     }
     
     if (!self.tableView.tableHeaderView) {
-        CGRect tableHeaderViewFrame = CGRectMake(0.0, 0.0, self.tableView.frame.size.width, self.defaultimagePagerHeight);
-        UIView *tableHeaderView = [[UIView alloc] initWithFrame:tableHeaderViewFrame];
+        UIView *tableHeaderView = nil;
+        if (self.shouldDisplayGradient) {
+            tableHeaderView = [[[NSBundle mainBundle] loadNibNamed:@"HeaderLabelsView" owner:self options:nil] objectAtIndex:0];;
+        } else {
+            CGRect tableHeaderViewFrame = CGRectMake(0.0, 0.0, self.tableView.frame.size.width, self.defaultimagePagerHeight);
+            tableHeaderView = [[UIView alloc] initWithFrame:tableHeaderViewFrame];
+        }
         tableHeaderView.backgroundColor = [UIColor clearColor];
         UITapGestureRecognizer *headerViewTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerViewTapped)];
         // Set required taps and number of touches
@@ -133,11 +139,7 @@
 
 #pragma mark - KVO Methods
 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
-{
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 	// Make sure we are observing this value.
 	if (context != (__bridge void *)self) {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];

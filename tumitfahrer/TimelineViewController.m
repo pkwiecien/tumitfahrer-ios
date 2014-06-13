@@ -77,7 +77,7 @@
     id result = [[[ActivityStore sharedStore] recentActivitiesByType:self.index] objectAtIndex:indexPath.row];
     
     if([result isKindOfClass:[Request class]]) {
-        cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"Request received for a ride to %@", ((Request *)result).requestedFrom];
+        cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"Request received for a ride to %@", ((Request *)result).requestedRide.destination];
         cell.iconImageView.image = self.passengerIconWhite;
     } else if ([result isKindOfClass:[RideSearch class]]) {
         RideSearch *search = ((RideSearch *)result);

@@ -26,49 +26,11 @@
 {
     [super setSelected:selected animated:animated];
     
-    // Configure the view for the selected state
 }
 
--(void)drawCirlesWithPassengersNumber:(NSInteger)passengers freeSeats:(NSInteger)freeSeats {
-    int posX = 40;
-    int posY = 40;
-    int padding = 80;
-    int i = 0;
-    int type = 0;
-    while (i<freeSeats) {
-        if(i >= passengers)
-            type = 1;
-        
-        [self drawCircleAtPostX:posX posY:posY tag:i type:type];
-        
-        posX += padding;
-        if ((i+1) % 3 == 0) {
-            posY += 80;
-            posX = 40;
-        }
-        i++;
-    }
+- (IBAction)passengerAcceptButtonPressed:(id)sender {
+    NSLog(@"Passenger id: %@", self.user.userId);
 }
 
--(void)drawCircleAtPostX:(NSInteger)posX posY:(NSInteger)posY tag:(NSInteger)tag type:(NSInteger)type {
-    UIButton *buttonWithImage = [UIButton buttonWithType:UIButtonTypeCustom];
-    buttonWithImage.frame = CGRectMake(posX, posY, 60, 60);
-    UIImage *circleImage;
-    if (type == 0) {
-        circleImage = [UIImage imageNamed:@"CircleBlue"];
-    } else {
-        circleImage = [UIImage imageNamed:@"CircleBlue"];
-    }
-    [buttonWithImage setImage:circleImage forState:UIControlStateNormal];
-    [buttonWithImage setTag:tag];
-    [buttonWithImage addTarget:self action:@selector(passengerCellPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:buttonWithImage];
-}
-
-
-- (void)passengerCellPressed:(id)sender {
-    UIButton *button = (UIButton *)sender;
-    NSLog(@"BUtton with tag %d", (int)[button tag]);
-}
 
 @end

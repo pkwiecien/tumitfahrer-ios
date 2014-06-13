@@ -53,11 +53,17 @@ static int const cMarginTop =120;
 // slide menu offset
 static int const cSlideMenuOffset = 70;
 
-
 typedef enum rideTypes : NSUInteger {
+    CurrentUserIsRideOwnerAndDriver = 0,
+    CurrentUserIsRideOwnerAndRequests = 1,
+    CurrentUserIsNotRideOwnerAndDriver = 2,
+    CurrentUserIsNotRideOwnerAndRequests = 3
+} SpecifcRideTypeEnum;
+
+typedef enum generalRideType : NSUInteger {
     RideOffer = 0,
-    RideRequest = 1,
-} RideMode;
+    RideRequest = 1
+} GeneralRideTypeEnum;
 
 typedef enum contentTypes : NSUInteger {
     ContentTypeCampusRides = 0,

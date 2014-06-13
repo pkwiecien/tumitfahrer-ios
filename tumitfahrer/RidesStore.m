@@ -21,6 +21,7 @@
 @property (nonatomic) NSMutableArray *privateActivityRides;
 @property (nonatomic) NSMutableArray *privatePastRides;
 @property (nonatomic) NSMutableArray *userRideRequests;
+@property (nonatomic) NSMutableArray *privateRideRequests;
 
 @property (nonatomic) NSMutableArray *privateCampusRidesNearby;
 @property (nonatomic) NSMutableArray *privateActivityRidesNearby;
@@ -679,6 +680,28 @@ static int activity_id = 0;
     return [self userRideRequests];
 }
 
+-(Request *)getRequestForPassengerWithId:(NSNumber *)passengerId ride:(Ride *)ride{
+    for(Request *currentRequest in [ride.requests allObjects]) {
+        if ([[currentRequest passengerId] isEqualToNumber:passengerId]) {
+            return currentRequest;
+        }
+    }
+    return nil;
+}
+-(BOOL)addPassengerForRideId:(NSNumber *)rideId requestor:(User *)requestor {
+    Ride *ride = [self containsRideWithId:rideId];
+    [ride addPassengersObject:requestor];
+    
+    Request *requestToBeRemoved = [self getRequestForPassengerWithId:requestor.userId ride:ride];
+    if (requestToBeRemoved != nil) {
+        [ride removeRequestsObject:requestToBeRemoved];
+        [self saveToPersistentStore:ride];
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 #pragma mark - getters with initializers
 
 -(NSMutableArray *)activityRides {
@@ -703,6 +726,13 @@ static int activity_id = 0;
 }
 
 -(NSMutableArray *)rideRequests {
+    if (self.privateRideRequests == nil) {
+        self.privateRideRequests = [[NSMutableArray alloc] init];
+    }
+    return self.privateRideRequests;
+}
+
+-(NSMutableArray *)userRideRequests {
     if (self.userRideRequests == nil) {
         self.userRideRequests = [[NSMutableArray alloc] init];
     }

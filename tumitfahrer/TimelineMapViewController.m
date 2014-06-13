@@ -126,7 +126,7 @@ typedef enum {
         rideAnnotation.subtitle = [NSString stringWithFormat:@"Ride to %@\nOn %@", dest, [ActionManager dateStringFromDate:ride.departureTime]];
         rideAnnotation.coordinate = CLLocationCoordinate2DMake([ride.destinationLatitude doubleValue], [ride.destinationLongitude doubleValue]);
     }
-    rideAnnotation.rideMode = [ride.isRideRequest intValue];
+    rideAnnotation.generalRideType = [ride.isRideRequest intValue];
     rideAnnotation.annotationObject = ride;
     return rideAnnotation;
 }
@@ -146,7 +146,7 @@ typedef enum {
         rideAnnotation.subtitle = [NSString stringWithFormat:@"Ride search to %@\nOn %@", dest, [ActionManager dateStringFromDate:rideSearch.departureTime]];
         rideAnnotation.coordinate = CLLocationCoordinate2DMake([rideSearch.destinationLatitude doubleValue], [rideSearch.destinationLongitude doubleValue]);
     }
-    rideAnnotation.rideMode = RideRequest;
+    rideAnnotation.generalRideType = RideRequest;
     
     return rideAnnotation;
 }
@@ -196,7 +196,7 @@ typedef enum {
 
 -(UIImage *)pinForAnnoation:(id <MKAnnotation>)annotation {
     CustomAnnotation *anno = (CustomAnnotation *)annotation;
-    if (anno.rideMode == RideOffer) {
+    if (anno.generalRideType == RideOffer) {
         return [UIImage imageNamed:@"BlueDriverPin"];
     } else {
         return [UIImage imageNamed:@"BluePassengerPin"];

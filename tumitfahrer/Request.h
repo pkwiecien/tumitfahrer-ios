@@ -15,8 +15,6 @@
 
 @property (nonatomic, retain) NSDate * createdAt;
 @property (nonatomic, retain) NSNumber * passengerId;
-@property (nonatomic, retain) NSString * requestedFrom;
-@property (nonatomic, retain) NSString * requestedTo;
 @property (nonatomic, retain) NSNumber * requestId;
 @property (nonatomic, retain) NSNumber * rideId;
 @property (nonatomic, retain) NSDate * updatedAt;

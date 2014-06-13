@@ -8,16 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
-@class Conversation, Message;
+@class Conversation, Message, User;
 
 @interface WebserviceRequest : NSObject
 
 +(void)getConversationsForRideId:(NSInteger)rideId block:(boolCompletionHandler)block;
 
 typedef void(^messageCompletionHandler)(Message *);
+typedef void(^userCompletionHandler)(User *);
+
 
 +(void)postMessageForConversation:(Conversation *)conversation message:(NSString *)message senderId:(NSNumber *)senderId receiverId:(NSNumber *)receiverId rideId:(NSNumber *)rideId block:(messageCompletionHandler)block;
 
 +(void)getPastRidesForCurrentUserWithBlock:(arrayCompletionHandler)block;
++(void)getUserWithId:(NSNumber *)userId block:(userCompletionHandler)block;
++(void)acceptRideRequestForUserId:(NSNumber *)userId rideId:(NSNumber *)rideId block:(boolCompletionHandler)block;
 
 @end

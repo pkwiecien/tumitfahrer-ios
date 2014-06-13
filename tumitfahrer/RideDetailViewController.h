@@ -7,13 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MapKit/MapKit.h>
 #import "DriverActionCell.h"
 #import "Ride.h"
 
 @class HeaderContentView;
 
-@interface RideDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, DriverActionCellDelegate, UINavigationControllerDelegate>
+@interface RideDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, DriverActionCellDelegate, UINavigationControllerDelegate>
 
 typedef enum {
     GoBackNormally = 0,
@@ -22,11 +21,11 @@ typedef enum {
 
 @property (nonatomic, assign) ShouldDisplayEnum displayEnum;
 @property (nonatomic, assign) ShouldGoBackEnum shouldGoBackEnum;
+@property (nonatomic, assign) SpecifcRideTypeEnum rideTypeEnum;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UILabel *headerViewLabel;
 @property (nonatomic, strong) HeaderContentView *rideDetail;
 
-@property (nonatomic, strong) MKMapView *map;
 @property (nonatomic, strong) Ride* ride;
 
 @end

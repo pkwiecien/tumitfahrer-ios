@@ -10,6 +10,7 @@
 #import "Message.h"
 #import "Conversation.h"
 #import "CurrentUser.h"
+#import "User.h"
 
 @implementation WebserviceRequest
 
@@ -55,5 +56,35 @@
         block(nil);
     }];
 }
+
+
+
+
+// ----------------------------- User --------------------------------------
+
++(void)getUserWithId:(NSNumber *)userId block:(userCompletionHandler)block {
+    User *user = [CurrentUser getUserWithIdFromCoreData:userId];
+    if(user != nil) {
+        block(user);
+    } else {
+        RKObjectManager *objectManager = [RKObjectManager sharedManager];
+        
+        NSString *requestString = [NSString stringWithFormat:@"/api/v2/users/%@", [CurrentUser sharedInstance].user.userId];
+        
+        [objectManager getObjectsAtPath:requestString parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+            User *user = [mappingResult firstObject];
+            block(user);
+        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+            RKLogError(@"Load failed with error: %@", error);
+            block(nil);
+        }];
+    }
+}
+
++(void)acceptRideRequestForUserId:(NSNumber *)userId rideId:(NSNumber *)rideId block:(boolCompletionHandler)block {
+    block(YES);
+}
+
+
 
 @end

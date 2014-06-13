@@ -27,16 +27,11 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="8rI-FN-vkQ">
-                        <rect key="frame" x="161" y="25" width="139" height="128"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    </mapView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="driverNameLabel" destination="5Ac-1L-MgI" id="Aqb-zi-Wro"/>
                 <outlet property="driverRatingLabel" destination="Jnu-KX-P0b" id="ci1-WG-mLd"/>
-                <outlet property="mapView" destination="8rI-FN-vkQ" id="edW-1h-GSR"/>
             </connections>
         </tableViewCell>
     </objects>

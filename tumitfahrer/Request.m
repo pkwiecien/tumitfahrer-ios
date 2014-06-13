@@ -15,8 +15,6 @@
 
 @dynamic createdAt;
 @dynamic passengerId;
-@dynamic requestedFrom;
-@dynamic requestedTo;
 @dynamic requestId;
 @dynamic rideId;
 @dynamic updatedAt;

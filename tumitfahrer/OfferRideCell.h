@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
 @protocol OfferRideCellDelegate <NSObject>
 
 - (void)offerRideButtonPressed;
