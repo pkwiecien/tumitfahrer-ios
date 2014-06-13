@@ -303,9 +303,11 @@
         
         Request *request =[[self.ride.requests allObjects] objectAtIndex:indexPath.row];
         [WebserviceRequest getUserWithId:request.passengerId block:^(User * user) {
-            cell.request = request;
-            cell.user = user;
-            [self.rideDetail.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+            if (user != nil) {
+                cell.request = request;
+                cell.user = user;
+                [self.rideDetail.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+            }
         }];
         return cell;
     }

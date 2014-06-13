@@ -13,6 +13,7 @@
 #import "User.h"
 #import "Request.h"
 #import "Ride.h"
+#import "ActionManager.h"
 
 @implementation WebserviceRequest
 
@@ -70,9 +71,11 @@
         block(user);
     } else {
         
-        NSString *requestString = [NSString stringWithFormat:@"/api/v2/users/%@", [CurrentUser sharedInstance].user.userId];
+        NSString *requestString = [NSString stringWithFormat:@"/api/v2/users/%@", userId];
+        RKObjectManager *objectManager = [RKObjectManager sharedManager];
+        [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[ActionManager encryptCredentialsWithEmail:[CurrentUser sharedInstance].user.email encryptedPassword:[CurrentUser sharedInstance].user.password]];
         
-        [[RKObjectManager sharedManager] getObjectsAtPath:requestString parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        [objectManager getObjectsAtPath:requestString parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             User *user = [mappingResult firstObject];
             block(user);
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {

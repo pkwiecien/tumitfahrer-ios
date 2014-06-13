@@ -233,6 +233,9 @@
     
     RKObjectMapping *putRideMapping = [RideMapping putRideMapping];
     [objectManager addResponseDescriptor:[RideMapping putRideResponseDescriptorWithMapping:putRideMapping]];
+    
+    RKEntityMapping *getUserMapping =[UserMapping userMapping];
+    [objectManager addResponseDescriptor:[UserMapping getUserResponseDescriptorWithMapping:getUserMapping]];
 }
 
 -(void)setupObservers {
