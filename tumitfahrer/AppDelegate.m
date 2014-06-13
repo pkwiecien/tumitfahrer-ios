@@ -227,6 +227,12 @@
     [objectManager addResponseDescriptor:[RideMapping getRideIdsresponseDescriptorWithMapping:getRidesIdsMapping]];
     
     [objectManager addResponseDescriptor:[SearchResultMapping postSearchResponseDescriptorWithMapping:generalRidesMapping]];
+    
+    RKObjectMapping *putRequestMapping = [RequestMapping putRequestMapping];
+    [objectManager addResponseDescriptor:[RequestMapping putRequestResponseDescriptorWithMapping:putRequestMapping]];
+    
+    RKObjectMapping *putRideMapping = [RideMapping putRideMapping];
+    [objectManager addResponseDescriptor:[RideMapping putRideResponseDescriptorWithMapping:putRideMapping]];
 }
 
 -(void)setupObservers {

@@ -57,7 +57,7 @@ static int activity_id = 0;
         [self fetchNewRides:^(BOOL fetched) { // try to load latest rides from webservice
             if (fetched) {
                 [self initAllRidesFromCoreData];
-               // [self initUserRequests];
+                // [self initUserRequests];
             }
         }];
         
@@ -365,14 +365,14 @@ static int activity_id = 0;
     }
     
     int index = 0;
-        for (Request *existingRequests in [self rideRequests]) {
-            if ([request.requestedRide.departureTime compare:existingRequests.requestedRide.departureTime] == NSOrderedAscending) {
-                break;
-            } else {
-                index++;
-            }
+    for (Request *existingRequests in [self rideRequests]) {
+        if ([request.requestedRide.departureTime compare:existingRequests.requestedRide.departureTime] == NSOrderedAscending) {
+            break;
+        } else {
+            index++;
         }
-        [[self rideRequests] insertObject:request atIndex:index];
+    }
+    [[self rideRequests] insertObject:request atIndex:index];
 }
 
 #pragma mark - utility functions
@@ -688,6 +688,7 @@ static int activity_id = 0;
     }
     return nil;
 }
+
 -(BOOL)addPassengerForRideId:(NSNumber *)rideId requestor:(User *)requestor {
     Ride *ride = [self containsRideWithId:rideId];
     [ride addPassengersObject:requestor];
@@ -701,6 +702,27 @@ static int activity_id = 0;
         return NO;
     }
 }
+
+-(BOOL)removeRequestForRide:(NSNumber *)rideId requestor:(User *)requestor {
+    Ride *ride = [self containsRideWithId:rideId];
+    Request *requestToBeRemoved = [self getRequestForPassengerWithId:requestor.userId ride:ride];
+    if (requestToBeRemoved != nil) {
+        [ride removeRequestsObject:requestToBeRemoved];
+        [self saveToPersistentStore:ride];
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+-(BOOL)removePassengerForRide:(NSNumber *)rideId passenger:(User *)passenger {
+    Ride *ride = [self containsRideWithId:rideId];
+    [ride removePassengersObject:passenger];
+    
+    [self saveToPersistentStore:ride];
+    return true;
+}
+
 
 #pragma mark - getters with initializers
 

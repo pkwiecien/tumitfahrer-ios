@@ -8,6 +8,7 @@
 
 #import "RequestorCell.h"
 #import "WebserviceRequest.h"
+#import "CurrentUser.h"
 
 @implementation RequestorCell
 
@@ -23,9 +24,8 @@
 }
 
 - (IBAction)acceptRequestorButtonPressed:(id)sender {
-    [WebserviceRequest acceptRideRequestForUserId:self.user.userId rideId:self.rideId block:^(BOOL isAccepted) {
+    [WebserviceRequest acceptRideRequest:self.request isConfirmed:YES block:^(BOOL isAccepted) {
         if (isAccepted) {
-            NSLog(@"is accepted");
             [self.delegate moveRequestorToPassengersFromIndexPath:self.indexPath requestor:self.user];
         } else {
             NSLog(@"could not be accepted");
@@ -35,6 +35,13 @@
 
 - (IBAction)declineRequestorButtonPressed:(id)sender {
     
+    [WebserviceRequest acceptRideRequest:self.request isConfirmed:NO block:^(BOOL isAccepted) {
+        if (isAccepted) {
+            [self.delegate removeRideRequest:self.indexPath requestor:self.user];
+        } else {
+            NSLog(@"could not be accepted");
+        }
+    }];
 }
 
 @end

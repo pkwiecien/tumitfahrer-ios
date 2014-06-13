@@ -22,8 +22,6 @@
 
 @property NSArray *pageTitles;
 
-// activity about new: rides (who add new activity ride, ride request, campus ride), who requests a ride, ride search, rating {activities : { activity_rides : { }, campus_ride: {}, ride_requests: {}, rating{}, }
-
 @end
 
 @implementation YourRidesPageViewController
@@ -32,7 +30,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.pageTitles = [NSArray arrayWithObjects:@"Your offers", @"Upcoming others", @"Past rides", nil];
+        self.pageTitles = [NSArray arrayWithObjects:@"Created", @"Joined", @"Past", nil];
     }
     return self;
 }

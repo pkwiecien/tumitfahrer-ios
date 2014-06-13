@@ -38,7 +38,7 @@
 #import "ActivityStore.h"
 #import "RequestorCell.h"
 
-@interface RideDetailViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, RequestorActionCellDelegate, JoinDriverCellDelegate, OfferRideCellDelegate, RequestorCellDelegate>
+@interface RideDetailViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, RequestorActionCellDelegate, JoinDriverCellDelegate, OfferRideCellDelegate, RequestorCellDelegate, PassengersCellDelegate>
 
 @property (strong, nonatomic) NSDictionary *backLinkInfo;
 @property (weak, nonatomic) UIView *backLinkView;
@@ -71,6 +71,12 @@
     self.rideDetail.headerView = _headerView;
 }
 
+-(void)refreshRideButtonPressed {
+    [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:self.ride.rideId block:^(BOOL fetched) {
+        [self.rideDetail.tableView reloadData];
+    }];
+}
+
 -(void)viewWillAppear:(BOOL)animated {
     
     if (self.ride.rideOwner == nil) {
@@ -78,6 +84,7 @@
             [self.rideDetail.tableView reloadData];
         }];
     }
+    
     if (self.ride.destinationImage == nil) {
         [RidesStore initRide:self.ride block:^(BOOL fetched) {
             
@@ -157,7 +164,7 @@
     } else if(self.rideTypeEnum == CurrentUserIsRideOwnerAndRequests) {
         return 4;
     } else if(self.rideTypeEnum == CurrentUserIsNotRideOwnerAndDriver) {
-        return 6;
+        return 4;
     } else {
         return 4;
     }
@@ -185,6 +192,7 @@
         } else {
             cell.noticeLabel.text = @"Activity Ride";
         }
+        [cell.refreshButton addTarget:self action:@selector(refreshRideButtonPressed) forControlEvents:UIControlEventTouchDown];
         [cell.mapButton addTarget:self action:@selector(mapViewTap) forControlEvents:UIControlEventTouchDown];
         return cell;
     }
@@ -256,42 +264,20 @@
             return cell;
         }
     } else if(indexPath.section == 3) {
-        if([self.ride.isRideRequest boolValue]) {
-            DriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DriverCell"];
-            if (cell == nil) {
-                cell = [DriverCell driverCell];
-            }
-            
-            if (self.ride.rideOwner != nil) {
-                cell.driverNameLabel.text = self.ride.rideOwner.firstName;
-                cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [self.ride.rideOwner.ratingAvg floatValue]];
-                CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageWithData:self.ride.rideOwner.profileImageData]];
-                [cell addSubview:circularImageView];
-            }
-            return cell;
-        } else {
-            DriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DriverCell"];
-            if (cell == nil) {
-                cell = [DriverCell driverCell];
-            }
-            if (self.ride.rideOwner == nil) {
-                
-            }
-            else if ([self.ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
-                cell.driverNameLabel.text = [CurrentUser sharedInstance].user.firstName;
-                cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [[CurrentUser sharedInstance].user.ratingAvg floatValue]];
-                CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageWithData:[CurrentUser sharedInstance].user.profileImageData]];
-                [cell addSubview:circularImageView];
-                
-                cell.driverNameLabel.text = self.ride.rideOwner.firstName;
-                cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [self.ride.rideOwner.ratingAvg floatValue]];
-            } else {
-                CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageNamed:@"CircleBlue"]];
-                [cell addSubview:circularImageView];
-            }
-            
-            return cell;
+        
+        DriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DriverCell"];
+        if (cell == nil) {
+            cell = [DriverCell driverCell];
         }
+        
+        if (self.ride.rideOwner != nil) {
+            cell.driverNameLabel.text = self.ride.rideOwner.firstName;
+            cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [self.ride.rideOwner.ratingAvg floatValue]];
+            CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageWithData:self.ride.rideOwner.profileImageData]];
+            [cell addSubview:circularImageView];
+        }
+        
+        return cell;
     } else if(indexPath.section == 4) { // passenger cell
         
         PassengersCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PassengersCell"];
@@ -299,13 +285,14 @@
             cell = [PassengersCell passengersCell];
         }
         cell.indexPath = indexPath;
-
+        
         User *user =[[self.ride.passengers allObjects] objectAtIndex:indexPath.row];
         cell.passengerName.text = user.firstName;
         cell.user = user;
+        cell.rideId = self.ride.rideId;
         return cell;
     } else { // request cell
-
+        
         RequestorCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RequestorCell"];
         if (cell == nil) {
             cell = [RequestorCell requestorCell];
@@ -316,6 +303,7 @@
         
         Request *request =[[self.ride.requests allObjects] objectAtIndex:indexPath.row];
         [WebserviceRequest getUserWithId:request.passengerId block:^(User * user) {
+            cell.request = request;
             cell.user = user;
             [self.rideDetail.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
         }];
@@ -349,7 +337,7 @@
 
 -(Request *)requestFoundInCoreData {
     for (Request *request in self.ride.requests) {
-        if (request.passengerId == [CurrentUser sharedInstance].user.userId) {
+        if ([request.passengerId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
             return request;
         }
     }
@@ -625,4 +613,15 @@
     }
 }
 
+-(void)removeRideRequest:(NSIndexPath *)indexPath requestor:(User *)requestor {
+    if ([[RidesStore sharedStore] removeRequestForRide:self.ride.rideId requestor:requestor]) {
+        [self.rideDetail.tableView reloadData];
+    }
+}
+
+-(void)passengerCellChangedForPassenger:(User *)passenger {
+    if ([[RidesStore sharedStore] removePassengerForRide:self.ride.rideId passenger:passenger]) {
+        [self.rideDetail.tableView reloadData];
+    }
+}
 @end

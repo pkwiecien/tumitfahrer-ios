@@ -11,6 +11,8 @@
 #import "Conversation.h"
 #import "CurrentUser.h"
 #import "User.h"
+#import "Request.h"
+#import "Ride.h"
 
 @implementation WebserviceRequest
 
@@ -67,11 +69,10 @@
     if(user != nil) {
         block(user);
     } else {
-        RKObjectManager *objectManager = [RKObjectManager sharedManager];
         
         NSString *requestString = [NSString stringWithFormat:@"/api/v2/users/%@", [CurrentUser sharedInstance].user.userId];
         
-        [objectManager getObjectsAtPath:requestString parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        [[RKObjectManager sharedManager] getObjectsAtPath:requestString parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             User *user = [mappingResult firstObject];
             block(user);
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -81,8 +82,41 @@
     }
 }
 
-+(void)acceptRideRequestForUserId:(NSNumber *)userId rideId:(NSNumber *)rideId block:(boolCompletionHandler)block {
-    block(YES);
++(void)acceptRideRequest:(Request *)request isConfirmed:(BOOL)isConfirmed block:(boolCompletionHandler)block {
+    
+    NSDictionary *requestParams = @{@"passenger_id": request.passengerId, @"confirmed" : [NSNumber numberWithBool:isConfirmed]};
+    
+    [[RKObjectManager sharedManager] putObject:requestParams path:[NSString stringWithFormat:@"/api/v2/rides/%@/requests/%@", request.requestedRide.rideId, request.requestId] parameters:requestParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        if (isConfirmed) {
+            block(YES);
+        } else {
+            block(NO);
+        }
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        block(NO);
+    }];
+}
+
++(void)removeRequestForRideId:(NSNumber *)rideId request:(Request *)request block:(boolCompletionHandler)block {
+    
+    [[RKObjectManager sharedManager] deleteObject:request path:[NSString stringWithFormat:@"/api/v2/rides/%@/requests/%@", rideId, request.requestId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        block(YES);
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        block(NO);
+    }];
+}
+
+
+
++(void)removePassengerWithId:(NSNumber *)passengerId rideId:(NSNumber *)rideId block:(boolCompletionHandler)block {
+    
+    NSDictionary *requestParams = @{@"removed_passenger": passengerId};
+    
+    [[RKObjectManager sharedManager] putObject:requestParams path:[NSString stringWithFormat:@"/api/v2/users/%@/rides/%@", [CurrentUser sharedInstance].user.userId, rideId] parameters:requestParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+            block(YES);
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        block(NO);
+    }];
 }
 
 

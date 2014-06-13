@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class Conversation, Message, User;
+@class Conversation, Message, User, Request;
 
 @interface WebserviceRequest : NSObject
 
@@ -22,6 +22,8 @@ typedef void(^userCompletionHandler)(User *);
 
 +(void)getPastRidesForCurrentUserWithBlock:(arrayCompletionHandler)block;
 +(void)getUserWithId:(NSNumber *)userId block:(userCompletionHandler)block;
-+(void)acceptRideRequestForUserId:(NSNumber *)userId rideId:(NSNumber *)rideId block:(boolCompletionHandler)block;
++(void)acceptRideRequest:(Request *)request isConfirmed:(BOOL)isConfirmed block:(boolCompletionHandler)block;
++(void)removePassengerWithId:(NSNumber *)passengerId rideId:(NSNumber *)rideId block:(boolCompletionHandler)block;
++(void)removeRequestForRideId:(NSNumber *)rideId request:(Request *)request block:(boolCompletionHandler)block;
 
 @end

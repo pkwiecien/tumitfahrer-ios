@@ -31,12 +31,23 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oeJ-YU-VTP">
+                        <rect key="frame" x="205" y="8" width="53" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal" title="Refresh">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="refreshButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="fcn-IM-Whz"/>
+                        </connections>
+                    </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="mapButton" destination="fUr-Kk-hdf" id="WlZ-M5-mS9"/>
                 <outlet property="noticeImage" destination="SIu-xi-8W7" id="H9t-fO-fA1"/>
                 <outlet property="noticeLabel" destination="eli-lt-0ZT" id="bV3-oC-Izm"/>
+                <outlet property="refreshButton" destination="oeJ-YU-VTP" id="RcK-0Q-ggQ"/>
             </connections>
         </tableViewCell>
     </objects>

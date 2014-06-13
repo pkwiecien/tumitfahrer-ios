@@ -8,6 +8,7 @@
 
 #import "PassengersCell.h"
 #import "ActionManager.h"
+#import "WebserviceRequest.h"
 
 @implementation PassengersCell
 
@@ -28,9 +29,14 @@
     
 }
 
-- (IBAction)passengerAcceptButtonPressed:(id)sender {
-    NSLog(@"Passenger id: %@", self.user.userId);
+- (IBAction)removeButtonPressed:(id)sender {
+    
+    [WebserviceRequest removePassengerWithId:self.user.userId rideId:self.rideId block:^(BOOL fetched) {
+        if (fetched) {
+            [self.delegate passengerCellChangedForPassenger:self.user];
+        }
+    }];
+    
 }
-
 
 @end

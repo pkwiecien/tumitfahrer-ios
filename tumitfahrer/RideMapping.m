@@ -11,6 +11,7 @@
 #import "RideSearch.h"
 #import "RequestMapping.h"
 #import "IdsMapping.h"
+#import "StatusMapping.h"
 
 @implementation RideMapping
 
@@ -86,5 +87,21 @@
     
     return responseDescriptor;
 }
+
+
++(RKObjectMapping *)putRideMapping {
+    RKObjectMapping *responseMapping = [RKObjectMapping mappingForClass:[StatusMapping class]];
+    [responseMapping addAttributeMappingsFromDictionary:@{@"message":@"message"}];
+    
+    return responseMapping;
+}
+
++(RKResponseDescriptor *)putRideResponseDescriptorWithMapping:(RKObjectMapping *)mapping {
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodPUT                                                                                      pathPattern:API_PUT_USERS_RIDES                                                                                          keyPath:nil                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    return responseDescriptor;
+}
+
+
 
 @end

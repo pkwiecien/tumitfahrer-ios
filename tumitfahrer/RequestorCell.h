@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "User.h"
+#import "Request.h"
 
 @protocol RequestorCellDelegate <NSObject>
 
 -(void)moveRequestorToPassengersFromIndexPath:(NSIndexPath *)indexPath requestor:(User *)requestor;
+-(void)removeRideRequest:(NSIndexPath *)indexPath requestor:(User *)requestor;
 
 @end
 
@@ -21,6 +23,7 @@
 
 @property (nonatomic, strong) id<RequestorCellDelegate> delegate;
 @property (nonatomic, strong) User *user;
+@property (nonatomic, strong) Request *request;
 @property (nonatomic, strong) NSIndexPath *indexPath;
 @property (nonatomic, strong) NSNumber *rideId;
 
