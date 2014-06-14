@@ -35,94 +35,24 @@
 
 @interface RequestViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, OfferRideCellDelegate, PassengersCellDelegate, HeaderContentViewDelegate>
 
-@property (strong, nonatomic) NSArray *headerTitles;
-
 @end
 
 @implementation RequestViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.rideDetail = [[HeaderContentView alloc] initWithFrame:self.view.bounds];
-    self.rideDetail.tableViewDataSource = self;
-    self.rideDetail.tableViewDelegate = self;
-    self.rideDetail.parallaxScrollFactor = 0.3; // little slower than normal.
-    [self.view addSubview:self.rideDetail];
     
     _headerView.backgroundColor = [UIColor darkerBlue];
     [self.view bringSubviewToFront:_headerView];
     [[RidesStore sharedStore] addObserver:self];
     
-    
-    UIView *gradientViewFlipped = [[UIView alloc] initWithFrame:CGRectMake(0, -20, 320, 180)];
-    UIImageView *gradientImageView = [[UIImageView alloc] initWithFrame:gradientViewFlipped.frame];
-    gradientImageView.image = [UIImage imageNamed:@"GradientWideFlipped"];
-    [gradientViewFlipped addSubview:gradientImageView];
-    [self.view addSubview:gradientViewFlipped];
-    
-    UIButton *buttonBack = [UIButton buttonWithType:UIButtonTypeCustom];
-    buttonBack.frame = CGRectMake(10, 25, 30, 30);
-    [buttonBack setImage:[UIImage imageNamed:@"BackIcon"] forState:UIControlStateNormal];
-    [buttonBack addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:buttonBack];
-    
-    UIButton *refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    refreshButton.frame = CGRectMake(200, 20, 44, 44);
-    [refreshButton setImage:[UIImage imageNamed:@"RefreshIcon"] forState:UIControlStateNormal];
-    [refreshButton addTarget:self action:@selector(refreshRideButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:refreshButton];
-    
-    UIButton *mapButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    mapButton.frame = CGRectMake(230, 20, 44, 44);
-    [mapButton setImage:[UIImage imageNamed:@"MapIcon"] forState:UIControlStateNormal];
-    [mapButton addTarget:self action:@selector(mapButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:mapButton];
-    
-    UIButton *editButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    editButton.frame = CGRectMake(280, 25, 30, 30);
-    [editButton setImage:[UIImage imageNamed:@"EditIcon"] forState:UIControlStateNormal];
-    [editButton addTarget:self action:@selector(editButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:editButton];
-    
-    
-    self.rideDetail.shouldDisplayGradient = YES;
     self.rideDetail.headerView = _headerView;
     self.rideDetail.delegate = self;
-    self.view.backgroundColor = [UIColor customLightGray];
-}
-
--(void)refreshRideButtonPressed {
-    [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:self.ride.rideId block:^(BOOL fetched) {
-        [self.rideDetail.tableView reloadData];
-    }];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
     
-    if (self.ride.rideOwner == nil) {
-        [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:self.ride.rideId block:^(BOOL fetched) {
-            [self.rideDetail.tableView reloadData];
-        }];
-    }
-    
-    if (self.ride.destinationImage == nil) {
-        [RidesStore initRide:self.ride block:^(BOOL fetched) { }];
-    } else {
-        self.rideDetail.selectedImageData = self.ride.destinationImage;
-    }
-    
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.headerViewLabel.text = [@"To " stringByAppendingString:self.ride.destination];
     self.headerTitles = [NSArray arrayWithObjects:@"Details", @"Passenger", @"", nil];
 }
@@ -200,27 +130,6 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
-- (void)back {
-    if (self.shouldGoBackEnum == GoBackNormally) {
-        [self.navigationController popViewControllerAnimated:YES];
-    } else {
-        if (self.ride.rideType == ContentTypeCampusRides) {
-            RidesPageViewController *campusRidesVC = [[RidesPageViewController alloc] initWithContentType:ContentTypeCampusRides];
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:campusRidesVC];
-            [self.sideBarController setCenterViewController:navController  withCloseAnimation:YES completion:nil];
-        } else {
-            RidesPageViewController *activityRidesVC = [[RidesPageViewController alloc] initWithContentType:ContentTypeActivityRides];
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:activityRidesVC];
-            [self.sideBarController setCenterViewController:navController withCloseAnimation:YES completion:nil];
-        }
-    }
-}
-
--(void)didReceivePhotoForRide:(NSNumber *)rideId {
-    UIImage *img = [UIImage imageWithData:self.ride.destinationImage];
-    [self.rideDetail.rideDetailHeaderView replaceMainImage:img];
-}
-
 -(void)dealloc {
     [[RidesStore sharedStore] removeObserver:self];
 }
@@ -229,31 +138,4 @@
     // offer ride
 }
 
--(void)headerViewTapped {
-    
-}
-
--(void)editButtonTapped {
-    
-}
-
--(void)passengerCellChangedForPassenger:(User *)passenger {
-    
-}
-
--(void)mapButtonTapped {
-    RideDetailMapViewController *rideDetailMapVC = [[RideDetailMapViewController alloc] init];
-    rideDetailMapVC.selectedRide = self.ride;
-    [self.navigationController pushViewController:rideDetailMapVC animated:YES];
-}
-
--(void)initFields {
-    [self.rideDetail.refreshButton addTarget:self action:@selector(refreshRideButtonPressed) forControlEvents:UIControlEventTouchDown];
-    self.rideDetail.departureLabel.text = self.ride.departurePlace;
-    self.rideDetail.destinationLabel.text = self.ride.destination;
-    self.rideDetail.timeLabel.text = [ActionManager timeStringFromDate:self.ride.departureTime];
-    self.rideDetail.calendarLabel.text = [ActionManager dateStringFromDate:self.ride.departureTime];
-}
-
 @end
-

@@ -12,10 +12,9 @@
 
 @protocol HeaderContentViewDelegate
 
-- (void)headerViewTapped;
-
 @optional
 
+- (void)headerViewTapped;
 -(void)mapButtonTapped;
 -(void)editButtonTapped;
 -(void)initFields;

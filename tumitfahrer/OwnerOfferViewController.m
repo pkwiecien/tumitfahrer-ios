@@ -54,6 +54,7 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     self.headerViewLabel.text = [@"To " stringByAppendingString:self.ride.destination];
+    self.headerTitles = [NSArray arrayWithObjects:@"Details", @"Passengers", @"Requests", @"", nil];
 }
 
 #pragma mark - UITableView
@@ -169,7 +170,7 @@
         }];
     } else if(indexPath.section == 2 && self.ride.requests > 0) {
         Request *request = [[self.ride.requests allObjects] objectAtIndex:indexPath.row];
-
+        
         [WebserviceRequest getUserWithId:request.passengerId block:^(User * user) {
             if (user != nil) {
                 [WebserviceRequest acceptRideRequest:request isConfirmed:YES block:^(BOOL isAccepted) {
@@ -182,7 +183,7 @@
             }
         }];
         
-
+        
     }
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
@@ -217,11 +218,6 @@
 }
 
 #pragma mark - delegate methods
-
--(void)didReceivePhotoForRide:(NSNumber *)rideId {
-    UIImage *img = [UIImage imageWithData:self.ride.destinationImage];
-    [self.rideDetail.rideDetailHeaderView replaceMainImage:img];
-}
 
 -(void)dealloc {
     [[RidesStore sharedStore] removeObserver:self];
@@ -331,28 +327,6 @@
     if ([[RidesStore sharedStore] removePassengerForRide:self.ride.rideId passenger:passenger]) {
         [self.rideDetail.tableView reloadData];
     }
-}
-
--(void)headerViewTapped {
-    
-}
-
--(void)editButtonTapped {
-    
-}
-
--(void)mapButtonTapped {
-    RideDetailMapViewController *rideDetailMapVC = [[RideDetailMapViewController alloc] init];
-    rideDetailMapVC.selectedRide = self.ride;
-    [self.navigationController pushViewController:rideDetailMapVC animated:YES];
-}
-
--(void)initFields {
-    [self.rideDetail.refreshButton addTarget:self action:@selector(refreshRideButtonPressed) forControlEvents:UIControlEventTouchDown];
-    self.rideDetail.departureLabel.text = self.ride.departurePlace;
-    self.rideDetail.destinationLabel.text = self.ride.destination;
-    self.rideDetail.timeLabel.text = [ActionManager timeStringFromDate:self.ride.departureTime];
-    self.rideDetail.calendarLabel.text = [ActionManager dateStringFromDate:self.ride.departureTime];
 }
 
 @end

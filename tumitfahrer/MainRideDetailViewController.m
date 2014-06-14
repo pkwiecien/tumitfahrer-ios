@@ -11,21 +11,14 @@
 #import "HeaderContentView.h"
 #import "RidesStore.h"
 #import "RidesPageViewController.h"
+#import "ActionManager.h"
+#import "RideDetailMapViewController.h"
 
 @interface MainRideDetailViewController () <RideStoreDelegate, HeaderContentViewDelegate>
-
 
 @end
 
 @implementation MainRideDetailViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -90,8 +83,7 @@
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-    self.headerTitles = [NSArray arrayWithObjects:@"Details", @"Passengers", @"Requests", @"", nil];
-    
+
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -128,5 +120,38 @@
         }
     }
 }
+
+-(void)didReceivePhotoForRide:(NSNumber *)rideId {
+    UIImage *img = [UIImage imageWithData:self.ride.destinationImage];
+    [self.rideDetail.rideDetailHeaderView replaceMainImage:img];
+}
+
+
+-(void)initFields {
+    self.rideDetail.departureLabel.text = self.ride.departurePlace;
+    self.rideDetail.destinationLabel.text = self.ride.destination;
+    self.rideDetail.timeLabel.text = [ActionManager timeStringFromDate:self.ride.departureTime];
+    self.rideDetail.calendarLabel.text = [ActionManager dateStringFromDate:self.ride.departureTime];
+}
+
+-(void)dealloc {
+    [[RidesStore sharedStore] removeObserver:self];
+}
+
+
+-(void)headerViewTapped {
+    
+}
+
+-(void)editButtonTapped {
+    
+}
+
+-(void)mapButtonTapped {
+    RideDetailMapViewController *rideDetailMapVC = [[RideDetailMapViewController alloc] init];
+    rideDetailMapVC.selectedRide = self.ride;
+    [self.navigationController pushViewController:rideDetailMapVC animated:YES];
+}
+
 
 @end

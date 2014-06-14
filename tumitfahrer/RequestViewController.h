@@ -7,18 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MainRideDetailViewController.h"
 
-@class HeaderContentView, Ride;
+@interface RequestViewController : MainRideDetailViewController <UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate>
 
-@interface RequestViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate>
-
-@property (nonatomic, assign) ShouldDisplayEnum displayEnum;
-@property (nonatomic, assign) ShouldGoBackEnum shouldGoBackEnum;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UILabel *headerViewLabel;
-@property (nonatomic, strong) HeaderContentView *rideDetail;
-
-@property (nonatomic, strong) Ride* ride;
 
 @end
 
