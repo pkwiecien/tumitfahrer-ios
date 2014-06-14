@@ -8,10 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
+
+@protocol RidePersonCellDelegate <NSObject>
+
+-(void)leftButtonPressedWithObject:(id)object cellType:(CellTypeEnum)cellType;
+-(void)rightButtonPressedWithObject:(id)object cellType:(CellTypeEnum)cellType;
+
+@end
+
 @interface RidePersonCell : UITableViewCell
 
 + (RidePersonCell*)ridePersonCell;
 
+@property (nonatomic, strong) id<RidePersonCellDelegate> delegate;
+@property id leftObject;
+@property id rightObject;
+
+@property (assign, nonatomic) CellTypeEnum cellTypeEnum;
 @property (weak, nonatomic) IBOutlet UIButton *leftButton;
 @property (weak, nonatomic) IBOutlet UIButton *rightButton;
 @property (weak, nonatomic) IBOutlet UILabel *personNameLabel;

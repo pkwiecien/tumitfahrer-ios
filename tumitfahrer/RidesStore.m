@@ -719,16 +719,11 @@ static int activity_id = 0;
     }
 }
 
--(BOOL)removeRequestForRide:(NSNumber *)rideId requestor:(User *)requestor {
+-(BOOL)removeRequestForRide:(NSNumber *)rideId request:(Request *)request {
     Ride *ride = [self containsRideWithId:rideId];
-    Request *requestToBeRemoved = [self getRequestForPassengerWithId:requestor.userId ride:ride];
-    if (requestToBeRemoved != nil) {
-        [ride removeRequestsObject:requestToBeRemoved];
-        [self saveToPersistentStore:ride];
-        return YES;
-    } else {
-        return NO;
-    }
+    [ride removeRequestsObject:request];
+    [self saveToPersistentStore:ride];
+    return YES;
 }
 
 -(BOOL)removePassengerForRide:(NSNumber *)rideId passenger:(User *)passenger {

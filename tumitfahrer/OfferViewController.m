@@ -21,7 +21,7 @@
 #import "RideDetailActionCell.h"
 #import "ActivityStore.h"
 
-@interface OfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, PassengersCellDelegate, HeaderContentViewDelegate>
+@interface OfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, PassengersCellDelegate, HeaderContentViewDelegate>
 
 @end
 
@@ -202,8 +202,8 @@
     }
 }
 
--(void)removeRideRequest:(NSIndexPath *)indexPath requestor:(User *)requestor {
-    if ([[RidesStore sharedStore] removeRequestForRide:self.ride.rideId requestor:requestor]) {
+-(void)removeRideRequest:(NSIndexPath *)indexPath requestor:(Request *)request {
+    if ([[RidesStore sharedStore] removeRequestForRide:self.ride.rideId request:request]) {
         [self.rideDetail.tableView reloadData];
     }
 }

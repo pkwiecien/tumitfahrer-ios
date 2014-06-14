@@ -11,22 +11,18 @@
 #import "ActionManager.h"
 #import "CurrentUser.h"
 #import "Ride.h"
-#import "ActionManager.h"
 #import "LocationController.h"
 #import "SwitchTableViewCell.h"
 #import "RidesStore.h"
 #import "NavigationBarUtilities.h"
 #import "MMDrawerBarButtonItem.h"
-#import "SearchRideViewController.h"
 #import "SegmentedControlCell.h"
 #import "KGStatusBar.h"
 #import "OwnerOfferViewController.h"
-#import "LocationController.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import "OwnerRequestViewController.h"
 
-@interface AddRideViewController () <NSFetchedResultsControllerDelegate, SementedControlCellDelegate, SwitchTableViewCellDelegate>
+@interface AddRideViewController () <SementedControlCellDelegate, SwitchTableViewCellDelegate>
 
-@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSMutableArray *shareValues;
 @property (nonatomic, strong) NSMutableArray *tablePassengerValues;
 @property (nonatomic, strong) NSMutableArray *tableDriverValues;
@@ -320,6 +316,7 @@
     
     NSLog(@"user api key: %@", [CurrentUser sharedInstance].user.apiKey);
     [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/users/%@/rides", [CurrentUser sharedInstance].user.userId] parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        
         Ride *ride = (Ride *)[mappingResult firstObject];
         [[RidesStore sharedStore] addRideToStore:ride];
         
@@ -327,11 +324,19 @@
         self.tableDriverValues = nil;
         [KGStatusBar showSuccessWithStatus:@"Ride added"];
         
-        OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
-        rideDetailVC.ride = ride;
-        rideDetailVC.displayEnum = self.displayEnum;
-        rideDetailVC.shouldGoBackEnum = GoBackToList;
-        [self.navigationController pushViewController:rideDetailVC animated:YES];
+        if ([ride.isRideRequest boolValue]) {
+            OwnerRequestViewController *requestVC = [[OwnerRequestViewController alloc] init];
+            requestVC.ride = ride;
+            requestVC.displayEnum = self.displayEnum;
+            requestVC.shouldGoBackEnum = GoBackToList;
+            [self.navigationController pushViewController:requestVC animated:YES];
+        } else {
+            OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
+            rideDetailVC.ride = ride;
+            rideDetailVC.displayEnum = self.displayEnum;
+            rideDetailVC.shouldGoBackEnum = GoBackToList;
+            [self.navigationController pushViewController:rideDetailVC animated:YES];
+        }
         
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [ActionManager showAlertViewWithTitle:[error localizedDescription]];
@@ -341,32 +346,6 @@
 
 -(void)closeButtonPressed {
     [self.navigationController popViewControllerWithFade];
-}
-
--(NSFetchedResultsController *)fetchedResultsController {
-    
-    if (self.fetchedResultsController != nil) {
-        return self.fetchedResultsController;
-    }
-    
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Ride"];
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO];
-    fetchRequest.sortDescriptors = @[descriptor];
-    NSError *error = nil;
-    
-    // Setup fetched results
-    self.fetchedResultsController = [[NSFetchedResultsController alloc]
-                                     initWithFetchRequest:fetchRequest
-                                     managedObjectContext:[RKManagedObjectStore defaultStore].
-                                     mainQueueManagedObjectContext
-                                     sectionNameKeyPath:nil cacheName:@"Ride"];
-    self.fetchedResultsController.delegate = self;
-    
-    if (![self.fetchedResultsController performFetch:&error]) {
-        [ActionManager showAlertViewWithTitle:[error localizedDescription]];
-    }
-    
-    return self.fetchedResultsController;
 }
 
 #pragma mark - RMDateSelectionViewController Delegates

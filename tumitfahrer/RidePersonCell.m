@@ -19,16 +19,12 @@
     return cell;
 }
 
-- (void)awakeFromNib {
-
-}
-
 - (IBAction)leftButtonPressed:(id)sender {
-    
+    [self.delegate leftButtonPressedWithObject:self.leftObject cellType:self.cellTypeEnum];
 }
 
 - (IBAction)rightButtonPressed:(id)sender {
-    
+    [self.delegate rightButtonPressedWithObject:self.rightObject cellType:self.cellTypeEnum];
 }
 
 @end

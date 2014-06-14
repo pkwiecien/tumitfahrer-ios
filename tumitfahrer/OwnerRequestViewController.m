@@ -19,7 +19,7 @@
 #import "RideDetailActionCell.h"
 #import "RequestorCell.h"
 
-@interface OwnerRequestViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, HeaderContentViewDelegate>
+@interface OwnerRequestViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate>
 
 @end
 
@@ -114,12 +114,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-}
-
--(void)removeRideRequest:(NSIndexPath *)indexPath requestor:(User *)requestor {
-    if ([[RidesStore sharedStore] removeRequestForRide:self.ride.rideId requestor:requestor]) {
-        [self.rideDetail.tableView reloadData];
-    }
 }
 
 -(void)deleteRideButtonPressed {

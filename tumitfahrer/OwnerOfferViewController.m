@@ -8,7 +8,6 @@
 
 #import "OwnerOfferViewController.h"
 #import "RideInformationCell.h"
-#import "PassengersCell.h"
 #import "ActionManager.h"
 #import "CurrentUser.h"
 #import "KGStatusBar.h"
@@ -18,10 +17,12 @@
 #import "RidesPageViewController.h"
 #import "WebserviceRequest.h"
 #import "RideDetailActionCell.h"
-#import "RequestorCell.h"
 #import "EmptyCell.h"
+#import "RidePersonCell.h"
+#import "Request.h"
+#import "SimpleChatViewController.h"
 
-@interface OwnerOfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, RequestorCellDelegate, PassengersCellDelegate, HeaderContentViewDelegate>
+@interface OwnerOfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate, RidePersonCellDelegate>
 
 @end
 
@@ -97,14 +98,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *generalCell = [tableView dequeueReusableCellWithIdentifier:@"reusable"];
-    if (!generalCell) {
-        generalCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reusable"];
-    }
-    
-    generalCell.textLabel.text = @"Default cell";
-    
-    
     if(indexPath.section == 0) {
         RideInformationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideInformationCell"];
         if(cell == nil){
@@ -119,7 +112,19 @@
         
         return cell;
     } else if (indexPath.section == 1 && [self.ride.passengers count] > 0) { // show passengers
-        return generalCell;
+        RidePersonCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RidePersonCell"];
+        if (cell == nil) {
+            cell = [RidePersonCell ridePersonCell];
+        }
+        User *passenger = [[self.ride.passengers allObjects] objectAtIndex:indexPath.row];
+        cell.personNameLabel.text = passenger.firstName;
+        cell.personImageView.image = [UIImage imageWithData:passenger.profileImageData];
+        cell.delegate = self;
+        cell.leftObject = passenger;
+        cell.rightObject = passenger;
+        cell.cellTypeEnum = PassengerCell;
+        return cell;
+        
     } else if(indexPath.section == 1 && [self.ride.passengers count] == 0) {
         EmptyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EmptyCell"];
         if (cell == nil) {
@@ -128,7 +133,30 @@
         cell.descriptionLabel.text = @"There are no passengers";
         return cell;
     } else if(indexPath.section == 2 && [self.ride.requests count] > 0) { // show requests
-        return generalCell;
+        
+        RidePersonCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RidePersonCell"];
+        if (cell == nil) {
+            cell = [RidePersonCell ridePersonCell];
+        }
+        cell.delegate = self;
+        
+        Request *request = [[self.ride.requests allObjects] objectAtIndex:indexPath.row];
+        User *user = [CurrentUser getUserWithIdFromCoreData:request.passengerId];
+        if(user != nil) {
+            cell.personNameLabel.text = user.firstName;
+            cell.personImageView.image = [UIImage imageWithData:user.profileImageData];
+        } else {
+            [WebserviceRequest getUserWithIdFromWebService:request.passengerId block:^(User *user) {
+                if (user != nil) {
+                    [self.rideDetail.tableView reloadData];
+                }
+            }];
+        }
+
+        cell.leftObject = request;
+        cell.rightObject = request;
+        cell.cellTypeEnum = RequestCell;
+        return cell;
     } else if(indexPath.section == 2 && [self.ride.requests count] == 0) {
         EmptyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EmptyCell"];
         if (cell == nil) {
@@ -144,32 +172,9 @@
         return actionCell;
     }
     
-    return generalCell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 1 && self.ride.passengers > 0) {
-        User *passenger = [[self.ride.passengers allObjects] objectAtIndex:indexPath.row];
-        [WebserviceRequest removePassengerWithId:passenger.userId rideId:self.ride.rideId block:^(BOOL fetched) {
-            if (fetched) {
-                [self passengerCellChangedForPassenger:passenger];
-            }
-        }];
-    } else if(indexPath.section == 2 && self.ride.requests > 0) {
-        Request *request = [[self.ride.requests allObjects] objectAtIndex:indexPath.row];
-        
-        [WebserviceRequest getUserWithId:request.passengerId block:^(User * user) {
-            if (user != nil) {
-                [WebserviceRequest acceptRideRequest:request isConfirmed:YES block:^(BOOL isAccepted) {
-                    if (isAccepted) {
-                        [self moveRequestorToPassengersFromIndexPath:indexPath requestor:user];
-                    } else {
-                        NSLog(@"could not be accepted");
-                    }
-                }];
-            }
-        }];
-    }
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
@@ -218,24 +223,75 @@
     }];
 }
 
--(void)moveRequestorToPassengersFromIndexPath:(NSIndexPath *)indexPath requestor:(User *)requestor {
-    if ([[RidesStore sharedStore] addPassengerForRideId:self.ride.rideId requestor:requestor]) {
+-(void)removeRideRequest:(Request*)request {
+    if ([[RidesStore sharedStore] removeRequestForRide:self.ride.rideId request:request]) {
         [self.rideDetail.tableView reloadData];
     }
 }
 
--(void)removeRideRequest:(NSIndexPath *)indexPath requestor:(User *)requestor {
-    if ([[RidesStore sharedStore] removeRequestForRide:self.ride.rideId requestor:requestor]) {
-        [self.rideDetail.tableView reloadData];
-    }
-}
-
--(void)passengerCellChangedForPassenger:(User *)passenger {
+-(void)updatePassengerCellsForPassenger:(User *)passenger {
     if ([[RidesStore sharedStore] removePassengerForRide:self.ride.rideId passenger:passenger]) {
         [self.rideDetail.tableView reloadData];
     }
 }
 
+-(void)moveRequestorToPassengers:(User *)requestor {
+    if ([[RidesStore sharedStore] addPassengerForRideId:self.ride.rideId requestor:requestor]) {
+        [self.rideDetail.tableView reloadData];
+    }
+}
+
+-(void)contactPassengerButtonPressedForUser:(User *)user {
+    SimpleChatViewController *chatVC = [[SimpleChatViewController alloc] init];
+    [self.navigationController pushViewController:chatVC animated:YES];
+}
+
+// removing passenger or ride request
+-(void)leftButtonPressedWithObject:(id)object cellType:(CellTypeEnum)cellType {
+    
+    if (cellType == PassengerCell) {
+        User *user = (User *)object;
+        [WebserviceRequest removePassengerWithId:user.userId rideId:self.ride.rideId block:^(BOOL fetched) {
+            if (fetched) {
+                [self updatePassengerCellsForPassenger:user];
+            }
+        }];
+    } else if(cellType == RequestCell) {
+        Request *request = (Request *)object;
+        [WebserviceRequest acceptRideRequest:request isConfirmed:NO block:^(BOOL isAccepted) {
+            if (isAccepted) {
+                [self removeRideRequest:request];
+            } else {
+                NSLog(@"could not be accepted");
+            }
+        }];
+    }
+}
+
+// accepting ride request or sending him a message
+-(void)rightButtonPressedWithObject:(id)object cellType:(CellTypeEnum)cellType {
+    if (cellType == PassengerCell) {
+        
+        User *user = (User *)object;
+        [self contactPassengerButtonPressedForUser:user];
+        
+    } else if(cellType == RequestCell) {
+        
+        Request *request = (Request *)object;
+        [WebserviceRequest getUserWithId:request.passengerId block:^(User * user) {
+            if (user != nil) {
+                [WebserviceRequest acceptRideRequest:request isConfirmed:YES block:^(BOOL isAccepted) {
+                    if (isAccepted) {
+                        [self moveRequestorToPassengers:user];
+                    } else {
+                        NSLog(@"could not be accepted");
+                    }
+                }];
+            }
+        }];
+    }
+
+}
 -(void)dealloc {
     [[RidesStore sharedStore] removeObserver:self];
 }

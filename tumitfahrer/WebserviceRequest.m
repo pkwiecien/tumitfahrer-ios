@@ -70,19 +70,25 @@
     if(user != nil) {
         block(user);
     } else {
-        
-        NSString *requestString = [NSString stringWithFormat:@"/api/v2/users/%@", userId];
-        RKObjectManager *objectManager = [RKObjectManager sharedManager];
-        [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[ActionManager encryptCredentialsWithEmail:[CurrentUser sharedInstance].user.email encryptedPassword:[CurrentUser sharedInstance].user.password]];
-        
-        [objectManager getObjectsAtPath:requestString parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-            User *user = [mappingResult firstObject];
+        [self getUserWithIdFromWebService:userId block:^(User * user) {
             block(user);
-        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-            RKLogError(@"Load failed with error: %@", error);
-            block(nil);
         }];
+       
     }
+}
+
++(void)getUserWithIdFromWebService:(NSNumber *)userId block:(userCompletionHandler)block {
+    NSString *requestString = [NSString stringWithFormat:@"/api/v2/users/%@", userId];
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[ActionManager encryptCredentialsWithEmail:[CurrentUser sharedInstance].user.email encryptedPassword:[CurrentUser sharedInstance].user.password]];
+    
+    [objectManager getObjectsAtPath:requestString parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        User *user = [mappingResult firstObject];
+        block(user);
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        RKLogError(@"Load failed with error: %@", error);
+        block(nil);
+    }];
 }
 
 +(void)acceptRideRequest:(Request *)request isConfirmed:(BOOL)isConfirmed block:(boolCompletionHandler)block {
@@ -90,7 +96,7 @@
     NSDictionary *requestParams = @{@"passenger_id": request.passengerId, @"confirmed" : [NSNumber numberWithBool:isConfirmed]};
     
     [[RKObjectManager sharedManager] putObject:requestParams path:[NSString stringWithFormat:@"/api/v2/rides/%@/requests/%@", request.requestedRide.rideId, request.requestId] parameters:requestParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        if (isConfirmed) {
+        if ([mappingResult firstObject] != nil) {
             block(YES);
         } else {
             block(NO);

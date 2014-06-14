@@ -92,6 +92,11 @@ typedef enum {
     GoBackToList
 } ShouldGoBackEnum;
 
+typedef enum cellType : NSUInteger {
+    PassengerCell = 0,
+    RequestCell = 1
+} CellTypeEnum;
+
 typedef void(^completionHandlerWithIndex)(NSInteger);
 
 typedef void(^boolCompletionHandler)(BOOL);

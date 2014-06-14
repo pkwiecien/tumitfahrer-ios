@@ -31,11 +31,7 @@
 
 - (IBAction)removeButtonPressed:(id)sender {
     
-    [WebserviceRequest removePassengerWithId:self.user.userId rideId:self.rideId block:^(BOOL fetched) {
-        if (fetched) {
-            [self.delegate passengerCellChangedForPassenger:self.user];
-        }
-    }];
+    
     
 }
 

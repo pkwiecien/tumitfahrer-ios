@@ -53,7 +53,7 @@
 - (void)fetchRidesForCurrentUser:(boolCompletionHandler)block ;
 
 - (BOOL)addPassengerForRideId:(NSNumber *)rideId requestor:(User *)requestor;
-- (BOOL)removeRequestForRide:(NSNumber *)rideId requestor:(User *)requestor;
+-(BOOL)removeRequestForRide:(NSNumber *)rideId request:(Request *)request;
 - (BOOL)removePassengerForRide:(NSNumber *)rideId passenger:(User *)passenger;
 - (void)saveToPersistentStore:(Ride *)ride;
 - (Request *)rideRequestInCoreData:(NSNumber *)userId;

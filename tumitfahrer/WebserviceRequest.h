@@ -25,5 +25,6 @@ typedef void(^userCompletionHandler)(User *);
 +(void)acceptRideRequest:(Request *)request isConfirmed:(BOOL)isConfirmed block:(boolCompletionHandler)block;
 +(void)removePassengerWithId:(NSNumber *)passengerId rideId:(NSNumber *)rideId block:(boolCompletionHandler)block;
 +(void)removeRequestForRideId:(NSNumber *)rideId request:(Request *)request block:(boolCompletionHandler)block;
++(void)getUserWithIdFromWebService:(NSNumber *)userId block:(userCompletionHandler)block;
 
 @end
