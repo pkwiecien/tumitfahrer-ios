@@ -74,8 +74,7 @@
         UIView *tableHeaderView = nil;
         if (self.shouldDisplayGradient) {
             tableHeaderView = [[[NSBundle mainBundle] loadNibNamed:@"HeaderLabelsView" owner:self options:nil] objectAtIndex:0];;
-            self.mapButton = (UIButton *)[tableHeaderView viewWithTag:14];
-            self.editButton = (UIButton *)[tableHeaderView viewWithTag:15];
+            self.refreshButton = (UIButton *)[tableHeaderView viewWithTag:16];
             self.departureLabel = (UILabel *)[tableHeaderView viewWithTag:10];
             self.destinationLabel = (UILabel *)[tableHeaderView viewWithTag:11];
             self.calendarLabel = (UILabel *)[tableHeaderView viewWithTag:12];

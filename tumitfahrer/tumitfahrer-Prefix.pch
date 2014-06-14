@@ -32,7 +32,7 @@
 
 static NSString * const SALT = @"toj369sbz1f316sx";
 //static NSString * const API_ADDRESS = @"http://tumitfahrer-staging.herokuapp.com";
-static NSString * const API_ADDRESS = @"http://192.168.0.101:3000";
+static NSString * const API_ADDRESS = @"http://10.180.3.98:3000";
 
 # pragma mark - Constants
 static int const TableSingleRowHeight = 45;

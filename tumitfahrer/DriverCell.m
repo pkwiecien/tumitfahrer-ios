@@ -15,7 +15,7 @@
     DriverCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"DriverCell" owner:self options:nil] objectAtIndex:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor darkerBlue];
-    cell.contentView.backgroundColor = [UIColor darkerBlue];
+    cell.contentView.backgroundColor = [UIColor customLightGray];
     
     return cell;
 }

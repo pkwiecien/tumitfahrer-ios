@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @protocol OfferRideCellDelegate <NSObject>
 
 - (void)offerRideButtonPressed;
@@ -22,5 +23,6 @@
 
 - (IBAction)offerRideButtonPressed:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIButton *actionButton;
 
 @end

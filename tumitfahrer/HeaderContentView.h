@@ -46,8 +46,7 @@
 
 @property (nonatomic, assign) BOOL shouldDisplayGradient;
 
-@property (nonatomic, strong) UIButton *mapButton;
-@property (nonatomic, strong) UIButton *editButton;
+@property (nonatomic, strong) UIButton *refreshButton;
 @property (nonatomic, strong) UILabel *departureLabel;
 @property (nonatomic, strong) UILabel *destinationLabel;
 @property (nonatomic, strong) UILabel *timeLabel;

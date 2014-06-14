@@ -27,9 +27,6 @@
 #import "RideRequestInformationCell.h"
 #import "CircularImageView.h"
 #import "WebserviceRequest.h"
-#import "ManageDriverRideViewController.h"
-#import "RequestorActionCell.h"
-#import "JoinDriverCell.h"
 #import "OfferRideCell.h"
 #import "SimpleChatViewController.h"
 #import "EditRequestViewController.h"
@@ -37,13 +34,15 @@
 #import "AddRideViewController.h"
 #import "ActivityStore.h"
 #import "RequestorCell.h"
+#import "EmptyCell.h"
 
-@interface RideDetailViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, RequestorActionCellDelegate, JoinDriverCellDelegate, OfferRideCellDelegate, RequestorCellDelegate, PassengersCellDelegate, HeaderContentViewDelegate>
+@interface RideDetailViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, OfferRideCellDelegate, RequestorCellDelegate, PassengersCellDelegate, HeaderContentViewDelegate>
 
 @property (strong, nonatomic) NSDictionary *backLinkInfo;
 @property (weak, nonatomic) UIView *backLinkView;
 @property (weak, nonatomic) UILabel *backLinkLabel;
 @property (strong, nonatomic) NSArray *headerTitles;
+@property (strong, nonatomic) OfferRideCell *actionCell;
 
 @end
 
@@ -62,15 +61,39 @@
     [self.view bringSubviewToFront:_headerView];
     [[RidesStore sharedStore] addObserver:self];
     
+    
+    UIView *gradientViewFlipped = [[UIView alloc] initWithFrame:CGRectMake(0, -20, 320, 180)];
+    UIImageView *gradientImageView = [[UIImageView alloc] initWithFrame:gradientViewFlipped.frame];
+    gradientImageView.image = [UIImage imageNamed:@"GradientWideFlipped"];
+    [gradientViewFlipped addSubview:gradientImageView];
+    [self.view addSubview:gradientViewFlipped];
+    
     UIButton *buttonBack = [UIButton buttonWithType:UIButtonTypeCustom];
     buttonBack.frame = CGRectMake(10, 25, 30, 30);
     [buttonBack setImage:[UIImage imageNamed:@"BackIcon"] forState:UIControlStateNormal];
     [buttonBack addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buttonBack];
     
+    UIButton *mapButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    mapButton.frame = CGRectMake(230, 20, 44, 44);
+    [mapButton setImage:[UIImage imageNamed:@"MapIcon"] forState:UIControlStateNormal];
+    [mapButton addTarget:self action:@selector(mapButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:mapButton];
+    
+    UIButton *editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    editButton.frame = CGRectMake(280, 25, 30, 30);
+    [editButton setImage:[UIImage imageNamed:@"EditIcon"] forState:UIControlStateNormal];
+    [editButton addTarget:self action:@selector(editButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:editButton];
+    
+    
     self.rideDetail.shouldDisplayGradient = YES;
     self.rideDetail.headerView = _headerView;
     self.rideDetail.delegate = self;
+    self.view.backgroundColor = [UIColor customLightGray];
+    
+    self.actionCell = [OfferRideCell offerRideCell];
+    self.actionCell.delegate = self;
 }
 
 -(void)refreshRideButtonPressed {
@@ -88,9 +111,7 @@
     }
     
     if (self.ride.destinationImage == nil) {
-        [RidesStore initRide:self.ride block:^(BOOL fetched) {
-            
-        }];
+        [RidesStore initRide:self.ride block:^(BOOL fetched) { }];
     } else {
         self.rideDetail.selectedImageData = self.ride.destinationImage;
     }
@@ -99,6 +120,7 @@
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.headerViewLabel.text = [@"To " stringByAppendingString:self.ride.destination];
     
+    // for facebook sharing
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     if (delegate.refererAppLink) {
         self.backLinkInfo = delegate.refererAppLink;
@@ -128,7 +150,7 @@
         self.headerTitles = [NSArray arrayWithObjects:@"Your car", @"Passengers", @"Requests", @"", nil];
     } else {
         self.rideTypeEnum = CurrentUserIsRideOwnerAndRequests;
-        self.headerTitles = [NSArray arrayWithObjects:@"Request Details", @"Passenger", @"", nil];
+        self.headerTitles = [NSArray arrayWithObjects:@"Request Details", @"", nil];
     }
 }
 
@@ -153,33 +175,25 @@
     } else if(self.rideTypeEnum == CurrentUserIsRideOwnerAndRequests) {
         return 44;
     } else if(self.rideTypeEnum == CurrentUserIsNotRideOwnerAndDriver) {
+        if (indexPath.section == 1) {
+            return 60;
+        }
         return 44;
     } else {
         return 44;
     }
- 
+    
     return 44;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return 1;
-    }
     
     if (self.rideTypeEnum == CurrentUserIsRideOwnerAndDriver) {
-        if (section == 1) {
+        if (section == 1 && [self.ride.passengers count] > 0) {
             return [self.ride.passengers count];
-        } else if(section == 2) {
+        } else if(section == 2 && [self.ride.passengers count] > 0) {
             return [self.ride.requests count];
-        } else if(section == 3){
-            return 1;
         }
-    } else if(self.rideTypeEnum == CurrentUserIsRideOwnerAndRequests) {
-        return 1;
-    } else if(self.rideTypeEnum == CurrentUserIsNotRideOwnerAndDriver) {
-        return 1;
-    } else {
-        return 1;
     }
     
     return 1;
@@ -187,21 +201,21 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (self.rideTypeEnum == CurrentUserIsRideOwnerAndDriver) {
-        return 3;
+        return 4;
     } else if(self.rideTypeEnum == CurrentUserIsRideOwnerAndRequests) {
         return 2;
     } else if(self.rideTypeEnum == CurrentUserIsNotRideOwnerAndDriver) {
-        return 2;
+        return 3;
     } else {
-        return 2;
+        return 3;
     }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == [self.headerTitles count]) {
+    if (section == [self.headerTitles count] -1) {
         return 0;
     }
-    return 44;
+    return 30;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -210,9 +224,8 @@
         cell = [RideNoticeCell rideNoticeCell];
     }
     cell.noticeLabel.text = [self.headerTitles objectAtIndex:section];
-    [cell.refreshButton addTarget:self action:@selector(refreshRideButtonPressed) forControlEvents:UIControlEventTouchDown];
     [cell.editButton addTarget:self action:@selector(editButtonTapped) forControlEvents:UIControlEventTouchDown];
-
+    
     return cell;
 }
 
@@ -225,6 +238,7 @@
     }
     
     generalCell.textLabel.text = @"Default cell";
+    
     
     if(indexPath.section == 0) {
         if (![self.ride.isRideRequest boolValue]) {
@@ -249,9 +263,9 @@
             return cell;
         }
     }
-
+    
     if (self.rideTypeEnum == CurrentUserIsRideOwnerAndDriver) {
-        if (indexPath.section == 1) { // show passengers
+        if (indexPath.section == 1 && [self.ride.passengers count] > 0) { // show passengers
             PassengersCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PassengersCell"];
             if (cell == nil) {
                 cell = [PassengersCell passengersCell];
@@ -264,7 +278,14 @@
             cell.user = user;
             cell.rideId = self.ride.rideId;
             return cell;
-        } else if(indexPath.section == 2) { // show requests
+        } else if(indexPath.section == 1 && [self.ride.passengers count] == 0) {
+            EmptyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EmptyCell"];
+            if (cell == nil) {
+                cell = [EmptyCell emptyCell];
+            }
+            cell.descriptionLabel.text = @"There are no passengers";
+            return cell;
+        } else if(indexPath.section == 2 && [self.ride.requests count] > 0) { // show requests
             RequestorCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RequestorCell"];
             if (cell == nil) {
                 cell = [RequestorCell requestorCell];
@@ -282,13 +303,22 @@
                 }
             }];
             return cell;
-        } else {         // show delete button
-            return generalCell;
+        } else if(indexPath.section == 2 && [self.ride.requests count] == 0) {
+            EmptyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EmptyCell"];
+            if (cell == nil) {
+                cell = [EmptyCell emptyCell];
+            }
+            cell.descriptionLabel.text = @"There are no requests";
+            return cell;
+        }else {  // show delete button
+            [self.actionCell.actionButton setTitle:@"Cancel ride" forState:UIControlStateNormal];
+            return self.actionCell;
         }
-
+        
     } else if(self.rideTypeEnum == CurrentUserIsRideOwnerAndRequests) {
         // show delete request button
-
+        self.actionCell.actionButton.titleLabel.text = @"Cancel ride request";
+        return self.actionCell;
     } else if(self.rideTypeEnum == CurrentUserIsNotRideOwnerAndDriver) {
         
         if (indexPath.section == 1) { // show driver
@@ -305,9 +335,10 @@
             }
             
             return cell;
+        } else if(indexPath.section == 2) { // show leave button
+            self.actionCell.actionButton.titleLabel.text = @"Leave ride";
+            return self.actionCell;
         }
-        // show leave button
-        
     } else {
         if (indexPath.section == 1) { // show passenger aka driver
             DriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DriverCell"];
@@ -323,9 +354,11 @@
             }
             
             return cell;
+        } else if(indexPath.section == 2) {
+            self.actionCell.actionButton.titleLabel.text = @"Leave ride";
+            return self.actionCell;
         }
         
-        // show offer a ride
     }
     
     return generalCell;
@@ -519,16 +552,6 @@
 
 #pragma mark - driver action cell
 
--(void)peopleDriverActionCellButtonPressed {
-    ManageDriverRideViewController *manageRideVC = [[ManageDriverRideViewController alloc] init];
-    manageRideVC.ride = self.ride;
-    [self.navigationController pushViewController:manageRideVC animated:YES];
-}
-
--(void)deleteDriverActionCellButtonPressed {
-    [self deleteRide:self.ride];
-}
-
 -(void)deleteRide:(Ride *)ride {
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
@@ -561,10 +584,6 @@
     EditRequestViewController *editRequest = [[EditRequestViewController alloc] init];
     editRequest.ride = self.ride;
     [self.navigationController pushViewController:editRequest animated:YES];
-}
-
--(void)deleteRequestorActionCellButtonPressed {
-    [self deleteRide:self.ride];
 }
 
 #pragma mark - join driver cell
@@ -614,10 +633,18 @@
 #pragma mark - offer ride cell
 
 -(void)offerRideButtonPressed {
-    AddRideViewController *addRideVC = [[AddRideViewController alloc] init];
-    addRideVC.RideType = [self.ride.rideType intValue];
-    addRideVC.RideDisplayType = ShowAsViewController;
-    [self.navigationController pushViewController:addRideVC animated:YES];
+    if (self.rideTypeEnum == CurrentUserIsRideOwnerAndDriver) {
+        [self deleteRide:self.ride];
+    } else if(self.rideTypeEnum == CurrentUserIsRideOwnerAndRequests) {
+
+    } else if(self.rideTypeEnum == CurrentUserIsNotRideOwnerAndDriver) {
+
+    } else {
+        AddRideViewController *addRideVC = [[AddRideViewController alloc] init];
+        addRideVC.RideType = [self.ride.rideType intValue];
+        addRideVC.RideDisplayType = ShowAsViewController;
+        [self.navigationController pushViewController:addRideVC animated:YES];
+    }
 }
 
 -(void)moveRequestorToPassengersFromIndexPath:(NSIndexPath *)indexPath requestor:(User *)requestor {
@@ -653,8 +680,7 @@
 }
 
 -(void)initFields {
-    [self.rideDetail.mapButton addTarget:self action:@selector(mapButtonTapped) forControlEvents:UIControlEventTouchDown];
-    [self.rideDetail.editButton addTarget:self action:@selector(editButtonTapped) forControlEvents:UIControlEventTouchDown];
+    [self.rideDetail.refreshButton addTarget:self action:@selector(refreshRideButtonPressed) forControlEvents:UIControlEventTouchDown];
     self.rideDetail.departureLabel.text = self.ride.departurePlace;
     self.rideDetail.destinationLabel.text = self.ride.destination;
     self.rideDetail.timeLabel.text = [ActionManager timeStringFromDate:self.ride.departureTime];
