@@ -38,6 +38,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     [super viewWillAppear:animated];
     [self setupNavbar];
@@ -68,7 +69,9 @@
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBarHidden = NO;
     
-    if (self.conversation == nil) {
+    if (self.user != nil) {
+        self.title = [@"Message to " stringByAppendingString:self.user.firstName];
+    } else if (self.conversation == nil) {
         self.title = @"Message to all";
     } else {
         self.title = @"Messages";

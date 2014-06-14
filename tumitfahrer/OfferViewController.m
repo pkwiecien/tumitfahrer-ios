@@ -8,8 +8,6 @@
 
 #import "OfferViewController.h"
 #import "RideInformationCell.h"
-#import "PassengersCell.h"
-#import "DriverCell.h"
 #import "ActionManager.h"
 #import "Request.h"
 #import "CurrentUser.h"
@@ -20,8 +18,12 @@
 #import "WebserviceRequest.h"
 #import "RideDetailActionCell.h"
 #import "ActivityStore.h"
+#import "User.h"
+#import "RidePersonCell.h"
+#import "SimpleChatViewController.h"
+#import "RideSectionHeaderCell.h"
 
-@interface OfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, PassengersCellDelegate, HeaderContentViewDelegate>
+@interface OfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate>
 
 @end
 
@@ -77,6 +79,17 @@
     return [self.headerTitles objectAtIndex:section];
 }
 
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    RideSectionHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideNoticeCell"];
+    if(cell == nil) {
+        cell = [RideSectionHeaderCell rideSectionHeaderCell];
+    }
+    cell.noticeLabel.text = [self.headerTitles objectAtIndex:section];
+    [cell.editButton addTarget:self action:@selector(editButtonTapped) forControlEvents:UIControlEventTouchDown];
+    
+    return cell;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *generalCell = [tableView dequeueReusableCellWithIdentifier:@"reusable"];
@@ -101,17 +114,20 @@
         
         return cell;
     } else if (indexPath.section == 1) { // show driver
-        DriverCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DriverCell"];
+
+        RidePersonCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RidePersonCell"];
         if (cell == nil) {
-            cell = [DriverCell driverCell];
+            cell = [RidePersonCell ridePersonCell];
         }
-        
         if (self.ride.rideOwner != nil) {
-            cell.driverNameLabel.text = self.ride.rideOwner.firstName;
-            cell.driverRatingLabel.text = [NSString stringWithFormat:@"%.01f", [self.ride.rideOwner.ratingAvg floatValue]];
-            CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageWithData:self.ride.rideOwner.profileImageData]];
-            [cell addSubview:circularImageView];
+            cell.personNameLabel.text = [self.ride.rideOwner.firstName stringByAppendingString:[NSString stringWithFormat:@"\nRating: %@", self.ride.rideOwner.ratingAvg]];
+            cell.personImageView.image = [UIImage imageWithData:self.ride.rideOwner.profileImageData];
+            
+//            CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageWithData:self.ride.rideOwner.profileImageData]];
+//            [cell addSubview:circularImageView];
         }
+        cell.leftButton.hidden = YES;
+        [cell.rightButton addTarget:self action:@selector(contactPassengerButtonPressed) forControlEvents:UIControlEventTouchDown];
         
         return cell;
     } else if(indexPath.section == 2) { // show leave button
@@ -163,8 +179,8 @@
 
 -(void)joinButtonPressed {
     if (![self isPassengerOfRide]) {
-        Request *request = [self requestFoundInCoreData];
         
+        Request *request = [self requestFoundInCoreData];
         RKObjectManager *objectManager = [RKObjectManager sharedManager];
         
         if (request == nil) {
@@ -198,7 +214,12 @@
             }];
         }
     } else {
-        
+        [WebserviceRequest removePassengerWithId:[CurrentUser sharedInstance].user.userId rideId:self.ride.rideId block:^(BOOL fetched) {
+            if (fetched) {
+                [[RidesStore sharedStore] removePassengerForRide:self.ride.rideId passenger:[CurrentUser sharedInstance].user];
+                [self.rideDetail.tableView reloadData];
+            }
+        }];
     }
 }
 
@@ -212,6 +233,12 @@
     if ([[RidesStore sharedStore] removePassengerForRide:self.ride.rideId passenger:passenger]) {
         [self.rideDetail.tableView reloadData];
     }
+}
+
+-(void)contactPassengerButtonPressed {
+    SimpleChatViewController *simpleChatVC = [[SimpleChatViewController alloc] init];
+    simpleChatVC.user = self.ride.rideOwner;
+    [self.navigationController pushViewController:simpleChatVC animated:YES];
 }
 
 -(void)dealloc {

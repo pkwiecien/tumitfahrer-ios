@@ -71,9 +71,9 @@
         if (self.tablePassengerValues != nil) {
             self.tableValues = [NSMutableArray arrayWithArray:self.tablePassengerValues];
         } else {
-            self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", nil];
+            self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", nil];
         }
-        self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", @"", nil];
+        self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", @"Meeting Point", @"", nil];
     } else {
         if(self.tableDriverValues != nil) {
             self.tableValues = [NSMutableArray arrayWithArray:self.tableDriverValues];

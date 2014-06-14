@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RideNoticeCell : UITableViewCell
+@interface RideSectionHeaderCell : UITableViewCell
 
-+ (RideNoticeCell *)rideNoticeCell;
++ (RideSectionHeaderCell *)rideSectionHeaderCell;
 
 @property (weak, nonatomic) IBOutlet UIImageView *noticeImage;
 @property (weak, nonatomic) IBOutlet UILabel *noticeLabel;

@@ -12,7 +12,7 @@
 #import "ActionManager.h"
 #import "KGStatusBar.h"
 #import "RidesStore.h"
-#import "RideNoticeCell.h"
+#import "RideSectionHeaderCell.h"
 #import "HeaderContentView.h"
 #import "RideRequestInformationCell.h"
 #import "WebserviceRequest.h"
@@ -20,6 +20,7 @@
 #import "RidePersonCell.h"
 #import "User.h"
 #import "AddRideViewController.h"
+#import "SimpleChatViewController.h"
 
 @interface RequestViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate>
 
@@ -72,9 +73,9 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    RideNoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideNoticeCell"];
+    RideSectionHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideNoticeCell"];
     if(cell == nil) {
-        cell = [RideNoticeCell rideNoticeCell];
+        cell = [RideSectionHeaderCell rideSectionHeaderCell];
     }
     cell.noticeLabel.text = [self.headerTitles objectAtIndex:section];
     [cell.editButton addTarget:self action:@selector(editButtonTapped) forControlEvents:UIControlEventTouchDown];
@@ -105,7 +106,7 @@
     } else {  // show delete button
         RideDetailActionCell *actionCell = [RideDetailActionCell offerRideCell];
         [actionCell.actionButton setTitle:@"Offer ride" forState:UIControlStateNormal];
-        [actionCell.actionButton addTarget:self action:@selector(contactRequestorButtonPressed) forControlEvents:UIControlEventTouchDown];
+        [actionCell.actionButton addTarget:self action:@selector(addRideButtonPressed) forControlEvents:UIControlEventTouchDown];
         return actionCell;
     }
 }
@@ -118,9 +119,15 @@
     [[RidesStore sharedStore] removeObserver:self];
 }
 
--(void)contactRequestorButtonPressed {
+-(void)addRideButtonPressed {
     AddRideViewController *addRideVC = [[AddRideViewController alloc] init];
     [self.navigationController pushViewController:addRideVC animated:YES];
+}
+
+-(void)contactRequestorButtonPressed {
+    SimpleChatViewController *simpleChatVC = [[SimpleChatViewController alloc] init];
+    simpleChatVC.user = self.ride.rideOwner;
+    [self.navigationController pushViewController:simpleChatVC animated:YES];
 }
 
 @end

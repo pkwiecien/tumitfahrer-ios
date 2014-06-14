@@ -8,10 +8,12 @@
 
 #import "JSMessagesViewController.h"
 #import "Conversation.h"
+#import "User.h"
 
 @interface SimpleChatViewController : JSMessagesViewController <JSMessagesViewDataSource, JSMessagesViewDelegate, UITextViewDelegate>
 
 @property (strong, nonatomic) NSDictionary *avatars;
 @property (strong, nonatomic) Conversation *conversation;
+@property (strong, nonatomic) User *user;
 
 @end

@@ -9,15 +9,13 @@
 #import "OwnerRequestViewController.h"
 #import "Ride.h"
 #import "RideInformationCell.h"
-#import "PassengersCell.h"
 #import "CurrentUser.h"
 #import "RidesStore.h"
-#import "RideNoticeCell.h"
+#import "RideSectionHeaderCell.h"
 #import "HeaderContentView.h"
 #import "RideRequestInformationCell.h"
 #import "WebserviceRequest.h"
 #import "RideDetailActionCell.h"
-#import "RequestorCell.h"
 
 @interface OwnerRequestViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate>
 
@@ -72,9 +70,9 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    RideNoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideNoticeCell"];
+    RideSectionHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideNoticeCell"];
     if(cell == nil) {
-        cell = [RideNoticeCell rideNoticeCell];
+        cell = [RideSectionHeaderCell rideSectionHeaderCell];
     }
     cell.noticeLabel.text = [self.headerTitles objectAtIndex:section];
     [cell.editButton addTarget:self action:@selector(editButtonTapped) forControlEvents:UIControlEventTouchDown];

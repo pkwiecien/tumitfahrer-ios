@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
-#import "RideNoticeCell.h"
+#import "RideSectionHeaderCell.h"
 #import "ActionManager.h"
 
-@implementation RideNoticeCell
+@implementation RideSectionHeaderCell
 
-+ (RideNoticeCell *)rideNoticeCell {
++ (RideSectionHeaderCell *)rideSectionHeaderCell {
     
-    RideNoticeCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"RideNoticeCell" owner:self options:nil] objectAtIndex:0];
+    RideSectionHeaderCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"RideSectionHeaderCell" owner:self options:nil] objectAtIndex:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor darkerBlue];
     cell.contentView.backgroundColor = [UIColor darkerBlue];

@@ -729,7 +729,6 @@ static int activity_id = 0;
 -(BOOL)removePassengerForRide:(NSNumber *)rideId passenger:(User *)passenger {
     Ride *ride = [self containsRideWithId:rideId];
     [ride removePassengersObject:passenger];
-    
     [self saveToPersistentStore:ride];
     return true;
 }

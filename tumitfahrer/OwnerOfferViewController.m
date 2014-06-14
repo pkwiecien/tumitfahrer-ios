@@ -12,7 +12,7 @@
 #import "CurrentUser.h"
 #import "KGStatusBar.h"
 #import "RidesStore.h"
-#import "RideNoticeCell.h"
+#import "RideSectionHeaderCell.h"
 #import "HeaderContentView.h"
 #import "RidesPageViewController.h"
 #import "WebserviceRequest.h"
@@ -86,9 +86,9 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    RideNoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideNoticeCell"];
+    RideSectionHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideNoticeCell"];
     if(cell == nil) {
-        cell = [RideNoticeCell rideNoticeCell];
+        cell = [RideSectionHeaderCell rideSectionHeaderCell];
     }
     cell.noticeLabel.text = [self.headerTitles objectAtIndex:section];
     [cell.editButton addTarget:self action:@selector(editButtonTapped) forControlEvents:UIControlEventTouchDown];
@@ -123,6 +123,8 @@
         cell.leftObject = passenger;
         cell.rightObject = passenger;
         cell.cellTypeEnum = PassengerCell;
+        [cell.leftButton setBackgroundImage:[UIImage imageNamed:@"DeleteIconBlack"] forState:UIControlStateNormal];
+        [cell.rightButton setBackgroundImage:[UIImage imageNamed:@"EmailIconBlack"] forState:UIControlStateNormal];
         return cell;
         
     } else if(indexPath.section == 1 && [self.ride.passengers count] == 0) {
@@ -152,7 +154,9 @@
                 }
             }];
         }
-
+        
+        [cell.leftButton setBackgroundImage:[UIImage imageNamed:@"DeleteIconBlack"] forState:UIControlStateNormal];
+        [cell.rightButton setBackgroundImage:[UIImage imageNamed:@"AcceptIconBlack"] forState:UIControlStateNormal];
         cell.leftObject = request;
         cell.rightObject = request;
         cell.cellTypeEnum = RequestCell;
