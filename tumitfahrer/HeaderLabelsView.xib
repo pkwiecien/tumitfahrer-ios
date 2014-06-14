@@ -58,13 +58,6 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" tag="16" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dGy-0V-viJ">
-                    <rect key="frame" x="282" y="144" width="25" height="27"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" backgroundImage="RefreshIcon">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -75,7 +68,6 @@
         <image name="DepartureIconSmall" width="20" height="20"/>
         <image name="DestinationIconSmall" width="13" height="20"/>
         <image name="GradientWide" width="320" height="181"/>
-        <image name="RefreshIcon" width="25" height="27"/>
         <image name="TimeIcon" width="20" height="20"/>
     </resources>
 </document>

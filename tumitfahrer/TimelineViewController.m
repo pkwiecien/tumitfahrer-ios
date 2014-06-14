@@ -15,12 +15,15 @@
 #import "Ride.h"
 #import "Rating.h"
 #import "ActionManager.h"
-#import "OwnerOfferViewController.h"
 #import "RidesStore.h"
 #import "RideSearch.h"
 #import "User.h"
 #import "CurrentUser.h"
+#import "Ride.h"
 #import "OfferViewController.h"
+#import "OwnerOfferViewController.h"
+#import "RequestViewController.h"
+#import "OwnerRequestViewController.h"
 
 @interface TimelineViewController () <ActivityStoreDelegate>
 
@@ -171,41 +174,46 @@
 
     if ([result isKindOfClass:[Ride class]]) {
         Ride *ride = (Ride *)result;
-        if (ride.rideOwner != nil && [ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && ![ride.isRideRequest boolValue]) {
-            
-            OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
-            rideDetailVC.ride = (Ride *)result;
-            [self.navigationController pushViewController:rideDetailVC animated:YES];
-
-        } else if(ride.rideOwner != nil && ![ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
-            OfferViewController *offerVC = [[OfferViewController alloc] init];
-            offerVC.ride = (Ride *)result;
-            [self.navigationController pushViewController:offerVC animated:YES];
-        }
-//        RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
-//        rideDetailVC.ride = (Ride *)result;
-//        [self.navigationController pushViewController:rideDetailVC animated:YES];
-//        MainRideDetailViewController *newRideDetailVC = [[MainRideDetailViewController alloc] init];
-//        newRideDetailVC.ride = (Ride *)result;
-//        [self.navigationController pushViewController:newRideDetailVC animated:YES];
+        UIViewController *vc = [self viewControllerForRide:ride];
+        [self.navigationController pushViewController:vc animated:YES];
     } else if([result isKindOfClass:[Request class]]) {
         Request *res = (Request *)result;
+        
         Ride *ride = [[RidesStore sharedStore] containsRideWithId:res.rideId];
+        
         if (ride != nil) {
             res.requestedRide = ride;
-            OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
-            rideDetailVC.ride = ride;
-            [self.navigationController pushViewController:rideDetailVC animated:YES];
+            UIViewController *vc = [self viewControllerForRide:ride];
+            [self.navigationController pushViewController:vc animated:YES];
         } else {
             [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:res.rideId block:^(BOOL completed) {
                 if(completed) {
-                    OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
                     Ride *ride = [[RidesStore sharedStore] fetchRideFromCoreDataWithId:res.rideId];
-                    rideDetailVC.ride = ride;
-                    [self.navigationController pushViewController:rideDetailVC animated:YES];
+                    UIViewController *vc = [self viewControllerForRide:ride];
+                    [self.navigationController pushViewController:vc animated:YES];
                 }
             }];
         }
+    }
+}
+
+-(UIViewController *)viewControllerForRide:(Ride *)ride {
+    if (![ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && [ride.isRideRequest boolValue]) {
+        RequestViewController *requestVC = [[RequestViewController alloc] init];
+        requestVC.ride = ride;
+        return requestVC;
+    } else if(![ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && ![ride.isRideRequest boolValue]) {
+        OfferViewController *offerVc = [[OfferViewController alloc] init];
+        offerVc.ride = ride;
+        return offerVc;
+    } else if([ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && ![ride.isRideRequest boolValue]) {
+        OwnerOfferViewController *ownerOfferVc = [[OwnerOfferViewController alloc] init];
+        ownerOfferVc.ride = ride;
+        return ownerOfferVc;
+    } else {
+        OwnerRequestViewController *ownerRequestVc = [[OwnerRequestViewController alloc] init];
+        ownerRequestVc.ride = ride;
+        return ownerRequestVc;
     }
 }
 
