@@ -10,33 +10,18 @@
 #import "RideInformationCell.h"
 #import "PassengersCell.h"
 #import "DriverCell.h"
-#import "MessagesOverviewViewController.h"
 #import "ActionManager.h"
-#import "User.h"
 #import "Request.h"
 #import "CurrentUser.h"
 #import "KGStatusBar.h"
-#import "Ride.h"
 #import "RidesStore.h"
-#import "RideNoticeCell.h"
 #import "HeaderContentView.h"
-#import "RideDetailMapViewController.h"
-#import <FacebookSDK/FacebookSDK.h>
-#import "AppDelegate.h"
-#import "RidesPageViewController.h"
-#import "RideRequestInformationCell.h"
 #import "CircularImageView.h"
 #import "WebserviceRequest.h"
 #import "OfferRideCell.h"
-#import "SimpleChatViewController.h"
-#import "EditRequestViewController.h"
-#import "EditRideViewController.h"
-#import "AddRideViewController.h"
 #import "ActivityStore.h"
-#import "RequestorCell.h"
-#import "EmptyCell.h"
 
-@interface OfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, OfferRideCellDelegate, RequestorCellDelegate, PassengersCellDelegate, HeaderContentViewDelegate>
+@interface OfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, OfferRideCellDelegate, PassengersCellDelegate, HeaderContentViewDelegate>
 
 @property (strong, nonatomic) NSDictionary *backLinkInfo;
 @property (weak, nonatomic) UIView *backLinkView;
@@ -183,33 +168,6 @@
 
 -(void)dealloc {
     [[RidesStore sharedStore] removeObserver:self];
-}
-
--(void)editDriverActionCellButtonPressed {
-    EditRideViewController *editRideVC = [[EditRideViewController alloc] init];
-    editRideVC.ride = self.ride;
-    [self.navigationController pushViewController:editRideVC animated:YES];
-}
-
--(void)contactDriverActionCellButtonPressed {
-    MessagesOverviewViewController *messageOverviewVC = [[MessagesOverviewViewController alloc] init];
-    messageOverviewVC.ride = self.ride;
-    [self.navigationController pushViewController:messageOverviewVC animated:YES];
-}
-
-#pragma mark - requestor action cell
-
--(void)editRequestorActionCellButtonPressed {
-    EditRequestViewController *editRequest = [[EditRequestViewController alloc] init];
-    editRequest.ride = self.ride;
-    [self.navigationController pushViewController:editRequest animated:YES];
-}
-
-#pragma mark - join driver cell
-
--(void)contactJoinDriverCellButtonPressed {
-    SimpleChatViewController *chatVC = [[SimpleChatViewController alloc] init];
-    [self.navigationController pushViewController:chatVC animated:YES];
 }
 
 -(void)joinJoinDriverCellButtonPressed {
