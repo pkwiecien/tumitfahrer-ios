@@ -6,12 +6,12 @@
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
-#import "OfferRideCell.h"
+#import "RideDetailActionCell.h"
 
-@implementation OfferRideCell
+@implementation RideDetailActionCell
 
-+(OfferRideCell *)offerRideCell {
-    OfferRideCell * cell = [[[NSBundle mainBundle] loadNibNamed:@"OfferRideCell" owner:self options:nil] objectAtIndex:0];
++(RideDetailActionCell *)offerRideCell {
+    RideDetailActionCell * cell = [[[NSBundle mainBundle] loadNibNamed:@"RideDetailActionCell" owner:self options:nil] objectAtIndex:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor customLightGray];
     

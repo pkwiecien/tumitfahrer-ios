@@ -16,9 +16,12 @@
 #import "HeaderContentView.h"
 #import "RideRequestInformationCell.h"
 #import "WebserviceRequest.h"
-#import "OfferRideCell.h"
+#import "RideDetailActionCell.h"
+#import "RidePersonCell.h"
+#import "User.h"
+#import "AddRideViewController.h"
 
-@interface RequestViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, OfferRideCellDelegate, HeaderContentViewDelegate>
+@interface RequestViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, HeaderContentViewDelegate>
 
 @end
 
@@ -43,7 +46,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
+    if (indexPath.section < 2) {
         return 60;
     }
     return 44;
@@ -81,14 +84,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *generalCell = [tableView dequeueReusableCellWithIdentifier:@"reusable"];
-    if (!generalCell) {
-        generalCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reusable"];
-    }
-    
-    generalCell.textLabel.text = @"Default cell";
-    
-    
     if(indexPath.section == 0) {
         
         RideRequestInformationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideRequestInformationCell"];
@@ -99,16 +94,20 @@
         return cell;
         
     } else if(indexPath.section == 1) {
-        return generalCell;
-    }else {  // show delete button
-        
-        OfferRideCell *actionCell = [OfferRideCell offerRideCell];
-        actionCell.delegate = self;
-        [actionCell.actionButton setTitle:@"Delete ride" forState:UIControlStateNormal];
+        RidePersonCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RidePersonCell"];
+        if(cell == nil){
+            cell = [RidePersonCell ridePersonCell];
+        }
+        cell.personNameLabel.text = self.ride.rideOwner.firstName;
+        cell.leftButton.hidden = YES;
+        [cell.rightButton addTarget:self action:@selector(contactRequestorButtonPressed) forControlEvents:UIControlEventTouchDown];
+        return cell;
+    } else {  // show delete button
+        RideDetailActionCell *actionCell = [RideDetailActionCell offerRideCell];
+        [actionCell.actionButton setTitle:@"Offer ride" forState:UIControlStateNormal];
+        [actionCell.actionButton addTarget:self action:@selector(contactRequestorButtonPressed) forControlEvents:UIControlEventTouchDown];
         return actionCell;
     }
-    
-    return generalCell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -119,8 +118,9 @@
     [[RidesStore sharedStore] removeObserver:self];
 }
 
--(void)offerRideButtonPressed {
-    // offer ride
+-(void)contactRequestorButtonPressed {
+    AddRideViewController *addRideVC = [[AddRideViewController alloc] init];
+    [self.navigationController pushViewController:addRideVC animated:YES];
 }
 
 @end

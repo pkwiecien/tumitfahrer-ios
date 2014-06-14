@@ -16,6 +16,7 @@
 @property (nonatomic, assign) ShouldDisplayEnum displayEnum;
 @property (nonatomic, assign) ShouldGoBackEnum shouldGoBackEnum;
 @property (strong, nonatomic) NSArray *headerTitles;
+@property (strong, nonatomic) NSArray *headerIcons;
 @property (nonatomic, strong) Ride* ride;
 
 

@@ -18,7 +18,7 @@
 #import "HeaderContentView.h"
 #import "CircularImageView.h"
 #import "WebserviceRequest.h"
-#import "OfferRideCell.h"
+#import "RideDetailActionCell.h"
 #import "ActivityStore.h"
 
 @interface OfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, OfferRideCellDelegate, PassengersCellDelegate, HeaderContentViewDelegate>
@@ -121,7 +121,7 @@
         return cell;
     } else if(indexPath.section == 2) { // show leave button
         
-        OfferRideCell *actionCell = [OfferRideCell offerRideCell];
+        RideDetailActionCell *actionCell = [RideDetailActionCell offerRideCell];
         actionCell.delegate = self;
         Request *request = [self requestFoundInCoreData];
         

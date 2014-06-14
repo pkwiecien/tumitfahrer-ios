@@ -17,11 +17,11 @@
 #import "HeaderContentView.h"
 #import "RidesPageViewController.h"
 #import "WebserviceRequest.h"
-#import "OfferRideCell.h"
+#import "RideDetailActionCell.h"
 #import "RequestorCell.h"
 #import "EmptyCell.h"
 
-@interface OwnerOfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, OfferRideCellDelegate, RequestorCellDelegate, PassengersCellDelegate, HeaderContentViewDelegate>
+@interface OwnerOfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, RequestorCellDelegate, PassengersCellDelegate, HeaderContentViewDelegate>
 
 @end
 
@@ -138,9 +138,9 @@
         return cell;
     }else {  // show delete button
         
-        OfferRideCell *actionCell = [OfferRideCell offerRideCell];
-        actionCell.delegate = self;
+        RideDetailActionCell *actionCell = [RideDetailActionCell offerRideCell];
         [actionCell.actionButton setTitle:@"Cancel ride" forState:UIControlStateNormal];
+        [actionCell.actionButton addTarget:self action:@selector(deleteRideButtonPressed) forControlEvents:UIControlEventTouchDown];
         return actionCell;
     }
     
@@ -169,8 +169,6 @@
                 }];
             }
         }];
-        
-        
     }
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
@@ -228,46 +226,9 @@
     }];
 }
 
--(void)joinJoinDriverCellButtonPressed {
-    Request *request = [[RidesStore sharedStore] rideRequestInCoreData:[CurrentUser sharedInstance].user.userId];
-    
-    RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    
-    if (request == nil) {
-        NSDictionary *queryParams;
-        // add enum
-        NSString *userId = [NSString stringWithFormat:@"%@", [CurrentUser sharedInstance].user.userId];
-        queryParams = @{@"passenger_id": userId};
-        NSDictionary *requestParams = @{@"request": queryParams};
-        
-        [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/rides/%@/requests", self.ride.rideId] parameters:requestParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-            [KGStatusBar showSuccessWithStatus:@"Request was sent"];
-            
-            Request *rideRequest = (Request *)[mappingResult firstObject];
-            [[RidesStore sharedStore] addRideRequestToStore:rideRequest forRide:self.ride];
-            
-            [self.rideDetail.tableView reloadData];
-        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-            [ActionManager showAlertViewWithTitle:[error localizedDescription]];
-            RKLogError(@"Load failed with error: %@", error);
-        }];
-    } else {
-        [objectManager deleteObject:request path:[NSString stringWithFormat:@"/api/v2/rides/%@/requests/%d", self.ride.rideId, [request.requestId intValue]] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-            
-            [KGStatusBar showSuccessWithStatus:@"Request canceled"];
-            
-            [[RidesStore sharedStore] deleteRideRequest:request];
-            
-            [self.rideDetail.tableView reloadData];
-        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-            RKLogError(@"Load failed with error: %@", error);
-        }];
-    }
-}
-
 #pragma mark - offer ride cell
 
--(void)offerRideButtonPressed {
+-(void)deleteRideButtonPressed {
     [self deleteRide:self.ride];
 }
 

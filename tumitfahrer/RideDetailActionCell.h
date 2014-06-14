@@ -15,9 +15,9 @@
 
 @end
 
-@interface OfferRideCell : UITableViewCell
+@interface RideDetailActionCell : UITableViewCell
 
-+(OfferRideCell *)offerRideCell;
++(RideDetailActionCell *)offerRideCell;
 
 @property (nonatomic, strong) id<OfferRideCellDelegate> delegate;
 

@@ -16,7 +16,7 @@
 #import "HeaderContentView.h"
 #import "RideRequestInformationCell.h"
 #import "WebserviceRequest.h"
-#import "OfferRideCell.h"
+#import "RideDetailActionCell.h"
 #import "RequestorCell.h"
 
 @interface OwnerRequestViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, OfferRideCellDelegate, RequestorCellDelegate, PassengersCellDelegate, HeaderContentViewDelegate>
@@ -106,7 +106,7 @@
         
     } else {  // show delete button
         
-        OfferRideCell *actionCell = [OfferRideCell offerRideCell];
+        RideDetailActionCell *actionCell = [RideDetailActionCell offerRideCell];
         actionCell.delegate = self;
         [actionCell.actionButton setTitle:@"Delete ride" forState:UIControlStateNormal];
         return actionCell;
