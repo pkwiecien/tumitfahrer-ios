@@ -21,7 +21,7 @@
 #import "User.h"
 #import "AddRideViewController.h"
 
-@interface RequestViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, HeaderContentViewDelegate>
+@interface RequestViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate>
 
 @end
 

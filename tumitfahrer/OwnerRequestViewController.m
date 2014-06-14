@@ -19,10 +19,7 @@
 #import "RideDetailActionCell.h"
 #import "RequestorCell.h"
 
-@interface OwnerRequestViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, OfferRideCellDelegate, RequestorCellDelegate, PassengersCellDelegate, HeaderContentViewDelegate>
-
-@property (strong, nonatomic) NSArray *headerTitles;
-
+@interface OwnerRequestViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, HeaderContentViewDelegate>
 
 @end
 
@@ -107,8 +104,8 @@
     } else {  // show delete button
         
         RideDetailActionCell *actionCell = [RideDetailActionCell offerRideCell];
-        actionCell.delegate = self;
         [actionCell.actionButton setTitle:@"Delete ride" forState:UIControlStateNormal];
+        [actionCell.actionButton addTarget:self action:@selector(deleteRideButtonPressed) forControlEvents:UIControlEventTouchDown];
         return actionCell;
     }
     
@@ -119,11 +116,13 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
--(void)dealloc {
-    [[RidesStore sharedStore] removeObserver:self];
+-(void)removeRideRequest:(NSIndexPath *)indexPath requestor:(User *)requestor {
+    if ([[RidesStore sharedStore] removeRequestForRide:self.ride.rideId requestor:requestor]) {
+        [self.rideDetail.tableView reloadData];
+    }
 }
 
--(void)deleteRide:(Ride *)ride {
+-(void)deleteRideButtonPressed {
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
     [objectManager deleteObject:self.ride path:[NSString stringWithFormat:@"/api/v2/rides/%@", self.ride.rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
@@ -137,27 +136,8 @@
     }];
 }
 
--(void)moveRequestorToPassengersFromIndexPath:(NSIndexPath *)indexPath requestor:(User *)requestor {
-    if ([[RidesStore sharedStore] addPassengerForRideId:self.ride.rideId requestor:requestor]) {
-        [self.rideDetail.tableView reloadData];
-    }
-}
-
--(void)removeRideRequest:(NSIndexPath *)indexPath requestor:(User *)requestor {
-    if ([[RidesStore sharedStore] removeRequestForRide:self.ride.rideId requestor:requestor]) {
-        [self.rideDetail.tableView reloadData];
-    }
-}
-
--(void)passengerCellChangedForPassenger:(User *)passenger {
-    if ([[RidesStore sharedStore] removePassengerForRide:self.ride.rideId passenger:passenger]) {
-        [self.rideDetail.tableView reloadData];
-    }
-}
-
-
--(void)offerRideButtonPressed {
-    [self deleteRide:self.ride];
+-(void)dealloc {
+    [[RidesStore sharedStore] removeObserver:self];
 }
 
 @end

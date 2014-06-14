@@ -21,12 +21,7 @@
 #import "RideDetailActionCell.h"
 #import "ActivityStore.h"
 
-@interface OfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, OfferRideCellDelegate, PassengersCellDelegate, HeaderContentViewDelegate>
-
-@property (strong, nonatomic) NSDictionary *backLinkInfo;
-@property (weak, nonatomic) UIView *backLinkView;
-@property (weak, nonatomic) UILabel *backLinkLabel;
-@property (strong, nonatomic) NSArray *headerTitles;
+@interface OfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, RideStoreDelegate, PassengersCellDelegate, HeaderContentViewDelegate>
 
 @end
 
@@ -122,7 +117,7 @@
     } else if(indexPath.section == 2) { // show leave button
         
         RideDetailActionCell *actionCell = [RideDetailActionCell offerRideCell];
-        actionCell.delegate = self;
+        [actionCell.actionButton addTarget:self action:@selector(joinButtonPressed) forControlEvents:UIControlEventTouchDown];
         Request *request = [self requestFoundInCoreData];
         
         if (request != nil) {
@@ -164,13 +159,9 @@
     }
 }
 
-#pragma mark - map view methods
+#pragma mark - offer ride cell
 
--(void)dealloc {
-    [[RidesStore sharedStore] removeObserver:self];
-}
-
--(void)joinJoinDriverCellButtonPressed {
+-(void)joinButtonPressed {
     if (![self isPassengerOfRide]) {
         Request *request = [self requestFoundInCoreData];
         
@@ -211,18 +202,6 @@
     }
 }
 
-#pragma mark - offer ride cell
-
--(void)offerRideButtonPressed {
-    [self joinJoinDriverCellButtonPressed];
-}
-
--(void)moveRequestorToPassengersFromIndexPath:(NSIndexPath *)indexPath requestor:(User *)requestor {
-    if ([[RidesStore sharedStore] addPassengerForRideId:self.ride.rideId requestor:requestor]) {
-        [self.rideDetail.tableView reloadData];
-    }
-}
-
 -(void)removeRideRequest:(NSIndexPath *)indexPath requestor:(User *)requestor {
     if ([[RidesStore sharedStore] removeRequestForRide:self.ride.rideId requestor:requestor]) {
         [self.rideDetail.tableView reloadData];
@@ -233,6 +212,10 @@
     if ([[RidesStore sharedStore] removePassengerForRide:self.ride.rideId passenger:passenger]) {
         [self.rideDetail.tableView reloadData];
     }
+}
+
+-(void)dealloc {
+    [[RidesStore sharedStore] removeObserver:self];
 }
 
 @end

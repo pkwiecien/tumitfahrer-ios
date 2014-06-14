@@ -173,8 +173,6 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
-#pragma mark - LocationDetailViewDelegate
-
 #pragma mark - Button actions
 
 - (void)back {
@@ -204,15 +202,9 @@
 
 #pragma mark - delegate methods
 
--(void)dealloc {
-    [[RidesStore sharedStore] removeObserver:self];
-}
+#pragma mark - offer ride cell
 
-#pragma mark - delegate methods
-
-#pragma mark - driver action cell
-
--(void)deleteRide:(Ride *)ride {
+-(void)deleteRideButtonPressed {
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
     [objectManager deleteObject:self.ride path:[NSString stringWithFormat:@"/api/v2/rides/%@", self.ride.rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
@@ -224,12 +216,6 @@
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);
     }];
-}
-
-#pragma mark - offer ride cell
-
--(void)deleteRideButtonPressed {
-    [self deleteRide:self.ride];
 }
 
 -(void)moveRequestorToPassengersFromIndexPath:(NSIndexPath *)indexPath requestor:(User *)requestor {
@@ -248,6 +234,10 @@
     if ([[RidesStore sharedStore] removePassengerForRide:self.ride.rideId passenger:passenger]) {
         [self.rideDetail.tableView reloadData];
     }
+}
+
+-(void)dealloc {
+    [[RidesStore sharedStore] removeObserver:self];
 }
 
 @end
