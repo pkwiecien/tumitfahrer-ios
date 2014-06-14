@@ -12,7 +12,7 @@
 #import "NavigationBarUtilities.h"
 #import "CurrentUser.h"
 #import "Ride.h"
-#import "RideDetailViewController.h"
+#import "OwnerOfferViewController.h"
 #import "RidesStore.h"
 #import "CustomUILabel.h"
 #import "MMDrawerBarButtonItem.h"
@@ -205,7 +205,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
+    OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
     rideDetailVC.ride = [[self.arrayWithSections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:rideDetailVC animated:YES];
 }

@@ -20,7 +20,7 @@
 #import "SearchRideViewController.h"
 #import "SegmentedControlCell.h"
 #import "KGStatusBar.h"
-#import "RideDetailViewController.h"
+#import "OwnerOfferViewController.h"
 #import "LocationController.h"
 #import <FacebookSDK/FacebookSDK.h>
 
@@ -327,7 +327,7 @@
         self.tableDriverValues = nil;
         [KGStatusBar showSuccessWithStatus:@"Ride added"];
         
-        RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
+        OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
         rideDetailVC.ride = ride;
         rideDetailVC.displayEnum = self.displayEnum;
         rideDetailVC.shouldGoBackEnum = GoBackToList;

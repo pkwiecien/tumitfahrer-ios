@@ -11,7 +11,7 @@
 #import "RidesCell.h"
 #import "HeaderImageView.h"
 #import "Ride.h"
-#import "RideDetailViewController.h"
+#import "OwnerOfferViewController.h"
 #import "NavigationBarUtilities.h"
 #import "ActionManager.h"
 #import "RidesStore.h"
@@ -173,7 +173,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
+    OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
     rideDetailVC.ride = [self.searchResults objectAtIndex:indexPath.section];
     [self.navigationController pushViewController:rideDetailVC animated:YES];
 }

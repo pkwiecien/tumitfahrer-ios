@@ -11,16 +11,10 @@
 
 @class HeaderContentView;
 
-@interface RideDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate>
-
-typedef enum {
-    GoBackNormally = 0,
-    GoBackToList
-} ShouldGoBackEnum;
+@interface OwnerOfferViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, assign) ShouldDisplayEnum displayEnum;
 @property (nonatomic, assign) ShouldGoBackEnum shouldGoBackEnum;
-@property (nonatomic, assign) SpecifcRideTypeEnum rideTypeEnum;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UILabel *headerViewLabel;
 @property (nonatomic, strong) HeaderContentView *rideDetail;

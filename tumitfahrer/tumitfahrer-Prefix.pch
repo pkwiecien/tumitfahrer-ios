@@ -87,6 +87,11 @@ typedef enum {
     ShouldShareRideOnFacebook
 } ShouldDisplayEnum;
 
+typedef enum {
+    GoBackNormally = 0,
+    GoBackToList
+} ShouldGoBackEnum;
+
 typedef void(^completionHandlerWithIndex)(NSInteger);
 
 typedef void(^boolCompletionHandler)(BOOL);

@@ -15,9 +15,12 @@
 #import "Ride.h"
 #import "Rating.h"
 #import "ActionManager.h"
-#import "RideDetailViewController.h"
+#import "OwnerOfferViewController.h"
 #import "RidesStore.h"
 #import "RideSearch.h"
+#import "User.h"
+#import "CurrentUser.h"
+#import "OfferViewController.h"
 
 @interface TimelineViewController () <ActivityStoreDelegate>
 
@@ -167,21 +170,36 @@
     id result = [[[ActivityStore sharedStore] recentActivitiesByType:self.index] objectAtIndex:indexPath.row];
 
     if ([result isKindOfClass:[Ride class]]) {
-        RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
-        rideDetailVC.ride = (Ride *)result;
-        [self.navigationController pushViewController:rideDetailVC animated:YES];
+        Ride *ride = (Ride *)result;
+        if (ride.rideOwner != nil && [ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && ![ride.isRideRequest boolValue]) {
+            
+            OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
+            rideDetailVC.ride = (Ride *)result;
+            [self.navigationController pushViewController:rideDetailVC animated:YES];
+
+        } else if(ride.rideOwner != nil && ![ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+            OfferViewController *offerVC = [[OfferViewController alloc] init];
+            offerVC.ride = (Ride *)result;
+            [self.navigationController pushViewController:offerVC animated:YES];
+        }
+//        RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
+//        rideDetailVC.ride = (Ride *)result;
+//        [self.navigationController pushViewController:rideDetailVC animated:YES];
+//        MainRideDetailViewController *newRideDetailVC = [[MainRideDetailViewController alloc] init];
+//        newRideDetailVC.ride = (Ride *)result;
+//        [self.navigationController pushViewController:newRideDetailVC animated:YES];
     } else if([result isKindOfClass:[Request class]]) {
         Request *res = (Request *)result;
         Ride *ride = [[RidesStore sharedStore] containsRideWithId:res.rideId];
         if (ride != nil) {
             res.requestedRide = ride;
-            RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
+            OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
             rideDetailVC.ride = ride;
             [self.navigationController pushViewController:rideDetailVC animated:YES];
         } else {
             [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:res.rideId block:^(BOOL completed) {
                 if(completed) {
-                    RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
+                    OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
                     Ride *ride = [[RidesStore sharedStore] fetchRideFromCoreDataWithId:res.rideId];
                     rideDetailVC.ride = ride;
                     [self.navigationController pushViewController:rideDetailVC animated:YES];

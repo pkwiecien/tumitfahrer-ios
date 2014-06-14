@@ -13,7 +13,7 @@
 #import "ActivityStore.h"
 #import "Ride.h"
 #import "ActionManager.h"
-#import "RideDetailViewController.h"
+#import "OwnerOfferViewController.h"
 #import "Request.h"
 #import "RidesStore.h"
 #import "RideSearch.h"
@@ -207,7 +207,7 @@ typedef enum {
     CustomAnnotation *result = (CustomAnnotation *)[[self.mapView selectedAnnotations] firstObject];
     
     if ([result.annotationObject isKindOfClass:[Ride class]]) {
-        RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
+        OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
         rideDetailVC.ride = (Ride *)result.annotationObject;
         [self.navigationController pushViewController:rideDetailVC animated:YES];
     } else if([result.annotationObject isKindOfClass:[Request class]]) {
@@ -215,13 +215,13 @@ typedef enum {
         Ride *ride = [[RidesStore sharedStore] containsRideWithId:res.rideId];
         if (ride != nil) {
             res.requestedRide = ride;
-            RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
+            OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
             rideDetailVC.ride = ride;
             [self.navigationController pushViewController:rideDetailVC animated:YES];
         } else {
             [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:res.rideId block:^(BOOL completed) {
                 if(completed) {
-                    RideDetailViewController *rideDetailVC = [[RideDetailViewController alloc] init];
+                    OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
                     Ride *ride = [[RidesStore sharedStore] fetchRideFromCoreDataWithId:res.rideId];
                     rideDetailVC.ride = ride;
                     [self.navigationController pushViewController:rideDetailVC animated:YES];
