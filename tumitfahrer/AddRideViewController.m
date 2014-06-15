@@ -23,6 +23,8 @@
 
 @interface AddRideViewController () <SementedControlCellDelegate, SwitchTableViewCellDelegate>
 
+@property (nonatomic, assign) CLLocationCoordinate2D departureCoordinate;
+@property (nonatomic, assign) CLLocationCoordinate2D destinationCoordinate;
 @property (nonatomic, strong) NSMutableArray *shareValues;
 @property (nonatomic, strong) NSMutableArray *tablePassengerValues;
 @property (nonatomic, strong) NSMutableArray *tableDriverValues;
@@ -59,6 +61,7 @@
     self.tableView.tableHeaderView = headerView;
     self.RideType = ContentTypeCampusRides;
     self.displayEnum = ShouldDisplayNormally;
+    self.departureCoordinate = [LocationController sharedInstance].currentLocation.coordinate;
 }
 
 -(void)initTables {
@@ -309,7 +312,8 @@
             return;
         }
         
-        queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": [NSNumber numberWithInt:self.RideType], @"car": car, @"is_driving": [NSNumber numberWithBool:YES]};
+        queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": [NSNumber numberWithInt:self.RideType], @"car": car, @"is_driving": [NSNumber numberWithBool:YES], @"departure_latitude" : [NSNumber numberWithDouble:self.departureCoordinate.latitude], @"departure_longitude" : [NSNumber numberWithDouble:self.departureCoordinate.longitude], @"destination_latitude": [NSNumber numberWithDouble:self.destinationCoordinate.latitude],
+                        @"destination_longitude" : [NSNumber numberWithDouble:self.destinationCoordinate.longitude]};
         
         rideParams = @{@"ride": queryParams};
         
@@ -374,9 +378,13 @@
     [self.tableValues replaceObjectAtIndex:indexPath.row withObject:value];
 }
 
--(void)selectedDestination:(NSString *)destination indexPath:(NSIndexPath*)indexPath{
+-(void)selectedDestination:(NSString *)destination coordinate:(CLLocationCoordinate2D)coordinate indexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 1) {
+        self.departureCoordinate = coordinate;
+    } else if (indexPath.row == 2){
+        self.destinationCoordinate = coordinate;
+    }
     [self.tableValues replaceObjectAtIndex:indexPath.row withObject:destination];
-    
 }
 
 -(void)stepperValueChanged:(NSInteger)stepperValue {

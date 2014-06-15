@@ -26,6 +26,8 @@
 
 @interface EditRideViewController () <SementedControlCellDelegate>
 
+@property (nonatomic, assign) CLLocationCoordinate2D departureCoordinate;
+@property (nonatomic, assign) CLLocationCoordinate2D destinationCoordinate;
 @property (nonatomic, strong) NSMutableArray *tableDriverValues;
 @property (nonatomic, strong) NSMutableArray *tablePlaceholders;
 @property (nonatomic, strong) NSMutableArray *tableValues;
@@ -257,7 +259,14 @@
     [self.tableValues replaceObjectAtIndex:indexPath.row withObject:value];
 }
 
--(void)selectedDestination:(NSString *)destination indexPath:(NSIndexPath*)indexPath{
+-(void)selectedDestination:(NSString *)destination coordinate:(CLLocationCoordinate2D)coordinate indexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.row == 0) {
+            self.departureCoordinate = coordinate;
+    } else if (indexPath.row == 1){
+            self.destinationCoordinate = coordinate;
+    }
+    
     [self.tableValues replaceObjectAtIndex:indexPath.row withObject:destination];
     
 }

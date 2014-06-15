@@ -34,6 +34,7 @@
     if (self) {
         self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"1", @"", @"", @"", nil];
         self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"", @"Destination", @"", @"Time", @"", nil];
+        self.navigationItem.backBarButtonItem.title = @"Search";
     }
     return self;
 }
@@ -205,7 +206,7 @@
     [self.tableValues replaceObjectAtIndex:indexPath.row withObject:value];
 }
 
--(void)selectedDestination:(NSString *)destination indexPath:(NSIndexPath*)indexPath{
+-(void)selectedDestination:(NSString *)destination coordinate:(CLLocationCoordinate2D)coordinate indexPath:(NSIndexPath *)indexPath {
     [self.tableValues replaceObjectAtIndex:indexPath.row withObject:destination];
     
     [self.tableView beginUpdates];

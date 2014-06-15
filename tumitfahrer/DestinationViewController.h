@@ -13,7 +13,7 @@
 
 @protocol DestinationViewControllerDelegate
 
--(void)selectedDestination:(NSString *)destination indexPath:(NSIndexPath*)indexPath;
+-(void)selectedDestination:(NSString *)destination coordinate:(CLLocationCoordinate2D)coordinate indexPath:(NSIndexPath*)indexPath;
 
 @end
 
