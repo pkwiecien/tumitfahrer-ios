@@ -13,6 +13,7 @@
 
 @interface ForgotPasswordViewController ()
 
+@property (nonatomic, strong) CustomTextField *emailTextField;
 @end
 
 @implementation ForgotPasswordViewController
@@ -28,9 +29,9 @@
     [super viewDidLoad];
     
     float centerX = (self.view.frame.size.width - cUIElementWidth)/2;
-    UIImage *emailIcon = [ActionManager colorImage:[UIImage imageNamed:@"EmailIcon"] withColor:[UIColor whiteColor]];
-    CustomTextField *emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIcon:emailIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeEmailAddress shouldStartWithCapital:NO];
-    [self.view addSubview:emailTextField];
+    UIImage *emailIcon = [ActionManager colorImage:[UIImage imageNamed:@"EmailIconBlack"] withColor:[UIColor whiteColor]];
+     self.emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIcon:emailIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeEmailAddress shouldStartWithCapital:NO];
+    [self.view addSubview:self.emailTextField];
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"DayRoadBackground"]];
     
@@ -38,9 +39,16 @@
     [self.view sendSubviewToBack:imageView];
 }
 
+
+-(void)viewWillAppear:(BOOL)animated {
+    NSString *email = [[NSUserDefaults standardUserDefaults] valueForKey:@"storedEmail"];
+    if (email!=nil) {
+        self.emailTextField.text = email;
+    }
+}
 -(NSURLRequest*)buildUrlRequest {
     
-    NSString *urlString = [API_ADDRESS stringByAppendingString:@"/api/v2/forgot"];
+    NSString *urlString = [API_ADDRESS stringByAppendingString:[NSString stringWithFormat:@"/api/v2/forgot?email=%@", self.emailTextField.text]];
     NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
@@ -48,6 +56,11 @@
 }
 
 - (IBAction)sendReminderButtonPressed:(id)sender {
+    
+    if (self.emailTextField.text.length == 0 || ![ActionManager isValidEmail:self.emailTextField.text]) {
+        [ActionManager showAlertViewWithTitle:@"Invalid input" description:@"Your email is invalid, please correct it"];
+        return;
+    }
     
     [NSURLConnection sendAsynchronousRequest:[self buildUrlRequest] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if (connectionError)

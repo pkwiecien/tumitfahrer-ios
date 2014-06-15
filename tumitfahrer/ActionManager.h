@@ -10,7 +10,6 @@
 
 @interface ActionManager : NSObject
 
-+ (void)showAlertViewWithTitle:(NSString *)title;
 + (void)showAlertViewWithTitle:(NSString *)title description:(NSString*)description;
 
 // image utilities
@@ -33,5 +32,9 @@
 
 // current time in local time zone
 + (NSDate *)currentDate;
+
+// validation
++(BOOL)isValidEmail:(NSString *)checkString;
+
 
 @end

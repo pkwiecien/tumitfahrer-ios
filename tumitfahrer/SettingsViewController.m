@@ -16,8 +16,11 @@
 #import "ReminderViewController.h"
 #import "FeedbackViewController.h"
 #import "CarsharingViewController.h"
+#import "EAIntroView.h"
+#import "ControllerUtilities.h"
+#import "TeamViewController.h"
 
-@interface SettingsViewController ()
+@interface SettingsViewController () <EAIntroDelegate>
 
 @property (nonatomic, strong) NSArray *headers;
 @property (nonatomic, strong) NSArray *readOptions;
@@ -134,6 +137,11 @@
         CarsharingViewController *carsharingVC = [[CarsharingViewController alloc] init];
         carsharingVC.title = @"Carsharing";
         [self.navigationController pushViewController:carsharingVC animated:YES];
+    } else if(indexPath.section == 2 && indexPath.row == 0) {
+        [self showIntroButtonPressed];
+    } else if(indexPath.section == 2 && indexPath.row == 1) {
+        TeamViewController *teamVC = [[TeamViewController alloc] init];
+        [self.navigationController pushViewController:teamVC animated:YES];
     } else if (indexPath.section == 2 && indexPath.row == 2) {
         FeedbackViewController *feedbackVC = [[FeedbackViewController alloc] init];
         feedbackVC.title = @"Contact us";
@@ -147,6 +155,12 @@
 }
 
 - (IBAction)sendFeedbackButtonPressed:(id)sender {
+}
+
+- (void)showIntroButtonPressed {
+    EAIntroView *intro = (EAIntroView *)[ControllerUtilities prepareIntroForView:self.view];
+    intro.delegate = self;
+    [intro showInView:self.view animateDuration:0.0];
 }
 
 - (IBAction)logoutButtonPressed:(id)sender {

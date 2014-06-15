@@ -13,6 +13,6 @@
 @interface ControllerUtilities : NSObject
 
 +(UIViewController *)viewControllerForRide:(Ride *)ride;
-
++(UIView *)prepareIntroForView:(UIView *)view;
 
 @end

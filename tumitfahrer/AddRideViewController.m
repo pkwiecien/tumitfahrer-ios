@@ -120,7 +120,7 @@
     UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.btnAdd];
     self.navigationItem.rightBarButtonItem = searchButtonItem;
     
-    self.title = @"Add ride";
+    self.title = @"Add";
     UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
     [settingsView addTarget:self action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [settingsView setBackgroundImage:[UIImage imageNamed:@"DeleteIcon"] forState:UIControlStateNormal];
@@ -359,7 +359,7 @@
         }
         self.btnAdd.enabled = YES;
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        [ActionManager showAlertViewWithTitle:[error localizedDescription]];
+        [ActionManager showAlertViewWithTitle:@"Error" description:@"Could not add a ride"];
         self.btnAdd.enabled = YES;
         RKLogError(@"Load failed with error: %@", error);
     }];

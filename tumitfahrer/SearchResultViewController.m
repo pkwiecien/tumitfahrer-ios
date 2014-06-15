@@ -91,7 +91,7 @@
         [self addSearchResults:rides];
         
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        [ActionManager showAlertViewWithTitle:[error localizedDescription]];
+        [ActionManager showAlertViewWithTitle:@"Error" description:@"Could not retrieve any search results"];
         RKLogError(@"Load failed with error: %@", error);
     }];
 }

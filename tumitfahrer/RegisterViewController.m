@@ -14,15 +14,13 @@
 #import "FacultyManager.h"
 #import "CustomIOS7AlertView.h"
 
-@interface RegisterViewController () <NSFetchedResultsControllerDelegate,CustomIOS7AlertViewDelegate>
+@interface RegisterViewController () <CustomIOS7AlertViewDelegate>
 
 @property (nonatomic, strong) CustomTextField *emailTextField;
 @property (nonatomic, strong) CustomTextField *firstNameTextField;
 @property (nonatomic, strong) CustomTextField *lastNameTextField;
 @property (nonatomic, strong) CustomTextField *departmentNameTextField;
-@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) CustomIOS7AlertView *alertView;
-
 
 @end
 
@@ -70,7 +68,7 @@
 - (void)prepareInputFields {
     
     float centerX = (self.view.frame.size.width - cUIElementWidth)/2;
-    UIImage *emailIcon = [ActionManager colorImage:[UIImage imageNamed:@"EmailIcon"] withColor:[UIColor whiteColor]];
+    UIImage *emailIcon = [ActionManager colorImage:[UIImage imageNamed:@"EmailIconBlack"] withColor:[UIColor whiteColor]];
     self.emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIcon:emailIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeEmailAddress shouldStartWithCapital:NO];
     
     UIImage *profileIcon = [ActionManager colorImage:[UIImage imageNamed:@"ProfileIcon"] withColor:[UIColor whiteColor]];
@@ -93,8 +91,12 @@
     NSString *firstName = [[self.firstNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *lastName = [[self.lastNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    if (email.length < 6 || firstName.length < 3 || lastName.length < 2) {
-        [ActionManager showAlertViewWithTitle:@"Invalid input" description:@"Input too short"];
+    
+    if (email.length < 6 || firstName.length < 3 || lastName.length < 2 ) {
+        [ActionManager showAlertViewWithTitle:@"Invalid input" description:@"Input "];
+        return;
+    } else if(![ActionManager isValidEmail:email]) {
+        [ActionManager showAlertViewWithTitle:@"Invalid email" description:@"Please correct your email"];
         return;
     }
 
@@ -109,11 +111,17 @@
     [objectManager postObject:nil path:@"/api/v2/users" parameters:userParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         LoginViewController *loginVC = (LoginViewController*)self.presentingViewController;
         loginVC.statusLabel.text = @"Login with the password from the email";
+        [self storeEmailInDefaults];
         [self backToLoginButtonPressed:nil];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        [ActionManager showAlertViewWithTitle:[error localizedDescription]];
+        [ActionManager showAlertViewWithTitle:@"Error" description:@"Could not create new user"];
         RKLogError(@"Load failed with error: %@", error);
     }];
+}
+
+-(void)storeEmailInDefaults {
+    [[NSUserDefaults standardUserDefaults] setValue:self.emailTextField.text forKey:@"storedEmail"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)showDepartmentPickerView {
@@ -128,31 +136,6 @@
 - (IBAction)dismissKeyboard:(id)sender {
     self.pickerView.hidden = YES;
     [self.view endEditing:YES];
-}
-
--(NSFetchedResultsController *)fetchedResultsController {
-    if (self.fetchedResultsController != nil) {
-        return self.fetchedResultsController;
-    }
-    
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO];
-    fetchRequest.sortDescriptors = @[descriptor];
-    NSError *error = nil;
-    
-    // Setup fetched results
-    self.fetchedResultsController = [[NSFetchedResultsController alloc]
-                                     initWithFetchRequest:fetchRequest
-                                     managedObjectContext:[RKManagedObjectStore defaultStore].
-                                     mainQueueManagedObjectContext
-                                     sectionNameKeyPath:nil cacheName:@"User"];
-    self.fetchedResultsController.delegate = self;
-    
-    if (![self.fetchedResultsController performFetch:&error]) {
-        [ActionManager showAlertViewWithTitle:[error localizedDescription]];
-    }
-    
-    return self.fetchedResultsController;
 }
 
 -(void)preparePickerView {
@@ -191,8 +174,6 @@
 -(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
     return 35.0f;
 }
-
-
 
 - (UIView *)createPickerView {
     UIView *demoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 290, 200)];

@@ -198,7 +198,7 @@
                 
                 [self.rideDetail.tableView reloadData];
             } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                [ActionManager showAlertViewWithTitle:[error localizedDescription]];
+                [ActionManager showAlertViewWithTitle:@"Error" description:@"Could not send ride request"];
                 RKLogError(@"Load failed with error: %@", error);
             }];
         } else {

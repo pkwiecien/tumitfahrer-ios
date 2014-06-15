@@ -11,7 +11,7 @@
 #import "ActionManager.h"
 #import "CurrentUser.h"
 
-@interface FeedbackViewController ()
+@interface FeedbackViewController () <UIGestureRecognizerDelegate, UITextViewDelegate>
 
 @end
 
@@ -27,8 +27,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor customLightGray]];
+    self.contentTextView.delegate = self;
+    [self addGestureRecognizerToTextField];
 }
 
+-(void)addGestureRecognizerToTextField {
+    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapRecognized)];
+    singleTap.numberOfTapsRequired = 1;
+    [self.contentTextView addGestureRecognizer:singleTap];
+}
+
+-(BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+    return YES;
+}
+
+
+
+-(void)singleTapRecognized {
+    if ([self.contentTextView isFirstResponder]) {
+        [self.contentTextView endEditing:YES];
+    } else {
+        [self.contentTextView becomeFirstResponder];
+    }
+}
 
 -(IBAction)sendButtonPressed:(id)sender {
     if (self.titleTextField.text.length == 0) {

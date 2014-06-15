@@ -192,7 +192,7 @@
         [self.navigationController popViewControllerAnimated:YES];
         
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        [ActionManager showAlertViewWithTitle:[error localizedDescription]];
+        [ActionManager showAlertViewWithTitle:@"Editing error" description:@"Could not save edit to database"];
         RKLogError(@"Load failed with error: %@", error);
     }];
 }

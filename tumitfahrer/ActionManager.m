@@ -12,10 +12,6 @@
 
 @implementation ActionManager
 
-+ (void)showAlertViewWithTitle:(NSString *)title {
-    [self showAlertViewWithTitle:title description:@"Functionality coming soon"];
-}
-
 + (void)showAlertViewWithTitle:(NSString *)title description:(NSString *)description {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:description delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
@@ -174,6 +170,17 @@
     
     NSDate* destinationDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:sourceDate];
     return destinationDate;
+}
+
+// from: http://stackoverflow.com/questions/3139619/check-that-an-email-address-is-valid-on-ios
++(BOOL)isValidEmail:(NSString *)checkString
+{
+    BOOL stricterFilter = YES;
+    NSString *stricterFilterString = @"[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}";
+    NSString *laxString = @".+@([A-Za-z0-9]+\\.)+[A-Za-z]{2}[A-Za-z]*";
+    NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:checkString];
 }
 
 @end
