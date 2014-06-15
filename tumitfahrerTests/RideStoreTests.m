@@ -57,10 +57,10 @@
 
 - (void)testFetchRidesFromCoreDataByTypeActivityRides
 {
-   // ContentType content = ContentTypeActivityRides;
-//    [[RidesStore sharedStore] loadRidesFromCoreDataByType:content];
-    // TODO @Dansen: fix test
-    // XCTAssertTrue([[[RidesStore sharedStore] allActivityRides] count]>0, "Could not fetch the correct rides");
+//        ContentType content = ContentTypeActivityRides;
+//        [[RidesStore sharedStore] ];
+////    // TODO @Dansen: fix test
+//        XCTAssertTrue([[[RidesStore sharedStore] allActivityRides] count]>0, "Could not fetch the correct rides");
 }
 
 //- (void)testAllRidesByTypeActivityRides
@@ -77,10 +77,6 @@
 //    XCTAssertTrue([[[RidesStore sharedStore] ] count]>0, "Could not fetch the correct rides");
 //}
 
-- (void)testGetRideWithId {
-    Ride *expected = [[RidesStore sharedStore] containsRideWithId:[NSNumber numberWithInt:12]];
-    XCTAssertEqual(self.campusRide.destination, expected.destination, "Fetch the wrong ride with ride ids are %@ ,%@",self.campusRide.rideId,expected.rideId);
-}
 
 //- (void)testDeleteRideFromCoreData
 //{

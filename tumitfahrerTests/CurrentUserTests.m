@@ -41,19 +41,19 @@
 - (void)testFetchUserFromCoreDataWithEmailWithIncorrectEmail
 {
     NSString *email = @"tum@tum.de";
-    XCTAssertFalse([CurrentUser fetchUserFromCoreDataWithEmail:email] , @"Couldn't fetch the user from given email %@", email);
+    XCTAssertFalse([[CurrentUser sharedInstance] fetchUserFromCoreDataWithEmail:email] , @"Couldn't fetch the user from given email %@", email);
 }
 
 - (void)testFetchUserFromCoreDataWithEmailWithIncorrectInput
 {
     NSString *email = @"abcde";
-    XCTAssertFalse([CurrentUser fetchUserFromCoreDataWithEmail:email] , @"Couldn't fetch the user from given email %@", email);
+    XCTAssertFalse([[CurrentUser sharedInstance] fetchUserFromCoreDataWithEmail:email] , @"Couldn't fetch the user from given email %@", email);
 }
 
 - (void)testFetchUserFromCoreDataWithEmailWithEmptyEmail
 {
     NSString *email = @"";
-    XCTAssertFalse([CurrentUser fetchUserFromCoreDataWithEmail:email] , @"Couldn't fetch the user from given email %@", email);
+    XCTAssertFalse([[CurrentUser sharedInstance] fetchUserFromCoreDataWithEmail:email] , @"Couldn't fetch the user from given email %@", email);
 }
 
 - (void)testFetchUserFromCoreDataWithEmailAndPasswordWithCorrectPassword
@@ -68,21 +68,21 @@
 {
     NSString *email = @"tum@tum.de";
     NSString *password = @"72b8c41f";
-     XCTAssertFalse([CurrentUser fetchUserFromCoreDataWithEmail:email encryptedPassword:password] , @"Couldn't fetch the user from given email %@ and paasword %@", email, password);
+     XCTAssertFalse([[CurrentUser sharedInstance] fetchUserFromCoreDataWithEmail:email encryptedPassword:password] , @"Couldn't fetch the user from given email %@ and paasword %@", email, password);
 }
 
 - (void)testFetchUserFromCoreDataWithEmailAndPasswordWithIncorrectEmailInput
 {
     NSString *email = @"abcde";
     NSString *password = @"abcde";
-    XCTAssertFalse([CurrentUser fetchUserFromCoreDataWithEmail:email encryptedPassword:password] , @"Couldn't fetch the user from given email %@ and paasword %@", email, password);
+    XCTAssertFalse([[CurrentUser sharedInstance] fetchUserFromCoreDataWithEmail:email encryptedPassword:password] , @"Couldn't fetch the user from given email %@ and paasword %@", email, password);
 }
 
 - (void)testFetchUserFromCoreDataWithEmailAndPasswordWithEmptyPassword
 {
     NSString *email = @"abcde";
     NSString *password = @"";
-    XCTAssertFalse([CurrentUser fetchUserFromCoreDataWithEmail:email encryptedPassword:password] , @"Couldn't fetch the user from given email %@ and paasword %@", email, password);
+    XCTAssertFalse([[CurrentUser sharedInstance] fetchUserFromCoreDataWithEmail:email encryptedPassword:password] , @"Couldn't fetch the user from given email %@ and paasword %@", email, password);
 }
 #pragma mark - helper methods
 
