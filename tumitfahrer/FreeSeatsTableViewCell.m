@@ -21,6 +21,10 @@
     self.stepper.value = 1;
     self.stepper.maximumValue = 8;
     self.stepper.minimumValue = 1;
+    
+    // set label for kif test
+    [self.stepper setAccessibilityLabel:@"Seat Stepper"];
+    [self.stepper setIsAccessibilityElement:YES];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

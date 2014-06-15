@@ -110,6 +110,11 @@
     
     // right button of the navigation bar
     CustomBarButton *searchButton = [[CustomBarButton alloc] initWithTitle:@"Add"];
+    
+    // set label for kif test
+    [searchButton setAccessibilityLabel:@"Add Button"];
+    [searchButton setIsAccessibilityElement:YES];
+    
     [searchButton addTarget:self action:@selector(addRideButtonPressed) forControlEvents:UIControlEventTouchDown];
     UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
     self.navigationItem.rightBarButtonItem = searchButtonItem;
@@ -154,6 +159,13 @@
             cell.segmentedControl.selectedSegmentIndex = self.TableType;
             [cell setFirstSegmentTitle:@"I am Passenger" secondSementTitle:@"I am Driver"];
             [cell addHandlerToSegmentedControl];
+            
+            // add label for kif test
+            [[[[cell segmentedControl] subviews] objectAtIndex:0] setAccessibilityLabel:@"Driver Choice"];
+            [[[[cell segmentedControl] subviews] objectAtIndex:1] setAccessibilityLabel:@"Passenger Choice"];
+            [[[[cell segmentedControl] subviews] objectAtIndex:0] setIsAccessibilityElement:YES];
+            [[[[cell segmentedControl] subviews] objectAtIndex:1] setIsAccessibilityElement:YES];
+            
             cell.controlId = 0;
             return cell;
         } else if(self.TableType == Driver && indexPath.row == 4) {
@@ -171,6 +183,11 @@
         } else if(indexPath.row == [self.tableValues count]-1) {
             SegmentedControlCell *cell = [SegmentedControlCell segmentedControlCell];
             [cell setFirstSegmentTitle:@"Campus" secondSementTitle:@"Activity"];
+            // add label for kif test
+            [[[[cell segmentedControl] subviews] objectAtIndex:0] setAccessibilityLabel:@"Activity"];
+            [[[[cell segmentedControl] subviews] objectAtIndex:1] setAccessibilityLabel:@"Campus"];
+            [[[[cell segmentedControl] subviews] objectAtIndex:0] setIsAccessibilityElement:YES];
+            [[[[cell segmentedControl] subviews] objectAtIndex:1] setIsAccessibilityElement:YES];
             cell.segmentedControl.selectedSegmentIndex = self.RideType;
             cell.delegate = self;
             [cell addHandlerToSegmentedControl];
@@ -203,6 +220,10 @@
         switchCell.switchId = indexPath.row;
         switchCell.delegate = self;
         
+        //set label for KIF test
+        [switchCell setAccessibilityLabel: switchCell.switchCellTextLabel.text];
+        [switchCell setIsAccessibilityElement:YES];
+        
         return switchCell;
     }
     
@@ -227,6 +248,8 @@
         } else if([[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Time"]) {
             RMDateSelectionViewController *dateSelectionVC = [RMDateSelectionViewController dateSelectionController];
             dateSelectionVC.delegate = self;
+            [dateSelectionVC.datePicker setAccessibilityLabel:@"Date Picker"];
+            [dateSelectionVC.datePicker setIsAccessibilityElement:YES];
             [dateSelectionVC show];
         }
     }
