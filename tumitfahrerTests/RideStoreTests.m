@@ -78,7 +78,7 @@
 //}
 
 - (void)testGetRideWithId {
-    Ride *expected = [[RidesStore sharedStore] getRideWithId:[NSNumber numberWithInt:12]];
+    Ride *expected = [[RidesStore sharedStore] containsRideWithId:[NSNumber numberWithInt:12]];
     XCTAssertEqual(self.campusRide.destination, expected.destination, "Fetch the wrong ride with ride ids are %@ ,%@",self.campusRide.rideId,expected.rideId);
 }
 
