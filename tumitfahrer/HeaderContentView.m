@@ -67,7 +67,6 @@
         [self.tableView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:context];
         
         [self addSubview:self.tableView];
-        
     }
     
     if (!self.tableView.tableHeaderView) {

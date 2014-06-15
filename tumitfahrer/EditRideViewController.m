@@ -22,6 +22,7 @@
 #import "OwnerOfferViewController.h"
 #import "LocationController.h"
 #import "Ride.h"
+#import "HeaderContentView.h"
 
 @interface EditRideViewController () <SementedControlCellDelegate>
 
@@ -29,6 +30,7 @@
 @property (nonatomic, strong) NSMutableArray *tablePlaceholders;
 @property (nonatomic, strong) NSMutableArray *tableValues;
 @property (nonatomic, assign) ContentType RideType;
+@property (nonatomic, strong) CustomBarButton *searchButton;
 
 @end
 
@@ -78,9 +80,10 @@
     [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor lighterBlue]];
     
     // right button of the navigation bar
-    CustomBarButton *searchButton = [[CustomBarButton alloc] initWithTitle:@"Save"];
-    [searchButton addTarget:self action:@selector(addRideButtonPressed) forControlEvents:UIControlEventTouchDown];
-    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
+    self.searchButton = [[CustomBarButton alloc] initWithTitle:@"Save"];
+    [self.searchButton addTarget:self action:@selector(saveButtonPressed) forControlEvents:UIControlEventTouchDown];
+    self.searchButton.enabled = YES;
+    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.searchButton];
     self.navigationItem.rightBarButtonItem = searchButtonItem;
     
     self.title = @"Edit ride";
@@ -100,7 +103,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
 
-    if(indexPath.row == 4) {
+    if(indexPath.row == 3) {
         FreeSeatsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FreeSeatsTableViewCell"];
         
         if(cell == nil){
@@ -111,6 +114,7 @@
         cell.backgroundColor = [UIColor clearColor];
         cell.contentView.backgroundColor = [UIColor clearColor];
         cell.stepperLabelText.text = [self.tablePlaceholders objectAtIndex:indexPath.row];
+        cell.passengersCountLabel.text = [self.tableValues objectAtIndex:indexPath.row];
         return  cell;
     } else if(indexPath.row == [self.tableValues count]-1) {
         SegmentedControlCell *cell = [SegmentedControlCell segmentedControlCell];
@@ -123,7 +127,6 @@
     }
     
     if (indexPath.row < [self.tableValues count] && [self.tableValues objectAtIndex:indexPath.row] != nil) {
-        NSLog(@"%d %d, %@", indexPath.row, indexPath.section, self.ride.rideId);
         cell.detailTextLabel.text = [self.tableValues objectAtIndex:indexPath.row];
     }
     cell.textLabel.text = [self.tablePlaceholders objectAtIndex:indexPath.row];
@@ -131,7 +134,6 @@
     cell.textLabel.textColor = [UIColor blackColor];
     cell.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];
-    
     
     return cell;
 }
@@ -159,17 +161,16 @@
     }
 }
 
--(void)addRideButtonPressed {
+-(void)saveButtonPressed {
     
-    [ActionManager showAlertViewWithTitle:@"Under construction" description:@"I'm working on it right now :)"];
-    return;
+    self.searchButton.enabled = NO;
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
     NSDictionary *queryParams;
     // add enum
-    NSString *departurePlace = [self.tableValues objectAtIndex:1];
-    NSString *destination = [self.tableValues objectAtIndex:2];
-    NSString *departureTime = [self.tableValues objectAtIndex:3];
+    NSString *departurePlace = [self.tableValues objectAtIndex:0];
+    NSString *destination = [self.tableValues objectAtIndex:1];
+    NSString *departureTime = [self.tableValues objectAtIndex:2];
     
     if (!departurePlace || departurePlace.length == 0) {
         [ActionManager showAlertViewWithTitle:@"No departure time" description:@"To add a ride please specify the departure place"];
@@ -191,41 +192,46 @@
     
     NSDictionary *rideParams = nil;
     
-    NSString *freeSeats = [self.tableValues objectAtIndex:4];
-    if (freeSeats.length == 0) {
+    NSString *freeSeats = [self.tableValues objectAtIndex:3];
+    if (freeSeats == nil || freeSeats.length == 0) {
         freeSeats = @"1";
     }
-    NSString *car = [self.tableValues objectAtIndex:5];
+    NSString *car = [self.tableValues objectAtIndex:4];
     if (!car) {
         car = @"";
     }
-    NSString *meetingPoint = [self.tableValues objectAtIndex:6];
+    NSString *meetingPoint = [self.tableValues objectAtIndex:5];
     if (!meetingPoint) {
         [ActionManager showAlertViewWithTitle:@"No meeting place" description:@"To add a ride please specify the meeting place"];
         return;
     }
     
-    queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": [NSNumber numberWithInt:self.RideType], @"car": car, @"is_driving": [NSNumber numberWithBool:YES]};
-    
+    queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": [NSNumber numberWithInt:self.RideType], @"car": car};
     rideParams = @{@"ride": queryParams};
     
     [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"apiKey" value:[[CurrentUser sharedInstance] user].apiKey];
     
-    NSLog(@"user api key: %@", [CurrentUser sharedInstance].user.apiKey);
-    [objectManager putObject:nil path:[NSString stringWithFormat:@"/api/v2/users/%@/rides", [CurrentUser sharedInstance].user.userId] parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        Ride *ride = (Ride *)[mappingResult firstObject];
-        [[RidesStore sharedStore] addRideToStore:ride];
+    [objectManager putObject:self.ride path:[NSString stringWithFormat:@"/api/v2/users/%@/rides/%@", [CurrentUser sharedInstance].user.userId, self.ride.rideId] parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+
+        self.searchButton.enabled = YES;
+
+        // put return no content (according to HTTP spec), so to update a ride we need to do another get request or update params manually
+        self.ride.departurePlace = departurePlace;
+        self.ride.destination = destination;
+        self.ride.departureTime = [ActionManager dateFromString:departureTime];
+        self.ride.freeSeats = [NSNumber numberWithInt:(int)freeSeats];
+        self.ride.meetingPoint = meetingPoint;
+        [[RidesStore sharedStore] saveToPersistentStore:self.ride];
         
         self.tableDriverValues = nil;
         [KGStatusBar showSuccessWithStatus:@"Ride added"];
         
-        OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
-        rideDetailVC.ride = ride;
-        rideDetailVC.shouldGoBackEnum = GoBackToList;
+        OwnerOfferViewController *rideDetailVC = (OwnerOfferViewController*)self.presentingViewController;
+        rideDetailVC.ride = self.ride;
         [self.navigationController popViewControllerAnimated:YES];
-        
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        [ActionManager showAlertViewWithTitle:[error localizedDescription]];
+        self.searchButton.enabled = YES;
+        [ActionManager showAlertViewWithTitle:@"Could not update" description:@"There was an error while updating your ride"];
         RKLogError(@"Load failed with error: %@", error);
     }];
 }

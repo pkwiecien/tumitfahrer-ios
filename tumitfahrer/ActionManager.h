@@ -29,6 +29,7 @@
 + (NSString *)stringFromDate:(NSDate*)date;
 + (NSString *)timeStringFromDate:(NSDate*)date;
 + (NSString *)dateStringFromDate:(NSDate*)date;
++ (NSDate *)dateFromString:(NSString *)stringDate;
 
 // current time in local time zone
 + (NSDate *)currentDate;

@@ -21,6 +21,7 @@
 #import "RidePersonCell.h"
 #import "Request.h"
 #import "SimpleChatViewController.h"
+#import "EditRideViewController.h"
 
 @interface OwnerOfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate, RidePersonCellDelegate>
 
@@ -39,10 +40,12 @@
     self.rideDetail.delegate = self;
 }
 
+
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     self.headerViewLabel.text = [@"To " stringByAppendingString:self.ride.destination];
     self.headerTitles = [NSArray arrayWithObjects:@"Details", @"Passengers", @"Requests", @"", nil];
+    [self.rideDetail.tableView reloadData];
 }
 
 #pragma mark - UITableView
@@ -184,22 +187,6 @@
 
 #pragma mark - Button actions
 
-- (void)back {
-    if (self.shouldGoBackEnum == GoBackNormally) {
-        [self.navigationController popViewControllerAnimated:YES];
-    } else {
-        if (self.ride.rideType == ContentTypeCampusRides) {
-            RidesPageViewController *campusRidesVC = [[RidesPageViewController alloc] initWithContentType:ContentTypeCampusRides];
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:campusRidesVC];
-            [self.sideBarController setCenterViewController:navController  withCloseAnimation:YES completion:nil];
-        } else {
-            RidesPageViewController *activityRidesVC = [[RidesPageViewController alloc] initWithContentType:ContentTypeActivityRides];
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:activityRidesVC];
-            [self.sideBarController setCenterViewController:navController withCloseAnimation:YES completion:nil];
-        }
-    }
-}
-
 -(Request *)requestFoundInCoreData {
     for (Request *request in self.ride.requests) {
         if ([request.passengerId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
@@ -294,8 +281,14 @@
             }
         }];
     }
-
 }
+
+-(void)editButtonTapped {
+    EditRideViewController *editRideVC = [[EditRideViewController alloc] init];
+    editRideVC.ride = self.ride;
+    [self.navigationController pushViewController:editRideVC animated:YES];
+}
+
 -(void)dealloc {
     [[RidesStore sharedStore] removeObserver:self];
 }

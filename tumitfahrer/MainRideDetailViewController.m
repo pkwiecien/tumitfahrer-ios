@@ -90,12 +90,6 @@
     return 1;
 }
 
--(void)refreshRideButtonPressed {
-    [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:self.ride.rideId block:^(BOOL fetched) {
-        [self.rideDetail.tableView reloadData];
-    }];
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *generalCell = [tableView dequeueReusableCellWithIdentifier:@"reusable"];
@@ -119,6 +113,12 @@
             [self.sideBarController setCenterViewController:navController withCloseAnimation:YES completion:nil];
         }
     }
+}
+
+-(void)refreshRideButtonPressed {
+    [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:self.ride.rideId block:^(BOOL fetched) {
+        [self.rideDetail.tableView reloadData];
+    }];
 }
 
 -(void)didReceivePhotoForRide:(NSNumber *)rideId {

@@ -132,6 +132,7 @@
 + (NSString *)stringFromDate:(NSDate*)date {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"de_DE"]];
     NSString *stringFromDate = [formatter stringFromDate:date];
     return stringFromDate;
 }
@@ -139,6 +140,7 @@
 + (NSString *)timeStringFromDate:(NSDate*)date {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"HH:mm"];
+    [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"de_DE"]];
     NSString *stringFromDate = [formatter stringFromDate:date];
     return stringFromDate;
 }
@@ -146,8 +148,17 @@
 + (NSString *)dateStringFromDate:(NSDate*)date {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
+    [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"de_DE"]];
     NSString *stringFromDate = [formatter stringFromDate:date];
     return stringFromDate;
+}
+
++ (NSDate *)dateFromString:(NSString *)stringDate {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"de_DE"]];
+    NSDate *date = [formatter dateFromString:stringDate];
+    return date;
 }
 
 +(NSDate *)currentDate {
