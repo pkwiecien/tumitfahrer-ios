@@ -22,7 +22,7 @@
 
 @property (nonatomic) UIColor *customGrayColor;
 @property (nonatomic, assign) NSInteger searchType;
-@property (nonatomic, strong) NSMutableArray *tableValue;
+@property (nonatomic, strong) NSMutableArray *tableValues;
 @property (nonatomic, strong) NSMutableArray *tablePlaceholders;
 
 @end
@@ -32,7 +32,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.tableValue = [[NSMutableArray alloc] initWithObjects:@"", @"select", @"select", @"select", @"1", @"", @"", @"", nil];
+        self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"1", @"", @"", @"", nil];
         self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"", @"Destination", @"", @"Time", @"", nil];
     }
     return self;
@@ -49,6 +49,16 @@
     
     if(self.SearchDisplayType == ShowAsViewController)
         [self setupLeftMenuButton];
+    
+    [self setDepartureLabelForCurrentLocation];
+}
+
+
+-(void)setDepartureLabelForCurrentLocation {
+    NSString *departurePlace = [LocationController sharedInstance].currentAddress;
+    
+    if(departurePlace!=nil)
+        [self.tableValues replaceObjectAtIndex:1 withObject:departurePlace];
 }
 
 -(void)setupLeftMenuButton{
@@ -95,8 +105,9 @@
         return cell;
     } else if(indexPath.row ==  1 || indexPath.row == 3 || indexPath.row == 5) {
         
-        if (indexPath.row < [self.tableValue count] && [self.tableValue objectAtIndex:indexPath.row] != nil) {
-            cell.detailTextLabel.text = [self.tableValue objectAtIndex:indexPath.row];
+        if (indexPath.row < [self.tableValues count] && [self.tableValues objectAtIndex:indexPath.row] != nil) {
+            cell.detailTextLabel.text = [self.tableValues objectAtIndex:indexPath.row];
+            cell.detailTextLabel.font = [UIFont systemFontOfSize:16.0];
         }
         cell.textLabel.text = [self.tablePlaceholders objectAtIndex:indexPath.row];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -142,17 +153,17 @@
 
 -(void)buttonSelected {
     // TODO: add enum
-    NSString *departurePlace = [self.tableValue objectAtIndex:1];
-    NSString *departurePlaceThreshold = [self.tableValue objectAtIndex:2];
-    NSString *destination = [self.tableValue objectAtIndex:3];
-    NSString *destinationThreshold = [self.tableValue objectAtIndex:4];
-    NSString *departureTime = [self.tableValue objectAtIndex:5];
+    NSString *departurePlace = [self.tableValues objectAtIndex:1];
+    NSString *departurePlaceThreshold = [self.tableValues objectAtIndex:2];
+    NSString *destination = [self.tableValues objectAtIndex:3];
+    NSString *destinationThreshold = [self.tableValues objectAtIndex:4];
+    NSString *departureTime = [self.tableValues objectAtIndex:5];
     
     if ((departurePlace == nil || departurePlace.length == 0) && (destination == nil || destination.length == 0) ) {
         [ActionManager showAlertViewWithTitle:@"Invalid search" description:@"Please specify departure and destination place"];
         return;
     }
-    NSString *time = nil;
+    NSString *time = @"";
     if (departureTime != nil && departureTime.length > 0) {
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
@@ -191,11 +202,11 @@
 #pragma mark - RMDateSelectionViewController Delegates
 
 -(void)didSelectValue:(NSString *)value forIndexPath:(NSIndexPath *)indexPath {
-    [self.tableValue replaceObjectAtIndex:indexPath.row withObject:value];
+    [self.tableValues replaceObjectAtIndex:indexPath.row withObject:value];
 }
 
 -(void)selectedDestination:(NSString *)destination indexPath:(NSIndexPath*)indexPath{
-    [self.tableValue replaceObjectAtIndex:indexPath.row withObject:destination];
+    [self.tableValues replaceObjectAtIndex:indexPath.row withObject:destination];
     
     [self.tableView beginUpdates];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -204,7 +215,7 @@
 
 - (void)dateSelectionViewController:(RMDateSelectionViewController *)vc didSelectDate:(NSDate *)aDate {
     NSString *dateString = [ActionManager stringFromDate:aDate];
-    [self.tableValue replaceObjectAtIndex:5 withObject:dateString];
+    [self.tableValues replaceObjectAtIndex:5 withObject:dateString];
     
     [self.tableView beginUpdates];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:5 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
@@ -220,7 +231,7 @@
 }
 
 -(void)sliderChangedToValue:(NSInteger)value indexPath:(NSIndexPath *)indexPath {
-    [self.tableValue replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithInt:value]];
+    [self.tableValues replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithInt:value]];
 }
 
 @end

@@ -128,6 +128,7 @@
     
     if (indexPath.row < [self.tableValues count] && [self.tableValues objectAtIndex:indexPath.row] != nil) {
         cell.detailTextLabel.text = [self.tableValues objectAtIndex:indexPath.row];
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:16.0];
     }
     cell.textLabel.text = [self.tablePlaceholders objectAtIndex:indexPath.row];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
