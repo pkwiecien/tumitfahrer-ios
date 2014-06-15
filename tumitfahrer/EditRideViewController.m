@@ -18,7 +18,6 @@
 #import "MMDrawerBarButtonItem.h"
 #import "SearchRideViewController.h"
 #import "SegmentedControlCell.h"
-#import "KGStatusBar.h"
 #import "OwnerOfferViewController.h"
 #import "LocationController.h"
 #import "Ride.h"
@@ -26,6 +25,8 @@
 
 @interface EditRideViewController () <SementedControlCellDelegate>
 
+@property (nonatomic, assign) CLLocationCoordinate2D departureCoordinate;
+@property (nonatomic, assign) CLLocationCoordinate2D destinationCoordinate;
 @property (nonatomic, strong) NSMutableArray *tableDriverValues;
 @property (nonatomic, strong) NSMutableArray *tablePlaceholders;
 @property (nonatomic, strong) NSMutableArray *tableValues;
@@ -110,6 +111,7 @@
             cell = [FreeSeatsTableViewCell freeSeatsTableViewCell];
         }
         
+        cell.stepper.value = [self.ride.freeSeats intValue];
         cell.delegate = self;
         cell.backgroundColor = [UIColor clearColor];
         cell.contentView.backgroundColor = [UIColor clearColor];
@@ -220,12 +222,15 @@
         self.ride.departurePlace = departurePlace;
         self.ride.destination = destination;
         self.ride.departureTime = [ActionManager dateFromString:departureTime];
-        self.ride.freeSeats = [NSNumber numberWithInt:(int)freeSeats];
+        
+        NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+        [f setNumberStyle:NSNumberFormatterDecimalStyle];
+        NSNumber * freeSeatsNumber = [f numberFromString:freeSeats];
+        
+        self.ride.freeSeats = freeSeatsNumber;
         self.ride.meetingPoint = meetingPoint;
         [[RidesStore sharedStore] saveToPersistentStore:self.ride];
-        
         self.tableDriverValues = nil;
-        [KGStatusBar showSuccessWithStatus:@"Ride added"];
         
         OwnerOfferViewController *rideDetailVC = (OwnerOfferViewController*)self.presentingViewController;
         rideDetailVC.ride = self.ride;
@@ -257,13 +262,20 @@
     [self.tableValues replaceObjectAtIndex:indexPath.row withObject:value];
 }
 
--(void)selectedDestination:(NSString *)destination indexPath:(NSIndexPath*)indexPath{
+-(void)selectedDestination:(NSString *)destination coordinate:(CLLocationCoordinate2D)coordinate indexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.row == 0) {
+            self.departureCoordinate = coordinate;
+    } else if (indexPath.row == 1){
+            self.destinationCoordinate = coordinate;
+    }
+    
     [self.tableValues replaceObjectAtIndex:indexPath.row withObject:destination];
     
 }
 
 -(void)stepperValueChanged:(NSInteger)stepperValue {
-    [self.tableValues replaceObjectAtIndex:4 withObject:[[NSNumber numberWithInt:(int)stepperValue] stringValue]];
+    [self.tableValues replaceObjectAtIndex:3 withObject:[[NSNumber numberWithInt:(int)stepperValue] stringValue]];
 }
 
 #pragma mark - Button Handlers

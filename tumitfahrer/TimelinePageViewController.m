@@ -103,13 +103,13 @@
     [self.navigationItem setTitleView:self.logo];
     
     // right button of the navigation bar
-    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *backBtnImage = [ActionManager colorImage:[UIImage imageNamed:@"MapIcon"] withColor:[UIColor customLightGray]];
-    [backBtn setBackgroundImage:backBtnImage forState:UIControlStateNormal];
-    [backBtn addTarget:self action:@selector(mapButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    backBtn.frame = CGRectMake(0, 0, 40, 40);
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:backBtn] ;
-    self.navigationItem.rightBarButtonItem = backButton;
+    UIButton *btnMap = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *btnMapImage = [UIImage imageNamed:@"MapIcon"];
+    [btnMap setBackgroundImage:btnMapImage forState:UIControlStateNormal];
+    [btnMap addTarget:self action:@selector(mapButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    btnMap.frame = CGRectMake(0, 0, 40, 40);
+    UIBarButtonItem *btnMapItem = [[UIBarButtonItem alloc] initWithCustomView:btnMap] ;
+    self.navigationItem.rightBarButtonItem = btnMapItem;
 }
 
 -(void)mapButtonPressed {

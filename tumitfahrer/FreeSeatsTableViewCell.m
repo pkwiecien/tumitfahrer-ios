@@ -14,22 +14,14 @@
     
     FreeSeatsTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"FreeSeatsTableViewCell" owner:self options:nil] objectAtIndex:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
-}
+    cell.stepper.value = 1;
+    cell.stepper.maximumValue = 8;
+    cell.stepper.minimumValue = 1;
 
-- (void)awakeFromNib {
-    self.stepper.value = 1;
-    self.stepper.maximumValue = 8;
-    self.stepper.minimumValue = 1;
-    
     // set label for kif test
-    [self.stepper setAccessibilityLabel:@"Seat Stepper"];
-    [self.stepper setIsAccessibilityElement:YES];
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
+    [cell.stepper setAccessibilityLabel:@"Seat Stepper"];
+    [cell.stepper setIsAccessibilityElement:YES];
+    return cell;
 }
 
 - (IBAction)stepperValueChanged:(UIStepper *)sender {

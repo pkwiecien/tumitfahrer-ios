@@ -15,9 +15,12 @@
 #import "NavigationBarUtilities.h"
 #import "ActionManager.h"
 #import "CurrentUser.h"
+#import "CustomUILabel.h"
+#import "ControllerUtilities.h"
 
 @interface RidesViewController ()
 
+@property (nonatomic, retain) UILabel *zeroRidesLabel;
 @property CGFloat previousScrollViewYOffset;
 @property UIRefreshControl *refreshControl;
 @property NSCache *imageCache;
@@ -48,6 +51,7 @@
     
     self.passengerIcon = [ActionManager colorImage:[UIImage imageNamed:@"PassengerIcon"] withColor:[UIColor customLightGray]];
     self.driverIcon =  [ActionManager colorImage:[UIImage imageNamed:@"DriverIcon"] withColor:[UIColor customLightGray]];
+    [self prepareZeroRidesLabel];
 }
 
 -(void)handleRefresh {
@@ -78,6 +82,7 @@
     [self addToImageCache];
     [self.delegate willAppearViewWithIndex:self.index];
     [self.tableView reloadData];
+    [self checkIfAnyRides];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -148,9 +153,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
-    rideDetailVC.ride = [[self ridesForCurrentIndex] objectAtIndex:indexPath.section];
-    [self.navigationController pushViewController:rideDetailVC animated:YES];
+    [self.navigationController pushViewController:[ControllerUtilities viewControllerForRide:[[self ridesForCurrentIndex] objectAtIndex:indexPath.section]] animated:YES];
 }
 
 #pragma mark - scroll view methods
@@ -261,6 +264,21 @@
         default:
             return 0;
     }
+}
+
+-(void)checkIfAnyRides {
+    if ([[self ridesForCurrentIndex] count] == 0) {
+        [self.view addSubview:self.zeroRidesLabel];
+        self.zeroRidesLabel.hidden = NO;
+    } else {
+        [self.zeroRidesLabel removeFromSuperview];
+        self.zeroRidesLabel.hidden = YES;
+    }
+}
+
+-(void)prepareZeroRidesLabel {
+    self.zeroRidesLabel = [[CustomUILabel alloc] initInMiddle:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) text:@"No rides found" viewWithNavigationBar:self.navigationController.navigationBar];
+    self.zeroRidesLabel.textColor = [UIColor blackColor];
 }
 
 -(void)dealloc {

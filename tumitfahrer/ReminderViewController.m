@@ -9,21 +9,13 @@
 #import "ReminderViewController.h"
 #import "SwitchTableViewCell.h"
 #import "TimePickerCell.h"
+#import "DescriptionCell.h"
 
 @interface ReminderViewController () <SwitchTableViewCellDelegate>
 
 @end
 
 @implementation ReminderViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -36,7 +28,7 @@
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return 3;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -44,7 +36,17 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    if (indexPath.row == 0) {
+    
+    if(indexPath.row == 0) {
+        DescriptionCell *descriptionCell = [tableView dequeueReusableCellWithIdentifier:@"DescriptionCell"];
+        
+        if (descriptionCell == nil) {
+            descriptionCell = [[[NSBundle mainBundle] loadNibNamed:@"DescriptionCell" owner:self options:nil] objectAtIndex:0];
+        }
+
+        return descriptionCell;
+    }
+    if (indexPath.row == 1) {
         SwitchTableViewCell *switchCell = [tableView dequeueReusableCellWithIdentifier:@"SwitchCell"];
         
         if (switchCell == nil) {
@@ -64,20 +66,22 @@
         [switchCell setIsAccessibilityElement:YES];
         
         return switchCell;
-    } else if(indexPath.row == 1) {
+    } else if(indexPath.row == 2) {
         TimePickerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TimePickerCell"];
         if (cell == nil) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"TimePickerCell" owner:self options:nil] firstObject];
         }
         return cell;
     }
-    cell.textLabel.text  = @"abc";
+
     return cell;
 }
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 1) {
+    if (indexPath.row == 0) {
+        return 70;
+    } else if (indexPath.row == 2) {
         return 200;
     }
     return 44;

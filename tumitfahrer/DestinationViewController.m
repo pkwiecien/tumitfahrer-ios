@@ -129,16 +129,20 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         NSString *addressString = [self.predefinedDestinations objectAtIndex:indexPath.row];
-        [self.delegate selectedDestination:addressString indexPath:self.rideTableIndexPath];
-        [self.navigationController popViewControllerAnimated:YES];
+        [[LocationController sharedInstance] fetchLocationForAddress:addressString completionHandler:^(CLLocation *location) {
+            if (location != nil) {
+                [self.delegate selectedDestination:addressString coordinate:location.coordinate indexPath:self.rideTableIndexPath];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        }];
     } else {
        SPGooglePlacesAutocompletePlace *place = [self placeAtIndexPath:indexPath];
-        
+
        [place resolveToPlacemark:^(CLPlacemark *placemark, NSString *addressString, NSError *error) {
             if (error) {
                 SPPresentAlertViewWithErrorAndTitle(error, @"Could not map selected Place");
             } else if (placemark) {
-                [self.delegate selectedDestination:addressString indexPath:self.rideTableIndexPath];
+                [self.delegate selectedDestination:addressString coordinate:placemark.location.coordinate indexPath:self.rideTableIndexPath];
                 [self.navigationController popViewControllerAnimated:YES];
             }
         }];

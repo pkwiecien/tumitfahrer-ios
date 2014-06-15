@@ -18,7 +18,7 @@
         
         UILabel *titleLabel = (UILabel *)[mainView viewWithTag:3];
         titleLabel.text = title;
-        titleLabel.textColor = [UIColor customLightGray];
+//        titleLabel.textColor = [UIColor customLightGray];
 
         [self addSubview:mainView];
     }

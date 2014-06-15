@@ -11,15 +11,17 @@
 #import "RidesCell.h"
 #import "HeaderImageView.h"
 #import "Ride.h"
-#import "OwnerOfferViewController.h"
 #import "NavigationBarUtilities.h"
 #import "ActionManager.h"
 #import "RidesStore.h"
 #import "CurrentUser.h"
 #import "RidesStore.h"
+#import "CustomUILabel.h"
+#import "ControllerUtilities.h"
 
 @interface SearchResultViewController () <RideStoreDelegate>
 
+@property (nonatomic, retain) UILabel *zeroRidesLabel;
 @property NSArray *cellsArray;
 @property UIImage *passengerIcon;
 @property UIImage *driverIcon;
@@ -45,12 +47,13 @@
     self.driverIcon =  [ActionManager colorImage:[UIImage imageNamed:@"DriverIcon"] withColor:[UIColor customLightGray]];
     self.searchResults = [[NSMutableArray alloc] init];
     self.page = 0;
-    self.navigationItem.backBarButtonItem.title = @"Search";
     self.title = @"Results";
+    self.navigationItem.backBarButtonItem.title = @"Search";
+    [self prepareZeroRidesLabel];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-
+    
     if (self.searchResults == nil || self.searchResults.count == 0) {
         [self fetchResults];
     } else {
@@ -62,6 +65,11 @@
     }
     [self.tableView reloadData];
     [self setupNavigationBar];
+}
+
+-(void)prepareZeroRidesLabel {
+    self.zeroRidesLabel = [[CustomUILabel alloc] initInMiddle:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) text:@"No rides found :(" viewWithNavigationBar:self.navigationController.navigationBar];
+    self.zeroRidesLabel.textColor = [UIColor blackColor];
 }
 
 -(void)setupNavigationBar {
@@ -89,21 +97,29 @@
 }
 
 -(void)addSearchResults:(NSArray *)newRides {
-    
-    for (Ride *ride in newRides) {
-        if ([self.searchResults containsObject:ride]) {
-            continue;
+    if (newRides.count == 0) {
+        [self.view addSubview:self.zeroRidesLabel];
+        self.zeroRidesLabel.hidden = NO;
+        return;
+    } else {
+        self.zeroRidesLabel.hidden = YES;
+        [self.zeroRidesLabel removeFromSuperview];
+        
+        for (Ride *ride in newRides) {
+            if ([self.searchResults containsObject:ride]) {
+                continue;
+            }
+            
+            [self.searchResults addObject:ride];
+            if (ride.destinationImage == nil || ride.departureLatitude == 0 || ride.destinationLatitude == 0) {
+                [RidesStore initRide:ride index:(self.searchResults.count-1) block:^(NSInteger index) {
+                    [self reloadTable];
+                }];
+            }
         }
         
-        [self.searchResults addObject:ride];
-        if (ride.destinationImage == nil || ride.departureLatitude == 0 || ride.destinationLatitude == 0) {
-            [RidesStore initRide:ride index:(self.searchResults.count-1) block:^(NSInteger index) {
-                [self reloadTable];
-            }];
-        }
+        [self reloadTable];
     }
-
-    [self reloadTable];
 }
 
 -(void)reloadTable {
@@ -175,9 +191,8 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
-    rideDetailVC.ride = [self.searchResults objectAtIndex:indexPath.section];
-    [self.navigationController pushViewController:rideDetailVC animated:YES];
+    UIViewController *vc = [ControllerUtilities viewControllerForRide:[self.searchResults objectAtIndex:indexPath.section]];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Observers Handlers
@@ -188,13 +203,6 @@
 
 -(void)didReceivePhotoForCurrentLocation:(UIImage *)image {
     [LocationController sharedInstance].currentLocationImage = image;
-}
-
--(void)didRecieveRidesFromWebService:(NSArray *)rides
-{
-    for (Ride *ride in rides) {
-        NSLog(@"Ride: %@", ride);
-    }
 }
 
 -(void)loadNewElements {

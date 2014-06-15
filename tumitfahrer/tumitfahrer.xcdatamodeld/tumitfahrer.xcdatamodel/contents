@@ -42,6 +42,7 @@
         <relationship name="requestedRide" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ride" inverseName="requests" inverseEntity="Ride" syncable="YES"/>
     </entity>
     <entity name="Ride" representedClassName="Ride" syncable="YES">
+        <attribute name="car" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" attributeType="Date" syncable="YES"/>
         <attribute name="departureLatitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="departureLongitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -106,7 +107,7 @@
         <element name="Message" positionX="0" positionY="0" width="128" height="163"/>
         <element name="Rating" positionX="106" positionY="-99" width="128" height="150"/>
         <element name="Request" positionX="18" positionY="-333" width="128" height="150"/>
-        <element name="Ride" positionX="-279" positionY="-175" width="128" height="373"/>
+        <element name="Ride" positionX="-279" positionY="-175" width="128" height="390"/>
         <element name="RideSearch" positionX="-72" positionY="-180" width="128" height="238"/>
         <element name="User" positionX="252" positionY="-40" width="128" height="313"/>
     </elements>

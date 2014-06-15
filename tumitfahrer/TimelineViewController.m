@@ -21,12 +21,12 @@
 #import "CurrentUser.h"
 #import "Ride.h"
 #import "OfferViewController.h"
-#import "OwnerOfferViewController.h"
-#import "RequestViewController.h"
-#import "OwnerRequestViewController.h"
+#import "ControllerUtilities.h"
+#import "CustomUILabel.h"
 
 @interface TimelineViewController () <ActivityStoreDelegate>
 
+@property (nonatomic, retain) UILabel *zeroRidesLabel;
 @property CGFloat previousScrollViewYOffset;
 @property UIRefreshControl *refreshControl;
 @property UIImage *driverIconWhite;
@@ -52,11 +52,30 @@
     self.driverIconWhite = [UIImage imageNamed:@"DriverIcon"];
     self.passengerIconWhite = [UIImage imageNamed:@"PassengerIconBig"];
     [[ActivityStore sharedStore] initAllActivitiesFromCoreData];
+    [self prepareZeroRidesLabel];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.delegate willAppearViewWithIndex:self.index];
     [self.tableView reloadData];
+    [self checkIfAnyRides];
+}
+
+-(void)checkIfAnyRides {
+    if ([[[ActivityStore sharedStore] recentActivitiesByType:self.index] count] == 0) {
+        [self.view addSubview:self.zeroRidesLabel];
+        self.zeroRidesLabel.hidden = NO;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    } else {
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        [self.zeroRidesLabel removeFromSuperview];
+        self.zeroRidesLabel.hidden = YES;
+    }
+}
+
+-(void)prepareZeroRidesLabel {
+    self.zeroRidesLabel = [[CustomUILabel alloc] initInMiddle:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) text:@"There are no new activities in TUMitfahrer" viewWithNavigationBar:self.navigationController.navigationBar];
+    self.zeroRidesLabel.textColor = [UIColor blackColor];
 }
 
 - (void)handleRefresh:(id)sender {
@@ -174,7 +193,7 @@
 
     if ([result isKindOfClass:[Ride class]]) {
         Ride *ride = (Ride *)result;
-        UIViewController *vc = [self viewControllerForRide:ride];
+        UIViewController *vc = [ControllerUtilities viewControllerForRide:ride];
         [self.navigationController pushViewController:vc animated:YES];
     } else if([result isKindOfClass:[Request class]]) {
         Request *res = (Request *)result;
@@ -183,37 +202,17 @@
         
         if (ride != nil) {
             res.requestedRide = ride;
-            UIViewController *vc = [self viewControllerForRide:ride];
+            UIViewController *vc = [ControllerUtilities viewControllerForRide:ride];
             [self.navigationController pushViewController:vc animated:YES];
         } else {
             [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:res.rideId block:^(BOOL completed) {
                 if(completed) {
                     Ride *ride = [[RidesStore sharedStore] fetchRideFromCoreDataWithId:res.rideId];
-                    UIViewController *vc = [self viewControllerForRide:ride];
+                    UIViewController *vc = [ControllerUtilities viewControllerForRide:ride];
                     [self.navigationController pushViewController:vc animated:YES];
                 }
             }];
         }
-    }
-}
-
--(UIViewController *)viewControllerForRide:(Ride *)ride {
-    if (![ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && [ride.isRideRequest boolValue]) {
-        RequestViewController *requestVC = [[RequestViewController alloc] init];
-        requestVC.ride = ride;
-        return requestVC;
-    } else if(![ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && ![ride.isRideRequest boolValue]) {
-        OfferViewController *offerVc = [[OfferViewController alloc] init];
-        offerVc.ride = ride;
-        return offerVc;
-    } else if([ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && ![ride.isRideRequest boolValue]) {
-        OwnerOfferViewController *ownerOfferVc = [[OwnerOfferViewController alloc] init];
-        ownerOfferVc.ride = ride;
-        return ownerOfferVc;
-    } else {
-        OwnerRequestViewController *ownerRequestVc = [[OwnerRequestViewController alloc] init];
-        ownerRequestVc.ride = ride;
-        return ownerRequestVc;
     }
 }
 
@@ -225,6 +224,7 @@
 
 -(void)didRecieveActivitiesFromWebService {
     [self.tableView reloadData];
+    [self checkIfAnyRides];
 }
 
 -(void)dealloc {

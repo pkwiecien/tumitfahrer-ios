@@ -23,12 +23,17 @@
 
 @interface AddRideViewController () <SementedControlCellDelegate, SwitchTableViewCellDelegate>
 
+@property (nonatomic, strong) CustomBarButton *btnAdd;
+@property (nonatomic, assign) CLLocationCoordinate2D departureCoordinate;
+@property (nonatomic, assign) CLLocationCoordinate2D destinationCoordinate;
 @property (nonatomic, strong) NSMutableArray *shareValues;
 @property (nonatomic, strong) NSMutableArray *tablePassengerValues;
 @property (nonatomic, strong) NSMutableArray *tableDriverValues;
 @property (nonatomic, strong) NSMutableArray *tablePlaceholders;
 @property (nonatomic, strong) NSMutableArray *tableSectionHeaders;
 @property (nonatomic, strong) NSMutableArray *tableSectionIcons;
+@property (nonatomic, strong) UIView *headerView;
+@property (nonatomic, strong) UIImage *destinationImage;
 
 @end
 
@@ -37,8 +42,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"1", @"", @"", @"", nil];
-        self.shareValues = [[NSMutableArray alloc] initWithObjects:@"Facebook", @"Email", nil];
+        self.shareValues = [[NSMutableArray alloc] initWithObjects:@"Facebook", nil];
         self.tableSectionIcons = [[NSMutableArray alloc] initWithObjects:[UIImage imageNamed:@"DetailsIcon"], [UIImage imageNamed:@"ShareIcon"], nil];
         self.tableSectionHeaders = [[NSMutableArray alloc] initWithObjects:@"Details", @"Share", nil];
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
@@ -55,10 +59,11 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor customLightGray];
     
-    UIView *headerView = [[[NSBundle mainBundle] loadNibNamed:@"AddRideTableHeader" owner:self options:nil] objectAtIndex:0];
-    self.tableView.tableHeaderView = headerView;
+    self.headerView = [[[NSBundle mainBundle] loadNibNamed:@"AddRideTableHeader" owner:self options:nil] objectAtIndex:0];
+    self.tableView.tableHeaderView = self.headerView;
     self.RideType = ContentTypeCampusRides;
     self.displayEnum = ShouldDisplayNormally;
+    self.departureCoordinate = [LocationController sharedInstance].currentLocation.coordinate;
 }
 
 -(void)initTables {
@@ -90,6 +95,7 @@
         [self setupLeftMenuButton];
     }
     [self setDepartureLabelForCurrentLocation];
+    [self.tableView sendSubviewToBack:self.headerView];
 }
 
 -(void)setDepartureLabelForCurrentLocation {
@@ -109,14 +115,15 @@
     [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor lighterBlue]];
     
     // right button of the navigation bar
-    CustomBarButton *searchButton = [[CustomBarButton alloc] initWithTitle:@"Add"];
-    
+
+    self.btnAdd = [[CustomBarButton alloc] initWithTitle:@"Add"];
     // set label for kif test
-    [searchButton setAccessibilityLabel:@"Add Button"];
-    [searchButton setIsAccessibilityElement:YES];
-    
-    [searchButton addTarget:self action:@selector(addRideButtonPressed) forControlEvents:UIControlEventTouchDown];
-    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
+    [self.btnAdd setAccessibilityLabel:@"Add Button"];
+    [self.btnAdd setIsAccessibilityElement:YES];
+
+    [self.btnAdd addTarget:self action:@selector(addRideButtonPressed) forControlEvents:UIControlEventTouchDown];
+    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.btnAdd];
+
     self.navigationItem.rightBarButtonItem = searchButtonItem;
     
     self.title = @"Add ride";
@@ -202,8 +209,8 @@
         cell.textLabel.text = [self.tablePlaceholders objectAtIndex:indexPath.row];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.textLabel.textColor = [UIColor blackColor];
-        cell.backgroundColor = [UIColor clearColor];
-        cell.contentView.backgroundColor = [UIColor clearColor];
+        cell.backgroundColor = [UIColor customLightGray];
+        cell.contentView.backgroundColor = [UIColor customLightGray];
         
     } else if(indexPath.section == 1) {
         SwitchTableViewCell *switchCell = [tableView dequeueReusableCellWithIdentifier:@"SwitchCell"];
@@ -256,22 +263,24 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 40.0f;
+    return 30.0f;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 40.0)];
     headerView.backgroundColor = [UIColor lighterBlue];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 8, 20, 20)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 3, 20, 20)];
     imageView.image = [self.tableSectionIcons objectAtIndex:section];
     [headerView addSubview:imageView];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(40, 10, 10, 10)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(40, 5, 10, 10)];
     label.text = [self.tableSectionHeaders objectAtIndex:section];
     label.textColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:18];
     [label sizeToFit];
     [headerView addSubview:label];
+    
     return headerView;
 }
 
@@ -288,6 +297,8 @@
 }
 
 -(void)addRideButtonPressed {
+    // prevent from adding same ride twice
+    self.btnAdd.enabled = NO;
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
@@ -299,12 +310,15 @@
     
     if (!departurePlace || departurePlace.length == 0) {
         [ActionManager showAlertViewWithTitle:@"No departure time" description:@"To add a ride please specify the departure place"];
+        self.btnAdd.enabled = YES;
         return;
     } else if(!destination || destination.length == 0) {
         [ActionManager showAlertViewWithTitle:@"No destination" description:@"To add a ride please specify the destination"];
+        self.btnAdd.enabled = YES;
         return;
     } else if(!departureTime || departureTime.length == 0) {
         [ActionManager showAlertViewWithTitle:@"No departure time" description:@"To add a ride please specify the departure time"];
+        self.btnAdd.enabled = YES;
         return;
     }
     
@@ -327,12 +341,14 @@
             car = @"";
         }
         NSString *meetingPoint = [self.tableValues objectAtIndex:6];
-        if (!meetingPoint) {
+        if (!meetingPoint || meetingPoint.length == 0) {
             [ActionManager showAlertViewWithTitle:@"No meeting place" description:@"To add a ride please specify the meeting place"];
+            self.btnAdd.enabled = YES;
             return;
         }
         
-        queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": [NSNumber numberWithInt:self.RideType], @"car": car, @"is_driving": [NSNumber numberWithBool:YES]};
+        queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": [NSNumber numberWithInt:self.RideType], @"car": car, @"is_driving": [NSNumber numberWithBool:YES], @"departure_latitude" : [NSNumber numberWithDouble:self.departureCoordinate.latitude], @"departure_longitude" : [NSNumber numberWithDouble:self.departureCoordinate.longitude], @"destination_latitude": [NSNumber numberWithDouble:self.destinationCoordinate.latitude],
+                        @"destination_longitude" : [NSNumber numberWithDouble:self.destinationCoordinate.longitude]};
         
         rideParams = @{@"ride": queryParams};
         
@@ -344,14 +360,12 @@
     
     [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"apiKey" value:[[CurrentUser sharedInstance] user].apiKey];
     
-    NSLog(@"user api key: %@", [CurrentUser sharedInstance].user.apiKey);
     [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/users/%@/rides", [CurrentUser sharedInstance].user.userId] parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         
         Ride *ride = (Ride *)[mappingResult firstObject];
+        ride.destinationImage = UIImagePNGRepresentation(self.destinationImage);
         [[RidesStore sharedStore] addRideToStore:ride];
-        
-        self.tablePassengerValues = nil;
-        self.tableDriverValues = nil;
+        [self resetTables];
         [KGStatusBar showSuccessWithStatus:@"Ride added"];
         
         if ([ride.isRideRequest boolValue]) {
@@ -367,11 +381,19 @@
             rideDetailVC.shouldGoBackEnum = GoBackToList;
             [self.navigationController pushViewController:rideDetailVC animated:YES];
         }
-        
+        self.btnAdd.enabled = YES;
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [ActionManager showAlertViewWithTitle:[error localizedDescription]];
+        self.btnAdd.enabled = YES;
         RKLogError(@"Load failed with error: %@", error);
     }];
+}
+
+-(void)resetTables {
+    self.tablePassengerValues = nil;
+    self.tableDriverValues = nil;
+    self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", @"", @"", nil];
+    [self setDepartureLabelForCurrentLocation];
 }
 
 -(void)closeButtonPressed {
@@ -383,10 +405,11 @@
 - (void)dateSelectionViewController:(RMDateSelectionViewController *)vc didSelectDate:(NSDate *)aDate {
     NSString *dateString = [ActionManager stringFromDate:aDate];
     [self.tableValues replaceObjectAtIndex:3 withObject:dateString];
-    
-    [self.tableView beginUpdates];
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:3 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView endUpdates];
+
+    [self.tableView reloadData];
+//    [self.tableView beginUpdates];
+//    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:3 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+//    [self.tableView endUpdates];
 }
 
 - (void)dateSelectionViewControllerDidCancel:(RMDateSelectionViewController *)vc {
@@ -397,9 +420,24 @@
     [self.tableValues replaceObjectAtIndex:indexPath.row withObject:value];
 }
 
--(void)selectedDestination:(NSString *)destination indexPath:(NSIndexPath*)indexPath{
+-(void)selectedDestination:(NSString *)destination coordinate:(CLLocationCoordinate2D)coordinate indexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 1) {
+        self.departureCoordinate = coordinate;
+    } else if (indexPath.row == 2){
+        self.destinationCoordinate = coordinate;
+        [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:[[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude] completionHandler:^(NSURL *photoUrl) {
+            if (photoUrl != nil) {
+                [self setPhotoForHeaderViewWithUrl:photoUrl];
+            }
+        }];
+    }
     [self.tableValues replaceObjectAtIndex:indexPath.row withObject:destination];
-    
+}
+
+-(void)setPhotoForHeaderViewWithUrl:(NSURL *)photoUrl {
+    UIImageView *headerImage = (UIImageView *)[self.headerView viewWithTag:10];
+    self.destinationImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:photoUrl]];
+    headerImage.image = self.destinationImage;
 }
 
 -(void)stepperValueChanged:(NSInteger)stepperValue {

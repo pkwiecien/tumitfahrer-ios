@@ -28,6 +28,7 @@
                                                       @"is_ride_request":@"isRideRequest",
                                                       @"price":@"price",
                                                       @"is_paid":@"isPaid",
+                                                      @"car":@"car",
                                                       @"created_at": @"createdAt",
                                                       @"updated_at": @"updatedAt"
                                                       }];
