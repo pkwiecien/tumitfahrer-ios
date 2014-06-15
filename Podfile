@@ -30,3 +30,6 @@ pod 'AMScrollingNavbar'
 pod 'GPUImage'
 # Facebook api for sharing rides
 pod 'Facebook-iOS-SDK'
+target 'UI Tests', :exclusive => true do
+    pod 'KIF', '~> 3.0'
+end
