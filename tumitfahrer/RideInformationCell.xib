@@ -17,6 +17,10 @@
                         <rect key="frame" x="10" y="15" width="25" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
+                    <imageView userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="SeatsIconBlack" translatesAutoresizingMaskIntoConstraints="NO" id="1Xv-Yz-7U5">
+                        <rect key="frame" x="182" y="13" width="25" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                     <imageView userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="InfoIconBlack" translatesAutoresizingMaskIntoConstraints="NO" id="Xjo-rr-Lhh">
                         <rect key="frame" x="10" y="60" width="25" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -29,7 +33,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2qV-mr-uey">
-                        <rect key="frame" x="50" y="15" width="254" height="21"/>
+                        <rect key="frame" x="50" y="15" width="108" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="79P-d1-dz1">
+                        <rect key="frame" x="222" y="15" width="108" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
                         <nil key="highlightedColor"/>
@@ -38,6 +48,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="carLabel" destination="2qV-mr-uey" id="j86-3a-NzH"/>
+                <outlet property="freeSeatsLabel" destination="79P-d1-dz1" id="NiD-9J-SJK"/>
                 <outlet property="informationLabel" destination="yFW-MM-xKD" id="Jv0-Sk-pi5"/>
             </connections>
         </tableViewCell>
@@ -45,5 +56,6 @@
     <resources>
         <image name="CarIconBlack" width="25" height="25"/>
         <image name="InfoIconBlack" width="25" height="25"/>
+        <image name="SeatsIconBlack" width="25" height="25"/>
     </resources>
 </document>

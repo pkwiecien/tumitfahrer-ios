@@ -45,6 +45,8 @@
     self.driverIcon =  [ActionManager colorImage:[UIImage imageNamed:@"DriverIcon"] withColor:[UIColor customLightGray]];
     self.searchResults = [[NSMutableArray alloc] init];
     self.page = 0;
+    self.navigationItem.backBarButtonItem.title = @"Search";
+    self.title = @"Results";
 }
 
 -(void)viewWillAppear:(BOOL)animated {

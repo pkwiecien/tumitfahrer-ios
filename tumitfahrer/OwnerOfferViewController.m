@@ -112,6 +112,7 @@
             cell.carLabel.text = self.ride.rideOwner.car;
         }
         cell.informationLabel.text = self.ride.meetingPoint;
+        cell.freeSeatsLabel.text = [self.ride.freeSeats stringValue];
         
         return cell;
     } else if (indexPath.section == 1 && [self.ride.passengers count] > 0) { // show passengers

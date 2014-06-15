@@ -51,10 +51,6 @@
     
     [self initTables];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    NSString *departurePlace = [LocationController sharedInstance].currentAddress;
-    
-    if(departurePlace!=nil)
-        [self.tableValues replaceObjectAtIndex:1 withObject:departurePlace];
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor customLightGray];
@@ -72,6 +68,7 @@
             self.tableValues = [NSMutableArray arrayWithArray:self.tablePassengerValues];
         } else {
             self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", nil];
+            [self setDepartureLabelForCurrentLocation];
         }
         self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", @"Meeting Point", @"", nil];
     } else {
@@ -79,6 +76,7 @@
             self.tableValues = [NSMutableArray arrayWithArray:self.tableDriverValues];
         } else {
             self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", @"", @"", nil];
+            [self setDepartureLabelForCurrentLocation];
         }
         self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", @"Free Seats", @"Car", @"Meeting Point", @"", nil];
     }
@@ -91,6 +89,14 @@
     if(self.RideDisplayType == ShowAsViewController) {
         [self setupLeftMenuButton];
     }
+    [self setDepartureLabelForCurrentLocation];
+}
+
+-(void)setDepartureLabelForCurrentLocation {
+    NSString *departurePlace = [LocationController sharedInstance].currentAddress;
+    
+    if(departurePlace!=nil)
+        [self.tableValues replaceObjectAtIndex:1 withObject:departurePlace];
 }
 
 -(void)setupLeftMenuButton{
@@ -174,6 +180,7 @@
         
         if (indexPath.row < [self.tableValues count] && [self.tableValues objectAtIndex:indexPath.row] != nil) {
             cell.detailTextLabel.text = [self.tableValues objectAtIndex:indexPath.row];
+            cell.detailTextLabel.font = [UIFont systemFontOfSize:16.0];
         }
         cell.textLabel.text = [self.tablePlaceholders objectAtIndex:indexPath.row];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;

@@ -14,5 +14,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *carLabel;
 @property (weak, nonatomic) IBOutlet UILabel *informationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *freeSeatsLabel;
 
 @end
