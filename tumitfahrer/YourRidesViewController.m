@@ -12,11 +12,11 @@
 #import "NavigationBarUtilities.h"
 #import "CurrentUser.h"
 #import "Ride.h"
-#import "OwnerOfferViewController.h"
 #import "RidesStore.h"
 #import "CustomUILabel.h"
 #import "MMDrawerBarButtonItem.h"
 #import "WebserviceRequest.h"
+#import "ControllerUtilities.h"
 
 @interface YourRidesViewController ()
 
@@ -79,8 +79,10 @@
 -(void)checkIfAnyRides {
     if ([self.arrayWithSections count] == 0) {
         [self.view addSubview:self.zeroRidesLabel];
+        self.zeroRidesLabel.hidden = NO;
     } else {
         [self.zeroRidesLabel removeFromSuperview];
+        self.zeroRidesLabel.hidden = YES;
     }
 }
 
@@ -205,9 +207,8 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
-    rideDetailVC.ride = [[self.arrayWithSections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:rideDetailVC animated:YES];
+    UIViewController *vc = [ControllerUtilities viewControllerForRide:[[self.arrayWithSections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Button Handlers

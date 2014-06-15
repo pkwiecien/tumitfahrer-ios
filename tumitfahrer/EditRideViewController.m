@@ -111,6 +111,7 @@
             cell = [FreeSeatsTableViewCell freeSeatsTableViewCell];
         }
         
+        cell.stepper.value = [self.ride.freeSeats intValue];
         cell.delegate = self;
         cell.backgroundColor = [UIColor clearColor];
         cell.contentView.backgroundColor = [UIColor clearColor];
@@ -221,7 +222,12 @@
         self.ride.departurePlace = departurePlace;
         self.ride.destination = destination;
         self.ride.departureTime = [ActionManager dateFromString:departureTime];
-        self.ride.freeSeats = [NSNumber numberWithInt:(int)freeSeats];
+        
+        NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+        [f setNumberStyle:NSNumberFormatterDecimalStyle];
+        NSNumber * freeSeatsNumber = [f numberFromString:freeSeats];
+        
+        self.ride.freeSeats = freeSeatsNumber;
         self.ride.meetingPoint = meetingPoint;
         [[RidesStore sharedStore] saveToPersistentStore:self.ride];
         self.tableDriverValues = nil;
@@ -269,7 +275,7 @@
 }
 
 -(void)stepperValueChanged:(NSInteger)stepperValue {
-    [self.tableValues replaceObjectAtIndex:4 withObject:[[NSNumber numberWithInt:(int)stepperValue] stringValue]];
+    [self.tableValues replaceObjectAtIndex:3 withObject:[[NSNumber numberWithInt:(int)stepperValue] stringValue]];
 }
 
 #pragma mark - Button Handlers

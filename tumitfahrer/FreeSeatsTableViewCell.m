@@ -14,18 +14,11 @@
     
     FreeSeatsTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"FreeSeatsTableViewCell" owner:self options:nil] objectAtIndex:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.stepper.value = 1;
+    cell.stepper.maximumValue = 8;
+    cell.stepper.minimumValue = 1;
+
     return cell;
-}
-
-- (void)awakeFromNib {
-    self.stepper.value = 1;
-    self.stepper.maximumValue = 8;
-    self.stepper.minimumValue = 1;
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
 }
 
 - (IBAction)stepperValueChanged:(UIStepper *)sender {
