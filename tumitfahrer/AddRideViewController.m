@@ -23,6 +23,7 @@
 
 @interface AddRideViewController () <SementedControlCellDelegate, SwitchTableViewCellDelegate>
 
+@property (nonatomic, strong) CustomBarButton *btnAdd;
 @property (nonatomic, assign) CLLocationCoordinate2D departureCoordinate;
 @property (nonatomic, assign) CLLocationCoordinate2D destinationCoordinate;
 @property (nonatomic, strong) NSMutableArray *shareValues;
@@ -40,7 +41,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"1", @"", @"", @"", nil];
-        self.shareValues = [[NSMutableArray alloc] initWithObjects:@"Facebook", @"Email", nil];
+        self.shareValues = [[NSMutableArray alloc] initWithObjects:@"Facebook", nil];
         self.tableSectionIcons = [[NSMutableArray alloc] initWithObjects:[UIImage imageNamed:@"DetailsIcon"], [UIImage imageNamed:@"ShareIcon"], nil];
         self.tableSectionHeaders = [[NSMutableArray alloc] initWithObjects:@"Details", @"Share", nil];
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
@@ -112,9 +113,9 @@
     [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor lighterBlue]];
     
     // right button of the navigation bar
-    CustomBarButton *searchButton = [[CustomBarButton alloc] initWithTitle:@"Add"];
-    [searchButton addTarget:self action:@selector(addRideButtonPressed) forControlEvents:UIControlEventTouchDown];
-    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
+    self.btnAdd = [[CustomBarButton alloc] initWithTitle:@"Add"];
+    [self.btnAdd addTarget:self action:@selector(addRideButtonPressed) forControlEvents:UIControlEventTouchDown];
+    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.btnAdd];
     self.navigationItem.rightBarButtonItem = searchButtonItem;
     
     self.title = @"Add ride";
@@ -268,6 +269,8 @@
 }
 
 -(void)addRideButtonPressed {
+    // prevent from adding same ride twice
+    self.btnAdd.enabled = NO;
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
@@ -279,12 +282,15 @@
     
     if (!departurePlace || departurePlace.length == 0) {
         [ActionManager showAlertViewWithTitle:@"No departure time" description:@"To add a ride please specify the departure place"];
+        self.btnAdd.enabled = YES;
         return;
     } else if(!destination || destination.length == 0) {
         [ActionManager showAlertViewWithTitle:@"No destination" description:@"To add a ride please specify the destination"];
+        self.btnAdd.enabled = YES;
         return;
     } else if(!departureTime || departureTime.length == 0) {
         [ActionManager showAlertViewWithTitle:@"No departure time" description:@"To add a ride please specify the departure time"];
+        self.btnAdd.enabled = YES;
         return;
     }
     
@@ -307,8 +313,9 @@
             car = @"";
         }
         NSString *meetingPoint = [self.tableValues objectAtIndex:6];
-        if (!meetingPoint) {
+        if (!meetingPoint || meetingPoint.length == 0) {
             [ActionManager showAlertViewWithTitle:@"No meeting place" description:@"To add a ride please specify the meeting place"];
+            self.btnAdd.enabled = YES;
             return;
         }
         
@@ -325,7 +332,6 @@
     
     [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"apiKey" value:[[CurrentUser sharedInstance] user].apiKey];
     
-    NSLog(@"user api key: %@", [CurrentUser sharedInstance].user.apiKey);
     [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/users/%@/rides", [CurrentUser sharedInstance].user.userId] parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         
         Ride *ride = (Ride *)[mappingResult firstObject];
@@ -348,9 +354,10 @@
             rideDetailVC.shouldGoBackEnum = GoBackToList;
             [self.navigationController pushViewController:rideDetailVC animated:YES];
         }
-        
+        self.btnAdd.enabled = YES;
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [ActionManager showAlertViewWithTitle:[error localizedDescription]];
+        self.btnAdd.enabled = YES;
         RKLogError(@"Load failed with error: %@", error);
     }];
 }

@@ -18,7 +18,6 @@
 #import "MMDrawerBarButtonItem.h"
 #import "SearchRideViewController.h"
 #import "SegmentedControlCell.h"
-#import "KGStatusBar.h"
 #import "OwnerOfferViewController.h"
 #import "LocationController.h"
 #import "Ride.h"
@@ -225,9 +224,7 @@
         self.ride.freeSeats = [NSNumber numberWithInt:(int)freeSeats];
         self.ride.meetingPoint = meetingPoint;
         [[RidesStore sharedStore] saveToPersistentStore:self.ride];
-        
         self.tableDriverValues = nil;
-        [KGStatusBar showSuccessWithStatus:@"Ride added"];
         
         OwnerOfferViewController *rideDetailVC = (OwnerOfferViewController*)self.presentingViewController;
         rideDetailVC.ride = self.ride;
