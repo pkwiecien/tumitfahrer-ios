@@ -24,6 +24,7 @@
                     </segmentedControl>
                 </subviews>
             </tableViewCellContentView>
+            <color key="backgroundColor" red="0.078431375319999996" green="0.79215693470000004" blue="0.13725490870000001" alpha="1" colorSpace="deviceRGB"/>
             <connections>
                 <outlet property="segmentedControl" destination="JHT-eL-0Ya" id="m6Z-YK-Qln"/>
             </connections>

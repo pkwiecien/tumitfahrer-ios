@@ -24,9 +24,11 @@
 #import "OwnerOfferViewController.h"
 #import "RequestViewController.h"
 #import "OwnerRequestViewController.h"
+#import "CustomUILabel.h"
 
 @interface TimelineViewController () <ActivityStoreDelegate>
 
+@property (nonatomic, retain) UILabel *zeroRidesLabel;
 @property CGFloat previousScrollViewYOffset;
 @property UIRefreshControl *refreshControl;
 @property UIImage *driverIconWhite;
@@ -57,7 +59,23 @@
 -(void)viewWillAppear:(BOOL)animated {
     [self.delegate willAppearViewWithIndex:self.index];
     [self.tableView reloadData];
+    [self checkIfAnyRides];
 }
+
+-(void)checkIfAnyRides {
+    if ([[[ActivityStore sharedStore] recentActivitiesByType:self.index] count] == 0) {
+        [self prepareZeroRidesLabel];
+        [self.view addSubview:self.zeroRidesLabel];
+    } else {
+        [self.zeroRidesLabel removeFromSuperview];
+    }
+}
+
+-(void)prepareZeroRidesLabel {
+    self.zeroRidesLabel = [[CustomUILabel alloc] initInMiddle:CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height) text:@"There are no new activities in TUMitfahrer" viewWithNavigationBar:self.navigationController.navigationBar];
+    self.zeroRidesLabel.textColor = [UIColor blackColor];
+}
+
 
 - (void)handleRefresh:(id)sender {
     [[ActivityStore sharedStore] fetchActivitiesFromWebservice:^(BOOL isFetched) {

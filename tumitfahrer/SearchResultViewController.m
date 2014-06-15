@@ -17,9 +17,11 @@
 #import "RidesStore.h"
 #import "CurrentUser.h"
 #import "RidesStore.h"
+#import "CustomUILabel.h"
 
 @interface SearchResultViewController () <RideStoreDelegate>
 
+@property (nonatomic, retain) UILabel *zeroRidesLabel;
 @property NSArray *cellsArray;
 @property UIImage *passengerIcon;
 @property UIImage *driverIcon;
@@ -50,7 +52,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-
+    
     if (self.searchResults == nil || self.searchResults.count == 0) {
         [self fetchResults];
     } else {
@@ -62,6 +64,11 @@
     }
     [self.tableView reloadData];
     [self setupNavigationBar];
+}
+
+-(void)prepareZeroRidesLabel {
+    self.zeroRidesLabel = [[CustomUILabel alloc] initInMiddle:CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height) text:@"No rides found :(" viewWithNavigationBar:self.navigationController.navigationBar];
+    self.zeroRidesLabel.textColor = [UIColor blackColor];
 }
 
 -(void)setupNavigationBar {
@@ -89,21 +96,29 @@
 }
 
 -(void)addSearchResults:(NSArray *)newRides {
-    
-    for (Ride *ride in newRides) {
-        if ([self.searchResults containsObject:ride]) {
-            continue;
+    if (newRides.count == 0) {
+        [self prepareZeroRidesLabel];
+        [self.view addSubview:self.zeroRidesLabel];
+        return;
+    } else {
+        
+        [self.zeroRidesLabel removeFromSuperview];
+        
+        for (Ride *ride in newRides) {
+            if ([self.searchResults containsObject:ride]) {
+                continue;
+            }
+            
+            [self.searchResults addObject:ride];
+            if (ride.destinationImage == nil || ride.departureLatitude == 0 || ride.destinationLatitude == 0) {
+                [RidesStore initRide:ride index:(self.searchResults.count-1) block:^(NSInteger index) {
+                    [self reloadTable];
+                }];
+            }
         }
         
-        [self.searchResults addObject:ride];
-        if (ride.destinationImage == nil || ride.departureLatitude == 0 || ride.destinationLatitude == 0) {
-            [RidesStore initRide:ride index:(self.searchResults.count-1) block:^(NSInteger index) {
-                [self reloadTable];
-            }];
-        }
+        [self reloadTable];
     }
-
-    [self reloadTable];
 }
 
 -(void)reloadTable {

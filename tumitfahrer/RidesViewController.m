@@ -15,9 +15,11 @@
 #import "NavigationBarUtilities.h"
 #import "ActionManager.h"
 #import "CurrentUser.h"
+#import "CustomUILabel.h"
 
 @interface RidesViewController ()
 
+@property (nonatomic, retain) UILabel *zeroRidesLabel;
 @property CGFloat previousScrollViewYOffset;
 @property UIRefreshControl *refreshControl;
 @property NSCache *imageCache;
@@ -78,7 +80,24 @@
     [self addToImageCache];
     [self.delegate willAppearViewWithIndex:self.index];
     [self.tableView reloadData];
+    [self checkIfAnyRides];
 }
+
+
+-(void)checkIfAnyRides {
+    if ([[self ridesForCurrentIndex] count] == 0) {
+        [self prepareZeroRidesLabel];
+        [self.view addSubview:self.zeroRidesLabel];
+    } else {
+        [self.zeroRidesLabel removeFromSuperview];
+    }
+}
+
+-(void)prepareZeroRidesLabel {
+    self.zeroRidesLabel = [[CustomUILabel alloc] initInMiddle:CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height) text:@"No rides found :(" viewWithNavigationBar:self.navigationController.navigationBar];
+    self.zeroRidesLabel.textColor = [UIColor blackColor];
+}
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [[self ridesForCurrentIndex] count];
