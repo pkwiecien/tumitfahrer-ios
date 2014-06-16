@@ -24,13 +24,14 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.teamPhotos = [NSArray arrayWithObjects:[UIImage imageNamed:@"PawelPhoto"], [ActionManager imageWithColor:[UIColor grayColor]], [ActionManager imageWithColor:[UIColor grayColor]], [ActionManager imageWithColor:[UIColor grayColor]], [ActionManager imageWithColor:[UIColor grayColor]], [ActionManager imageWithColor:[UIColor grayColor]], [ActionManager imageWithColor:[UIColor grayColor]], [ActionManager imageWithColor:[UIColor grayColor]], [ActionManager imageWithColor:[UIColor grayColor]], [ActionManager imageWithColor:[UIColor grayColor]], nil];
-        self.aboutPersonArray = [NSArray arrayWithObjects:@"Pawel Kwiecien",@"Michael Schermann",@"Behroz Sikander",@"Saqib Javed",@"Anuradha Ganapathi",@"Shahid Aslam",@"Lukasz Kwiatkowskie",@"Amr Arafat",@"Abhijith Srivatsav", @"Dansen Zhou", nil];
+        self.aboutPersonArray = [NSArray arrayWithObjects:@"Pawel Kwiecien\nTask: Main developer of iOS app\nAbout: TUMitfahrer was for me a Master Thesis project.",@"Michael Schermann",@"Behroz Sikander",@"Saqib Javed",@"Anuradha Ganapathi",@"Shahid Aslam",@"Lukasz Kwiatkowskie",@"Amr Arafat",@"Abhijith Srivatsav", @"Dansen Zhou", nil];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"Team";
     self.view.backgroundColor = [UIColor customLightGray];
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
     self.tableView.tableFooterView = footerView;
@@ -65,6 +66,7 @@
     textView.selectable = NO;
     textView.backgroundColor = [UIColor clearColor];
     textView.text = [self.aboutPersonArray objectAtIndex:indexPath.row];
+    textView.font = [UIFont systemFontOfSize:14];
     
     [cell addSubview:circularImageView];
     [cell addSubview:textView];

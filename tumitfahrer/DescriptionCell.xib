@@ -13,7 +13,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="With reminder you won't forget about upcoming rides. Turn it on to get a reminder about your next ride." textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Woc-y9-Tm2">
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="With reminder you won't forget about upcoming rides. Turn it on to get a reminder about your next ride." textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Woc-y9-Tm2">
                         <rect key="frame" x="10" y="0.0" width="300" height="69"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

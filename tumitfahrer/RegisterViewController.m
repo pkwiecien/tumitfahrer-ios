@@ -183,6 +183,28 @@
 }
 
 
+//-(BOOL)textFieldShouldReturn:(UITextField *)textField
+//{
+//    NSInteger nextTag = textField.tag + 1;
+//    //-- try to find next responde
+//    UIResponder* nextResponder = [textField.superview viewWithTag:nextTag];
+//    
+//    if (nextResponder)
+//    {
+//        //-- found next responce ,so set it
+//        [nextResponder becomeFirstResponder];
+//    }
+//    else
+//    {
+//        [scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+//        //-- not found remove keyboard
+//        [textField resignFirstResponder];
+//        return YES;
+//    }
+//    
+//    return YES;
+//}
+
 -(void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
         

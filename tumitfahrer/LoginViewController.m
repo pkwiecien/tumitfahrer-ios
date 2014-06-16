@@ -58,8 +58,8 @@
     RKLogConfigureByName("RestKit/Network", RKLogLevelDebug);
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
+-(void)viewWillAppear:(BOOL)animated {
+    
     NSString *email = [[NSUserDefaults standardUserDefaults] valueForKey:@"storedEmail"];
     if (email!=nil) {
         self.emailTextField.text = email;

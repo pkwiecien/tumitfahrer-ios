@@ -11,7 +11,7 @@
 #import "ActionManager.h"
 #import "CurrentUser.h"
 
-@interface FeedbackViewController () <UIGestureRecognizerDelegate, UITextViewDelegate>
+@interface FeedbackViewController () <UIGestureRecognizerDelegate, UITextViewDelegate, UITextFieldDelegate>
 
 @end
 
@@ -28,28 +28,24 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor customLightGray]];
     self.contentTextView.delegate = self;
-    [self addGestureRecognizerToTextField];
+    self.titleTextField.delegate = self;
 }
 
--(void)addGestureRecognizerToTextField {
-    
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapRecognized)];
-    singleTap.numberOfTapsRequired = 1;
-    [self.contentTextView addGestureRecognizer:singleTap];
-}
-
--(BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if ([text isEqual:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
     return YES;
 }
 
-
-
--(void)singleTapRecognized {
-    if ([self.contentTextView isFirstResponder]) {
-        [self.contentTextView endEditing:YES];
-    } else {
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == self.titleTextField) {
+        [self.titleTextField resignFirstResponder];
         [self.contentTextView becomeFirstResponder];
+        return NO;
     }
+    return YES;
 }
 
 -(IBAction)sendButtonPressed:(id)sender {

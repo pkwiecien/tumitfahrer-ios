@@ -13,6 +13,7 @@
 
 @interface ReminderViewController () <SwitchTableViewCellDelegate>
 
+@property BOOL reminderValue;
 @end
 
 @implementation ReminderViewController
@@ -24,6 +25,8 @@
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
     self.tableView.tableHeaderView = headerView;
+    NSNumber *reminder = [[NSUserDefaults standardUserDefaults] valueForKey:@"reminder"];
+    self.reminderValue = [reminder boolValue];
 }
 
 
@@ -43,7 +46,7 @@
         if (descriptionCell == nil) {
             descriptionCell = [[[NSBundle mainBundle] loadNibNamed:@"DescriptionCell" owner:self options:nil] objectAtIndex:0];
         }
-
+        
         return descriptionCell;
     }
     if (indexPath.row == 1) {
@@ -60,6 +63,7 @@
         switchCell.selectionStyle = UITableViewCellSelectionStyleNone;
         switchCell.switchId = indexPath.row;
         switchCell.delegate = self;
+        [switchCell.switchElement setOn:self.reminderValue];
         
         return switchCell;
     } else if(indexPath.row == 2) {
@@ -67,9 +71,10 @@
         if (cell == nil) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"TimePickerCell" owner:self options:nil] firstObject];
         }
+        [cell.datePicker addTarget:self action:@selector(pickerViewChanged:) forControlEvents:UIControlEventValueChanged];
         return cell;
     }
-
+    
     return cell;
 }
 
@@ -84,7 +89,17 @@
 }
 
 -(void)switchChangedToStatus:(BOOL)status switchId:(NSInteger)switchId {
-    
+    [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:status] forKey:@"reminder"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void) pickerViewChanged:(id)sender {
+    UIDatePicker *picker=(UIDatePicker*)sender;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd 'at' HH:mm:ss"];
+    [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
+    NSDate *dateOfBirth = [dateFormatter dateFromString:[dateFormatter stringFromDate:picker.date]];
+    NSLog(@"%@", dateOfBirth);
 }
 
 @end

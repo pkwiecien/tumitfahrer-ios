@@ -13,7 +13,8 @@
 +(TimePickerCell *)timePickerCell {
     TimePickerCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"TimePickerCell" owner:self options:nil] objectAtIndex:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
+    cell.datePicker.timeZone = [NSTimeZone localTimeZone];
+    
     return cell;
 }
 
