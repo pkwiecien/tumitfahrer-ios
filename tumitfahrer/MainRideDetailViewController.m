@@ -47,6 +47,11 @@
     buttonBack.frame = CGRectMake(10, 25, 30, 30);
     [buttonBack setImage:[UIImage imageNamed:@"BackIcon"] forState:UIControlStateNormal];
     [buttonBack addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    
+    // set label for kif test
+    [buttonBack setAccessibilityLabel:@"Back Button"];
+    [buttonBack setIsAccessibilityElement:YES];
+    
     [self.view addSubview:buttonBack];
     
     UIButton *refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];

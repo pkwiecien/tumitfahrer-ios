@@ -70,6 +70,10 @@
 
 -(void)setupLeftMenuButton{
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
+    
+    // set label for kif test
+    [leftDrawerButton setAccessibilityLabel:@"Left Drawer Button"];
+    [leftDrawerButton setIsAccessibilityElement:YES];
     [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
     
     UIBarButtonItem *btnSearch = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchButtonPressed)];

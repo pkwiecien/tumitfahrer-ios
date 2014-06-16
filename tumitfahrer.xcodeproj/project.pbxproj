@@ -11,6 +11,9 @@
 		12849E718A644E04BCE4B00C /* libPods-UI Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 21C7515A720A4BD98246E980 /* libPods-UI Tests.a */; };
 		6E4E133C1913F7B300D0C453 /* XCTest+GCovFlush.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4E133B1913F7B300D0C453 /* XCTest+GCovFlush.m */; };
 		6E4E133F1913F7BF00D0C453 /* UIApplication+GCovFlush.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4E133E1913F7BF00D0C453 /* UIApplication+GCovFlush.m */; };
+		6E5DACA5194D9C9600694DE7 /* LoginTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E5DACA4194D9C9600694DE7 /* LoginTest.m */; };
+		6E5DACA8194DA42600694DE7 /* SettingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E5DACA7194DA42600694DE7 /* SettingTest.m */; };
+		6E5DACAB194DC81F00694DE7 /* AddRideTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E5DACAA194DC81F00694DE7 /* AddRideTest.m */; };
 		6EB5C89A191CEFDA0026A886 /* FacultyManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5C899191CEFDA0026A886 /* FacultyManagerTests.m */; };
 		6EB7C1A7192CFDCD004AD7F5 /* CoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB7C1A6192CFDCD004AD7F5 /* CoreDataHelper.m */; };
 		6EC837D2192605AE00007017 /* CurrentUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EC837D1192605AE00007017 /* CurrentUserTests.m */; };
@@ -257,6 +260,12 @@
 		6E4E133B1913F7B300D0C453 /* XCTest+GCovFlush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTest+GCovFlush.m"; sourceTree = "<group>"; };
 		6E4E133D1913F7BF00D0C453 /* UIApplication+GCovFlush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+GCovFlush.h"; sourceTree = "<group>"; };
 		6E4E133E1913F7BF00D0C453 /* UIApplication+GCovFlush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+GCovFlush.m"; sourceTree = "<group>"; };
+		6E5DACA3194D9C9600694DE7 /* LoginTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTest.h; sourceTree = "<group>"; };
+		6E5DACA4194D9C9600694DE7 /* LoginTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTest.m; sourceTree = "<group>"; };
+		6E5DACA6194DA42600694DE7 /* SettingTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingTest.h; sourceTree = "<group>"; };
+		6E5DACA7194DA42600694DE7 /* SettingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingTest.m; sourceTree = "<group>"; };
+		6E5DACA9194DC81F00694DE7 /* AddRideTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddRideTest.h; sourceTree = "<group>"; };
+		6E5DACAA194DC81F00694DE7 /* AddRideTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddRideTest.m; sourceTree = "<group>"; };
 		6EB5C899191CEFDA0026A886 /* FacultyManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacultyManagerTests.m; sourceTree = "<group>"; };
 		6EB7C1A5192CFDCD004AD7F5 /* CoreDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataHelper.h; sourceTree = "<group>"; };
 		6EB7C1A6192CFDCD004AD7F5 /* CoreDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataHelper.m; sourceTree = "<group>"; };
@@ -1057,6 +1066,12 @@
 			isa = PBXGroup;
 			children = (
 				E526B631194D97E0006D3527 /* Supporting Files */,
+				6E5DACA3194D9C9600694DE7 /* LoginTest.h */,
+				6E5DACA4194D9C9600694DE7 /* LoginTest.m */,
+				6E5DACA6194DA42600694DE7 /* SettingTest.h */,
+				6E5DACA7194DA42600694DE7 /* SettingTest.m */,
+				6E5DACA9194DC81F00694DE7 /* AddRideTest.h */,
+				6E5DACAA194DC81F00694DE7 /* AddRideTest.m */,
 			);
 			path = "UI Tests";
 			sourceTree = "<group>";
@@ -2055,6 +2070,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E5DACA8194DA42600694DE7 /* SettingTest.m in Sources */,
+				6E5DACAB194DC81F00694DE7 /* AddRideTest.m in Sources */,
+				6E5DACA5194D9C9600694DE7 /* LoginTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
