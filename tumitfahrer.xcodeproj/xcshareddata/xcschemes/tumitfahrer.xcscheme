@@ -24,7 +24,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E522BAB518AE13F600ECD375"
-               BuildableName = "TUMitfahrer.app"
+               BuildableName = "tumitfahrer.app"
                BlueprintName = "tumitfahrer"
                ReferencedContainer = "container:tumitfahrer.xcodeproj">
             </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E522BAB518AE13F600ECD375"
-            BuildableName = "TUMitfahrer.app"
+            BuildableName = "tumitfahrer.app"
             BlueprintName = "tumitfahrer"
             ReferencedContainer = "container:tumitfahrer.xcodeproj">
          </BuildableReference>
@@ -81,7 +81,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E522BAB518AE13F600ECD375"
-            BuildableName = "TUMitfahrer.app"
+            BuildableName = "tumitfahrer.app"
             BlueprintName = "tumitfahrer"
             ReferencedContainer = "container:tumitfahrer.xcodeproj">
          </BuildableReference>
@@ -99,7 +99,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E522BAB518AE13F600ECD375"
-            BuildableName = "TUMitfahrer.app"
+            BuildableName = "tumitfahrer.app"
             BlueprintName = "tumitfahrer"
             ReferencedContainer = "container:tumitfahrer.xcodeproj">
          </BuildableReference>

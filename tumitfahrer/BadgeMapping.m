@@ -15,9 +15,13 @@
     mapping.identificationAttributes = @[@"badgeId"];
     [mapping addAttributeMappingsFromDictionary:@{@"id": @"badgeId",
                                                   @"campus_badge" : @"campusBadge",
+                                                  @"campus_updated_at" : @"campusUpdatedAt",
                                                   @"activity_badge" : @"activityBadge",
+                                                  @"activity_updated_at" : @"activityUpdatedAt",
                                                   @"timeline_badge" : @"timelineBadge",
+                                                  @"timeline_updated_at" : @"timelineUpdatedAt",
                                                   @"my_rides_badge" : @"myRidesBadge",
+                                                  @"my_rides_updated_at" : @"myRidesUpdatedAt",
                                                   @"created_at" : @"createdAt"
                                                           }];
     

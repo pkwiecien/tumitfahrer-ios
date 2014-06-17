@@ -18,5 +18,9 @@
 @property (nonatomic, retain) NSNumber * activityBadge;
 @property (nonatomic, retain) NSNumber * myRidesBadge;
 @property (nonatomic, retain) NSDate * createdAt;
+@property (nonatomic, retain) NSDate * activityUpdatedAt;
+@property (nonatomic, retain) NSDate * campusUpdatedAt;
+@property (nonatomic, retain) NSDate * myRidesUpdatedAt;
+@property (nonatomic, retain) NSDate * timelineUpdatedAt;
 
 @end

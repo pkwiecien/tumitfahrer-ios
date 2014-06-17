@@ -8,11 +8,15 @@
     </entity>
     <entity name="Badge" representedClassName="Badge" syncable="YES">
         <attribute name="activityBadge" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="activityUpdatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="badgeId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="campusBadge" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="campusUpdatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="myRidesBadge" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="myRidesUpdatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="timelineBadge" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="timelineUpdatedAt" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
     <entity name="Conversation" representedClassName="Conversation" syncable="YES">
         <attribute name="conversationId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -118,6 +122,6 @@
         <element name="Ride" positionX="-279" positionY="-175" width="128" height="390"/>
         <element name="RideSearch" positionX="-72" positionY="-180" width="128" height="238"/>
         <element name="User" positionX="252" positionY="-40" width="128" height="313"/>
-        <element name="Badge" positionX="-72" positionY="-180" width="128" height="133"/>
+        <element name="Badge" positionX="-72" positionY="-180" width="128" height="193"/>
     </elements>
 </model>

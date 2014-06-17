@@ -17,5 +17,9 @@
 @dynamic activityBadge;
 @dynamic myRidesBadge;
 @dynamic createdAt;
+@dynamic activityUpdatedAt;
+@dynamic campusUpdatedAt;
+@dynamic myRidesUpdatedAt;
+@dynamic timelineUpdatedAt;
 
 @end

@@ -152,6 +152,9 @@
     [WebserviceRequest getBadgeCounterForUserId:[CurrentUser sharedInstance].user.userId block:^(Badge *badge) {
         if (badge != nil) {
             [self setCurrentBadge:badge];
+            if ([badge.myRidesBadge intValue] > 0 || [badge.campusBadge intValue] > 0 || [badge.activityBadge intValue] > 0 || [badge.timelineBadge intValue] > 0) {
+                [self.tableView reloadData];
+            }
         }
     }];
 }
@@ -205,7 +208,43 @@
         cell.contentView.backgroundColor = [UIColor lightestBlue];
     }
     
+    //badges
+    if (indexPath.section == 0 && indexPath.row == 0 && [self.badge.timelineBadge intValue] > 0) {
+        [self showBadgeForCell:&cell labelNumber:self.badge.timelineBadge];
+    } else {
+        [self hideBadgeForCell:&cell];
+    }
+    
+    if (indexPath.section == 1 && indexPath.row == 0 && [self.badge.campusBadge intValue] > 0) {
+        [self showBadgeForCell:&cell labelNumber:self.badge.campusBadge];
+    } else {
+        [self hideBadgeForCell:&cell];
+    }
+    
+    if (indexPath.section == 1 && indexPath.row == 1 && [self.badge.activityBadge intValue] > 0) {
+        [self showBadgeForCell:&cell labelNumber:self.badge.activityBadge];
+    } else {
+        [self hideBadgeForCell:&cell];
+    }
+    
+    if (indexPath.section == 3 && indexPath.row == 1 && [self.badge.myRidesBadge intValue] > 0) {
+        [self showBadgeForCell:&cell labelNumber:self.badge.myRidesBadge];
+    } else {
+        [self hideBadgeForCell:&cell];
+    }
+    
     return cell;
+}
+
+-(void)showBadgeForCell:(MenuTableViewCell **)cell labelNumber:(NSNumber *)labelNumber{
+    (*cell).badgeImageView.hidden = NO;
+    (*cell).badgeLabel.hidden = NO;
+    (*cell).badgeLabel.text = [NSString stringWithFormat:@"%@", labelNumber];
+}
+
+-(void)hideBadgeForCell:(MenuTableViewCell **)cell {
+    (*cell).badgeLabel.hidden = YES;
+    (*cell).badgeImageView.hidden = YES;
 }
 
 // avoid sticky header in the table

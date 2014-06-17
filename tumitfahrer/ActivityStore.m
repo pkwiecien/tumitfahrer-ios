@@ -14,6 +14,8 @@
 #import "CurrentUser.h"
 #import "RidesStore.h"
 #import "ActionManager.h"
+#import "BadgeUtilities.h"
+#import "Badge.h"
 #import <RestKit/RestKit.h>
 
 @interface ActivityStore () <NSFetchedResultsControllerDelegate>
@@ -213,6 +215,7 @@ static int activity_id = 0;
         if (activity != nil && (activity.rides.count > 0 || activity.rideSearches.count > 0 || activity.requests.count > 0)) {
             activity_id++;
         }
+        [BadgeUtilities updateTimelineDateInBadge:[ActionManager currentDate]];
         block(YES);
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);

@@ -18,6 +18,7 @@
 +(RKEntityMapping *)generalRideMapping {
     RKEntityMapping *rideMapping = [RKEntityMapping mappingForEntityForName:@"Ride" inManagedObjectStore:[[RKObjectManager sharedManager] managedObjectStore]];
     rideMapping.identificationAttributes = @[@"rideId"];
+    
     [rideMapping addAttributeMappingsFromDictionary:@{@"id": @"rideId",
                                                       @"departure_place": @"departurePlace",
                                                       @"destination": @"destination",

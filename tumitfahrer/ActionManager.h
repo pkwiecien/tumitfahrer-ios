@@ -32,6 +32,7 @@
 
 // current time in local time zone
 + (NSDate *)currentDate;
++ (NSDate *)localDateWithDate:(NSDate *)sourceDate;
 
 // validation
 +(BOOL)isValidEmail:(NSString *)checkString;

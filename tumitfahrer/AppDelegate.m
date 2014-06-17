@@ -177,8 +177,7 @@
     
     // register date formatter compliant with the date format in the backend
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
-    dateFormatter.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"CET"];
+    dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSSZZZZ";
     [[RKValueTransformer defaultValueTransformer] insertValueTransformer:dateFormatter atIndex:0];
     
     // add mappings to object manager

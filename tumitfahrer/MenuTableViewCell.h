@@ -13,5 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *iconMenuImageView;
 @property (weak, nonatomic) IBOutlet UILabel *menuLabel;
 @property (weak, nonatomic) IBOutlet UIView *selectedView;
+@property (weak, nonatomic) IBOutlet UILabel *badgeLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *badgeImageView;
 
 @end

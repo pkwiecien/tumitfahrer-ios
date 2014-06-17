@@ -15,6 +15,7 @@
 #import "Ride.h"
 #import "ActionManager.h"
 #import "Badge.h"
+#import "BadgeUtilities.h"
 
 @implementation WebserviceRequest
 
@@ -134,14 +135,26 @@
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
     // fetch last badge
-    Badge *badge = [self fetchLastBadgeDateFromCoreData];
+    Badge *badge = [BadgeUtilities fetchLastBadgeDateFromCoreData];
 
     NSMutableDictionary *requestParams = [[NSMutableDictionary alloc] init];
     [requestParams setValue:userId forKey:@"user_id"];
-    if (badge != nil && badge.createdAt != nil) {
-        [requestParams setValue:badge.createdAt forKey:@"last_check"];
+    if (badge != nil) {
+        if (badge.myRidesUpdatedAt != nil) {
+            
+            [requestParams setValue:[ActionManager localDateWithDate:badge.myRidesUpdatedAt] forKey:@"my_rides_updated_at"];
+        }
+        if (badge.campusUpdatedAt != nil) {
+            [requestParams setValue:[ActionManager localDateWithDate:badge.campusUpdatedAt] forKey:@"campus_updated_at"];
+        }
+        if (badge.activityUpdatedAt != nil) {
+            [requestParams setValue:[ActionManager localDateWithDate:badge.activityUpdatedAt] forKey:@"activity_updated_at"];
+        }
+        if (badge.timelineUpdatedAt != nil) {
+            [requestParams setValue:[ActionManager localDateWithDate:badge.timelineUpdatedAt] forKey:@"timeline_updated_at"];
+        }
     }
-
+    
     [objectManager getObjectsAtPath:API_ACTIVITIES_BADGES parameters:requestParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         Badge *badge = [mappingResult firstObject];
         if (badge != nil) {
@@ -154,31 +167,5 @@
         RKLogError(@"Load failed with error: %@", error);
     }];
 }
-
-// fetch all past rides
-+(Badge *)fetchLastBadgeDateFromCoreData {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *e = [NSEntityDescription entityForName:@"Badge"
-                                         inManagedObjectContext:[RKManagedObjectStore defaultStore].
-                              mainQueueManagedObjectContext];
-    NSPredicate *predicate;
-    predicate = [NSPredicate predicateWithFormat:@"badgeId = 0"];
-    [request setPredicate:predicate];
-    
-    request.entity = e;
-    
-    NSError *error;
-    NSArray *fetchedObjects = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:&error];
-    if (!fetchedObjects) {
-        [NSException raise:@"Fetch failed"
-                    format:@"Reason: %@", [error localizedDescription]];
-    }
-    
-    Badge *badge = [fetchedObjects firstObject];
-    
-    return badge;
-}
-
-
 
 @end
