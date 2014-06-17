@@ -6,6 +6,14 @@
         <relationship name="rides" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ride" inverseName="activities" inverseEntity="Ride" syncable="YES"/>
         <relationship name="rideSearches" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RideSearch" inverseName="activity" inverseEntity="RideSearch" syncable="YES"/>
     </entity>
+    <entity name="Badge" representedClassName="Badge" syncable="YES">
+        <attribute name="activityBadge" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="badgeId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="campusBadge" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="myRidesBadge" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="timelineBadge" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+    </entity>
     <entity name="Conversation" representedClassName="Conversation" syncable="YES">
         <attribute name="conversationId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="otherUserId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -110,5 +118,6 @@
         <element name="Ride" positionX="-279" positionY="-175" width="128" height="390"/>
         <element name="RideSearch" positionX="-72" positionY="-180" width="128" height="238"/>
         <element name="User" positionX="252" positionY="-40" width="128" height="313"/>
+        <element name="Badge" positionX="-72" positionY="-180" width="128" height="133"/>
     </elements>
 </model>

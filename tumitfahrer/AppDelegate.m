@@ -31,6 +31,7 @@
 #import "ConversationMapping.h"
 #import "MessageMapping.h"
 #import "SearchResultMapping.h"
+#import "BadgeMapping.h"
 
 @interface AppDelegate ()
 
@@ -56,7 +57,7 @@
     [self setupObservers];
     
     // Ubertersters SDK initialization
-    [[Ubertesters shared] initializeWithOptions:UTOptionsManual];
+    //[[Ubertesters shared] initializeWithOptions:UTOptionsManual];
     
     // Load the FBLoginView class (needed for login)
     [FBLoginView class];
@@ -176,7 +177,8 @@
     
     // register date formatter compliant with the date format in the backend
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZ";
+    dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss";
+    dateFormatter.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"CET"];
     [[RKValueTransformer defaultValueTransformer] insertValueTransformer:dateFormatter atIndex:0];
     
     // add mappings to object manager
@@ -236,6 +238,10 @@
     
     RKEntityMapping *getUserMapping =[UserMapping userMapping];
     [objectManager addResponseDescriptor:[UserMapping getUserResponseDescriptorWithMapping:getUserMapping]];
+    
+    RKEntityMapping *getBadgesMapping =[BadgeMapping badgeMapping];
+    [objectManager addResponseDescriptor:[BadgeMapping getBadgesResponseDescriptorWithMapping:getBadgesMapping]];
+    
 }
 
 -(void)setupObservers {

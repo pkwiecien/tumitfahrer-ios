@@ -14,6 +14,7 @@
 #import "Request.h"
 #import "Ride.h"
 #import "ActionManager.h"
+#import "Badge.h"
 
 @implementation WebserviceRequest
 
@@ -126,6 +127,56 @@
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         block(NO);
     }];
+}
+
++(void)getBadgeCounterForUserId:(NSNumber *)userId block:(badgeCompletionHandler)block{
+    
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    
+    // fetch last badge
+    Badge *badge = [self fetchLastBadgeDateFromCoreData];
+
+    NSMutableDictionary *requestParams = [[NSMutableDictionary alloc] init];
+    [requestParams setValue:userId forKey:@"user_id"];
+    if (badge != nil && badge.createdAt != nil) {
+        [requestParams setValue:badge.createdAt forKey:@"last_check"];
+    }
+
+    [objectManager getObjectsAtPath:API_ACTIVITIES_BADGES parameters:requestParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        Badge *badge = [mappingResult firstObject];
+        if (badge != nil) {
+            block(badge);
+        } else {
+            block(nil);
+        }
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        block(nil);
+        RKLogError(@"Load failed with error: %@", error);
+    }];
+}
+
+// fetch all past rides
++(Badge *)fetchLastBadgeDateFromCoreData {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *e = [NSEntityDescription entityForName:@"Badge"
+                                         inManagedObjectContext:[RKManagedObjectStore defaultStore].
+                              mainQueueManagedObjectContext];
+    NSPredicate *predicate;
+    predicate = [NSPredicate predicateWithFormat:@"badgeId = 0"];
+    [request setPredicate:predicate];
+    
+    request.entity = e;
+    
+    NSError *error;
+    NSArray *fetchedObjects = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:&error];
+    if (!fetchedObjects) {
+        [NSException raise:@"Fetch failed"
+                    format:@"Reason: %@", [error localizedDescription]];
+    }
+    
+    Badge *badge = [fetchedObjects firstObject];
+    
+    return badge;
 }
 
 

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class Conversation, Message, User, Request;
+@class Conversation, Message, User, Request, Badge;
 
 @interface WebserviceRequest : NSObject
 
@@ -16,7 +16,7 @@
 
 typedef void(^messageCompletionHandler)(Message *);
 typedef void(^userCompletionHandler)(User *);
-
+typedef void(^badgeCompletionHandler)(Badge *);
 
 +(void)postMessageForConversation:(Conversation *)conversation message:(NSString *)message senderId:(NSNumber *)senderId receiverId:(NSNumber *)receiverId rideId:(NSNumber *)rideId block:(messageCompletionHandler)block;
 
@@ -27,4 +27,5 @@ typedef void(^userCompletionHandler)(User *);
 +(void)removeRequestForRideId:(NSNumber *)rideId request:(Request *)request block:(boolCompletionHandler)block;
 +(void)getUserWithIdFromWebService:(NSNumber *)userId block:(userCompletionHandler)block;
 
++(void)getBadgeCounterForUserId:(NSNumber *)userId block:(badgeCompletionHandler)block;
 @end

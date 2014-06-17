@@ -20,6 +20,8 @@
 #import "TimelinePageViewController.h"
 #import "RidesPageViewController.h"
 #import "CircularImageView.h"
+#import "WebserviceRequest.h"
+#import "Badge.h"
 
 @interface MenuViewController ()
 
@@ -39,6 +41,7 @@
 @property NSArray *allMenuItems;
 @property NSArray *allViewControllers;
 @property NSArray *allIcons;
+@property Badge *badge;
 
 @end
 
@@ -138,10 +141,23 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self makeHeaderForTableView];
+    [self getBadges];
     
     // set initally first row selected
     //NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
     //[self.tableView selectRowAtIndexPath:indexPath animated:YES  scrollPosition:UITableViewScrollPositionBottom];
+}
+
+-(void)getBadges {
+    [WebserviceRequest getBadgeCounterForUserId:[CurrentUser sharedInstance].user.userId block:^(Badge *badge) {
+        if (badge != nil) {
+            [self setCurrentBadge:badge];
+        }
+    }];
+}
+
+-(void)setCurrentBadge:(Badge *)badge {
+    self.badge = badge;
 }
 
 #pragma mark - table view

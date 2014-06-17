@@ -63,6 +63,9 @@
 		E50DB29118F881BC00E87E62 /* PanoramioUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB29018F881BC00E87E62 /* PanoramioUtilities.m */; };
 		E50DB29418FA7A8800E87E62 /* FacultyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB29318FA7A8800E87E62 /* FacultyManager.m */; };
 		E50DB29818FA7D4100E87E62 /* Faculty.m in Sources */ = {isa = PBXBuildFile; fileRef = E50DB29718FA7D4100E87E62 /* Faculty.m */; };
+		E517DB511950210500961344 /* BadgeMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E517DB501950210500961344 /* BadgeMapping.m */; };
+		E517DB54195021E500961344 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E517DB53195021E500961344 /* User.m */; };
+		E517DB5D1950223E00961344 /* Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = E517DB5C1950223E00961344 /* Badge.m */; };
 		E51FD50218F0864C0098AD11 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E51FD50018F0864C0098AD11 /* ProfileViewController.m */; };
 		E51FD50318F0864C0098AD11 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E51FD50118F0864C0098AD11 /* ProfileViewController.xib */; };
 		E51FD50D18F3B6A00098AD11 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E51FD50C18F3B6A00098AD11 /* CoreData.framework */; };
@@ -86,7 +89,6 @@
 		E526B5AD194A488B006D3527 /* CustomIOS7AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = E526B5AC194A488B006D3527 /* CustomIOS7AlertView.m */; };
 		E526B5B1194AC8D9006D3527 /* EditDepartmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E526B5AF194AC8D9006D3527 /* EditDepartmentViewController.m */; };
 		E526B5B2194AC8D9006D3527 /* EditDepartmentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E526B5B0194AC8D9006D3527 /* EditDepartmentViewController.xib */; };
-		E526B5C4194AEDF0006D3527 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E526B5C3194AEDF0006D3527 /* User.m */; };
 		E526B5C6194B008F006D3527 /* HeaderLabelsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E526B5C5194B008F006D3527 /* HeaderLabelsView.xib */; };
 		E526B5C9194B16A0006D3527 /* Request.m in Sources */ = {isa = PBXBuildFile; fileRef = E526B5C8194B16A0006D3527 /* Request.m */; };
 		E526B5D4194C2A78006D3527 /* EmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E526B5D2194C2A78006D3527 /* EmptyCell.m */; };
@@ -351,6 +353,12 @@
 		E50DB29318FA7A8800E87E62 /* FacultyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacultyManager.m; sourceTree = "<group>"; };
 		E50DB29618FA7D4100E87E62 /* Faculty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Faculty.h; sourceTree = "<group>"; };
 		E50DB29718FA7D4100E87E62 /* Faculty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Faculty.m; sourceTree = "<group>"; };
+		E517DB4F1950210500961344 /* BadgeMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BadgeMapping.h; sourceTree = "<group>"; };
+		E517DB501950210500961344 /* BadgeMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BadgeMapping.m; sourceTree = "<group>"; };
+		E517DB52195021E500961344 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		E517DB53195021E500961344 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		E517DB5B1950223E00961344 /* Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Badge.h; sourceTree = "<group>"; };
+		E517DB5C1950223E00961344 /* Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Badge.m; sourceTree = "<group>"; };
 		E51FD4FF18F0864C0098AD11 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		E51FD50018F0864C0098AD11 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		E51FD50118F0864C0098AD11 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
@@ -384,8 +392,6 @@
 		E526B5AE194AC8D9006D3527 /* EditDepartmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditDepartmentViewController.h; sourceTree = "<group>"; };
 		E526B5AF194AC8D9006D3527 /* EditDepartmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDepartmentViewController.m; sourceTree = "<group>"; };
 		E526B5B0194AC8D9006D3527 /* EditDepartmentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditDepartmentViewController.xib; sourceTree = "<group>"; };
-		E526B5C2194AEDF0006D3527 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		E526B5C3194AEDF0006D3527 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		E526B5C5194B008F006D3527 /* HeaderLabelsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderLabelsView.xib; sourceTree = "<group>"; };
 		E526B5C7194B16A0006D3527 /* Request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Request.h; sourceTree = "<group>"; };
 		E526B5C8194B16A0006D3527 /* Request.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Request.m; sourceTree = "<group>"; };
@@ -788,6 +794,8 @@
 			children = (
 				E50CCCC3191F6FAC003A9490 /* ActivityMapping.h */,
 				E50CCCC4191F6FAC003A9490 /* ActivityMapping.m */,
+				E517DB4F1950210500961344 /* BadgeMapping.h */,
+				E517DB501950210500961344 /* BadgeMapping.m */,
 				E5FEF31B1944B5B200E326BB /* ConversationMapping.h */,
 				E5FEF31C1944B5B200E326BB /* ConversationMapping.m */,
 				E504D9EC190BCCE20036FFA8 /* DeviceMapping.h */,
@@ -1223,6 +1231,8 @@
 				E5FEF3771946299500E326BB /* Activity.m */,
 				E50CCCFC191F7C74003A9490 /* ActivityStore.h */,
 				E50CCCFD191F7C74003A9490 /* ActivityStore.m */,
+				E517DB5B1950223E00961344 /* Badge.h */,
+				E517DB5C1950223E00961344 /* Badge.m */,
 				E5FEF33F1944EDFD00E326BB /* Conversation.h */,
 				E5FEF3401944EDFD00E326BB /* Conversation.m */,
 				E50DB26918F447B800E87E62 /* CurrentUser.h */,
@@ -1233,16 +1243,16 @@
 				E5FEF32B1944C4AC00E326BB /* Message.m */,
 				E50CCCE7191F7256003A9490 /* Rating.h */,
 				E50CCCE8191F7256003A9490 /* Rating.m */,
+				E526B5C7194B16A0006D3527 /* Request.h */,
+				E526B5C8194B16A0006D3527 /* Request.m */,
+				E526B646194DD82A006D3527 /* Ride.h */,
+				E526B647194DD82A006D3527 /* Ride.m */,
 				E5FEF3701946181B00E326BB /* RideSearch.h */,
 				E5FEF3711946181B00E326BB /* RideSearch.m */,
 				E50DB28918F8730400E87E62 /* RidesStore.h */,
 				E50DB28A18F8730400E87E62 /* RidesStore.m */,
-				E526B646194DD82A006D3527 /* Ride.h */,
-				E526B647194DD82A006D3527 /* Ride.m */,
-				E526B5C7194B16A0006D3527 /* Request.h */,
-				E526B5C8194B16A0006D3527 /* Request.m */,
-				E526B5C2194AEDF0006D3527 /* User.h */,
-				E526B5C3194AEDF0006D3527 /* User.m */,
+				E517DB52195021E500961344 /* User.h */,
+				E517DB53195021E500961344 /* User.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1639,9 +1649,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E522BAB518AE13F600ECD375 /* TUMitfahrer */ = {
+		E522BAB518AE13F600ECD375 /* tumitfahrer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E522BAE818AE13F600ECD375 /* Build configuration list for PBXNativeTarget "TUMitfahrer" */;
+			buildConfigurationList = E522BAE818AE13F600ECD375 /* Build configuration list for PBXNativeTarget "tumitfahrer" */;
 			buildPhases = (
 				08AFFB74EA2F4AC190481684 /* Check Pods Manifest.lock */,
 				E522BAB218AE13F600ECD375 /* Sources */,
@@ -1654,7 +1664,7 @@
 			);
 			dependencies = (
 			);
-			name = TUMitfahrer;
+			name = tumitfahrer;
 			productName = tumitfahrer;
 			productReference = E522BAB618AE13F600ECD375 /* TUMitfahrer.app */;
 			productType = "com.apple.product-type.application";
@@ -1733,7 +1743,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E522BAB518AE13F600ECD375 /* TUMitfahrer */,
+				E522BAB518AE13F600ECD375 /* tumitfahrer */,
 				E522BAD618AE13F600ECD375 /* tumitfahrerTests */,
 				E526B62B194D97E0006D3527 /* UI Tests */,
 			);
@@ -1946,6 +1956,7 @@
 				E5FEF3901946F85100E326BB /* EditRequestViewController.m in Sources */,
 				E5FEF34B1944F93300E326BB /* ButtonCell.m in Sources */,
 				6E4E133F1913F7BF00D0C453 /* UIApplication+GCovFlush.m in Sources */,
+				E517DB511950210500961344 /* BadgeMapping.m in Sources */,
 				E5FC44D6190D30FF00E8DB65 /* MenuViewController.m in Sources */,
 				E50CCC14191E54F1003A9490 /* UIViewController+SideBarController.m in Sources */,
 				E526B624194CB644006D3527 /* RidePersonCell.m in Sources */,
@@ -1993,7 +2004,6 @@
 				E5FEF3681945E5CD00E326BB /* FeedbackViewController.m in Sources */,
 				E5FEF31D1944B5B200E326BB /* ConversationMapping.m in Sources */,
 				E5E215641907A95F00B0B150 /* SearchRideViewController.m in Sources */,
-				E526B5C4194AEDF0006D3527 /* User.m in Sources */,
 				E58889F51913E14A0062D0DF /* RideInformationCell.m in Sources */,
 				E5FEF36E1946005600E326BB /* TimePickerCell.m in Sources */,
 				E58B872A19151F1B0032524A /* KGStatusBar.m in Sources */,
@@ -2002,6 +2012,7 @@
 				E5FB4D5619191D0A006F4F5D /* CustomUILabel.m in Sources */,
 				E5FEF33D1944CEA500E326BB /* SimpleChatViewController.m in Sources */,
 				E5E2155F1907A94A00B0B150 /* AddRideViewController.m in Sources */,
+				E517DB54195021E500961344 /* User.m in Sources */,
 				E50CCD0C191FBD5A003A9490 /* RidesCell.m in Sources */,
 				E50DB29118F881BC00E87E62 /* PanoramioUtilities.m in Sources */,
 				E504D9EE190BCCE20036FFA8 /* DeviceMapping.m in Sources */,
@@ -2020,6 +2031,7 @@
 				E504D9EB190B963E0036FFA8 /* JsonParser.m in Sources */,
 				E58889E4191394BB0062D0DF /* HeaderImageView.m in Sources */,
 				E5FEF3631945E5BC00E326BB /* ReminderViewController.m in Sources */,
+				E517DB5D1950223E00961344 /* Badge.m in Sources */,
 				E5FD9ECD1923FA6C00902502 /* UIColor+LayoutColors.m in Sources */,
 				E59B9A4B1916A241008DE80B /* YourRidesViewController.m in Sources */,
 				E504D9D1190A7FC50036FFA8 /* SPGooglePlacesAutocompleteQuery.m in Sources */,
@@ -2081,12 +2093,12 @@
 /* Begin PBXTargetDependency section */
 		E522BADD18AE13F600ECD375 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E522BAB518AE13F600ECD375 /* TUMitfahrer */;
+			target = E522BAB518AE13F600ECD375 /* tumitfahrer */;
 			targetProxy = E522BADC18AE13F600ECD375 /* PBXContainerItemProxy */;
 		};
 		E526B63A194D97E0006D3527 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E522BAB518AE13F600ECD375 /* TUMitfahrer */;
+			target = E522BAB518AE13F600ECD375 /* tumitfahrer */;
 			targetProxy = E526B639194D97E0006D3527 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -2376,7 +2388,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E522BAE818AE13F600ECD375 /* Build configuration list for PBXNativeTarget "TUMitfahrer" */ = {
+		E522BAE818AE13F600ECD375 /* Build configuration list for PBXNativeTarget "tumitfahrer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E522BAE918AE13F600ECD375 /* Debug */,
