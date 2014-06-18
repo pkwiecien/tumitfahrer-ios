@@ -19,11 +19,11 @@
 #import "SearchRideViewController.h"
 #import "SegmentedControlCell.h"
 #import "KGStatusBar.h"
-#import "OwnerOfferViewController.h"
+#import "OwnerRequestViewController.h"
 #import "LocationController.h"
 #import "Ride.h"
 
-@interface EditRequestViewController () <NSFetchedResultsControllerDelegate, SementedControlCellDelegate>
+@interface EditRequestViewController () <NSFetchedResultsControllerDelegate, SegmentedControlCellDelegate>
 
 @property (nonatomic, assign) CLLocationCoordinate2D departureCoordinate;
 @property (nonatomic, assign) CLLocationCoordinate2D destinationCoordinate;
@@ -31,6 +31,7 @@
 @property (nonatomic, strong) NSMutableArray *tablePlaceholders;
 @property (nonatomic, strong) NSMutableArray *tableValues;
 @property (nonatomic, assign) ContentType RideType;
+@property (nonatomic, strong) CustomBarButton *saveButton;
 
 @end
 
@@ -55,8 +56,12 @@
 }
 
 -(void)initTables {
-    self.tableValues = [[NSMutableArray alloc] initWithObjects:self.ride.departurePlace, self.ride.destination, [ActionManager stringFromDate:self.ride.departureTime], @"", nil];
-    self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"Departure", @"Destination", @"Time", @"", nil];
+    NSString *meetingPoint = @"";
+    if (self.ride.meetingPoint != nil) {
+        meetingPoint = self.ride.meetingPoint;
+    }
+    self.tableValues = [[NSMutableArray alloc] initWithObjects:self.ride.departurePlace, self.ride.destination, [ActionManager stringFromDate:self.ride.departureTime], meetingPoint, @"", nil];
+    self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"Departure", @"Destination", @"Time", @"Meeting Point", @"", nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -69,12 +74,13 @@
     [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor lighterBlue]];
     
     // right button of the navigation bar
-    CustomBarButton *searchButton = [[CustomBarButton alloc] initWithTitle:@"Save"];
-    [searchButton addTarget:self action:@selector(addRideButtonPressed) forControlEvents:UIControlEventTouchDown];
-    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
+    self.saveButton = [[CustomBarButton alloc] initWithTitle:@"Save"];
+    [self.saveButton addTarget:self action:@selector(addRideButtonPressed) forControlEvents:UIControlEventTouchDown];
+    self.saveButton.enabled = YES;
+    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.saveButton];
     self.navigationItem.rightBarButtonItem = searchButtonItem;
     
-    self.title = @"Edit ride";
+    self.title = @"Edit request";
 }
 
 
@@ -140,26 +146,33 @@
 
 -(void)addRideButtonPressed {
     
-    
-    [ActionManager showAlertViewWithTitle:@"Under construction" description:@"I'm working on it right now :)"];
-    return;
+    self.saveButton.enabled = NO;
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
     NSDictionary *queryParams;
     // add enum
-    NSString *departurePlace = [self.tableValues objectAtIndex:1];
-    NSString *destination = [self.tableValues objectAtIndex:2];
-    NSString *departureTime = [self.tableValues objectAtIndex:3];
+    NSString *departurePlace = [self.tableValues objectAtIndex:0];
+    NSString *destination = [self.tableValues objectAtIndex:1];
+    NSString *departureTime = [self.tableValues objectAtIndex:2];
     
     if (!departurePlace || departurePlace.length == 0) {
         [ActionManager showAlertViewWithTitle:@"No departure time" description:@"To add a ride please specify the departure place"];
+        self.saveButton.enabled = YES;
         return;
     } else if(!destination || destination.length == 0) {
         [ActionManager showAlertViewWithTitle:@"No destination" description:@"To add a ride please specify the destination"];
+        self.saveButton.enabled = YES;
         return;
     } else if(!departureTime || departureTime.length == 0) {
         [ActionManager showAlertViewWithTitle:@"No departure time" description:@"To add a ride please specify the departure time"];
+        self.saveButton.enabled = YES;
+        return;
+    }
+    NSString *meetingPoint = [self.tableValues objectAtIndex:3];
+    if (meetingPoint == nil) {
+        [ActionManager showAlertViewWithTitle:@"No meeting place" description:@"To add a ride please specify the meeting place"];
+        self.saveButton.enabled = YES;
         return;
     }
     
@@ -172,27 +185,31 @@
     
     NSDictionary *rideParams = nil;
     
-    queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"ride_type": [NSNumber numberWithInt:self.RideType], @"is_driving": [NSNumber numberWithBool:NO]};
+    queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"ride_type": [NSNumber numberWithInt:self.RideType], @"is_driving": [NSNumber numberWithBool:NO],  @"meeting_point": meetingPoint};
     
     rideParams = @{@"ride": queryParams};
     
     [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"apiKey" value:[[CurrentUser sharedInstance] user].apiKey];
     
-    NSLog(@"user api key: %@", [CurrentUser sharedInstance].user.apiKey);
-    [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/users/%@/rides", [CurrentUser sharedInstance].user.userId] parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        Ride *ride = (Ride *)[mappingResult firstObject];
-        [[RidesStore sharedStore] addRideToStore:ride];
+    [objectManager putObject:nil path:[NSString stringWithFormat:@"/api/v2/users/%@/rides/%@", [CurrentUser sharedInstance].user.userId, self.ride.rideId] parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         
         self.tablePassengerValues = nil;
-        [KGStatusBar showSuccessWithStatus:@"Ride added"];
+        [KGStatusBar showSuccessWithStatus:@"Request saved"];
         
-        OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
-        rideDetailVC.ride = ride;
-        rideDetailVC.shouldGoBackEnum = GoBackToList;
+        self.ride.departurePlace = departurePlace;
+        self.ride.destination = destination;
+        self.ride.departureTime = [ActionManager dateFromString:departureTime];
+        self.ride.meetingPoint = meetingPoint;
+        [[RidesStore sharedStore] saveToPersistentStore:self.ride];
+        
+        OwnerRequestViewController *requestDetailVC = [[OwnerRequestViewController alloc] init];
+        requestDetailVC.ride = self.ride;
+        requestDetailVC.shouldGoBackEnum = GoBackToList;
         [self.navigationController popViewControllerAnimated:YES];
         
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [ActionManager showAlertViewWithTitle:@"Editing error" description:@"Could not save edit to database"];
+        self.saveButton.enabled = YES;
         RKLogError(@"Load failed with error: %@", error);
     }];
 }
@@ -228,10 +245,6 @@
     }
     [self.tableValues replaceObjectAtIndex:indexPath.row withObject:destination];
     
-}
-
--(void)stepperValueChanged:(NSInteger)stepperValue {
-    [self.tableValues replaceObjectAtIndex:4 withObject:[[NSNumber numberWithInt:(int)stepperValue] stringValue]];
 }
 
 #pragma mark - Button Handlers

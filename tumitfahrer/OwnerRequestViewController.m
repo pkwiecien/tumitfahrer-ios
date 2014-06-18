@@ -16,13 +16,13 @@
 #import "RideRequestInformationCell.h"
 #import "WebserviceRequest.h"
 #import "RideDetailActionCell.h"
+#import "EditRequestViewController.h"
 
 @interface OwnerRequestViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate>
 
 @end
 
 @implementation OwnerRequestViewController
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -38,7 +38,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-
+    
     self.headerViewLabel.text = [@"To " stringByAppendingString:self.ride.destination];
     self.headerTitles = [NSArray arrayWithObjects:@"Details", @"", nil];
 }
@@ -90,18 +90,14 @@
     
     generalCell.textLabel.text = @"Default cell";
     
-    
     if(indexPath.section == 0) {
-        
         RideRequestInformationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideRequestInformationCell"];
         if(cell == nil){
             cell = [RideRequestInformationCell rideRequestInformationCell];
         }
-        cell.requestInfoLabel.text = self.ride.departurePlace;
+        cell.requestInfoLabel.text = self.ride.meetingPoint;
         return cell;
-        
     } else {  // show delete button
-        
         RideDetailActionCell *actionCell = [RideDetailActionCell offerRideCell];
         [actionCell.actionButton setTitle:@"Delete ride" forState:UIControlStateNormal];
         [actionCell.actionButton addTarget:self action:@selector(deleteRideButtonPressed) forControlEvents:UIControlEventTouchDown];
@@ -127,6 +123,12 @@
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);
     }];
+}
+
+-(void)editButtonTapped {
+    EditRequestViewController *editRequestVC = [[EditRequestViewController alloc] init];
+    editRequestVC.ride = self.ride;
+    [self.navigationController pushViewController:editRequestVC animated:YES];
 }
 
 -(void)dealloc {

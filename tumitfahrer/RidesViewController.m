@@ -11,7 +11,6 @@
 #import "RidesCell.h"
 #import "HeaderImageView.h"
 #import "Ride.h"
-#import "OwnerOfferViewController.h"
 #import "NavigationBarUtilities.h"
 #import "ActionManager.h"
 #import "CurrentUser.h"

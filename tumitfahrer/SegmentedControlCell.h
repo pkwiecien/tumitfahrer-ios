@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol SementedControlCellDelegate
+@protocol SegmentedControlCellDelegate
 
 -(void)segmentedControlChangedToIndex:(NSInteger)index segmentedControlId:(NSInteger)controlId;
 
@@ -19,7 +19,7 @@
 +(SegmentedControlCell *)segmentedControlCell;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
-@property (nonatomic, strong) id <SementedControlCellDelegate> delegate;
+@property (nonatomic, strong) id <SegmentedControlCellDelegate> delegate;
 @property (nonatomic, strong) NSString *firstSegmentTitle;
 @property (nonatomic, strong) NSString *secondSegmentTitle;
 @property (nonatomic, assign) NSInteger controlId;

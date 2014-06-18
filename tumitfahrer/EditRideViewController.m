@@ -23,7 +23,7 @@
 #import "Ride.h"
 #import "HeaderContentView.h"
 
-@interface EditRideViewController () <SementedControlCellDelegate>
+@interface EditRideViewController () <SegmentedControlCellDelegate>
 
 @property (nonatomic, assign) CLLocationCoordinate2D departureCoordinate;
 @property (nonatomic, assign) CLLocationCoordinate2D destinationCoordinate;
@@ -31,7 +31,7 @@
 @property (nonatomic, strong) NSMutableArray *tablePlaceholders;
 @property (nonatomic, strong) NSMutableArray *tableValues;
 @property (nonatomic, assign) ContentType RideType;
-@property (nonatomic, strong) CustomBarButton *searchButton;
+@property (nonatomic, strong) CustomBarButton *saveButton;
 
 @end
 
@@ -81,10 +81,10 @@
     [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor lighterBlue]];
     
     // right button of the navigation bar
-    self.searchButton = [[CustomBarButton alloc] initWithTitle:@"Save"];
-    [self.searchButton addTarget:self action:@selector(saveButtonPressed) forControlEvents:UIControlEventTouchDown];
-    self.searchButton.enabled = YES;
-    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.searchButton];
+    self.saveButton = [[CustomBarButton alloc] initWithTitle:@"Save"];
+    [self.saveButton addTarget:self action:@selector(saveButtonPressed) forControlEvents:UIControlEventTouchDown];
+    self.saveButton.enabled = YES;
+    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.saveButton];
     self.navigationItem.rightBarButtonItem = searchButtonItem;
     
     self.title = @"Edit ride";
@@ -166,7 +166,7 @@
 
 -(void)saveButtonPressed {
     
-    self.searchButton.enabled = NO;
+    self.saveButton.enabled = NO;
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
     NSDictionary *queryParams;
@@ -177,12 +177,15 @@
     
     if (!departurePlace || departurePlace.length == 0) {
         [ActionManager showAlertViewWithTitle:@"No departure time" description:@"To add a ride please specify the departure place"];
+        self.saveButton.enabled = YES;
         return;
     } else if(!destination || destination.length == 0) {
         [ActionManager showAlertViewWithTitle:@"No destination" description:@"To add a ride please specify the destination"];
+        self.saveButton.enabled = YES;
         return;
     } else if(!departureTime || departureTime.length == 0) {
         [ActionManager showAlertViewWithTitle:@"No departure time" description:@"To add a ride please specify the departure time"];
+        self.saveButton.enabled = YES;
         return;
     }
     
@@ -204,7 +207,7 @@
         car = @"";
     }
     NSString *meetingPoint = [self.tableValues objectAtIndex:5];
-    if (!meetingPoint) {
+    if (meetingPoint == nil) {
         [ActionManager showAlertViewWithTitle:@"No meeting place" description:@"To add a ride please specify the meeting place"];
         return;
     }
@@ -215,8 +218,6 @@
     [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"apiKey" value:[[CurrentUser sharedInstance] user].apiKey];
     
     [objectManager putObject:self.ride path:[NSString stringWithFormat:@"/api/v2/users/%@/rides/%@", [CurrentUser sharedInstance].user.userId, self.ride.rideId] parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-
-        self.searchButton.enabled = YES;
 
         // put return no content (according to HTTP spec), so to update a ride we need to do another get request or update params manually
         self.ride.departurePlace = departurePlace;
@@ -236,7 +237,7 @@
         rideDetailVC.ride = self.ride;
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        self.searchButton.enabled = YES;
+        self.saveButton.enabled = YES;
         [ActionManager showAlertViewWithTitle:@"Could not update" description:@"There was an error while updating your ride"];
         RKLogError(@"Load failed with error: %@", error);
     }];

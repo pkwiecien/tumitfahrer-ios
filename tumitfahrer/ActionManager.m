@@ -149,6 +149,14 @@
     return stringFromDate;
 }
 
++ (NSString *)webserviceStringFromDate:(NSDate *)date {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZ"];
+    [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"de_DE"]];
+    NSString *time = [formatter stringFromDate:date];
+    return time;
+}
+
 + (NSDate *)dateFromString:(NSString *)stringDate {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];

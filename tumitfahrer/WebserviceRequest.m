@@ -139,10 +139,12 @@
 
     NSMutableDictionary *requestParams = [[NSMutableDictionary alloc] init];
     [requestParams setValue:userId forKey:@"user_id"];
+    
+   
     if (badge != nil) {
         if (badge.myRidesUpdatedAt != nil) {
-            
-            [requestParams setValue:badge.myRidesUpdatedAt forKey:@"my_rides_updated_at"];
+            NSString *date = [ActionManager webserviceStringFromDate:badge.myRidesUpdatedAt];
+            [requestParams setValue:date forKey:@"my_rides_updated_at"];
         }
         if (badge.campusUpdatedAt != nil) {
             [requestParams setValue:badge.campusUpdatedAt forKey:@"campus_updated_at"];

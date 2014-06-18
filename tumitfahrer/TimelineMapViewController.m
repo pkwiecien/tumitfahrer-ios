@@ -13,10 +13,10 @@
 #import "ActivityStore.h"
 #import "Ride.h"
 #import "ActionManager.h"
-#import "OwnerOfferViewController.h"
 #import "Request.h"
 #import "RidesStore.h"
 #import "RideSearch.h"
+#import "ControllerUtilities.h"
 
 @interface TimelineMapViewController ()
 
@@ -207,24 +207,21 @@ typedef enum {
     CustomAnnotation *result = (CustomAnnotation *)[[self.mapView selectedAnnotations] firstObject];
     
     if ([result.annotationObject isKindOfClass:[Ride class]]) {
-        OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
-        rideDetailVC.ride = (Ride *)result.annotationObject;
-        [self.navigationController pushViewController:rideDetailVC animated:YES];
+        UIViewController *vc = [ControllerUtilities viewControllerForRide:result.annotationObject];
+        [self.navigationController pushViewController:vc animated:YES];
     } else if([result.annotationObject isKindOfClass:[Request class]]) {
         Request *res = (Request *)result.annotationObject;
         Ride *ride = [[RidesStore sharedStore] containsRideWithId:res.rideId];
         if (ride != nil) {
             res.requestedRide = ride;
-            OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
-            rideDetailVC.ride = ride;
-            [self.navigationController pushViewController:rideDetailVC animated:YES];
+            UIViewController *vc = [ControllerUtilities viewControllerForRide:ride];
+            [self.navigationController pushViewController:vc animated:YES];
         } else {
             [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:res.rideId block:^(BOOL completed) {
                 if(completed) {
-                    OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
                     Ride *ride = [[RidesStore sharedStore] fetchRideFromCoreDataWithId:res.rideId];
-                    rideDetailVC.ride = ride;
-                    [self.navigationController pushViewController:rideDetailVC animated:YES];
+                    UIViewController *vc = [ControllerUtilities viewControllerForRide:ride];
+                    [self.navigationController pushViewController:vc animated:YES];
                 }
             }];
         }

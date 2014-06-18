@@ -21,7 +21,7 @@
 #import "OwnerOfferViewController.h"
 #import "OwnerRequestViewController.h"
 
-@interface AddRideViewController () <SementedControlCellDelegate, SwitchTableViewCellDelegate>
+@interface AddRideViewController () <SegmentedControlCellDelegate, SwitchTableViewCellDelegate>
 
 @property (nonatomic, strong) CustomBarButton *btnAdd;
 @property (nonatomic, assign) CLLocationCoordinate2D departureCoordinate;

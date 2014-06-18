@@ -18,7 +18,7 @@
 #import "DestinationViewController.h"
 #import "SearchResultViewController.h"
 
-@interface SearchRideViewController () <SementedControlCellDelegate, DestinationViewControllerDelegate, RMDateSelectionViewControllerDelegate, SliderCellDelegate, ButtonCellDelegate>
+@interface SearchRideViewController () <SegmentedControlCellDelegate, DestinationViewControllerDelegate, RMDateSelectionViewControllerDelegate, SliderCellDelegate, ButtonCellDelegate>
 
 @property (nonatomic) UIColor *customGrayColor;
 @property (nonatomic, assign) NSInteger searchType;
