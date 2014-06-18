@@ -64,8 +64,13 @@
         }
     }
     [self checkIfAllRidesExist];
-    [self.tableView reloadData];
     [self setupNavigationBar];
+    [self reloadTable];
+}
+
+-(void)reloadTable {
+    [self.tableView reloadData];
+    [self checkIfZeroRides];
 }
 
 -(void)checkIfAllRidesExist {
@@ -74,6 +79,16 @@
         if ([[RidesStore sharedStore] fetchRideFromCoreDataWithId:ride.rideId] == nil) {
             [self.searchResults removeObject:ride];
         }
+    }
+}
+
+-(void)checkIfZeroRides {
+    if (self.searchResults.count > 0) {
+        self.zeroRidesLabel.hidden = YES;
+        [self.zeroRidesLabel removeFromSuperview];
+    } else {
+        [self.view addSubview:self.zeroRidesLabel];
+        self.zeroRidesLabel.hidden = NO;
     }
 }
 
@@ -107,33 +122,21 @@
 }
 
 -(void)addSearchResults:(NSArray *)newRides {
-    if (newRides.count == 0) {
-        [self.view addSubview:self.zeroRidesLabel];
-        self.zeroRidesLabel.hidden = NO;
-        return;
-    } else {
-        self.zeroRidesLabel.hidden = YES;
-        [self.zeroRidesLabel removeFromSuperview];
-        
-        for (Ride *ride in newRides) {
-            if ([self.searchResults containsObject:ride]) {
-                continue;
-            }
-            
-            [self.searchResults addObject:ride];
-            if (ride.destinationImage == nil || ride.departureLatitude == 0 || ride.destinationLatitude == 0) {
-                [RidesStore initRide:ride index:(self.searchResults.count-1) block:^(NSInteger index) {
-                    [self reloadTable];
-                }];
-            }
+    
+    for (Ride *ride in newRides) {
+        if ([self.searchResults containsObject:ride]) {
+            continue;
         }
         
-        [self reloadTable];
+        [self.searchResults addObject:ride];
+        if (ride.destinationImage == nil || ride.departureLatitude == 0 || ride.destinationLatitude == 0) {
+            [RidesStore initRide:ride index:(self.searchResults.count-1) block:^(NSInteger index) {
+                [self reloadTable];
+            }];
+        }
     }
-}
-
--(void)reloadTable {
-    [self.tableView reloadData];
+    
+    [self reloadTable];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -208,7 +211,7 @@
 #pragma mark - Observers Handlers
 
 -(void)didReceivePhotoForRide:(NSNumber *)rideId {
-    [self.tableView reloadData];
+    [self reloadTable];
 }
 
 -(void)didReceivePhotoForCurrentLocation:(UIImage *)image {

@@ -131,6 +131,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     if(indexPath.row == 1 || indexPath.row == 3) {
         DestinationViewController *destinationVC = [[DestinationViewController alloc] init];
         destinationVC.rideTableIndexPath = indexPath;
@@ -164,14 +165,12 @@
         [ActionManager showAlertViewWithTitle:@"Invalid search" description:@"Please specify departure and destination place"];
         return;
     }
-    NSString *time = @"";
+    NSDate *date = nil;
     if (departureTime != nil && departureTime.length > 0) {
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
         [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"de_DE"]];
-        NSDate *dateString = [formatter dateFromString:departureTime];
-        [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
-        time = [formatter stringFromDate:dateString];
+        date = [formatter dateFromString:departureTime];
     }
     
     if (departurePlace.length == 0 && destination.length == 0 && departureTime.length == 0) {
@@ -179,7 +178,15 @@
         return;
     }
     
-    NSDictionary *queryParams = @{@"departure_place": departurePlace, @"departure_place_threshold" : departurePlaceThreshold, @"destination": destination, @"destination_threshold":destinationThreshold, @"departure_time": time, @"ride_type": [NSNumber numberWithBool:self.searchType]};
+    NSMutableDictionary *queryParams = [[NSMutableDictionary alloc] init];
+    [queryParams setValue:departurePlace forKey:@"departure_place"];
+    [queryParams setValue:departurePlaceThreshold forKey:@"departure_place_threshold"];
+    [queryParams setValue:destination forKey:@"destination"];
+    [queryParams setValue:destinationThreshold forKey:@"destination_threshold"];
+    [queryParams setValue:[NSNumber numberWithBool:self.searchType] forKey:@"ride_type"];
+    if (date != nil) {
+        [queryParams setValue:date forKey:@"departure_time"];
+    }
     
     SearchResultViewController *searchResultVC = [[SearchResultViewController alloc] init];
     searchResultVC.queryParams = queryParams;

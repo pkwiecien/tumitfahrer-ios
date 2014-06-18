@@ -33,9 +33,13 @@
         float centerX = (self.view.frame.size.width - cUIElementWidth)/2;
         UIImage *emailWhiteIcon = [ActionManager colorImage:[UIImage imageNamed:@"EmailIconBlack"] withColor:[UIColor whiteColor]];
         self.emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIcon:emailWhiteIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeEmailAddress shouldStartWithCapital:NO];
+        self.emailTextField.tag = 10;
+        self.emailTextField.delegate = self;
         
         UIImage *passwordWhiteIcon = [ActionManager colorImage:[UIImage imageNamed:@"PasswordIconBlack"] withColor:[UIColor whiteColor]];
         self.passwordTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop+self.emailTextField.frame.size.height + cUIElementPadding, cUIElementWidth, cUIElementHeight) placeholderText:@"Your password" customIcon:passwordWhiteIcon returnKeyType:UIReturnKeyDone keyboardType:UIKeyboardTypeDefault secureInput:YES];
+        self.passwordTextField.tag = 11;
+        self.passwordTextField.delegate = self;
         
         [self.view addSubview:self.emailTextField];
         [self.view addSubview:self.passwordTextField];
@@ -167,6 +171,25 @@
 
 - (IBAction)dismissKeyboard:(id)sender {
     [self.view endEditing:YES];
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSInteger nextTag = textField.tag + 1;
+    //try to find next responder
+    CustomTextField *nextTextField = (CustomTextField *)[self.view viewWithTag:nextTag];
+    
+    if (nextTextField) {
+        // found next responce ,so set it
+        [nextTextField becomeFirstResponder];
+    }
+    else {
+        // not found remove keyboard
+        [textField resignFirstResponder];
+        return YES;
+    }
+    
+    return YES;
 }
 
 - (IBAction)showIntroButtonPressed:(id)sender {
