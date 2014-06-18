@@ -38,10 +38,7 @@
     
     [[PanoramioUtilities sharedInstance] addObserver:self];
     [[RidesStore sharedStore] addObserver:self];
-    
     [self.view setBackgroundColor:[UIColor customLightGray]];
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
-    self.tableView.tableFooterView = footerView;
     
     self.passengerIcon = [ActionManager colorImage:[UIImage imageNamed:@"PassengerIcon"] withColor:[UIColor customLightGray]];
     self.driverIcon =  [ActionManager colorImage:[UIImage imageNamed:@"DriverIcon"] withColor:[UIColor customLightGray]];
@@ -102,7 +99,6 @@
     
     UINavigationController *navController = self.navigationController;
     [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor darkestBlue]];
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
 -(void)fetchResults {
@@ -220,6 +216,12 @@
 
 -(void)loadNewElements {
     
+}
+
+-(void)dealloc {
+    
+    [[PanoramioUtilities sharedInstance] removeObserver:self];
+    [[RidesStore sharedStore] removeObserver:self];
 }
 
 @end
