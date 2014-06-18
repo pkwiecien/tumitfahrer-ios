@@ -132,7 +132,7 @@
         [self storeCurrentUserInDefaults];
         [self dismissViewControllerAnimated:YES completion:nil];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        [ActionManager showAlertViewWithTitle:@"Invalid email/password" description:@"Could not authenticate, please check your credentials."];
+        [ActionManager showAlertViewWithTitle:@"Invalid email/password" description:@"Could not login, please check your email and password."];
         RKLogError(@"Load failed with error: %@", error);
     }];
 }

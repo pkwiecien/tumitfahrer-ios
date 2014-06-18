@@ -42,27 +42,12 @@
         [self.view addSubview:self.firstNameTextField];
         [self.view addSubview:self.lastNameTextField];
         [self.view addSubview:self.departmentNameTextField];
-        [self.view addSubview:self.pickerView];
-
-        self.alertView  = [[CustomIOS7AlertView alloc] init];
-
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self.alertView setContainerView:[self createPickerView]];
-    
-    // Modify the parameters
-    [self.alertView setButtonTitles:[NSMutableArray arrayWithObjects:@"Close", @"Select", nil]];
-    [self.alertView setDelegate:self];
-    [self.alertView setUseMotionEffects:true];
-}
-
--(void)viewWillAppear:(BOOL)animated {
-    self.pickerView.hidden = YES;
 }
 
 - (void)prepareInputFields {
@@ -70,16 +55,17 @@
     float centerX = (self.view.frame.size.width - cUIElementWidth)/2;
     UIImage *emailIcon = [ActionManager colorImage:[UIImage imageNamed:@"EmailIconBlack"] withColor:[UIColor whiteColor]];
     self.emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIcon:emailIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeEmailAddress shouldStartWithCapital:NO];
+    self.emailTextField.tag = 10;
+    self.emailTextField.delegate = self;
     
     UIImage *profileIcon = [ActionManager colorImage:[UIImage imageNamed:@"ProfileIcon"] withColor:[UIColor whiteColor]];
     self.firstNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop + cUIElementPadding + self.emailTextField.frame.size.height, cUIElementWidth, cUIElementHeight) placeholderText:@"First name" customIcon:profileIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeDefault shouldStartWithCapital:YES];
+    self.firstNameTextField.tag = 11;
+    self.firstNameTextField.delegate = self;
     
     self.lastNameTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop + cUIElementPadding*2 + self.emailTextField.frame.size.height*2, cUIElementWidth, cUIElementHeight) placeholderText:@"Last name" customIcon:profileIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeDefault shouldStartWithCapital:YES];
-    
-    
-    [self.emailTextField addTarget:self action:@selector(hidePickerView) forControlEvents:UIControlEventAllTouchEvents];
-    [self.firstNameTextField addTarget:self action:@selector(hidePickerView) forControlEvents:UIControlEventAllTouchEvents];
-    [self.lastNameTextField addTarget:self action:@selector(hidePickerView) forControlEvents:UIControlEventAllTouchEvents];
+    self.lastNameTextField.tag = 12;
+    self.lastNameTextField.delegate = self;
     
     UIImage *campusIcon = [ActionManager colorImage:[UIImage imageNamed:@"CampusIcon"] withColor:[UIColor whiteColor]];
     self.departmentNameTextField = [[CustomTextField alloc] initNotEditableButton:CGRectMake(centerX,cMarginTop + cUIElementPadding*3 + self.emailTextField.frame.size.height*3, cUIElementWidth, cUIElementHeight) placeholderText:@"Department" customIcon:campusIcon];
@@ -90,7 +76,6 @@
     NSString *email = [[self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *firstName = [[self.firstNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *lastName = [[self.lastNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
     
     if (email.length < 6 || firstName.length < 3 || lastName.length < 2 ) {
         [ActionManager showAlertViewWithTitle:@"Invalid input" description:@"Input "];
@@ -105,7 +90,7 @@
     
     NSDictionary *queryParams;
     // add enum
-    queryParams = @{@"email": self.emailTextField.text, @"first_name": self.firstNameTextField.text, @"last_name":self.lastNameTextField.text, @"department": @"1"};
+    queryParams = @{@"email": self.emailTextField.text, @"first_name": self.firstNameTextField.text, @"last_name":self.lastNameTextField.text, @"department": [NSNumber numberWithInt:[[FacultyManager sharedInstance] indexForFacultyName:self.departmentNameTextField.text]]};
     NSDictionary *userParams = @{@"user": queryParams};
     
     [objectManager postObject:nil path:@"/api/v2/users" parameters:userParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
@@ -126,7 +111,13 @@
 
 - (void)showDepartmentPickerView {
     [self.view endEditing:YES];
-    self.pickerView.hidden = !self.pickerView.hidden;
+    
+    CustomIOS7AlertView *alertView = [[CustomIOS7AlertView alloc] init];
+    [alertView setContainerView:[self preparePickerView]];
+    [alertView setButtonTitles:[NSMutableArray arrayWithObjects:@"Cancel", @"Select", nil]];
+    [alertView setDelegate:self];
+    [alertView setUseMotionEffects:false];
+    [alertView show];
 }
 
 - (IBAction)backToLoginButtonPressed:(id)sender {
@@ -134,23 +125,15 @@
 }
 
 - (IBAction)dismissKeyboard:(id)sender {
-    self.pickerView.hidden = YES;
     [self.view endEditing:YES];
 }
 
--(void)preparePickerView {
-    self.pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 440, self.view.frame.size.width, 80)];
+-(UIPickerView *)preparePickerView {
+    self.pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, 290, 200)];
     self.pickerView.delegate = self;
     self.pickerView.dataSource = self;
-    self.pickerView.backgroundColor = [UIColor colorWithRed:70 green:30 blue:180 alpha:0.6];
-}
-
--(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
-    return true;
-}
-
-- (void)hidePickerView {
-    self.pickerView.hidden = YES;
+    [self.pickerView selectRow:[[FacultyManager sharedInstance] indexForFacultyName:self.departmentNameTextField.text] inComponent:0 animated:NO];
+    return self.pickerView;
 }
 
 #pragma mark - picker view delegates
@@ -175,40 +158,26 @@
     return 35.0f;
 }
 
-- (UIView *)createPickerView {
-    UIView *demoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 290, 200)];
-    demoView.backgroundColor = [UIColor greenColor];
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSInteger nextTag = textField.tag + 1;
+    //try to find next responder
+    CustomTextField *nextTextField = (CustomTextField *)[self.view viewWithTag:nextTag];
     
-    return demoView;
+    if (nextTextField) {
+        // found next responce ,so set it
+        [nextTextField becomeFirstResponder];
+    }
+    else {
+        // not found remove keyboard
+        [textField resignFirstResponder];
+        return YES;
+    }
+    
+    return YES;
 }
 
-
-//-(BOOL)textFieldShouldReturn:(UITextField *)textField
-//{
-//    NSInteger nextTag = textField.tag + 1;
-//    //-- try to find next responde
-//    UIResponder* nextResponder = [textField.superview viewWithTag:nextTag];
-//    
-//    if (nextResponder)
-//    {
-//        //-- found next responce ,so set it
-//        [nextResponder becomeFirstResponder];
-//    }
-//    else
-//    {
-//        [scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-//        //-- not found remove keyboard
-//        [textField resignFirstResponder];
-//        return YES;
-//    }
-//    
-//    return YES;
-//}
-
 -(void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        
-    }
     [alertView close];
 }
 

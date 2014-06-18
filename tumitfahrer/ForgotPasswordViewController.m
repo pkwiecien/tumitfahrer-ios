@@ -69,7 +69,7 @@
         } else {
             NSLog(@"Password reminder sent successfully");
             LoginViewController *loginVC = (LoginViewController*)self.presentingViewController;
-            loginVC.statusLabel.text = @"Password sent to your email address";
+            loginVC.statusLabel.text = @"Please check your email";
             [self backToLoginButtonPressed:nil];
         }
     }];

@@ -64,4 +64,15 @@
     return faculty.name;
 }
 
+
+-(NSInteger)indexForFacultyName:(NSString *)name {
+    int index = 0;
+    for (Faculty *faculty in self.facultyArray) {
+        if ([faculty.name isEqualToString:name]) {
+            return index;
+        }
+        index++;
+    }
+    return 0;
+}
 @end

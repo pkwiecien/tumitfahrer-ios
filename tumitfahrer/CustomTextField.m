@@ -52,11 +52,7 @@
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
         imageView.image = customIcon;
-        
-        /*UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(1, 1, 60, 25)];
-         [lbl setText:@"Partenza:"];
-         [lbl setFont:[UIFont fontWithName:@"Verdana" size:12]];
-         [lblselfsetTextColor:[UIColor grayColor]];*/
+    
         self.leftView = imageView;
         self.leftViewMode = UITextFieldViewModeAlways;
         self.delegate = self;

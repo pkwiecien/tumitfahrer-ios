@@ -14,5 +14,6 @@
 
 - (NSArray *)allFaculties;
 - (NSString *)nameOfFacultyAtIndex:(NSInteger)index;
+- (NSInteger)indexForFacultyName:(NSString *)name;
 
 @end
