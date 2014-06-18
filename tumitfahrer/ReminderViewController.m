@@ -10,10 +10,12 @@
 #import "SwitchTableViewCell.h"
 #import "TimePickerCell.h"
 #import "DescriptionCell.h"
+#import "ActionManager.h"
 
 @interface ReminderViewController () <SwitchTableViewCellDelegate>
 
 @property BOOL reminderValue;
+
 @end
 
 @implementation ReminderViewController
@@ -27,6 +29,7 @@
     self.tableView.tableHeaderView = headerView;
     NSNumber *reminder = [[NSUserDefaults standardUserDefaults] valueForKey:@"reminder"];
     self.reminderValue = [reminder boolValue];
+    self.tableView.allowsSelection = NO;
 }
 
 
@@ -75,11 +78,36 @@
         if (cell == nil) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"TimePickerCell" owner:self options:nil] firstObject];
         }
+
+        [self checkIfDateDefaultsExistForCell:(&cell)];
+        cell.datePicker.userInteractionEnabled = self.reminderValue;
+        if (!self.reminderValue) {
+            [cell.datePicker setAlpha:.6];
+        } else {
+            [cell.datePicker setAlpha:1.0];
+        }
         [cell.datePicker addTarget:self action:@selector(pickerViewChanged:) forControlEvents:UIControlEventValueChanged];
         return cell;
     }
     
     return cell;
+}
+
+-(void)checkIfDateDefaultsExistForCell:(TimePickerCell **)cell {
+    (*cell).datePicker.date;
+    NSNumber *hour = [[NSUserDefaults standardUserDefaults] valueForKey:@"reminderHour"];
+    NSNumber *minute = [[NSUserDefaults standardUserDefaults] valueForKey:@"reminderMinute"];
+    if (hour && minute) {
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit)
+                                                   fromDate:[NSDate date]];
+        components.timeZone = [NSTimeZone localTimeZone];
+        [components setCalendar:calendar];
+        components.hour = [hour intValue];
+        components.minute = [minute intValue];
+
+        (*cell).datePicker.date = [components date];
+    }
 }
 
 
@@ -93,17 +121,23 @@
 }
 
 -(void)switchChangedToStatus:(BOOL)status switchId:(NSInteger)switchId {
+    self.reminderValue = status;
     [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:status] forKey:@"reminder"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [self.tableView reloadData];
 }
 
 - (void) pickerViewChanged:(id)sender {
+    
     UIDatePicker *picker=(UIDatePicker*)sender;
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd 'at' HH:mm:ss"];
-    [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
-    NSDate *dateOfBirth = [dateFormatter dateFromString:[dateFormatter stringFromDate:picker.date]];
-    NSLog(@"%@", dateOfBirth);
+    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
+
+    NSDateComponents *timeComponents = [calendar components:( NSHourCalendarUnit | NSMinuteCalendarUnit ) fromDate:picker.date];
+    NSInteger minutes = timeComponents.minute;
+    NSInteger hour = timeComponents.hour;
+    [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithInt:hour] forKey:@"reminderHour"];
+    [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithInt:minutes] forKey:@"reminderMinute"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

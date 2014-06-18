@@ -112,7 +112,7 @@
     
     CustomIOS7AlertView *alertView = [[CustomIOS7AlertView alloc] init];
     [alertView setContainerView:[self preparePickerView]];
-    [alertView setButtonTitles:[NSMutableArray arrayWithObjects:@"Cancel", @"Select", nil]];
+    [alertView setButtonTitles:[NSMutableArray arrayWithObjects:@"Select", nil]];
     [alertView setDelegate:self];
     [alertView setUseMotionEffects:false];
     [alertView show];
@@ -176,7 +176,7 @@
 }
 
 -(void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
+    if (buttonIndex == 0) {
         if ([self.departmentNameTextField.text isEqualToString:@""]) {
             self.departmentNameTextField.text = [[FacultyManager sharedInstance] nameOfFacultyAtIndex:0];
         }

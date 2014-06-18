@@ -11,6 +11,7 @@
 @interface FeedbackViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @property (weak, nonatomic) IBOutlet UITextView *contentTextView;
 - (IBAction)sendButtonPressed:(id)sender;
 - (IBAction)dismissKeyboard:(id)sender;

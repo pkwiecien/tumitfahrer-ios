@@ -41,28 +41,34 @@
 
 +(UIView *)prepareIntroForView:(UIView *)view {
     // first intro page
-    EAIntroPage *page1 = [EAIntroPage page];
-    page1.title = @"Hello world";
-    page1.titlePositionY = 220;
-    page1.desc = @"this is sampe description";
-    page1.descPositionY = 200;
-    page1.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CircleBlue"]];
-    page1.titleIconPositionY = 100;
-    page1.bgImage = [ActionManager imageWithColor:[[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"TweedPattern"]]];
     
-    // second intro page
-    EAIntroPage *page2 = [EAIntroPage page];
-    page2.title = @"This is page 2";
-    page2.titlePositionY = 220;
-    page2.desc = @"this is sampel description";
-    page2.descPositionY = 200;
-    page2.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CircleBlue"]];
-    page2.titleIconPositionY = 100;
-    page2.bgImage = [ActionManager imageWithColor:[[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"TweedPattern"]]];
+    EAIntroPage *page1 = [self introPageWithTitle:@"Need ride to the uni?" descriptionText:@"Search for a ride to your campus and join fellow students going to the uni by car. Travel in a nice student atmosphere." logo:[UIImage imageNamed:@"CampusIntroIcon"]];
     
+    EAIntroPage *page2 = [self introPageWithTitle:@"Looking for weekend ideas?" descriptionText:@"Join activity rides and enjoy cool trip to IKEA, nearby lake or a hiking trip in the mountains." logo:[UIImage imageNamed:@"ActivityIntroIcon"]];
     
-    EAIntroView *intro = [[EAIntroView alloc] initWithFrame:view.bounds andPages:@[page1, page2]];
+    EAIntroPage *page3 = [self introPageWithTitle:@"Have free seats in your car?" descriptionText:@"Create a ride and share travel expenses between all people." logo:[UIImage imageNamed:@"SeatsIntroIcon"]];
+    
+    EAIntroPage *page4 = [self introPageWithTitle:@"Don't have a car" descriptionText:@"Request a ride offer. Fellow students will pick you up. Enojoy the car ride" logo:[UIImage imageNamed:@"PassengerIntroIcon"]];
+    
+    EAIntroPage *page5 = [self introPageWithTitle:@"Be social" descriptionText:@"Stay informed about current rides via timeline. Let know your TUM friends about your rides via facebook" logo:[UIImage imageNamed:@"ShareIntroIcon"]];
+    
+    EAIntroView *intro = [[EAIntroView alloc] initWithFrame:view.bounds andPages:@[page1, page2, page3, page4, page5]];
+    
     return intro;
+}
+
++(EAIntroPage *)introPageWithTitle:(NSString *)title descriptionText:(NSString *)descriptionText logo:(UIImage *)logo {
+    EAIntroPage *page = [EAIntroPage page];
+    page.title = title;
+    page.titlePositionY = 220;
+    page.titleIconView = [[UIImageView alloc] initWithImage:logo];
+    page.titleIconPositionY = 100;
+    page.descWidth = 250;
+    page.desc = descriptionText;
+    page.descPositionY = 200;
+    page.titleIconPositionY = 100;
+    page.bgImage = [UIImage imageNamed:@"bg1"];
+    return page;
 }
 
 

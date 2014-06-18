@@ -10,20 +10,14 @@ pod 'AFNetworking', '~> 1.2'
 pod 'RestKit'
 # pod with date selection controller
 pod 'RMDateSelectionViewController'
-# implementation of mock objects
-pod 'OCMock'
 # chat UI
 pod 'JSMessagesViewController'
 # pod for websockets
 pod 'SocketRocket'
-# pod: pull down to refresh uicollection view
-pod 'SVPullToRefresh'
 # pod: intro page
 pod 'EAIntroView'
 # pod: sidebar menu
 pod 'MMDrawerController'
-# pod: disapearing navbar
-pod 'AMScrollingNavbar'
 # pod: blur images
 pod 'GPUImage'
 # Facebook api for sharing rides

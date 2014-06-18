@@ -129,16 +129,19 @@
         [self.navigationController pushViewController:feedbackVC animated:YES];
     } else if (indexPath.section == 1 && indexPath.row == 0) {
         ReminderViewController *reminderVC = [[ReminderViewController alloc] init];
+        reminderVC.title = @"Reminder";
         [self.navigationController pushViewController:reminderVC animated:YES];
     }
     else if (indexPath.section == 1 && indexPath.row == 1) {
         PrivacyViewController *privacyVC = [[PrivacyViewController alloc] init];
+        privacyVC.title = @"Privacy";
+        privacyVC.privacyViewTypeEnum = Privacy;
         [self.navigationController pushViewController:privacyVC animated:YES];
     } else if(indexPath.section == 1 && indexPath.row == 2) {
-        
-        // TODO: add licenses
-        PrivacyViewController *privacyVC = [[PrivacyViewController alloc] init];
-        [self.navigationController pushViewController:privacyVC animated:YES];
+        PrivacyViewController *licenses = [[PrivacyViewController alloc] init];
+        licenses.title = @"Licenses";
+        licenses.privacyViewTypeEnum = Licenses;
+        [self.navigationController pushViewController:licenses animated:YES];
     } else if (indexPath.section == 1 && indexPath.row == 3) {
         CarsharingViewController *carsharingVC = [[CarsharingViewController alloc] init];
         carsharingVC.title = @"Carsharing";
@@ -147,6 +150,7 @@
         [self showIntroButtonPressed];
     } else if(indexPath.section == 2 && indexPath.row == 1) {
         TeamViewController *teamVC = [[TeamViewController alloc] init];
+        teamVC.title = @"Team";
         [self.navigationController pushViewController:teamVC animated:YES];
     } else if (indexPath.section == 2 && indexPath.row == 2) {
         FeedbackViewController *feedbackVC = [[FeedbackViewController alloc] init];

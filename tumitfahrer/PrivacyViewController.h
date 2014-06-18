@@ -10,4 +10,12 @@
 
 @interface PrivacyViewController : UIViewController
 
+typedef enum privacyViewType : NSUInteger {
+    Privacy = 0,
+    Licenses = 1
+} PrivacyViewTypeEnum;
+
+@property (weak, nonatomic) IBOutlet UITextView *contentTextView;
+@property (assign, nonatomic) PrivacyViewTypeEnum privacyViewTypeEnum;
+
 @end

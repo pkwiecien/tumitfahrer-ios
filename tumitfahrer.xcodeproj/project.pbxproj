@@ -157,6 +157,19 @@
 		E5A9BE19194236CD0072E9B0 /* YourRidesPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5A9BE17194236CD0072E9B0 /* YourRidesPageViewController.xib */; };
 		E5A9BE25194253390072E9B0 /* RideSearchMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A9BE24194253390072E9B0 /* RideSearchMapping.m */; };
 		E5CD592819516E4F00E97DEC /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5CD592A19516E4F00E97DEC /* ProfileViewController.xib */; };
+		E5CD592D1951C14900E97DEC /* afnetworking.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD592C1951C14900E97DEC /* afnetworking.txt */; };
+		E5CD59371951C39D00E97DEC /* EAIntroView.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD592E1951C39D00E97DEC /* EAIntroView.txt */; };
+		E5CD59381951C39D00E97DEC /* Facebook-iOS-SDK.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD592F1951C39D00E97DEC /* Facebook-iOS-SDK.txt */; };
+		E5CD59391951C39D00E97DEC /* GPUImage.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD59301951C39D00E97DEC /* GPUImage.txt */; };
+		E5CD593A1951C39D00E97DEC /* JSMessagesViewController.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD59311951C39D00E97DEC /* JSMessagesViewController.txt */; };
+		E5CD593B1951C39D00E97DEC /* KIF.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD59321951C39D00E97DEC /* KIF.txt */; };
+		E5CD593C1951C39D00E97DEC /* MMDrawerController.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD59331951C39D00E97DEC /* MMDrawerController.txt */; };
+		E5CD593D1951C39D00E97DEC /* restkit.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD59341951C39D00E97DEC /* restkit.txt */; };
+		E5CD593E1951C39D00E97DEC /* RMDateSelectionViewController.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD59351951C39D00E97DEC /* RMDateSelectionViewController.txt */; };
+		E5CD593F1951C39D00E97DEC /* SocketRocket.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD59361951C39D00E97DEC /* SocketRocket.txt */; };
+		E5CD59421951C3EA00E97DEC /* KGStatusBar.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD59401951C3EA00E97DEC /* KGStatusBar.txt */; };
+		E5CD59431951C3EA00E97DEC /* SPGooglePlacesAutocompletePlace.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD59411951C3EA00E97DEC /* SPGooglePlacesAutocompletePlace.txt */; };
+		E5CD59461951C6E300E97DEC /* Privacy.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD59451951C6E300E97DEC /* Privacy.txt */; };
 		E5DE44E8192610E10034AF6F /* AddRideTableHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DE44E7192610E10034AF6F /* AddRideTableHeader.xib */; };
 		E5DE44ED192618270034AF6F /* SegmentedControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DE44EB192618270034AF6F /* SegmentedControlCell.m */; };
 		E5DE44EE192618270034AF6F /* SegmentedControlCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DE44EC192618270034AF6F /* SegmentedControlCell.xib */; };
@@ -498,6 +511,19 @@
 		E5A9BE23194253390072E9B0 /* RideSearchMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideSearchMapping.h; sourceTree = "<group>"; };
 		E5A9BE24194253390072E9B0 /* RideSearchMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideSearchMapping.m; sourceTree = "<group>"; };
 		E5CD592919516E4F00E97DEC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ProfileViewController.xib; sourceTree = "<group>"; };
+		E5CD592C1951C14900E97DEC /* afnetworking.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = afnetworking.txt; sourceTree = "<group>"; };
+		E5CD592E1951C39D00E97DEC /* EAIntroView.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EAIntroView.txt; sourceTree = "<group>"; };
+		E5CD592F1951C39D00E97DEC /* Facebook-iOS-SDK.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Facebook-iOS-SDK.txt"; sourceTree = "<group>"; };
+		E5CD59301951C39D00E97DEC /* GPUImage.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GPUImage.txt; sourceTree = "<group>"; };
+		E5CD59311951C39D00E97DEC /* JSMessagesViewController.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = JSMessagesViewController.txt; sourceTree = "<group>"; };
+		E5CD59321951C39D00E97DEC /* KIF.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = KIF.txt; sourceTree = "<group>"; };
+		E5CD59331951C39D00E97DEC /* MMDrawerController.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MMDrawerController.txt; sourceTree = "<group>"; };
+		E5CD59341951C39D00E97DEC /* restkit.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = restkit.txt; sourceTree = "<group>"; };
+		E5CD59351951C39D00E97DEC /* RMDateSelectionViewController.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RMDateSelectionViewController.txt; sourceTree = "<group>"; };
+		E5CD59361951C39D00E97DEC /* SocketRocket.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SocketRocket.txt; sourceTree = "<group>"; };
+		E5CD59401951C3EA00E97DEC /* KGStatusBar.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = KGStatusBar.txt; sourceTree = "<group>"; };
+		E5CD59411951C3EA00E97DEC /* SPGooglePlacesAutocompletePlace.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SPGooglePlacesAutocompletePlace.txt; sourceTree = "<group>"; };
+		E5CD59451951C6E300E97DEC /* Privacy.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Privacy.txt; sourceTree = "<group>"; };
 		E5DE44E7192610E10034AF6F /* AddRideTableHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddRideTableHeader.xib; sourceTree = "<group>"; };
 		E5DE44EA192618270034AF6F /* SegmentedControlCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentedControlCell.h; sourceTree = "<group>"; };
 		E5DE44EB192618270034AF6F /* SegmentedControlCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentedControlCell.m; sourceTree = "<group>"; };
@@ -919,6 +945,8 @@
 		E522BAC018AE13F600ECD375 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E5CD59441951C6DB00E97DEC /* Privacy */,
+				E5CD592B1951C13F00E97DEC /* Licenses */,
 				E599881818E804E500B01C62 /* highway-nosound@2x.mp4 */,
 				E522BAC118AE13F600ECD375 /* tumitfahrer-Info.plist */,
 				E522BAC218AE13F600ECD375 /* InfoPlist.strings */,
@@ -1398,6 +1426,33 @@
 			name = "Page Control";
 			sourceTree = "<group>";
 		};
+		E5CD592B1951C13F00E97DEC /* Licenses */ = {
+			isa = PBXGroup;
+			children = (
+				E5CD592C1951C14900E97DEC /* afnetworking.txt */,
+				E5CD592E1951C39D00E97DEC /* EAIntroView.txt */,
+				E5CD592F1951C39D00E97DEC /* Facebook-iOS-SDK.txt */,
+				E5CD59301951C39D00E97DEC /* GPUImage.txt */,
+				E5CD59311951C39D00E97DEC /* JSMessagesViewController.txt */,
+				E5CD59401951C3EA00E97DEC /* KGStatusBar.txt */,
+				E5CD59321951C39D00E97DEC /* KIF.txt */,
+				E5CD59331951C39D00E97DEC /* MMDrawerController.txt */,
+				E5CD59341951C39D00E97DEC /* restkit.txt */,
+				E5CD59351951C39D00E97DEC /* RMDateSelectionViewController.txt */,
+				E5CD59361951C39D00E97DEC /* SocketRocket.txt */,
+				E5CD59411951C3EA00E97DEC /* SPGooglePlacesAutocompletePlace.txt */,
+			);
+			name = Licenses;
+			sourceTree = "<group>";
+		};
+		E5CD59441951C6DB00E97DEC /* Privacy */ = {
+			isa = PBXGroup;
+			children = (
+				E5CD59451951C6E300E97DEC /* Privacy.txt */,
+			);
+			name = Privacy;
+			sourceTree = "<group>";
+		};
 		E5DE44E6192610C10034AF6F /* Header */ = {
 			isa = PBXGroup;
 			children = (
@@ -1761,14 +1816,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				E599880218E72BF600B01C62 /* ForgotPasswordViewController.xib in Resources */,
+				E5CD59461951C6E300E97DEC /* Privacy.txt in Resources */,
+				E5CD593D1951C39D00E97DEC /* restkit.txt in Resources */,
 				E5FEF3691945E5CD00E326BB /* FeedbackViewController.xib in Resources */,
 				E5E215651907A95F00B0B150 /* SearchRideViewController.xib in Resources */,
+				E5CD59381951C39D00E97DEC /* Facebook-iOS-SDK.txt in Resources */,
 				E58889E91913C7010062D0DF /* UbertestersSDKResources.bundle in Resources */,
 				E5FEF3521945A02300E326BB /* SearchResultViewController.xib in Resources */,
 				E5FEF3971946F8B100E326BB /* EditRideViewController.xib in Resources */,
 				E59987FC18E7251000B01C62 /* RegisterViewController.xib in Resources */,
 				E599880C18E7836D00B01C62 /* MenuViewController.xib in Resources */,
 				E59987D118E6E47F00B01C62 /* LoginViewController.xib in Resources */,
+				E5CD593E1951C39D00E97DEC /* RMDateSelectionViewController.txt in Resources */,
 				E504D9BD190A58710036FFA8 /* MeetingPointViewController.xib in Resources */,
 				E5DF641618EB548E00D53164 /* SettingsViewController.xib in Resources */,
 				E50CCD12191FC324003A9490 /* RidesPageViewController.xib in Resources */,
@@ -1778,14 +1837,18 @@
 				E522BAD218AE13F600ECD375 /* Images.xcassets in Resources */,
 				E526B644194DB84B006D3527 /* DescriptionCell.xib in Resources */,
 				E5A9BE19194236CD0072E9B0 /* YourRidesPageViewController.xib in Resources */,
+				E5CD593B1951C39D00E97DEC /* KIF.txt in Resources */,
 				E50CCC11191E529A003A9490 /* TimelineViewController.xib in Resources */,
 				E50CCC1B191E5885003A9490 /* TimelineCell.xib in Resources */,
+				E5CD59421951C3EA00E97DEC /* KGStatusBar.txt in Resources */,
 				E5FEF3641945E5BC00E326BB /* ReminderViewController.xib in Resources */,
+				E5CD592D1951C14900E97DEC /* afnetworking.txt in Resources */,
 				E526B5B2194AC8D9006D3527 /* EditDepartmentViewController.xib in Resources */,
 				E526B612194C7DC8006D3527 /* OfferViewController.xib in Resources */,
 				E5FC44D5190CF83100E8DB65 /* MenuTopHeaderView.xib in Resources */,
 				E5DE44E8192610E10034AF6F /* AddRideTableHeader.xib in Resources */,
 				E526B651194E00FB006D3527 /* TeamViewController.xib in Resources */,
+				E5CD593F1951C39D00E97DEC /* SocketRocket.txt in Resources */,
 				E59B9A611916B7E4008DE80B /* YourRidesCell.xib in Resources */,
 				E564464B192A976B00F636A5 /* GeneralInfoCell.xib in Resources */,
 				E5FEF3AA1946FD0000E326BB /* RideDetailActionCell.xib in Resources */,
@@ -1800,15 +1863,19 @@
 				E5FEF37E19463D6800E326BB /* CarsharingViewController.xib in Resources */,
 				E59B9A4C1916A241008DE80B /* YourRidesViewController.xib in Resources */,
 				E599886318E84D9D00B01C62 /* MenuTableViewCell.xib in Resources */,
+				E5CD593C1951C39D00E97DEC /* MMDrawerController.txt in Resources */,
 				E526B5A2194A1D07006D3527 /* EditProfileFieldViewController.xib in Resources */,
 				E5FEF2F819447A3B00E326BB /* MessageListCell.xib in Resources */,
 				E5FEF36F1946005600E326BB /* TimePickerCell.xib in Resources */,
 				E526B61C194C9C2A006D3527 /* RequestViewController.xib in Resources */,
+				E5CD593A1951C39D00E97DEC /* JSMessagesViewController.txt in Resources */,
 				E50CCD07191FAE8A003A9490 /* RidesViewController.xib in Resources */,
 				E526B5D5194C2A78006D3527 /* EmptyCell.xib in Resources */,
 				E5FEF2F31944766300E326BB /* MessagesOverviewViewController.xib in Resources */,
 				E5E215801908492200B0B150 /* FreeSeatsTableViewCell.xib in Resources */,
 				E526B617194C9C21006D3527 /* OwnerRequestViewController.xib in Resources */,
+				E5CD59391951C39D00E97DEC /* GPUImage.txt in Resources */,
+				E5CD59371951C39D00E97DEC /* EAIntroView.txt in Resources */,
 				E507C440193A298D005F1083 /* RideRequestInformationCell.xib in Resources */,
 				E5CD592819516E4F00E97DEC /* ProfileViewController.xib in Resources */,
 				E5E215601907A94A00B0B150 /* AddRideViewController.xib in Resources */,
@@ -1817,6 +1884,7 @@
 				E5FEF34C1944F93300E326BB /* ButtonCell.xib in Resources */,
 				E504D9C3190A6C940036FFA8 /* DestinationViewController.xib in Resources */,
 				E5FEF35F1945E4EC00E326BB /* PrivacyViewController.xib in Resources */,
+				E5CD59431951C3EA00E97DEC /* SPGooglePlacesAutocompletePlace.txt in Resources */,
 				E5FD9EC819234A8500902502 /* TimelineMapViewController.xib in Resources */,
 				E5FEF3911946F85100E326BB /* EditRequestViewController.xib in Resources */,
 				E52EA4D4192C019C00E78B6D /* RideDetailMapViewController.xib in Resources */,

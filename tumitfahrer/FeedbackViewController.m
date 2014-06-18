@@ -17,18 +17,17 @@
 
 @implementation FeedbackViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor customLightGray]];
     self.contentTextView.delegate = self;
     self.titleTextField.delegate = self;
+    if (iPhone5) {
+        self.sendButton.frame = CGRectMake(self.sendButton.frame.origin.x, [UIScreen mainScreen].bounds.size.height - self.navigationController.navigationBar.frame.size.height - 120, 238, 38);
+        self.contentTextView.frame = CGRectMake(self.contentTextView.frame.origin.x, self.contentTextView.frame.origin.y, self.contentTextView.frame.size.width, [UIScreen mainScreen].bounds.size.height - 200);
+    } else {
+        self.contentTextView.frame = CGRectMake(self.contentTextView.frame.origin.x, self.contentTextView.frame.origin.y, self.contentTextView.frame.size.width, [UIScreen mainScreen].bounds.size.height - 70);
+    }
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {

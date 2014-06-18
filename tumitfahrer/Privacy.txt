@@ -1,0 +1,29 @@
+Datenschutzerklärung
+
+1. Allgemeines
+Personenbezogene Daten, die Sie über die TUMitfahrer-App-Webseite oder in der App eingeben, werden von TUMitfahrer GbR erhoben, genutzt und verarbeitet. Diese ist verantwortliche Stelle im Sinne des Bundesdatenschutzgesetzes.
+
+2. Registrierung auf unserer Webseite / in der App
+Zur Nutzung unserer Webseite müssen Sie sich zunächst mit Ihrer E-Mailadresse und einem frei zu wählenden Benutzernamen und Passwort auf unserer Webseite registrieren. Bitte achten Sie sorgfältig auf die Geheimhaltung Ihres Passworts, um einem Missbrauch vorzubeugen.
+Um Ihnen die Nutzung der Webseite zu ermöglichen, werden die von Ihrem Computer mitgeteilte IP-Nummer sowie der Zeitraum der Nutzung gespeichert. Diese Daten werden nach Wegfall des Erhebungszwecks wieder gelöscht.
+Die Daten werden dabei verschlüsselt übertragen. Hierzu wird das HTTPS-Protokoll verwendet.
+Auf Verlangen gibt Ihnen die TUMitfahrer GbR gerne Auskunft über die Daten, die unter Ihrem Benutzernamen gespeichert sind. Schreiben Sie uns hierzu an TUMitfahrer App, Lehrstuhl für Datenverarbeitung, Arcisstraße 21, 80333 München.
+
+3. Art, Umfang und Zweck der Datenverwendung, Einwilligung des Nutzers
+Die von Ihnen im Rahmen Ihrer Registrierung angegebenen Daten werden für die vertraglich vereinbarten Zwecke, d. h. zur Kennzeichnung Ihrer Mitfahrgelegenheiten, Ermöglichung der Nutzung der Webseite und der App. Darüber hinaus werden die Daten zu Informations- und Werbezwecken nur dann genutzt, wenn Sie hierzu ihre Einwilligung erteilen. Die Nutzung der Daten zu Werbezwecken kann insbesondere darin bestehen, dass Werbung eingeblendet wird, die für den Nutzer relevant ist. Die Daten werden dabei elektronisch gespeichert.
+Die Einwilligung zur Verwendung ihrer Daten erfolgt auf freiwilliger Basis auf unserer Internetseite. Sie haben daher das Recht, diese Einwilligung jederzeit mit Wirkung für die Zukunft zu widerrufen.
+Bei der Registrierung müssen folgende Felder ausgefüllt werden: Username, Vorname, Nachname E-Mail-Adresse, Fakultät sowie die Eigenschaft Student/Mitarbeiter. Von anderen Mitgliedern sind folgende Daten einsehbar: Vorname, Fakultät sowie die Eigenschaft Student/Mitarbeiter.
+
+4. Dritte
+Die TUMitfahrer GbR kann gesetzlich zur Weitergabe der Daten an Dritte, z. B. Ermittlungsbehörden, verpflichtet sein. Außer in dem vorgenannten Umfang werden Ihre personenbezogenen Daten nicht an Dritte weitergegeben.
+
+5. Löschung oder Sperrung der Daten
+Sie können Ihr Konto jederzeit löschen. Ihre Daten, die Sie bei der Registrierung für unsere Webseite angegeben haben, bleiben so lange gespeichert, bis Sie Ihre Registrierung bei uns aufheben. Dann werden die Daten gelöscht, es sei denn es bestehen gesetzliche Aufbewahrungspflichten. Im letzten Fall werden die Daten für eine weitere Verwendung gesperrt.
+
+6. Verwendung von Facebook Social Plugins
+Unser Internetauftritt verwendet Social Plugins (Plugins) des sozialen Netzwerks facebook.com, welches von der Facebook Inc., 1601 S. California Ave, Palo Alto, CA 94304, USA betrieben wird (Facebook). Die Plugins sind an den Facebook-Logos erkennbar (weißes „f“ auf blauer Kachel oder ein „Daumen hoch“-Zeichen).
+Bei der Nutzung von Webseiten der TUMitfahrer GbR, die ein solches Plugin enthalten, baut Ihr Browser eine Verbindung mit den Servern von Facebook auf. Wenn Sie auf Facebook eingeloggt sind, ordnet Facebook die Information über die Nutzung unserer Webseite Ihrem Facebook-Konto zu und bindet den Plugin-Inhalt in die Webseite ein. Auch wenn Sie kein Mitglied von Facebook sind, besteht die Möglichkeit, dass Facebook Ihre IP-Adresse in Erfahrung bringt und speichert. Zweck und Umfang der Datenerhebung und die weitere Verarbeitung und Nutzung der Daten durch Facebook sowie Ihre diesbezüglichen Rechte und Einstellungsmöglichkeiten zum Schutz der Privatsphäre sind den Datenschutzhinweisen von Facebook zu entnehmen: www.facebook.com/policy.php
+
+7. Änderung der Datenschutzhinweise
+Die TUMitfahrer GbR behält sich vor, diese Datenschutzhinweise zu aktualisieren. Im Falle von Änderungen, die für Sie nachteilig sein könnten, wird die TUMitfahrer GbR Sie mit angemessener Frist hierüber informieren.
+
