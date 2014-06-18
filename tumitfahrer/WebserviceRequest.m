@@ -139,7 +139,6 @@
 
     NSMutableDictionary *requestParams = [[NSMutableDictionary alloc] init];
     [requestParams setValue:userId forKey:@"user_id"];
-    
    
     if (badge != nil) {
         if (badge.myRidesUpdatedAt != nil) {

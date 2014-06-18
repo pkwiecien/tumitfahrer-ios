@@ -18,8 +18,10 @@
 #import "WebserviceRequest.h"
 #import "ControllerUtilities.h"
 #import "RideSectionHeaderCell.h"
+#import "EmptyCell.h"
+#import "PanoramioUtilities.h"
 
-@interface YourRidesViewController ()
+@interface YourRidesViewController () <PanoramioUtilitiesDelegate>
 
 @property (nonatomic, retain) UILabel *zeroRidesLabel;
 @property CGFloat previousScrollViewYOffset;
@@ -27,6 +29,7 @@
 @property UIImage *driverIcon;
 @property (nonatomic, strong) NSMutableArray *arrayWithSections;
 @property (nonatomic, strong) NSMutableArray *arrayWithHeaders;
+@property (nonatomic, strong) NSArray *emptyCellDescriptionsArray;
 
 @end
 
@@ -48,6 +51,12 @@
     [self.view addSubview:self.activityIndicatorView];
     self.passengerIcon = [UIImage imageNamed:@"PassengerIconBlack"];
     self.driverIcon = [UIImage imageNamed:@"DriverIconBlack"];
+    
+    NSArray *emptyCreated = [NSArray arrayWithObjects:@"No rides as drives", @"No requests for a ride", nil];
+    NSArray *emptyJoined = [NSArray arrayWithObjects:@"No upcoming rides as passenger", @"No pending ride requests", nil];
+    NSArray *emptyPast = [NSArray arrayWithObjects:@"You don't have any past rides", nil];
+    self.emptyCellDescriptionsArray = [NSArray arrayWithObjects:emptyCreated, emptyJoined, emptyPast, nil];
+    [[PanoramioUtilities sharedInstance] addObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -115,7 +124,7 @@
         [self.arrayWithSections addObject:ridesAsOwner];
         [self.arrayWithSections addObject:rideRequests];
     } else if(self.index == 1) {
-
+        
         NSMutableArray *ridesAsPassenger = [[NSMutableArray alloc] init];
         // should be: confirmed rides as passenger, pending requests
         for (Ride *ride in [CurrentUser sharedInstance].user.ridesAsPassenger) {
@@ -136,7 +145,7 @@
         
     } else  if(self.index == 2) {
         [[RidesStore sharedStore] fetchPastRidesFromCoreData];
-
+        
         if ([[RidesStore sharedStore] pastRides].count == 0) {
             
             [WebserviceRequest getPastRidesForCurrentUserWithBlock:^(NSArray * fetchedRides) {
@@ -179,11 +188,15 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[self.arrayWithSections objectAtIndex:section] count];
+    NSInteger rows = [[self.arrayWithSections objectAtIndex:section] count];
+    if (rows > 0) {
+        return rows;
+    }
+    return 1;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 130.0f;
+    return 100.0f;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
@@ -194,26 +207,49 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    YourRidesCell *cell = [tableView dequeueReusableCellWithIdentifier:@"YourRidesCell"];
     
-    if(cell == nil){
-        cell = [YourRidesCell yourRidesCell];
+    if ([[self.arrayWithSections objectAtIndex:indexPath.section] count] == 0) { // just an empty cell
+        
+        EmptyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EmptyCell"];
+        if(cell == nil){
+            cell = [EmptyCell emptyCell];
+        }
+        cell.descriptionLabel.text = [[self.emptyCellDescriptionsArray objectAtIndex:self.index] objectAtIndex:indexPath.section];
+        return cell;
+        
+    } else {
+        YourRidesCell *cell = [tableView dequeueReusableCellWithIdentifier:@"YourRidesCell"];
+        
+        if(cell == nil){
+            cell = [YourRidesCell yourRidesCell];
+        }
+        Ride *ride = [[self.arrayWithSections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+        cell.departurePlaceLabel.text = ride.departurePlace;
+        cell.destinationLabel.text = ride.destination;
+        cell.departureTimeLabel.text = [ActionManager stringFromDate:ride.departureTime];
+        if (ride.destinationImage == nil) {
+            [RidesStore initRide:ride block:^(BOOL fetched) { }];
+        } else {
+            cell.destinationImage.image = [UIImage imageWithData:ride.destinationImage];
+        }
+        return cell;
     }
-    
-    Ride *ride = [[self.arrayWithSections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    cell.departurePlaceLabel.text = ride.departurePlace;
-    cell.destinationLabel.text = ride.destination;
-    cell.departureTimeLabel.text = [ActionManager stringFromDate:ride.departureTime];
-    
-    return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([[self.arrayWithSections objectAtIndex:indexPath.section] count] == 0) { // just an empty cell
+        return;
+    }
     UIViewController *vc = [ControllerUtilities viewControllerForRide:[[self.arrayWithSections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Button Handlers
+
+-(void)didReceivePhotoForLocation:(UIImage *)image rideId:(NSNumber *)rideId {
+    // TODO: make smarter algorithm that will update only one cell
+    [self.tableView reloadData];
+}
 
 -(void)leftDrawerButtonPress:(id)sender{
     [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
@@ -229,6 +265,7 @@
 
 -(void)dealloc {
     self.delegate = nil;
+    [[PanoramioUtilities sharedInstance] removeObserver:self];
 }
 
 @end

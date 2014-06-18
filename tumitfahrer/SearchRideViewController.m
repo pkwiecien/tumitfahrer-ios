@@ -32,7 +32,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"1", @"", @"", @"", nil];
+        self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"15", @"", @"15", @"", @"", @"", nil];
         self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"", @"Destination", @"", @"Time", @"", nil];
         self.navigationItem.backBarButtonItem.title = @"Search";
     }
@@ -70,7 +70,7 @@
 -(void)setupNavigationBar {
     UINavigationController *navController = self.navigationController;
     [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor lighterBlue]];
-    self.title = @"Search rides";
+    self.title = @"Search";
     
     UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
     [settingsView addTarget:self action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];

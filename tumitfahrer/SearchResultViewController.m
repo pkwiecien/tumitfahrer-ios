@@ -63,8 +63,18 @@
             }
         }
     }
+    [self checkIfAllRidesExist];
     [self.tableView reloadData];
     [self setupNavigationBar];
+}
+
+-(void)checkIfAllRidesExist {
+    NSArray *results = [self.searchResults copy];
+    for (Ride *ride in results) {
+        if ([[RidesStore sharedStore] fetchRideFromCoreDataWithId:ride.rideId] == nil) {
+            [self.searchResults removeObject:ride];
+        }
+    }
 }
 
 -(void)prepareZeroRidesLabel {

@@ -15,7 +15,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *departurePlaceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *destinationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *departureTimeLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *driverImageView;
-@property (weak, nonatomic) IBOutlet UILabel *driverLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *firstImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *thirdImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *secondImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *destinationImage;
 
 @end

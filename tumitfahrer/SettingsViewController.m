@@ -164,9 +164,9 @@
 }
 
 - (void)showIntroButtonPressed {
-    EAIntroView *intro = (EAIntroView *)[ControllerUtilities prepareIntroForView:self.view];
+    EAIntroView *intro = (EAIntroView *)[ControllerUtilities prepareIntroForView:self.navigationController.view];
     intro.delegate = self;
-    [intro showInView:self.view animateDuration:0.0];
+    [intro showInView:self.navigationController.view animateDuration:0.0];
 }
 
 - (IBAction)logoutButtonPressed:(id)sender {
