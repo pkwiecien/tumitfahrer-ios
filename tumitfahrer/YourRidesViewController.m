@@ -40,9 +40,6 @@
     [super viewDidLoad];
     [self prepareZeroRidesLabel];
     [self.view setBackgroundColor:[UIColor customLightGray]];
-    
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
-    self.tableView.tableFooterView = footerView;
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     
     CGRect frame = CGRectMake (120.0, 185.0, 80, 80);

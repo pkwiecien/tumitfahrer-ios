@@ -44,6 +44,12 @@
         <relationship name="givenRating" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="ratingsGiven" inverseEntity="User" syncable="YES"/>
         <relationship name="receivedRating" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="ratingsReceived" inverseEntity="User" syncable="YES"/>
     </entity>
+    <entity name="RecentPlace" representedClassName="RecentPlace" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="placeLatitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="placeLongitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="placeName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Request" representedClassName="Request" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="passengerId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -115,6 +121,7 @@
     </entity>
     <elements>
         <element name="Activity" positionX="-72" positionY="-180" width="128" height="105"/>
+        <element name="Badge" positionX="-72" positionY="-180" width="128" height="193"/>
         <element name="Conversation" positionX="-72" positionY="-180" width="128" height="118"/>
         <element name="Message" positionX="0" positionY="0" width="128" height="163"/>
         <element name="Rating" positionX="106" positionY="-99" width="128" height="150"/>
@@ -122,6 +129,6 @@
         <element name="Ride" positionX="-279" positionY="-175" width="128" height="390"/>
         <element name="RideSearch" positionX="-72" positionY="-180" width="128" height="238"/>
         <element name="User" positionX="252" positionY="-40" width="128" height="313"/>
-        <element name="Badge" positionX="-72" positionY="-180" width="128" height="193"/>
+        <element name="RecentPlace" positionX="-72" positionY="-180" width="128" height="105"/>
     </elements>
 </model>

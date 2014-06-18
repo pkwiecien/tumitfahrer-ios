@@ -170,6 +170,8 @@
 		E5CD59421951C3EA00E97DEC /* KGStatusBar.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD59401951C3EA00E97DEC /* KGStatusBar.txt */; };
 		E5CD59431951C3EA00E97DEC /* SPGooglePlacesAutocompletePlace.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD59411951C3EA00E97DEC /* SPGooglePlacesAutocompletePlace.txt */; };
 		E5CD59461951C6E300E97DEC /* Privacy.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD59451951C6E300E97DEC /* Privacy.txt */; };
+		E5CD594C1952255900E97DEC /* RecentPlaceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CD594B1952255900E97DEC /* RecentPlaceUtilities.m */; };
+		E5CD594F1952267800E97DEC /* RecentPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CD594E1952267800E97DEC /* RecentPlace.m */; };
 		E5DE44E8192610E10034AF6F /* AddRideTableHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DE44E7192610E10034AF6F /* AddRideTableHeader.xib */; };
 		E5DE44ED192618270034AF6F /* SegmentedControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DE44EB192618270034AF6F /* SegmentedControlCell.m */; };
 		E5DE44EE192618270034AF6F /* SegmentedControlCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DE44EC192618270034AF6F /* SegmentedControlCell.xib */; };
@@ -524,6 +526,10 @@
 		E5CD59401951C3EA00E97DEC /* KGStatusBar.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = KGStatusBar.txt; sourceTree = "<group>"; };
 		E5CD59411951C3EA00E97DEC /* SPGooglePlacesAutocompletePlace.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SPGooglePlacesAutocompletePlace.txt; sourceTree = "<group>"; };
 		E5CD59451951C6E300E97DEC /* Privacy.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Privacy.txt; sourceTree = "<group>"; };
+		E5CD594A1952255900E97DEC /* RecentPlaceUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentPlaceUtilities.h; sourceTree = "<group>"; };
+		E5CD594B1952255900E97DEC /* RecentPlaceUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentPlaceUtilities.m; sourceTree = "<group>"; };
+		E5CD594D1952267800E97DEC /* RecentPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentPlace.h; sourceTree = "<group>"; };
+		E5CD594E1952267800E97DEC /* RecentPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentPlace.m; sourceTree = "<group>"; };
 		E5DE44E7192610E10034AF6F /* AddRideTableHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddRideTableHeader.xib; sourceTree = "<group>"; };
 		E5DE44EA192618270034AF6F /* SegmentedControlCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentedControlCell.h; sourceTree = "<group>"; };
 		E5DE44EB192618270034AF6F /* SegmentedControlCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentedControlCell.m; sourceTree = "<group>"; };
@@ -1284,6 +1290,8 @@
 				E50DB28A18F8730400E87E62 /* RidesStore.m */,
 				E517DB52195021E500961344 /* User.h */,
 				E517DB53195021E500961344 /* User.m */,
+				E5CD594D1952267800E97DEC /* RecentPlace.h */,
+				E5CD594E1952267800E97DEC /* RecentPlace.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1350,6 +1358,12 @@
 			children = (
 				E5FDDBEF18F0059D00CE7B01 /* ActionManager.h */,
 				E5FDDBF018F0059D00CE7B01 /* ActionManager.m */,
+				E517DB611950391500961344 /* BadgeUtilities.h */,
+				E517DB621950391500961344 /* BadgeUtilities.m */,
+				E564464D192AB67200F636A5 /* CircularImageView.h */,
+				E564464E192AB67200F636A5 /* CircularImageView.m */,
+				E526B649194DE05E006D3527 /* ControllerUtilities.h */,
+				E526B64A194DE05E006D3527 /* ControllerUtilities.m */,
 				E50DB29618FA7D4100E87E62 /* Faculty.h */,
 				E50DB29718FA7D4100E87E62 /* Faculty.m */,
 				E50DB29218FA7A8800E87E62 /* FacultyManager.h */,
@@ -1362,14 +1376,10 @@
 				E59B9A691916D072008DE80B /* NavigationBarUtilities.m */,
 				E50DB28F18F881BC00E87E62 /* PanoramioUtilities.h */,
 				E50DB29018F881BC00E87E62 /* PanoramioUtilities.m */,
-				E564464D192AB67200F636A5 /* CircularImageView.h */,
-				E564464E192AB67200F636A5 /* CircularImageView.m */,
+				E5CD594A1952255900E97DEC /* RecentPlaceUtilities.h */,
+				E5CD594B1952255900E97DEC /* RecentPlaceUtilities.m */,
 				E5FEF3001944A9AD00E326BB /* WebserviceRequest.h */,
 				E5FEF3011944A9AD00E326BB /* WebserviceRequest.m */,
-				E526B649194DE05E006D3527 /* ControllerUtilities.h */,
-				E526B64A194DE05E006D3527 /* ControllerUtilities.m */,
-				E517DB611950391500961344 /* BadgeUtilities.h */,
-				E517DB621950391500961344 /* BadgeUtilities.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -2048,8 +2058,10 @@
 				E526B611194C7DC8006D3527 /* OfferViewController.m in Sources */,
 				E50CCD01191F8968003A9490 /* RatingMapping.m in Sources */,
 				E5FEF2F719447A3B00E326BB /* MessageListCell.m in Sources */,
+				E5CD594C1952255900E97DEC /* RecentPlaceUtilities.m in Sources */,
 				E50CCC1A191E5885003A9490 /* TimelineCell.m in Sources */,
 				E58B8726191511EA0032524A /* RequestMapping.m in Sources */,
+				E5CD594F1952267800E97DEC /* RecentPlace.m in Sources */,
 				E526B616194C9C21006D3527 /* OwnerRequestViewController.m in Sources */,
 				E5E2157F1908492200B0B150 /* FreeSeatsTableViewCell.m in Sources */,
 				E50CCCF5191F7416003A9490 /* tumitfahrer.xcdatamodeld in Sources */,

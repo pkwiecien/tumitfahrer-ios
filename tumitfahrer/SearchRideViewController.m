@@ -18,9 +18,13 @@
 #import "DestinationViewController.h"
 #import "SearchResultViewController.h"
 #import "LocationController.h"
+#import "RecentPlace.h"
+#import "RecentPlaceUtilities.h"
 
 @interface SearchRideViewController () <SegmentedControlCellDelegate, DestinationViewControllerDelegate, RMDateSelectionViewControllerDelegate, SliderCellDelegate, ButtonCellDelegate>
 
+@property (nonatomic, assign) CLLocationCoordinate2D departureCoordinate;
+@property (nonatomic, assign) CLLocationCoordinate2D destinationCoordinate;
 @property (nonatomic) UIColor *customGrayColor;
 @property (nonatomic, assign) NSInteger searchType;
 @property (nonatomic, strong) NSMutableArray *tableValues;
@@ -61,8 +65,10 @@
 -(void)setDepartureLabelForCurrentLocation {
     NSString *departurePlace = [LocationController sharedInstance].currentAddress;
     
-    if(departurePlace!=nil)
+    if(departurePlace!=nil) {
         [self.tableValues replaceObjectAtIndex:1 withObject:departurePlace];
+        self.departureCoordinate = [LocationController sharedInstance].currentLocation.coordinate;
+    }
 }
 
 -(void)setupLeftMenuButton{
@@ -199,6 +205,9 @@
         [queryParams setValue:date forKey:@"departure_time"];
     }
     
+    [RecentPlaceUtilities createRecentPlaceWithName:departurePlace coordinate:self.departureCoordinate];
+    [RecentPlaceUtilities createRecentPlaceWithName:destination coordinate:self.destinationCoordinate];
+    
     SearchResultViewController *searchResultVC = [[SearchResultViewController alloc] init];
     searchResultVC.queryParams = queryParams;
     [self.navigationController pushViewController:searchResultVC animated:YES];
@@ -226,6 +235,11 @@
 
 -(void)selectedDestination:(NSString *)destination coordinate:(CLLocationCoordinate2D)coordinate indexPath:(NSIndexPath *)indexPath {
     [self.tableValues replaceObjectAtIndex:indexPath.row withObject:destination];
+    if (indexPath.row == 1) {
+        self.departureCoordinate = coordinate;
+    } else if(indexPath.row == 3) {
+        self.destinationCoordinate = coordinate;
+    }
     
     [self.tableView beginUpdates];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];

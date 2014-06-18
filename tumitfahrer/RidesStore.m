@@ -15,6 +15,8 @@
 #import "ActionManager.h"
 #import "ActivityStore.h"
 #import "BadgeUtilities.h"
+#import "RecentPlaceUtilities.h"
+#import "RecentPlace.h"
 
 @interface RidesStore () <NSFetchedResultsControllerDelegate>
 
@@ -343,7 +345,7 @@ static int activity_id = 0;
         [[self activityRides] insertObject:ride atIndex:index];
     }
     
-    if ([self checkIfRideFavourite:ride]) {
+    if ([self checkIfRideFavourite:ride recentPlacesFromCoreData:[RecentPlaceUtilities fetchPlacesFromCoreData]]) {
         [self addFavoriteRide:ride];
     }
     
@@ -417,7 +419,12 @@ static int activity_id = 0;
 #pragma mark - favorite rides
 
 - (void)filterFavoriteRidesByType:(ContentType)rideType {
-    // TODO: implement
+    NSArray *recentPlaces = [RecentPlaceUtilities fetchPlacesFromCoreData];
+    for (Ride *ride in [self allRides]) {
+        if ([self checkIfRideFavourite:ride recentPlacesFromCoreData:recentPlaces]) {
+            [self addFavoriteRide:ride];
+        }
+    }
 }
 
 - (NSInteger)addFavoriteRide:(Ride*)ride {
@@ -453,8 +460,18 @@ static int activity_id = 0;
     return nil;
 }
 
--(BOOL)checkIfRideFavourite:(Ride*)ride {
-    // TODO: implement
+-(BOOL)checkIfRideFavourite:(Ride*)ride recentPlacesFromCoreData:(NSArray *)recentPlaces{
+    
+    CLLocation *departureLocation = [[CLLocation alloc] initWithLatitude:[ride.departureLatitude doubleValue] longitude:[ride.departureLongitude doubleValue]];
+    CLLocation *destinationLocation = [[CLLocation alloc] initWithLatitude:[ride.departureLatitude doubleValue] longitude:[ride.departureLongitude doubleValue]];
+    
+    for (RecentPlace *recentPlace in recentPlaces) {
+        CLLocation *recentPlaceLocation = [[CLLocation alloc] initWithLatitude:[recentPlace.placeLatitude doubleValue] longitude:[recentPlace.placeLongitude doubleValue]];
+        
+        if([LocationController isLocation:recentPlaceLocation nearbyAnotherLocation:departureLocation thresholdInMeters:1000] || [LocationController isLocation:recentPlaceLocation nearbyAnotherLocation:destinationLocation thresholdInMeters:1000]) {
+            return YES;
+        }
+    }
     return NO;
 }
 
