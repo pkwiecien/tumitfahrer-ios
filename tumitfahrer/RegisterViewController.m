@@ -20,7 +20,6 @@
 @property (nonatomic, strong) CustomTextField *firstNameTextField;
 @property (nonatomic, strong) CustomTextField *lastNameTextField;
 @property (nonatomic, strong) CustomTextField *departmentNameTextField;
-@property (nonatomic, strong) CustomIOS7AlertView *alertView;
 
 @end
 
@@ -33,7 +32,6 @@
         
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RoadBackground"]];
         [self prepareInputFields];
-        [self preparePickerView];
         
         [self.view addSubview:imageView ];
         [self.view sendSubviewToBack:imageView ];
@@ -69,7 +67,7 @@
     
     UIImage *campusIcon = [ActionManager colorImage:[UIImage imageNamed:@"CampusIcon"] withColor:[UIColor whiteColor]];
     self.departmentNameTextField = [[CustomTextField alloc] initNotEditableButton:CGRectMake(centerX,cMarginTop + cUIElementPadding*3 + self.emailTextField.frame.size.height*3, cUIElementWidth, cUIElementHeight) placeholderText:@"Department" customIcon:campusIcon];
-    [self.departmentNameTextField addTarget:self action:@selector(showDepartmentPickerView) forControlEvents:UIControlEventAllTouchEvents];
+    [self.departmentNameTextField addTarget:self action:@selector(showDepartmentPickerView) forControlEvents:UIControlEventTouchDown];
 }
 
 - (IBAction)registerButtonPressed:(id)sender {
@@ -77,8 +75,8 @@
     NSString *firstName = [[self.firstNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *lastName = [[self.lastNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    if (email.length < 6 || firstName.length < 3 || lastName.length < 2 ) {
-        [ActionManager showAlertViewWithTitle:@"Invalid input" description:@"Input "];
+    if (email.length < 6 || firstName.length < 2 || lastName.length < 2 ) {
+        [ActionManager showAlertViewWithTitle:@"Invalid input" description:@"Please correct information about you."];
         return;
     } else if(![ActionManager isValidEmail:email]) {
         [ActionManager showAlertViewWithTitle:@"Invalid email" description:@"Please correct your email"];
@@ -95,7 +93,7 @@
     
     [objectManager postObject:nil path:@"/api/v2/users" parameters:userParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         LoginViewController *loginVC = (LoginViewController*)self.presentingViewController;
-        loginVC.statusLabel.text = @"Login with the password from the email";
+        loginVC.statusLabel.text = @"Please check your email";
         [self storeEmailInDefaults];
         [self backToLoginButtonPressed:nil];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -178,6 +176,11 @@
 }
 
 -(void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        if ([self.departmentNameTextField.text isEqualToString:@""]) {
+            self.departmentNameTextField.text = [[FacultyManager sharedInstance] nameOfFacultyAtIndex:0];
+        }
+    }
     [alertView close];
 }
 
