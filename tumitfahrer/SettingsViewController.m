@@ -56,9 +56,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor customLightGray]];
-    
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
-    self.tableView.tableFooterView = footerView;
 }
 
 -(void)viewWillAppear:(BOOL)animated {

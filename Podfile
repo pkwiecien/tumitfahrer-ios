@@ -20,8 +20,6 @@ pod 'SocketRocket'
 pod 'SVPullToRefresh'
 # pod: intro page
 pod 'EAIntroView'
-# full screen image viewer with image zoom custom view controller transition
-pod 'Vertigo'
 # pod: sidebar menu
 pod 'MMDrawerController'
 # pod: disapearing navbar

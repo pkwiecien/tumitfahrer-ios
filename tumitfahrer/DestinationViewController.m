@@ -66,7 +66,7 @@
     if (section == 0) {
         return [self.predefinedDestinations count];
     } else
-    return [searchResultPlaces count];
+    return [searchResultPlaces count] + 8;
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -96,7 +96,7 @@
     
     if (indexPath.section == 0) {
         cell.textLabel.text = [self.predefinedDestinations objectAtIndex:indexPath.row];
-    } else {
+    } else if(indexPath.section == 1 && indexPath.row < searchResultPlaces.count) {
         cell.textLabel.text = [self placeAtIndexPath:indexPath].name;
     }
     

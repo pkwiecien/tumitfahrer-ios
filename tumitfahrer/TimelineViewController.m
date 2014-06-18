@@ -57,9 +57,21 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.delegate willAppearViewWithIndex:self.index];
+    [self initTableViewSize];
     [self.tableView reloadData];
     [self checkIfAnyRides];
 }
+
+-(void)initTableViewSize {
+    if (iPhone5) {
+        self.view.frame = CGRectMake(0, 0, 480, 568);
+        self.tableView.frame = CGRectMake(0, 0, 280, 568);
+    } else {
+        self.view.frame = CGRectMake(0, 0, 480, 480);
+        self.tableView.frame = CGRectMake(0, 0, 280, 480);
+    }
+}
+
 
 -(void)checkIfAnyRides {
     if ([[[ActivityStore sharedStore] recentActivitiesByType:self.index] count] == 0) {

@@ -68,7 +68,6 @@
 		E517DB601950354400961344 /* Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = E517DB5F1950354400961344 /* Badge.m */; };
 		E517DB631950391500961344 /* BadgeUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E517DB621950391500961344 /* BadgeUtilities.m */; };
 		E51FD50218F0864C0098AD11 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E51FD50018F0864C0098AD11 /* ProfileViewController.m */; };
-		E51FD50318F0864C0098AD11 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E51FD50118F0864C0098AD11 /* ProfileViewController.xib */; };
 		E51FD50D18F3B6A00098AD11 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E51FD50C18F3B6A00098AD11 /* CoreData.framework */; };
 		E51FD50F18F3B6AF0098AD11 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E51FD50E18F3B6AF0098AD11 /* Security.framework */; };
 		E51FD51118F3B6BD0098AD11 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E51FD51018F3B6BD0098AD11 /* MobileCoreServices.framework */; };
@@ -157,6 +156,7 @@
 		E5A9BE18194236CD0072E9B0 /* YourRidesPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A9BE16194236CD0072E9B0 /* YourRidesPageViewController.m */; };
 		E5A9BE19194236CD0072E9B0 /* YourRidesPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5A9BE17194236CD0072E9B0 /* YourRidesPageViewController.xib */; };
 		E5A9BE25194253390072E9B0 /* RideSearchMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A9BE24194253390072E9B0 /* RideSearchMapping.m */; };
+		E5CD592819516E4F00E97DEC /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5CD592A19516E4F00E97DEC /* ProfileViewController.xib */; };
 		E5DE44E8192610E10034AF6F /* AddRideTableHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DE44E7192610E10034AF6F /* AddRideTableHeader.xib */; };
 		E5DE44ED192618270034AF6F /* SegmentedControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DE44EB192618270034AF6F /* SegmentedControlCell.m */; };
 		E5DE44EE192618270034AF6F /* SegmentedControlCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DE44EC192618270034AF6F /* SegmentedControlCell.xib */; };
@@ -364,7 +364,6 @@
 		E517DB621950391500961344 /* BadgeUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BadgeUtilities.m; sourceTree = "<group>"; };
 		E51FD4FF18F0864C0098AD11 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		E51FD50018F0864C0098AD11 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
-		E51FD50118F0864C0098AD11 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		E51FD50A18F3B6530098AD11 /* libPods-RestKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-RestKit.a"; path = "Pods/build/Debug-iphoneos/libPods-RestKit.a"; sourceTree = "<group>"; };
 		E51FD50C18F3B6A00098AD11 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		E51FD50E18F3B6AF0098AD11 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -498,6 +497,7 @@
 		E5A9BE17194236CD0072E9B0 /* YourRidesPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YourRidesPageViewController.xib; sourceTree = "<group>"; };
 		E5A9BE23194253390072E9B0 /* RideSearchMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideSearchMapping.h; sourceTree = "<group>"; };
 		E5A9BE24194253390072E9B0 /* RideSearchMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideSearchMapping.m; sourceTree = "<group>"; };
+		E5CD592919516E4F00E97DEC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ProfileViewController.xib; sourceTree = "<group>"; };
 		E5DE44E7192610E10034AF6F /* AddRideTableHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddRideTableHeader.xib; sourceTree = "<group>"; };
 		E5DE44EA192618270034AF6F /* SegmentedControlCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentedControlCell.h; sourceTree = "<group>"; };
 		E5DE44EB192618270034AF6F /* SegmentedControlCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentedControlCell.m; sourceTree = "<group>"; };
@@ -835,7 +835,7 @@
 				E564464C192A976E00F636A5 /* GeneralInfoCell */,
 				E51FD4FF18F0864C0098AD11 /* ProfileViewController.h */,
 				E51FD50018F0864C0098AD11 /* ProfileViewController.m */,
-				E51FD50118F0864C0098AD11 /* ProfileViewController.xib */,
+				E5CD592A19516E4F00E97DEC /* ProfileViewController.xib */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -1810,7 +1810,7 @@
 				E5E215801908492200B0B150 /* FreeSeatsTableViewCell.xib in Resources */,
 				E526B617194C9C21006D3527 /* OwnerRequestViewController.xib in Resources */,
 				E507C440193A298D005F1083 /* RideRequestInformationCell.xib in Resources */,
-				E51FD50318F0864C0098AD11 /* ProfileViewController.xib in Resources */,
+				E5CD592819516E4F00E97DEC /* ProfileViewController.xib in Resources */,
 				E5E215601907A94A00B0B150 /* AddRideViewController.xib in Resources */,
 				E5E215791908442100B0B150 /* SwitchTableViewCell.xib in Resources */,
 				E50CCD0D191FBD5A003A9490 /* RidesCell.xib in Resources */,
@@ -2132,6 +2132,14 @@
 				E526B634194D97E0006D3527 /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E5CD592A19516E4F00E97DEC /* ProfileViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E5CD592919516E4F00E97DEC /* en */,
+			);
+			name = ProfileViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -6,51 +6,57 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="YourRidesCell" rowHeight="119" id="KGk-i7-Jjw" customClass="YourRidesCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="YourRidesCell" rowHeight="89" id="KGk-i7-Jjw" customClass="YourRidesCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="129"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="99"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UEX-Wa-03b">
-                        <rect key="frame" x="56" y="11" width="188" height="21"/>
+                        <rect key="frame" x="98" y="9" width="161" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="15"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Yc-Fk-dtM">
-                        <rect key="frame" x="56" y="40" width="188" height="21"/>
+                        <rect key="frame" x="98" y="40" width="159" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="15"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6o6-oS-hpE">
-                        <rect key="frame" x="56" y="73" width="188" height="21"/>
+                        <rect key="frame" x="98" y="69" width="159" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dg0-0Q-jQ4">
-                        <rect key="frame" x="56" y="103" width="188" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="15"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CalendarIconBlack" translatesAutoresizingMaskIntoConstraints="NO" id="1Hj-4O-OrU">
-                        <rect key="frame" x="20" y="74" width="20" height="20"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CalendarIconBlack" translatesAutoresizingMaskIntoConstraints="NO" id="1Hj-4O-OrU">
+                        <rect key="frame" x="75" y="72" width="15" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DriverIconBlack" translatesAutoresizingMaskIntoConstraints="NO" id="5cx-J7-eDY">
-                        <rect key="frame" x="20" y="104" width="20" height="20"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DestinationIconBlack" translatesAutoresizingMaskIntoConstraints="NO" id="UNp-hS-Xvg">
+                        <rect key="frame" x="75" y="45" width="15" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DestinationIconBlack" translatesAutoresizingMaskIntoConstraints="NO" id="UNp-hS-Xvg">
-                        <rect key="frame" x="20" y="46" width="20" height="20"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DepartureIconBlack" translatesAutoresizingMaskIntoConstraints="NO" id="dHd-w1-ed6">
+                        <rect key="frame" x="75" y="12" width="15" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DepartureIconBlack" translatesAutoresizingMaskIntoConstraints="NO" id="dHd-w1-ed6">
-                        <rect key="frame" x="20" y="11" width="20" height="20"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="MainCampus" translatesAutoresizingMaskIntoConstraints="NO" id="hcb-Ii-ldZ">
+                        <rect key="frame" x="7" y="21" width="60" height="60"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="EmailIconBlack" translatesAutoresizingMaskIntoConstraints="NO" id="IYb-Tq-edH">
+                        <rect key="frame" x="288" y="7" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DeleteIconBlack" translatesAutoresizingMaskIntoConstraints="NO" id="RqE-mf-35C">
+                        <rect key="frame" x="288" y="40" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="PassengerIconBlack" translatesAutoresizingMaskIntoConstraints="NO" id="0uI-B8-gcz">
+                        <rect key="frame" x="288" y="70" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
                 </subviews>
@@ -60,15 +66,16 @@
                 <outlet property="departurePlaceLabel" destination="UEX-Wa-03b" id="6kr-ff-8IL"/>
                 <outlet property="departureTimeLabel" destination="6o6-oS-hpE" id="ex8-Pn-gvL"/>
                 <outlet property="destinationLabel" destination="6Yc-Fk-dtM" id="1nH-ed-bXj"/>
-                <outlet property="driverImageView" destination="5cx-J7-eDY" id="kr0-0b-2Ij"/>
-                <outlet property="driverLabel" destination="dg0-0Q-jQ4" id="1BE-Lv-8G7"/>
             </connections>
         </tableViewCell>
     </objects>
     <resources>
         <image name="CalendarIconBlack" width="25" height="25"/>
+        <image name="DeleteIconBlack" width="30" height="30"/>
         <image name="DepartureIconBlack" width="25" height="25"/>
         <image name="DestinationIconBlack" width="16" height="25"/>
-        <image name="DriverIconBlack" width="20" height="20"/>
+        <image name="EmailIconBlack" width="30" height="30"/>
+        <image name="MainCampus" width="320" height="110"/>
+        <image name="PassengerIconBlack" width="20" height="20"/>
     </resources>
 </document>

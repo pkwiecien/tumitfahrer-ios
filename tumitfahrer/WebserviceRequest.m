@@ -142,16 +142,16 @@
     if (badge != nil) {
         if (badge.myRidesUpdatedAt != nil) {
             
-            [requestParams setValue:[ActionManager localDateWithDate:badge.myRidesUpdatedAt] forKey:@"my_rides_updated_at"];
+            [requestParams setValue:badge.myRidesUpdatedAt forKey:@"my_rides_updated_at"];
         }
         if (badge.campusUpdatedAt != nil) {
-            [requestParams setValue:[ActionManager localDateWithDate:badge.campusUpdatedAt] forKey:@"campus_updated_at"];
+            [requestParams setValue:badge.campusUpdatedAt forKey:@"campus_updated_at"];
         }
         if (badge.activityUpdatedAt != nil) {
-            [requestParams setValue:[ActionManager localDateWithDate:badge.activityUpdatedAt] forKey:@"activity_updated_at"];
+            [requestParams setValue:badge.activityUpdatedAt forKey:@"activity_updated_at"];
         }
         if (badge.timelineUpdatedAt != nil) {
-            [requestParams setValue:[ActionManager localDateWithDate:badge.timelineUpdatedAt] forKey:@"timeline_updated_at"];
+            [requestParams setValue:badge.timelineUpdatedAt forKey:@"timeline_updated_at"];
         }
     }
     

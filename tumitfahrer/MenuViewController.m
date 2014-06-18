@@ -108,17 +108,17 @@
 }
 
 -(void)addBackgroundToTableView {
-    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.backgroundColor = [UIColor yellowColor];
     self.view.backgroundColor = [UIColor colorWithRed:0.325 green:0.655 blue:0.835 alpha:1];
 }
 
 -(void)makeHeaderForTableView {
     UIView *menuTopHeaderView = [[[NSBundle mainBundle] loadNibNamed:@"MenuTopHeaderView" owner:self options:nil] firstObject];
+    menuTopHeaderView.frame = CGRectMake(0, 0, 280, 128);
     UILabel *initialsLabel = (UILabel *)[menuTopHeaderView viewWithTag:2];
     UILabel *usernameLabel = (UILabel *)[menuTopHeaderView viewWithTag:3];
     UIButton *settingsButton = (UIButton *)[menuTopHeaderView viewWithTag:4];
     
-    NSLog(@"user name: %@", [CurrentUser sharedInstance].user.firstName);
     usernameLabel.text = [CurrentUser sharedInstance].user.firstName;
     initialsLabel.text = [[[CurrentUser sharedInstance].user.firstName substringToIndex:1] stringByAppendingString:[[CurrentUser sharedInstance].user.lastName substringToIndex:1]];
     [settingsButton setBackgroundImage:[UIImage imageNamed:@"SettingsIcon"] forState:UIControlStateNormal];
@@ -132,16 +132,23 @@
     }
     menuTopHeaderView.backgroundColor = [UIColor colorWithRed:0.129 green:0.129 blue:0.129 alpha:1];
     self.tableView.tableHeaderView = menuTopHeaderView;
-    
-    UIView *topview = [[UIView alloc] initWithFrame:CGRectMake(0,-480,320,480)];
-    topview.backgroundColor = [UIColor colorWithRed:0.129 green:0.129 blue:0.129 alpha:1];
-    [self.tableView addSubview:topview];
+}
+
+-(void)initTableViewSize {
+    if (iPhone5) {
+        self.view.frame = CGRectMake(0, 0, 480, 568);
+        self.tableView.frame = CGRectMake(0, 0, 280, 568);
+    } else {
+        self.view.frame = CGRectMake(0, 0, 480, 480);
+        self.tableView.frame = CGRectMake(0, 0, 280, 480);
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self makeHeaderForTableView];
     [self getBadges];
+    [self initTableViewSize];
     
     // set initally first row selected
     //NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
@@ -248,14 +255,14 @@
 }
 
 // avoid sticky header in the table
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGFloat sectionHeaderHeight = 40;
-    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
-        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
-    } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
-        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
-    }
-}
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    CGFloat sectionHeaderHeight = 40;
+//    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
+//        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+//    } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
+//        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+//    }
+//}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 63;

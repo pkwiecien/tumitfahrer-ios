@@ -17,6 +17,7 @@
 #import "MMDrawerBarButtonItem.h"
 #import "WebserviceRequest.h"
 #import "ControllerUtilities.h"
+#import "RideSectionHeaderCell.h"
 
 @interface YourRidesViewController ()
 
@@ -162,6 +163,21 @@
     return [self.arrayWithHeaders objectAtIndex:section];
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 30;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    RideSectionHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RideNoticeCell"];
+    if(cell == nil) {
+        cell = [RideSectionHeaderCell rideSectionHeaderCell];
+    }
+    cell.noticeLabel.text = [self.arrayWithHeaders objectAtIndex:section];
+    cell.contentView.backgroundColor = [UIColor lightestBlue];
+    
+    return cell;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [[self.arrayWithSections objectAtIndex:section] count];
 }
@@ -188,20 +204,6 @@
     cell.departurePlaceLabel.text = ride.departurePlace;
     cell.destinationLabel.text = ride.destination;
     cell.departureTimeLabel.text = [ActionManager stringFromDate:ride.departureTime];
-    
-    if ([ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && [ride.isRideRequest boolValue]) {
-        cell.driverImageView.image = self.passengerIcon;
-        cell.driverLabel.text = @"Your request";
-    } else if([ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && ![ride.isRideRequest boolValue]) {
-        cell.driverImageView.image = self.driverIcon;
-        cell.driverLabel.text = @"You are a driver";
-    } else if (![ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && [ride.isRideRequest boolValue]) {
-        cell.driverImageView.image = self.passengerIcon;
-        cell.driverLabel.text = @"Ride request";
-    } else {
-        cell.driverImageView.image = self.driverIcon;
-        cell.driverLabel.text = @"Ride offer";
-    }
     
     return cell;
 }
