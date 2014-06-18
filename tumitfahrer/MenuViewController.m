@@ -147,7 +147,7 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self makeHeaderForTableView];
-    [self getBadges];
+//    [self getBadges];
     [self initTableViewSize];
     
     // set initally first row selected

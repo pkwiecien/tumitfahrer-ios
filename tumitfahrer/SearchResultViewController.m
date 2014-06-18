@@ -18,8 +18,9 @@
 #import "RidesStore.h"
 #import "CustomUILabel.h"
 #import "ControllerUtilities.h"
+#import "PanoramioUtilities.h"
 
-@interface SearchResultViewController () <RideStoreDelegate>
+@interface SearchResultViewController () <RideStoreDelegate, PanoramioUtilitiesDelegate>
 
 @property (nonatomic, retain) UILabel *zeroRidesLabel;
 @property NSArray *cellsArray;
@@ -83,9 +84,11 @@
     if (self.searchResults.count > 0) {
         self.zeroRidesLabel.hidden = YES;
         [self.zeroRidesLabel removeFromSuperview];
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     } else {
         [self.view addSubview:self.zeroRidesLabel];
         self.zeroRidesLabel.hidden = NO;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
 }
 
@@ -212,10 +215,6 @@
 
 -(void)didReceivePhotoForCurrentLocation:(UIImage *)image {
     [LocationController sharedInstance].currentLocationImage = image;
-}
-
--(void)loadNewElements {
-    
 }
 
 -(void)dealloc {

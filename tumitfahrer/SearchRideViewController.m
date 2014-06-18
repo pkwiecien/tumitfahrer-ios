@@ -17,6 +17,7 @@
 #import "ButtonCell.h"
 #import "DestinationViewController.h"
 #import "SearchResultViewController.h"
+#import "LocationController.h"
 
 @interface SearchRideViewController () <SegmentedControlCellDelegate, DestinationViewControllerDelegate, RMDateSelectionViewControllerDelegate, SliderCellDelegate, ButtonCellDelegate>
 

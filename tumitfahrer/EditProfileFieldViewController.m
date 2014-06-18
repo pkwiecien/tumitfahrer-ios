@@ -49,7 +49,7 @@
 
 -(void)setupNavigationBar {
     UINavigationController *navController = self.navigationController;
-    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor lighterBlue]];
+    [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor lightestBlue]];
     
     // right button of the navigation bar
     CustomBarButton *rightBarButton = [[CustomBarButton alloc] initWithTitle:@"Save"];

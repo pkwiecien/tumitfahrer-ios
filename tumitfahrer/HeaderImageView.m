@@ -78,6 +78,7 @@
     [imageView setBackgroundColor:[UIColor clearColor]];
     [imageView setTag:0];
     [imageView setImage:[UIImage imageWithData:self.selectedImageData]];
+    imageView.contentMode = UIViewContentModeCenter;
     
     [_scrollView addSubview:imageView];
     if (self.circularImage != nil) {

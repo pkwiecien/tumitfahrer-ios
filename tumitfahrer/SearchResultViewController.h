@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PanoramioUtilities.h"
 
-@interface SearchResultViewController : UIViewController <UITableViewDataSource, UITableViewDelegate,  PanoramioUtilitiesDelegate>
+@interface SearchResultViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (assign, nonatomic) NSInteger index;

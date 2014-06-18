@@ -55,12 +55,16 @@
     
     if (!self.tableView) {
         self.tableView = [[UITableView alloc] initWithFrame:self.bounds];
+        if (!iPhone5) {
+            UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+            self.tableView.tableFooterView = footerView;
+        }
         self.tableView.backgroundColor = [UIColor clearColor];
         self.tableView.delegate = self.tableViewDelegate;
         self.tableView.dataSource = self.tableViewDataSource;
         self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
         UIViewAutoresizingFlexibleHeight;
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         // Add scroll view KVO
         void *context = (__bridge void *)self;

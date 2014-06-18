@@ -62,24 +62,18 @@
     [buttonBack addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buttonBack];
     
-    UIButton *editButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    editButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-40, 10, 33, 25);
-    [editButton setImage:[UIImage imageNamed:@"CameraIcon"] forState:UIControlStateNormal];
-    [editButton addTarget:self action:@selector(headerViewTapped) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:editButton];
+    UIButton *cameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    cameraButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-40, 10, 33, 25);
+    [cameraButton setImage:[UIImage imageNamed:@"CameraIcon"] forState:UIControlStateNormal];
+    [cameraButton addTarget:self action:@selector(headerViewTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:cameraButton];
     
-    UIImage *bluredImage = [ActionManager applyBlurFilterOnImage:[UIImage imageNamed:@"MainCampus"]];
-    self.profileImageContentView.selectedImageData = UIImagePNGRepresentation(bluredImage);
+    self.profileImageContentView.selectedImageData = UIImagePNGRepresentation([UIImage imageNamed:@"bg1"]);
     if ([CurrentUser sharedInstance].user.profileImageData != nil) {
         UIImage *profilePic = [UIImage imageWithData:[CurrentUser sharedInstance].user.profileImageData];
-        if(profilePic.imageOrientation == UIImageOrientationUp) {
-            NSLog(@"image orientation up");
-        } else {
-            NSLog(@"image orientation different");
-        }
         self.profileImageContentView.circularImage = profilePic;
     } else {
-        //        self.profileImageContentView.circularImage = [UIImage imageNamed:@"CircleBlue"];
+
     }
     [[RidesStore sharedStore] fetchPastRidesFromCoreData];
 }
@@ -104,9 +98,6 @@
     self.cellDescriptions = [[NSArray alloc] initWithObjects:[CurrentUser sharedInstance].user.firstName, [CurrentUser sharedInstance].user.lastName, [CurrentUser sharedInstance].user.email, phoneNumber, car, @"●●●●●●", department, nil];
 }
 
--(void)oneFingerTwoTaps {
-    
-}
 #pragma mark - UITableView
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -135,11 +126,18 @@
             cell = [GeneralInfoCell generalInfoCell];
         }
         
-        NSInteger ridesAsOwner = [[CurrentUser sharedInstance].user.ridesAsOwner count] + [[[RidesStore sharedStore] pastRides] count];
-
-        cell.driverLabel.text = [NSString stringWithFormat:@"%d", ridesAsOwner];
-        cell.passengerLabel.text = [NSString stringWithFormat:@"%d", (int)[[CurrentUser sharedInstance].user.ridesAsPassenger count]];
-        cell.ratingLabel.text = [NSString stringWithFormat:@"%d %%", (int)[CurrentUser sharedInstance].user.ratingAvg];
+        NSInteger totalRidesAsDriver = [self ridesAsOwnerAndIsDriving:NO rides:[[CurrentUser sharedInstance].user.ridesAsOwner allObjects]] + [self ridesAsOwnerAndIsDriving:NO rides:[[RidesStore sharedStore] pastRides]];
+        
+        NSInteger totalRidesAsPassenger = [self ridesAsOwnerAndIsDriving:YES rides:[[CurrentUser sharedInstance].user.ridesAsOwner allObjects]] + [self ridesAsOwnerAndIsDriving:YES rides:[[RidesStore sharedStore] pastRides]] + [[CurrentUser sharedInstance].user.ridesAsPassenger count];
+        
+        cell.driverLabel.text = [NSString stringWithFormat:@"%d", totalRidesAsDriver];
+        cell.passengerLabel.text = [NSString stringWithFormat:@"%d", totalRidesAsPassenger];
+        if ([[CurrentUser sharedInstance].user.ratingAvg doubleValue] < 0) {
+            cell.ratingLabel.text = @"-";
+        } else {
+            NSInteger rating = [[CurrentUser sharedInstance].user.ratingAvg doubleValue]*100;
+            cell.ratingLabel.text = [NSString stringWithFormat:@"%d %%", rating];
+        }
         return cell;
         
     } else{
@@ -160,6 +158,18 @@
         return cell;
     }
 }
+
+-(NSInteger)ridesAsOwnerAndIsDriving:(BOOL)isRideRequest rides:(NSArray *)rides {
+    int rideCount = 0;
+    for (Ride *ride in rides) {
+        if ([ride.isRideRequest boolValue] == isRideRequest) {
+            rideCount++;
+        }
+    }
+    return rideCount;
+}
+
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [self.profileImageContentView.tableView deselectRowAtIndexPath:indexPath animated:NO];
