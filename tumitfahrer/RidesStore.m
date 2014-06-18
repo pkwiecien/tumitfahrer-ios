@@ -418,12 +418,26 @@ static int activity_id = 0;
 
 #pragma mark - favorite rides
 
+-(void)filterAllFavoriteRides {
+    [self filterFavoriteRidesByType:ContentTypeCampusRides];
+    [self filterFavoriteRidesByType:ContentTypeActivityRides];
+}
+
 - (void)filterFavoriteRidesByType:(ContentType)rideType {
+    [self initFavoriteRidesByType:rideType];
     NSArray *recentPlaces = [RecentPlaceUtilities fetchPlacesFromCoreData];
     for (Ride *ride in [self allRides]) {
         if ([self checkIfRideFavourite:ride recentPlacesFromCoreData:recentPlaces]) {
             [self addFavoriteRide:ride];
         }
+    }
+}
+
+-(void)initFavoriteRidesByType:(ContentType)rideType {
+    if (rideType == ContentTypeActivityRides) {
+        self.privateActivityRidesFavorites = [[NSMutableArray alloc] init];
+    } else if(rideType == ContentTypeCampusRides) {
+        self.privateCampusRidesFavorites = [[NSMutableArray alloc] init];
     }
 }
 

@@ -15,9 +15,9 @@
 @optional
 
 - (void)headerViewTapped;
--(void)mapButtonTapped;
--(void)editButtonTapped;
--(void)initFields;
+- (void)mapButtonTapped;
+- (void)editButtonTapped;
+- (void)initFields;
 
 @end
 

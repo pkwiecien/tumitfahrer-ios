@@ -84,7 +84,7 @@
             [queryParams setValue:escapedString forKey:@"last_name"];
             break;
         case Phone:
-            [queryParams setValue:escapedString forKey:@"phone"];
+            [queryParams setValue:escapedString forKey:@"phone_number"];
             break;
         case Car:
             [queryParams setValue:escapedString forKey:@"car"];

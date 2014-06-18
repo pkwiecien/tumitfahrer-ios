@@ -20,6 +20,7 @@
 #import "LocationController.h"
 #import "RecentPlace.h"
 #import "RecentPlaceUtilities.h"
+#import "RidesStore.h"
 
 @interface SearchRideViewController () <SegmentedControlCellDelegate, DestinationViewControllerDelegate, RMDateSelectionViewControllerDelegate, SliderCellDelegate, ButtonCellDelegate>
 
@@ -207,6 +208,7 @@
     
     [RecentPlaceUtilities createRecentPlaceWithName:departurePlace coordinate:self.departureCoordinate];
     [RecentPlaceUtilities createRecentPlaceWithName:destination coordinate:self.destinationCoordinate];
+    [[RidesStore sharedStore] filterAllFavoriteRides];
     
     SearchResultViewController *searchResultVC = [[SearchResultViewController alloc] init];
     searchResultVC.queryParams = queryParams;

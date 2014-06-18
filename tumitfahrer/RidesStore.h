@@ -58,4 +58,6 @@
 - (void)saveToPersistentStore:(Ride *)ride;
 - (Request *)rideRequestInCoreData:(NSNumber *)userId;
 
+- (void)filterAllFavoriteRides;
+
 @end

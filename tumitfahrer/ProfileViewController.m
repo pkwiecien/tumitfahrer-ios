@@ -18,10 +18,13 @@
 #import "FacultyManager.h"
 #import "EditDepartmentViewController.h"
 #import "RidesStore.h"
+#import "User.h"
 
 @interface ProfileViewController ()
 
 @property (strong, nonatomic) NSArray *cellDescriptions;
+@property (strong, nonatomic) NSArray *ownerCellImages;
+@property (strong, nonatomic) NSArray *otherCellImages;
 @property (strong, nonatomic) NSArray *cellImages;
 @property (strong, nonatomic) NSArray *editDescriptions;
 @property (nonatomic) UIImagePickerController *imagePickerController;
@@ -35,14 +38,14 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-        self.cellImages = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"ProfileIconBlack"], [UIImage imageNamed:@"ProfileIconBlack"], [UIImage imageNamed:@"EmailIconBlackSmall"], [UIImage imageNamed:@"PhoneIconBlackSmall"], [UIImage imageNamed:@"CarIconBlack"], [UIImage imageNamed:@"PasswordIconBlackMedium"],  [UIImage imageNamed:@"CampusIconBlack"], nil];
+        self.ownerCellImages = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"ProfileIconBlack"], [UIImage imageNamed:@"ProfileIconBlack"], [UIImage imageNamed:@"EmailIconBlackSmall"], [UIImage imageNamed:@"PhoneIconBlackSmall"], [UIImage imageNamed:@"CarIconBlack"], [UIImage imageNamed:@"PasswordIconBlackMedium"],  [UIImage imageNamed:@"CampusIconBlack"], nil];
+        self.otherCellImages = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"ProfileIconBlack"], [UIImage imageNamed:@"EmailIconBlackSmall"], [UIImage imageNamed:@"PhoneIconBlackSmall"], [UIImage imageNamed:@"CarIconBlack"], [UIImage imageNamed:@"CampusIconBlack"], nil];
         self.editDescriptions = [NSArray arrayWithObjects:@"First Name",@"Last Name", @"Email", @"Phone", @"Car", @"Password", @"Department", nil];
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor customLightGray]];
     
@@ -62,40 +65,55 @@
     [buttonBack addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buttonBack];
     
-    UIButton *cameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    cameraButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-40, 10, 33, 25);
-    [cameraButton setImage:[UIImage imageNamed:@"CameraIcon"] forState:UIControlStateNormal];
-    [cameraButton addTarget:self action:@selector(headerViewTapped) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:cameraButton];
-    
-    self.profileImageContentView.selectedImageData = UIImagePNGRepresentation([UIImage imageNamed:@"bg1"]);
-    if ([CurrentUser sharedInstance].user.profileImageData != nil) {
-        UIImage *profilePic = [UIImage imageWithData:[CurrentUser sharedInstance].user.profileImageData];
-        self.profileImageContentView.circularImage = profilePic;
-    } else {
-
-    }
     [[RidesStore sharedStore] fetchPastRidesFromCoreData];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    if (self.user == nil) {
+        self.user = [CurrentUser sharedInstance].user;
+    }
+    [self initProfilePic];
+    
     [self updateCellDescriptions];
     [self.profileImageContentView.tableView reloadData];
+    
+}
+
+-(void)initProfilePic {
+    self.profileImageContentView.selectedImageData = UIImagePNGRepresentation([UIImage imageNamed:@"bg1"]);
+    if (self.user.profileImageData != nil) {
+        UIImage *profilePic = [UIImage imageWithData:self.user.profileImageData];
+        self.profileImageContentView.circularImage = profilePic;
+    } else {
+    }
 }
 
 -(void)updateCellDescriptions {
+    
     NSString *phoneNumber = @"Not defined";
-    if ([CurrentUser sharedInstance].user.phoneNumber != nil) {
-        phoneNumber = [CurrentUser sharedInstance].user.phoneNumber;
+    if (self.user.phoneNumber != nil) {
+        phoneNumber = self.user.phoneNumber;
     }
     NSString *car = @"Not defined";
-    if ([CurrentUser sharedInstance].user.car != nil) {
-        car = [CurrentUser sharedInstance].user.car;
+    if (self.user.car != nil) {
+        car = self.user.car;
     }
     
-    NSString *department = [NSString stringWithFormat:@"%@", [[FacultyManager sharedInstance] nameOfFacultyAtIndex:[[CurrentUser sharedInstance].user.department intValue]]];
-    self.cellDescriptions = [[NSArray alloc] initWithObjects:[CurrentUser sharedInstance].user.firstName, [CurrentUser sharedInstance].user.lastName, [CurrentUser sharedInstance].user.email, phoneNumber, car, @"●●●●●●", department, nil];
+    NSString *department = [NSString stringWithFormat:@"%@", [[FacultyManager sharedInstance] nameOfFacultyAtIndex:[self.user.department intValue]]];
+    if ([self.user.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+        self.cellDescriptions = [[NSArray alloc] initWithObjects:self.user.firstName, self.user.lastName, self.user.email, phoneNumber, car, @"●●●●●●", department, nil];
+        self.cellImages = self.ownerCellImages;
+        UIButton *cameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        cameraButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-40, 10, 33, 25);
+        [cameraButton setImage:[UIImage imageNamed:@"CameraIcon"] forState:UIControlStateNormal];
+        [cameraButton addTarget:self action:@selector(headerViewTapped) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:cameraButton];
+
+    } else {
+        self.cellDescriptions = [[NSArray alloc] initWithObjects:self.user.firstName, self.user.email, phoneNumber, car, department, nil];
+        self.cellImages = self.otherCellImages;
+    }
 }
 
 #pragma mark - UITableView
@@ -126,16 +144,16 @@
             cell = [GeneralInfoCell generalInfoCell];
         }
         
-        NSInteger totalRidesAsDriver = [self ridesAsOwnerAndIsDriving:NO rides:[[CurrentUser sharedInstance].user.ridesAsOwner allObjects]] + [self ridesAsOwnerAndIsDriving:NO rides:[[RidesStore sharedStore] pastRides]];
+        NSInteger totalRidesAsDriver = [self ridesAsOwnerAndIsDriving:NO rides:[self.user.ridesAsOwner allObjects]] + [self ridesAsOwnerAndIsDriving:NO rides:[[RidesStore sharedStore] pastRides]];
         
-        NSInteger totalRidesAsPassenger = [self ridesAsOwnerAndIsDriving:YES rides:[[CurrentUser sharedInstance].user.ridesAsOwner allObjects]] + [self ridesAsOwnerAndIsDriving:YES rides:[[RidesStore sharedStore] pastRides]] + [[CurrentUser sharedInstance].user.ridesAsPassenger count];
+        NSInteger totalRidesAsPassenger = [self ridesAsOwnerAndIsDriving:YES rides:[self.user.ridesAsOwner allObjects]] + [self ridesAsOwnerAndIsDriving:YES rides:[[RidesStore sharedStore] pastRides]] + [self.user.ridesAsPassenger count];
         
         cell.driverLabel.text = [NSString stringWithFormat:@"%d", totalRidesAsDriver];
         cell.passengerLabel.text = [NSString stringWithFormat:@"%d", totalRidesAsPassenger];
-        if ([[CurrentUser sharedInstance].user.ratingAvg doubleValue] < 0) {
+        if ([self.user.ratingAvg doubleValue] < 0) {
             cell.ratingLabel.text = @"-";
         } else {
-            NSInteger rating = [[CurrentUser sharedInstance].user.ratingAvg doubleValue]*100;
+            NSInteger rating = [self.user.ratingAvg doubleValue]*100;
             cell.ratingLabel.text = [NSString stringWithFormat:@"%d %%", rating];
         }
         return cell;
@@ -151,7 +169,7 @@
         cell.imageView.image = [self.cellImages objectAtIndex:indexPath.row];
         cell.textLabel.text = [self.cellDescriptions objectAtIndex:indexPath.row];
         cell.backgroundColor = [UIColor customLightGray];
-        if (![[self.cellDescriptions objectAtIndex:indexPath.row] isEqualToString:[CurrentUser sharedInstance].user.email]) {
+        if (![[self.cellDescriptions objectAtIndex:indexPath.row] isEqualToString:self.user.email] && [self.user.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         
@@ -174,7 +192,11 @@
     
     [self.profileImageContentView.tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    if (indexPath.section == 0 || [[self.cellDescriptions objectAtIndex:indexPath.row] isEqualToString:[CurrentUser sharedInstance].user.email]) {
+    if (![self.user.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) { // we can't edit other user
+        return;
+    }
+    
+    if (indexPath.section == 0 || [[self.cellDescriptions objectAtIndex:indexPath.row] isEqualToString:self.user.email]) {
         // do nothing
     } else if(indexPath.row == [self.cellDescriptions count]-1) {
         EditDepartmentViewController *editDepartmentVC = [[EditDepartmentViewController alloc] init];
@@ -192,10 +214,17 @@
 #pragma mark - Button handlers
 
 - (void)back {
-    [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+    if(self.returnEnum == ViewController) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+    }
 }
 
 -(void)headerViewTapped {
+    if (![self.user.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+        return;
+    }
     UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Change profile picture:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
                             @"Take a photo",
                             @"Select a photo",
@@ -236,11 +265,13 @@
 }
 
 - (void)selectPhoto {
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    [self presentViewController:picker animated:YES completion:NULL];
+    if ([self.user.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:picker animated:YES completion:NULL];
+    }
 }
 
 #pragma mark - Image Picker Controller delegate methods
@@ -250,10 +281,10 @@
     UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
     self.profileImageContentView.rideDetailHeaderView.circularImage = chosenImage;
     [self.profileImageContentView.rideDetailHeaderView replaceImage:chosenImage];
-    [CurrentUser sharedInstance].user.profileImageData = UIImageJPEGRepresentation(chosenImage, 1.0f);
+    self.user.profileImageData = UIImageJPEGRepresentation(chosenImage, 1.0f);
     [picker dismissViewControllerAnimated:YES completion:NULL];
     NSError *error;
-    if (![[CurrentUser sharedInstance].user.managedObjectContext saveToPersistentStore:&error]) {
+    if (![self.user.managedObjectContext saveToPersistentStore:&error]) {
         NSLog(@"Whoops");
     }
 }
