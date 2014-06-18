@@ -48,11 +48,13 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [self setupNavigationBar];
+
+    if ([[self.tableValues objectAtIndex:1] isEqualToString:@""]) {
+        [self setDepartureLabelForCurrentLocation];
+    }
     
     if(self.SearchDisplayType == ShowAsViewController)
         [self setupLeftMenuButton];
-    
-    [self setDepartureLabelForCurrentLocation];
 }
 
 
@@ -137,6 +139,8 @@
         DestinationViewController *destinationVC = [[DestinationViewController alloc] init];
         destinationVC.rideTableIndexPath = indexPath;
         destinationVC.delegate = self;
+        destinationVC.headers = [NSMutableArray arrayWithObjects:@"Search History", @"Search Results", nil];
+        destinationVC.predefinedDestinations = [NSMutableArray arrayWithObjects:@"Anywhere", @"Arcistraße 21, München", @"Garching-Hochbrück", @"Garching Forschungszentrum", nil];
         [self.navigationController pushViewController:destinationVC animated:YES];
     } else if (indexPath.row == 5) {
         RMDateSelectionViewController *dateSelectionVC = [RMDateSelectionViewController dateSelectionController];
@@ -157,8 +161,14 @@
 -(void)buttonSelected {
     // TODO: add enum
     NSString *departurePlace = [self.tableValues objectAtIndex:1];
+    if ([departurePlace isEqualToString:@"Anywhere"]) {
+        departurePlace = @"";
+    }
     NSString *departurePlaceThreshold = [self.tableValues objectAtIndex:2];
     NSString *destination = [self.tableValues objectAtIndex:3];
+    if ([destination isEqualToString:@"Anywhere"]) {
+        destination = @"";
+    }
     NSString *destinationThreshold = [self.tableValues objectAtIndex:4];
     NSString *departureTime = [self.tableValues objectAtIndex:5];
     
@@ -175,7 +185,7 @@
     }
     
     if (departurePlace.length == 0 && destination.length == 0 && departureTime.length == 0) {
-        [ActionManager showAlertViewWithTitle:@"No data" description:@"All search fields can't be empty"];
+        [ActionManager showAlertViewWithTitle:@"Invalid search" description:@"All search fields can't be empty"];
         return;
     }
     

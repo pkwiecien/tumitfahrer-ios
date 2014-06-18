@@ -7,7 +7,6 @@
 //
 
 #import "AddRideViewController.h"
-#import "CustomBarButton.h"
 #import "ActionManager.h"
 #import "CurrentUser.h"
 #import "Ride.h"
@@ -20,10 +19,10 @@
 #import "KGStatusBar.h"
 #import "OwnerOfferViewController.h"
 #import "OwnerRequestViewController.h"
+#import "RideDetailActionCell.h"
 
 @interface AddRideViewController () <SegmentedControlCellDelegate, SwitchTableViewCellDelegate>
 
-@property (nonatomic, strong) CustomBarButton *btnAdd;
 @property (nonatomic, assign) CLLocationCoordinate2D departureCoordinate;
 @property (nonatomic, assign) CLLocationCoordinate2D destinationCoordinate;
 @property (nonatomic, strong) NSMutableArray *shareValues;
@@ -44,7 +43,7 @@
     if (self) {
         self.shareValues = [[NSMutableArray alloc] initWithObjects:@"Facebook", nil];
         self.tableSectionIcons = [[NSMutableArray alloc] initWithObjects:[UIImage imageNamed:@"DetailsIcon"], [UIImage imageNamed:@"ShareIcon"], nil];
-        self.tableSectionHeaders = [[NSMutableArray alloc] initWithObjects:@"Details", @"Share", nil];
+        self.tableSectionHeaders = [[NSMutableArray alloc] initWithObjects:@"Details", @"Share", @"Add", nil];
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
     }
     return self;
@@ -64,6 +63,9 @@
     self.RideType = ContentTypeCampusRides;
     self.displayEnum = ShouldDisplayNormally;
     self.departureCoordinate = [LocationController sharedInstance].currentLocation.coordinate;
+    
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+    self.tableView.tableFooterView = footerView;
 }
 
 -(void)initTables {
@@ -94,7 +96,9 @@
     if(self.RideDisplayType == ShowAsViewController) {
         [self setupLeftMenuButton];
     }
-    [self setDepartureLabelForCurrentLocation];
+    if ([[self.tableValues objectAtIndex:1] isEqualToString:@""]) {
+        [self setDepartureLabelForCurrentLocation];
+    }
     [self.tableView sendSubviewToBack:self.headerView];
 }
 
@@ -114,18 +118,6 @@
     UINavigationController *navController = self.navigationController;
     [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor lighterBlue]];
     
-    // right button of the navigation bar
-
-    self.btnAdd = [[CustomBarButton alloc] initWithTitle:@"Add"];
-    // set label for kif test
-    [self.btnAdd setAccessibilityLabel:@"Add Button"];
-    [self.btnAdd setIsAccessibilityElement:YES];
-
-    [self.btnAdd addTarget:self action:@selector(addRideButtonPressed) forControlEvents:UIControlEventTouchDown];
-    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.btnAdd];
-
-    self.navigationItem.rightBarButtonItem = searchButtonItem;
-    
     self.title = @"Add";
     UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
     [settingsView addTarget:self action:@selector(closeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -135,7 +127,7 @@
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 
 
@@ -144,6 +136,8 @@
         return [self.tablePlaceholders count];
     } else if (section == 1){
         return [self.shareValues count];
+    } else if(section == 2) {
+        return 1;
     }
     return 0;
 }
@@ -232,6 +226,13 @@
         [switchCell setIsAccessibilityElement:YES];
         
         return switchCell;
+    } else if (indexPath.section == 2) {
+        RideDetailActionCell *actionCell = [RideDetailActionCell offerRideCell];
+        [actionCell.actionButton addTarget:self action:@selector(addRideButtonPressed) forControlEvents:UIControlEventTouchDown];
+        [actionCell.actionButton setTitle:@"Add" forState:UIControlStateNormal];
+        [actionCell.actionButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"BlueButton"] withColor:[UIColor lighterBlue]] forState:UIControlStateNormal];
+        
+        return actionCell;
     }
     
     return cell;
@@ -263,25 +264,35 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 2) {
+        return 10;
+    }
     return 30.0f;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 40.0)];
-    headerView.backgroundColor = [UIColor lighterBlue];
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 3, 20, 20)];
-    imageView.image = [self.tableSectionIcons objectAtIndex:section];
-    [headerView addSubview:imageView];
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(40, 5, 10, 10)];
-    label.text = [self.tableSectionHeaders objectAtIndex:section];
-    label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:18];
-    [label sizeToFit];
-    [headerView addSubview:label];
-    
-    return headerView;
+    if (section == 0 || section == 1) {
+        
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 40.0)];
+        headerView.backgroundColor = [UIColor lighterBlue];
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 3, 20, 20)];
+        imageView.image = [self.tableSectionIcons objectAtIndex:section];
+        [headerView addSubview:imageView];
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(40, 5, 10, 10)];
+        label.text = [self.tableSectionHeaders objectAtIndex:section];
+        label.textColor = [UIColor whiteColor];
+        label.font = [UIFont systemFontOfSize:18];
+        [label sizeToFit];
+        [headerView addSubview:label];
+        
+        return headerView;
+    } {
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 10.0)];
+        headerView.backgroundColor = [UIColor clearColor];
+        return headerView;
+    }
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -298,7 +309,6 @@
 
 -(void)addRideButtonPressed {
     // prevent from adding same ride twice
-    self.btnAdd.enabled = NO;
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
@@ -310,15 +320,12 @@
     
     if (!departurePlace || departurePlace.length == 0) {
         [ActionManager showAlertViewWithTitle:@"No departure time" description:@"To add a ride please specify the departure place"];
-        self.btnAdd.enabled = YES;
         return;
     } else if(!destination || destination.length == 0) {
         [ActionManager showAlertViewWithTitle:@"No destination" description:@"To add a ride please specify the destination"];
-        self.btnAdd.enabled = YES;
         return;
     } else if(!departureTime || departureTime.length == 0) {
         [ActionManager showAlertViewWithTitle:@"No departure time" description:@"To add a ride please specify the departure time"];
-        self.btnAdd.enabled = YES;
         return;
     }
     
@@ -343,7 +350,6 @@
         NSString *meetingPoint = [self.tableValues objectAtIndex:6];
         if (!meetingPoint || meetingPoint.length == 0) {
             [ActionManager showAlertViewWithTitle:@"No meeting place" description:@"To add a ride please specify the meeting place"];
-            self.btnAdd.enabled = YES;
             return;
         }
         
@@ -381,10 +387,8 @@
             rideDetailVC.shouldGoBackEnum = GoBackToList;
             [self.navigationController pushViewController:rideDetailVC animated:YES];
         }
-        self.btnAdd.enabled = YES;
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [ActionManager showAlertViewWithTitle:@"Error" description:@"Could not add a ride"];
-        self.btnAdd.enabled = YES;
         RKLogError(@"Load failed with error: %@", error);
     }];
 }
@@ -405,11 +409,11 @@
 - (void)dateSelectionViewController:(RMDateSelectionViewController *)vc didSelectDate:(NSDate *)aDate {
     NSString *dateString = [ActionManager stringFromDate:aDate];
     [self.tableValues replaceObjectAtIndex:3 withObject:dateString];
-
+    
     [self.tableView reloadData];
-//    [self.tableView beginUpdates];
-//    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:3 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-//    [self.tableView endUpdates];
+    //    [self.tableView beginUpdates];
+    //    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:3 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+    //    [self.tableView endUpdates];
 }
 
 - (void)dateSelectionViewControllerDidCancel:(RMDateSelectionViewController *)vc {

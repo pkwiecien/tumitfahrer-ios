@@ -17,7 +17,6 @@
 @interface DestinationViewController ()
 
 @property (nonatomic) UISearchBar *searchBar;
-@property (nonatomic, strong) NSMutableArray *predefinedDestinations;
 
 @end
 
@@ -29,6 +28,7 @@
         searchQuery = [SPGooglePlacesAutocompleteQuery query];
         searchQuery.radius = 100.0;
         self.predefinedDestinations = [NSMutableArray arrayWithObjects:@"Arcistraße 21, München", @"Garching-Hochbrück", @"Garching Forschungszentrum", nil];
+        self.headers = [NSMutableArray arrayWithObjects:@"Suggestions", @"Search Results", nil];
     }
     return self;
 }
@@ -66,14 +66,12 @@
     if (section == 0) {
         return [self.predefinedDestinations count];
     } else
-    return [searchResultPlaces count] + 8;
+        return [searchResultPlaces count] + 8;
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if (section == 0) {
-        return @"TUM Campuses";
-    } else
-        return @"Other Locations";
+    
+    return [self.headers objectAtIndex:section];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -130,15 +128,13 @@
     if (indexPath.section == 0) {
         NSString *addressString = [self.predefinedDestinations objectAtIndex:indexPath.row];
         [[LocationController sharedInstance] fetchLocationForAddress:addressString completionHandler:^(CLLocation *location) {
-            if (location != nil) {
-                [self.delegate selectedDestination:addressString coordinate:location.coordinate indexPath:self.rideTableIndexPath];
-                [self.navigationController popViewControllerAnimated:YES];
-            }
+            [self.delegate selectedDestination:addressString coordinate:location.coordinate indexPath:self.rideTableIndexPath];
+            [self.navigationController popViewControllerAnimated:YES];
         }];
     } else {
-       SPGooglePlacesAutocompletePlace *place = [self placeAtIndexPath:indexPath];
-
-       [place resolveToPlacemark:^(CLPlacemark *placemark, NSString *addressString, NSError *error) {
+        SPGooglePlacesAutocompletePlace *place = [self placeAtIndexPath:indexPath];
+        
+        [place resolveToPlacemark:^(CLPlacemark *placemark, NSString *addressString, NSError *error) {
             if (error) {
                 SPPresentAlertViewWithErrorAndTitle(error, @"Could not map selected Place");
             } else if (placemark) {

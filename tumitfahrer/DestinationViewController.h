@@ -26,5 +26,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) id <DestinationViewControllerDelegate> delegate;
 @property (nonatomic) NSIndexPath *rideTableIndexPath;
+@property (nonatomic, strong) NSMutableArray *predefinedDestinations;
+@property (nonatomic, strong) NSMutableArray *headers;
 
 @end

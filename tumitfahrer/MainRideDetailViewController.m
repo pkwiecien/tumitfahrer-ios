@@ -72,7 +72,6 @@
     [editButton addTarget:self action:@selector(editButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:editButton];
     
-    
     self.rideDetail.shouldDisplayGradient = YES;
     self.view.backgroundColor = [UIColor customLightGray];
 }
