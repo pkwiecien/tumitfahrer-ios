@@ -13,9 +13,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="287" height="79"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="92z-k4-oEl">
-                        <rect key="frame" x="8" y="18" width="50" height="44"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlueBg" id="Qn9-tH-Yit">
+                        <rect key="frame" x="9" y="18" width="50" height="44"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HwN-j0-Ts3">
                         <rect key="frame" x="66" y="53" width="248" height="21"/>
@@ -28,13 +28,23 @@
                         <rect key="frame" x="16" y="22" width="35" height="35"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" selectable="NO" id="fnt-l2-5ig">
+                        <rect key="frame" x="66" y="5" width="226" height="46"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="activityDetailLabel" destination="HwN-j0-Ts3" id="Uhs-dy-CrQ"/>
-                <outlet property="backgroundImageView" destination="92z-k4-oEl" id="BtN-c0-IP6"/>
                 <outlet property="iconImageView" destination="vbx-Bs-jT9" id="qbz-1z-sYw"/>
+                <outlet property="textView" destination="fnt-l2-5ig" id="bBX-gz-TJ6"/>
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="BlueBg" width="50" height="44"/>
+    </resources>
 </document>

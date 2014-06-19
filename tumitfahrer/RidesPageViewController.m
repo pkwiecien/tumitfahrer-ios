@@ -144,6 +144,7 @@
 -(void)addButtonPressed {
     AddRideViewController *addRideVC = [[AddRideViewController alloc] init];
     addRideVC.RideType = self.RideType;
+    addRideVC.TableType = Driver;
     addRideVC.RideDisplayType = ShowAsModal;
     [self.navigationController pushViewControllerWithFade:addRideVC];
 }

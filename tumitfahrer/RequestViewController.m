@@ -128,6 +128,8 @@
 
 -(void)addRideButtonPressed {
     AddRideViewController *addRideVC = [[AddRideViewController alloc] init];
+    addRideVC.TableType = Driver;
+    addRideVC.RideType = ContentTypeCampusRides;
     [self.navigationController pushViewController:addRideVC animated:YES];
 }
 

@@ -58,20 +58,9 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.delegate willAppearViewWithIndex:self.index];
-    [self initTableViewSize];
     [self.tableView reloadData];
     [self checkIfAnyRides];
     [BadgeUtilities updateMyRidesDateInBadge:[ActionManager currentDate]];
-}
-
--(void)initTableViewSize {
-    if (iPhone5) {
-        self.view.frame = CGRectMake(0, 0, 480, 568);
-        self.tableView.frame = CGRectMake(0, 0, 280, 568);
-    } else {
-        self.view.frame = CGRectMake(0, 0, 480, 480);
-        self.tableView.frame = CGRectMake(0, 0, 280, 480);
-    }
 }
 
 -(void)checkIfAnyRides {
@@ -114,18 +103,21 @@
     
     id result = [[[ActivityStore sharedStore] recentActivitiesByType:self.index] objectAtIndex:indexPath.row];
     
+    NSString *rideDescription = @"";
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     if([result isKindOfClass:[Request class]]) {
-        cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"Request received for a ride to %@", ((Request *)result).requestedRide.destination];
+        rideDescription = [NSString stringWithFormat:@"Request received for a ride to %@", ((Request *)result).requestedRide.destination];
         cell.iconImageView.image = self.passengerIconWhite;
     } else if ([result isKindOfClass:[RideSearch class]]) {
         RideSearch *search = ((RideSearch *)result);
         if (search.destination == nil || search.destination.length == 0) {
-            cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"User searched for a ride from %@", search.departurePlace];
+           rideDescription = [NSString stringWithFormat:@"User searched for a ride from %@", search.departurePlace];
         } else {
-            cell.activityDescriptionLabel.text = [NSString stringWithFormat:@"User searched for a ride to %@", search.destination];
+            rideDescription = [NSString stringWithFormat:@"User searched for a ride to %@", search.destination];
         }
-        
+        cell.accessoryType = UITableViewCellAccessoryNone;
         cell.iconImageView.image = self.passengerIconWhite;
+        
     } else if([result isKindOfClass:[Ride class]]) {
         Ride *ride = (Ride*)result;
 
@@ -133,54 +125,15 @@
         NSString* destination = [fullDestination objectAtIndex:0];
         
         if ([ride.isRideRequest boolValue]) {
-            NSString *descr = [NSString stringWithFormat:@"New ride request to: \n%@", destination];
-            // iOS6 and above : Use NSAttributedStrings
-            const CGFloat fontSize = 15;
-            UIFont *regularFont = [UIFont systemFontOfSize:fontSize];
-            UIColor *foregroundColor = [UIColor blackColor];
-            
-            // Create the attributes
-            NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   regularFont, NSFontAttributeName,
-                                   foregroundColor, NSForegroundColorAttributeName, nil];
-            
-            // Create the attributed string (text + attributes)
-            NSMutableAttributedString *attributedText =
-            [[NSMutableAttributedString alloc] initWithString:descr
-                                                   attributes:attrs];
-            //[attributedText setAttributes:subAttrs range:range];
-            
-            // Set it in our UILabel and we are done!
-            [cell.activityDescriptionLabel setAttributedText:attributedText];
-            [cell.activityDescriptionLabel sizeToFit];
+            rideDescription = [NSString stringWithFormat:@"New ride request to: \n%@", destination];
             cell.iconImageView.image = self.passengerIconWhite;
         } else {
-            // iOS6 and above : Use NSAttributedStrings
-            NSString *descr = [NSString stringWithFormat:@"New ride offer to: \n%@", destination];
-            const CGFloat fontSize = 15;
-            //UIFont *boldFont = [UIFont boldSystemFontOfSize:fontSize];
-            UIFont *regularFont = [UIFont systemFontOfSize:fontSize];
-            UIColor *foregroundColor = [UIColor blackColor];
-            
-            // Create the attributes
-            NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   regularFont, NSFontAttributeName,
-                                   foregroundColor, NSForegroundColorAttributeName, nil];
-            // NSDictionary *subAttrs = [NSDictionary dictionaryWithObjectsAndKeys: boldFont, NSFontAttributeName, nil];
-            //const NSRange range = NSMakeRange(a,b); // range of " 2012/10/14 ". Ideally this should not be hardcoded
-            
-            // Create the attributed string (text + attributes)
-            NSMutableAttributedString *attributedText =
-            [[NSMutableAttributedString alloc] initWithString:descr
-                                                   attributes:attrs];
-//            [attributedText setAttributes:subAttrs range:range];
-            
-            // Set it in our UILabel and we are done!
-            [cell.activityDescriptionLabel setAttributedText:attributedText];
-            [cell.activityDescriptionLabel sizeToFit];
+            rideDescription = [NSString stringWithFormat:@"New ride offer to: \n%@", destination];
             cell.iconImageView.image = self.driverIconWhite;
         }
     }
+    cell.textView.text = rideDescription;
+    cell.textView.font = [UIFont systemFontOfSize:15];
     
     NSDate *now = [ActionManager currentDate];
     NSCalendar *c = [NSCalendar currentCalendar];

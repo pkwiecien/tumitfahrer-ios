@@ -71,6 +71,7 @@
     AddRideViewController *addRideVC = [[AddRideViewController alloc] init];
     addRideVC.RideDisplayType = ShowAsViewController;
     addRideVC.TableType = Driver;
+    addRideVC.RideType = ContentTypeCampusRides;
     SearchRideViewController *searchRidesVC = [[SearchRideViewController alloc] init];
     searchRidesVC.SearchDisplayType = ShowAsViewController;
     self.addRidesViewControllers = [NSArray arrayWithObjects: addRideVC, searchRidesVC, nil];
@@ -149,32 +150,25 @@
     [self makeHeaderForTableView];
     [self getBadges];
     [self initTableViewSize];
-    
-    // set initally first row selected
-    //NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
-    //[self.tableView selectRowAtIndexPath:indexPath animated:YES  scrollPosition:UITableViewScrollPositionBottom];
 }
 
 -(void)getBadges {
     [WebserviceRequest getBadgeCounterForUserId:[CurrentUser sharedInstance].user.userId block:^(Badge *badge) {
         if (badge != nil) {
             [self setCurrentBadge:badge];
-            if ([badge.campusBadge intValue] > 0 || [badge.activityBadge intValue] > 0 || [badge.myRidesBadge intValue] > 0 || [badge.timelineBadge intValue] > 0) {
-                [self reloadTableAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-            }
-            
+            [self reloadTable];
         }
     }];
 }
 
--(void)reloadTableAtIndexPath:(NSIndexPath *)indexPath {
+-(void)reloadTable {
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     [self.tableView reloadData];
     [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionBottom];
 }
 
 -(void)setCurrentBadge:(Badge *)badge {
-        self.badge = badge;
+    self.badge = badge;
 }
 
 #pragma mark - table view
