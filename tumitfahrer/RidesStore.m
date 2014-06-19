@@ -75,6 +75,13 @@ static int activity_id = 0;
     [self checkPhotoForEachRide];
 }
 
+-(void)initRidesByType:(NSInteger)rideType block:(boolCompletionHandler)block{
+    [self loadRidesFromCoreDataByType:rideType];
+    [self filterRidesByType:rideType];
+    [self checkPhotoForEachRide];
+    block(YES);
+}
+
 -(void)initUserRequests {
     if ([CurrentUser sharedInstance].user != nil) {
         [self fetchUserRequestedRidesFromCoreData:[CurrentUser sharedInstance].user.userId];
@@ -214,7 +221,8 @@ static int activity_id = 0;
     //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
     
     [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/users/%@/rides", [CurrentUser sharedInstance].user.userId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        [self updateBadges];
+        [self updateBadgesWithType:ContentTypeCampusRides];
+        [self updateBadgesWithType:ContentTypeActivityRides];
         block(YES);
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);
@@ -230,7 +238,7 @@ static int activity_id = 0;
     [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/rides?page=%d", activity_id] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         if ([[mappingResult array] count] > 0) {
             activity_id++;
-            [self updateBadges];
+//            [self updateBadges];
         }
         block(YES);
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -239,9 +247,28 @@ static int activity_id = 0;
     }];
 }
 
--(void)updateBadges {
-    [BadgeUtilities updateActivityDateInBadge:[ActionManager currentDate]];
-    [BadgeUtilities updateCampusDateInBadge:[ActionManager currentDate]];
+-(void)fetchRidesfromDate:(NSDate *)date rideType:(NSInteger)rideType block:(boolCompletionHandler)block {
+    
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    NSDictionary *queryParams = @{@"from_date": [ActionManager currentDate], @"ride_type" : [NSNumber numberWithInt:rideType]};
+    
+    [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/rides"] parameters:queryParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        if ([[mappingResult array] count] > 0) {
+            [self updateBadgesWithType:rideType];
+        }
+        block(YES);
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        RKLogError(@"Load failed with error: %@", error);
+        block(NO);
+    }];
+}
+
+-(void)updateBadgesWithType:(NSInteger)rideType {
+    if (rideType == ContentTypeCampusRides) {
+        [BadgeUtilities updateCampusDateInBadge:[ActionManager currentDate]];
+    } else {
+        [BadgeUtilities updateActivityDateInBadge:[ActionManager currentDate]];
+    }
     [BadgeUtilities updateMyRidesDateInBadge:[ActionManager currentDate]];
 }
 
