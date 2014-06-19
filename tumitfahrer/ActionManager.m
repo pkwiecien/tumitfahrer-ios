@@ -182,7 +182,7 @@
 
 +(NSArray *)shortestTimeFromNowFromDate:(NSDate *)date {
     NSDate* date1 = date;
-    NSDate* date2 = [self currentDate];
+    NSDate* date2 = [NSDate date];
     NSTimeInterval distanceBetweenDates = [date1 timeIntervalSinceDate:date2];
     double secondsInAnHour = 3600;
     double minutesInAnHour = 60;

@@ -63,8 +63,8 @@ static int activity_id = 0;
     [self filterAllActivities];
     
     self.privateActivitiesNearby = [self sortActivitiesWithArray:self.privateActivitiesNearby];
-    self.privateMyRecentActivities = [self sortActivitiesWithArray:self.privateMyRecentActivities];
-//    self.privateMyRecentActivities = [self sortArrayByDeparture:[self getSortedRides]];
+//    self.privateMyRecentActivities = [self sortActivitiesWithArray:self.privateMyRecentActivities];
+    self.privateMyRecentActivities = [self sortArrayByDeparture:[self getSortedRides]];
     if ([self.privateAllRecentActivities count] > 0) {
         [self.delegate didRecieveActivitiesFromWebService];
     }
@@ -103,12 +103,11 @@ static int activity_id = 0;
 
 -(NSMutableArray *)getSortedActivities {
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    NSDate *now = [ActionManager currentDate];
+    NSDate *now = [NSDate date];
     
     for (Activity *activity in self.privateActivityArray) {
         
         for (Ride *ride in activity.rides) {
-            NSLog(@"ride to %@ and time %@", ride.destination, ride.departureTime);
             if ([now compare:ride.departureTime] == NSOrderedAscending && ![array containsObject:ride]) {
                 [array addObject:ride];
                 [[RidesStore sharedStore] addRideToStore:ride];
@@ -131,10 +130,11 @@ static int activity_id = 0;
 
 -(NSMutableArray *)getSortedRides {
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    NSDate *now = [ActionManager currentDate];
+    NSDate *now = [NSDate date];
     
     for (Activity *activity in self.privateActivityArray) {
         for (Ride *ride in activity.rides) {
+            NSLog(@"now: %@, depart: %@", now, ride.departureTime);
             if ([now compare:ride.departureTime] == NSOrderedAscending && ![array containsObject:ride]) {
                 [array addObject:ride];
                 [[RidesStore sharedStore] addRideToStore:ride];
