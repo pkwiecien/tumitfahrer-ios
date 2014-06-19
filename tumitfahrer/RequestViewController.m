@@ -21,6 +21,7 @@
 #import "User.h"
 #import "AddRideViewController.h"
 #import "SimpleChatViewController.h"
+#import "ProfileViewController.h"
 
 @interface RequestViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate>
 
@@ -112,6 +113,12 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 1) {
+        ProfileViewController *profileVC = [[ProfileViewController alloc] init];
+        profileVC.user = self.ride.rideOwner;
+        profileVC.returnEnum = ViewController;
+        [self.navigationController pushViewController:profileVC animated:YES];
+    }
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 

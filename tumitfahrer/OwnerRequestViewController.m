@@ -17,8 +17,9 @@
 #import "WebserviceRequest.h"
 #import "RideDetailActionCell.h"
 #import "EditRequestViewController.h"
+#import "CustomIOS7AlertView.h"
 
-@interface OwnerRequestViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate>
+@interface OwnerRequestViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate, CustomIOS7AlertViewDelegate>
 
 @end
 
@@ -100,7 +101,7 @@
     } else {  // show delete button
         RideDetailActionCell *actionCell = [RideDetailActionCell offerRideCell];
         [actionCell.actionButton setTitle:@"Delete ride" forState:UIControlStateNormal];
-        [actionCell.actionButton addTarget:self action:@selector(deleteRideButtonPressed) forControlEvents:UIControlEventTouchDown];
+        [actionCell.actionButton addTarget:self action:@selector(showCancelationAlertView) forControlEvents:UIControlEventTouchDown];
         return actionCell;
     }
     
@@ -123,6 +124,19 @@
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);
     }];
+}
+
+-(void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        if (self.textView.text.length < 50) {
+            self.counterLabel.textColor = [UIColor redColor];
+        } else {
+            [self deleteRideButtonPressed];
+            [alertView close];
+        }
+    } else {
+        [alertView close];
+    }
 }
 
 -(void)editButtonTapped {

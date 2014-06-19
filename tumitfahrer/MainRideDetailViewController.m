@@ -15,8 +15,9 @@
 #import "ActionManager.h"
 #import "RideDetailMapViewController.h"
 #import "AppDelegate.h"
+#import "CustomIOS7AlertView.h"
 
-@interface MainRideDetailViewController () <RideStoreDelegate, HeaderContentViewDelegate, UIGestureRecognizerDelegate>
+@interface MainRideDetailViewController () <RideStoreDelegate, HeaderContentViewDelegate, UIGestureRecognizerDelegate, UITextViewDelegate, CustomIOS7AlertViewDelegate>
 
 @property (strong, nonatomic) NSDictionary *backLinkInfo;
 @property (weak, nonatomic) UIView *backLinkView;
@@ -173,6 +174,52 @@
     RideDetailMapViewController *rideDetailMapVC = [[RideDetailMapViewController alloc] init];
     rideDetailMapVC.selectedRide = self.ride;
     [self.navigationController pushViewController:rideDetailMapVC animated:YES];
+}
+
+- (void)showCancelationAlertView {
+    
+    CustomIOS7AlertView *alertView = [[CustomIOS7AlertView alloc] init];
+    [alertView setContainerView:[self prepareReasonView]];
+    [alertView setButtonTitles:[NSMutableArray arrayWithObjects:@"Cancel", @"Select", nil]];
+    [alertView setDelegate:self];
+    [alertView setUseMotionEffects:false];
+    [alertView show];
+}
+
+-(UIView *)prepareReasonView {
+    UIView *mainView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 290, 200)];
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, mainView.frame.size.width, 20)];
+    titleLabel.text = @"Cancel ride";
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    [mainView addSubview:titleLabel];
+    UILabel *reasonLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, 290, 20)];
+    reasonLabel.text = @"Please give a reason for canceletion";
+    reasonLabel.textAlignment = NSTextAlignmentCenter;
+    reasonLabel.textColor = [UIColor blackColor];
+    reasonLabel.font = [UIFont systemFontOfSize:14];
+    [mainView addSubview:reasonLabel];
+    self.counterLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, mainView.frame.size.width, 20)];
+    self.counterLabel.text = @"0 / 50 characters (required)";
+    self.counterLabel.textAlignment = NSTextAlignmentCenter;
+    self.counterLabel.font = [UIFont systemFontOfSize:14];
+    [mainView addSubview:self.counterLabel];
+    self.textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 90, 270, 100)];
+    self.textView.delegate = self;
+    [mainView addSubview:self.textView];
+    
+    return mainView;
+    
+}
+
+-(void)textViewDidChange:(UITextView *)textView {
+    self.counterLabel.textColor = [UIColor blackColor];
+    int len = textView.text.length;
+    self.counterLabel.text=[NSString stringWithFormat:@"%i / 50 characters (required)", len];
+}
+
+-(void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
 }
 
 

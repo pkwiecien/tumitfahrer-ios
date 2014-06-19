@@ -22,8 +22,10 @@
 #import "Request.h"
 #import "SimpleChatViewController.h"
 #import "EditRideViewController.h"
+#import "ProfileViewController.h"
+#import "CustomIOS7AlertView.h"
 
-@interface OwnerOfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate, RidePersonCellDelegate>
+@interface OwnerOfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate, RidePersonCellDelegate, CustomIOS7AlertViewDelegate, UITextViewDelegate>
 
 @end
 
@@ -176,15 +178,30 @@
         
         RideDetailActionCell *actionCell = [RideDetailActionCell offerRideCell];
         [actionCell.actionButton setTitle:@"Cancel ride" forState:UIControlStateNormal];
-        [actionCell.actionButton addTarget:self action:@selector(deleteRideButtonPressed) forControlEvents:UIControlEventTouchDown];
+        [actionCell.actionButton addTarget:self action:@selector(showCancelationAlertView) forControlEvents:UIControlEventTouchDown];
         return actionCell;
     }
     
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    ProfileViewController *profileVC = [[ProfileViewController alloc] init];
+    profileVC.returnEnum = ViewController;
+    
+    if (indexPath.section == 1 && [self.ride.passengers count] > 0) {
+        profileVC.user = [[self.ride.passengers allObjects] objectAtIndex:indexPath.row];
+        [self.navigationController pushViewController:profileVC animated:YES];
+    } else if(indexPath.section == 2 && [self.ride.requests count] > 0) {
+        Request *request = [[self.ride.requests allObjects] objectAtIndex:indexPath.row];
+        User *user = [CurrentUser getUserWithIdFromCoreData:request.passengerId];
+        profileVC.user = user;
+        [self.navigationController pushViewController:profileVC animated:YES];
+    }
+    
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
 }
+
 
 #pragma mark - Button actions
 
@@ -202,9 +219,11 @@
 #pragma mark - offer ride cell
 
 -(void)deleteRideButtonPressed {
-    RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
-    [objectManager deleteObject:self.ride path:[NSString stringWithFormat:@"/api/v2/rides/%@", self.ride.rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    NSDictionary *queryParams = @{@"reason": self.textView.text};
+    
+    [objectManager deleteObject:self.ride path:[NSString stringWithFormat:@"/api/v2/rides/%@", self.ride.rideId] parameters:queryParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         
         [[CurrentUser sharedInstance].user removeRidesAsOwnerObject:self.ride];
         [[RidesStore sharedStore] deleteRideFromCoreData:self.ride];
@@ -288,6 +307,19 @@
     EditRideViewController *editRideVC = [[EditRideViewController alloc] init];
     editRideVC.ride = self.ride;
     [self.navigationController pushViewController:editRideVC animated:YES];
+}
+
+-(void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        if (self.textView.text.length < 50) {
+            self.counterLabel.textColor = [UIColor redColor];
+        } else {
+            [self deleteRideButtonPressed];
+            [alertView close];
+        }
+    } else {
+        [alertView close];
+    }
 }
 
 -(void)dealloc {

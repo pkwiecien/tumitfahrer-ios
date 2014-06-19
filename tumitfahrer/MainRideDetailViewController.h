@@ -19,5 +19,9 @@
 @property (strong, nonatomic) NSArray *headerIcons;
 @property (nonatomic, strong) Ride* ride;
 
+@property (nonatomic, strong) UILabel *counterLabel;
+@property (nonatomic, strong) UITextView *textView;
+
+- (void)showCancelationAlertView;
 
 @end
