@@ -147,7 +147,7 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self makeHeaderForTableView];
-//    [self getBadges];
+    [self getBadges];
     [self initTableViewSize];
     
     // set initally first row selected
@@ -159,15 +159,24 @@
     [WebserviceRequest getBadgeCounterForUserId:[CurrentUser sharedInstance].user.userId block:^(Badge *badge) {
         if (badge != nil) {
             [self setCurrentBadge:badge];
-            if ([badge.myRidesBadge intValue] > 0 || [badge.campusBadge intValue] > 0 || [badge.activityBadge intValue] > 0 || [badge.timelineBadge intValue] > 0) {
-                [self.tableView reloadData];
+            if ([badge.campusBadge intValue] > 0 || [badge.activityBadge intValue] > 0 || [badge.myRidesBadge intValue] > 0 || [badge.timelineBadge intValue] > 0) {
+                [self reloadTableAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
             }
+            
         }
     }];
 }
 
+
+-(void)reloadTableAtIndexPath:(NSIndexPath *)indexPath {
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    [self.tableView reloadData];
+    [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionBottom];
+//    NSLog(@"badge: %@, %@, %@", self.badge.campusBadge, self.badge.activityBadge, self.badge.myRidesBadge);
+}
+
 -(void)setCurrentBadge:(Badge *)badge {
-    self.badge = badge;
+        self.badge = badge;
 }
 
 #pragma mark - table view
@@ -216,28 +225,37 @@
     }
     
     //badges
-    if (indexPath.section == 0 && indexPath.row == 0 && [self.badge.timelineBadge intValue] > 0) {
-        [self showBadgeForCell:&cell labelNumber:self.badge.timelineBadge];
-    } else {
-        [self hideBadgeForCell:&cell];
+    if (indexPath.section == 1 && indexPath.row == 0) {
+        if ([self.badge.campusBadge intValue] > 0) {
+            cell.anotherTest.hidden = NO;
+            cell.anotherTest.text = [NSString stringWithFormat:@"%d", [self.badge.campusBadge intValue]];
+            cell.backgroundBadgeTest.hidden = NO;
+        } else {
+            cell.badgeTestLabel.hidden = YES;
+            cell.backgroundBadgeTest.hidden = YES;
+        }
     }
     
-    if (indexPath.section == 1 && indexPath.row == 0 && [self.badge.campusBadge intValue] > 0) {
-        [self showBadgeForCell:&cell labelNumber:self.badge.campusBadge];
-    } else {
-        [self hideBadgeForCell:&cell];
+    if (indexPath.section == 1 && indexPath.row == 1) {
+        if ([self.badge.activityBadge intValue] > 0) {
+            cell.anotherTest.hidden = NO;
+            cell.anotherTest.text = [NSString stringWithFormat:@"%d", [self.badge.activityBadge intValue]];
+            cell.backgroundBadgeTest.hidden = NO;
+        } else {
+            cell.badgeTestLabel.hidden = YES;
+            cell.backgroundBadgeTest.hidden = YES;
+        }
     }
     
-    if (indexPath.section == 1 && indexPath.row == 1 && [self.badge.activityBadge intValue] > 0) {
-        [self showBadgeForCell:&cell labelNumber:self.badge.activityBadge];
-    } else {
-        [self hideBadgeForCell:&cell];
-    }
-    
-    if (indexPath.section == 3 && indexPath.row == 1 && [self.badge.myRidesBadge intValue] > 0) {
-        [self showBadgeForCell:&cell labelNumber:self.badge.myRidesBadge];
-    } else {
-        [self hideBadgeForCell:&cell];
+    if (indexPath.section == 3 && indexPath.row == 1) {
+        if ([self.badge.myRidesBadge intValue] > 0) {
+            cell.anotherTest.hidden = NO;
+            cell.anotherTest.text = [NSString stringWithFormat:@"%d", [self.badge.myRidesBadge intValue]];
+            cell.backgroundBadgeTest.hidden = NO;
+        } else {
+            cell.badgeTestLabel.hidden = YES;
+            cell.backgroundBadgeTest.hidden = YES;
+        }
     }
     
     return cell;
@@ -253,16 +271,6 @@
     (*cell).badgeLabel.hidden = YES;
     (*cell).badgeImageView.hidden = YES;
 }
-
-// avoid sticky header in the table
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    CGFloat sectionHeaderHeight = 40;
-//    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
-//        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
-//    } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
-//        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
-//    }
-//}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 63;
