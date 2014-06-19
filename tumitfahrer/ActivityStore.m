@@ -64,6 +64,7 @@ static int activity_id = 0;
     
     self.privateActivitiesNearby = [self sortActivitiesWithArray:self.privateActivitiesNearby];
     self.privateMyRecentActivities = [self sortActivitiesWithArray:self.privateMyRecentActivities];
+//    self.privateMyRecentActivities = [self sortArrayByDeparture:[self getSortedRides]];
     if ([self.privateAllRecentActivities count] > 0) {
         [self.delegate didRecieveActivitiesFromWebService];
     }
@@ -84,7 +85,51 @@ static int activity_id = 0;
     return [[NSMutableArray alloc] initWithArray:sortedArray];
 }
 
+-(NSMutableArray *)sortArrayByDeparture:(NSMutableArray *)array {
+    NSArray *sortedArray;
+    sortedArray = [array sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        if ([a isKindOfClass:[Request class]]) {
+            a = ((Request *)a).requestedRide;
+        }
+        if ([b isKindOfClass:[Request class]]) {
+            b = ((Request *)b).requestedRide;
+        }
+        NSDate *first = [a departureTime];
+        NSDate *second = [b departureTime];
+        return [first compare:second] == NSOrderedDescending;
+    }];
+    return [[NSMutableArray alloc] initWithArray:sortedArray];
+}
+
 -(NSMutableArray *)getSortedActivities {
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    NSDate *now = [ActionManager currentDate];
+    
+    for (Activity *activity in self.privateActivityArray) {
+        
+        for (Ride *ride in activity.rides) {
+            NSLog(@"ride to %@ and time %@", ride.destination, ride.departureTime);
+            if ([now compare:ride.departureTime] == NSOrderedAscending && ![array containsObject:ride]) {
+                [array addObject:ride];
+                [[RidesStore sharedStore] addRideToStore:ride];
+            }
+        }
+        for (Request *request in activity.requests) {
+            if ([now compare:request.requestedRide.departureTime] == NSOrderedAscending && ![array containsObject:request])  {
+                [array addObject:request];
+            }
+        }
+        for (RideSearch *rideSearch in activity.rideSearches) {
+            if (![array containsObject:rideSearch]) {
+                [array addObject:rideSearch];
+            }
+        }
+    }
+    
+    return [self sortActivitiesWithArray:array];
+}
+
+-(NSMutableArray *)getSortedRides {
     NSMutableArray *array = [[NSMutableArray alloc] init];
     NSDate *now = [ActionManager currentDate];
     
@@ -98,19 +143,12 @@ static int activity_id = 0;
         for (Request *request in activity.requests) {
             if ([now compare:request.requestedRide.departureTime] == NSOrderedAscending && ![array containsObject:request])  {
                 [array addObject:request];
-//                [[RidesStore sharedStore] addRideRequestToStore:request];
-            }
-        }
-        for (RideSearch *rideSearch in activity.rideSearches) {
-            if (![array containsObject:rideSearch]) {
-                [array addObject:rideSearch];
             }
         }
     }
     
     return [self sortActivitiesWithArray:array];
 }
-
 # pragma mark - filter nearby activities
 
 -(void)filterNearbyActivities {

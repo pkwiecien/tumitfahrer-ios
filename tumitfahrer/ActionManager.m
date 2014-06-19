@@ -38,7 +38,7 @@
     // mask by alpha values of original image
     CGContextSetBlendMode(context, kCGBlendModeDestinationIn);
     CGContextDrawImage(context, rect, origImage.CGImage);
-
+    
     // draw alpha-mask
     CGContextSetBlendMode(context, kCGBlendModeNormal);
     CGContextDrawImage(context, rect, origImage.CGImage);
@@ -50,7 +50,7 @@
     
     UIImage *coloredImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-
+    
     return coloredImage;
 }
 
@@ -79,7 +79,7 @@
     
     return blurredSnapshotImage;
 }
-    
+
 
 #pragma mark - encryption
 
@@ -93,14 +93,14 @@
 + (NSString *)decodeBase64String:(NSString *)base64String {
     NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:base64String options:0];
     NSString *decodedString = [[NSString alloc] initWithData:decodedData encoding:NSUTF8StringEncoding];
-
+    
     return decodedString;
 }
 
 + (NSString *)createSHA512:(NSString *)string {
     string = [string stringByAppendingString:SALT];
     const char *s = [string cStringUsingEncoding:NSASCIIStringEncoding];
-
+    
     NSData *keyData = [NSData dataWithBytes:s length:strlen(s)];
     uint8_t digest[CC_SHA512_DIGEST_LENGTH] = {0};
     CC_SHA512(keyData.bytes, (CC_LONG)keyData.length, digest);
@@ -180,16 +180,19 @@
     return destinationDate;
 }
 
-+(NSDate *)localDateWithDate:(NSDate *)sourceDate {
++(NSArray *)shortestTimeFromNowFromDate:(NSDate *)date {
+    NSDate* date1 = date;
+    NSDate* date2 = [self currentDate];
+    NSTimeInterval distanceBetweenDates = [date1 timeIntervalSinceDate:date2];
+    double secondsInAnHour = 3600;
+    double minutesInAnHour = 60;
+    NSInteger hoursBetweenDates = distanceBetweenDates / secondsInAnHour;
+    NSInteger minutesBetweenDate = distanceBetweenDates / minutesInAnHour;
     
-//    NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
-//    NSTimeZone* destinationTimeZone = [NSTimeZone systemTimeZone];
-//    
-//    NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:sourceDate];
-//    NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:sourceDate];
-//    NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
-//    
-//    NSDate* destinationDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:sourceDate];
+    return [NSArray arrayWithObjects:[NSNumber numberWithInt:hoursBetweenDates], [NSNumber numberWithInt:minutesBetweenDate], nil];
+}
+
++(NSDate *)localDateWithDate:(NSDate *)sourceDate {
     return [NSDate dateWithTimeInterval:[[NSTimeZone localTimeZone] secondsFromGMT] sinceDate:sourceDate];
 }
 

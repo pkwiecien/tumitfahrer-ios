@@ -103,12 +103,42 @@
     
     id result = [[[ActivityStore sharedStore] recentActivitiesByType:self.index] objectAtIndex:indexPath.row];
     
+    NSDate *now = [ActionManager currentDate];
+    NSCalendar *c = [NSCalendar currentCalendar];
+    NSDateComponents *components = [c components:NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:[ActionManager localDateWithDate:[result updatedAt]] toDate:now options:0];
+    components.timeZone = [NSTimeZone localTimeZone];
+    if (components.day > 0) {
+        cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d days ago", components.day];
+    } else if(components.hour > 0) {
+        cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d hours ago", components.hour];
+    } else if(components.minute > 0) {
+        cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d minutes ago", components.minute];
+    } else {
+        cell.activityDetailLabel.text = [NSString stringWithFormat:@"Added just now"];
+    }
+    
     NSString *rideDescription = @"";
+    
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     if([result isKindOfClass:[Request class]]) {
-        rideDescription = [NSString stringWithFormat:@"Request received for a ride to %@", ((Request *)result).requestedRide.destination];
+        Request *request = (Request *)result;
+        rideDescription = [NSString stringWithFormat:@"Request received for a ride to %@", request.requestedRide.destination];
         cell.iconImageView.image = self.passengerIconWhite;
-    } else if ([result isKindOfClass:[RideSearch class]]) {
+        if (self.index == 2) {
+            NSArray *timeValues = [ActionManager shortestTimeFromNowFromDate:request.requestedRide.departureTime];
+            
+            if ([[timeValues objectAtIndex:1] intValue]< 60) {
+                cell.activityDetailLabel.text = [NSString stringWithFormat:@"Join in %@ minutes", [timeValues objectAtIndex:1]];
+                cell.activityDetailLabel.textColor = [UIColor redColor];
+            } else if([[timeValues objectAtIndex:0] intValue] < 12){
+                cell.activityDetailLabel.text = [NSString stringWithFormat:@"Join in %@ hours", [timeValues objectAtIndex:0]];
+                cell.activityDetailLabel.textColor = [UIColor orangeColor];
+            } else {
+                cell.activityDetailLabel.text = [NSString stringWithFormat:@"Join in %@ hours", [timeValues objectAtIndex:0]];
+                cell.activityDetailLabel.textColor = [UIColor darkGrayColor];
+            }
+        }
+    } else if ([result isKindOfClass:[RideSearch class]] ) {
         RideSearch *search = ((RideSearch *)result);
         if (search.destination == nil || search.destination.length == 0) {
            rideDescription = [NSString stringWithFormat:@"User searched for a ride from %@", search.departurePlace];
@@ -131,24 +161,25 @@
             rideDescription = [NSString stringWithFormat:@"New ride offer to: \n%@", destination];
             cell.iconImageView.image = self.driverIconWhite;
         }
+        
+        if (self.index == 2) {
+            
+            NSArray *timeValues = [ActionManager shortestTimeFromNowFromDate:ride.departureTime];
+            
+            if ([[timeValues objectAtIndex:1] intValue]< 60) {
+                cell.activityDetailLabel.text = [NSString stringWithFormat:@"Join in %@ minutes", [timeValues objectAtIndex:1]];
+                cell.activityDetailLabel.textColor = [UIColor redColor];
+            } else if([[timeValues objectAtIndex:0] intValue] < 12){
+                cell.activityDetailLabel.text = [NSString stringWithFormat:@"Join in %@ hours", [timeValues objectAtIndex:0]];
+                cell.activityDetailLabel.textColor = [UIColor orangeColor];
+            } else {
+                cell.activityDetailLabel.text = [NSString stringWithFormat:@"Join in %@ hours", [timeValues objectAtIndex:0]];
+                cell.activityDetailLabel.textColor = [UIColor darkGrayColor];
+            }
+        }
     }
     cell.textView.text = rideDescription;
     cell.textView.font = [UIFont systemFontOfSize:15];
-    
-    NSDate *now = [ActionManager currentDate];
-    NSCalendar *c = [NSCalendar currentCalendar];
-    NSDateComponents *components = [c components:NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:[ActionManager localDateWithDate:[result updatedAt]] toDate:now options:0];
-    components.timeZone = [NSTimeZone localTimeZone];
-    if (components.day > 0) {
-        cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d days ago", components.day];
-    } else if(components.hour > 0) {
-        cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d hours ago", components.hour];
-    } else if(components.minute > 0) {
-        cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d minutes ago", components.minute];
-    } else {
-        cell.activityDetailLabel.text = [NSString stringWithFormat:@"Added just now"];
-    }
-
     cell.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];
     
