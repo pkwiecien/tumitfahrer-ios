@@ -10,7 +10,9 @@
 
 @class HeaderContentView, Ride;
 
-@interface MainRideDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate>
+@interface MainRideDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate> {
+    @protected UIButton *editButton;
+}
 
 @property (nonatomic, strong) HeaderContentView *rideDetail;
 @property (nonatomic, assign) ShouldDisplayEnum displayEnum;

@@ -2,17 +2,18 @@
 //  Ride.h
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 6/15/14.
+//  Created by Pawel Kwiecien on 6/19/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Activity, Conversation, Request, User;
+@class Activity, Conversation, Rating, Request, User;
 
 @interface Ride : NSManagedObject
 
+@property (nonatomic, retain) NSString * car;
 @property (nonatomic, retain) NSDate * createdAt;
 @property (nonatomic, retain) NSNumber * departureLatitude;
 @property (nonatomic, retain) NSNumber * departureLongitude;
@@ -30,12 +31,12 @@
 @property (nonatomic, retain) NSNumber * rideId;
 @property (nonatomic, retain) NSNumber * rideType;
 @property (nonatomic, retain) NSDate * updatedAt;
-@property (nonatomic, retain) NSString * car;
 @property (nonatomic, retain) Activity *activities;
 @property (nonatomic, retain) NSSet *conversations;
 @property (nonatomic, retain) NSSet *passengers;
 @property (nonatomic, retain) NSSet *requests;
 @property (nonatomic, retain) User *rideOwner;
+@property (nonatomic, retain) NSSet *ratings;
 @end
 
 @interface Ride (CoreDataGeneratedAccessors)
@@ -54,5 +55,10 @@
 - (void)removeRequestsObject:(Request *)value;
 - (void)addRequests:(NSSet *)values;
 - (void)removeRequests:(NSSet *)values;
+
+- (void)addRatingsObject:(Rating *)value;
+- (void)removeRatingsObject:(Rating *)value;
+- (void)addRatings:(NSSet *)values;
+- (void)removeRatings:(NSSet *)values;
 
 @end

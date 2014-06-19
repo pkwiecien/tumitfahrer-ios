@@ -12,6 +12,7 @@
 #import "RequestMapping.h"
 #import "IdsMapping.h"
 #import "StatusMapping.h"
+#import "RatingMapping.h"
 
 @implementation RideMapping
 
@@ -39,6 +40,9 @@
    [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"passengers" toKeyPath:@"passengers" withMapping:[UserMapping userMapping]]];
     
     [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"requests" toKeyPath:@"requests" withMapping:[RequestMapping requestMapping]]];
+    
+    [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"ratings" toKeyPath:@"ratings" withMapping:[RatingMapping ratingMapping]]];
+    
     return rideMapping;
 }
 

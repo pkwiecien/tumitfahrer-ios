@@ -15,11 +15,13 @@
     RKEntityMapping *ratingMapping = [RKEntityMapping mappingForEntityForName:@"Rating" inManagedObjectStore:[[RKObjectManager sharedManager] managedObjectStore]];
     ratingMapping.identificationAttributes = @[@"ratingId"];
     [ratingMapping addAttributeMappingsFromDictionary:@{@"id": @"ratingId",
-                                                         @"ride_id":@"rideId",
-                                                         @"rating_type":@"ratingType",
-                                                         @"created_at": @"createdAt",
-                                                         @"updated_at": @"updatedAt"
-                                                         }];
+                                                        @"to_user_id":@"toUserId",
+                                                        @"from_user_id":@"fromUserId",
+                                                        @"ride_id":@"rideId",
+                                                        @"rating_type":@"ratingType",
+                                                        @"created_at": @"createdAt",
+                                                        @"updated_at": @"updatedAt"
+                                                        }];
     return ratingMapping;
 }
 

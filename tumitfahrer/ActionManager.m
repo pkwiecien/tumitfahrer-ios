@@ -182,15 +182,15 @@
 
 +(NSDate *)localDateWithDate:(NSDate *)sourceDate {
     
-    NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
-    NSTimeZone* destinationTimeZone = [NSTimeZone systemTimeZone];
-    
-    NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:sourceDate];
-    NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:sourceDate];
-    NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
-    
-    NSDate* destinationDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:sourceDate];
-    return destinationDate;
+//    NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+//    NSTimeZone* destinationTimeZone = [NSTimeZone systemTimeZone];
+//    
+//    NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:sourceDate];
+//    NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:sourceDate];
+//    NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
+//    
+//    NSDate* destinationDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:sourceDate];
+    return [NSDate dateWithTimeInterval:[[NSTimeZone localTimeZone] secondsFromGMT] sinceDate:sourceDate];
 }
 
 // from: http://stackoverflow.com/questions/3139619/check-that-an-email-address-is-valid-on-ios

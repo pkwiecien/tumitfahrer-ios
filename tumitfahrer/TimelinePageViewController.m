@@ -33,7 +33,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.pageTitles = [NSArray arrayWithObjects:@"Timeline", @"Around you", @"Your activity", nil];
+        self.pageTitles = [NSArray arrayWithObjects:@"Timeline", @"Around you", @"Last minute", nil];
     }
     return self;
 }

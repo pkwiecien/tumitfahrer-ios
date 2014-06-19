@@ -48,6 +48,9 @@
     self.headerViewLabel.text = [@"To " stringByAppendingString:self.ride.destination];
     self.headerTitles = [NSArray arrayWithObjects:@"Details", @"Passengers", @"Requests", @"", nil];
     [self.rideDetail.tableView reloadData];
+    if ([self isPastRide]) {
+        editButton.hidden = YES;
+    }
 }
 
 #pragma mark - UITableView
@@ -75,7 +78,18 @@
     return 1;
 }
 
+-(BOOL)isPastRide {
+    if ([[ActionManager localDateWithDate:self.ride.departureTime] compare:[ActionManager currentDate]] == NSOrderedAscending) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // if past ride then don't show last section with action button
+    if ([self isPastRide]) {
+        return 3;
+    }
     return 4;
 }
 

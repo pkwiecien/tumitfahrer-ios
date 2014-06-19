@@ -25,7 +25,7 @@
 
 @end
 
-@implementation MainRideDetailViewController
+@implementation MainRideDetailViewController 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -56,19 +56,19 @@
     [self.view addSubview:buttonBack];
     
     UIButton *refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    refreshButton.frame = CGRectMake(200, 20, 44, 44);
+    refreshButton.frame = CGRectMake(170, 20, 44, 44);
     [refreshButton setImage:[UIImage imageNamed:@"RefreshIcon"] forState:UIControlStateNormal];
     [refreshButton addTarget:self action:@selector(refreshRideButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:refreshButton];
     
     UIButton *mapButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    mapButton.frame = CGRectMake(230, 20, 44, 44);
+    mapButton.frame = CGRectMake(260, 20, 44, 44);
     [mapButton setImage:[UIImage imageNamed:@"MapIcon"] forState:UIControlStateNormal];
     [mapButton addTarget:self action:@selector(mapButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:mapButton];
     
-    UIButton *editButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    editButton.frame = CGRectMake(280, 25, 30, 30);
+    editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    editButton.frame = CGRectMake(220, 25, 30, 30);
     [editButton setImage:[UIImage imageNamed:@"EditIcon"] forState:UIControlStateNormal];
     [editButton addTarget:self action:@selector(editButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:editButton];

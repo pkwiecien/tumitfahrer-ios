@@ -183,7 +183,7 @@
     
     NSDate *now = [ActionManager currentDate];
     NSCalendar *c = [NSCalendar currentCalendar];
-    NSDateComponents *components = [c components:NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:[result updatedAt] toDate:now options:0];
+    NSDateComponents *components = [c components:NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:[ActionManager localDateWithDate:[result updatedAt]] toDate:now options:0];
     components.timeZone = [NSTimeZone localTimeZone];
     if (components.day > 0) {
         cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d days ago", components.day];
