@@ -67,11 +67,11 @@
         switchCell.switchId = indexPath.row;
         switchCell.delegate = self;
         [switchCell.switchElement setOn:self.reminderValue];
-        
+#ifdef DEBUG
         //set label for KIF test
         [switchCell setAccessibilityLabel:@"Reminder Switch"];
         [switchCell setIsAccessibilityElement:YES];
-        
+#endif
         return switchCell;
     } else if(indexPath.row == 2) {
         TimePickerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TimePickerCell"];

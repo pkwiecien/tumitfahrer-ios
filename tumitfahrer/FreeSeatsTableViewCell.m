@@ -17,10 +17,11 @@
     cell.stepper.value = 1;
     cell.stepper.maximumValue = 8;
     cell.stepper.minimumValue = 1;
-
+#ifdef DEBUG
     // set label for kif test
     [cell.stepper setAccessibilityLabel:@"Seat Stepper"];
     [cell.stepper setIsAccessibilityElement:YES];
+#endif
     return cell;
 }
 

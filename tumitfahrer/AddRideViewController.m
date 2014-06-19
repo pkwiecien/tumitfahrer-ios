@@ -161,11 +161,14 @@
             [cell setFirstSegmentTitle:@"I am Passenger" secondSementTitle:@"I am Driver"];
             [cell addHandlerToSegmentedControl];
             
+            
+#ifdef DEBUG
             // add label for kif test
             [[[[cell segmentedControl] subviews] objectAtIndex:0] setAccessibilityLabel:@"Driver Choice"];
             [[[[cell segmentedControl] subviews] objectAtIndex:1] setAccessibilityLabel:@"Passenger Choice"];
             [[[[cell segmentedControl] subviews] objectAtIndex:0] setIsAccessibilityElement:YES];
             [[[[cell segmentedControl] subviews] objectAtIndex:1] setIsAccessibilityElement:YES];
+#endif
             
             cell.controlId = 0;
             return cell;
@@ -184,11 +187,13 @@
         } else if(indexPath.row == [self.tableValues count]-1) {
             SegmentedControlCell *cell = [SegmentedControlCell segmentedControlCell];
             [cell setFirstSegmentTitle:@"Campus" secondSementTitle:@"Activity"];
+#ifdef DEBUG
             // add label for kif test
             [[[[cell segmentedControl] subviews] objectAtIndex:0] setAccessibilityLabel:@"Activity"];
             [[[[cell segmentedControl] subviews] objectAtIndex:1] setAccessibilityLabel:@"Campus"];
             [[[[cell segmentedControl] subviews] objectAtIndex:0] setIsAccessibilityElement:YES];
             [[[[cell segmentedControl] subviews] objectAtIndex:1] setIsAccessibilityElement:YES];
+#endif
             cell.segmentedControl.selectedSegmentIndex = self.RideType;
             cell.delegate = self;
             [cell addHandlerToSegmentedControl];
@@ -220,18 +225,21 @@
         switchCell.selectionStyle = UITableViewCellSelectionStyleNone;
         switchCell.switchId = indexPath.row;
         switchCell.delegate = self;
-        
+#ifdef DEBUG
         //set label for KIF test
         [switchCell setAccessibilityLabel: switchCell.switchCellTextLabel.text];
         [switchCell setIsAccessibilityElement:YES];
-        
+#endif
         return switchCell;
     } else if (indexPath.section == 2) {
         RideDetailActionCell *actionCell = [RideDetailActionCell offerRideCell];
         [actionCell.actionButton addTarget:self action:@selector(addRideButtonPressed) forControlEvents:UIControlEventTouchDown];
         [actionCell.actionButton setTitle:@"Add" forState:UIControlStateNormal];
         [actionCell.actionButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"BlueButton"] withColor:[UIColor lighterBlue]] forState:UIControlStateNormal];
-        
+#ifdef DEBUG
+        [actionCell.actionButton setAccessibilityLabel:@"Add Button"];
+        [actionCell.actionButton setIsAccessibilityElement:YES];
+#endif
         return actionCell;
     }
     
@@ -256,8 +264,11 @@
         } else if([[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Time"]) {
             RMDateSelectionViewController *dateSelectionVC = [RMDateSelectionViewController dateSelectionController];
             dateSelectionVC.delegate = self;
+            
+#ifdef DEBUG
             [dateSelectionVC.datePicker setAccessibilityLabel:@"Date Picker"];
             [dateSelectionVC.datePicker setIsAccessibilityElement:YES];
+#endif
             [dateSelectionVC show];
         }
     }

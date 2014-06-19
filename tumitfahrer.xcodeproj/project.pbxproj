@@ -2428,7 +2428,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 00C0C3ED020C4AE39B725DA2 /* Pods-UI Tests.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TUMitfahrer.app/TUMitfahrer";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/tumitfahrer.app/tumitfahrer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2453,7 +2453,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 00C0C3ED020C4AE39B725DA2 /* Pods-UI Tests.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TUMitfahrer.app/TUMitfahrer";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/tumitfahrer.app/tumitfahrer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

@@ -41,6 +41,12 @@
     self.searchBar.showsCancelButton = NO;
     self.searchBar.placeholder = @"Search Address";
     self.searchBar.tintColor = [UIColor blueColor];
+    
+#ifdef DEBUG
+    [self.searchBar setAccessibilityLabel:@"Search Bar"];
+    [self.searchBar setIsAccessibilityElement:YES];
+#endif
+    
     NSDictionary *attributes =
     [NSDictionary dictionaryWithObjectsAndKeys: [UIColor whiteColor], NSForegroundColorAttributeName, nil];
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]

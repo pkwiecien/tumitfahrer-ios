@@ -113,6 +113,14 @@
         [cell setFirstSegmentTitle:@"Campus Ride" secondSementTitle:@"Activity Ride"];
         [cell addHandlerToSegmentedControl];
         cell.controlId = 0;
+        
+#ifdef DEBUG
+        // add label for kif test
+        [[[[cell segmentedControl] subviews] objectAtIndex:0] setAccessibilityLabel:@"Activity"];
+        [[[[cell segmentedControl] subviews] objectAtIndex:1] setAccessibilityLabel:@"Campus"];
+        [[[[cell segmentedControl] subviews] objectAtIndex:0] setIsAccessibilityElement:YES];
+        [[[[cell segmentedControl] subviews] objectAtIndex:1] setIsAccessibilityElement:YES];
+#endif
         return cell;
     } else if(indexPath.row ==  1 || indexPath.row == 3 || indexPath.row == 5) {
         
