@@ -24,6 +24,7 @@
 #import "EditRideViewController.h"
 #import "ProfileViewController.h"
 #import "CustomIOS7AlertView.h"
+#import "Rating.h"
 
 @interface OwnerOfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate, RidePersonCellDelegate, CustomIOS7AlertViewDelegate, UITextViewDelegate>
 
@@ -78,13 +79,6 @@
     return 1;
 }
 
--(BOOL)isPastRide {
-    if ([[ActionManager localDateWithDate:self.ride.departureTime] compare:[ActionManager currentDate]] == NSOrderedAscending) {
-        return YES;
-    } else {
-        return NO;
-    }
-}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // if past ride then don't show last section with action button
     if ([self isPastRide]) {
@@ -143,8 +137,22 @@
         cell.leftObject = passenger;
         cell.rightObject = passenger;
         cell.cellTypeEnum = PassengerCell;
-        [cell.leftButton setBackgroundImage:[UIImage imageNamed:@"DeleteIconBlack"] forState:UIControlStateNormal];
-        [cell.rightButton setBackgroundImage:[UIImage imageNamed:@"EmailIconBlack"] forState:UIControlStateNormal];
+        if ([self isPastRide]) {
+            [cell.leftButton setBackgroundImage:[UIImage imageNamed:@"DislikeIconBlack"] forState:UIControlStateNormal];
+            [cell.rightButton setBackgroundImage:[UIImage imageNamed:@"LikeIconBlack"] forState:UIControlStateNormal];
+            
+            Rating *rating = [self isRatingGivenForUserId:passenger.userId];
+            if (rating != nil && [rating.ratingType boolValue]) {
+                cell.leftButton.hidden = YES;
+                cell.rightButton.enabled = NO;
+            } else if(rating != nil && ![rating.ratingType boolValue]) {
+                cell.leftButton.enabled = NO;
+                cell.rightButton.hidden = YES;
+            }
+        } else {
+            [cell.leftButton setBackgroundImage:[UIImage imageNamed:@"DeleteIconBlack"] forState:UIControlStateNormal];
+            [cell.rightButton setBackgroundImage:[UIImage imageNamed:@"EmailIconBlack"] forState:UIControlStateNormal];
+        }
         return cell;
         
     } else if(indexPath.section == 1 && [self.ride.passengers count] == 0) {
@@ -175,8 +183,13 @@
             }];
         }
         
-        [cell.leftButton setBackgroundImage:[UIImage imageNamed:@"DeleteIconBlack"] forState:UIControlStateNormal];
-        [cell.rightButton setBackgroundImage:[UIImage imageNamed:@"AcceptIconBlack"] forState:UIControlStateNormal];
+        if ([self isPastRide]) {
+            cell.leftButton.hidden = YES;
+            cell.rightButton.hidden = YES;
+        } else {
+            [cell.leftButton setBackgroundImage:[UIImage imageNamed:@"DeleteIconBlack"] forState:UIControlStateNormal];
+            [cell.rightButton setBackgroundImage:[UIImage imageNamed:@"AcceptIconBlack"] forState:UIControlStateNormal];
+        }
         cell.leftObject = request;
         cell.rightObject = request;
         cell.cellTypeEnum = RequestCell;
@@ -195,7 +208,6 @@
         [actionCell.actionButton addTarget:self action:@selector(showCancelationAlertView) forControlEvents:UIControlEventTouchDown];
         return actionCell;
     }
-    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -276,11 +288,20 @@
     
     if (cellType == PassengerCell) {
         User *user = (User *)object;
-        [WebserviceRequest removePassengerWithId:user.userId rideId:self.ride.rideId block:^(BOOL fetched) {
-            if (fetched) {
-                [self updatePassengerCellsForPassenger:user];
-            }
-        }];
+
+        if ([self isPastRide]) {
+            [WebserviceRequest giveRatingToUserWithId:user.userId rideId:self.ride.rideId ratingType:0 block:^(BOOL given) {
+                if (given) {
+                    [self updateRide];
+                }
+            }];
+        } else {
+            [WebserviceRequest removePassengerWithId:user.userId rideId:self.ride.rideId block:^(BOOL fetched) {
+                if (fetched) {
+                    [self updatePassengerCellsForPassenger:user];
+                }
+            }];
+        }
     } else if(cellType == RequestCell) {
         Request *request = (Request *)object;
         [WebserviceRequest acceptRideRequest:request isConfirmed:NO block:^(BOOL isAccepted) {
@@ -296,9 +317,17 @@
 // accepting ride request or sending him a message
 -(void)rightButtonPressedWithObject:(id)object cellType:(CellTypeEnum)cellType {
     if (cellType == PassengerCell) {
-        
         User *user = (User *)object;
-        [self contactPassengerButtonPressedForUser:user];
+
+        if ([self isPastRide]) {
+            [WebserviceRequest giveRatingToUserWithId:user.userId rideId:self.ride.rideId ratingType:1 block:^(BOOL given) {
+                if (given) {
+                    [self updateRide];
+                }
+            }];
+        } else {
+            [self contactPassengerButtonPressedForUser:user];
+        }
         
     } else if(cellType == RequestCell) {
         

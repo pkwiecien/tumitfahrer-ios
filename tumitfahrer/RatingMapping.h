@@ -10,6 +10,7 @@
 
 @interface RatingMapping : NSObject
 
-+(RKEntityMapping*)ratingMapping;
++ (RKEntityMapping*)ratingMapping;
++ (RKResponseDescriptor *)postRatingResponseDescriptorWithMapping:(RKEntityMapping *)mapping;
 
 @end

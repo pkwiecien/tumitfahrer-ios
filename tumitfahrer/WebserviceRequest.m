@@ -169,4 +169,19 @@
     }];
 }
 
++(void)giveRatingToUserWithId:(NSNumber *)otherUserId rideId:(NSNumber *)rideId ratingType:(BOOL)ratingType block:(boolCompletionHandler)block {
+    
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+
+    NSString *requestString = [NSString stringWithFormat:@"/api/v2/users/%@/ratings", [CurrentUser sharedInstance].user.userId];
+    NSDictionary *queryParams = @{@"ride_id": rideId, @"rating_type": [NSNumber numberWithBool:ratingType], @"to_user_id" : otherUserId};
+    
+    [objectManager postObject:nil path:requestString parameters:queryParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        block(YES);
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        block(NO);
+    }];
+
+}
+
 @end

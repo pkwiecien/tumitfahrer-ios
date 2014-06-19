@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class HeaderContentView, Ride;
+@class HeaderContentView, Ride, Rating;
 
 @interface MainRideDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate> {
     @protected UIButton *editButton;
@@ -25,5 +25,8 @@
 @property (nonatomic, strong) UITextView *textView;
 
 - (void)showCancelationAlertView;
+- (BOOL)isPastRide;
+- (Rating *)isRatingGivenForUserId:(NSNumber *)otherUserId;
+- (void)updateRide;
 
 @end

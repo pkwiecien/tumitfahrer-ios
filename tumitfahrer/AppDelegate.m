@@ -32,6 +32,7 @@
 #import "MessageMapping.h"
 #import "SearchResultMapping.h"
 #import "BadgeMapping.h"
+#import "RatingMapping.h"
 
 @interface AppDelegate ()
 
@@ -241,6 +242,8 @@
     RKEntityMapping *getBadgesMapping =[BadgeMapping badgeMapping];
     [objectManager addResponseDescriptor:[BadgeMapping getBadgesResponseDescriptorWithMapping:getBadgesMapping]];
     
+    RKEntityMapping *postRatingMapping =[RatingMapping ratingMapping];
+    [objectManager addResponseDescriptor:[RatingMapping postRatingResponseDescriptorWithMapping:postRatingMapping]];
 }
 
 -(void)setupObservers {

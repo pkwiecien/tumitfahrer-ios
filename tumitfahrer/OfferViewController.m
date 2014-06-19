@@ -23,8 +23,9 @@
 #import "SimpleChatViewController.h"
 #import "RideSectionHeaderCell.h"
 #import "ProfileViewController.h"
+#import "Rating.h"
 
-@interface OfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate>
+@interface OfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate, RidePersonCellDelegate>
 
 @end
 
@@ -66,6 +67,10 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // if past ride then don't show last section with action button
+    if ([self isPastRide]) {
+        return 2;
+    }
     return 3;
 }
 
@@ -115,23 +120,33 @@
         
         return cell;
     } else if (indexPath.section == 1) { // show driver
-
+        
         RidePersonCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RidePersonCell"];
         if (cell == nil) {
             cell = [RidePersonCell ridePersonCell];
         }
+        cell.delegate = self;
         if (self.ride.rideOwner != nil) {
             cell.personNameLabel.text = [self.ride.rideOwner.firstName stringByAppendingString:[NSString stringWithFormat:@"\nRating: %@", self.ride.rideOwner.ratingAvg]];
             cell.personImageView.image = [UIImage imageWithData:self.ride.rideOwner.profileImageData];
-            
-//            CircularImageView *circularImageView = circularImageView = [[CircularImageView alloc] initWithFrame:CGRectMake(18, 15, 100, 100) image:[UIImage imageWithData:self.ride.rideOwner.profileImageData]];
-//            [cell addSubview:circularImageView];
         }
-        cell.leftButton.hidden = YES;
-        [cell.rightButton addTarget:self action:@selector(contactPassengerButtonPressed) forControlEvents:UIControlEventTouchDown];
-        
+        if ([self isPastRide] && self.ride.rideOwner != nil) {
+            [cell.leftButton setBackgroundImage:[UIImage imageNamed:@"DislikeIconBlack"] forState:UIControlStateNormal];
+            [cell.rightButton setBackgroundImage:[UIImage imageNamed:@"LikeIconBlack"] forState:UIControlStateNormal];
+            
+            Rating *rating = [self isRatingGivenForUserId:self.ride.rideOwner.userId];
+            if (rating != nil && [rating.ratingType boolValue]) {
+                cell.leftButton.hidden = YES;
+                cell.rightButton.enabled = NO;
+            } else if(rating != nil && ![rating.ratingType boolValue]) {
+                cell.leftButton.enabled = NO;
+                cell.rightButton.hidden = YES;
+            }
+        } else {
+            cell.leftButton.hidden = YES;
+        }
         return cell;
-    } else if(indexPath.section == 2) { // show leave button
+    } else if(indexPath.section == 2) { // show leave button if it's not a past ride
         
         RideDetailActionCell *actionCell = [RideDetailActionCell offerRideCell];
         [actionCell.actionButton addTarget:self action:@selector(joinButtonPressed) forControlEvents:UIControlEventTouchDown];
@@ -230,6 +245,30 @@
     }
 }
 
+-(void)leftButtonPressedWithObject:(id)object cellType:(CellTypeEnum)cellType {
+
+    if ([self isPastRide]) {
+        [WebserviceRequest giveRatingToUserWithId:self.ride.rideOwner.userId rideId:self.ride.rideId ratingType:0 block:^(BOOL given) {
+            if (given) {
+                [self updateRide];
+            }
+        }];
+    }
+}
+
+-(void)rightButtonPressedWithObject:(id)object cellType:(CellTypeEnum)cellType {
+    
+    if ([self isPastRide]) {
+        [WebserviceRequest giveRatingToUserWithId:self.ride.rideOwner.userId rideId:self.ride.rideId ratingType:1 block:^(BOOL given) {
+            if (given) {
+                [self updateRide];
+            }
+        }];
+    } else {
+        [self contactDriverButtonPressed];
+    }
+}
+
 -(void)removeRideRequest:(NSIndexPath *)indexPath requestor:(Request *)request {
     if ([[RidesStore sharedStore] removeRequestForRide:self.ride.rideId request:request]) {
         [self.rideDetail.tableView reloadData];
@@ -242,7 +281,7 @@
     }
 }
 
--(void)contactPassengerButtonPressed {
+-(void)contactDriverButtonPressed {
     SimpleChatViewController *simpleChatVC = [[SimpleChatViewController alloc] init];
     simpleChatVC.user = self.ride.rideOwner;
     [self.navigationController pushViewController:simpleChatVC animated:YES];

@@ -28,4 +28,7 @@ typedef void(^badgeCompletionHandler)(Badge *);
 +(void)getUserWithIdFromWebService:(NSNumber *)userId block:(userCompletionHandler)block;
 
 +(void)getBadgeCounterForUserId:(NSNumber *)userId block:(badgeCompletionHandler)block;
+
++(void)giveRatingToUserWithId:(NSNumber *)otherUserId rideId:(NSNumber *)rideId ratingType:(BOOL)ratingType block:(boolCompletionHandler)block;
+
 @end

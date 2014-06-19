@@ -109,6 +109,7 @@ typedef void(^arrayCompletionHandler)(NSArray *);
 
 static NSString *API_USERS = @"/api/v2/users";
 static NSString *API_USERS_RIDES = @"/api/v2/users/:userId/rides";
+static NSString *API_USERS_RATINGS = @"/api/v2/users/:userId/ratings";
 static NSString *API_PUT_USERS_RIDES = @"/api/v2/users/:userId/rides/:rideId";
 static NSString *API_USERS_DEVICES = @"/api/v2/users/:userId/devices";
 static NSString *API_SESSIONS = @"/api/v2/sessions";

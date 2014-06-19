@@ -25,4 +25,12 @@
     return ratingMapping;
 }
 
++(RKResponseDescriptor *)postRatingResponseDescriptorWithMapping:(RKEntityMapping *)mapping {
+    
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor
+                                                responseDescriptorWithMapping:mapping method:RKRequestMethodPOST pathPattern:API_USERS_RATINGS keyPath:@"rating" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    return responseDescriptor;
+}
+
 @end

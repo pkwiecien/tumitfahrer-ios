@@ -16,6 +16,7 @@
 #import "RideDetailMapViewController.h"
 #import "AppDelegate.h"
 #import "CustomIOS7AlertView.h"
+#import "Rating.h"
 
 @interface MainRideDetailViewController () <RideStoreDelegate, HeaderContentViewDelegate, UIGestureRecognizerDelegate, UITextViewDelegate, CustomIOS7AlertViewDelegate>
 
@@ -222,6 +223,35 @@
     
 }
 
+
+-(BOOL)isPastRide {
+    if ([[ActionManager localDateWithDate:self.ride.departureTime] compare:[ActionManager currentDate]] == NSOrderedAscending) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+-(Rating *)isRatingGivenForUserId:(NSNumber *)otherUserId {
+    for (Rating *rating  in [self.ride.ratings allObjects]) {
+        if ([rating.toUserId isEqualToNumber:otherUserId]) {
+            return rating;
+        }
+    }
+    return nil;
+}
+
+
+-(void)updateRide {
+    [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:self.ride.rideId block:^(BOOL fetched) {
+        [self reloadTableAndRide];
+    }];
+}
+
+-(void)reloadTableAndRide {
+    self.ride = [[RidesStore sharedStore] fetchRideFromCoreDataWithId:self.ride.rideId];
+    [self.rideDetail.tableView reloadData];
+}
 
 #pragma mark - Facebook sharing methods
 
