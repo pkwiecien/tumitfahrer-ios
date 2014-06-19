@@ -32,10 +32,11 @@
     // right button of the navigation bar
     CustomBarButton *searchButton = [[CustomBarButton alloc] initWithTitle:@"Save"];
     
+#ifdef DEBUG
     // set label for kif test
     [searchButton setAccessibilityLabel:@"Save Meetpoint Button"];
     [searchButton setIsAccessibilityElement:YES];
-    
+#endif
     [searchButton addTarget:self action:@selector(saveButtonPressed) forControlEvents:UIControlEventTouchDown];
     UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
     self.navigationItem.rightBarButtonItem = searchButtonItem;

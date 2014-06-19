@@ -59,6 +59,7 @@
 }
 
 -(void)initViewControllers {
+
     TimelinePageViewController *timelinePageVC = [[TimelinePageViewController alloc] init];
     self.timelineViewControllers = [NSArray arrayWithObjects:timelinePageVC, nil];
     
@@ -66,6 +67,7 @@
     RidesPageViewController *campusRidesVC = [[RidesPageViewController alloc] initWithContentType:ContentTypeCampusRides];
     RidesPageViewController *activityRidesVC = [[RidesPageViewController alloc] initWithContentType:ContentTypeActivityRides];
     self.browseRidesViewControllers = [NSArray arrayWithObjects:campusRidesVC, activityRidesVC, nil];
+    
     
     // section 1 - view controllers
     AddRideViewController *addRideVC = [[AddRideViewController alloc] init];

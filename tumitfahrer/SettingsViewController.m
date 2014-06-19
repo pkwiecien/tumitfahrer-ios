@@ -71,21 +71,22 @@
     self.title = @"Settings";
     
     UIBarButtonItem *refreshButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"LogoutIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(logoutButtonPressed:)];
-    
+#ifdef DEBUG
     // set label for kif test
     [self.navigationItem setAccessibilityLabel:@"Back Setting Button"];
     [self.navigationItem setIsAccessibilityElement:YES];
+#endif
     
     [self.navigationItem setRightBarButtonItem:refreshButtonItem];
 }
 
 -(void)setupLeftMenuButton{
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
-    
+#ifdef DEBUG
     // set label for kif test
     [leftDrawerButton setAccessibilityLabel:@"Menu Button"];
     [leftDrawerButton setIsAccessibilityElement:YES];
-    
+#endif
     [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
 }
 
