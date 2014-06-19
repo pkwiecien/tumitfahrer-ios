@@ -30,6 +30,7 @@
 @property (nonatomic, strong) NSMutableArray *arrayWithSections;
 @property (nonatomic, strong) NSMutableArray *arrayWithHeaders;
 @property (nonatomic, strong) NSArray *emptyCellDescriptionsArray;
+@property NSCache *imageCache;
 
 @end
 
@@ -54,6 +55,8 @@
     NSArray *emptyPast = [NSArray arrayWithObjects:@"You don't have any past rides", nil];
     self.emptyCellDescriptionsArray = [NSArray arrayWithObjects:emptyCreated, emptyJoined, emptyPast, nil];
     [[PanoramioUtilities sharedInstance] addObserver:self];
+    self.imageCache = [[NSCache alloc] init];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -224,11 +227,20 @@
         cell.departurePlaceLabel.text = ride.departurePlace;
         cell.destinationLabel.text = ride.destination;
         cell.departureTimeLabel.text = [ActionManager stringFromDate:ride.departureTime];
-        if (ride.destinationImage == nil) {
-            [RidesStore initRide:ride block:^(BOOL fetched) { }];
-        } else {
-            cell.destinationImage.image = [UIImage imageWithData:ride.destinationImage];
+        
+        UIImage *image = [_imageCache objectForKey:[NSNumber numberWithInteger:indexPath.section]];
+        if (image == nil) {
+            if(ride.destinationImage == nil) {
+                image = [UIImage imageNamed:@"Placeholder"];
+                [RidesStore initRide:ride block:^(BOOL fetched) { }];
+            } else {
+                image = [UIImage imageWithData:ride.destinationImage];
+            }
+            [_imageCache setObject:image forKey:[NSNumber numberWithInteger:indexPath.section]];
         }
+        cell.destinationImage.image = [UIImage imageWithData:ride.destinationImage];
+        cell.destinationImage.clipsToBounds = YES;
+        
         return cell;
     }
 }
@@ -262,6 +274,7 @@
 
 -(void)dealloc {
     self.delegate = nil;
+    [self.imageCache removeAllObjects];
     [[PanoramioUtilities sharedInstance] removeObserver:self];
 }
 
