@@ -167,12 +167,10 @@
     }];
 }
 
-
 -(void)reloadTableAtIndexPath:(NSIndexPath *)indexPath {
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     [self.tableView reloadData];
     [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionBottom];
-//    NSLog(@"badge: %@, %@, %@", self.badge.campusBadge, self.badge.activityBadge, self.badge.myRidesBadge);
 }
 
 -(void)setCurrentBadge:(Badge *)badge {
