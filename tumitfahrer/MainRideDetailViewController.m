@@ -56,12 +56,6 @@
 #endif
     [self.view addSubview:buttonBack];
     
-    UIButton *refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    refreshButton.frame = CGRectMake(170, 20, 44, 44);
-    [refreshButton setImage:[UIImage imageNamed:@"RefreshIcon"] forState:UIControlStateNormal];
-    [refreshButton addTarget:self action:@selector(refreshRideButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:refreshButton];
-    
     UIButton *mapButton = [UIButton buttonWithType:UIButtonTypeCustom];
     mapButton.frame = CGRectMake(260, 20, 44, 44);
     [mapButton setImage:[UIImage imageNamed:@"MapIcon"] forState:UIControlStateNormal];
@@ -127,7 +121,7 @@
     if (self.shouldGoBackEnum == GoBackNormally) {
         [self.navigationController popViewControllerAnimated:YES];
     } else {
-        if (self.ride.rideType == ContentTypeCampusRides) {
+        if ([self.ride.rideType intValue] == ContentTypeCampusRides) {
             RidesPageViewController *campusRidesVC = [[RidesPageViewController alloc] initWithContentType:ContentTypeCampusRides];
             UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:campusRidesVC];
             [self.sideBarController setCenterViewController:navController  withCloseAnimation:YES completion:nil];

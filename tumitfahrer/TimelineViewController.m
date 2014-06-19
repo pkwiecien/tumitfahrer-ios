@@ -23,6 +23,7 @@
 #import "OfferViewController.h"
 #import "ControllerUtilities.h"
 #import "CustomUILabel.h"
+#import "BadgeUtilities.h"
 
 @interface TimelineViewController () <ActivityStoreDelegate>
 
@@ -60,6 +61,7 @@
     [self initTableViewSize];
     [self.tableView reloadData];
     [self checkIfAnyRides];
+    [BadgeUtilities updateMyRidesDateInBadge:[ActionManager currentDate]];
 }
 
 -(void)initTableViewSize {
@@ -71,7 +73,6 @@
         self.tableView.frame = CGRectMake(0, 0, 280, 480);
     }
 }
-
 
 -(void)checkIfAnyRides {
     if ([[[ActivityStore sharedStore] recentActivitiesByType:self.index] count] == 0) {

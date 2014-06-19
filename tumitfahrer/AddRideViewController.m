@@ -252,7 +252,7 @@
             MeetingPointViewController *meetingPointVC = [[MeetingPointViewController alloc] init];
             meetingPointVC.selectedValueDelegate = self;
             meetingPointVC.indexPath = indexPath;
-            meetingPointVC.title = [self.tableValues objectAtIndex:indexPath.row];
+            meetingPointVC.title = [self.tablePlaceholders objectAtIndex:indexPath.row];
             meetingPointVC.startText = [self.tableValues objectAtIndex:indexPath.row];
             [self.navigationController pushViewController:meetingPointVC animated:YES];
         }

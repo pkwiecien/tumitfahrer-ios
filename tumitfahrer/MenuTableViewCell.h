@@ -15,5 +15,8 @@
 @property (weak, nonatomic) IBOutlet UIView *selectedView;
 @property (weak, nonatomic) IBOutlet UILabel *badgeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *badgeImageView;
+@property (weak, nonatomic) IBOutlet UILabel *badgeTestLabel;
+@property (weak, nonatomic) IBOutlet UILabel *anotherTest;
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundBadgeTest;
 
 @end

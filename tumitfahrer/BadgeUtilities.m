@@ -44,18 +44,21 @@
 +(void)updateMyRidesDateInBadge:(NSDate*)date {
     Badge *badge = [BadgeUtilities fetchLastBadgeDateFromCoreData];
     badge.myRidesUpdatedAt = date;
+    badge.myRidesBadge = [NSNumber numberWithInt:0];
     [BadgeUtilities saveBadgeToPersisentStore:badge];
 }
 
 +(void)updateCampusDateInBadge:(NSDate*)date {
     Badge *badge = [BadgeUtilities fetchLastBadgeDateFromCoreData];
     badge.campusUpdatedAt = date;
+    badge.campusBadge = [NSNumber numberWithInt:0];
     [BadgeUtilities saveBadgeToPersisentStore:badge];
 }
 
 +(void)updateActivityDateInBadge:(NSDate*)date {
     Badge *badge = [BadgeUtilities fetchLastBadgeDateFromCoreData];
     badge.activityUpdatedAt = date;
+    badge.activityBadge = [NSNumber numberWithInt:0];
     [BadgeUtilities saveBadgeToPersisentStore:badge];
 }
 

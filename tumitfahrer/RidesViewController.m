@@ -54,11 +54,12 @@
 }
 
 -(void)handleRefresh {
-    [[RidesStore sharedStore] fetchNewRides:^(BOOL fetched) {
-        if(fetched) {
-            [self addToImageCache];
-            [self.tableView reloadData];
-            [self.refreshControl endRefreshing];
+    [[RidesStore sharedStore] fetchRidesfromDate:[ActionManager currentDate] rideType:self.RideType block:^(BOOL fetched) {
+        if (fetched) {
+            [[RidesStore sharedStore] initRidesByType:self.RideType block:^(BOOL fetched) {
+                [self.tableView reloadData];
+                [self.refreshControl endRefreshing];
+            }];
         }
     }];
 }
@@ -242,15 +243,17 @@
     }
 }
 
+// if upper refresh is shown (pull down), then fetch updated rides after a date
 -(void)loadNewElements {
-    [[RidesStore sharedStore] fetchNewRides:^(BOOL fetched) {
-        if (fetched) {
-            for (Ride *ride in [[RidesStore sharedStore] allRides]) {
-                NSLog(@"ride with id: %@", ride.rideId);
-            }
-        }
+
+    [[RidesStore sharedStore] fetchRidesfromDate:[ActionManager currentDate] rideType:self.RideType block:^(BOOL fetched) {
+        
     }];
 }
+
+
+// if lower refres is show (pull up), then fetch rides that are later that the ride with last date
+
 
 -(NSArray *)ridesForCurrentIndex {
     switch (self.index) {
