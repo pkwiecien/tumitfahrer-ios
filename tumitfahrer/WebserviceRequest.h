@@ -13,6 +13,7 @@
 @interface WebserviceRequest : NSObject
 
 +(void)getConversationsForRideId:(NSInteger)rideId block:(boolCompletionHandler)block;
++(void)getConversationForRideId:(NSNumber *)rideId conversationId:(NSNumber *)conversationId block:(boolCompletionHandler)block;
 
 typedef void(^messageCompletionHandler)(Message *);
 typedef void(^userCompletionHandler)(User *);

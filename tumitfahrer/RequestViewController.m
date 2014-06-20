@@ -22,6 +22,8 @@
 #import "AddRideViewController.h"
 #import "SimpleChatViewController.h"
 #import "ProfileViewController.h"
+#import "ConversationUtilities.h"
+#import "CurrentUser.h"
 
 @interface RequestViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate>
 
@@ -135,7 +137,8 @@
 
 -(void)contactRequestorButtonPressed {
     SimpleChatViewController *simpleChatVC = [[SimpleChatViewController alloc] init];
-    simpleChatVC.user = self.ride.rideOwner;
+    simpleChatVC.conversation = [ConversationUtilities findConversationBetweenUser:[CurrentUser sharedInstance].user otherUser:self.ride.rideOwner conversationArray:[self.ride.conversations allObjects]];
+    simpleChatVC.otherUser = self.ride.rideOwner;
     [self.navigationController pushViewController:simpleChatVC animated:YES];
 }
 

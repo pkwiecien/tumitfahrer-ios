@@ -222,6 +222,8 @@
     
     RKEntityMapping *conversationsMapping = [ConversationMapping conversationMapping];
     [objectManager addResponseDescriptor:[ConversationMapping getConversationsResponseDescriptorWithMapping:conversationsMapping]];
+    [objectManager addResponseDescriptor:[ConversationMapping getConversationResponseDescriptorWithMapping:conversationsMapping]];
+    
     RKEntityMapping *postMessageMapping =[MessageMapping messageMapping];
     [objectManager addResponseDescriptor:[MessageMapping postMessageResponseDescriptorWithMapping:postMessageMapping]];
     

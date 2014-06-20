@@ -17,14 +17,13 @@
     mapping.identificationAttributes = @[@"conversationId"];
     [mapping addAttributeMappingsFromDictionary:@{    @"id": @"conversationId",
                                                       @"user_id": @"userId",
+                                                      @"ride_id": @"rideId",
                                                       @"other_user_id": @"otherUserId",
                                                       @"created_at": @"createdAt",
                                                       @"updated_at": @"updatedAt"
                                                       }];
     
     [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"messages" toKeyPath:@"messages" withMapping:[MessageMapping messageMapping]]];
-
-    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"ride" toKeyPath:@"ride" withMapping:[RideMapping generalRideMapping]]];
     
     return mapping;
 }
@@ -32,6 +31,13 @@
 +(RKResponseDescriptor *)getConversationsResponseDescriptorWithMapping:(RKEntityMapping *)mapping {
     // create response description for rides
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodGET pathPattern:API_RIDES_CONVERSATIONS keyPath:@"conversations"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    return responseDescriptor;
+}
+
++(RKResponseDescriptor *)getConversationResponseDescriptorWithMapping:(RKEntityMapping *)mapping {
+    // create response description for rides
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodGET pathPattern:API_RIDES_CONVERSATION keyPath:@"conversation"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     
     return responseDescriptor;
 }

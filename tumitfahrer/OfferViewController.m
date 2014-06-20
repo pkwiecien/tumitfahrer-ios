@@ -24,6 +24,7 @@
 #import "RideSectionHeaderCell.h"
 #import "ProfileViewController.h"
 #import "Rating.h"
+#import "ConversationUtilities.h"
 
 @interface OfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate, RidePersonCellDelegate>
 
@@ -283,7 +284,8 @@
 
 -(void)contactDriverButtonPressed {
     SimpleChatViewController *simpleChatVC = [[SimpleChatViewController alloc] init];
-    simpleChatVC.user = self.ride.rideOwner;
+    simpleChatVC.conversation = [ConversationUtilities findConversationBetweenUser:[CurrentUser sharedInstance].user otherUser:self.ride.rideOwner conversationArray:[self.ride.conversations allObjects]];
+    simpleChatVC.otherUser = self.ride.rideOwner;
     [self.navigationController pushViewController:simpleChatVC animated:YES];
 }
 

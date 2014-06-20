@@ -19,6 +19,8 @@
 		6EC837D2192605AE00007017 /* CurrentUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EC837D1192605AE00007017 /* CurrentUserTests.m */; };
 		6EFC23801926343200AAF263 /* RideSearchStoreTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EFC237F1926343200AAF263 /* RideSearchStoreTest.m */; };
 		6EFC23821926447500AAF263 /* RideStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EFC23811926447500AAF263 /* RideStoreTests.m */; };
+		E50263861954D5110041E21A /* ConversationUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E50263851954D5110041E21A /* ConversationUtilities.m */; };
+		E50263891954DC2D0041E21A /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = E50263881954DC2D0041E21A /* Conversation.m */; };
 		E504D9BC190A58710036FFA8 /* MeetingPointViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9BA190A58710036FFA8 /* MeetingPointViewController.m */; };
 		E504D9BD190A58710036FFA8 /* MeetingPointViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E504D9BB190A58710036FFA8 /* MeetingPointViewController.xib */; };
 		E504D9C2190A6C940036FFA8 /* DestinationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9C0190A6C940036FFA8 /* DestinationViewController.m */; };
@@ -213,7 +215,6 @@
 		E5FEF31D1944B5B200E326BB /* ConversationMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF31C1944B5B200E326BB /* ConversationMapping.m */; };
 		E5FEF32C1944C4AC00E326BB /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF32B1944C4AC00E326BB /* Message.m */; };
 		E5FEF33D1944CEA500E326BB /* SimpleChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF33C1944CEA500E326BB /* SimpleChatViewController.m */; };
-		E5FEF3411944EDFD00E326BB /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3401944EDFD00E326BB /* Conversation.m */; };
 		E5FEF3451944F57A00E326BB /* SliderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3431944F57A00E326BB /* SliderCell.m */; };
 		E5FEF3461944F57A00E326BB /* SliderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FEF3441944F57A00E326BB /* SliderCell.xib */; };
 		E5FEF34B1944F93300E326BB /* ButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3491944F93300E326BB /* ButtonCell.m */; };
@@ -292,6 +293,10 @@
 		6EFC23811926447500AAF263 /* RideStoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideStoreTests.m; sourceTree = "<group>"; };
 		BAEC5882914944C4B8E2DE24 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C71CE6059C014DFABC5B4F22 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		E50263841954D5110041E21A /* ConversationUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationUtilities.h; sourceTree = "<group>"; };
+		E50263851954D5110041E21A /* ConversationUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationUtilities.m; sourceTree = "<group>"; };
+		E50263871954DC2D0041E21A /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
+		E50263881954DC2D0041E21A /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 		E504D9B9190A58710036FFA8 /* MeetingPointViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetingPointViewController.h; sourceTree = "<group>"; };
 		E504D9BA190A58710036FFA8 /* MeetingPointViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetingPointViewController.m; sourceTree = "<group>"; };
 		E504D9BB190A58710036FFA8 /* MeetingPointViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeetingPointViewController.xib; sourceTree = "<group>"; };
@@ -589,8 +594,6 @@
 		E5FEF32B1944C4AC00E326BB /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		E5FEF33B1944CEA500E326BB /* SimpleChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleChatViewController.h; sourceTree = "<group>"; };
 		E5FEF33C1944CEA500E326BB /* SimpleChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleChatViewController.m; sourceTree = "<group>"; };
-		E5FEF33F1944EDFD00E326BB /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
-		E5FEF3401944EDFD00E326BB /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 		E5FEF3421944F57A00E326BB /* SliderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderCell.h; sourceTree = "<group>"; };
 		E5FEF3431944F57A00E326BB /* SliderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderCell.m; sourceTree = "<group>"; };
 		E5FEF3441944F57A00E326BB /* SliderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SliderCell.xib; sourceTree = "<group>"; };
@@ -1270,8 +1273,8 @@
 				E50CCCFD191F7C74003A9490 /* ActivityStore.m */,
 				E517DB5E1950354400961344 /* Badge.h */,
 				E517DB5F1950354400961344 /* Badge.m */,
-				E5FEF33F1944EDFD00E326BB /* Conversation.h */,
-				E5FEF3401944EDFD00E326BB /* Conversation.m */,
+				E50263871954DC2D0041E21A /* Conversation.h */,
+				E50263881954DC2D0041E21A /* Conversation.m */,
 				E50DB26918F447B800E87E62 /* CurrentUser.h */,
 				E50DB26A18F447B800E87E62 /* CurrentUser.m */,
 				E504D9E6190B02490036FFA8 /* Device.h */,
@@ -1380,6 +1383,8 @@
 				E5CD594B1952255900E97DEC /* RecentPlaceUtilities.m */,
 				E5FEF3001944A9AD00E326BB /* WebserviceRequest.h */,
 				E5FEF3011944A9AD00E326BB /* WebserviceRequest.m */,
+				E50263841954D5110041E21A /* ConversationUtilities.h */,
+				E50263851954D5110041E21A /* ConversationUtilities.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -2069,11 +2074,11 @@
 				E5E215681907B82500B0B150 /* CustomBarButton.m in Sources */,
 				E5E215781908442100B0B150 /* SwitchTableViewCell.m in Sources */,
 				E51FD50218F0864C0098AD11 /* ProfileViewController.m in Sources */,
-				E5FEF3411944EDFD00E326BB /* Conversation.m in Sources */,
 				E564464F192AB67200F636A5 /* CircularImageView.m in Sources */,
 				E5FEF32C1944C4AC00E326BB /* Message.m in Sources */,
 				E526B5AD194A488B006D3527 /* CustomIOS7AlertView.m in Sources */,
 				E5FEF35E1945E4EC00E326BB /* PrivacyViewController.m in Sources */,
+				E50263891954DC2D0041E21A /* Conversation.m in Sources */,
 				E504D9E8190B02490036FFA8 /* Device.m in Sources */,
 				E5FEF3781946299500E326BB /* Activity.m in Sources */,
 				E526B61F194CA3ED006D3527 /* MainRideDetailViewController.m in Sources */,
@@ -2109,6 +2114,7 @@
 				E5FEF3551945AA1100E326BB /* SearchResultMapping.m in Sources */,
 				E59987FB18E7251000B01C62 /* RegisterViewController.m in Sources */,
 				E5CD59551952C7BC00E97DEC /* Ride.m in Sources */,
+				E50263861954D5110041E21A /* ConversationUtilities.m in Sources */,
 				E50DB28B18F8730400E87E62 /* RidesStore.m in Sources */,
 				E50DB28818F8706500E87E62 /* RideMapping.m in Sources */,
 				E564464A192A976B00F636A5 /* GeneralInfoCell.m in Sources */,

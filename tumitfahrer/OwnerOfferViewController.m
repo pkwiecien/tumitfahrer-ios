@@ -25,6 +25,7 @@
 #import "ProfileViewController.h"
 #import "CustomIOS7AlertView.h"
 #import "Rating.h"
+#import "ConversationUtilities.h"
 
 @interface OwnerOfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate, RidePersonCellDelegate, CustomIOS7AlertViewDelegate, UITextViewDelegate>
 
@@ -283,6 +284,9 @@
 
 -(void)contactPassengerButtonPressedForUser:(User *)user {
     SimpleChatViewController *chatVC = [[SimpleChatViewController alloc] init];
+    chatVC.title = [NSString stringWithFormat:@"Chat with %@", user.firstName];
+    chatVC.conversation = [ConversationUtilities findConversationBetweenUser:[CurrentUser sharedInstance].user otherUser:user conversationArray:[self.ride.conversations allObjects]];
+    chatVC.otherUser = user;
     [self.navigationController pushViewController:chatVC animated:YES];
 }
 

@@ -14,6 +14,7 @@
 #import "CurrentUser.h"
 #import "WebserviceRequest.h"
 #import "Ride.h"
+#import "ConversationUtilities.h"
 
 @interface SimpleChatViewController ()
 
@@ -24,8 +25,7 @@
 
 @implementation SimpleChatViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     self.delegate = self;
     self.dataSource = self;
     [super viewDidLoad];
@@ -42,19 +42,12 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     [super viewWillAppear:animated];
     [self setupNavbar];
-    if ([self.conversation.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+    if (self.conversation != nil && [self.conversation.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
         self.receiverId = self.conversation.otherUserId;
-    } else {
+    } else if(self.conversation != nil) {
         self.receiverId = self.conversation.userId;
     }
-    
-    NSArray *sortedArray = [[self.conversation.messages allObjects] sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-        NSDate *first = [a createdAt];
-        NSDate *second = [b createdAt];
-        return [first compare:second] == NSOrderedDescending;
-    }];
-    
-    self.conversationArray = [NSMutableArray arrayWithArray:sortedArray];
+    [self refreshButtonPressed];
     
     // scroll to bottom before the view appears
     [self.tableView setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
@@ -69,12 +62,10 @@
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBarHidden = NO;
     
-    if (self.user != nil) {
-        self.title = [@"Message to " stringByAppendingString:self.user.firstName];
-    } else if (self.conversation == nil) {
+    if (self.conversation == nil) {
         self.title = @"Message to all";
     } else {
-        self.title = @"Messages";
+        self.title = @"New Message";
     }
     
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
@@ -85,8 +76,7 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.conversationArray count];
 }
 
@@ -199,19 +189,40 @@
 
 - (JSMessage *)messageForRowAtIndexPath:(NSIndexPath *)indexPath {
     Message *message = [self.conversationArray objectAtIndex:indexPath.row];
-    JSMessage *jsMessage = [[JSMessage alloc] initWithText:message.content sender:[CurrentUser sharedInstance].user.firstName date:message.createdAt];
+    JSMessage *jsMessage = nil;
+    if ([message.senderId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+        jsMessage = [[JSMessage alloc] initWithText:message.content sender:[CurrentUser sharedInstance].user.firstName date:message.createdAt];
+    } else {
+        jsMessage = [[JSMessage alloc] initWithText:message.content sender:self.otherUser.firstName date:message.createdAt];
+    }
     
-    return jsMessage ;
+    return jsMessage;
 }
 
 - (UIImageView *)avatarImageViewForRowAtIndexPath:(NSIndexPath *)indexPath sender:(NSString *)sender
 {
-    UIImage *image = [self.avatars objectForKey:sender];
-    return [[UIImageView alloc] initWithImage:image];
+//    UIImage *image = [self.avatars objectForKey:sender];
+    return [UIImageView new];
 }
 
 -(void)refreshButtonPressed {
+    [WebserviceRequest getConversationForRideId:self.conversation.ride.rideId conversationId:self.conversation.conversationId block:^(BOOL fetched) {
+        if (fetched) {
+            [self reloadTableWithConversationId:self.conversation.conversationId];
+        }
+    }];
+}
+
+-(void)reloadTableWithConversationId:(NSNumber *)conversationId {
+    self.conversation = [ConversationUtilities fetchConversationFromCoreDataWithId:conversationId];
+    NSArray *sortedArray = [[self.conversation.messages allObjects] sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        NSDate *first = [a createdAt];
+        NSDate *second = [b createdAt];
+        return [first compare:second] == NSOrderedDescending;
+    }];
     
+    self.conversationArray = [NSMutableArray arrayWithArray:sortedArray];
+    [self.tableView reloadData];
 }
 
 -(void)dealloc {

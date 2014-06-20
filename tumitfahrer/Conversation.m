@@ -2,7 +2,7 @@
 //  Conversation.m
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 6/8/14.
+//  Created by Pawel Kwiecien on 6/20/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
@@ -14,9 +14,12 @@
 @implementation Conversation
 
 @dynamic conversationId;
-@dynamic userId;
 @dynamic otherUserId;
-@dynamic ride;
+@dynamic userId;
+@dynamic rideId;
+@dynamic createdAt;
+@dynamic updatedAt;
 @dynamic messages;
+@dynamic ride;
 
 @end
