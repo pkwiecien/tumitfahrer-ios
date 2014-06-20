@@ -32,11 +32,32 @@
     [super viewDidLoad];
     self.mapView.delegate = self;
     
-    CustomAnnotation *departureAnnotation = [self createAnnotationWithCoordinates:CLLocationCoordinate2DMake([self.selectedRide.departureLatitude doubleValue], [self.selectedRide.departureLongitude doubleValue]) title:@"Departure"];
-    CustomAnnotation *destinationAnnotation = [self createAnnotationWithCoordinates:CLLocationCoordinate2DMake([self.selectedRide.destinationLatitude doubleValue], [self.selectedRide.destinationLongitude doubleValue]) title:@"Destination"];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    
+    [self setupNavigationBar];
+    
+    [self removeAllAnnoations];
+    
+    NSArray* fullDestination = [self.selectedRide.destination componentsSeparatedByString: @","];
+    NSString* destination = [fullDestination objectAtIndex:0];
+    
+    NSArray* fullDeparture = [self.selectedRide.departurePlace componentsSeparatedByString: @","];
+    NSString* departurePlace = [fullDeparture objectAtIndex:0];
+    
+    CustomAnnotation *departureAnnotation = [self createAnnotationWithCoordinates:CLLocationCoordinate2DMake([self.selectedRide.departureLatitude doubleValue], [self.selectedRide.departureLongitude doubleValue]) title:[NSString stringWithFormat:@"Departure: %@", departurePlace]];
+    CustomAnnotation *destinationAnnotation = [self createAnnotationWithCoordinates:CLLocationCoordinate2DMake([self.selectedRide.destinationLatitude doubleValue], [self.selectedRide.destinationLongitude doubleValue]) title:[NSString stringWithFormat:@"Departure: %@", destination]];
     
     [self.mapView addAnnotation:departureAnnotation];
     [self.mapView addAnnotation:destinationAnnotation];
+    
+    [self prepareDirections];
+}
+
+-(void)removeAllAnnoations {
+    [self.mapView removeAnnotations:self.mapView.annotations];
 }
 
 - (CustomAnnotation *)createAnnotationWithCoordinates:(CLLocationCoordinate2D)coordinate title:(NSString *)title {
@@ -44,11 +65,6 @@
     rideAnnotation.title = title;
     rideAnnotation.coordinate = coordinate;
     return rideAnnotation;
-}
-
--(void)viewWillAppear:(BOOL)animated {
-    [self setupNavigationBar];
-    [self prepareDirections];
 }
 
 -(void)viewDidAppear:(BOOL)animated {

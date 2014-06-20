@@ -236,6 +236,14 @@ static int activity_id = 0;
     }
 }
 
+-(void)updateActivities {
+    [self fetchActivitiesFromWebservice:^(BOOL fetched) {
+        if (fetched) {
+            [self initAllActivitiesFromCoreData];
+        }
+    }];
+}
+
 -(void)addMyActivity:(id)activity {
     if (![[self myRecentActivities] containsObject:activity]) {
         [[self myRecentActivities] addObject:activity];

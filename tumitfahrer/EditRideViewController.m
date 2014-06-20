@@ -22,6 +22,7 @@
 #import "LocationController.h"
 #import "Ride.h"
 #import "HeaderContentView.h"
+#import "ActivityStore.h"
 
 @interface EditRideViewController () <SegmentedControlCellDelegate>
 
@@ -72,6 +73,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
     [self.tableView reloadData];
     [self setupNavigationBar];
 }
@@ -212,7 +214,23 @@
         return;
     }
     
-    queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": [NSNumber numberWithInt:self.RideType], @"car": car};
+    NSNumber *departureLatitude = nil, *departureLongitude = nil, *destinationLatitude = nil, *destinationLongitude = nil;
+    if (self.departureCoordinate.latitude != 0) {
+        departureLatitude = [NSNumber numberWithDouble:self.departureCoordinate.latitude];
+        departureLongitude = [NSNumber numberWithDouble:self.departureCoordinate.longitude];
+    } else {
+        departureLatitude = self.ride.departureLatitude;
+        departureLongitude = self.ride.departureLongitude;
+    }
+    if(self.destinationCoordinate.latitude != 0) {
+        destinationLatitude = [NSNumber numberWithDouble:self.destinationCoordinate.latitude];
+        destinationLongitude = [NSNumber numberWithDouble:self.destinationCoordinate.longitude];
+    } else {
+        destinationLatitude = self.ride.destinationLatitude;
+        destinationLongitude = self.ride.destinationLongitude;
+    }
+    
+    queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": [NSNumber numberWithInt:self.RideType], @"car": car, @"departure_latitude": departureLatitude, @"departure_longitude" : departureLongitude, @"destination_latitude" : destinationLatitude, @"destination_longitude" : destinationLongitude};
     rideParams = @{@"ride": queryParams};
     
     [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"apiKey" value:[[CurrentUser sharedInstance] user].apiKey];
@@ -223,6 +241,11 @@
         self.ride.departurePlace = departurePlace;
         self.ride.destination = destination;
         self.ride.departureTime = [ActionManager dateFromString:departureTime];
+        self.ride.departureLatitude = departureLatitude;
+        self.ride.departureLongitude = departureLongitude;
+        self.ride.destinationLatitude = destinationLatitude;
+        self.ride.destinationLongitude = destinationLongitude;
+        [[RidesStore sharedStore] fetchImageForCurrentRide:self.ride];
         
         NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
         [f setNumberStyle:NSNumberFormatterDecimalStyle];
@@ -232,6 +255,7 @@
         self.ride.meetingPoint = meetingPoint;
         [[RidesStore sharedStore] saveToPersistentStore:self.ride];
         self.tableDriverValues = nil;
+        [[ActivityStore sharedStore] updateActivities];
         
         OwnerOfferViewController *rideDetailVC = (OwnerOfferViewController*)self.presentingViewController;
         rideDetailVC.ride = self.ride;

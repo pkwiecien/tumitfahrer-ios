@@ -184,9 +184,11 @@
     if([ride.isRideRequest boolValue]) {
         cell.seatsView.backgroundColor = [UIColor orangeColor];
         cell.roleImageView.image = self.passengerIcon;
+        cell.actionLabel.text = @"Help him";
     } else {
         cell.seatsView.backgroundColor = [UIColor orangeColor];
         cell.roleImageView.image = self.driverIcon;
+        cell.actionLabel.text = @"Join now";
     }
     if ([ride.isRideRequest boolValue]) {
         cell.seatsLabel.text = @"offer a ride";

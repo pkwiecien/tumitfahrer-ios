@@ -81,6 +81,7 @@
         }];
     }
     
+    
     if (self.ride.destinationImage == nil) {
         [RidesStore initRide:self.ride block:^(BOOL fetched) { }];
     } else {
@@ -244,6 +245,7 @@
 
 -(void)reloadTableAndRide {
     self.ride = [[RidesStore sharedStore] fetchRideFromCoreDataWithId:self.ride.rideId];
+    [self initFields];
     [self.rideDetail.tableView reloadData];
 }
 

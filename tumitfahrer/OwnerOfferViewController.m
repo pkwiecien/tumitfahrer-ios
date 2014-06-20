@@ -46,12 +46,15 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
+    
     self.headerViewLabel.text = [@"To " stringByAppendingString:self.ride.destination];
     self.headerTitles = [NSArray arrayWithObjects:@"Details", @"Passengers", @"Requests", @"", nil];
-    [self.rideDetail.tableView reloadData];
+
     if ([self isPastRide]) {
         editButton.hidden = YES;
     }
+    
+    [self reloadTableAndRide];
 }
 
 #pragma mark - UITableView

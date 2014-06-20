@@ -28,5 +28,7 @@
 - (BOOL)isPastRide;
 - (Rating *)isRatingGivenForUserId:(NSNumber *)otherUserId;
 - (void)updateRide;
+- (void)reloadTableAndRide;
+
 
 @end

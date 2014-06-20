@@ -252,9 +252,13 @@ typedef enum {
     // Add extra space on the sides
     region.span.latitudeDelta = fabs(topLeftCoord.latitude - bottomRightCoord.latitude) * 1.4;
     region.span.longitudeDelta = fabs(bottomRightCoord.longitude - topLeftCoord.longitude) * 1.4;
-    
     region = [mapView regionThatFits:region];
-    [mapView setRegion:region animated:YES];
+
+    if(region.center.longitude == -180.00000000){
+        NSLog(@"Invalid region!");
+    }else{
+        [mapView setRegion:region animated:YES];
+    }
 }
 
 -(void)dealloc {

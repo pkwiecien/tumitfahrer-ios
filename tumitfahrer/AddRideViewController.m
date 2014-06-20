@@ -62,7 +62,6 @@
     self.tableView.tableHeaderView = self.headerView;
     self.RideType = ContentTypeCampusRides;
     self.displayEnum = ShouldDisplayNormally;
-    self.departureCoordinate = [LocationController sharedInstance].currentLocation.coordinate;
     
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
     self.tableView.tableFooterView = footerView;
@@ -103,6 +102,7 @@
 }
 
 -(void)setDepartureLabelForCurrentLocation {
+    self.departureCoordinate = [LocationController sharedInstance].currentLocation.coordinate;
     NSString *departurePlace = [LocationController sharedInstance].currentAddress;
     
     if(departurePlace!=nil)
@@ -358,19 +358,27 @@
         if (!car) {
             car = @"";
         }
+        
         NSString *meetingPoint = [self.tableValues objectAtIndex:6];
         if (!meetingPoint || meetingPoint.length == 0) {
             [ActionManager showAlertViewWithTitle:@"No meeting place" description:@"To add a ride please specify the meeting place"];
             return;
         }
-        
+
         queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": [NSNumber numberWithInt:self.RideType], @"car": car, @"is_driving": [NSNumber numberWithBool:YES], @"departure_latitude" : [NSNumber numberWithDouble:self.departureCoordinate.latitude], @"departure_longitude" : [NSNumber numberWithDouble:self.departureCoordinate.longitude], @"destination_latitude": [NSNumber numberWithDouble:self.destinationCoordinate.latitude],
                         @"destination_longitude" : [NSNumber numberWithDouble:self.destinationCoordinate.longitude]};
         
         rideParams = @{@"ride": queryParams};
         
     } else { // passenger
-        queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"ride_type": [NSNumber numberWithInt:self.RideType], @"is_driving": [NSNumber numberWithBool:NO]};
+        
+        NSString *meetingPoint = [self.tableValues objectAtIndex:4];
+        if (!meetingPoint || meetingPoint.length == 0) {
+            [ActionManager showAlertViewWithTitle:@"No meeting place" description:@"To add a ride please specify the meeting place"];
+            return;
+        }
+        
+        queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"ride_type": [NSNumber numberWithInt:self.RideType], @"is_driving": [NSNumber numberWithBool:NO], @"meeting_point" : meetingPoint};
         
         rideParams = @{@"ride": queryParams};
     }
@@ -407,7 +415,11 @@
 -(void)resetTables {
     self.tablePassengerValues = nil;
     self.tableDriverValues = nil;
-    self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", @"", @"", nil];
+    if(self.TableType == Passenger) {
+            self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", nil];
+    } else {
+            self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", @"", @"", nil];
+    }
     [self setDepartureLabelForCurrentLocation];
 }
 
@@ -422,9 +434,6 @@
     [self.tableValues replaceObjectAtIndex:3 withObject:dateString];
     
     [self.tableView reloadData];
-    //    [self.tableView beginUpdates];
-    //    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:3 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-    //    [self.tableView endUpdates];
 }
 
 - (void)dateSelectionViewControllerDidCancel:(RMDateSelectionViewController *)vc {

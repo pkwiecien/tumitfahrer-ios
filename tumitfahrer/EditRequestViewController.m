@@ -22,6 +22,7 @@
 #import "OwnerRequestViewController.h"
 #import "LocationController.h"
 #import "Ride.h"
+#import "ActivityStore.h"
 
 @interface EditRequestViewController () <NSFetchedResultsControllerDelegate, SegmentedControlCellDelegate>
 
@@ -65,6 +66,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
     [self.tableView reloadData];
     [self setupNavigationBar];
 }
@@ -185,7 +187,23 @@
     
     NSDictionary *rideParams = nil;
     
-    queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"ride_type": [NSNumber numberWithInt:self.RideType], @"is_driving": [NSNumber numberWithBool:NO],  @"meeting_point": meetingPoint};
+    NSNumber *departureLatitude = nil, *departureLongitude = nil, *destinationLatitude = nil, *destinationLongitude = nil;
+    if (self.departureCoordinate.latitude != 0) {
+        departureLatitude = [NSNumber numberWithDouble:self.departureCoordinate.latitude];
+        departureLongitude = [NSNumber numberWithDouble:self.departureCoordinate.longitude];
+    } else {
+        departureLatitude = self.ride.departureLatitude;
+        departureLongitude = self.ride.departureLongitude;
+    }
+    if(self.destinationCoordinate.latitude != 0) {
+        destinationLatitude = [NSNumber numberWithDouble:self.destinationCoordinate.latitude];
+        destinationLongitude = [NSNumber numberWithDouble:self.destinationCoordinate.longitude];
+    } else {
+        destinationLatitude = self.ride.destinationLatitude;
+        destinationLongitude = self.ride.destinationLongitude;
+    }
+    
+    queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"ride_type": [NSNumber numberWithInt:self.RideType], @"is_driving": [NSNumber numberWithBool:NO],  @"meeting_point": meetingPoint, @"departure_latitude": departureLatitude, @"departure_longitude" : departureLongitude, @"destination_latitude" : destinationLatitude, @"destination_longitude" : destinationLongitude};
     
     rideParams = @{@"ride": queryParams};
     
@@ -200,7 +218,14 @@
         self.ride.destination = destination;
         self.ride.departureTime = [ActionManager dateFromString:departureTime];
         self.ride.meetingPoint = meetingPoint;
+        self.ride.departureLatitude = departureLatitude;
+        self.ride.departureLongitude = departureLongitude;
+        self.ride.destinationLatitude = destinationLatitude;
+        self.ride.destinationLongitude = destinationLongitude;
+        [[RidesStore sharedStore] fetchImageForCurrentRide:self.ride];
+
         [[RidesStore sharedStore] saveToPersistentStore:self.ride];
+        [[ActivityStore sharedStore] updateActivities];
         
         OwnerRequestViewController *requestDetailVC = [[OwnerRequestViewController alloc] init];
         requestDetailVC.ride = self.ride;

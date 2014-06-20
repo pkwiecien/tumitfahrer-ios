@@ -62,5 +62,6 @@
 
 - (void)filterAllFavoriteRides;
 - (void)fetchRidesfromDate:(NSDate *)date rideType:(NSInteger)rideType block:(boolCompletionHandler)block;
+- (void)fetchImageForCurrentRide:(Ride *)ride;
 
 @end

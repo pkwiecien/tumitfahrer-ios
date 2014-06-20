@@ -29,5 +29,6 @@
 - (NSArray *)recentActivitiesByType:(TimelineContentType)contentType;
 - (void)initAllActivitiesFromCoreData;
 - (void)deleteRideFromActivites:(Ride *)ride;
+- (void)updateActivities;
 
 @end

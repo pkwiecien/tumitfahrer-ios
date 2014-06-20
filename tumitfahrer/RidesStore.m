@@ -634,10 +634,15 @@ static int activity_id = 0;
     CLLocation *location = [LocationController locationFromLongitude:[ride.destinationLongitude doubleValue] latitude:[ride.destinationLatitude doubleValue]];
     [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:location completionHandler:^(NSURL *imageUrl) {
         UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:imageUrl]];
-        ride.destinationImage = UIImagePNGRepresentation(retrievedImage);
-        [self saveToPersistentStore:ride];
-        [self notifyAllAboutNewImageForRideId:ride.rideId];
+        [self setImage:retrievedImage forRide:ride];
     }];
+}
+
+
+-(void)setImage:(UIImage *)image forRide:(Ride *)ride {
+    ride.destinationImage = UIImagePNGRepresentation(image);
+    [self saveToPersistentStore:ride];
+    [self notifyAllAboutNewImageForRideId:ride.rideId];
 }
 
 -(BOOL)isCurrentLocationNearbyRide:(Ride *)ride {
