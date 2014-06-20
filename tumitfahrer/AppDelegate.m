@@ -58,7 +58,7 @@
     [self setupObservers];
     
     // Ubertersters SDK initialization
-    //[[Ubertesters shared] initializeWithOptions:UTOptionsManual];
+    [[Ubertesters shared] initializeWithOptions:UTOptionsManual];
     
     // Load the FBLoginView class (needed for login)
     [FBLoginView class];

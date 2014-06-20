@@ -3,11 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "PawelPhoto.png"
+      "filename" : "BehrozPhoto.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "BehrozPhoto@2x.png"
     }
   ],
   "info" : {

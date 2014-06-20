@@ -65,7 +65,7 @@
     if (self.conversation == nil) {
         self.title = @"Message to all";
     } else {
-        self.title = @"New Message";
+        self.title = [NSString stringWithFormat:@"Chat with %@", self.otherUser.firstName];
     }
     
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};

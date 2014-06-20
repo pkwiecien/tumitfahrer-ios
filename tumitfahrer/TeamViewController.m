@@ -23,8 +23,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.teamPhotos = [NSArray arrayWithObjects:[UIImage imageNamed:@"PawelPhoto"], [ActionManager imageWithColor:[UIColor grayColor]], [ActionManager imageWithColor:[UIColor grayColor]], [ActionManager imageWithColor:[UIColor grayColor]], [ActionManager imageWithColor:[UIColor grayColor]], [ActionManager imageWithColor:[UIColor grayColor]], [ActionManager imageWithColor:[UIColor grayColor]], [ActionManager imageWithColor:[UIColor grayColor]], [ActionManager imageWithColor:[UIColor grayColor]], [ActionManager imageWithColor:[UIColor grayColor]], nil];
-        self.aboutPersonArray = [NSArray arrayWithObjects:@"Pawel Kwiecien\nTask: Main developer of iOS app\nAbout: TUMitfahrer was for me a Master Thesis project.",@"Michael Schermann",@"Behroz Sikander",@"Saqib Javed",@"Anuradha Ganapathi",@"Shahid Aslam",@"Lukasz Kwiatkowskie",@"Amr Arafat",@"Abhijith Srivatsav", @"Dansen Zhou", nil];
+        self.teamPhotos = [NSArray arrayWithObjects:[UIImage imageNamed:@"PawelPhoto"], [ActionManager imageWithColor:[UIColor grayColor]], [UIImage imageNamed:@"BehrozPhoto"], [UIImage imageNamed:@"SaqibPhoto"], [ActionManager imageWithColor:[UIColor grayColor]], [UIImage imageNamed:@"ShahidPhoto"], [UIImage imageNamed:@"LukasPhoto"], [UIImage imageNamed:@"AmrPhoto"], [UIImage imageNamed:@"AbiPhoto"], [UIImage imageNamed:@"DansenPhoto"], nil];
+        self.aboutPersonArray = [NSArray arrayWithObjects:@"Pawel Kwiecien\nTask: Main developer of iOS app\nAbout: TUMitfahrer was for me a Master Thesis project.",@"Michael Schermann",@"Behroz Sikander",@"Saqib Javed",@"Anuradha Ganapathi",@"Shahid Aslam",@"Lukasz Kwiatkowski",@"Amr Arafat",@"Abhijith Srivatsav", @"Dansen Zhou", nil];
     }
     return self;
 }
