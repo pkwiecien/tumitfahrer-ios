@@ -41,6 +41,9 @@
     [[RidesStore sharedStore] addObserver:self];
     [self.view setBackgroundColor:[UIColor customLightGray]];
     
+    UIView *footerView = [[[NSBundle mainBundle] loadNibNamed:@"BrowseRidesPanoramioFooter" owner:self options:nil] objectAtIndex:0];
+    self.tableView.tableFooterView = footerView;
+    
     self.passengerIcon = [ActionManager colorImage:[UIImage imageNamed:@"PassengerIcon"] withColor:[UIColor customLightGray]];
     self.driverIcon =  [ActionManager colorImage:[UIImage imageNamed:@"DriverIcon"] withColor:[UIColor customLightGray]];
     self.searchResults = [[NSMutableArray alloc] init];
@@ -85,10 +88,12 @@
         self.zeroRidesLabel.hidden = YES;
         [self.zeroRidesLabel removeFromSuperview];
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        self.tableView.tableFooterView.hidden = NO;
     } else {
         [self.view addSubview:self.zeroRidesLabel];
         self.zeroRidesLabel.hidden = NO;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        self.tableView.tableFooterView.hidden = YES;
     }
 }
 

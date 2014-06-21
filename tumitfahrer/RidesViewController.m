@@ -284,9 +284,11 @@
     if ([[self ridesForCurrentIndex] count] == 0) {
         [self.view addSubview:self.zeroRidesLabel];
         self.zeroRidesLabel.hidden = NO;
+        self.tableView.tableFooterView.hidden = YES;
     } else {
         [self.zeroRidesLabel removeFromSuperview];
         self.zeroRidesLabel.hidden = YES;
+        self.tableView.tableFooterView.hidden = NO;
     }
 }
 

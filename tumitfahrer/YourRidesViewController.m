@@ -59,7 +59,6 @@
     self.emptyCellDescriptionsArray = [NSArray arrayWithObjects:emptyCreated, emptyJoined, emptyPast, nil];
     [[PanoramioUtilities sharedInstance] addObserver:self];
     self.imageCache = [[NSCache alloc] init];
-
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -72,6 +71,19 @@
     [self initTitlesForCurrentSection];
     [self.tableView reloadData];
     [self checkIfAnyRides];
+}
+
+-(void)checkIfAnyRides {
+    int ridesCount = 0;
+    for (NSArray *array in self.arrayWithSections) {
+        ridesCount += [array count];
+    }
+    
+    if (ridesCount == 0) {
+        self.tableView.tableFooterView.hidden = YES;
+    } else {
+        self.tableView.tableFooterView.hidden = NO;
+    }
 }
 
 -(void)setupLeftMenuButton{
@@ -87,16 +99,6 @@
 -(void)prepareZeroRidesLabel {
     self.zeroRidesLabel = [[CustomUILabel alloc] initInMiddle:CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height) text:@"You don't have any rides" viewWithNavigationBar:self.navigationController.navigationBar];
     self.zeroRidesLabel.textColor = [UIColor blackColor];
-}
-
--(void)checkIfAnyRides {
-    if ([self.arrayWithSections count] == 0) {
-        [self.view addSubview:self.zeroRidesLabel];
-        self.zeroRidesLabel.hidden = NO;
-    } else {
-        [self.zeroRidesLabel removeFromSuperview];
-        self.zeroRidesLabel.hidden = YES;
-    }
 }
 
 -(void)initTitlesForCurrentSection {
