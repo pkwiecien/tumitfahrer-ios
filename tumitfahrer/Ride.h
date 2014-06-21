@@ -2,7 +2,7 @@
 //  Ride.h
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 6/19/14.
+//  Created by Pawel Kwiecien on 6/21/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
@@ -34,9 +34,10 @@
 @property (nonatomic, retain) Activity *activities;
 @property (nonatomic, retain) NSSet *conversations;
 @property (nonatomic, retain) NSSet *passengers;
+@property (nonatomic, retain) NSSet *ratings;
 @property (nonatomic, retain) NSSet *requests;
 @property (nonatomic, retain) User *rideOwner;
-@property (nonatomic, retain) NSSet *ratings;
+@property (nonatomic, retain) NSManagedObject *photo;
 @end
 
 @interface Ride (CoreDataGeneratedAccessors)
@@ -51,14 +52,14 @@
 - (void)addPassengers:(NSSet *)values;
 - (void)removePassengers:(NSSet *)values;
 
-- (void)addRequestsObject:(Request *)value;
-- (void)removeRequestsObject:(Request *)value;
-- (void)addRequests:(NSSet *)values;
-- (void)removeRequests:(NSSet *)values;
-
 - (void)addRatingsObject:(Rating *)value;
 - (void)removeRatingsObject:(Rating *)value;
 - (void)addRatings:(NSSet *)values;
 - (void)removeRatings:(NSSet *)values;
+
+- (void)addRequestsObject:(Request *)value;
+- (void)removeRequestsObject:(Request *)value;
+- (void)addRequests:(NSSet *)values;
+- (void)removeRequests:(NSSet *)values;
 
 @end

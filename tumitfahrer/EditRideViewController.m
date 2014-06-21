@@ -61,8 +61,12 @@
 -(void)initTables {
     
     NSString *car = @"";
-    if(self.ride.rideOwner.car != nil)
+    if (self.ride.car != nil) {
+        car = self.ride.car;
+    } else if (self.ride.rideOwner != nil && self.ride.rideOwner.car != nil) {
         car = self.ride.rideOwner.car;
+    }
+
     NSString *meetingPoint = @"";
     if (self.ride.meetingPoint != nil) {
         meetingPoint = self.ride.meetingPoint;
@@ -191,6 +195,12 @@
         return;
     }
     
+    BOOL isNearby = [LocationController isLocation:[[CLLocation alloc] initWithLatitude:self.departureCoordinate.latitude longitude:self.departureCoordinate.longitude] nearbyAnotherLocation:[[CLLocation alloc] initWithLatitude:self.destinationCoordinate.latitude longitude:self.destinationCoordinate.longitude] thresholdInMeters:1000];
+    if (isNearby) {
+        [ActionManager showAlertViewWithTitle:@"Problem" description:@"The route is too short"];
+        return;
+    }
+    
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"de_DE"]];
@@ -198,16 +208,23 @@
     [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
     NSString *time = [formatter stringFromDate:dateString];
     
+    if ([dateString compare:[NSDate date]] == NSOrderedAscending) {
+        [ActionManager showAlertViewWithTitle:@"Problem" description:@"You can't add ride in the past"];
+        return;
+    }
+    
     NSDictionary *rideParams = nil;
     
     NSString *freeSeats = [self.tableValues objectAtIndex:3];
     if (freeSeats == nil || freeSeats.length == 0) {
         freeSeats = @"1";
     }
+    
     NSString *car = [self.tableValues objectAtIndex:4];
-    if (!car) {
-        car = @"";
+    if (car.length == 0 && [CurrentUser sharedInstance].user.car != nil) {
+        car = [CurrentUser sharedInstance].user.car;
     }
+    
     NSString *meetingPoint = [self.tableValues objectAtIndex:5];
     if (meetingPoint == nil) {
         [ActionManager showAlertViewWithTitle:@"No meeting place" description:@"To add a ride please specify the meeting place"];
@@ -251,6 +268,7 @@
         [f setNumberStyle:NSNumberFormatterDecimalStyle];
         NSNumber * freeSeatsNumber = [f numberFromString:freeSeats];
         
+        self.ride.car = car;
         self.ride.freeSeats = freeSeatsNumber;
         self.ride.meetingPoint = meetingPoint;
         [[RidesStore sharedStore] saveToPersistentStore:self.ride];

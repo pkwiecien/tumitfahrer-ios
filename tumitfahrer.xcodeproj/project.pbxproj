@@ -21,6 +21,11 @@
 		6EFC23821926447500AAF263 /* RideStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EFC23811926447500AAF263 /* RideStoreTests.m */; };
 		E50263861954D5110041E21A /* ConversationUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E50263851954D5110041E21A /* ConversationUtilities.m */; };
 		E50263891954DC2D0041E21A /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = E50263881954DC2D0041E21A /* Conversation.m */; };
+		E502638C195574DB0041E21A /* BrowseRidesPanoramioFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = E502638B195574DB0041E21A /* BrowseRidesPanoramioFooter.xib */; };
+		E502638F19557A1F0041E21A /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E502638E19557A1F0041E21A /* Ride.m */; };
+		E502639519557A4D0041E21A /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = E502639419557A4D0041E21A /* Message.m */; };
+		E502639819557A4D0041E21A /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = E502639719557A4D0041E21A /* Photo.m */; };
+		E502639B19557B730041E21A /* PanoramioMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E502639A19557B730041E21A /* PanoramioMapping.m */; };
 		E504D9BC190A58710036FFA8 /* MeetingPointViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9BA190A58710036FFA8 /* MeetingPointViewController.m */; };
 		E504D9BD190A58710036FFA8 /* MeetingPointViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E504D9BB190A58710036FFA8 /* MeetingPointViewController.xib */; };
 		E504D9C2190A6C940036FFA8 /* DestinationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9C0190A6C940036FFA8 /* DestinationViewController.m */; };
@@ -171,7 +176,6 @@
 		E5CD59461951C6E300E97DEC /* Privacy.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD59451951C6E300E97DEC /* Privacy.txt */; };
 		E5CD594C1952255900E97DEC /* RecentPlaceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CD594B1952255900E97DEC /* RecentPlaceUtilities.m */; };
 		E5CD594F1952267800E97DEC /* RecentPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CD594E1952267800E97DEC /* RecentPlace.m */; };
-		E5CD59551952C7BC00E97DEC /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CD59541952C7BC00E97DEC /* Ride.m */; };
 		E5CD59581952C7BC00E97DEC /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CD59571952C7BC00E97DEC /* User.m */; };
 		E5CD595E1952C87C00E97DEC /* Rating.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CD595D1952C87C00E97DEC /* Rating.m */; };
 		E5DE44E8192610E10034AF6F /* AddRideTableHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DE44E7192610E10034AF6F /* AddRideTableHeader.xib */; };
@@ -213,7 +217,6 @@
 		E5FEF3021944A9AD00E326BB /* WebserviceRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3011944A9AD00E326BB /* WebserviceRequest.m */; };
 		E5FEF3051944ABF300E326BB /* MessageMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3041944ABF300E326BB /* MessageMapping.m */; };
 		E5FEF31D1944B5B200E326BB /* ConversationMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF31C1944B5B200E326BB /* ConversationMapping.m */; };
-		E5FEF32C1944C4AC00E326BB /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF32B1944C4AC00E326BB /* Message.m */; };
 		E5FEF33D1944CEA500E326BB /* SimpleChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF33C1944CEA500E326BB /* SimpleChatViewController.m */; };
 		E5FEF3451944F57A00E326BB /* SliderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FEF3431944F57A00E326BB /* SliderCell.m */; };
 		E5FEF3461944F57A00E326BB /* SliderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FEF3441944F57A00E326BB /* SliderCell.xib */; };
@@ -297,6 +300,15 @@
 		E50263851954D5110041E21A /* ConversationUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationUtilities.m; sourceTree = "<group>"; };
 		E50263871954DC2D0041E21A /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
 		E50263881954DC2D0041E21A /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
+		E502638B195574DB0041E21A /* BrowseRidesPanoramioFooter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowseRidesPanoramioFooter.xib; sourceTree = "<group>"; };
+		E502638D19557A1F0041E21A /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
+		E502638E19557A1F0041E21A /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
+		E502639319557A4D0041E21A /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		E502639419557A4D0041E21A /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
+		E502639619557A4D0041E21A /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
+		E502639719557A4D0041E21A /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
+		E502639919557B730041E21A /* PanoramioMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanoramioMapping.h; sourceTree = "<group>"; };
+		E502639A19557B730041E21A /* PanoramioMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanoramioMapping.m; sourceTree = "<group>"; };
 		E504D9B9190A58710036FFA8 /* MeetingPointViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetingPointViewController.h; sourceTree = "<group>"; };
 		E504D9BA190A58710036FFA8 /* MeetingPointViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetingPointViewController.m; sourceTree = "<group>"; };
 		E504D9BB190A58710036FFA8 /* MeetingPointViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeetingPointViewController.xib; sourceTree = "<group>"; };
@@ -529,8 +541,6 @@
 		E5CD594B1952255900E97DEC /* RecentPlaceUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentPlaceUtilities.m; sourceTree = "<group>"; };
 		E5CD594D1952267800E97DEC /* RecentPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentPlace.h; sourceTree = "<group>"; };
 		E5CD594E1952267800E97DEC /* RecentPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentPlace.m; sourceTree = "<group>"; };
-		E5CD59531952C7BC00E97DEC /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
-		E5CD59541952C7BC00E97DEC /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
 		E5CD59561952C7BC00E97DEC /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		E5CD59571952C7BC00E97DEC /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		E5CD595C1952C87C00E97DEC /* Rating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rating.h; sourceTree = "<group>"; };
@@ -590,8 +600,6 @@
 		E5FEF3041944ABF300E326BB /* MessageMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageMapping.m; sourceTree = "<group>"; };
 		E5FEF31B1944B5B200E326BB /* ConversationMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationMapping.h; sourceTree = "<group>"; };
 		E5FEF31C1944B5B200E326BB /* ConversationMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationMapping.m; sourceTree = "<group>"; };
-		E5FEF32A1944C4AC00E326BB /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
-		E5FEF32B1944C4AC00E326BB /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		E5FEF33B1944CEA500E326BB /* SimpleChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleChatViewController.h; sourceTree = "<group>"; };
 		E5FEF33C1944CEA500E326BB /* SimpleChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleChatViewController.m; sourceTree = "<group>"; };
 		E5FEF3421944F57A00E326BB /* SliderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderCell.h; sourceTree = "<group>"; };
@@ -691,6 +699,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E502638A195574B50041E21A /* Footer */ = {
+			isa = PBXGroup;
+			children = (
+				E502638B195574DB0041E21A /* BrowseRidesPanoramioFooter.xib */,
+			);
+			name = Footer;
+			sourceTree = "<group>";
+		};
 		E504D9B8190A585A0036FFA8 /* Meeting Point */ = {
 			isa = PBXGroup;
 			children = (
@@ -798,6 +814,7 @@
 		E50CCD02191FADE2003A9490 /* Browse Rides */ = {
 			isa = PBXGroup;
 			children = (
+				E502638A195574B50041E21A /* Footer */,
 				E50CCD13191FC32C003A9490 /* Page Controller */,
 				E50CCD08191FBD12003A9490 /* Ride Cell */,
 				E50CCD03191FAE8A003A9490 /* RidesViewController.h */,
@@ -842,6 +859,8 @@
 				E5A9BE0D19421F2C0072E9B0 /* IdsMapping.m */,
 				E5FEF3031944ABF300E326BB /* MessageMapping.h */,
 				E5FEF3041944ABF300E326BB /* MessageMapping.m */,
+				E502639919557B730041E21A /* PanoramioMapping.h */,
+				E502639A19557B730041E21A /* PanoramioMapping.m */,
 				E50CCCFF191F8968003A9490 /* RatingMapping.h */,
 				E50CCD00191F8968003A9490 /* RatingMapping.m */,
 				E58B8724191511EA0032524A /* RequestMapping.h */,
@@ -1279,16 +1298,18 @@
 				E50DB26A18F447B800E87E62 /* CurrentUser.m */,
 				E504D9E6190B02490036FFA8 /* Device.h */,
 				E504D9E7190B02490036FFA8 /* Device.m */,
-				E5FEF32A1944C4AC00E326BB /* Message.h */,
-				E5FEF32B1944C4AC00E326BB /* Message.m */,
+				E502639319557A4D0041E21A /* Message.h */,
+				E502639419557A4D0041E21A /* Message.m */,
+				E502639619557A4D0041E21A /* Photo.h */,
+				E502639719557A4D0041E21A /* Photo.m */,
 				E5CD595C1952C87C00E97DEC /* Rating.h */,
 				E5CD595D1952C87C00E97DEC /* Rating.m */,
 				E5CD594D1952267800E97DEC /* RecentPlace.h */,
 				E5CD594E1952267800E97DEC /* RecentPlace.m */,
 				E526B5C7194B16A0006D3527 /* Request.h */,
 				E526B5C8194B16A0006D3527 /* Request.m */,
-				E5CD59531952C7BC00E97DEC /* Ride.h */,
-				E5CD59541952C7BC00E97DEC /* Ride.m */,
+				E502638D19557A1F0041E21A /* Ride.h */,
+				E502638E19557A1F0041E21A /* Ride.m */,
 				E5FEF3701946181B00E326BB /* RideSearch.h */,
 				E5FEF3711946181B00E326BB /* RideSearch.m */,
 				E50DB28918F8730400E87E62 /* RidesStore.h */,
@@ -1864,6 +1885,7 @@
 				E5DE44E8192610E10034AF6F /* AddRideTableHeader.xib in Resources */,
 				E526B651194E00FB006D3527 /* TeamViewController.xib in Resources */,
 				E5CD593F1951C39D00E97DEC /* SocketRocket.txt in Resources */,
+				E502638C195574DB0041E21A /* BrowseRidesPanoramioFooter.xib in Resources */,
 				E59B9A611916B7E4008DE80B /* YourRidesCell.xib in Resources */,
 				E564464B192A976B00F636A5 /* GeneralInfoCell.xib in Resources */,
 				E5FEF3AA1946FD0000E326BB /* RideDetailActionCell.xib in Resources */,
@@ -2036,6 +2058,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E502638F19557A1F0041E21A /* Ride.m in Sources */,
 				E59B9A601916B7E4008DE80B /* YourRidesCell.m in Sources */,
 				E517DB631950391500961344 /* BadgeUtilities.m in Sources */,
 				E50CCD06191FAE8A003A9490 /* RidesViewController.m in Sources */,
@@ -2075,7 +2098,6 @@
 				E5E215781908442100B0B150 /* SwitchTableViewCell.m in Sources */,
 				E51FD50218F0864C0098AD11 /* ProfileViewController.m in Sources */,
 				E564464F192AB67200F636A5 /* CircularImageView.m in Sources */,
-				E5FEF32C1944C4AC00E326BB /* Message.m in Sources */,
 				E526B5AD194A488B006D3527 /* CustomIOS7AlertView.m in Sources */,
 				E5FEF35E1945E4EC00E326BB /* PrivacyViewController.m in Sources */,
 				E50263891954DC2D0041E21A /* Conversation.m in Sources */,
@@ -2095,7 +2117,9 @@
 				E5DF641518EB548E00D53164 /* SettingsViewController.m in Sources */,
 				E5FEF3681945E5CD00E326BB /* FeedbackViewController.m in Sources */,
 				E5FEF31D1944B5B200E326BB /* ConversationMapping.m in Sources */,
+				E502639B19557B730041E21A /* PanoramioMapping.m in Sources */,
 				E5E215641907A95F00B0B150 /* SearchRideViewController.m in Sources */,
+				E502639819557A4D0041E21A /* Photo.m in Sources */,
 				E58889F51913E14A0062D0DF /* RideInformationCell.m in Sources */,
 				E5FEF36E1946005600E326BB /* TimePickerCell.m in Sources */,
 				E58B872A19151F1B0032524A /* KGStatusBar.m in Sources */,
@@ -2113,10 +2137,10 @@
 				E526B5D4194C2A78006D3527 /* EmptyCell.m in Sources */,
 				E5FEF3551945AA1100E326BB /* SearchResultMapping.m in Sources */,
 				E59987FB18E7251000B01C62 /* RegisterViewController.m in Sources */,
-				E5CD59551952C7BC00E97DEC /* Ride.m in Sources */,
 				E50263861954D5110041E21A /* ConversationUtilities.m in Sources */,
 				E50DB28B18F8730400E87E62 /* RidesStore.m in Sources */,
 				E50DB28818F8706500E87E62 /* RideMapping.m in Sources */,
+				E502639519557A4D0041E21A /* Message.m in Sources */,
 				E564464A192A976B00F636A5 /* GeneralInfoCell.m in Sources */,
 				E5FEF3721946181B00E326BB /* RideSearch.m in Sources */,
 				E5FD9EC719234A8500902502 /* TimelineMapViewController.m in Sources */,

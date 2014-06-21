@@ -340,12 +340,23 @@
         return;
     }
     
+    BOOL isNearby = [LocationController isLocation:[[CLLocation alloc] initWithLatitude:self.departureCoordinate.latitude longitude:self.departureCoordinate.longitude] nearbyAnotherLocation:[[CLLocation alloc] initWithLatitude:self.destinationCoordinate.latitude longitude:self.destinationCoordinate.longitude] thresholdInMeters:1000];
+    if (isNearby) {
+        [ActionManager showAlertViewWithTitle:@"Problem" description:@"The route is too short"];
+        return;
+    }
+    
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"de_DE"]];
     NSDate *dateString = [formatter dateFromString:departureTime];
     [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
     NSString *time = [formatter stringFromDate:dateString];
+    
+    if ([dateString compare:[NSDate date]] == NSOrderedAscending) {
+        [ActionManager showAlertViewWithTitle:@"Problem" description:@"You can't add ride in the past"];
+        return;
+    }
     
     NSDictionary *rideParams = nil;
     if(self.TableType == Driver) {
@@ -354,9 +365,10 @@
         if (freeSeats.length == 0) {
             freeSeats = @"1";
         }
+        
         NSString *car = [self.tableValues objectAtIndex:5];
-        if (!car) {
-            car = @"";
+        if (car.length == 0 && [CurrentUser sharedInstance].user.car != nil) {
+            car = [CurrentUser sharedInstance].user.car;
         }
         
         NSString *meetingPoint = [self.tableValues objectAtIndex:6];

@@ -2,7 +2,7 @@
 //  Message.m
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 6/8/14.
+//  Created by Pawel Kwiecien on 6/21/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
@@ -16,9 +16,9 @@
 @dynamic createdAt;
 @dynamic isSeen;
 @dynamic messageId;
-@dynamic updatedAt;
-@dynamic senderId;
 @dynamic receiverId;
+@dynamic senderId;
+@dynamic updatedAt;
 @dynamic conversation;
 
 @end

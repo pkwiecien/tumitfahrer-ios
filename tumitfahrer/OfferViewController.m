@@ -112,10 +112,13 @@
         if(cell == nil){
             cell = [RideInformationCell rideInformationCell];
         }
-        if (self.ride.rideOwner == nil || self.ride.rideOwner.car == nil) {
-            cell.carLabel.text = @"Not specified";
-        } else {
+        
+        if (self.ride.car != nil) {
+            cell.carLabel.text = self.ride.car;
+        } else if (self.ride.rideOwner != nil && self.ride.rideOwner.car != nil) {
             cell.carLabel.text = self.ride.rideOwner.car;
+        } else {
+            cell.carLabel.text = @"Not specified";
         }
         cell.informationLabel.text = self.ride.meetingPoint;
         

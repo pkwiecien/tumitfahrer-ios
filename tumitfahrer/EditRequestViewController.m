@@ -171,6 +171,13 @@
         self.saveButton.enabled = YES;
         return;
     }
+    
+    BOOL isNearby = [LocationController isLocation:[[CLLocation alloc] initWithLatitude:self.departureCoordinate.latitude longitude:self.departureCoordinate.longitude] nearbyAnotherLocation:[[CLLocation alloc] initWithLatitude:self.destinationCoordinate.latitude longitude:self.destinationCoordinate.longitude] thresholdInMeters:1000];
+    if (isNearby) {
+        [ActionManager showAlertViewWithTitle:@"Problem" description:@"The route is too short"];
+        return;
+    }
+    
     NSString *meetingPoint = [self.tableValues objectAtIndex:3];
     if (meetingPoint == nil) {
         [ActionManager showAlertViewWithTitle:@"No meeting place" description:@"To add a ride please specify the meeting place"];
@@ -184,6 +191,11 @@
     NSDate *dateString = [formatter dateFromString:departureTime];
     [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
     NSString *time = [formatter stringFromDate:dateString];
+    
+    if ([dateString compare:[NSDate date]] == NSOrderedAscending) {
+        [ActionManager showAlertViewWithTitle:@"Problem" description:@"You can't add ride in the past"];
+        return;
+    }
     
     NSDictionary *rideParams = nil;
     

@@ -21,6 +21,6 @@
         </view>
     </objects>
     <resources>
-        <image name="MainCampus" width="320" height="110"/>
+        <image name="MainCampus" width="320" height="128"/>
     </resources>
 </document>

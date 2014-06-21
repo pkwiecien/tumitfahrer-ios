@@ -81,7 +81,6 @@
         }];
     }
     
-    
     if (self.ride.destinationImage == nil) {
         [RidesStore initRide:self.ride block:^(BOOL fetched) { }];
     } else {
