@@ -61,7 +61,6 @@
     [delegate.panoramioObjectManager getObjectsAtPath:@"/map/get_panoramas.php" parameters:[self queryParams:location] success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         Photo *photo = [mappingResult firstObject];
         if (photo != nil) {
-            NSLog(@"photo id: %@, photo url: %@", photo.photoId, photo.photoFileUrl);
             NSURL *imageUrl = [[NSURL alloc] initWithString:photo.photoFileUrl];
             self.requestCounter = 1;
             block(imageUrl);
