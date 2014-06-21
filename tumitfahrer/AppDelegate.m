@@ -33,6 +33,7 @@
 #import "SearchResultMapping.h"
 #import "BadgeMapping.h"
 #import "RatingMapping.h"
+#import "PanoramioMapping.h"
 
 @interface AppDelegate ()
 
@@ -183,6 +184,10 @@
     
     // add mappings to object manager
     [self initMappingsForObjectManager:objectManager];
+    // add mappings to panormation object manager
+    [self initPanoramioMapping];
+    self.panoramioObjectManager.managedObjectStore = managedObjectStore;
+
     
     // complete Core Data stack initialization
     [managedObjectStore createPersistentStoreCoordinator];
@@ -247,6 +252,17 @@
     RKEntityMapping *postRatingMapping =[RatingMapping ratingMapping];
     [objectManager addResponseDescriptor:[RatingMapping postRatingResponseDescriptorWithMapping:postRatingMapping]];
 }
+
+-(void)initPanoramioMapping {
+    
+    NSURL *baseURL = [NSURL URLWithString:@"http://www.panoramio.com"];
+    
+    self.panoramioObjectManager = [RKObjectManager managerWithBaseURL:baseURL];
+    
+    RKEntityMapping *photoMapping =[PanoramioMapping panoramioMapping];
+    [self.panoramioObjectManager addResponseDescriptor:[PanoramioMapping getPhotoResponseDescriptorWithMapping:photoMapping]];
+}
+
 
 -(void)setupObservers {
     // for getting location of a specific photo

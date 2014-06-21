@@ -8,6 +8,9 @@
 
 #import "PanoramioUtilities.h"
 #import "LocationController.h"
+#import "AppDelegate.h"
+#import "Photo.h"
+#import "Ride.h"
 
 @interface PanoramioUtilities ()
 
@@ -40,53 +43,35 @@
 
 # pragma mark - build requests and fetch methods
 
-- (NSURLRequest*)buildUrlRequestWithLocation:(CLLocation *)location {
+- (NSDictionary*)queryParams:(CLLocation *)location {
     
-    NSString *urlString = [NSString stringWithFormat:@"http://www.panoramio.com/map/get_panoramas.php?set=public&from=0&to=1&minx=%f&miny=%f&maxx=%f&maxy=%f&size=medium&mapfilter=true", location.coordinate.longitude, location.coordinate.latitude, location.coordinate.longitude+0.005*self.requestCounter, location.coordinate.latitude+0.005*self.requestCounter];
+    NSDictionary *queryParams = @{@"set": @"public", @"from" : @"0", @"to": @"1", @"minx" : [NSNumber numberWithFloat:location.coordinate.longitude], @"miny" : [NSNumber numberWithFloat:location.coordinate.latitude], @"maxx" : [NSNumber numberWithFloat:(location.coordinate.longitude+0.005*pow(4, self.requestCounter))], @"maxy" : [NSNumber numberWithFloat:(location.coordinate.latitude+0.005*pow(4, self.requestCounter))], @"size" : @"medium", @"mapfilter" : @YES};
     self.requestCounter++;
-    NSLog(@"request: %@", urlString);
-    NSURL *url = [[NSURL alloc] initWithString:urlString];
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-    
-    return urlRequest;
+    return queryParams;
 }
 
 -(void)fetchPhotoForLocation:(CLLocation *)location completionHandler:(photoUrlCompletionHandler)block {
     
-    if (self.requestCounter > 5) {
+    if (self.requestCounter > 3) {
         self.requestCounter = 1;
         return;
     }
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
-    [NSURLConnection sendAsynchronousRequest:[self buildUrlRequestWithLocation:location] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        if (connectionError)
-        {
-            NSLog(@"Error connecting data from server: %@", connectionError.localizedDescription);
+    [delegate.panoramioObjectManager getObjectsAtPath:@"/map/get_panoramas.php" parameters:[self queryParams:location] success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        Photo *photo = [mappingResult firstObject];
+        if (photo != nil) {
+            NSLog(@"photo id: %@, photo url: %@", photo.photoId, photo.photoFileUrl);
+            NSURL *imageUrl = [[NSURL alloc] initWithString:photo.photoFileUrl];
+            self.requestCounter = 1;
+            block(imageUrl);
         } else {
-            NSLog(@"Response data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-            
-            NSError *localError = nil;
-            if (localError) {
-                return;
-            }
-            
-            // parse json
-            NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
-            @try {
-                if (parsedObject[@"photos"] == nil ||[parsedObject[@"photos"] count] == 0 || parsedObject[@"photos"][0] == nil) {
-                    [self fetchPhotoForLocation:location completionHandler:^(NSURL * photoUrl) {
-                        block(photoUrl);
-                    }];
-                } else {
-                    NSURL *imageUrl = [[NSURL alloc] initWithString:parsedObject[@"photos"][0][@"photo_file_url"]];
-                    self.requestCounter = 1;
-                    block(imageUrl);
-                }
-            }
-            @catch (NSException *exception) {
-                NSLog(@"Photo could not be received for location: %@", location);
-            }
+            [self fetchPhotoForLocation:location completionHandler:^(NSURL * photoUrl) { block(photoUrl);
+            }];
         }
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        RKLogError(@"Could not received photo with error: %@", error);
+        block(nil);
     }];
 }
 

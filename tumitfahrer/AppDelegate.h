@@ -13,5 +13,6 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) NSDictionary *refererAppLink;
+@property (strong, nonatomic) RKObjectManager *panoramioObjectManager;
 
 @end

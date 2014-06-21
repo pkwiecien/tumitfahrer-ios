@@ -10,6 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "LocationController.h"
 
+@class Photo;
 @protocol PanoramioUtilitiesDelegate <NSObject>
 
 @optional
