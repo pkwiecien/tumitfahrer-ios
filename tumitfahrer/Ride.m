@@ -9,6 +9,7 @@
 #import "Ride.h"
 #import "Activity.h"
 #import "Conversation.h"
+#import "Photo.h"
 #import "Rating.h"
 #import "Request.h"
 #import "User.h"

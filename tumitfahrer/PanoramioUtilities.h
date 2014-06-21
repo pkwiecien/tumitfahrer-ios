@@ -11,6 +11,7 @@
 #import "LocationController.h"
 
 @class Photo;
+
 @protocol PanoramioUtilitiesDelegate <NSObject>
 
 @optional
@@ -23,7 +24,7 @@
 
 @property (nonatomic, weak) id<PanoramioUtilitiesDelegate> delegate;
 
-typedef void(^photoUrlCompletionHandler)(NSURL *);
+typedef void(^photoCompletionHandler)(Photo *);
 
 + (PanoramioUtilities*)sharedInstance; // Singleton method
 
@@ -32,6 +33,6 @@ typedef void(^photoUrlCompletionHandler)(NSURL *);
 - (void)notifyAllAboutNewImage:(UIImage *)image rideId:(NSNumber *)rideId;
 - (void)removeObserver:(id<PanoramioUtilitiesDelegate>)observer;
 
-- (void)fetchPhotoForLocation:(CLLocation *)location completionHandler:(photoUrlCompletionHandler)block;
+- (void)fetchPhotoForLocation:(CLLocation *)location completionHandler:(photoCompletionHandler)block;
 
 @end

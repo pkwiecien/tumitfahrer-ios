@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Activity, Conversation, Rating, Request, User;
+@class Activity, Conversation, Photo, Rating, Request, User;
 
 @interface Ride : NSManagedObject
 
@@ -37,7 +37,7 @@
 @property (nonatomic, retain) NSSet *ratings;
 @property (nonatomic, retain) NSSet *requests;
 @property (nonatomic, retain) User *rideOwner;
-@property (nonatomic, retain) NSManagedObject *photo;
+@property (nonatomic, retain) Photo *photo;
 @end
 
 @interface Ride (CoreDataGeneratedAccessors)

@@ -12,12 +12,12 @@
 
 @implementation Photo
 
-@dynamic photoId;
 @dynamic photoUrl;
 @dynamic ownerName;
 @dynamic photoTitle;
 @dynamic photoFileUrl;
 @dynamic uploadDate;
+@dynamic photoId;
 @dynamic ride;
 
 @end

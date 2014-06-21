@@ -20,6 +20,7 @@
 #import "OwnerOfferViewController.h"
 #import "OwnerRequestViewController.h"
 #import "RideDetailActionCell.h"
+#import "Photo.h"
 
 @interface AddRideViewController () <SegmentedControlCellDelegate, SwitchTableViewCellDelegate>
 
@@ -33,6 +34,7 @@
 @property (nonatomic, strong) NSMutableArray *tableSectionIcons;
 @property (nonatomic, strong) UIView *headerView;
 @property (nonatomic, strong) UIImage *destinationImage;
+@property (nonatomic, strong) Photo *destinationPhotoInfo;
 
 @end
 
@@ -401,6 +403,9 @@
         
         Ride *ride = (Ride *)[mappingResult firstObject];
         ride.destinationImage = UIImagePNGRepresentation(self.destinationImage);
+        if (self.destinationPhotoInfo != nil) {
+            ride.photo = self.destinationPhotoInfo;
+        }
         [[RidesStore sharedStore] addRideToStore:ride];
         [self resetTables];
         [KGStatusBar showSuccessWithStatus:@"Ride added"];
@@ -461,18 +466,20 @@
         self.departureCoordinate = coordinate;
     } else if (indexPath.row == 2){
         self.destinationCoordinate = coordinate;
-        [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:[[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude] completionHandler:^(NSURL *photoUrl) {
-            if (photoUrl != nil) {
-                [self setPhotoForHeaderViewWithUrl:photoUrl];
+        [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:[[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude] completionHandler:^(Photo *photo) {
+            if (photo != nil) {
+                [self setDestinationPhoto:photo];
             }
         }];
     }
     [self.tableValues replaceObjectAtIndex:indexPath.row withObject:destination];
 }
 
--(void)setPhotoForHeaderViewWithUrl:(NSURL *)photoUrl {
+-(void)setDestinationPhoto:(Photo *)photo {
+    self.destinationPhotoInfo = photo;
     UIImageView *headerImage = (UIImageView *)[self.headerView viewWithTag:10];
-    self.destinationImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:photoUrl]];
+    NSURL *url = [NSURL URLWithString:photo.photoFileUrl];
+    self.destinationImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
     headerImage.image = self.destinationImage;
 }
 

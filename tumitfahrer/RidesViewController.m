@@ -16,6 +16,7 @@
 #import "CurrentUser.h"
 #import "CustomUILabel.h"
 #import "ControllerUtilities.h"
+#import "Photo.h"
 
 @interface RidesViewController ()
 
@@ -87,6 +88,12 @@
     [self.delegate willAppearViewWithIndex:self.index];
     [self.tableView reloadData];
     [self checkIfAnyRides];
+    [self checkPhotosOfRides];
+    
+}
+
+-(void)checkPhotosOfRides {
+    // add here checking if all rides have photos
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

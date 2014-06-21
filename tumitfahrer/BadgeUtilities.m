@@ -17,9 +17,9 @@
     NSEntityDescription *e = [NSEntityDescription entityForName:@"Badge"
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
                               mainQueueManagedObjectContext];
-    NSPredicate *predicate;
-    predicate = [NSPredicate predicateWithFormat:@"badgeId = 0"];
-    [request setPredicate:predicate];
+    
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO];
+    request.sortDescriptors = @[descriptor];
     
     request.entity = e;
     
@@ -38,37 +38,44 @@
 +(void)updateTimelineDateInBadge:(NSDate*)date {
     Badge *badge = [self fetchLastBadgeDateFromCoreData];
     badge.timelineUpdatedAt = date;
-    [self saveBadgeToPersisentStore:badge];
+    if (badge != nil) {
+        [self saveBadgeToPersisentStore:badge];
+    }
 }
 
 +(void)updateMyRidesDateInBadge:(NSDate*)date {
     Badge *badge = [BadgeUtilities fetchLastBadgeDateFromCoreData];
     badge.myRidesUpdatedAt = date;
     badge.myRidesBadge = [NSNumber numberWithInt:0];
-    [BadgeUtilities saveBadgeToPersisentStore:badge];
+    if (badge != nil) {
+        [BadgeUtilities saveBadgeToPersisentStore:badge];
+    }
 }
 
 +(void)updateCampusDateInBadge:(NSDate*)date {
     Badge *badge = [BadgeUtilities fetchLastBadgeDateFromCoreData];
     badge.campusUpdatedAt = date;
     badge.campusBadge = [NSNumber numberWithInt:0];
-    [BadgeUtilities saveBadgeToPersisentStore:badge];
+    if (badge != nil) {
+        [BadgeUtilities saveBadgeToPersisentStore:badge];
+    }
 }
 
 +(void)updateActivityDateInBadge:(NSDate*)date {
     Badge *badge = [BadgeUtilities fetchLastBadgeDateFromCoreData];
     badge.activityUpdatedAt = date;
     badge.activityBadge = [NSNumber numberWithInt:0];
-    [BadgeUtilities saveBadgeToPersisentStore:badge];
+    if (badge != nil) {
+        [BadgeUtilities saveBadgeToPersisentStore:badge];
+    }
 }
-
 
 +(void)saveBadgeToPersisentStore:(Badge *)badge {
     
     NSManagedObjectContext *context = badge.managedObjectContext;
     NSError *error;
     if (![context saveToPersistentStore:&error]) {
-        NSLog(@"delete error %@", [error localizedDescription]);
+        NSLog(@"saving error %@", [error localizedDescription]);
     }
 }
 

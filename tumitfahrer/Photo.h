@@ -13,12 +13,12 @@
 
 @interface Photo : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * photoId;
 @property (nonatomic, retain) NSString * photoUrl;
 @property (nonatomic, retain) NSString * ownerName;
 @property (nonatomic, retain) NSString * photoTitle;
 @property (nonatomic, retain) NSString * photoFileUrl;
 @property (nonatomic, retain) NSDate * uploadDate;
+@property (nonatomic, retain) NSNumber * photoId;
 @property (nonatomic, retain) Ride *ride;
 
 @end

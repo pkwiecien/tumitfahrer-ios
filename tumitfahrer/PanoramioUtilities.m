@@ -50,7 +50,7 @@
     return queryParams;
 }
 
--(void)fetchPhotoForLocation:(CLLocation *)location completionHandler:(photoUrlCompletionHandler)block {
+-(void)fetchPhotoForLocation:(CLLocation *)location completionHandler:(photoCompletionHandler)block {
     
     if (self.requestCounter > 3) {
         self.requestCounter = 1;
@@ -61,11 +61,11 @@
     [delegate.panoramioObjectManager getObjectsAtPath:@"/map/get_panoramas.php" parameters:[self queryParams:location] success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         Photo *photo = [mappingResult firstObject];
         if (photo != nil) {
-            NSURL *imageUrl = [[NSURL alloc] initWithString:photo.photoFileUrl];
             self.requestCounter = 1;
-            block(imageUrl);
+            block(photo);
         } else {
-            [self fetchPhotoForLocation:location completionHandler:^(NSURL * photoUrl) { block(photoUrl);
+            [self fetchPhotoForLocation:location completionHandler:^(Photo * photo) {
+                block(photo);
             }];
         }
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {

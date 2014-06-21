@@ -17,6 +17,7 @@
 #import "BadgeUtilities.h"
 #import "RecentPlaceUtilities.h"
 #import "RecentPlace.h"
+#import "Photo.h"
 
 @interface RidesStore () <NSFetchedResultsControllerDelegate>
 
@@ -632,15 +633,19 @@ static int activity_id = 0;
 
 -(void)fetchImageForCurrentRide:(Ride *)ride {
     CLLocation *location = [LocationController locationFromLongitude:[ride.destinationLongitude doubleValue] latitude:[ride.destinationLatitude doubleValue]];
-    [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:location completionHandler:^(NSURL *imageUrl) {
-        UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:imageUrl]];
-        [self setImage:retrievedImage forRide:ride];
+    [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:location completionHandler:^(Photo *photo) {
+        if (photo != nil) {
+            NSURL *photoUrl = [NSURL URLWithString:photo.photoFileUrl];
+            UIImage *retrievedImage = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:photoUrl]];
+            [self setImage:retrievedImage photoInfo:photo forRide:ride];
+        }
     }];
 }
 
 
--(void)setImage:(UIImage *)image forRide:(Ride *)ride {
+-(void)setImage:(UIImage *)image photoInfo:(Photo *)photoInfo forRide:(Ride *)ride {
     ride.destinationImage = UIImagePNGRepresentation(image);
+    ride.photo = photoInfo;
     [self saveToPersistentStore:ride];
     [self notifyAllAboutNewImageForRideId:ride.rideId];
 }
