@@ -39,9 +39,7 @@
     [self.view bringSubviewToFront:_headerView];
     [[RidesStore sharedStore] addObserver:self];
     
-    self.rideDetail.headerView = _headerView;
-    self.rideDetail.delegate = self;
-    
+    self.rideDetail.headerView = _headerView;    
     self.headerTitles = [NSArray arrayWithObjects:@"Details", @"Driver", @"",nil];
 }
 

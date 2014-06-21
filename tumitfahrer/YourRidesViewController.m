@@ -50,6 +50,9 @@
     self.passengerIcon = [UIImage imageNamed:@"PassengerIconBlack"];
     self.driverIcon = [UIImage imageNamed:@"DriverIconBlack"];
     
+    UIView *footerView = [[[NSBundle mainBundle] loadNibNamed:@"BrowseRidesPanoramioFooter" owner:self options:nil] objectAtIndex:0];
+    self.tableView.tableFooterView = footerView;
+    
     NSArray *emptyCreated = [NSArray arrayWithObjects:@"No rides as drives", @"No requests for a ride", nil];
     NSArray *emptyJoined = [NSArray arrayWithObjects:@"No upcoming rides as passenger", @"No pending ride requests", nil];
     NSArray *emptyPast = [NSArray arrayWithObjects:@"You don't have any past rides", nil];

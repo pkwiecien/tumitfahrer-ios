@@ -22,6 +22,7 @@ pod 'MMDrawerController'
 pod 'GPUImage'
 # Facebook api for sharing rides
 pod 'Facebook-iOS-SDK'
+# KIF framework for UI tests
 target 'UI Tests', :exclusive => true do
     pod 'KIF', '~> 3.0'
 end

@@ -8,7 +8,9 @@
 
 #import "HeaderContentView.h"
 
-@implementation HeaderContentView
+@implementation HeaderContentView {
+    UITapGestureRecognizer *singleTapGestureRecognizer;
+}
 
 - (id)init
 {
@@ -88,11 +90,11 @@
             tableHeaderView = [[UIView alloc] initWithFrame:tableHeaderViewFrame];
         }
         tableHeaderView.backgroundColor = [UIColor clearColor];
-        UITapGestureRecognizer *headerViewTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerViewTapped)];
-        // Set required taps and number of touches
-        [headerViewTap setNumberOfTapsRequired:1];
-        [headerViewTap setNumberOfTouchesRequired:1];
-        [tableHeaderView addGestureRecognizer:headerViewTap];
+
+        singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerViewTapped)];
+        [singleTapGestureRecognizer setNumberOfTapsRequired:1];
+
+        [tableHeaderView addGestureRecognizer:singleTapGestureRecognizer];
         
         self.tableView.tableHeaderView = tableHeaderView;
     }
@@ -217,6 +219,7 @@
 }
 
 - (void)dealloc {
+    [self.tableView.tableHeaderView removeGestureRecognizer:singleTapGestureRecognizer];
 	[self.tableView removeObserver:self forKeyPath:@"contentOffset"];
     self.delegate = nil;
 }

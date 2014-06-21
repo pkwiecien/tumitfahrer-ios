@@ -44,7 +44,7 @@
         <attribute name="photoId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="photoTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photoUrl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="uploadDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="uploadDate" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="ride" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ride" inverseName="photo" inverseEntity="Ride" syncable="YES"/>
     </entity>
     <entity name="Rating" representedClassName="Rating" syncable="YES">

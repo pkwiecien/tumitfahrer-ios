@@ -41,9 +41,7 @@
     [[RidesStore sharedStore] addObserver:self];
     
     self.rideDetail.headerView = _headerView;
-    self.rideDetail.delegate = self;
 }
-
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];

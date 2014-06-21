@@ -40,8 +40,10 @@
 		E50263BB19558F000041E21A /* PawelPhoto@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E50263AF19558F000041E21A /* PawelPhoto@2x.jpg */; };
 		E50263BC19558F000041E21A /* SaqibPhoto.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E50263B019558F000041E21A /* SaqibPhoto.jpg */; };
 		E50263BD19558F000041E21A /* SaqibPhoto@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E50263B119558F000041E21A /* SaqibPhoto@2x.jpg */; };
-		E50263C0195592780041E21A /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = E50263BF195592780041E21A /* Photo.m */; };
 		E50263C3195592780041E21A /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E50263C2195592780041E21A /* Ride.m */; };
+		E50263C819559C970041E21A /* PhotoDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50263C619559C970041E21A /* PhotoDetailsViewController.m */; };
+		E50263C919559C970041E21A /* PhotoDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50263C719559C970041E21A /* PhotoDetailsViewController.xib */; };
+		E50263CC1955ADB00041E21A /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = E50263CB1955ADB00041E21A /* Photo.m */; };
 		E504D9BC190A58710036FFA8 /* MeetingPointViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9BA190A58710036FFA8 /* MeetingPointViewController.m */; };
 		E504D9BD190A58710036FFA8 /* MeetingPointViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E504D9BB190A58710036FFA8 /* MeetingPointViewController.xib */; };
 		E504D9C2190A6C940036FFA8 /* DestinationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9C0190A6C940036FFA8 /* DestinationViewController.m */; };
@@ -337,10 +339,13 @@
 		E50263AF19558F000041E21A /* PawelPhoto@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "PawelPhoto@2x.jpg"; sourceTree = "<group>"; };
 		E50263B019558F000041E21A /* SaqibPhoto.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = SaqibPhoto.jpg; sourceTree = "<group>"; };
 		E50263B119558F000041E21A /* SaqibPhoto@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "SaqibPhoto@2x.jpg"; sourceTree = "<group>"; };
-		E50263BE195592780041E21A /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
-		E50263BF195592780041E21A /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
 		E50263C1195592780041E21A /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
 		E50263C2195592780041E21A /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
+		E50263C519559C970041E21A /* PhotoDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoDetailsViewController.h; sourceTree = "<group>"; };
+		E50263C619559C970041E21A /* PhotoDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoDetailsViewController.m; sourceTree = "<group>"; };
+		E50263C719559C970041E21A /* PhotoDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhotoDetailsViewController.xib; sourceTree = "<group>"; };
+		E50263CA1955ADB00041E21A /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
+		E50263CB1955ADB00041E21A /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
 		E504D9B9190A58710036FFA8 /* MeetingPointViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetingPointViewController.h; sourceTree = "<group>"; };
 		E504D9BA190A58710036FFA8 /* MeetingPointViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetingPointViewController.m; sourceTree = "<group>"; };
 		E504D9BB190A58710036FFA8 /* MeetingPointViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeetingPointViewController.xib; sourceTree = "<group>"; };
@@ -770,6 +775,16 @@
 			name = Team;
 			sourceTree = "<group>";
 		};
+		E50263C419559C840041E21A /* Photo Details */ = {
+			isa = PBXGroup;
+			children = (
+				E50263C519559C970041E21A /* PhotoDetailsViewController.h */,
+				E50263C619559C970041E21A /* PhotoDetailsViewController.m */,
+				E50263C719559C970041E21A /* PhotoDetailsViewController.xib */,
+			);
+			name = "Photo Details";
+			sourceTree = "<group>";
+		};
 		E504D9B8190A585A0036FFA8 /* Meeting Point */ = {
 			isa = PBXGroup;
 			children = (
@@ -1166,6 +1181,7 @@
 		E526B626194D0111006D3527 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E50263C419559C840041E21A /* Photo Details */,
 				E5FEF38C1946F84400E326BB /* Edit Request */,
 				E5FEF3921946F89C00E326BB /* Edit Ride */,
 				E58889DE191384F40062D0DF /* Header View */,
@@ -1364,8 +1380,6 @@
 				E504D9E7190B02490036FFA8 /* Device.m */,
 				E502639319557A4D0041E21A /* Message.h */,
 				E502639419557A4D0041E21A /* Message.m */,
-				E50263BE195592780041E21A /* Photo.h */,
-				E50263BF195592780041E21A /* Photo.m */,
 				E5CD595C1952C87C00E97DEC /* Rating.h */,
 				E5CD595D1952C87C00E97DEC /* Rating.m */,
 				E5CD594D1952267800E97DEC /* RecentPlace.h */,
@@ -1380,6 +1394,8 @@
 				E50DB28A18F8730400E87E62 /* RidesStore.m */,
 				E5CD59561952C7BC00E97DEC /* User.h */,
 				E5CD59571952C7BC00E97DEC /* User.m */,
+				E50263CA1955ADB00041E21A /* Photo.h */,
+				E50263CB1955ADB00041E21A /* Photo.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2001,6 +2017,7 @@
 				E504D9C3190A6C940036FFA8 /* DestinationViewController.xib in Resources */,
 				E50263A219558DC40041E21A /* ShahidPhoto.jpg in Resources */,
 				E5FEF35F1945E4EC00E326BB /* PrivacyViewController.xib in Resources */,
+				E50263C919559C970041E21A /* PhotoDetailsViewController.xib in Resources */,
 				E5CD59431951C3EA00E97DEC /* SPGooglePlacesAutocompletePlace.txt in Resources */,
 				E5FD9EC819234A8500902502 /* TimelineMapViewController.xib in Resources */,
 				E5FEF3911946F85100E326BB /* EditRequestViewController.xib in Resources */,
@@ -2152,6 +2169,7 @@
 				E526B624194CB644006D3527 /* RidePersonCell.m in Sources */,
 				E504D9BC190A58710036FFA8 /* MeetingPointViewController.m in Sources */,
 				E504D9D0190A7FC50036FFA8 /* SPGooglePlacesAutocompletePlace.m in Sources */,
+				E50263C819559C970041E21A /* PhotoDetailsViewController.m in Sources */,
 				E526B5B1194AC8D9006D3527 /* EditDepartmentViewController.m in Sources */,
 				E5FEF3A91946FD0000E326BB /* RideDetailActionCell.m in Sources */,
 				E5FEF3511945A02300E326BB /* SearchResultViewController.m in Sources */,
@@ -2215,7 +2233,6 @@
 				E599880118E72BF600B01C62 /* ForgotPasswordViewController.m in Sources */,
 				E526B5D4194C2A78006D3527 /* EmptyCell.m in Sources */,
 				E5FEF3551945AA1100E326BB /* SearchResultMapping.m in Sources */,
-				E50263C0195592780041E21A /* Photo.m in Sources */,
 				E59987FB18E7251000B01C62 /* RegisterViewController.m in Sources */,
 				E50263861954D5110041E21A /* ConversationUtilities.m in Sources */,
 				E50DB28B18F8730400E87E62 /* RidesStore.m in Sources */,
@@ -2246,6 +2263,7 @@
 				E5FB4D3E1918DB18006F4F5D /* RideSectionHeaderCell.m in Sources */,
 				E5FEF3961946F8B100E326BB /* EditRideViewController.m in Sources */,
 				E52EA4D3192C019C00E78B6D /* RideDetailMapViewController.m in Sources */,
+				E50263CC1955ADB00041E21A /* Photo.m in Sources */,
 				E504D9D2190A7FC50036FFA8 /* SPGooglePlacesAutocompleteUtilities.m in Sources */,
 				E58889DC191383570062D0DF /* OwnerOfferViewController.m in Sources */,
 				E522BAC618AE13F600ECD375 /* main.m in Sources */,

@@ -33,7 +33,6 @@
     [[RidesStore sharedStore] addObserver:self];
     
     self.rideDetail.headerView = _headerView;
-    self.rideDetail.delegate = self;
     self.rideDetail.tableView.backgroundColor = [UIColor customLightGray];
 }
 

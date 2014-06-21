@@ -17,6 +17,7 @@
 #import "AppDelegate.h"
 #import "CustomIOS7AlertView.h"
 #import "Rating.h"
+#import "PhotoDetailsViewController.h"
 
 @interface MainRideDetailViewController () <RideStoreDelegate, HeaderContentViewDelegate, UIGestureRecognizerDelegate, UITextViewDelegate, CustomIOS7AlertViewDelegate>
 
@@ -26,7 +27,10 @@
 
 @end
 
-@implementation MainRideDetailViewController 
+@implementation MainRideDetailViewController {
+    UITapGestureRecognizer *doubleTapGestureRecognizer;
+    UIView *headerFlippedGradientView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -35,15 +39,20 @@
     self.rideDetail.tableViewDataSource = self;
     self.rideDetail.tableViewDelegate = self;
     self.rideDetail.parallaxScrollFactor = 0.3; // little slower than normal.
+    self.rideDetail.delegate = self;
     [self.view addSubview:self.rideDetail];
     
     [[RidesStore sharedStore] addObserver:self];
     
-    UIView *gradientViewFlipped = [[UIView alloc] initWithFrame:CGRectMake(0, -20, 320, 180)];
-    UIImageView *gradientImageView = [[UIImageView alloc] initWithFrame:gradientViewFlipped.frame];
+    headerFlippedGradientView = [[UIView alloc] initWithFrame:CGRectMake(0, -20, 320, 180)];
+    UIImageView *gradientImageView = [[UIImageView alloc] initWithFrame:headerFlippedGradientView.frame];
     gradientImageView.image = [UIImage imageNamed:@"GradientWideFlipped"];
-    [gradientViewFlipped addSubview:gradientImageView];
-    [self.view addSubview:gradientViewFlipped];
+    [headerFlippedGradientView addSubview:gradientImageView];
+    [self.view addSubview:headerFlippedGradientView];
+    
+    doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerViewTappedTwice)];
+    [doubleTapGestureRecognizer setNumberOfTapsRequired:2];
+    [headerFlippedGradientView addGestureRecognizer:doubleTapGestureRecognizer];
     
     UIButton *buttonBack = [UIButton buttonWithType:UIButtonTypeCustom];
     buttonBack.frame = CGRectMake(10, 25, 30, 30);
@@ -139,6 +148,14 @@
     }];
 }
 
+-(void)headerViewTappedTwice {
+    PhotoDetailsViewController *photoDetailsVC = [[PhotoDetailsViewController alloc] init];
+    photoDetailsVC.photoInfo = self.ride.photo;
+    photoDetailsVC.photo = [UIImage imageWithData:self.ride.destinationImage];
+    photoDetailsVC.title = @"Photo Details";
+    [self.navigationController pushViewController:photoDetailsVC animated:YES];
+}
+
 -(void)didReceivePhotoForRide:(NSNumber *)rideId {
     UIImage *img = [UIImage imageWithData:self.ride.destinationImage];
     [self.rideDetail.rideDetailHeaderView replaceMainImage:img];
@@ -154,11 +171,7 @@
 
 -(void)dealloc {
     [[RidesStore sharedStore] removeObserver:self];
-}
-
-
--(void)headerViewTapped {
-    
+    [headerFlippedGradientView removeGestureRecognizer:doubleTapGestureRecognizer];
 }
 
 -(void)editButtonTapped {

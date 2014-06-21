@@ -89,7 +89,6 @@
     [self.tableView reloadData];
     [self checkIfAnyRides];
     [self checkPhotosOfRides];
-    
 }
 
 -(void)checkPhotosOfRides {
