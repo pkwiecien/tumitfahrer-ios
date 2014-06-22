@@ -40,7 +40,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-        self.ownerCellImages = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"ProfileIconBlack"], [UIImage imageNamed:@"ProfileIconBlack"], [UIImage imageNamed:@"EmailIconBlackSmall"], [UIImage imageNamed:@"PhoneIconBlackSmall"], [UIImage imageNamed:@"CarIconBlack"], [UIImage imageNamed:@"PasswordIconBlackMedium"],  [UIImage imageNamed:@"CampusIconBlack"], nil];
+        self.ownerCellImages = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"ProfileIconBlack"], [UIImage imageNamed:@"ProfileIconBlack"], [UIImage imageNamed:@"EmailIconBlackSmall"], [UIImage imageNamed:@"PhoneIconBlackSmall"], [UIImage imageNamed:@"CarIconBlack"], [UIImage imageNamed:@"PasswordIconBlackMedium"],  [UIImage imageNamed:@"CampusIconBlack"],[UIImage imageNamed:@"CampusIconBlack"], nil];
         self.otherCellImages = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"ProfileIconBlack"], [UIImage imageNamed:@"EmailIconBlackSmall"], [UIImage imageNamed:@"PhoneIconBlackSmall"], [UIImage imageNamed:@"CarIconBlack"], [UIImage imageNamed:@"CampusIconBlack"], nil];
         self.editDescriptions = [NSArray arrayWithObjects:@"First Name",@"Last Name", @"Email", @"Phone", @"Car", @"Password", @"Department", nil];
     }
@@ -49,6 +49,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (iPhone5) {
+        self.view.frame = CGRectMake(0, 0, 320, 568);
+    } else {
+        self.view.frame = CGRectMake(0, 0, 320, 480);
+    }
     [self.view setBackgroundColor:[UIColor customLightGray]];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];

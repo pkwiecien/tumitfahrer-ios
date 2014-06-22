@@ -55,6 +55,12 @@
     self.passengerIconWhite = [UIImage imageNamed:@"PassengerIconBig"];
     [[ActivityStore sharedStore] initAllActivitiesFromCoreData];
     [self prepareZeroRidesLabel];
+    
+    if (iPhone5) {
+        self.tableView.frame = CGRectMake(0, 0, 320, 498);
+    } else {
+        self.tableView.frame = CGRectMake(0, 0, 320, 408);
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -62,6 +68,7 @@
     [self.tableView reloadData];
     [self checkIfAnyRides];
     [BadgeUtilities updateMyRidesDateInBadge:[ActionManager currentDate]];
+    NSLog(@"%f %f", self.view.frame.size.width, self.view.frame.size.height);
 }
 
 -(void)checkIfAnyRides {

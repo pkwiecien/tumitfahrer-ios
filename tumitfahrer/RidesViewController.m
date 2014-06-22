@@ -56,6 +56,11 @@
     self.passengerIcon = [ActionManager colorImage:[UIImage imageNamed:@"PassengerIcon"] withColor:[UIColor customLightGray]];
     self.driverIcon =  [ActionManager colorImage:[UIImage imageNamed:@"DriverIcon"] withColor:[UIColor customLightGray]];
     [self prepareZeroRidesLabel];
+    if (iPhone5) {
+        self.tableView.frame = CGRectMake(0, 0, 320, 498);
+    } else {
+        self.tableView.frame = CGRectMake(0, 0, 320, 408);
+    }
 }
 
 -(void)handleRefresh {

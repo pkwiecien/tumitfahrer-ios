@@ -44,8 +44,6 @@
     self.defaultimagePagerHeight = 180.0f;
     self.parallaxScrollFactor = 0.6f;
     self.headerFade = 130.0f;
-    self.autoresizesSubviews = YES;
-    self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.backgroundViewColor = [UIColor clearColor];
     self.shouldDisplayGradient = NO;
 }
@@ -57,21 +55,19 @@
     
     if (!self.tableView) {
         self.tableView = [[UITableView alloc] initWithFrame:self.bounds];
-        if (!iPhone5) {
-            UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
-            self.tableView.tableFooterView = footerView;
+        if (iPhone5) {
+            self.tableView.frame = CGRectMake(0, 0, 320, 568);
+        } else {
+            self.tableView.frame = CGRectMake(0, 0, 320, 460);
         }
         self.tableView.backgroundColor = [UIColor clearColor];
         self.tableView.delegate = self.tableViewDelegate;
         self.tableView.dataSource = self.tableViewDataSource;
-        self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
-        UIViewAutoresizingFlexibleHeight;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         // Add scroll view KVO
         void *context = (__bridge void *)self;
         [self.tableView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:context];
-        
         [self addSubview:self.tableView];
     }
     

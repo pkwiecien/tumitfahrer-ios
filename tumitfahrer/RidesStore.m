@@ -515,7 +515,7 @@ static int activity_id = 0;
     for (RecentPlace *recentPlace in recentPlaces) {
         CLLocation *recentPlaceLocation = [[CLLocation alloc] initWithLatitude:[recentPlace.placeLatitude doubleValue] longitude:[recentPlace.placeLongitude doubleValue]];
         
-        if([LocationController isLocation:recentPlaceLocation nearbyAnotherLocation:departureLocation thresholdInMeters:1000] || [LocationController isLocation:recentPlaceLocation nearbyAnotherLocation:destinationLocation thresholdInMeters:1000]) {
+        if([LocationController isLocation:recentPlaceLocation nearbyAnotherLocation:departureLocation thresholdInMeters:5000] || [LocationController isLocation:recentPlaceLocation nearbyAnotherLocation:destinationLocation thresholdInMeters:5000]) {
             return YES;
         }
     }

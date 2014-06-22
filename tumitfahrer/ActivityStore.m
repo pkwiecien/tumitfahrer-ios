@@ -63,7 +63,6 @@ static int activity_id = 0;
     [self filterAllActivities];
     
     self.privateActivitiesNearby = [self sortActivitiesWithArray:self.privateActivitiesNearby];
-//    self.privateMyRecentActivities = [self sortActivitiesWithArray:self.privateMyRecentActivities];
     self.privateMyRecentActivities = [self sortArrayByDeparture:[self getSortedRides]];
     if ([self.privateAllRecentActivities count] > 0) {
         [self.delegate didRecieveActivitiesFromWebService];
@@ -132,16 +131,21 @@ static int activity_id = 0;
     NSMutableArray *array = [[NSMutableArray alloc] init];
     NSDate *now = [NSDate date];
     
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *comps = [NSDateComponents new];
+    comps.day = 1;
+    NSDate *tomorrow = [calendar dateByAddingComponents:comps toDate:[NSDate date] options:0];
+    
     for (Activity *activity in self.privateActivityArray) {
         for (Ride *ride in activity.rides) {
-            NSLog(@"now: %@, depart: %@", now, ride.departureTime);
-            if ([now compare:ride.departureTime] == NSOrderedAscending && ![array containsObject:ride]) {
+            if ([now compare:ride.departureTime] == NSOrderedAscending && ![array containsObject:ride] && [ride.departureTime compare:tomorrow] == NSOrderedAscending) {
                 [array addObject:ride];
                 [[RidesStore sharedStore] addRideToStore:ride];
             }
         }
         for (Request *request in activity.requests) {
-            if ([now compare:request.requestedRide.departureTime] == NSOrderedAscending && ![array containsObject:request])  {
+            if ([now compare:request.requestedRide.departureTime] == NSOrderedAscending && ![array containsObject:request] && [request.requestedRide.departureTime compare:tomorrow] == NSOrderedAscending)  {
                 [array addObject:request];
             }
         }
