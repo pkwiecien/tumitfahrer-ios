@@ -22,6 +22,7 @@
 @interface ActivityStore : NSObject <LocationControllerDelegate>
 
 + (instancetype)sharedStore;
+
 @property (nonatomic, strong) id <ActivityStoreDelegate> delegate;
 
 - (void)fetchActivitiesFromWebservice:(boolCompletionHandler)block;

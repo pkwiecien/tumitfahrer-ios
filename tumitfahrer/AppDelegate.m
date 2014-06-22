@@ -34,6 +34,7 @@
 #import "BadgeMapping.h"
 #import "RatingMapping.h"
 #import "PanoramioMapping.h"
+#import <AWSRuntime/AWSRuntime.h>
 
 @interface AppDelegate ()
 
@@ -64,9 +65,16 @@
     // Load the FBLoginView class (needed for login)
     [FBLoginView class];
     
+#ifdef DEBUG
+    [AmazonLogger verboseLogging];
+#else
+    [AmazonLogger turnLoggingOff];
+#endif
+    
+    [AmazonErrorHandler shouldNotThrowExceptions];
+    
     [self.window makeKeyAndVisible];
     return YES;
-    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

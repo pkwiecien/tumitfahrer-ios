@@ -19,6 +19,7 @@
 #import "EditDepartmentViewController.h"
 #import "RidesStore.h"
 #import "User.h"
+#import "AWSUploader.h"
 
 @interface ProfileViewController ()
 
@@ -68,6 +69,7 @@
     [[RidesStore sharedStore] fetchPastRidesFromCoreData];
 }
 
+
 -(void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     if (self.user == nil) {
@@ -77,7 +79,17 @@
     
     [self updateCellDescriptions];
     [self.profileImageContentView.tableView reloadData];
-    
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    if (self.user.profileImageData == nil) {
+        UIImage *image = [[AWSUploader sharedStore] downloadProfilePictureForUserId:[CurrentUser sharedInstance].user.userId];
+        
+        self.profileImageContentView.rideDetailHeaderView.circularImage = image;
+        [self.profileImageContentView.rideDetailHeaderView replaceImage:image];
+        self.user.profileImageData = UIImageJPEGRepresentation(image, 1.0f);
+        [[CurrentUser sharedInstance] saveUserToPersisentStore];
+    }
 }
 
 -(void)initProfilePic {
@@ -109,7 +121,7 @@
         [cameraButton setImage:[UIImage imageNamed:@"CameraIcon"] forState:UIControlStateNormal];
         [cameraButton addTarget:self action:@selector(headerViewTapped) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:cameraButton];
-
+        
     } else {
         self.cellDescriptions = [[NSArray alloc] initWithObjects:self.user.firstName, self.user.email, phoneNumber, car, department, nil];
         self.cellImages = self.otherCellImages;
@@ -257,7 +269,7 @@
 - (void)takePhoto {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
-    picker.modalPresentationStyle = UIModalPresentationFullScreen;
+    picker.modalPresentationStyle = UIModalPresentationCurrentContext;
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     picker.allowsEditing = NO;
     self.imagePickerController = picker;
@@ -279,14 +291,23 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
-    self.profileImageContentView.rideDetailHeaderView.circularImage = chosenImage;
-    [self.profileImageContentView.rideDetailHeaderView replaceImage:chosenImage];
-    self.user.profileImageData = UIImageJPEGRepresentation(chosenImage, 1.0f);
+    UIImage *resizedImage = [ActionManager imageWithImage:chosenImage scaledToSize:CGSizeMake(100, 135)];
+    NSData *chosenImageData = UIImageJPEGRepresentation(chosenImage, 1.0);
+    NSData *resizedImageData = UIImageJPEGRepresentation(resizedImage, 1.0);
+    
+    NSLog(@"size of original : %lu, size of cropped: %lu", (unsigned long)[chosenImageData length], (unsigned long)[resizedImageData length]);
+    
+    self.profileImageContentView.rideDetailHeaderView.circularImage = resizedImage;
+    [self.profileImageContentView.rideDetailHeaderView replaceImage:resizedImage];
+    self.user.profileImageData = UIImageJPEGRepresentation(resizedImage, 1.0f);
+    
     [picker dismissViewControllerAnimated:YES completion:NULL];
     NSError *error;
     if (![self.user.managedObjectContext saveToPersistentStore:&error]) {
         NSLog(@"Whoops");
     }
+    
+    [[AWSUploader sharedStore] uploadImageData:resizedImageData userId:[CurrentUser sharedInstance].user.userId];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

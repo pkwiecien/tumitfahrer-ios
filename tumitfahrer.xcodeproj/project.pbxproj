@@ -210,6 +210,10 @@
 		E5E215791908442100B0B150 /* SwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E215771908442100B0B150 /* SwitchTableViewCell.xib */; };
 		E5E2157F1908492200B0B150 /* FreeSeatsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2157D1908492200B0B150 /* FreeSeatsTableViewCell.m */; };
 		E5E215801908492200B0B150 /* FreeSeatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E2157E1908492200B0B150 /* FreeSeatsTableViewCell.xib */; };
+		E5E9C3821955EBB9009FF381 /* AWSRuntime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E9C3801955EBB9009FF381 /* AWSRuntime.framework */; };
+		E5E9C3831955EBB9009FF381 /* AWSS3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E9C3811955EBB9009FF381 /* AWSS3.framework */; };
+		E5E9C3881955ECEE009FF381 /* AWSConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E9C3851955ECEE009FF381 /* AWSConstants.m */; };
+		E5E9C3891955ECEE009FF381 /* AWSUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E9C3871955ECEE009FF381 /* AWSUploader.m */; };
 		E5FB4D3E1918DB18006F4F5D /* RideSectionHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FB4D3C1918DB18006F4F5D /* RideSectionHeaderCell.m */; };
 		E5FB4D3F1918DB18006F4F5D /* RideSectionHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FB4D3D1918DB18006F4F5D /* RideSectionHeaderCell.xib */; };
 		E5FB4D5619191D0A006F4F5D /* CustomUILabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FB4D5519191D0A006F4F5D /* CustomUILabel.m */; };
@@ -603,6 +607,12 @@
 		E5E2157C1908492200B0B150 /* FreeSeatsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreeSeatsTableViewCell.h; sourceTree = "<group>"; };
 		E5E2157D1908492200B0B150 /* FreeSeatsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreeSeatsTableViewCell.m; sourceTree = "<group>"; };
 		E5E2157E1908492200B0B150 /* FreeSeatsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FreeSeatsTableViewCell.xib; sourceTree = "<group>"; };
+		E5E9C3801955EBB9009FF381 /* AWSRuntime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSRuntime.framework; sourceTree = "<group>"; };
+		E5E9C3811955EBB9009FF381 /* AWSS3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSS3.framework; sourceTree = "<group>"; };
+		E5E9C3841955ECEE009FF381 /* AWSConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSConstants.h; sourceTree = "<group>"; };
+		E5E9C3851955ECEE009FF381 /* AWSConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSConstants.m; sourceTree = "<group>"; };
+		E5E9C3861955ECEE009FF381 /* AWSUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSUploader.h; sourceTree = "<group>"; };
+		E5E9C3871955ECEE009FF381 /* AWSUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSUploader.m; sourceTree = "<group>"; };
 		E5FB4D3B1918DB18006F4F5D /* RideSectionHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideSectionHeaderCell.h; sourceTree = "<group>"; };
 		E5FB4D3C1918DB18006F4F5D /* RideSectionHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideSectionHeaderCell.m; sourceTree = "<group>"; };
 		E5FB4D3D1918DB18006F4F5D /* RideSectionHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RideSectionHeaderCell.xib; sourceTree = "<group>"; };
@@ -694,12 +704,14 @@
 				E51FD51118F3B6BD0098AD11 /* MobileCoreServices.framework in Frameworks */,
 				E51FD50F18F3B6AF0098AD11 /* Security.framework in Frameworks */,
 				E51FD50D18F3B6A00098AD11 /* CoreData.framework in Frameworks */,
+				E5E9C3831955EBB9009FF381 /* AWSS3.framework in Frameworks */,
 				E5FDDBE718EFDD4F00CE7B01 /* CoreMotion.framework in Frameworks */,
 				E5FDDBE518EFDD4800CE7B01 /* OpenGLES.framework in Frameworks */,
 				E5FDDBE318EFDD4000CE7B01 /* AudioToolbox.framework in Frameworks */,
 				E5FDDBDF18EFDD3500CE7B01 /* CoreTelephony.framework in Frameworks */,
 				E5FDDBDD18EFDD2E00CE7B01 /* SystemConfiguration.framework in Frameworks */,
 				E5FDDBDB18EFDD2700CE7B01 /* CoreImage.framework in Frameworks */,
+				E5E9C3821955EBB9009FF381 /* AWSRuntime.framework in Frameworks */,
 				E5FDDBD918EFDD1E00CE7B01 /* AdSupport.framework in Frameworks */,
 				E599881118E7FC5900B01C62 /* MediaPlayer.framework in Frameworks */,
 				E599880E18E7FB1600B01C62 /* AVFoundation.framework in Frameworks */,
@@ -783,6 +795,17 @@
 				E50263C719559C970041E21A /* PhotoDetailsViewController.xib */,
 			);
 			name = "Photo Details";
+			sourceTree = "<group>";
+		};
+		E50263CD1955C5F50041E21A /* AWS */ = {
+			isa = PBXGroup;
+			children = (
+				E5E9C3841955ECEE009FF381 /* AWSConstants.h */,
+				E5E9C3851955ECEE009FF381 /* AWSConstants.m */,
+				E5E9C3861955ECEE009FF381 /* AWSUploader.h */,
+				E5E9C3871955ECEE009FF381 /* AWSUploader.m */,
+			);
+			name = AWS;
 			sourceTree = "<group>";
 		};
 		E504D9B8190A585A0036FFA8 /* Meeting Point */ = {
@@ -998,6 +1021,8 @@
 		E522BAB818AE13F600ECD375 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E5E9C3801955EBB9009FF381 /* AWSRuntime.framework */,
+				E5E9C3811955EBB9009FF381 /* AWSS3.framework */,
 				E58B872B191559B30032524A /* libicucore.dylib */,
 				E51FD51618F3B6EA0098AD11 /* CFNetwork.framework */,
 				E51FD51418F3B6E00098AD11 /* libxml2.dylib */,
@@ -1460,6 +1485,7 @@
 		E599882218E8155800B01C62 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				E50263CD1955C5F50041E21A /* AWS */,
 				E5FDDBEF18F0059D00CE7B01 /* ActionManager.h */,
 				E5FDDBF018F0059D00CE7B01 /* ActionManager.m */,
 				E517DB611950391500961344 /* BadgeUtilities.h */,
@@ -2210,6 +2236,7 @@
 				E50263C3195592780041E21A /* Ride.m in Sources */,
 				E5DE44ED192618270034AF6F /* SegmentedControlCell.m in Sources */,
 				E507C43F193A298D005F1083 /* RideRequestInformationCell.m in Sources */,
+				E5E9C3881955ECEE009FF381 /* AWSConstants.m in Sources */,
 				E50CCD11191FC324003A9490 /* RidesPageViewController.m in Sources */,
 				E5FEF2F21944766300E326BB /* MessagesOverviewViewController.m in Sources */,
 				E5DF641518EB548E00D53164 /* SettingsViewController.m in Sources */,
@@ -2221,6 +2248,7 @@
 				E5FEF36E1946005600E326BB /* TimePickerCell.m in Sources */,
 				E58B872A19151F1B0032524A /* KGStatusBar.m in Sources */,
 				E522BACA18AE13F600ECD375 /* AppDelegate.m in Sources */,
+				E5E9C3891955ECEE009FF381 /* AWSUploader.m in Sources */,
 				E5A9BE18194236CD0072E9B0 /* YourRidesPageViewController.m in Sources */,
 				E5FB4D5619191D0A006F4F5D /* CustomUILabel.m in Sources */,
 				E5FEF33D1944CEA500E326BB /* SimpleChatViewController.m in Sources */,
@@ -2446,6 +2474,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/tumitfahrer/UbertestersSDK/**",
 					"$(PROJECT_DIR)/tumitfahrer/UbertestersSDK",
+					"$(PROJECT_DIR)",
 				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
@@ -2476,6 +2505,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/tumitfahrer/UbertestersSDK/**",
 					"$(PROJECT_DIR)/tumitfahrer/UbertestersSDK",
+					"$(PROJECT_DIR)",
 				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
