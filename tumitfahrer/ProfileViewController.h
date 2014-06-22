@@ -11,7 +11,7 @@
 
 @class User;
 
-@interface ProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, HeaderContentViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface ProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 typedef enum {
     Menu = 0,

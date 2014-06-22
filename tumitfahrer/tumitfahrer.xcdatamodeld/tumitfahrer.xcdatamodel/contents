@@ -137,12 +137,12 @@
         <element name="Badge" positionX="-72" positionY="-180" width="128" height="193"/>
         <element name="Conversation" positionX="-72" positionY="-180" width="128" height="165"/>
         <element name="Message" positionX="0" positionY="0" width="128" height="163"/>
+        <element name="Photo" positionX="-72" positionY="-180" width="128" height="148"/>
         <element name="Rating" positionX="106" positionY="-99" width="128" height="163"/>
         <element name="RecentPlace" positionX="-72" positionY="-180" width="128" height="105"/>
         <element name="Request" positionX="18" positionY="-333" width="128" height="148"/>
         <element name="Ride" positionX="-279" positionY="-175" width="128" height="418"/>
         <element name="RideSearch" positionX="-72" positionY="-180" width="128" height="238"/>
         <element name="User" positionX="252" positionY="-40" width="128" height="285"/>
-        <element name="Photo" positionX="-72" positionY="-180" width="128" height="148"/>
     </elements>
 </model>

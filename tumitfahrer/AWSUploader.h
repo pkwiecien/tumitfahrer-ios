@@ -10,11 +10,19 @@
 #import <AWSRuntime/AWSRuntime.h>
 #import <AWSS3/AWSS3.h>
 
+@protocol AWSUploaderDelegate <NSObject>
+
+-(void)didDownloadImageData:(NSData *)imageData;
+
+@end
+
 @interface AWSUploader : NSObject <AmazonServiceRequestDelegate>
 
 + (instancetype)sharedStore;
 
+@property (nonatomic, strong) id<AWSUploaderDelegate> delegate;
+
 - (void)uploadImageData:(NSData *)imageData userId:(NSNumber *)userId;
-- (UIImage *)downloadProfilePictureForUserId:(NSNumber *)userId;
+- (void)downloadProfilePictureForUserId:(NSNumber *)userId;
 
 @end

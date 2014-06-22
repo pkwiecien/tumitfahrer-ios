@@ -63,37 +63,19 @@
     [self.tm upload:putObjectRequest];
 }
 
--(UIImage *)downloadProfilePictureForUserId:(NSNumber *)userId {
+-(void)downloadProfilePictureForUserId:(NSNumber *)userId {
+    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *filePath = [NSString stringWithFormat:@"%@/tumitfahrer/users/%@/profile_picture.jpg", documentsDirectory, userId];
     NSLog(@"filePath %@", filePath);
     NSString *path = [NSString stringWithFormat:@"users/%@/profile_picture.jpg", userId];
     
-    S3GetObjectRequest *request = [[S3GetObjectRequest alloc] initWithKey:path withBucket:BUCKET_NAME];
-    request.credentials = self.credentials;
-    request.ifModifiedSince = [NSDate date];
-    [self.s3 getObject:request];
-
-    S3GetObjectResponse *response;
-    @try
-    {
-        response = [self.s3 getObject:request];
-    }
-    @catch(NSException* ex)
-    {
-        NSLog(@"could not get photo");
-    }
+    S3GetObjectRequest *getObjectRequest = [[S3GetObjectRequest alloc] initWithKey:path withBucket:BUCKET_NAME];
+    getObjectRequest.credentials = self.credentials;
+    getObjectRequest.delegate = self;
     
-    NSData *data = response.body;
-    UIImage *image = [UIImage imageWithData:data];
-
-    if (image == nil) {
-        NSLog(@"image is null");
-    } else {
-        NSLog(@"image is not null");
-    }
-    return image;
+    [self.tm download:getObjectRequest];
 }
 #pragma mark - AmazonServiceRequestDelegate
 
@@ -114,7 +96,10 @@
 }
 
 -(void)request:(AmazonServiceRequest *)request didCompleteWithResponse:(AmazonServiceResponse *)response {
-    NSLog(@"done");
+    NSData *imageData = response.body;
+    if (imageData != nil && imageData.length > 0) {
+        [self.delegate didDownloadImageData:response.body];
+    }
 }
 
 -(void)request:(AmazonServiceRequest *)request didFailWithError:(NSError *)error {

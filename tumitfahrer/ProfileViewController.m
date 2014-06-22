@@ -21,7 +21,7 @@
 #import "User.h"
 #import "AWSUploader.h"
 
-@interface ProfileViewController ()
+@interface ProfileViewController () <AWSUploaderDelegate, HeaderContentViewDelegate>
 
 @property (strong, nonatomic) NSArray *cellDescriptions;
 @property (strong, nonatomic) NSArray *ownerCellImages;
@@ -29,6 +29,7 @@
 @property (strong, nonatomic) NSArray *cellImages;
 @property (strong, nonatomic) NSArray *editDescriptions;
 @property (nonatomic) UIImagePickerController *imagePickerController;
+@property (strong, nonatomic) NSData *initialImageData;
 
 @end
 
@@ -67,6 +68,9 @@
     [self.view addSubview:buttonBack];
     
     [[RidesStore sharedStore] fetchPastRidesFromCoreData];
+    [AWSUploader sharedStore].delegate = self;
+    
+    self.initialImageData = [CurrentUser sharedInstance].user.profileImageData;
 }
 
 
@@ -82,14 +86,18 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-    if (self.user.profileImageData == nil) {
-        UIImage *image = [[AWSUploader sharedStore] downloadProfilePictureForUserId:[CurrentUser sharedInstance].user.userId];
-        
-        self.profileImageContentView.rideDetailHeaderView.circularImage = image;
-        [self.profileImageContentView.rideDetailHeaderView replaceImage:image];
-        self.user.profileImageData = UIImageJPEGRepresentation(image, 1.0f);
-        [[CurrentUser sharedInstance] saveUserToPersisentStore];
+    if(self.user.profileImageData == nil) {
+        [[AWSUploader sharedStore] downloadProfilePictureForUserId:self.user.userId];
     }
+}
+
+-(void)didDownloadImageData:(NSData *)imageData {
+    UIImage *profileImage = [UIImage imageWithData:imageData];
+    self.profileImageContentView.rideDetailHeaderView.circularImage = profileImage;
+    [self.profileImageContentView.rideDetailHeaderView replaceImage:profileImage];
+    self.user.profileImageData = imageData;
+    self.initialImageData = imageData;
+    [[CurrentUser sharedInstance] saveUserToPersisentStore];
 }
 
 -(void)initProfilePic {
@@ -306,12 +314,21 @@
     if (![self.user.managedObjectContext saveToPersistentStore:&error]) {
         NSLog(@"Whoops");
     }
-    
-    [[AWSUploader sharedStore] uploadImageData:resizedImageData userId:[CurrentUser sharedInstance].user.userId];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    if ([self.user.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && self.initialImageData.length != self.user.profileImageData.length) {
+        [[AWSUploader sharedStore] uploadImageData:[CurrentUser sharedInstance].user.profileImageData userId:self.user.userId];
+        self.initialImageData = self.user.profileImageData;
+    }
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+-(void)dealloc {
+    [AWSUploader sharedStore].delegate = nil;
 }
 
 @end
