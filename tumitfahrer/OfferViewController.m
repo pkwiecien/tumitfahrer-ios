@@ -237,6 +237,7 @@
                 
                 [KGStatusBar showSuccessWithStatus:@"Request canceled"];
                 [[RidesStore sharedStore] deleteRideRequest:request];
+                [[ActivityStore sharedStore] deleteRequestFromActivites:request];
                 
                 [self.rideDetail.tableView reloadData];
             } failure:^(RKObjectRequestOperation *operation, NSError *error) {

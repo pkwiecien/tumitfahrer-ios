@@ -277,7 +277,7 @@
 -(void)removeRideRequest:(Request*)request {
     if ([[RidesStore sharedStore] removeRequestForRide:self.ride.rideId request:request]) {
         [self.rideDetail.tableView reloadData];
-        [[ActivityStore sharedStore] initAllActivitiesFromCoreData];
+        [[ActivityStore sharedStore] deleteRequestFromActivites:request];
     }
 }
 
@@ -290,7 +290,17 @@
 -(void)moveRequestorToPassengers:(User *)requestor {
     if ([[RidesStore sharedStore] addPassengerForRideId:self.ride.rideId requestor:requestor]) {
         [self.rideDetail.tableView reloadData];
-        [[ActivityStore sharedStore] initAllActivitiesFromCoreData];
+        [self.ride.requests allObjects];
+        [self findRequestForRide:self.ride requestor:requestor];
+    }
+}
+
+-(void)findRequestForRide:(Ride *)ride requestor:(User *)requestor {
+    for (Request *request in [self.ride.requests allObjects]) {
+        if ([request.passengerId isEqualToNumber:requestor.userId]) {
+            [[ActivityStore sharedStore] deleteRequestFromActivites:request];
+            return;
+        }
     }
 }
 

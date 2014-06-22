@@ -57,7 +57,7 @@
     self.profileImageContentView.tableViewDataSource = self;
     self.profileImageContentView.tableViewDelegate = self;
     self.profileImageContentView.parallaxScrollFactor = 0.3; // little slower than normal.
-    self.profileImageContentView.circularImage = [UIImage imageNamed:@"MainCampus"];
+    self.profileImageContentView.circularImage = [UIImage imageNamed:@"MainCampus.jpg"];
     self.profileImageContentView.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:self.profileImageContentView];
     
@@ -101,7 +101,7 @@
 }
 
 -(void)initProfilePic {
-    self.profileImageContentView.selectedImageData = UIImagePNGRepresentation([UIImage imageNamed:@"bg1"]);
+    self.profileImageContentView.selectedImageData = UIImagePNGRepresentation([UIImage imageNamed:@"bg1.jpg"]);
     if (self.user.profileImageData != nil) {
         UIImage *profilePic = [UIImage imageWithData:self.user.profileImageData];
         self.profileImageContentView.circularImage = profilePic;

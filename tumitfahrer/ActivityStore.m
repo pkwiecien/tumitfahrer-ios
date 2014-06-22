@@ -350,6 +350,12 @@ static int activity_id = 0;
     [[self myRecentActivities] removeObject:ride];
 }
 
+-(void)deleteRequestFromActivites:(Request *)request {
+    [[self allRecentActivities] removeObject:request];
+    [[self activitiesNearby] removeObject:request];
+    [[self myRecentActivities] removeObject:request];
+}
+
 #pragma mark - getters with initializers
 
 -(NSMutableArray *)myRecentActivities {

@@ -67,7 +67,7 @@
     page.desc = descriptionText;
     page.descPositionY = 200;
     page.titleIconPositionY = 100;
-    page.bgImage = [UIImage imageNamed:@"bg1"];
+    page.bgImage = [UIImage imageNamed:@"bg1.jpg"];
     return page;
 }
 

@@ -20,6 +20,14 @@
 		6EFC23801926343200AAF263 /* RideSearchStoreTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EFC237F1926343200AAF263 /* RideSearchStoreTest.m */; };
 		6EFC23821926447500AAF263 /* RideStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EFC23811926447500AAF263 /* RideStoreTests.m */; };
 		E50164781956B780004DA38A /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E50164771956B780004DA38A /* User.m */; };
+		E501647B1956E0C0004DA38A /* bg1@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E501647A1956E0C0004DA38A /* bg1@2x.jpg */; };
+		E501647D1956E0F2004DA38A /* bg1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E501647C1956E0F2004DA38A /* bg1.jpg */; };
+		E50164801956E14F004DA38A /* DayRoadBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E501647E1956E14F004DA38A /* DayRoadBackground.jpg */; };
+		E50164811956E14F004DA38A /* DayRoadBackground@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E501647F1956E14F004DA38A /* DayRoadBackground@2x.jpg */; };
+		E50164861956E1E0004DA38A /* MainCampus.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E50164821956E1E0004DA38A /* MainCampus.jpg */; };
+		E50164871956E1E0004DA38A /* MainCampus@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E50164831956E1E0004DA38A /* MainCampus@2x.jpg */; };
+		E50164881956E1E0004DA38A /* RoadBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E50164841956E1E0004DA38A /* RoadBackground.jpg */; };
+		E50164891956E1E0004DA38A /* RoadBackground@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E50164851956E1E0004DA38A /* RoadBackground@2x.jpg */; };
 		E50263861954D5110041E21A /* ConversationUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E50263851954D5110041E21A /* ConversationUtilities.m */; };
 		E50263891954DC2D0041E21A /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = E50263881954DC2D0041E21A /* Conversation.m */; };
 		E502638C195574DB0041E21A /* BrowseRidesPanoramioFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = E502638B195574DB0041E21A /* BrowseRidesPanoramioFooter.xib */; };
@@ -320,6 +328,14 @@
 		C71CE6059C014DFABC5B4F22 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		E50164761956B780004DA38A /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		E50164771956B780004DA38A /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		E501647A1956E0C0004DA38A /* bg1@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg1@2x.jpg"; sourceTree = "<group>"; };
+		E501647C1956E0F2004DA38A /* bg1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg1.jpg; sourceTree = "<group>"; };
+		E501647E1956E14F004DA38A /* DayRoadBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = DayRoadBackground.jpg; sourceTree = "<group>"; };
+		E501647F1956E14F004DA38A /* DayRoadBackground@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "DayRoadBackground@2x.jpg"; sourceTree = "<group>"; };
+		E50164821956E1E0004DA38A /* MainCampus.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = MainCampus.jpg; sourceTree = "<group>"; };
+		E50164831956E1E0004DA38A /* MainCampus@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "MainCampus@2x.jpg"; sourceTree = "<group>"; };
+		E50164841956E1E0004DA38A /* RoadBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RoadBackground.jpg; sourceTree = "<group>"; };
+		E50164851956E1E0004DA38A /* RoadBackground@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "RoadBackground@2x.jpg"; sourceTree = "<group>"; };
 		E50263841954D5110041E21A /* ConversationUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationUtilities.h; sourceTree = "<group>"; };
 		E50263851954D5110041E21A /* ConversationUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationUtilities.m; sourceTree = "<group>"; };
 		E50263871954DC2D0041E21A /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
@@ -748,6 +764,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E50164791956E0B5004DA38A /* Backgrounds */ = {
+			isa = PBXGroup;
+			children = (
+				E50164821956E1E0004DA38A /* MainCampus.jpg */,
+				E50164831956E1E0004DA38A /* MainCampus@2x.jpg */,
+				E50164841956E1E0004DA38A /* RoadBackground.jpg */,
+				E50164851956E1E0004DA38A /* RoadBackground@2x.jpg */,
+				E501647E1956E14F004DA38A /* DayRoadBackground.jpg */,
+				E501647F1956E14F004DA38A /* DayRoadBackground@2x.jpg */,
+				E501647C1956E0F2004DA38A /* bg1.jpg */,
+				E501647A1956E0C0004DA38A /* bg1@2x.jpg */,
+			);
+			name = Backgrounds;
+			sourceTree = "<group>";
+		};
 		E502638A195574B50041E21A /* Footer */ = {
 			isa = PBXGroup;
 			children = (
@@ -759,6 +790,7 @@
 		E502639C19558D060041E21A /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E50164791956E0B5004DA38A /* Backgrounds */,
 				E50263A519558DCC0041E21A /* Team */,
 			);
 			name = Images;
@@ -1960,8 +1992,10 @@
 				E599880218E72BF600B01C62 /* ForgotPasswordViewController.xib in Resources */,
 				E5CD59461951C6E300E97DEC /* Privacy.txt in Resources */,
 				E5CD593D1951C39D00E97DEC /* restkit.txt in Resources */,
+				E501647B1956E0C0004DA38A /* bg1@2x.jpg in Resources */,
 				E5FEF3691945E5CD00E326BB /* FeedbackViewController.xib in Resources */,
 				E5E215651907A95F00B0B150 /* SearchRideViewController.xib in Resources */,
+				E50164881956E1E0004DA38A /* RoadBackground.jpg in Resources */,
 				E5CD59381951C39D00E97DEC /* Facebook-iOS-SDK.txt in Resources */,
 				E58889E91913C7010062D0DF /* UbertestersSDKResources.bundle in Resources */,
 				E5FEF3521945A02300E326BB /* SearchResultViewController.xib in Resources */,
@@ -2002,17 +2036,21 @@
 				E5FEF3AA1946FD0000E326BB /* RideDetailActionCell.xib in Resources */,
 				E58889F61913E14A0062D0DF /* RideInformationCell.xib in Resources */,
 				E50CCC21191E6A7E003A9490 /* LogoView.xib in Resources */,
+				E50164871956E1E0004DA38A /* MainCampus@2x.jpg in Resources */,
 				E599881918E804E500B01C62 /* highway-nosound@2x.mp4 in Resources */,
 				E50263B319558F000041E21A /* AbiPhoto@2x.jpg in Resources */,
+				E50164801956E14F004DA38A /* DayRoadBackground.jpg in Resources */,
 				E526B657194E011C006D3527 /* TeamMemberCell.xib in Resources */,
 				E50263B919558F000041E21A /* LukasPhoto@2x.jpg in Resources */,
 				E50CCCC2191E7A94003A9490 /* TimelinePageViewController.xib in Resources */,
 				E50263B419558F000041E21A /* AmrPhoto.jpg in Resources */,
+				E50164811956E14F004DA38A /* DayRoadBackground@2x.jpg in Resources */,
 				E5FB4D3F1918DB18006F4F5D /* RideSectionHeaderCell.xib in Resources */,
 				E522BAC418AE13F600ECD375 /* InfoPlist.strings in Resources */,
 				E526B625194CB644006D3527 /* RidePersonCell.xib in Resources */,
 				E50263BB19558F000041E21A /* PawelPhoto@2x.jpg in Resources */,
 				E5FEF37E19463D6800E326BB /* CarsharingViewController.xib in Resources */,
+				E50164861956E1E0004DA38A /* MainCampus.jpg in Resources */,
 				E59B9A4C1916A241008DE80B /* YourRidesViewController.xib in Resources */,
 				E50263B219558F000041E21A /* AbiPhoto.jpg in Resources */,
 				E599886318E84D9D00B01C62 /* MenuTableViewCell.xib in Resources */,
@@ -2020,12 +2058,14 @@
 				E526B5A2194A1D07006D3527 /* EditProfileFieldViewController.xib in Resources */,
 				E5FEF2F819447A3B00E326BB /* MessageListCell.xib in Resources */,
 				E50263BC19558F000041E21A /* SaqibPhoto.jpg in Resources */,
+				E501647D1956E0F2004DA38A /* bg1.jpg in Resources */,
 				E5FEF36F1946005600E326BB /* TimePickerCell.xib in Resources */,
 				E526B61C194C9C2A006D3527 /* RequestViewController.xib in Resources */,
 				E50263A419558DCA0041E21A /* ShahidPhoto@2x.jpg in Resources */,
 				E50263B819558F000041E21A /* LukasPhoto.jpg in Resources */,
 				E5CD593A1951C39D00E97DEC /* JSMessagesViewController.txt in Resources */,
 				E50263A019558D310041E21A /* BehrozPhoto@2x.jpg in Resources */,
+				E50164891956E1E0004DA38A /* RoadBackground@2x.jpg in Resources */,
 				E50263B519558F000041E21A /* AmrPhoto@2x.jpg in Resources */,
 				E50CCD07191FAE8A003A9490 /* RidesViewController.xib in Resources */,
 				E526B5D5194C2A78006D3527 /* EmptyCell.xib in Resources */,
