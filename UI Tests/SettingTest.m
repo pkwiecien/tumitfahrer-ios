@@ -28,6 +28,7 @@
 
 -(void)test00SendFeedback
 {
+    [tester waitForTimeInterval:1];
     [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] inTableViewWithAccessibilityIdentifier:@"Setting List"];
     [tester waitForTappableViewWithAccessibilityLabel:@"Feedback View"];
     
@@ -42,6 +43,7 @@
 
 -(void)test10ReportProblem
 {
+    [tester waitForTimeInterval:1];
     [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0] inTableViewWithAccessibilityIdentifier:@"Setting List"];
     [tester waitForTappableViewWithAccessibilityLabel:@"Feedback View"];
     
@@ -62,7 +64,7 @@
     [tester setOn:YES forSwitchWithAccessibilityLabel:@"Reminder Switch"];
     
     [tester tapViewWithAccessibilityLabel:@"Reminder Time Picker"];
-    NSArray *dateTime = @[@"6", @"30", @"AM"];
+    NSArray *dateTime = @[@"", @"30"];
     [tester selectDatePickerValue:dateTime];
     [tester waitForTappableViewWithAccessibilityLabel:@"Reminder View"];
 
@@ -88,14 +90,14 @@
     [tester waitForTappableViewWithAccessibilityLabel:@"Setting View"];
 }
 
--(void)test50CarSharing
-{
-    [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:1] inTableViewWithAccessibilityIdentifier:@"Setting List"];
-    [tester waitForTappableViewWithAccessibilityLabel:@"CarSharing View"];
-    
-    [tester tapViewWithAccessibilityLabel:@"Back Setting Button"];
-    [tester waitForTappableViewWithAccessibilityLabel:@"Setting View"];
-}
+//-(void)test50CarSharing
+//{
+//    [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:1] inTableViewWithAccessibilityIdentifier:@"Setting List"];
+//    [tester waitForTappableViewWithAccessibilityLabel:@"CarSharing View"];
+//    
+//    [tester tapViewWithAccessibilityLabel:@"Back Setting Button"];
+//    [tester waitForTappableViewWithAccessibilityLabel:@"Setting View"];
+//}
 
 -(void)test60ContactUs
 {

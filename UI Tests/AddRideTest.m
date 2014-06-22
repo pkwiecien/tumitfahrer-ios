@@ -26,11 +26,21 @@ NSInteger const kDEPARTURE_SEARCH = 3;
 -(void)testDemo
 {
     // add an activity ride as driver with search place
-    [self addRideAsDriverWithActivityRideWithSearch];
+    //[self addRideAsDriverWithActivityRideWithSearch];
     // search an activity ride
-    [self searchRideWithActivityRideWithRadius0WithTimeWithSearch];
+    //[self searchRideWithActivityRideWithRadius0WithTimeWithSearch];
     // delete an activity ride as an owner
-    [self deleteRideAsOffer];
+    //[self deleteRideAsOffer];
+
+    //[self addRideAsDriverWithCampusRide];
+    //[self addRideAsDriverWithCampusRide];
+    //[self addRideAsDriverWithCampusRide];
+    //[self searchRideWithCampusRideWithRadius0WithoutTime];
+    //[self searchBack];
+[self addRideAsPassengerWithCampusRideWithSearch];
+
+[self searchRideWithCampusRideWithRadius0WithTimeWithSearch];
+[self deleteRideAsRequest];
 }
 
 
@@ -209,6 +219,20 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     [self search];
 }
 
+-(void)searchRideWithCampusRideWithRadius0WithTimeWithSearch
+{
+    [self selectSearchRide];
+    
+    [self searchPlace:0 section:1 address:@"Garching" type:kDEPARTURE_SEARCH];
+    [self sliderRadius:0 row:2];
+    
+    [self searchPlace:0 section:1 address:@"Munich" type:kDESTINATION_SEARCH];
+    [self sliderRadius:0 row:4];
+    [self selectDateByPointInSearch];
+    
+    [self search];
+}
+
 -(void)searchRideWithActivityRideWithRadius0WithTimeWithSearch
 {
     [self selectSearchRide];
@@ -230,7 +254,6 @@ NSInteger const kDEPARTURE_SEARCH = 3;
 
     [self viewRideDetailAsRequestAndDelete];
     [self tapDeleteButtonInAlert];
-    [self deleteBack];
 }
 
 -(void)deleteRideAsOffer
@@ -238,7 +261,6 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     // then choose the first one in list
     [self viewRideDetailAsOfferAndDelete];
     [self tapDeleteButtonInAlert];
-    [self deleteBack];
 }
 
 #pragma mark - test steps
@@ -508,14 +530,14 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     select.y = 300;
     [tester tapScreenAtPoint:select];
     
-    select.x = 20;
-    select.y = 20;
+    [tester waitForTimeInterval:1];
+    
+    select.x = 25;
+    select.y = 25;
     [tester tapScreenAtPoint:select];
+
+    [tester waitForTimeInterval:1];
 }
 
--(void)deleteBack
-{
-    [tester tapViewWithAccessibilityLabel:@"Back Button"];
-}
 
 @end
