@@ -44,10 +44,7 @@
     fromSelectionVC.delegate = self;
     fromSelectionVC.datePicker.date = fromDate;
     
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *comps = [NSDateComponents new];
-    comps.day = 7;
-    toDate = [calendar dateByAddingComponents:comps toDate:[NSDate date] options:0];
+    toDate = [self dateInDays:7];
     
     toSelectionVC = [RMDateSelectionViewController dateSelectionController];
     toSelectionVC.delegate = self;
@@ -66,7 +63,72 @@
     multiSelectControl.tintColor = [UIColor lighterBlue];
     multiSelectControl.enabled = NO;
     [self.view addSubview:multiSelectControl];
-    selectedDays = [NSMutableArray arrayWithObjects: [NSNumber numberWithBool:0], [NSNumber numberWithBool:0], [NSNumber numberWithBool:0], [NSNumber numberWithBool:0], [NSNumber numberWithBool:0], [NSNumber numberWithBool:0], nil];
+    selectedDays = [NSMutableArray arrayWithObjects: [NSNumber numberWithBool:0], [NSNumber numberWithBool:0], [NSNumber numberWithBool:0], [NSNumber numberWithBool:0], [NSNumber numberWithBool:0],[NSNumber numberWithBool:0], [NSNumber numberWithBool:0],  nil];
+    
+    if (self.values == nil) {
+        self.values = [[NSMutableDictionary alloc] init];
+        [self.values setObject:fromDate forKey:@"fromDate"];
+        [self.values setObject:toDate forKey:@"toDate"];
+        [self.values setObject:selectedDays forKey:@"selectedDays"];
+        [self.values setObject:@NO forKey:@"shouldRepeatDaily"];
+        [self.values setObject:@NO forKey:@"shouldRepeatWeekly"];
+        [self.values setObject:[NSNumber numberWithInt:0] forKey:@"dailyFrequency"];
+    }
+}
+
+-(NSDate *)dateInDays:(NSInteger)days {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *comps = [NSDateComponents new];
+    comps.day = days;
+    return [calendar dateByAddingComponents:comps toDate:[NSDate date] options:0];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [self.repeatDailySwitch setOn:[[self.values objectForKey:@"shouldRepeatDaily"] boolValue]];
+    if (self.repeatDailySwitch.isOn) {
+        self.dayStepper.enabled = YES;
+    } else {
+        self.dayStepper.enabled = NO;
+    }
+    [self.repeatWeeklySwitch setOn:[[self.values objectForKey:@"shouldRepeatWeekly"] boolValue]];
+    if (self.repeatWeeklySwitch.isOn) {
+        multiSelectControl.enabled = YES;
+    } else {
+        multiSelectControl.enabled = NO;
+    }
+    if ([self.values objectForKey:@"fromDate"] == nil) {
+        fromDate = [NSDate date];
+        [self.fromButton setTitle:[ActionManager stringFromDate:fromDate] forState:UIControlStateNormal];
+    } else {
+        [self.fromButton setTitle:[ActionManager stringFromDate:[self.values objectForKey:@"fromDate"]] forState:UIControlStateNormal];
+    }
+    if ([self.values objectForKey:@"toDate"] == nil) {
+        toDate = [self dateInDays:7];
+        [self.toButton setTitle:[ActionManager stringFromDate:toDate] forState:UIControlStateNormal];
+    } else {
+        [self.toButton setTitle:[ActionManager stringFromDate:[self.values objectForKey:@"toDate"]] forState:UIControlStateNormal];
+    }
+    selectedDays = [self.values objectForKey:@"selectedDays"];
+    
+    NSMutableIndexSet *mutableIndexSet = [[NSMutableIndexSet alloc] init];
+    
+    for (int i = 0; i<selectedDays.count; i++) {
+        NSNumber *isSelected = [selectedDays objectAtIndex:i];
+        if ([isSelected boolValue] && i >= 2) {
+            [mutableIndexSet addIndex:(i-2)];
+        }
+    }
+    [multiSelectControl setSelectedSegmentIndexes:mutableIndexSet];
+    
+    if ([self.repeatDailySwitch isOn]) {
+        NSInteger dailyFrequency = [[self.values objectForKey:@"dailyFrequency"] integerValue];
+        self.dayStepper.value = dailyFrequency;
+        if (self.dayStepper.value == 1) {
+            self.everyDayLabel.text = @"Every day";
+        } else {
+            self.everyDayLabel.text = [NSString stringWithFormat:@"Every %d days", (int)self.dayStepper.value];
+        }
+    }
 }
 
 - (IBAction)repeatDailySwitchChanged:(id)sender {
@@ -89,6 +151,7 @@
     } else {
         multiSelectControl.enabled = NO;
     }
+    [self.values setObject:[NSNumber numberWithBool:switchControl.isOn] forKey:@"shouldRepeatWeekly"];
 }
 
 - (IBAction)dayStepperChanged:(id)sender {
@@ -98,32 +161,39 @@
     } else {
         self.everyDayLabel.text = [NSString stringWithFormat:@"Every %d days", (int)dayStepper.value];
     }
-}
-
-- (IBAction)segmentedControlChanged:(id)sender {
-    UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
-    self.selectedDay = segmentedControl.selectedSegmentIndex;
+    [self.values setObject:[NSNumber numberWithInt:dayStepper.value] forKey:@"dailyFrequency"];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:YES];
     
+    NSString *descriptionLabel = @"";
     NSMutableArray *repeatDatesArray = [[NSMutableArray alloc] init];
     if ([self.repeatDailySwitch isOn]) { // repeat daily
         for (NSDate *date = fromDate; [date compare:toDate] == NSOrderedAscending; date = [date dateByAddingTimeInterval:60*60*24*((int)self.dayStepper.value)]) {
             [repeatDatesArray addObject:date];
         }
+        descriptionLabel = @"Daily";
     } else if([self.repeatWeeklySwitch isOn]) { // repeat weekly
         for (NSDate *date = fromDate; [date compare:toDate] == NSOrderedAscending; date = [date dateByAddingTimeInterval:60*60*24*((int)self.dayStepper.value)]) {
-            NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay fromDate:date];
-            NSInteger day = components.day;
-            if ([[selectedDays objectAtIndex:day] boolValue]) {
+            NSDateComponents *weekdayComponents = [[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit fromDate:date];
+            NSInteger weekday = [weekdayComponents weekday]%7; // according to gregorian calendar, sunday = 1
+            if (weekday <= 1 ) { // Sunday or Saturday, don't repeat a ride then
+                continue;
+            }
+            
+            if ([[selectedDays objectAtIndex:weekday] boolValue]) {
                 [repeatDatesArray addObject:date];
             }
         }
+        if (selectedDays.count > 0) {
+            descriptionLabel = @"Weekly";
+        }
+        
+        [self.values setObject:selectedDays forKey:@"selectedDays"];
     }
     
-    [self.delegate didSelectRepeatDates:repeatDatesArray];
+    [self.delegate didSelectRepeatDates:repeatDatesArray descriptionLabel:descriptionLabel selectedValues:self.values];
 }
 
 
@@ -147,6 +217,7 @@
             return;
         }
         fromDate = aDate;
+        [self.values setObject:fromDate forKey:@"fromDate"];
         [self.fromButton setTitle:dateString forState:UIControlStateNormal];
     } else {
         if ([fromDate compare:aDate] == NSOrderedDescending) {
@@ -154,6 +225,7 @@
             return;
         }
         toDate = aDate;
+        [self.values setObject:toDate forKey:@"toDate"];
         [self.toButton setTitle:dateString forState:UIControlStateNormal];
     }
 }
@@ -163,7 +235,7 @@
 }
 
 -(void)multiSelect:(MultiSelectSegmentedControl *)multiSelecSegmendedControl didChangeValue:(BOOL)value atIndex:(NSUInteger)index {
-    [selectedDays replaceObjectAtIndex:index withObject:[NSNumber numberWithBool:value]];
+    [selectedDays replaceObjectAtIndex:(index+2) withObject:[NSNumber numberWithBool:value]];
 }
 
 @end

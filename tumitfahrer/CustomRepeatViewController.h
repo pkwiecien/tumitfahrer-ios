@@ -10,12 +10,13 @@
 
 @protocol CustomRepeatViewController <NSObject>
 
-- (void)didSelectRepeatDates:(NSArray *)repeatDates;
+- (void)didSelectRepeatDates:(NSArray *)repeatDates descriptionLabel:(NSString *)descriptionLabel selectedValues:(NSMutableDictionary *)selectedValues;
 
 @end
 
 @interface CustomRepeatViewController : UIViewController
 
+@property (nonatomic, strong) NSMutableDictionary *values;
 @property (nonatomic, strong) id<CustomRepeatViewController> delegate;
 @property (weak, nonatomic) IBOutlet UISwitch *repeatDailySwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *repeatWeeklySwitch;

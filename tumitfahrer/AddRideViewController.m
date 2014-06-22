@@ -37,6 +37,7 @@
 @property (nonatomic, strong) UIImage *destinationImage;
 @property (nonatomic, strong) Photo *destinationPhotoInfo;
 @property (nonatomic, strong) NSArray *repeatDates;
+@property (nonatomic, strong) NSMutableDictionary *selectedRepeatValues;
 
 @end
 
@@ -264,6 +265,7 @@
             CustomRepeatViewController *customRepeatVC = [[CustomRepeatViewController alloc] init];
             customRepeatVC.title = @"Repeat ride";
             customRepeatVC.delegate = self;
+            customRepeatVC.values = self.selectedRepeatValues;
             [self.navigationController pushViewController:customRepeatVC animated:YES];
         }
     }
@@ -435,8 +437,9 @@
     if(self.TableType == Passenger) {
             self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", nil];
     } else {
-            self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", @"", @"", @"", nil];
+            self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"No", @"", @"", @"", @"", nil];
     }
+    self.selectedRepeatValues = [NSMutableDictionary dictionary];
     [self setDepartureLabelForCurrentLocation];
 }
 
@@ -534,8 +537,14 @@
     }
 }
 
--(void)didSelectRepeatDates:(NSArray *)repeatDates {
+-(void)didSelectRepeatDates:(NSArray *)repeatDates descriptionLabel:(NSString *)descriptionLabel selectedValues:(NSMutableDictionary *)selectedValues {
+    self.selectedRepeatValues = selectedValues;
     self.repeatDates = repeatDates;
+    if (repeatDates.count > 0) {
+        [self.tableValues replaceObjectAtIndex:4 withObject:descriptionLabel];
+    } else {
+        [self.tableValues replaceObjectAtIndex:4 withObject:@"No"];
+    }
 }
 
 @end
