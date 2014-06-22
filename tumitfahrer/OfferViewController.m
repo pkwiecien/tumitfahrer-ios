@@ -25,6 +25,8 @@
 #import "ProfileViewController.h"
 #import "Rating.h"
 #import "ConversationUtilities.h"
+#import "AWSUploader.h"
+#import "Conversation.h"
 
 @interface OfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate, RidePersonCellDelegate>
 
@@ -130,7 +132,11 @@
         cell.delegate = self;
         if (self.ride.rideOwner != nil) {
             cell.personNameLabel.text = [self.ride.rideOwner.firstName stringByAppendingString:[NSString stringWithFormat:@"\nRating: %@", self.ride.rideOwner.ratingAvg]];
-            cell.personImageView.image = [UIImage imageWithData:self.ride.rideOwner.profileImageData];
+            if (self.ride.rideOwner.profileImageData != nil) {
+                cell.personImageView.image = [UIImage imageWithData:self.ride.rideOwner.profileImageData];
+            } else {
+                [[AWSUploader sharedStore] downloadProfilePictureForUser:self.ride.rideOwner];
+            }
         }
         if ([self isPastRide] && self.ride.rideOwner != nil) {
             [cell.leftButton setBackgroundImage:[UIImage imageNamed:@"DislikeIconBlack"] forState:UIControlStateNormal];
@@ -146,6 +152,7 @@
             }
         } else {
             cell.leftButton.hidden = YES;
+            cell.rightButton.hidden = YES;
         }
         return cell;
     } else if(indexPath.section == 2) { // show leave button if it's not a past ride
@@ -212,12 +219,12 @@
             // add enum
             NSString *userId = [NSString stringWithFormat:@"%@", [CurrentUser sharedInstance].user.userId];
             queryParams = @{@"passenger_id": userId};
-            NSDictionary *requestParams = @{@"request": queryParams};
             
-            [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/rides/%@/requests", self.ride.rideId] parameters:requestParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+            [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/rides/%@/requests", self.ride.rideId] parameters:queryParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                 [KGStatusBar showSuccessWithStatus:@"Request was sent"];
                 
                 Request *rideRequest = (Request *)[mappingResult firstObject];
+                [self fetchRide];
                 [[RidesStore sharedStore] addRideRequestToStore:rideRequest forRide:self.ride];
                 
                 [self.rideDetail.tableView reloadData];
@@ -229,7 +236,6 @@
             [objectManager deleteObject:request path:[NSString stringWithFormat:@"/api/v2/rides/%@/requests/%d", self.ride.rideId, [request.requestId intValue]] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                 
                 [KGStatusBar showSuccessWithStatus:@"Request canceled"];
-                
                 [[RidesStore sharedStore] deleteRideRequest:request];
                 
                 [self.rideDetail.tableView reloadData];
@@ -245,6 +251,18 @@
             }
         }];
     }
+}
+
+-(void)fetchRide {
+    [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:self.ride.rideId block:^(BOOL fetched) {
+        if (fetched) {
+            [self initRide];
+        }
+    }];
+}
+
+-(void)initRide {
+    self.ride = [[RidesStore sharedStore] fetchRideFromCoreDataWithId:self.ride.rideId];
 }
 
 -(void)leftButtonPressedWithObject:(id)object cellType:(CellTypeEnum)cellType {
@@ -284,11 +302,16 @@
 }
 
 -(void)contactDriverButtonPressed {
-    SimpleChatViewController *simpleChatVC = [[SimpleChatViewController alloc] init];
-    simpleChatVC.conversation = [ConversationUtilities findConversationBetweenUser:[CurrentUser sharedInstance].user otherUser:self.ride.rideOwner conversationArray:[self.ride.conversations allObjects]];
-    simpleChatVC.otherUser = self.ride.rideOwner;
-    [self.navigationController pushViewController:simpleChatVC animated:YES];
+//    SimpleChatViewController *simpleChatVC = [[SimpleChatViewController alloc] init];
+//    simpleChatVC.otherUser = self.ride.rideOwner;
+//    Conversation *conversation = [ConversationUtilities findConversationBetweenUser:[CurrentUser sharedInstance].user otherUser:self.ride.rideOwner conversationArray:[self.ride.conversations allObjects]];
+//    if (conversation != nil) {
+//        simpleChatVC.conversation =conversation;
+//        [self.navigationController pushViewController:simpleChatVC animated:YES];
+//    } else {
+//    }
 }
+
 
 -(void)dealloc {
     [[RidesStore sharedStore] removeObserver:self];

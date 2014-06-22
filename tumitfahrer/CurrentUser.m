@@ -214,8 +214,17 @@
     if (![context saveToPersistentStore:&error]) {
         NSLog(@"delete error %@", [error localizedDescription]);
     }
-    
 }
+
+
++(void)saveUserToPersistentStore:(User *)user {
+    NSManagedObjectContext *context = user.managedObjectContext;
+    NSError *error;
+    if (![context saveToPersistentStore:&error]) {
+        NSLog(@"delete error %@", [error localizedDescription]);
+    }
+}
+
 
 -(NSArray *)requests {
     return [[RidesStore sharedStore] currentUserRequestedRides];

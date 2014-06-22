@@ -18,8 +18,11 @@
 #import "CustomIOS7AlertView.h"
 #import "Rating.h"
 #import "PhotoDetailsViewController.h"
+#import "AWSUploader.h"
+#import "User.h"
+#import "CurrentUser.h"
 
-@interface MainRideDetailViewController () <RideStoreDelegate, HeaderContentViewDelegate, UIGestureRecognizerDelegate, UITextViewDelegate, CustomIOS7AlertViewDelegate>
+@interface MainRideDetailViewController () <RideStoreDelegate, HeaderContentViewDelegate, UIGestureRecognizerDelegate, UITextViewDelegate, CustomIOS7AlertViewDelegate, AWSUploaderDelegate>
 
 @property (strong, nonatomic) NSDictionary *backLinkInfo;
 @property (weak, nonatomic) UIView *backLinkView;
@@ -79,6 +82,8 @@
     
     self.rideDetail.shouldDisplayGradient = YES;
     self.view.backgroundColor = [UIColor customLightGray];
+    
+    [AWSUploader sharedStore].delegate = self;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -260,6 +265,13 @@
     [self initFields];
     [self.rideDetail.tableView reloadData];
 }
+
+-(void)didDownloadImageData:(NSData *)imageData user:(User *)user{
+    user.profileImageData = imageData;
+    [CurrentUser saveUserToPersistentStore:user];
+    [self reloadTableAndRide];
+}
+
 
 #pragma mark - Facebook sharing methods
 

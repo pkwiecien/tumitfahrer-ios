@@ -26,6 +26,7 @@
 - (void)saveToPersisentStore;
 - (void)saveUserToPersisentStore;
 + (User *)getUserWithIdFromCoreData:(NSNumber *)userId;
++ (void)saveUserToPersistentStore:(User *)user;
 - (NSArray *)requests;
 - (void)initCurrentUser:(User *)user;
 @end

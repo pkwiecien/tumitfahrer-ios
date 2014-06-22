@@ -26,6 +26,8 @@
 #import "CustomIOS7AlertView.h"
 #import "Rating.h"
 #import "ConversationUtilities.h"
+#import "AWSUploader.h"
+#import "ActivityStore.h"
 
 @interface OwnerOfferViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate, RidePersonCellDelegate, CustomIOS7AlertViewDelegate, UITextViewDelegate>
 
@@ -136,7 +138,11 @@
         }
         User *passenger = [[self.ride.passengers allObjects] objectAtIndex:indexPath.row];
         cell.personNameLabel.text = passenger.firstName;
-        cell.personImageView.image = [UIImage imageWithData:passenger.profileImageData];
+        if (passenger.profileImageData != nil) {
+            cell.personImageView.image = [UIImage imageWithData:passenger.profileImageData];
+        } else {
+            [[AWSUploader sharedStore] downloadProfilePictureForUser:passenger];
+        }
         cell.delegate = self;
         cell.leftObject = passenger;
         cell.rightObject = passenger;
@@ -178,7 +184,11 @@
         User *user = [CurrentUser getUserWithIdFromCoreData:request.passengerId];
         if(user != nil) {
             cell.personNameLabel.text = user.firstName;
-            cell.personImageView.image = [UIImage imageWithData:user.profileImageData];
+            if (user.profileImageData != nil) {
+                cell.personImageView.image = [UIImage imageWithData:user.profileImageData];
+            } else {
+                [[AWSUploader sharedStore] downloadProfilePictureForUser:user];
+            }
         } else {
             [WebserviceRequest getUserWithIdFromWebService:request.passengerId block:^(User *user) {
                 if (user != nil) {
@@ -267,6 +277,7 @@
 -(void)removeRideRequest:(Request*)request {
     if ([[RidesStore sharedStore] removeRequestForRide:self.ride.rideId request:request]) {
         [self.rideDetail.tableView reloadData];
+        [[ActivityStore sharedStore] initAllActivitiesFromCoreData];
     }
 }
 
@@ -279,6 +290,7 @@
 -(void)moveRequestorToPassengers:(User *)requestor {
     if ([[RidesStore sharedStore] addPassengerForRideId:self.ride.rideId requestor:requestor]) {
         [self.rideDetail.tableView reloadData];
+        [[ActivityStore sharedStore] initAllActivitiesFromCoreData];
     }
 }
 

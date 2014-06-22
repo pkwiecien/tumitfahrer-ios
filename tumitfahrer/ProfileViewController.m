@@ -87,11 +87,11 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     if(self.user.profileImageData == nil) {
-        [[AWSUploader sharedStore] downloadProfilePictureForUserId:self.user.userId];
+        [[AWSUploader sharedStore] downloadProfilePictureForUser:self.user];
     }
 }
 
--(void)didDownloadImageData:(NSData *)imageData {
+-(void)didDownloadImageData:(NSData *)imageData user:(User *)user {
     UIImage *profileImage = [UIImage imageWithData:imageData];
     self.profileImageContentView.rideDetailHeaderView.circularImage = profileImage;
     [self.profileImageContentView.rideDetailHeaderView replaceImage:profileImage];
@@ -278,8 +278,12 @@
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.modalPresentationStyle = UIModalPresentationCurrentContext;
-    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    picker.allowsEditing = NO;
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        picker.allowsEditing = NO;
+    } else {
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
     self.imagePickerController = picker;
     [self presentViewController:self.imagePickerController animated:YES completion:nil];
 }
@@ -318,7 +322,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated {
     if ([self.user.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId] && self.initialImageData.length != self.user.profileImageData.length) {
-        [[AWSUploader sharedStore] uploadImageData:[CurrentUser sharedInstance].user.profileImageData userId:self.user.userId];
+        [[AWSUploader sharedStore] uploadImageData:[CurrentUser sharedInstance].user.profileImageData user:self.user];
         self.initialImageData = self.user.profileImageData;
     }
 }

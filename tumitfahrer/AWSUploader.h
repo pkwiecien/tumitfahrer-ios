@@ -10,9 +10,11 @@
 #import <AWSRuntime/AWSRuntime.h>
 #import <AWSS3/AWSS3.h>
 
+@class User;
+
 @protocol AWSUploaderDelegate <NSObject>
 
--(void)didDownloadImageData:(NSData *)imageData;
+-(void)didDownloadImageData:(NSData *)imageData user:(User *)user;
 
 @end
 
@@ -22,7 +24,7 @@
 
 @property (nonatomic, strong) id<AWSUploaderDelegate> delegate;
 
-- (void)uploadImageData:(NSData *)imageData userId:(NSNumber *)userId;
-- (void)downloadProfilePictureForUserId:(NSNumber *)userId;
+- (void)uploadImageData:(NSData *)imageData user:(User *)user;
+- (void)downloadProfilePictureForUser:(User *)user;
 
 @end

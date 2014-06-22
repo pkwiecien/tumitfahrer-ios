@@ -24,6 +24,7 @@
 #import "ProfileViewController.h"
 #import "ConversationUtilities.h"
 #import "CurrentUser.h"
+#import "AWSUploader.h"
 
 @interface RequestViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate>
 
@@ -96,12 +97,17 @@
         cell.requestInfoLabel.text = self.ride.departurePlace;
         return cell;
         
-    } else if(indexPath.section == 1) {
+    } else if(indexPath.section == 1) { // driver
         RidePersonCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RidePersonCell"];
         if(cell == nil){
             cell = [RidePersonCell ridePersonCell];
         }
         cell.personNameLabel.text = self.ride.rideOwner.firstName;
+        if (self.ride.rideOwner.profileImageData != nil) {
+            cell.personImageView.image = [UIImage imageWithData:self.ride.rideOwner.profileImageData];
+        } else {
+            [[AWSUploader sharedStore] downloadProfilePictureForUser:self.ride.rideOwner];
+        }
         cell.leftButton.hidden = YES;
         [cell.rightButton addTarget:self action:@selector(contactRequestorButtonPressed) forControlEvents:UIControlEventTouchDown];
         return cell;

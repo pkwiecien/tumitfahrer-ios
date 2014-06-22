@@ -8,6 +8,7 @@
 
 #import "AWSUploader.h"
 #import "AWSConstants.h"
+#import "User.h"
 
 @interface AWSUploader ()
 
@@ -16,6 +17,7 @@
 @property (nonatomic, strong)  AmazonCredentials * credentials;
 @property (nonatomic, strong) S3TransferManager *tm;
 @property (nonatomic, retain) AmazonS3Client *s3;
+@property (nonatomic, strong) User *user;
 
 @end
 
@@ -51,9 +53,11 @@
     self.tm.s3 = self.s3;
 }
 
--(void)uploadImageData:(NSData *)imageData userId:(NSNumber *)userId {
+-(void)uploadImageData:(NSData *)imageData user:(User *)user {
 
-    NSString *path = [NSString stringWithFormat:@"users/%@/profile_picture.jpg", userId];
+    self.user = user;
+
+    NSString *path = [NSString stringWithFormat:@"users/%@/profile_picture.jpg", user.userId];
     S3PutObjectRequest *putObjectRequest = [[S3PutObjectRequest alloc] initWithKey:path inBucket:BUCKET_NAME];
     putObjectRequest.data = imageData;
     putObjectRequest.delegate = self;
@@ -63,13 +67,15 @@
     [self.tm upload:putObjectRequest];
 }
 
--(void)downloadProfilePictureForUserId:(NSNumber *)userId {
+-(void)downloadProfilePictureForUser:(User *)user {
+    
+    self.user = user;
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *filePath = [NSString stringWithFormat:@"%@/tumitfahrer/users/%@/profile_picture.jpg", documentsDirectory, userId];
+    NSString *filePath = [NSString stringWithFormat:@"%@/tumitfahrer/users/%@/profile_picture.jpg", documentsDirectory, user.userId];
     NSLog(@"filePath %@", filePath);
-    NSString *path = [NSString stringWithFormat:@"users/%@/profile_picture.jpg", userId];
+    NSString *path = [NSString stringWithFormat:@"users/%@/profile_picture.jpg", user.userId];
     
     S3GetObjectRequest *getObjectRequest = [[S3GetObjectRequest alloc] initWithKey:path withBucket:BUCKET_NAME];
     getObjectRequest.credentials = self.credentials;
@@ -98,7 +104,7 @@
 -(void)request:(AmazonServiceRequest *)request didCompleteWithResponse:(AmazonServiceResponse *)response {
     NSData *imageData = response.body;
     if (imageData != nil && imageData.length > 0) {
-        [self.delegate didDownloadImageData:response.body];
+        [self.delegate didDownloadImageData:response.body user:self.user];
     }
 }
 
