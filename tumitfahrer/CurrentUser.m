@@ -12,8 +12,9 @@
 #import "Device.h"
 #import "Ride.h"
 #import "RidesStore.h"
+#import "AWSUploader.h"
 
-@interface CurrentUser ()
+@interface CurrentUser () <AWSUploaderDelegate>
 
 @property (nonatomic, strong) NSMutableArray *privateUserRides;
 
@@ -46,6 +47,10 @@
         // initializer ride requests, even if could not fetch rides for current user
         [[RidesStore sharedStore] initUserRequests];
     }];
+    if (self.user.profileImageData == nil) {
+        [AWSUploader sharedStore].delegate = self;
+        [[AWSUploader sharedStore] downloadProfilePictureForUser:self.user];
+    }
 }
 
 - (BOOL)fetchUserFromCoreDataWithEmail:(NSString *)email {
@@ -96,6 +101,11 @@
         return true;
     }
     return false;
+}
+
+-(void)didDownloadImageData:(NSData *)imageData user:(User *)user {
+    self.user.profileImageData = imageData;
+    [self saveToPersisentStore];
 }
 
 -(void)deleteRide:(Ride *)ride forUserId:(NSInteger)userId {
@@ -201,10 +211,9 @@
 -(void)saveToPersisentStore {
     
     NSManagedObjectContext *context = self.user.managedObjectContext;
-    [context deleteObject:self.user];
     NSError *error;
     if (![context saveToPersistentStore:&error]) {
-        NSLog(@"delete error %@", [error localizedDescription]);
+        NSLog(@"saving error %@", [error localizedDescription]);
     }
 }
 
@@ -212,7 +221,7 @@
     NSManagedObjectContext *context = self.user.managedObjectContext;
     NSError *error;
     if (![context saveToPersistentStore:&error]) {
-        NSLog(@"delete error %@", [error localizedDescription]);
+        NSLog(@"saving error %@", [error localizedDescription]);
     }
 }
 
@@ -234,6 +243,10 @@
 
 -(NSString *)description {
     return [NSString stringWithFormat:@"Name: %@ %@, email: %@, registered at: %@", self.user.firstName, self.user.lastName, self.user.email, self.user.createdAt];
+}
+
+-(void)dealloc {
+    [AWSUploader sharedStore].delegate = nil;
 }
 
 @end

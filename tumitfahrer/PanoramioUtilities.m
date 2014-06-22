@@ -45,7 +45,7 @@
 
 - (NSDictionary*)queryParams:(CLLocation *)location {
     
-    NSDictionary *queryParams = @{@"set": @"public", @"from" : @"0", @"to": @"1", @"minx" : [NSNumber numberWithFloat:location.coordinate.longitude], @"miny" : [NSNumber numberWithFloat:location.coordinate.latitude], @"maxx" : [NSNumber numberWithFloat:(location.coordinate.longitude+0.005*pow(4, self.requestCounter))], @"maxy" : [NSNumber numberWithFloat:(location.coordinate.latitude+0.005*pow(4, self.requestCounter))], @"size" : @"medium", @"mapfilter" : @YES};
+    NSDictionary *queryParams = @{@"set": @"public", @"from" : @"0", @"to": @"1", @"minx" : [NSNumber numberWithFloat:location.coordinate.longitude], @"miny" : [NSNumber numberWithFloat:location.coordinate.latitude], @"maxx" : [NSNumber numberWithFloat:(location.coordinate.longitude+0.0005*pow(4, self.requestCounter))], @"maxy" : [NSNumber numberWithFloat:(location.coordinate.latitude+0.0005*pow(4, self.requestCounter))], @"size" : @"medium", @"mapfilter" : @YES};
     self.requestCounter++;
     return queryParams;
 }

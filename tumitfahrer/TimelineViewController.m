@@ -102,6 +102,7 @@
         cell = [TimelineCell timelineCell];
     }
     
+    // TODO: potential bug
     id result = [[[ActivityStore sharedStore] recentActivitiesByType:self.index] objectAtIndex:indexPath.row];
     
     NSDate *now = [ActionManager currentDate];

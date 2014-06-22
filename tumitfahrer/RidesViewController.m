@@ -59,9 +59,20 @@
 }
 
 -(void)handleRefresh {
-    [[RidesStore sharedStore] fetchRidesfromDate:[ActionManager currentDate] rideType:self.RideType block:^(BOOL fetched) {
+    NSDate *lastUpdate = [NSDate date];
+    for (Ride *ride in [self ridesForCurrentIndex]) {
+        if ([ride.updatedAt compare:lastUpdate] == NSOrderedAscending) {
+            lastUpdate = ride.updatedAt;
+        }
+        if ([ride.createdAt compare:lastUpdate] == NSOrderedAscending) {
+            lastUpdate = ride.createdAt;
+        }
+    }
+    NSLog(@"date %@", lastUpdate);
+    [[RidesStore sharedStore] fetchRidesfromDate:lastUpdate rideType:self.RideType block:^(BOOL fetched) {
         if (fetched) {
             [[RidesStore sharedStore] initRidesByType:self.RideType block:^(BOOL fetched) {
+                [self checkIfAnyRides];
                 [self.tableView reloadData];
                 [self.refreshControl endRefreshing];
             }];

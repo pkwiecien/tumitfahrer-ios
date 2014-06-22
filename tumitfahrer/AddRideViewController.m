@@ -402,7 +402,9 @@
     [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/users/%@/rides", [CurrentUser sharedInstance].user.userId] parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         
         Ride *ride = (Ride *)[mappingResult firstObject];
-        ride.destinationImage = UIImagePNGRepresentation(self.destinationImage);
+        if (self.destinationImage != nil) {
+            ride.destinationImage = UIImagePNGRepresentation(self.destinationImage);
+        }
         if (self.destinationPhotoInfo != nil) {
             ride.photo = self.destinationPhotoInfo;
         }

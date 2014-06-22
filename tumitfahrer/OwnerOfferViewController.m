@@ -262,11 +262,11 @@
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     NSDictionary *queryParams = @{@"reason": self.textView.text};
-    
     [objectManager deleteObject:self.ride path:[NSString stringWithFormat:@"/api/v2/rides/%@", self.ride.rideId] parameters:queryParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         
         [[CurrentUser sharedInstance].user removeRidesAsOwnerObject:self.ride];
         [[RidesStore sharedStore] deleteRideFromCoreData:self.ride];
+        [KGStatusBar showWithStatus:@"Ride successfully deleted"];
         
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {

@@ -251,7 +251,7 @@ static int activity_id = 0;
 -(void)fetchRidesfromDate:(NSDate *)date rideType:(NSInteger)rideType block:(boolCompletionHandler)block {
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    NSDictionary *queryParams = @{@"from_date": [ActionManager currentDate], @"ride_type" : [NSNumber numberWithInt:rideType]};
+    NSDictionary *queryParams = @{@"from_date": date, @"ride_type" : [NSNumber numberWithInt:rideType]};
     
     [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/rides"] parameters:queryParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         if ([[mappingResult array] count] > 0) {

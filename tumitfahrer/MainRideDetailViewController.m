@@ -193,7 +193,7 @@
     
     CustomIOS7AlertView *alertView = [[CustomIOS7AlertView alloc] init];
     [alertView setContainerView:[self prepareReasonView]];
-    [alertView setButtonTitles:[NSMutableArray arrayWithObjects:@"Cancel", @"Select", nil]];
+    [alertView setButtonTitles:[NSMutableArray arrayWithObjects:@"Cancel", @"Confirm", nil]];
     [alertView setDelegate:self];
     [alertView setUseMotionEffects:false];
     [alertView show];
