@@ -15,7 +15,6 @@
 // image utilities
 + (UIImage *)colorImage:(UIImage *)origImage withColor:(UIColor *)color;
 + (UIImage *)imageWithColor:(UIColor *)color;
-+ (UIImage *)applyBlurFilterOnImage:(UIImage *)image;
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 
 // encryption untilities

@@ -28,6 +28,9 @@
 		E50164871956E1E0004DA38A /* MainCampus@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E50164831956E1E0004DA38A /* MainCampus@2x.jpg */; };
 		E50164881956E1E0004DA38A /* RoadBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E50164841956E1E0004DA38A /* RoadBackground.jpg */; };
 		E50164891956E1E0004DA38A /* RoadBackground@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E50164851956E1E0004DA38A /* RoadBackground@2x.jpg */; };
+		E501648E195706FF004DA38A /* CustomRepeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E501648C195706FF004DA38A /* CustomRepeatViewController.m */; };
+		E501648F195706FF004DA38A /* CustomRepeatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E501648D195706FF004DA38A /* CustomRepeatViewController.xib */; };
+		E501649C195723DA004DA38A /* MultiSelectSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E501649B195723DA004DA38A /* MultiSelectSegmentedControl.m */; };
 		E50263861954D5110041E21A /* ConversationUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E50263851954D5110041E21A /* ConversationUtilities.m */; };
 		E50263891954DC2D0041E21A /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = E50263881954DC2D0041E21A /* Conversation.m */; };
 		E502638C195574DB0041E21A /* BrowseRidesPanoramioFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = E502638B195574DB0041E21A /* BrowseRidesPanoramioFooter.xib */; };
@@ -336,6 +339,11 @@
 		E50164831956E1E0004DA38A /* MainCampus@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "MainCampus@2x.jpg"; sourceTree = "<group>"; };
 		E50164841956E1E0004DA38A /* RoadBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RoadBackground.jpg; sourceTree = "<group>"; };
 		E50164851956E1E0004DA38A /* RoadBackground@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "RoadBackground@2x.jpg"; sourceTree = "<group>"; };
+		E501648B195706FF004DA38A /* CustomRepeatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomRepeatViewController.h; sourceTree = "<group>"; };
+		E501648C195706FF004DA38A /* CustomRepeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomRepeatViewController.m; sourceTree = "<group>"; };
+		E501648D195706FF004DA38A /* CustomRepeatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomRepeatViewController.xib; sourceTree = "<group>"; };
+		E501649A195723DA004DA38A /* MultiSelectSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiSelectSegmentedControl.h; sourceTree = "<group>"; };
+		E501649B195723DA004DA38A /* MultiSelectSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiSelectSegmentedControl.m; sourceTree = "<group>"; };
 		E50263841954D5110041E21A /* ConversationUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationUtilities.h; sourceTree = "<group>"; };
 		E50263851954D5110041E21A /* ConversationUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationUtilities.m; sourceTree = "<group>"; };
 		E50263871954DC2D0041E21A /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
@@ -777,6 +785,25 @@
 				E501647A1956E0C0004DA38A /* bg1@2x.jpg */,
 			);
 			name = Backgrounds;
+			sourceTree = "<group>";
+		};
+		E501648A195706E2004DA38A /* Regular Ride */ = {
+			isa = PBXGroup;
+			children = (
+				E501648B195706FF004DA38A /* CustomRepeatViewController.h */,
+				E501648C195706FF004DA38A /* CustomRepeatViewController.m */,
+				E501648D195706FF004DA38A /* CustomRepeatViewController.xib */,
+			);
+			name = "Regular Ride";
+			sourceTree = "<group>";
+		};
+		E501649019571FF8004DA38A /* Segmented Control */ = {
+			isa = PBXGroup;
+			children = (
+				E501649A195723DA004DA38A /* MultiSelectSegmentedControl.h */,
+				E501649B195723DA004DA38A /* MultiSelectSegmentedControl.m */,
+			);
+			name = "Segmented Control";
 			sourceTree = "<group>";
 		};
 		E502638A195574B50041E21A /* Footer */ = {
@@ -1561,6 +1588,7 @@
 		E599886618E860FA00B01C62 /* zLibraries */ = {
 			isa = PBXGroup;
 			children = (
+				E501649019571FF8004DA38A /* Segmented Control */,
 				E526B5AA194A487C006D3527 /* Custom Alert View */,
 				E58B872719151F1B0032524A /* KGStatusBar */,
 				E504D9C7190A7FAC0036FFA8 /* GooglePlacesAutocomplete */,
@@ -1663,6 +1691,7 @@
 		E5E2155A1907A92700B0B150 /* Add Ride */ = {
 			isa = PBXGroup;
 			children = (
+				E501648A195706E2004DA38A /* Regular Ride */,
 				E5DE44E9192617ED0034AF6F /* Segmented Control Cell */,
 				E5DE44E6192610C10034AF6F /* Header */,
 				E504D9BE190A6C860036FFA8 /* Destination */,
@@ -2039,6 +2068,7 @@
 				E50164871956E1E0004DA38A /* MainCampus@2x.jpg in Resources */,
 				E599881918E804E500B01C62 /* highway-nosound@2x.mp4 in Resources */,
 				E50263B319558F000041E21A /* AbiPhoto@2x.jpg in Resources */,
+				E501648F195706FF004DA38A /* CustomRepeatViewController.xib in Resources */,
 				E50164801956E14F004DA38A /* DayRoadBackground.jpg in Resources */,
 				E526B657194E011C006D3527 /* TeamMemberCell.xib in Resources */,
 				E50263B919558F000041E21A /* LukasPhoto@2x.jpg in Resources */,
@@ -2233,6 +2263,7 @@
 				E5FC44D6190D30FF00E8DB65 /* MenuViewController.m in Sources */,
 				E50CCC14191E54F1003A9490 /* UIViewController+SideBarController.m in Sources */,
 				E526B624194CB644006D3527 /* RidePersonCell.m in Sources */,
+				E501649C195723DA004DA38A /* MultiSelectSegmentedControl.m in Sources */,
 				E504D9BC190A58710036FFA8 /* MeetingPointViewController.m in Sources */,
 				E504D9D0190A7FC50036FFA8 /* SPGooglePlacesAutocompletePlace.m in Sources */,
 				E50263C819559C970041E21A /* PhotoDetailsViewController.m in Sources */,
@@ -2306,6 +2337,7 @@
 				E50DB28B18F8730400E87E62 /* RidesStore.m in Sources */,
 				E50DB28818F8706500E87E62 /* RideMapping.m in Sources */,
 				E502639519557A4D0041E21A /* Message.m in Sources */,
+				E501648E195706FF004DA38A /* CustomRepeatViewController.m in Sources */,
 				E564464A192A976B00F636A5 /* GeneralInfoCell.m in Sources */,
 				E5FEF3721946181B00E326BB /* RideSearch.m in Sources */,
 				E5FD9EC719234A8500902502 /* TimelineMapViewController.m in Sources */,

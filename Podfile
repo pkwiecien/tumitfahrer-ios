@@ -18,8 +18,6 @@ pod 'SocketRocket'
 pod 'EAIntroView'
 # pod: sidebar menu
 pod 'MMDrawerController'
-# pod: blur images
-pod 'GPUImage'
 # Facebook api for sharing rides
 pod 'Facebook-iOS-SDK'
 # KIF framework for UI tests

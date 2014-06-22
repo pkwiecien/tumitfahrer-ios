@@ -12,7 +12,6 @@
 #import "SPGooglePlacesAutocompleteQuery.h"
 #import "SPGooglePlacesAutocompletePlace.h"
 #import "LocationController.h"
-#import "NavigationBarUtilities.h"
 
 @interface DestinationViewController ()
 

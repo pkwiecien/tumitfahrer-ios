@@ -21,8 +21,9 @@
 #import "OwnerRequestViewController.h"
 #import "RideDetailActionCell.h"
 #import "Photo.h"
+#import "CustomRepeatViewController.h"
 
-@interface AddRideViewController () <SegmentedControlCellDelegate, SwitchTableViewCellDelegate>
+@interface AddRideViewController () <SegmentedControlCellDelegate, SwitchTableViewCellDelegate, CustomRepeatViewController>
 
 @property (nonatomic, assign) CLLocationCoordinate2D departureCoordinate;
 @property (nonatomic, assign) CLLocationCoordinate2D destinationCoordinate;
@@ -35,6 +36,7 @@
 @property (nonatomic, strong) UIView *headerView;
 @property (nonatomic, strong) UIImage *destinationImage;
 @property (nonatomic, strong) Photo *destinationPhotoInfo;
+@property (nonatomic, strong) NSArray *repeatDates;
 
 @end
 
@@ -47,6 +49,7 @@
         self.tableSectionIcons = [[NSMutableArray alloc] initWithObjects:[UIImage imageNamed:@"DetailsIcon"], [UIImage imageNamed:@"ShareIcon"], nil];
         self.tableSectionHeaders = [[NSMutableArray alloc] initWithObjects:@"Details", @"Share", @"Add", nil];
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
+        self.repeatDates = [NSArray array];
     }
     return self;
 }
@@ -83,10 +86,10 @@
         if(self.tableDriverValues != nil) {
             self.tableValues = [NSMutableArray arrayWithArray:self.tableDriverValues];
         } else {
-            self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", @"", @"", nil];
+            self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"No", @"", @"", @"", @"", nil];
             [self setDepartureLabelForCurrentLocation];
         }
-        self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", @"Free Seats", @"Car", @"Meeting Point", @"", nil];
+        self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", @"Repeat", @"Free Seats", @"Car", @"Meeting Point", @"", nil];
     }
 }
 
@@ -162,19 +165,9 @@
             cell.segmentedControl.selectedSegmentIndex = self.TableType;
             [cell setFirstSegmentTitle:@"I am Passenger" secondSementTitle:@"I am Driver"];
             [cell addHandlerToSegmentedControl];
-            
-            
-#ifdef DEBUG
-            // add label for kif test
-            [[[[cell segmentedControl] subviews] objectAtIndex:0] setAccessibilityLabel:@"Driver Choice"];
-            [[[[cell segmentedControl] subviews] objectAtIndex:1] setAccessibilityLabel:@"Passenger Choice"];
-            [[[[cell segmentedControl] subviews] objectAtIndex:0] setIsAccessibilityElement:YES];
-            [[[[cell segmentedControl] subviews] objectAtIndex:1] setIsAccessibilityElement:YES];
-#endif
-            
             cell.controlId = 0;
             return cell;
-        } else if(self.TableType == Driver && indexPath.row == 4) {
+        } else if(self.TableType == Driver && indexPath.row == 5) {
             FreeSeatsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FreeSeatsTableViewCell"];
             
             if(cell == nil){
@@ -189,13 +182,6 @@
         } else if(indexPath.row == [self.tableValues count]-1) {
             SegmentedControlCell *cell = [SegmentedControlCell segmentedControlCell];
             [cell setFirstSegmentTitle:@"Campus" secondSementTitle:@"Activity"];
-#ifdef DEBUG
-            // add label for kif test
-            [[[[cell segmentedControl] subviews] objectAtIndex:0] setAccessibilityLabel:@"Activity"];
-            [[[[cell segmentedControl] subviews] objectAtIndex:1] setAccessibilityLabel:@"Campus"];
-            [[[[cell segmentedControl] subviews] objectAtIndex:0] setIsAccessibilityElement:YES];
-            [[[[cell segmentedControl] subviews] objectAtIndex:1] setIsAccessibilityElement:YES];
-#endif
             cell.segmentedControl.selectedSegmentIndex = self.RideType;
             cell.delegate = self;
             [cell addHandlerToSegmentedControl];
@@ -249,6 +235,8 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     if (indexPath.section == 0) {
         if ([[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Meeting Point"] || [[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Car"]) {
             MeetingPointViewController *meetingPointVC = [[MeetingPointViewController alloc] init];
@@ -266,12 +254,17 @@
         } else if([[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Time"]) {
             RMDateSelectionViewController *dateSelectionVC = [RMDateSelectionViewController dateSelectionController];
             dateSelectionVC.delegate = self;
-            
+            dateSelectionVC.hideNowButton = YES;
 #ifdef DEBUG
             [dateSelectionVC.datePicker setAccessibilityLabel:@"Date Picker"];
             [dateSelectionVC.datePicker setIsAccessibilityElement:YES];
 #endif
             [dateSelectionVC show];
+        } else if([[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Repeat"]) {
+            CustomRepeatViewController *customRepeatVC = [[CustomRepeatViewController alloc] init];
+            customRepeatVC.title = @"Repeat ride";
+            customRepeatVC.delegate = self;
+            [self.navigationController pushViewController:customRepeatVC animated:YES];
         }
     }
 }
@@ -363,30 +356,30 @@
     NSDictionary *rideParams = nil;
     if(self.TableType == Driver) {
         
-        NSString *freeSeats = [self.tableValues objectAtIndex:4];
+        NSString *freeSeats = [self.tableValues objectAtIndex:5];
         if (freeSeats.length == 0) {
             freeSeats = @"1";
         }
         
-        NSString *car = [self.tableValues objectAtIndex:5];
+        NSString *car = [self.tableValues objectAtIndex:6];
         if (car.length == 0 && [CurrentUser sharedInstance].user.car != nil) {
             car = [CurrentUser sharedInstance].user.car;
         }
         
-        NSString *meetingPoint = [self.tableValues objectAtIndex:6];
+        NSString *meetingPoint = [self.tableValues objectAtIndex:7];
         if (!meetingPoint || meetingPoint.length == 0) {
             [ActionManager showAlertViewWithTitle:@"No meeting place" description:@"To add a ride please specify the meeting place"];
             return;
         }
 
         queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": [NSNumber numberWithInt:self.RideType], @"car": car, @"is_driving": [NSNumber numberWithBool:YES], @"departure_latitude" : [NSNumber numberWithDouble:self.departureCoordinate.latitude], @"departure_longitude" : [NSNumber numberWithDouble:self.departureCoordinate.longitude], @"destination_latitude": [NSNumber numberWithDouble:self.destinationCoordinate.latitude],
-                        @"destination_longitude" : [NSNumber numberWithDouble:self.destinationCoordinate.longitude]};
+                        @"destination_longitude" : [NSNumber numberWithDouble:self.destinationCoordinate.longitude], @"repeat_dates" : self.repeatDates};
         
         rideParams = @{@"ride": queryParams};
         
     } else { // passenger
         
-        NSString *meetingPoint = [self.tableValues objectAtIndex:4];
+        NSString *meetingPoint = [self.tableValues objectAtIndex:5];
         if (!meetingPoint || meetingPoint.length == 0) {
             [ActionManager showAlertViewWithTitle:@"No meeting place" description:@"To add a ride please specify the meeting place"];
             return;
@@ -408,6 +401,11 @@
         if (self.destinationPhotoInfo != nil) {
             ride.photo = self.destinationPhotoInfo;
         }
+        
+        if (self.repeatDates.count > 1) {
+            [[RidesStore sharedStore] fetchRidesFromDate:ride.createdAt];
+        }
+        
         [[RidesStore sharedStore] addRideToStore:ride];
         [self resetTables];
         [KGStatusBar showSuccessWithStatus:@"Ride added"];
@@ -437,7 +435,7 @@
     if(self.TableType == Passenger) {
             self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", nil];
     } else {
-            self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", @"", @"", nil];
+            self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", @"", @"", @"", nil];
     }
     [self setDepartureLabelForCurrentLocation];
 }
@@ -486,7 +484,7 @@
 }
 
 -(void)stepperValueChanged:(NSInteger)stepperValue {
-    [self.tableValues replaceObjectAtIndex:4 withObject:[[NSNumber numberWithInt:(int)stepperValue] stringValue]];
+    [self.tableValues replaceObjectAtIndex:5 withObject:[[NSNumber numberWithInt:(int)stepperValue] stringValue]];
 }
 
 #pragma mark - Button Handlers
@@ -534,6 +532,10 @@
     if (switchId == 1) { // go to email
         
     }
+}
+
+-(void)didSelectRepeatDates:(NSArray *)repeatDates {
+    self.repeatDates = repeatDates;
 }
 
 @end
