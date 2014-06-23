@@ -43,17 +43,13 @@
 
 -(void)initCurrentUser:(User *)user {
     self.user = user;
-    [[RidesStore sharedStore] fetchRidesForCurrentUser:^(BOOL fetched) {
-        // initializer ride requests, even if could not fetch rides for current user
-        [[RidesStore sharedStore] initUserRequests];
-    }];
     if (self.user.profileImageData == nil) {
         [AWSUploader sharedStore].delegate = self;
         [[AWSUploader sharedStore] downloadProfilePictureForUser:self.user];
     }
 }
 
-- (BOOL)fetchUserFromCoreDataWithEmail:(NSString *)email {
++ (User *)fetchUserFromCoreDataWithEmail:(NSString *)email {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *e = [NSEntityDescription entityForName:@"User"
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
@@ -69,16 +65,9 @@
         [NSException raise:@"Fetch failed"
                     format:@"Reason: %@", [error localizedDescription]];
     }
-    
-    User *user = (User *)[result firstObject];
-    if(user) {
-        [self initCurrentUser:user];
-        return true;
-    }
-    return false;
-    
+    return  (User *)[result firstObject];
 }
-- (BOOL)fetchUserFromCoreDataWithEmail:(NSString *)email encryptedPassword:(NSString *)encryptedPassword{
++ (User *)fetchUserFromCoreDataWithEmail:(NSString *)email encryptedPassword:(NSString *)encryptedPassword{
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *e = [NSEntityDescription entityForName:@"User"
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
@@ -94,21 +83,10 @@
         [NSException raise:@"Fetch failed"
                     format:@"Reason: %@", [error localizedDescription]];
     }
-    
-    User *user = (User *)[result firstObject];
-    if(user) {
-        [self initCurrentUser:user];
-        return true;
-    }
-    return false;
+    return (User *)[result firstObject];
 }
 
--(void)didDownloadImageData:(NSData *)imageData user:(User *)user {
-    self.user.profileImageData = imageData;
-    [self saveToPersisentStore];
-}
-
--(void)deleteRide:(Ride *)ride forUserId:(NSInteger)userId {
++(User *)fetchFromCoreDataUserWithId:(NSNumber *)userId {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *e = [NSEntityDescription entityForName:@"User"
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
@@ -124,11 +102,13 @@
         [NSException raise:@"Fetch failed"
                     format:@"Reason: %@", [error localizedDescription]];
     }
-    
-    User *user = (User *)[result firstObject];
-    [user removeRidesAsOwnerObject:ride];
+    return (User *)[result firstObject];
 }
 
+-(void)didDownloadImageData:(NSData *)imageData user:(User *)user {
+    self.user.profileImageData = imageData;
+    [CurrentUser saveUserToPersistentStore:self.user];
+}
 
 #pragma mark - Device token methods
 
@@ -178,53 +158,12 @@
     }
 }
 
-- (void)refreshUserRides {
+- (NSMutableArray *)userRides {
     self.privateUserRides = [NSMutableArray arrayWithArray:[self.user.ridesAsOwner allObjects]];
     [self.privateUserRides addObjectsFromArray:[self.user.ridesAsPassenger allObjects]];
-    [self.privateUserRides addObjectsFromArray:[[RidesStore sharedStore] rideRequestsForUserWithId:self.user.userId]];
-}
-
-- (NSMutableArray *)userRides {
-    [self refreshUserRides];
+    [self.privateUserRides addObjectsFromArray:[[RidesStore sharedStore] fetchUserRequestsFromCoreDataForUserId:self.user.userId]];
     return  self.privateUserRides;
 }
-
-+ (User *)getUserWithIdFromCoreData:(NSNumber *)userId {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *e = [NSEntityDescription entityForName:@"User"
-                                         inManagedObjectContext:[RKManagedObjectStore defaultStore].
-                              mainQueueManagedObjectContext];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userId = %@", userId];
-    [request setPredicate:predicate];
-    
-    request.entity = e;
-    
-    NSError *error;
-    NSArray *fetchedObjects = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:&error];
-    if (!fetchedObjects) {
-        [NSException raise:@"Fetch failed"
-                    format:@"Reason: %@", [error localizedDescription]];
-    }
-    return (User *)[fetchedObjects firstObject];
-}
-
--(void)saveToPersisentStore {
-    
-    NSManagedObjectContext *context = self.user.managedObjectContext;
-    NSError *error;
-    if (![context saveToPersistentStore:&error]) {
-        NSLog(@"saving error %@", [error localizedDescription]);
-    }
-}
-
--(void)saveUserToPersisentStore {
-    NSManagedObjectContext *context = self.user.managedObjectContext;
-    NSError *error;
-    if (![context saveToPersistentStore:&error]) {
-        NSLog(@"saving error %@", [error localizedDescription]);
-    }
-}
-
 
 +(void)saveUserToPersistentStore:(User *)user {
     NSManagedObjectContext *context = user.managedObjectContext;
@@ -236,7 +175,7 @@
 
 
 -(NSArray *)requests {
-    return [[RidesStore sharedStore] currentUserRequestedRides];
+    return [[RidesStore sharedStore] fetchUserRequestsFromCoreDataForUserId:[CurrentUser sharedInstance].user.userId];
 }
 
 # pragma mark - Object to string

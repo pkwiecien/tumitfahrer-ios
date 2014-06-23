@@ -19,6 +19,7 @@
 #import "ControllerUtilities.h"
 #import "RideSectionHeaderCell.h"
 #import "EmptyCell.h"
+#import "Request.h"
 #import "PanoramioUtilities.h"
 
 @interface YourRidesViewController () <PanoramioUtilitiesDelegate>
@@ -139,9 +140,10 @@
         }
         
         NSMutableArray *requestedRides = [[NSMutableArray alloc] init];
-        for(Ride *ride in [[CurrentUser sharedInstance] requests]) {
-            if ([ride.departureTime compare:now] == NSOrderedDescending) {
-                [requestedRides addObject:ride];
+        NSArray *currentUserRequests = [[CurrentUser sharedInstance] requests];
+        for(Request *request in currentUserRequests) {
+            if ([request.requestedRide.departureTime compare:now] == NSOrderedDescending) {
+                [requestedRides addObject:request.requestedRide];
             }
         }
         

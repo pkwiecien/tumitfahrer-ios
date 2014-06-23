@@ -337,6 +337,8 @@
         return;
     }
     
+    NSLog(@"%@ %@ %@", departurePlace, destination, departureTime);
+    
     BOOL isNearby = [LocationController isLocation:[[CLLocation alloc] initWithLatitude:self.departureCoordinate.latitude longitude:self.departureCoordinate.longitude] nearbyAnotherLocation:[[CLLocation alloc] initWithLatitude:self.destinationCoordinate.latitude longitude:self.destinationCoordinate.longitude] thresholdInMeters:1000];
     if (isNearby) {
         [ActionManager showAlertViewWithTitle:@"Problem" description:@"The route is too short"];
@@ -381,7 +383,7 @@
         
     } else { // passenger
         
-        NSString *meetingPoint = [self.tableValues objectAtIndex:5];
+        NSString *meetingPoint = [self.tableValues objectAtIndex:4];
         if (!meetingPoint || meetingPoint.length == 0) {
             [ActionManager showAlertViewWithTitle:@"No meeting place" description:@"To add a ride please specify the meeting place"];
             return;

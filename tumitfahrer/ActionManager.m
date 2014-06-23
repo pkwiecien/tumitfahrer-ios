@@ -184,10 +184,10 @@
     NSTimeInterval distanceBetweenDates = [date1 timeIntervalSinceDate:date2];
     double secondsInAnHour = 3600;
     double minutesInAnHour = 60;
-    NSInteger hoursBetweenDates = distanceBetweenDates / secondsInAnHour;
-    NSInteger minutesBetweenDate = distanceBetweenDates / minutesInAnHour;
+    NSUInteger hoursBetweenDates = distanceBetweenDates / secondsInAnHour;
+    NSUInteger minutesBetweenDate = distanceBetweenDates / minutesInAnHour;
     
-    return [NSArray arrayWithObjects:[NSNumber numberWithInt:hoursBetweenDates], [NSNumber numberWithInt:minutesBetweenDate], nil];
+    return [NSArray arrayWithObjects:[NSNumber numberWithInt:(int)hoursBetweenDates], [NSNumber numberWithInt:(int)minutesBetweenDate], nil];
 }
 
 +(NSDate *)localDateWithDate:(NSDate *)sourceDate {

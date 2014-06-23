@@ -24,7 +24,7 @@
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
     
-    [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/rides/%d/conversations", rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/rides/%d/conversations", (int)rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         block(YES);
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);
@@ -82,7 +82,7 @@
 // ----------------------------- User --------------------------------------
 
 +(void)getUserWithId:(NSNumber *)userId block:(userCompletionHandler)block {
-    User *user = [CurrentUser getUserWithIdFromCoreData:userId];
+    User *user = [CurrentUser fetchFromCoreDataUserWithId:userId];
     if(user != nil) {
         block(user);
     } else {

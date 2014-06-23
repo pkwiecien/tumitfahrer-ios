@@ -15,17 +15,13 @@
 
 @property (nonatomic, strong) User *user;
 
-- (BOOL)fetchUserFromCoreDataWithEmail:(NSString *)email encryptedPassword:(NSString *)encryptedPassword;
-- (BOOL)fetchUserFromCoreDataWithEmail:(NSString *)email;
++ (User *)fetchUserFromCoreDataWithEmail:(NSString *)email encryptedPassword:(NSString *)encryptedPassword;
++ (User *)fetchUserFromCoreDataWithEmail:(NSString *)email;
 
 - (void)hasDeviceTokenInWebservice:(boolCompletionHandler)block;
 - (void)sendDeviceTokenToWebservice;
 - (NSMutableArray *)userRides;
-- (void)refreshUserRides;
-- (void)deleteRide:(Ride *)ride forUserId:(NSInteger)userId;
-- (void)saveToPersisentStore;
-- (void)saveUserToPersisentStore;
-+ (User *)getUserWithIdFromCoreData:(NSNumber *)userId;
++ (User *)fetchFromCoreDataUserWithId:(NSNumber *)userId;
 + (void)saveUserToPersistentStore:(User *)user;
 - (NSArray *)requests;
 - (void)initCurrentUser:(User *)user;

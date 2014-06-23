@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-#define ACCESS_KEY_ID          @"CHANGEME"
-#define SECRET_KEY             @"CHANGEME"
+#define ACCESS_KEY_ID          @"changeme"
+#define SECRET_KEY             @"changeme"
 #define BUCKET_NAME            @"tumitfahrer"
 
 @interface AWSConstants : NSObject

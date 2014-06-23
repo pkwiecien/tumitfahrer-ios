@@ -96,7 +96,7 @@
     } else {
         otherUserId = conversation.userId;
     }
-    User *otherUser = [CurrentUser getUserWithIdFromCoreData:otherUserId];
+    User *otherUser = [CurrentUser fetchFromCoreDataUserWithId:otherUserId];
     cell.passengerNameLabel.text = [NSString stringWithFormat:@"%@ %@", otherUser.firstName, otherUser.lastName] ;
     
     Message *lastMesage = [[conversation.messages allObjects] lastObject];

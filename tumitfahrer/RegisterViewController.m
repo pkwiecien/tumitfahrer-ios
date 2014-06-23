@@ -88,7 +88,7 @@
     
     NSDictionary *queryParams;
     // add enum
-    queryParams = @{@"email": self.emailTextField.text, @"first_name": self.firstNameTextField.text, @"last_name":self.lastNameTextField.text, @"department": [NSNumber numberWithInt:[[FacultyManager sharedInstance] indexForFacultyName:self.departmentNameTextField.text]]};
+    queryParams = @{@"email": self.emailTextField.text, @"first_name": self.firstNameTextField.text, @"last_name":self.lastNameTextField.text, @"department": [NSNumber numberWithInt:(int)[[FacultyManager sharedInstance] indexForFacultyName:self.departmentNameTextField.text]]};
     NSDictionary *userParams = @{@"user": queryParams};
     
     [objectManager postObject:nil path:@"/api/v2/users" parameters:userParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {

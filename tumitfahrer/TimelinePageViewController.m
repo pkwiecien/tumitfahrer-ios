@@ -64,7 +64,10 @@
     NSString *emailLoggedInUser = [[NSUserDefaults standardUserDefaults] valueForKey:@"emailLoggedInUser"];
     
     if (emailLoggedInUser != nil) {
-        [[CurrentUser sharedInstance] fetchUserFromCoreDataWithEmail:emailLoggedInUser];
+        User *user = [CurrentUser fetchUserFromCoreDataWithEmail:emailLoggedInUser];
+        if (user != nil) {
+            [[CurrentUser sharedInstance] initCurrentUser:user];
+        }
     }
 }
 
@@ -81,11 +84,6 @@
 -(void)setupLeftMenuButton{
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
-#ifdef DEBUG
-    // set label for kif test
-    [leftDrawerButton setAccessibilityLabel:@"Left Drawer Button"];
-    [leftDrawerButton setIsAccessibilityElement:YES];
-#endif
 }
 
 -(void)setupNavigationBar {

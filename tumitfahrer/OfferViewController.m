@@ -40,6 +40,7 @@
     _headerView.backgroundColor = [UIColor darkerBlue];
     [self.view bringSubviewToFront:_headerView];
     [[RidesStore sharedStore] addObserver:self];
+    editButton.hidden = YES;
     
     self.rideDetail.headerView = _headerView;    
     self.headerTitles = [NSArray arrayWithObjects:@"Details", @"Driver", @"",nil];
@@ -92,7 +93,6 @@
         cell = [RideSectionHeaderCell rideSectionHeaderCell];
     }
     cell.noticeLabel.text = [self.headerTitles objectAtIndex:section];
-    [cell.editButton addTarget:self action:@selector(editButtonTapped) forControlEvents:UIControlEventTouchDown];
     
     return cell;
 }

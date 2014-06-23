@@ -33,10 +33,8 @@
 + (void)initRide:(Ride *)ride block:(boolCompletionHandler)block;
 + (void)initRide:(Ride *)ride index:(NSInteger)index block:(completionHandlerWithIndex)block;
 - (void)initAllRidesFromCoreData;
-- (void)initUserRequests;
 - (void)initRidesByType:(NSInteger)rideType block:(boolCompletionHandler)block;
 - (Ride *)containsRideWithId:(NSNumber *)rideId;
-- (NSArray *)rideRequestsForUserWithId:(NSNumber *)userId;
 - (void)fetchNewRides:(boolCompletionHandler)block;
 - (void)deleteRideFromCoreData:(Ride *)ride;
 - (void)deleteRideRequest:(Request *)request;
@@ -51,18 +49,17 @@
 - (Ride *)fetchRideFromCoreDataWithId:(NSNumber *)rideId;
 - (void)fetchPastRidesFromCoreData;
 - (NSMutableArray *)pastRides;
-- (NSArray *)currentUserRequestedRides;
 - (void)fetchRidesForCurrentUser:(boolCompletionHandler)block ;
 
 - (BOOL)addPassengerForRideId:(NSNumber *)rideId requestor:(User *)requestor;
 - (BOOL)removeRequestForRide:(NSNumber *)rideId request:(Request *)request;
 - (BOOL)removePassengerForRide:(NSNumber *)rideId passenger:(User *)passenger;
 - (void)saveToPersistentStore:(Ride *)ride;
-- (Request *)rideRequestInCoreData:(NSNumber *)userId;
 
 - (void)filterAllFavoriteRides;
 - (void)fetchRidesfromDate:(NSDate *)date rideType:(NSInteger)rideType block:(boolCompletionHandler)block;
 - (void)fetchImageForCurrentRide:(Ride *)ride;
 - (void)fetchRidesFromDate:(NSDate *)date;
+- (NSArray *)fetchUserRequestsFromCoreDataForUserId:(NSNumber *)userId;
 
 @end

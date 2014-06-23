@@ -31,8 +31,8 @@
 -(instancetype)initWithContentType:(ContentType)contentType {
     self = [super init];
     if (self) {
-        NSArray *campusTitles = [NSArray arrayWithObjects:@"All Campus", @"Around you", @"Recent", nil];
-        NSArray *activityTitles = [NSArray arrayWithObjects:@"All Activity", @"Around you", @"Recent", nil];
+        NSArray *campusTitles = [NSArray arrayWithObjects:@"All Campus", @"Around you", @"Recent Searches", nil];
+        NSArray *activityTitles = [NSArray arrayWithObjects:@"All Activity", @"Around you", @"Recent Searches", nil];
         self.pageTitles = [NSArray arrayWithObjects:campusTitles, activityTitles, nil];
         self.pageColor = [UIColor colorWithRed:0 green:0.361 blue:0.588 alpha:1];
         self.RideType = contentType;

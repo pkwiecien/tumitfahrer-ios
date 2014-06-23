@@ -117,11 +117,11 @@
     NSDateComponents *components = [c components:NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:[ActionManager localDateWithDate:[result updatedAt]] toDate:now options:0];
     components.timeZone = [NSTimeZone localTimeZone];
     if (components.day > 0) {
-        cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d days ago", components.day];
+        cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d days ago", (int)components.day];
     } else if(components.hour > 0) {
-        cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d hours ago", components.hour];
+        cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d hours ago", (int)components.hour];
     } else if(components.minute > 0) {
-        cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d minutes ago", components.minute];
+        cell.activityDetailLabel.text = [NSString stringWithFormat:@"%d minutes ago", (int)components.minute];
     } else {
         cell.activityDetailLabel.text = [NSString stringWithFormat:@"Added just now"];
     }

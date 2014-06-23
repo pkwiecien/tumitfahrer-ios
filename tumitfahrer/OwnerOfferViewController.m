@@ -181,7 +181,7 @@
         cell.delegate = self;
         
         Request *request = [[self.ride.requests allObjects] objectAtIndex:indexPath.row];
-        User *user = [CurrentUser getUserWithIdFromCoreData:request.passengerId];
+        User *user = [CurrentUser fetchFromCoreDataUserWithId:request.passengerId];
         if(user != nil) {
             cell.personNameLabel.text = user.firstName;
             if (user.profileImageData != nil) {
@@ -233,7 +233,7 @@
         [self.navigationController pushViewController:profileVC animated:YES];
     } else if(indexPath.section == 2 && [self.ride.requests count] > 0) {
         Request *request = [[self.ride.requests allObjects] objectAtIndex:indexPath.row];
-        User *user = [CurrentUser getUserWithIdFromCoreData:request.passengerId];
+        User *user = [CurrentUser fetchFromCoreDataUserWithId:request.passengerId];
         profileVC.user = user;
         [self.navigationController pushViewController:profileVC animated:YES];
     }

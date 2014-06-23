@@ -38,7 +38,7 @@
     _headerView.backgroundColor = [UIColor darkerBlue];
     [self.view bringSubviewToFront:_headerView];
     [[RidesStore sharedStore] addObserver:self];
-    
+    editButton.hidden = YES;
     self.rideDetail.headerView = _headerView;
 }
 

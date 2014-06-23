@@ -135,8 +135,8 @@
     NSDateComponents *timeComponents = [calendar components:( NSHourCalendarUnit | NSMinuteCalendarUnit ) fromDate:picker.date];
     NSInteger minutes = timeComponents.minute;
     NSInteger hour = timeComponents.hour;
-    [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithInt:hour] forKey:@"reminderHour"];
-    [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithInt:minutes] forKey:@"reminderMinute"];
+    [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithInt:(int)hour] forKey:@"reminderHour"];
+    [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithInt:(int)minutes] forKey:@"reminderMinute"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

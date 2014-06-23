@@ -19,7 +19,7 @@
 #import "RecentPlace.h"
 #import "Photo.h"
 
-@interface RidesStore () <NSFetchedResultsControllerDelegate>
+@interface RidesStore ()
 
 @property (nonatomic) NSMutableArray *privateCampusRides;
 @property (nonatomic) NSMutableArray *privateActivityRides;
@@ -31,7 +31,6 @@
 @property (nonatomic) NSMutableArray *privateActivityRidesFavorites;
 @property (nonatomic) NSMutableArray *privateCampusRidesFavorites;
 
-@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSMutableArray *observers;
 
 @property (nonatomic, strong) CLLocation *lastLocation;
@@ -81,12 +80,6 @@ static int activity_id = 0;
     [self filterRidesByType:rideType];
     [self checkPhotoForEachRide];
     block(YES);
-}
-
--(void)initUserRequests {
-    if ([CurrentUser sharedInstance].user != nil) {
-        [self fetchUserRequestedRidesFromCoreData:[CurrentUser sharedInstance].user.userId];
-    }
 }
 
 -(void)loadAllRidesFromCoreData {
@@ -164,7 +157,7 @@ static int activity_id = 0;
     self.privatePastRides = [[NSMutableArray alloc] initWithArray:fetchedObjects];
 }
 
-- (void)fetchUserRequestedRidesFromCoreData:(NSNumber *)userId {
+- (NSArray *)fetchUserRequestsFromCoreDataForUserId:(NSNumber *)userId {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *e = [NSEntityDescription entityForName:@"Request"
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
@@ -182,6 +175,7 @@ static int activity_id = 0;
                     format:@"Reason: %@", [error localizedDescription]];
     }
     self.privateRideRequests = [[NSMutableArray alloc] initWithArray:fetchedObjects];
+    return self.privateRideRequests;
 }
 
 - (Ride *)fetchRideFromCoreDataWithId:(NSNumber *)rideId {
@@ -201,20 +195,6 @@ static int activity_id = 0;
                     format:@"Reason: %@", [error localizedDescription]];
     }
     return [fetchedObjects firstObject];
-}
-
--(NSArray *)rideRequestsForUserWithId:(NSNumber *)userId {
-    [self fetchUserRequestedRidesFromCoreData:userId];
-    return [self rideRequests];
-}
-
--(Request *)rideRequestInCoreData:(NSNumber *)userId {
-    for (Request *request in [self rideRequestsForUserWithId:userId]) {
-        if ([request.passengerId isEqualToNumber:userId]) {
-            return request;
-        }
-    }
-    return nil;
 }
 
 -(void)fetchRidesForCurrentUser:(boolCompletionHandler)block {
@@ -251,7 +231,7 @@ static int activity_id = 0;
 -(void)fetchRidesfromDate:(NSDate *)date rideType:(NSInteger)rideType block:(boolCompletionHandler)block {
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    NSDictionary *queryParams = @{@"from_date": date, @"ride_type" : [NSNumber numberWithInt:rideType]};
+    NSDictionary *queryParams = @{@"from_date": date, @"ride_type" : [NSNumber numberWithInt:(int)rideType]};
     
     [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/rides"] parameters:queryParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         if ([[mappingResult array] count] > 0) {
@@ -289,32 +269,6 @@ static int activity_id = 0;
         RKLogError(@"Load failed with error: %@", error);
         block(NO);
     }];
-}
-
--(NSFetchedResultsController *)fetchedResultsController {
-    if (self.fetchedResultsController != nil) {
-        return self.fetchedResultsController;
-    }
-    
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Ride"];
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO];
-    fetchRequest.sortDescriptors = @[descriptor];
-    NSError *error = nil;
-    
-    // Setup fetched results
-    self.fetchedResultsController = [[NSFetchedResultsController alloc]
-                                     initWithFetchRequest:fetchRequest
-                                     managedObjectContext:[RKManagedObjectStore defaultStore].
-                                     mainQueueManagedObjectContext
-                                     sectionNameKeyPath:nil cacheName:@"Ride"];
-    self.fetchedResultsController.delegate = self;
-    [fetchRequest setReturnsObjectsAsFaults:NO];
-    
-    if (![self.fetchedResultsController performFetch:&error]) {
-        NSLog(@"Error fetching from db: %@", [error localizedDescription]);
-    }
-    
-    return self.fetchedResultsController;
 }
 
 -(Ride *)containsRideWithId:(NSNumber *)rideId {
@@ -769,13 +723,6 @@ static int activity_id = 0;
 
 -(void)deleteRideRequestFromLocalStore:(Request *)request {
     [[self rideRequests] removeObject:request];
-}
-
--(NSArray *)currentUserRequestedRides {
-    if ([self rideRequests] == nil) {
-        [self initUserRequests];
-    }
-    return [self rideRequests];
 }
 
 -(Request *)getRequestForPassengerWithId:(NSNumber *)passengerId ride:(Ride *)ride{

@@ -15,7 +15,7 @@
 
 @interface EditDepartmentViewController ()
 
-@property NSInteger chosenFaculty;
+@property NSUInteger chosenFaculty;
 
 @end
 
@@ -80,7 +80,7 @@
     NSMutableDictionary *queryParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:encryptedPassword, @"password", encryptedPassword, @"password_confirmation", [CurrentUser sharedInstance].user.car, @"car",[CurrentUser sharedInstance].user.phoneNumber, @"phone_number", [CurrentUser sharedInstance].user.firstName,@"first_name" , [CurrentUser sharedInstance].user.lastName,  @"last_name",  [CurrentUser sharedInstance].user.department,@"department", nil];
     
     NSDictionary *userParams = @{@"user": queryParams};
-    NSNumber *facultyNumber =[NSNumber numberWithInt:self.chosenFaculty];
+    NSNumber *facultyNumber =[NSNumber numberWithInt:(int)self.chosenFaculty];
     [queryParams setValue:facultyNumber forKey:@"department"];
 
     [objectManager putObject:nil path:[NSString stringWithFormat:@"/api/v2/users/%@", [CurrentUser sharedInstance].user.userId] parameters:userParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {

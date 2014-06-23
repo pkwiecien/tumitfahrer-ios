@@ -104,10 +104,11 @@
 - (IBAction)loginButtonPressed:(id)sender {
     
     // firstly check if the user was previously stored in core data
-    if ([[CurrentUser sharedInstance] fetchUserFromCoreDataWithEmail:self.emailTextField.text encryptedPassword:[ActionManager createSHA512:self.passwordTextField.text]] ) {
+    User *user= [CurrentUser fetchUserFromCoreDataWithEmail:self.emailTextField.text encryptedPassword:[ActionManager createSHA512:self.passwordTextField.text]];
+    if (user != nil) {
         // user fetched successfully from core data
+        [[CurrentUser sharedInstance] initCurrentUser:user];
         [self storeCurrentUserInDefaults];
-//        [[SlideNavigationController sharedInstance] popToRootViewControllerAnimated:NO];
         [self dismissViewControllerAnimated:YES completion:nil];
     } else {
         // new user, get account from webservice

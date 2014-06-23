@@ -274,7 +274,7 @@
 }
 
 -(void)sliderChangedToValue:(NSInteger)value indexPath:(NSIndexPath *)indexPath {
-    [self.tableValues replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithInt:value]];
+    [self.tableValues replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithInt:(int)value]];
 }
 
 @end

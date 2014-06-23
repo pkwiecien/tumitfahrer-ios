@@ -26,7 +26,7 @@
 {
     UISlider *slider = (UISlider *)sender;
     NSInteger val = lroundf(slider.value);
-    self.selectedDistanceLabel.text = [NSString stringWithFormat:@"%d km",val];
+    self.selectedDistanceLabel.text = [NSString stringWithFormat:@"%d km", (int)val];
     [self.delegate sliderChangedToValue:val indexPath:self.indexPath];
 }
 

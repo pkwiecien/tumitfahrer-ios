@@ -227,7 +227,7 @@
 
 -(void)textViewDidChange:(UITextView *)textView {
     self.counterLabel.textColor = [UIColor blackColor];
-    int len = textView.text.length;
+    int len = (int)textView.text.length;
     self.counterLabel.text=[NSString stringWithFormat:@"%i / 50 characters (required)", len];
 }
 

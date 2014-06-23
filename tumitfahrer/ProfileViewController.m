@@ -102,7 +102,7 @@
     [self.profileImageContentView.rideDetailHeaderView replaceImage:profileImage];
     self.user.profileImageData = imageData;
     self.initialImageData = imageData;
-    [[CurrentUser sharedInstance] saveUserToPersisentStore];
+    [CurrentUser saveUserToPersistentStore:[CurrentUser sharedInstance].user];
 }
 
 -(void)initProfilePic {
@@ -173,13 +173,13 @@
         
         NSInteger totalRidesAsPassenger = [self ridesAsOwnerAndIsDriving:YES rides:[self.user.ridesAsOwner allObjects]] + [self ridesAsOwnerAndIsDriving:YES rides:[[RidesStore sharedStore] pastRides]] + [self.user.ridesAsPassenger count];
         
-        cell.driverLabel.text = [NSString stringWithFormat:@"%d", totalRidesAsDriver];
-        cell.passengerLabel.text = [NSString stringWithFormat:@"%d", totalRidesAsPassenger];
+        cell.driverLabel.text = [NSString stringWithFormat:@"%d", (int)totalRidesAsDriver];
+        cell.passengerLabel.text = [NSString stringWithFormat:@"%d", (int)totalRidesAsPassenger];
         if ([self.user.ratingAvg doubleValue] < 0) {
             cell.ratingLabel.text = @"-";
         } else {
             NSInteger rating = [self.user.ratingAvg doubleValue]*100;
-            cell.ratingLabel.text = [NSString stringWithFormat:@"%d %%", rating];
+            cell.ratingLabel.text = [NSString stringWithFormat:@"%d %%", (int)rating];
         }
         return cell;
         
@@ -231,7 +231,7 @@
         EditProfileFieldViewController *editProfileVC = [[EditProfileFieldViewController alloc] init];
         editProfileVC.title = [self.editDescriptions objectAtIndex:indexPath.row];
         editProfileVC.initialDescription = [self.cellDescriptions objectAtIndex:indexPath.row];
-        editProfileVC.updatedFiled = indexPath.row;
+        editProfileVC.updatedFiled = (int)indexPath.row;
         [self.navigationController pushViewController:editProfileVC animated:YES];
     }
 }
