@@ -26,7 +26,6 @@
 @property (nonatomic, strong) id <ActivityStoreDelegate> delegate;
 
 - (void)fetchActivitiesFromWebservice:(boolCompletionHandler)block;
-- (NSFetchedResultsController *)fetchedResultsController;
 - (NSArray *)recentActivitiesByType:(TimelineContentType)contentType;
 - (void)initAllActivitiesFromCoreData;
 - (void)deleteRideFromActivites:(Ride *)ride;

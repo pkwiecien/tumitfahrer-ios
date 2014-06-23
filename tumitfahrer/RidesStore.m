@@ -59,7 +59,6 @@ static int activity_id = 0;
         [self fetchNewRides:^(BOOL fetched) { // try to load latest rides from webservice
             if (fetched) {
                 [self initAllRidesFromCoreData];
-                // [self initUserRequests];
             }
         }];
         

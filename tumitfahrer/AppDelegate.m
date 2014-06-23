@@ -107,17 +107,11 @@
 
 - (void)saveContext
 {
-    NSLog(@"user is still with apssword: %@", [CurrentUser sharedInstance].user.password);
     NSError *error = nil;
     NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].
     mainQueueManagedObjectContext;
     if (managedObjectContext != nil) {
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
+        [managedObjectContext save:&error];
     }
 }
 
@@ -131,8 +125,7 @@
     [[Device sharedInstance] setDeviceToken:hexToken];
 }
 
-- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
-{
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error {
 	NSLog(@"Failed to get token, error: %@", error);
 }
 

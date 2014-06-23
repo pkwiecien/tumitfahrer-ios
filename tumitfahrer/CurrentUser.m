@@ -16,8 +16,6 @@
 
 @interface CurrentUser () <AWSUploaderDelegate>
 
-@property (nonatomic, strong) NSMutableArray *privateUserRides;
-
 @end
 
 @implementation CurrentUser
@@ -67,6 +65,7 @@
     }
     return  (User *)[result firstObject];
 }
+
 + (User *)fetchUserFromCoreDataWithEmail:(NSString *)email encryptedPassword:(NSString *)encryptedPassword{
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *e = [NSEntityDescription entityForName:@"User"
@@ -103,11 +102,6 @@
                     format:@"Reason: %@", [error localizedDescription]];
     }
     return (User *)[result firstObject];
-}
-
--(void)didDownloadImageData:(NSData *)imageData user:(User *)user {
-    self.user.profileImageData = imageData;
-    [CurrentUser saveUserToPersistentStore:self.user];
 }
 
 #pragma mark - Device token methods
@@ -158,21 +152,27 @@
     }
 }
 
+#pragma mark - user utility functions
+
+-(void)didDownloadImageData:(NSData *)imageData user:(User *)user {
+    self.user.profileImageData = imageData;
+    [CurrentUser saveUserToPersistentStore:self.user];
+}
+
 - (NSMutableArray *)userRides {
-    self.privateUserRides = [NSMutableArray arrayWithArray:[self.user.ridesAsOwner allObjects]];
-    [self.privateUserRides addObjectsFromArray:[self.user.ridesAsPassenger allObjects]];
-    [self.privateUserRides addObjectsFromArray:[[RidesStore sharedStore] fetchUserRequestsFromCoreDataForUserId:self.user.userId]];
-    return  self.privateUserRides;
+    NSMutableArray *privateUserRides = [NSMutableArray arrayWithArray:[self.user.ridesAsOwner allObjects]];
+    [privateUserRides addObjectsFromArray:[self.user.ridesAsPassenger allObjects]];
+    [privateUserRides addObjectsFromArray:[[RidesStore sharedStore] fetchUserRequestsFromCoreDataForUserId:self.user.userId]];
+    return  privateUserRides;
 }
 
 +(void)saveUserToPersistentStore:(User *)user {
     NSManagedObjectContext *context = user.managedObjectContext;
     NSError *error;
     if (![context saveToPersistentStore:&error]) {
-        NSLog(@"delete error %@", [error localizedDescription]);
+        NSLog(@"saving error %@", [error localizedDescription]);
     }
 }
-
 
 -(NSArray *)requests {
     return [[RidesStore sharedStore] fetchUserRequestsFromCoreDataForUserId:[CurrentUser sharedInstance].user.userId];

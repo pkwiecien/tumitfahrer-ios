@@ -16,15 +16,13 @@
 #import "ActionManager.h"
 #import "BadgeUtilities.h"
 #import "Badge.h"
-#import <RestKit/RestKit.h>
 
-@interface ActivityStore () <NSFetchedResultsControllerDelegate>
+@interface ActivityStore ()
 
 @property (nonatomic, strong) NSMutableArray *privateActivityArray;
 @property (nonatomic, strong) NSMutableArray *privateAllRecentActivities;
 @property (nonatomic, strong) NSMutableArray *privateActivitiesNearby;
 @property (nonatomic, strong) NSMutableArray *privateMyRecentActivities;
-@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @property (nonatomic, strong) CLLocation *lastLocation;
 
@@ -294,32 +292,6 @@ static int activity_id = 0;
             [self.privateActivityArray addObject:[fetchedObjects objectAtIndex:i]];
         }
     }
-}
-
--(NSFetchedResultsController *)fetchedResultsController {
-    if (self.fetchedResultsController != nil) {
-        return self.fetchedResultsController;
-    }
-    
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Activity"];
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO];
-    fetchRequest.sortDescriptors = @[descriptor];
-    NSError *error = nil;
-    
-    // Setup fetched results
-    self.fetchedResultsController = [[NSFetchedResultsController alloc]
-                                     initWithFetchRequest:fetchRequest
-                                     managedObjectContext:[RKManagedObjectStore defaultStore].
-                                     mainQueueManagedObjectContext
-                                     sectionNameKeyPath:nil cacheName:@"Activity"];
-    self.fetchedResultsController.delegate = self;
-    [fetchRequest setReturnsObjectsAsFaults:NO];
-    
-    if (![self.fetchedResultsController performFetch:&error]) {
-        NSLog(@"Error fetching from db: %@", [error localizedDescription]);
-    }
-    
-    return self.fetchedResultsController;
 }
 
 # pragma mark - helper functions
