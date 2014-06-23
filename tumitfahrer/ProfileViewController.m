@@ -106,7 +106,7 @@
 }
 
 -(void)initProfilePic {
-    self.profileImageContentView.selectedImageData = UIImagePNGRepresentation([UIImage imageNamed:@"bg1.jpg"]);
+    self.profileImageContentView.selectedImageData = UIImageJPEGRepresentation([UIImage imageNamed:@"bg1.jpg"], 1.0);
     if (self.user.profileImageData != nil) {
         UIImage *profilePic = [UIImage imageWithData:self.user.profileImageData];
         self.profileImageContentView.circularImage = profilePic;

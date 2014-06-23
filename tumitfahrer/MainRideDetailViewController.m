@@ -235,6 +235,9 @@
     
 }
 
+-(void)headerViewTapped {
+    
+}
 
 -(BOOL)isPastRide {
     if ([[ActionManager localDateWithDate:self.ride.departureTime] compare:[ActionManager currentDate]] == NSOrderedAscending) {

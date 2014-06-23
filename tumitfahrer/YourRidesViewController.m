@@ -32,6 +32,7 @@
 @property (nonatomic, strong) NSMutableArray *arrayWithHeaders;
 @property (nonatomic, strong) NSArray *emptyCellDescriptionsArray;
 @property NSCache *imageCache;
+@property UIRefreshControl *refreshControl;
 
 @end
 
@@ -54,12 +55,27 @@
     UIView *footerView = [[[NSBundle mainBundle] loadNibNamed:@"BrowseRidesPanoramioFooter" owner:self options:nil] objectAtIndex:0];
     self.tableView.tableFooterView = footerView;
     
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing rides"];
+    self.refreshControl.backgroundColor = [UIColor grayColor];
+    self.refreshControl.tintColor = [UIColor lightestBlue];
+    [self.refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:self.refreshControl atIndex:0];
+    
     NSArray *emptyCreated = [NSArray arrayWithObjects:@"No rides as drives", @"No requests for a ride", nil];
     NSArray *emptyJoined = [NSArray arrayWithObjects:@"No upcoming rides as passenger", @"No pending ride requests", nil];
     NSArray *emptyPast = [NSArray arrayWithObjects:@"You don't have any past rides", nil];
     self.emptyCellDescriptionsArray = [NSArray arrayWithObjects:emptyCreated, emptyJoined, emptyPast, nil];
     [[PanoramioUtilities sharedInstance] addObserver:self];
     self.imageCache = [[NSCache alloc] init];
+}
+
+-(void)handleRefresh {
+    [[RidesStore sharedStore] fetchRidesForCurrentUser:^(BOOL isFetched) {
+        if (isFetched) {
+            [self.refreshControl endRefreshing];
+        }
+    }];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -72,7 +88,35 @@
     [self initTitlesForCurrentSection];
     [self.tableView reloadData];
     [self checkIfAnyRides];
+    [self addToImageCache];
 }
+
+-(void)addToImageCache {
+    UIImage *placeholderImage = [UIImage imageNamed:@"Placeholder"];
+    
+    int table = 0;
+    for (NSArray *sectionArray in self.arrayWithSections) {
+        int counter = 0;
+        for (Ride *ride in sectionArray) {
+            UIImage *image = [UIImage imageWithData:ride.destinationImage];
+            if (image == nil) {
+                image = placeholderImage;
+                if (self.index != 2) {
+                    [RidesStore initRide:ride block:^(BOOL fetched) {
+                        if(fetched) {
+                            [self.tableView reloadData];
+                        }
+                    }];
+                }
+            }
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:counter inSection:table];
+            [_imageCache setObject:image forKey:indexPath];
+            counter++;
+        }
+        table++;
+    }
+}
+
 
 -(void)checkIfAnyRides {
     int ridesCount = 0;
@@ -235,17 +279,8 @@
         cell.destinationLabel.text = ride.destination;
         cell.departureTimeLabel.text = [ActionManager stringFromDate:ride.departureTime];
         
-        UIImage *image = [_imageCache objectForKey:[NSNumber numberWithInteger:indexPath.section]];
-        if (image == nil) {
-            if(ride.destinationImage == nil) {
-                image = [UIImage imageNamed:@"Placeholder"];
-                [RidesStore initRide:ride block:^(BOOL fetched) { }];
-            } else {
-                image = [UIImage imageWithData:ride.destinationImage];
-            }
-            [_imageCache setObject:image forKey:[NSNumber numberWithInteger:indexPath.section]];
-        }
-        cell.destinationImage.image = [UIImage imageWithData:ride.destinationImage];
+        UIImage *image = [_imageCache objectForKey:indexPath];
+        cell.destinationImage.image = image;
         cell.destinationImage.clipsToBounds = YES;
         
         return cell;

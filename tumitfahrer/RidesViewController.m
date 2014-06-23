@@ -73,7 +73,7 @@
             lastUpdate = ride.createdAt;
         }
     }
-    NSLog(@"date %@", lastUpdate);
+
     [[RidesStore sharedStore] fetchRidesfromDate:lastUpdate rideType:self.RideType block:^(BOOL fetched) {
         if (fetched) {
             [[RidesStore sharedStore] initRidesByType:self.RideType block:^(BOOL fetched) {

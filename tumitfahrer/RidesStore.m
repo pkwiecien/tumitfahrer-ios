@@ -602,7 +602,7 @@ static int activity_id = 0;
 
 
 -(void)setImage:(UIImage *)image photoInfo:(Photo *)photoInfo forRide:(Ride *)ride {
-    ride.destinationImage = UIImagePNGRepresentation(image);
+    ride.destinationImage = UIImageJPEGRepresentation(image, 0.8);
     ride.photo = photoInfo;
     [self saveToPersistentStore:ride];
     [self notifyAllAboutNewImageForRideId:ride.rideId];

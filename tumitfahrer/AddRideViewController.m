@@ -400,7 +400,7 @@
         
         Ride *ride = (Ride *)[mappingResult firstObject];
         if (self.destinationImage != nil) {
-            ride.destinationImage = UIImagePNGRepresentation(self.destinationImage);
+            ride.destinationImage = UIImageJPEGRepresentation(self.destinationImage, 0.8);
         }
         if (self.destinationPhotoInfo != nil) {
             ride.photo = self.destinationPhotoInfo;

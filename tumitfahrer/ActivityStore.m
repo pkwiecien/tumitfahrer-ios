@@ -46,6 +46,8 @@ static int activity_id = 0;
     if (self) {
         [self initAllActivitiesFromCoreData];
         
+        // fetch rides from webservice created after date of last ride in core data
+        //
         [self fetchActivitiesFromWebservice:^(BOOL resultsFetched) {
             if(resultsFetched) {
                 [self initAllActivitiesFromCoreData];
@@ -69,7 +71,7 @@ static int activity_id = 0;
 
 -(void)filterAllActivities {
     [self filterNearbyActivities];
-    [self filterMyActivities];
+    [self filterLastMinuteActivities];
 }
 
 -(NSMutableArray *)sortActivitiesWithArray:(NSMutableArray *)array {
@@ -212,7 +214,7 @@ static int activity_id = 0;
 
 # pragma mark - filter my activities
 
--(void)filterMyActivities {
+-(void)filterLastMinuteActivities {
     
     if ([CurrentUser sharedInstance].user == nil) {
         return;
