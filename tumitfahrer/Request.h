@@ -2,7 +2,7 @@
 //  Request.h
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 6/13/14.
+//  Created by Pawel Kwiecien on 6/23/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSNumber * requestId;
 @property (nonatomic, retain) NSNumber * rideId;
 @property (nonatomic, retain) NSDate * updatedAt;
+@property (nonatomic, retain) NSNumber * isSeen;
 @property (nonatomic, retain) Activity *activities;
 @property (nonatomic, retain) Ride *requestedRide;
 

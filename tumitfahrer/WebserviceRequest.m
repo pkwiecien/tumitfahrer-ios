@@ -32,6 +32,22 @@
     }];
 }
 
++(void)createConversationsForRideId:(NSNumber *)rideId userId:(NSNumber *)userId otherUserId:(NSNumber *)otherUserId block:(conversationCompletionHandler)block {
+    
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
+    
+    NSString *requestString = [NSString stringWithFormat:@"/api/v2/rides/%@/conversations", rideId];
+    NSDictionary *queryParams = @{@"user_id": userId, @"other_user_id" : otherUserId};
+    
+    [objectManager postObject:nil path:requestString parameters:queryParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        Conversation *conversation = [mappingResult firstObject];
+        block(conversation);
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        block(nil);
+    }];
+}
+
 +(void)getConversationForRideId:(NSNumber *)rideId conversationId:(NSNumber *)conversationId block:(boolCompletionHandler)block {
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];

@@ -31,10 +31,10 @@
     <entity name="Message" representedClassName="Message" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="isSeen" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="messageId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="receiverId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="senderId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="isSeen" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="messageId" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="receiverId" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="senderId" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="conversation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="messages" inverseEntity="Conversation" syncable="YES"/>
     </entity>
@@ -65,9 +65,10 @@
     </entity>
     <entity name="Request" representedClassName="Request" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="passengerId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="requestId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="rideId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="isSeen" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="passengerId" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="requestId" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="rideId" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="activities" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="requests" inverseEntity="Activity" syncable="YES"/>
         <relationship name="requestedRide" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ride" inverseName="requests" inverseEntity="Ride" syncable="YES"/>
@@ -140,7 +141,7 @@
         <element name="Photo" positionX="-72" positionY="-180" width="128" height="148"/>
         <element name="Rating" positionX="106" positionY="-99" width="128" height="163"/>
         <element name="RecentPlace" positionX="-72" positionY="-180" width="128" height="105"/>
-        <element name="Request" positionX="18" positionY="-333" width="128" height="148"/>
+        <element name="Request" positionX="18" positionY="-333" width="128" height="165"/>
         <element name="Ride" positionX="-279" positionY="-175" width="128" height="418"/>
         <element name="RideSearch" positionX="-72" positionY="-180" width="128" height="238"/>
         <element name="User" positionX="252" positionY="-40" width="128" height="285"/>

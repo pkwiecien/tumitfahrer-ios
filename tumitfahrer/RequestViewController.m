@@ -142,9 +142,20 @@
 
 -(void)contactRequestorButtonPressed {
     SimpleChatViewController *simpleChatVC = [[SimpleChatViewController alloc] init];
-    simpleChatVC.conversation = [ConversationUtilities findConversationBetweenUser:[CurrentUser sharedInstance].user otherUser:self.ride.rideOwner conversationArray:[self.ride.conversations allObjects]];
     simpleChatVC.otherUser = self.ride.rideOwner;
-    [self.navigationController pushViewController:simpleChatVC animated:YES];
+    Conversation *conversation = [ConversationUtilities findConversationBetweenUser:[CurrentUser sharedInstance].user otherUser:self.ride.rideOwner conversationArray:[self.ride.conversations allObjects]];
+    if (conversation != nil) {
+        simpleChatVC.conversation =conversation;
+        [self.navigationController pushViewController:simpleChatVC animated:YES];
+    } else {
+        [WebserviceRequest createConversationsForRideId:self.ride.rideId userId:[CurrentUser sharedInstance].user.userId otherUserId:self.ride.rideOwner.userId block:^(Conversation *conversation) {
+            if (conversation != nil) {
+                simpleChatVC.conversation =conversation;
+                [self.navigationController pushViewController:simpleChatVC animated:YES];
+            }
+        }];
+    }
 }
+
 
 @end

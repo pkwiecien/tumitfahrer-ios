@@ -45,4 +45,50 @@
     return [fetchedObjects firstObject];
 }
 
++ (Conversation *)fetchConversationFromCoreDataBetweenUserId:(NSNumber *)userId otherUserId:(NSNumber *)otherUserId rideId:(NSNumber *)rideId {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *e = [NSEntityDescription entityForName:@"Conversation"
+                                         inManagedObjectContext:[RKManagedObjectStore defaultStore].
+                              mainQueueManagedObjectContext];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(self.userId = %@ && self.otherUserId = %@ && self.rideId = %@) || (self.userId = %@ && self.otherUserId = %@ && self.rideId = %@)", userId, otherUserId, rideId, otherUserId, userId, rideId];
+    [request setPredicate:predicate];
+    
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:YES];
+    request.sortDescriptors = @[descriptor];
+    
+    request.entity = e;
+    
+    NSError *error;
+    NSArray *fetchedObjects = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:&error];
+    if (!fetchedObjects) {
+        [NSException raise:@"Fetch failed"
+                    format:@"Reason: %@", [error localizedDescription]];
+    }
+    return [fetchedObjects firstObject];
+}
+
++ (BOOL)conversationHasUnseenMessages:(Conversation *)conversation {
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *e = [NSEntityDescription entityForName:@"Conversation"
+                                         inManagedObjectContext:[RKManagedObjectStore defaultStore].
+                              mainQueueManagedObjectContext];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"ANY messages.isSeen = NO"];
+    
+    [request setPredicate:predicate];
+    request.entity = e;
+    
+    NSError *error;
+    NSArray *fetchedObjects = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:&error];
+    if (!fetchedObjects) {
+        [NSException raise:@"Fetch failed"
+                    format:@"Reason: %@", [error localizedDescription]];
+    }
+
+    if ([fetchedObjects count] > 0) {
+        return YES;
+    }
+    return NO;
+}
+
 @end

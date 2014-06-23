@@ -54,8 +54,21 @@
     if ([self isPastRide]) {
         editButton.hidden = YES;
     }
+    [self markRequestsAsRead];
+    [self markDeletedPassengersAsRead];
     
     [self reloadTableAndRide];
+}
+
+-(void)markRequestsAsRead {
+    for (Request *request in self.ride.requests) {
+        request.isSeen = [NSNumber numberWithBool:YES];
+    }
+    [[RidesStore sharedStore] saveToPersistentStore:self.ride];
+}
+
+-(void)markDeletedPassengersAsRead {
+    
 }
 
 #pragma mark - UITableView

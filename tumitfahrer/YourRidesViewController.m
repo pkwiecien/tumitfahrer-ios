@@ -21,6 +21,9 @@
 #import "EmptyCell.h"
 #import "Request.h"
 #import "PanoramioUtilities.h"
+#import "ConversationUtilities.h"
+#import "Conversation.h"
+#import "Message.h"
 
 @interface YourRidesViewController () <PanoramioUtilitiesDelegate>
 
@@ -104,17 +107,24 @@
                 if (self.index != 2) {
                     [RidesStore initRide:ride block:^(BOOL fetched) {
                         if(fetched) {
+                            [self initRidesForCurrentSection];
+                            UIImage *image = [UIImage imageWithData:ride.destinationImage];
+                            [self addImageToCache:image indexPath:[NSIndexPath indexPathForRow:counter inSection:table]];
                             [self.tableView reloadData];
                         }
                     }];
                 }
             }
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:counter inSection:table];
-            [_imageCache setObject:image forKey:indexPath];
+            [self addImageToCache:image indexPath:[NSIndexPath indexPathForRow:counter inSection:table]];
             counter++;
         }
         table++;
     }
+}
+
+-(void)addImageToCache:(UIImage *)image indexPath:(NSIndexPath *)indexPath {
+    NSLog(@"image is nil %d, %@", image == nil, indexPath);
+    [_imageCache setObject:image forKey:indexPath];
 }
 
 
@@ -278,6 +288,20 @@
         cell.departurePlaceLabel.text = ride.departurePlace;
         cell.destinationLabel.text = ride.destination;
         cell.departureTimeLabel.text = [ActionManager stringFromDate:ride.departureTime];
+        if (self.index == 0) { // display new message, deleted or new request icon
+            if([self rideHasUnseenMessage:ride]) {
+                cell.firstImageView.hidden = NO;
+            } else {
+                cell.firstImageView.hidden =YES;
+            }
+            if ([self rideHasUnseenRequest:ride]) {
+                cell.secondImageView.hidden = NO;
+            } else {
+                cell.secondImageView.hidden = YES;
+            }
+        } else if (self.index == 1) { // new message icon
+            
+        }
         
         UIImage *image = [_imageCache objectForKey:indexPath];
         cell.destinationImage.image = image;
@@ -286,6 +310,27 @@
         return cell;
     }
 }
+
+-(BOOL)rideHasUnseenMessage:(Ride *)ride {
+    
+    for (Conversation *conversation in ride.conversations) {
+        if([ConversationUtilities conversationHasUnseenMessages:conversation]) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+-(BOOL)rideHasUnseenRequest:(Ride *)ride {
+    for (Request *request in ride.requests) {
+        if (![request.isSeen boolValue]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([[self.arrayWithSections objectAtIndex:indexPath.section] count] == 0) { // just an empty cell

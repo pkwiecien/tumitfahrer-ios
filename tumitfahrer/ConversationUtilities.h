@@ -14,5 +14,7 @@
 
 +(Conversation *)findConversationBetweenUser:(User *)user otherUser:(User *)otherUser conversationArray:(NSArray *)conversations;
 + (Conversation *)fetchConversationFromCoreDataWithId:(NSNumber *)conversationId;
++ (Conversation *)fetchConversationFromCoreDataBetweenUserId:(NSNumber *)userId otherUserId:(NSNumber *)otherUserId rideId:(NSNumber *)rideId;
++ (BOOL)conversationHasUnseenMessages:(Conversation *)conversation;
 
 @end

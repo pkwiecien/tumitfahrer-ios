@@ -12,12 +12,15 @@
 
 @interface WebserviceRequest : NSObject
 
-+(void)getConversationsForRideId:(NSInteger)rideId block:(boolCompletionHandler)block;
-+(void)getConversationForRideId:(NSNumber *)rideId conversationId:(NSNumber *)conversationId block:(boolCompletionHandler)block;
 
 typedef void(^messageCompletionHandler)(Message *);
 typedef void(^userCompletionHandler)(User *);
 typedef void(^badgeCompletionHandler)(Badge *);
+typedef void(^conversationCompletionHandler)(Conversation *);
+
++(void)getConversationsForRideId:(NSInteger)rideId block:(boolCompletionHandler)block;
++(void)getConversationForRideId:(NSNumber *)rideId conversationId:(NSNumber *)conversationId block:(boolCompletionHandler)block;
++(void)createConversationsForRideId:(NSNumber *)rideId userId:(NSNumber *)userId otherUserId:(NSNumber *)otherUserId block:(conversationCompletionHandler)block;
 
 +(void)postMessageForConversation:(Conversation *)conversation message:(NSString *)message senderId:(NSNumber *)senderId receiverId:(NSNumber *)receiverId rideId:(NSNumber *)rideId block:(messageCompletionHandler)block;
 

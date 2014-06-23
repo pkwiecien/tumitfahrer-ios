@@ -13,5 +13,5 @@
 +(RKEntityMapping *)conversationMapping;
 +(RKResponseDescriptor *)getConversationsResponseDescriptorWithMapping:(RKEntityMapping *)mapping;
 +(RKResponseDescriptor *)getConversationResponseDescriptorWithMapping:(RKEntityMapping *)mapping;
-
++(RKResponseDescriptor *)postConversationResponseDescriptorWithMapping:(RKEntityMapping *)mapping;
 @end

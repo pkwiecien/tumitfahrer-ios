@@ -42,4 +42,11 @@
     return responseDescriptor;
 }
 
++(RKResponseDescriptor *)postConversationResponseDescriptorWithMapping:(RKEntityMapping *)mapping {
+    // create response description for rides
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodPOST pathPattern:API_RIDES_CONVERSATIONS keyPath:@"conversation"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    return responseDescriptor;
+}
+
 @end
