@@ -94,7 +94,7 @@
         if(cell == nil){
             cell = [RideRequestInformationCell rideRequestInformationCell];
         }
-        cell.requestInfoLabel.text = self.ride.departurePlace;
+        cell.requestInfoLabel.text = self.ride.meetingPoint;
         return cell;
         
     } else if(indexPath.section == 1) { // driver
@@ -109,7 +109,7 @@
             [[AWSUploader sharedStore] downloadProfilePictureForUser:self.ride.rideOwner];
         }
         cell.leftButton.hidden = YES;
-        [cell.rightButton addTarget:self action:@selector(contactRequestorButtonPressed) forControlEvents:UIControlEventTouchDown];
+        cell.rightButton.hidden = YES;
         return cell;
     } else {  // show delete button
         RideDetailActionCell *actionCell = [RideDetailActionCell offerRideCell];

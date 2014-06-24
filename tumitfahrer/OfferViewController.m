@@ -42,7 +42,7 @@
     [[RidesStore sharedStore] addObserver:self];
     editButton.hidden = YES;
     
-    self.rideDetail.headerView = _headerView;    
+    self.rideDetail.headerView = _headerView;
     self.headerTitles = [NSArray arrayWithObjects:@"Details", @"Driver", @"",nil];
 }
 
@@ -153,7 +153,11 @@
             }
         } else {
             cell.leftButton.hidden = YES;
-            cell.rightButton.hidden = YES;
+            if([self isPassengerOfRide]) {
+                cell.rightButton.hidden = NO;
+            } else {
+                cell.rightButton.hidden = YES;
+            }
         }
         return cell;
     } else if(indexPath.section == 2) { // show leave button if it's not a past ride
@@ -268,7 +272,7 @@
 }
 
 -(void)leftButtonPressedWithObject:(id)object cellType:(CellTypeEnum)cellType {
-
+    
     if ([self isPastRide]) {
         [WebserviceRequest giveRatingToUserWithId:self.ride.rideOwner.userId rideId:self.ride.rideId ratingType:0 block:^(BOOL given) {
             if (given) {
@@ -304,14 +308,14 @@
 }
 
 -(void)contactDriverButtonPressed {
-//    SimpleChatViewController *simpleChatVC = [[SimpleChatViewController alloc] init];
-//    simpleChatVC.otherUser = self.ride.rideOwner;
-//    Conversation *conversation = [ConversationUtilities findConversationBetweenUser:[CurrentUser sharedInstance].user otherUser:self.ride.rideOwner conversationArray:[self.ride.conversations allObjects]];
-//    if (conversation != nil) {
-//        simpleChatVC.conversation =conversation;
-//        [self.navigationController pushViewController:simpleChatVC animated:YES];
-//    } else {
-//    }
+    SimpleChatViewController *simpleChatVC = [[SimpleChatViewController alloc] init];
+    simpleChatVC.otherUser = self.ride.rideOwner;
+    Conversation *conversation = [ConversationUtilities findConversationBetweenUser:[CurrentUser sharedInstance].user otherUser:self.ride.rideOwner conversationArray:[self.ride.conversations allObjects]];
+    if (conversation != nil) {
+        simpleChatVC.conversation =conversation;
+        [self.navigationController pushViewController:simpleChatVC animated:YES];
+    } else {
+    }
 }
 
 

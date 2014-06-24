@@ -16,5 +16,7 @@
 + (Conversation *)fetchConversationFromCoreDataWithId:(NSNumber *)conversationId;
 + (Conversation *)fetchConversationFromCoreDataBetweenUserId:(NSNumber *)userId otherUserId:(NSNumber *)otherUserId rideId:(NSNumber *)rideId;
 + (BOOL)conversationHasUnseenMessages:(Conversation *)conversation;
++ (void)updateSeenTimeForConversation:(Conversation *)conversation;
++(void)saveConversationToPersistentStore:(Conversation *)conversation;
 
 @end

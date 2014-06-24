@@ -21,6 +21,7 @@
 @property (nonatomic, retain) NSNumber * userId;
 @property (nonatomic, retain) NSDate * lastMessageTime;
 @property (nonatomic, retain) NSDate * seenTime;
+@property (nonatomic, retain) NSNumber * lastSenderId;
 @property (nonatomic, retain) NSSet *messages;
 @property (nonatomic, retain) Ride *ride;
 @end

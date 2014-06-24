@@ -41,7 +41,9 @@
 
 @end
 
-@implementation AddRideViewController
+@implementation AddRideViewController {
+    RideDetailActionCell *addActionCell;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -214,22 +216,14 @@
         switchCell.selectionStyle = UITableViewCellSelectionStyleNone;
         switchCell.switchId = indexPath.row;
         switchCell.delegate = self;
-#ifdef DEBUG
-        //set label for KIF test
-        [switchCell setAccessibilityLabel: switchCell.switchCellTextLabel.text];
-        [switchCell setIsAccessibilityElement:YES];
-#endif
         return switchCell;
     } else if (indexPath.section == 2) {
-        RideDetailActionCell *actionCell = [RideDetailActionCell offerRideCell];
-        [actionCell.actionButton addTarget:self action:@selector(addRideButtonPressed) forControlEvents:UIControlEventTouchDown];
-        [actionCell.actionButton setTitle:@"Add" forState:UIControlStateNormal];
-        [actionCell.actionButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"BlueButton"] withColor:[UIColor lighterBlue]] forState:UIControlStateNormal];
-#ifdef DEBUG
-        [actionCell.actionButton setAccessibilityLabel:@"Add Button"];
-        [actionCell.actionButton setIsAccessibilityElement:YES];
-#endif
-        return actionCell;
+        addActionCell = [RideDetailActionCell offerRideCell];
+        [addActionCell.actionButton addTarget:self action:@selector(addRideButtonPressed) forControlEvents:UIControlEventTouchDown];
+        [addActionCell.actionButton setTitle:@"Add" forState:UIControlStateNormal];
+        [addActionCell.actionButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"BlueButton"] withColor:[UIColor lighterBlue]] forState:UIControlStateNormal];
+
+        return addActionCell;
     }
     
     return cell;
@@ -317,6 +311,7 @@
 
 -(void)addRideButtonPressed {
     // prevent from adding same ride twice
+    addActionCell.actionButton.enabled = NO;
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
@@ -328,12 +323,15 @@
     
     if (!departurePlace || departurePlace.length == 0) {
         [ActionManager showAlertViewWithTitle:@"No departure time" description:@"To add a ride please specify the departure place"];
+        addActionCell.actionButton.enabled = YES;
         return;
     } else if(!destination || destination.length == 0) {
         [ActionManager showAlertViewWithTitle:@"No destination" description:@"To add a ride please specify the destination"];
+        addActionCell.actionButton.enabled = YES;
         return;
     } else if(!departureTime || departureTime.length == 0) {
         [ActionManager showAlertViewWithTitle:@"No departure time" description:@"To add a ride please specify the departure time"];
+        addActionCell.actionButton.enabled = YES;
         return;
     }
     
@@ -342,6 +340,7 @@
     BOOL isNearby = [LocationController isLocation:[[CLLocation alloc] initWithLatitude:self.departureCoordinate.latitude longitude:self.departureCoordinate.longitude] nearbyAnotherLocation:[[CLLocation alloc] initWithLatitude:self.destinationCoordinate.latitude longitude:self.destinationCoordinate.longitude] thresholdInMeters:1000];
     if (isNearby) {
         [ActionManager showAlertViewWithTitle:@"Problem" description:@"The route is too short"];
+        addActionCell.actionButton.enabled = YES;
         return;
     }
     
@@ -354,6 +353,7 @@
     
     if ([dateString compare:[NSDate date]] == NSOrderedAscending) {
         [ActionManager showAlertViewWithTitle:@"Problem" description:@"You can't add ride in the past"];
+        addActionCell.actionButton.enabled = YES;
         return;
     }
     
@@ -373,6 +373,7 @@
         NSString *meetingPoint = [self.tableValues objectAtIndex:7];
         if (!meetingPoint || meetingPoint.length == 0) {
             [ActionManager showAlertViewWithTitle:@"No meeting place" description:@"To add a ride please specify the meeting place"];
+            addActionCell.actionButton.enabled = YES;
             return;
         }
 
@@ -386,6 +387,7 @@
         NSString *meetingPoint = [self.tableValues objectAtIndex:4];
         if (!meetingPoint || meetingPoint.length == 0) {
             [ActionManager showAlertViewWithTitle:@"No meeting place" description:@"To add a ride please specify the meeting place"];
+            addActionCell.actionButton.enabled = YES;
             return;
         }
         
@@ -429,6 +431,7 @@
         }
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [ActionManager showAlertViewWithTitle:@"Error" description:@"Could not add a ride"];
+        addActionCell.actionButton.enabled = YES;
         RKLogError(@"Load failed with error: %@", error);
     }];
 }

@@ -48,7 +48,6 @@
         self.receiverId = self.conversation.userId;
     }
     [self refreshButtonPressed];
-    
     // scroll to bottom before the view appears
     [self.tableView setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
 }
@@ -223,6 +222,10 @@
     
     self.conversationArray = [NSMutableArray arrayWithArray:sortedArray];
     [self.tableView reloadData];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [ConversationUtilities updateSeenTimeForConversation:self.conversation];
 }
 
 -(void)dealloc {

@@ -11,7 +11,9 @@
 @interface ConversationMapping : NSObject
 
 +(RKEntityMapping *)conversationMapping;
++(RKEntityMapping *)simpleConversationMapping;
 +(RKResponseDescriptor *)getConversationsResponseDescriptorWithMapping:(RKEntityMapping *)mapping;
 +(RKResponseDescriptor *)getConversationResponseDescriptorWithMapping:(RKEntityMapping *)mapping;
 +(RKResponseDescriptor *)postConversationResponseDescriptorWithMapping:(RKEntityMapping *)mapping;
+
 @end

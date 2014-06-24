@@ -43,45 +43,57 @@
 }
 
 - (void)configureAWS {
-    self.s3 = [[AmazonS3Client alloc] initWithAccessKey:ACCESS_KEY_ID withSecretKey:SECRET_KEY];
-    self.credentials = [[AmazonCredentials alloc] initWithAccessKey:ACCESS_KEY_ID withSecretKey:SECRET_KEY];
-    self.s3.endpoint = [AmazonEndpoints s3Endpoint:US_EAST_1];
-    self.s3.maxRetries = 10;
-    self.s3.timeout = 240;
-    
-    self.tm = [S3TransferManager new];
-    self.tm.s3 = self.s3;
+    if (![ACCESS_KEY_ID isEqualToString:@"changeme"]) {
+        self.s3 = [[AmazonS3Client alloc] initWithAccessKey:ACCESS_KEY_ID withSecretKey:SECRET_KEY];
+        self.credentials = [[AmazonCredentials alloc] initWithAccessKey:ACCESS_KEY_ID withSecretKey:SECRET_KEY];
+        self.s3.endpoint = [AmazonEndpoints s3Endpoint:US_EAST_1];
+        self.s3.maxRetries = 10;
+        self.s3.timeout = 240;
+        
+        self.tm = [S3TransferManager new];
+        self.tm.s3 = self.s3;
+    }
 }
 
 -(void)uploadImageData:(NSData *)imageData user:(User *)user {
-
-    self.user = user;
-
-    NSString *path = [NSString stringWithFormat:@"users/%@/profile_picture.jpg", user.userId];
-    S3PutObjectRequest *putObjectRequest = [[S3PutObjectRequest alloc] initWithKey:path inBucket:BUCKET_NAME];
-    putObjectRequest.data = imageData;
-    putObjectRequest.delegate = self;
-    putObjectRequest.contentType = @"image/jpeg";
-    putObjectRequest.credentials = self.credentials;
     
-    [self.tm upload:putObjectRequest];
+    if (self.tm != nil) {
+        
+        self.user = user;
+        
+        NSString *path = [NSString stringWithFormat:@"users/%@/profile_picture.jpg", user.userId];
+        S3PutObjectRequest *putObjectRequest = [[S3PutObjectRequest alloc] initWithKey:path inBucket:BUCKET_NAME];
+        putObjectRequest.data = imageData;
+        putObjectRequest.delegate = self;
+        putObjectRequest.contentType = @"image/jpeg";
+        putObjectRequest.credentials = self.credentials;
+        
+        [self.tm upload:putObjectRequest];
+    } else {
+        NSLog(@"AWS uploader is not configured");
+    }
 }
 
 -(void)downloadProfilePictureForUser:(User *)user {
     
-    self.user = user;
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *filePath = [NSString stringWithFormat:@"%@/tumitfahrer/users/%@/profile_picture.jpg", documentsDirectory, user.userId];
-    NSLog(@"filePath %@", filePath);
-    NSString *path = [NSString stringWithFormat:@"users/%@/profile_picture.jpg", user.userId];
-    
-    S3GetObjectRequest *getObjectRequest = [[S3GetObjectRequest alloc] initWithKey:path withBucket:BUCKET_NAME];
-    getObjectRequest.credentials = self.credentials;
-    getObjectRequest.delegate = self;
-    
-    [self.tm download:getObjectRequest];
+    if (self.tm != nil) {
+        
+        self.user = user;
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSString *filePath = [NSString stringWithFormat:@"%@/tumitfahrer/users/%@/profile_picture.jpg", documentsDirectory, user.userId];
+        NSLog(@"filePath %@", filePath);
+        NSString *path = [NSString stringWithFormat:@"users/%@/profile_picture.jpg", user.userId];
+        
+        S3GetObjectRequest *getObjectRequest = [[S3GetObjectRequest alloc] initWithKey:path withBucket:BUCKET_NAME];
+        getObjectRequest.credentials = self.credentials;
+        getObjectRequest.delegate = self;
+        
+        [self.tm download:getObjectRequest];
+    } else {
+        NSLog(@"AWS uploader is not configured");
+    }
 }
 #pragma mark - AmazonServiceRequestDelegate
 

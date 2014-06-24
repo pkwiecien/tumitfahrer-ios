@@ -28,6 +28,23 @@
     return mapping;
 }
 
++(RKEntityMapping *)simpleConversationMapping {
+    RKEntityMapping *mapping = [RKEntityMapping mappingForEntityForName:@"Conversation" inManagedObjectStore:[[RKObjectManager sharedManager] managedObjectStore]];
+    mapping.identificationAttributes = @[@"conversationId"];
+    [mapping addAttributeMappingsFromDictionary:@{    @"id": @"conversationId",
+                                                      @"user_id": @"userId",
+                                                      @"ride_id": @"rideId",
+                                                      @"other_user_id": @"otherUserId",
+                                                      @"last_message_time" : @"lastMessageTime",
+                                                      @"last_sender_id" : @"lastSenderId",
+                                                      @"created_at": @"createdAt",
+                                                      @"updated_at": @"updatedAt"
+                                                      }];
+    
+    return mapping;
+}
+
+
 +(RKResponseDescriptor *)getConversationsResponseDescriptorWithMapping:(RKEntityMapping *)mapping {
     // create response description for rides
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodGET pathPattern:API_RIDES_CONVERSATIONS keyPath:@"conversations"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];

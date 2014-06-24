@@ -44,7 +44,7 @@
     
     [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"ratings" toKeyPath:@"ratings" withMapping:[RatingMapping ratingMapping]]];
     
-    [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"conversations" toKeyPath:@"conversations" withMapping:[ConversationMapping conversationMapping]]];
+    [rideMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"conversations" toKeyPath:@"conversations" withMapping:[ConversationMapping simpleConversationMapping]]];
     
     return rideMapping;
 }

@@ -21,6 +21,7 @@
 @dynamic userId;
 @dynamic lastMessageTime;
 @dynamic seenTime;
+@dynamic lastSenderId;
 @dynamic messages;
 @dynamic ride;
 

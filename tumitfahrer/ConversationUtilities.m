@@ -91,4 +91,17 @@
     return NO;
 }
 
++(void)saveConversationToPersistentStore:(Conversation *)conversation {
+    NSManagedObjectContext *context = conversation.managedObjectContext;
+    NSError *error;
+    if (![context saveToPersistentStore:&error]) {
+        NSLog(@"saving error %@", [error localizedDescription]);
+    }
+}
+
++(void)updateSeenTimeForConversation:(Conversation *)conversation {
+    conversation.seenTime = [NSDate date];
+    [self saveConversationToPersistentStore:conversation];
+}
+
 @end

@@ -39,7 +39,9 @@
 
 @end
 
-@implementation YourRidesViewController
+@implementation YourRidesViewController {
+    UIImage *placeholderImage;
+}
 
 
 - (void)viewDidLoad {
@@ -71,12 +73,15 @@
     self.emptyCellDescriptionsArray = [NSArray arrayWithObjects:emptyCreated, emptyJoined, emptyPast, nil];
     [[PanoramioUtilities sharedInstance] addObserver:self];
     self.imageCache = [[NSCache alloc] init];
+    placeholderImage = [UIImage imageNamed:@"Placeholder"];
+
 }
 
 -(void)handleRefresh {
     [[RidesStore sharedStore] fetchRidesForCurrentUser:^(BOOL isFetched) {
         if (isFetched) {
             [self.refreshControl endRefreshing];
+            [self.tableView reloadData];
         }
     }];
 }
@@ -95,7 +100,6 @@
 }
 
 -(void)addToImageCache {
-    UIImage *placeholderImage = [UIImage imageNamed:@"Placeholder"];
     
     int table = 0;
     for (NSArray *sectionArray in self.arrayWithSections) {
@@ -123,7 +127,9 @@
 }
 
 -(void)addImageToCache:(UIImage *)image indexPath:(NSIndexPath *)indexPath {
-    NSLog(@"image is nil %d, %@", image == nil, indexPath);
+    if (image == nil) {
+        image = placeholderImage;
+    }
     [_imageCache setObject:image forKey:indexPath];
 }
 
@@ -300,7 +306,11 @@
                 cell.secondImageView.hidden = YES;
             }
         } else if (self.index == 1) { // new message icon
-            
+            if([self rideHasUnseenMessage:ride]) {
+                cell.firstImageView.hidden = NO;
+            } else {
+                cell.firstImageView.hidden =YES;
+            }
         }
         
         UIImage *image = [_imageCache objectForKey:indexPath];
@@ -314,7 +324,8 @@
 -(BOOL)rideHasUnseenMessage:(Ride *)ride {
     
     for (Conversation *conversation in ride.conversations) {
-        if([ConversationUtilities conversationHasUnseenMessages:conversation]) {
+        NSLog(@"conversaion last seen: %@", conversation.lastMessageTime);
+        if (((conversation.lastMessageTime != nil && conversation.seenTime == nil) || ([conversation.lastMessageTime compare:conversation.seenTime] == NSOrderedDescending)) && ![conversation.lastSenderId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
             return YES;
         }
     }

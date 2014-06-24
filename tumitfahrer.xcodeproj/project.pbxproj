@@ -67,7 +67,7 @@
 		E504D9EE190BCCE20036FFA8 /* DeviceMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E504D9ED190BCCE20036FFA8 /* DeviceMapping.m */; };
 		E507850E1958CCCD00E7CD06 /* Request.m in Sources */ = {isa = PBXBuildFile; fileRef = E507850D1958CCCD00E7CD06 /* Request.m */; };
 		E507851A1958DFFF00E7CD06 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = E50785191958DFFF00E7CD06 /* Message.m */; };
-		E507851D195958EE00E7CD06 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = E507851C195958EE00E7CD06 /* Conversation.m */; };
+		E507852619596F8F00E7CD06 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = E507852519596F8F00E7CD06 /* Conversation.m */; };
 		E507C437193901B5005F1083 /* CustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = E507C436193901B5005F1083 /* CustomAnnotation.m */; };
 		E507C43F193A298D005F1083 /* RideRequestInformationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E507C43D193A298D005F1083 /* RideRequestInformationCell.m */; };
 		E507C440193A298D005F1083 /* RideRequestInformationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E507C43E193A298D005F1083 /* RideRequestInformationCell.xib */; };
@@ -396,8 +396,8 @@
 		E507850D1958CCCD00E7CD06 /* Request.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Request.m; sourceTree = "<group>"; };
 		E50785181958DFFF00E7CD06 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		E50785191958DFFF00E7CD06 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
-		E507851B195958EE00E7CD06 /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
-		E507851C195958EE00E7CD06 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
+		E507852419596F8F00E7CD06 /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
+		E507852519596F8F00E7CD06 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 		E507C435193901B5005F1083 /* CustomAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotation.h; sourceTree = "<group>"; };
 		E507C436193901B5005F1083 /* CustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotation.m; sourceTree = "<group>"; };
 		E507C43C193A298D005F1083 /* RideRequestInformationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideRequestInformationCell.h; sourceTree = "<group>"; };
@@ -1456,8 +1456,8 @@
 				E50CCCFD191F7C74003A9490 /* ActivityStore.m */,
 				E517DB5E1950354400961344 /* Badge.h */,
 				E517DB5F1950354400961344 /* Badge.m */,
-				E507851B195958EE00E7CD06 /* Conversation.h */,
-				E507851C195958EE00E7CD06 /* Conversation.m */,
+				E507852419596F8F00E7CD06 /* Conversation.h */,
+				E507852519596F8F00E7CD06 /* Conversation.m */,
 				E50DB26918F447B800E87E62 /* CurrentUser.h */,
 				E50DB26A18F447B800E87E62 /* CurrentUser.m */,
 				E504D9E6190B02490036FFA8 /* Device.h */,
@@ -2371,7 +2371,7 @@
 				E5FDDBF118F0059D00CE7B01 /* ActionManager.m in Sources */,
 				E58889E1191385110062D0DF /* HeaderContentView.m in Sources */,
 				E5A9BE25194253390072E9B0 /* RideSearchMapping.m in Sources */,
-				E507851D195958EE00E7CD06 /* Conversation.m in Sources */,
+				E507852619596F8F00E7CD06 /* Conversation.m in Sources */,
 				E50DB29818FA7D4100E87E62 /* Faculty.m in Sources */,
 				E526B64B194DE05E006D3527 /* ControllerUtilities.m in Sources */,
 				E504D9C2190A6C940036FFA8 /* DestinationViewController.m in Sources */,
