@@ -16,6 +16,7 @@
 #import "ActionManager.h"
 #import "Badge.h"
 #import "BadgeUtilities.h"
+#import "RidesStore.h"
 
 @implementation WebserviceRequest
 
@@ -147,7 +148,16 @@
     }];
 }
 
-
++(void)addPassengerWithId:(NSNumber *)passengerId rideId:(NSNumber *)rideId block:(boolCompletionHandler)block {
+    
+    NSDictionary *requestParams = @{@"added_passenger": passengerId};
+    
+    [[RKObjectManager sharedManager] putObject:requestParams path:[NSString stringWithFormat:@"/api/v2/users/%@/rides/%@", [CurrentUser sharedInstance].user.userId, rideId] parameters:requestParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        block(YES);
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        block(NO);
+    }];
+}
 
 +(void)removePassengerWithId:(NSNumber *)passengerId rideId:(NSNumber *)rideId block:(boolCompletionHandler)block {
     
@@ -210,7 +220,20 @@
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         block(NO);
     }];
+}
 
++(void)deleteRideFromWebservice:(Ride *)ride block:(boolCompletionHandler)block {
+    
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    
+    [objectManager deleteObject:ride path:[NSString stringWithFormat:@"/api/v2/rides/%@", ride.rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        [[CurrentUser sharedInstance].user removeRidesAsOwnerObject:ride];
+        [[RidesStore sharedStore] deleteRideFromCoreData:ride];
+        block(YES);
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        block(NO);
+        RKLogError(@"Load failed with error: %@", error);
+    }];
 }
 
 @end

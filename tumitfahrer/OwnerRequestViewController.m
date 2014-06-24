@@ -114,16 +114,10 @@
 }
 
 -(void)deleteRideButtonPressed {
-    RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    
-    [objectManager deleteObject:self.ride path:[NSString stringWithFormat:@"/api/v2/rides/%@", self.ride.rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        
-        [[CurrentUser sharedInstance].user removeRidesAsOwnerObject:self.ride];
-        [[RidesStore sharedStore] deleteRideFromCoreData:self.ride];
-        
-        [self.navigationController popViewControllerAnimated:YES];
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        RKLogError(@"Load failed with error: %@", error);
+    [WebserviceRequest deleteRideFromWebservice:self.ride block:^(BOOL isDeleted) {
+        if (isDeleted) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }];
 }
 

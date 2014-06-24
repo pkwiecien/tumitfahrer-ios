@@ -136,7 +136,16 @@
 -(void)addRideButtonPressed {
     AddRideViewController *addRideVC = [[AddRideViewController alloc] init];
     addRideVC.TableType = Driver;
-    addRideVC.RideType = ContentTypeCampusRides;
+    addRideVC.RideType = [self.ride.rideType intValue];
+    addRideVC.RideDisplayType = ShowAsViewController;
+    NSString *car  = @"";
+    if ([CurrentUser sharedInstance].user.car != nil) {
+        car = [CurrentUser sharedInstance].user.car;
+    }
+    NSMutableArray *offerArray = [NSMutableArray arrayWithObjects:@"", self.ride.departurePlace, self.ride.destination, [ActionManager stringFromDate:self.ride.departureTime], @"No", @"", car, @"", @"", nil];
+
+    addRideVC.potentialRequestedRide = self.ride;
+    addRideVC.tableValues = offerArray;
     [self.navigationController pushViewController:addRideVC animated:YES];
 }
 

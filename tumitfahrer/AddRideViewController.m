@@ -22,6 +22,8 @@
 #import "RideDetailActionCell.h"
 #import "Photo.h"
 #import "CustomRepeatViewController.h"
+#import "MenuViewController.h"
+#import "WebserviceRequest.h"
 
 @interface AddRideViewController () <SegmentedControlCellDelegate, SwitchTableViewCellDelegate, CustomRepeatViewController>
 
@@ -88,13 +90,31 @@
     } else {
         if(self.tableDriverValues != nil) {
             self.tableValues = [NSMutableArray arrayWithArray:self.tableDriverValues];
-        } else {
+        } else if(self.tableValues == nil){
             self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"No", @"", @"", @"", @"", nil];
             [self setDepartureLabelForCurrentLocation];
+        } else if(self.tableValues != nil) {
+            // init departureCoordinate, destinationCoordinate and fetchPhoto
+            [self initDepartureAndDestinationCoordinates];
         }
+        
         self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", @"Repeat", @"Free Seats", @"Car", @"Meeting Point", @"", nil];
     }
 }
+
+-(void)initDepartureAndDestinationCoordinates {
+    NSString *departure = [self.tableValues objectAtIndex:1];
+    NSString *destination = [self.tableValues objectAtIndex:2];
+    [[LocationController sharedInstance] fetchLocationForAddress:departure completionHandler:^(CLLocation *location) {
+        [self setDepartureCoordinate:location.coordinate];
+        
+        [[LocationController sharedInstance] fetchLocationForAddress:destination completionHandler:^(CLLocation *location) {
+            [self setDestinationCoordinate:location.coordinate];
+            [self fetchPhotoForDestinationCoordinate];
+        }];
+    }];
+}
+
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.tableView reloadData];
@@ -222,7 +242,7 @@
         [addActionCell.actionButton addTarget:self action:@selector(addRideButtonPressed) forControlEvents:UIControlEventTouchDown];
         [addActionCell.actionButton setTitle:@"Add" forState:UIControlStateNormal];
         [addActionCell.actionButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"BlueButton"] withColor:[UIColor lighterBlue]] forState:UIControlStateNormal];
-
+        
         return addActionCell;
     }
     
@@ -335,8 +355,6 @@
         return;
     }
     
-    NSLog(@"%@ %@ %@", departurePlace, destination, departureTime);
-    
     BOOL isNearby = [LocationController isLocation:[[CLLocation alloc] initWithLatitude:self.departureCoordinate.latitude longitude:self.departureCoordinate.longitude] nearbyAnotherLocation:[[CLLocation alloc] initWithLatitude:self.destinationCoordinate.latitude longitude:self.destinationCoordinate.longitude] thresholdInMeters:1000];
     if (isNearby) {
         [ActionManager showAlertViewWithTitle:@"Problem" description:@"The route is too short"];
@@ -376,7 +394,7 @@
             addActionCell.actionButton.enabled = YES;
             return;
         }
-
+        
         queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": [NSNumber numberWithInt:self.RideType], @"car": car, @"is_driving": [NSNumber numberWithBool:YES], @"departure_latitude" : [NSNumber numberWithDouble:self.departureCoordinate.latitude], @"departure_longitude" : [NSNumber numberWithDouble:self.departureCoordinate.longitude], @"destination_latitude": [NSNumber numberWithDouble:self.destinationCoordinate.latitude],
                         @"destination_longitude" : [NSNumber numberWithDouble:self.destinationCoordinate.longitude], @"repeat_dates" : self.repeatDates};
         
@@ -413,6 +431,9 @@
         }
         
         [[RidesStore sharedStore] addRideToStore:ride];
+        if(self.potentialRequestedRide != nil) {
+            [self addPassengerToNewRide:ride];
+        }
         [self resetTables];
         [KGStatusBar showSuccessWithStatus:@"Ride added"];
         
@@ -436,13 +457,25 @@
     }];
 }
 
+-(void)addPassengerToNewRide:(Ride *)newRide {
+    [WebserviceRequest addPassengerWithId:self.potentialRequestedRide.rideOwner.userId rideId:self.potentialRequestedRide.rideId block:^(BOOL isAdded) {
+        if (isAdded) {
+            [WebserviceRequest deleteRideFromWebservice:self.potentialRequestedRide block:^(BOOL isCompleted) {
+                if (isCompleted) {
+                    NSLog(@"sucessfully added passenger to ride");
+                }
+            }];
+        }
+    }];
+}
+
 -(void)resetTables {
     self.tablePassengerValues = nil;
     self.tableDriverValues = nil;
     if(self.TableType == Passenger) {
-            self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", nil];
+        self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", nil];
     } else {
-            self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"No", @"", @"", @"", @"", nil];
+        self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"No", @"", @"", @"", @"", nil];
     }
     self.selectedRepeatValues = [NSMutableDictionary dictionary];
     [self setDepartureLabelForCurrentLocation];
@@ -474,13 +507,20 @@
         self.departureCoordinate = coordinate;
     } else if (indexPath.row == 2){
         self.destinationCoordinate = coordinate;
-        [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:[[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude] completionHandler:^(Photo *photo) {
+        [self fetchPhotoForDestinationCoordinate];
+    }
+    [self.tableValues replaceObjectAtIndex:indexPath.row withObject:destination];
+}
+
+
+-(void)fetchPhotoForDestinationCoordinate {
+    if (CLLocationCoordinate2DIsValid(self.destinationCoordinate)) {
+        [[PanoramioUtilities sharedInstance] fetchPhotoForLocation:[[CLLocation alloc] initWithLatitude:self.destinationCoordinate.latitude longitude:self.destinationCoordinate.longitude] completionHandler:^(Photo *photo) {
             if (photo != nil) {
                 [self setDestinationPhoto:photo];
             }
         }];
     }
-    [self.tableValues replaceObjectAtIndex:indexPath.row withObject:destination];
 }
 
 -(void)setDestinationPhoto:(Photo *)photo {
@@ -498,6 +538,10 @@
 #pragma mark - Button Handlers
 
 -(void)leftDrawerButtonPress:(id)sender{
+    MenuViewController *menu = (MenuViewController *)self.sideBarController.leftDrawerViewController;
+    NSIndexPath *ip = [NSIndexPath indexPathForRow:0 inSection:2];
+    [menu.tableView selectRowAtIndexPath:ip animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+    
     [self.sideBarController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 

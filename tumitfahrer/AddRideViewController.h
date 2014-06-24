@@ -12,6 +12,8 @@
 #import "FreeSeatsTableViewCell.h"
 #import "RMDateSelectionViewController.h"
 
+@class Ride;
+
 @interface AddRideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MeetingPointDelegate, DestinationViewControllerDelegate, FreeSeatsCellDelegate, RMDateSelectionViewControllerDelegate>
 
 typedef enum {
@@ -19,6 +21,7 @@ typedef enum {
     Driver = 1
 } TableTypeEnum;
 
+@property (nonatomic, strong) Ride *potentialRequestedRide;
 @property (nonatomic, assign) ShouldDisplayEnum displayEnum;
 @property (nonatomic, assign) TableTypeEnum TableType;
 @property (nonatomic, assign) ContentType RideType;
