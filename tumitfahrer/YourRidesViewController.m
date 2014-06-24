@@ -305,6 +305,11 @@
             } else {
                 cell.secondImageView.hidden = YES;
             }
+            if ([self rideHasUnseenCancelations:ride]) {
+                cell.thirdImageView.hidden = NO;
+            } else {
+                cell.thirdImageView.hidden = YES;
+            }
         } else if (self.index == 1) { // new message icon
             if([self rideHasUnseenMessage:ride]) {
                 cell.firstImageView.hidden = NO;
@@ -338,6 +343,13 @@
         if (![request.isSeen boolValue]) {
             return YES;
         }
+    }
+    return NO;
+}
+
+-(BOOL)rideHasUnseenCancelations:(Ride *)ride {
+    if (ride.lastCancelTime != nil && [ride.lastCancelTime compare:ride.lastSeenTime] == NSOrderedDescending) {
+        return YES;
     }
     return NO;
 }

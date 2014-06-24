@@ -32,6 +32,7 @@
                                                       @"price":@"price",
                                                       @"is_paid":@"isPaid",
                                                       @"car":@"car",
+                                                      @"last_cancel_time":@"lastCancelTime",
                                                       @"created_at": @"createdAt",
                                                       @"updated_at": @"updatedAt"
                                                       }];

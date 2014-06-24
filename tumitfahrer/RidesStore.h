@@ -61,5 +61,6 @@
 - (void)fetchImageForCurrentRide:(Ride *)ride;
 - (void)fetchRidesFromDate:(NSDate *)date;
 - (NSArray *)fetchUserRequestsFromCoreDataForUserId:(NSNumber *)userId;
++ (void)updateLastSeenTime:(Ride *)ride;
 
 @end

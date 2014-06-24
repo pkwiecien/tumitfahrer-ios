@@ -681,7 +681,7 @@ static int activity_id = 0;
     NSManagedObjectContext *context = ride.managedObjectContext;
     NSError *error;
     if (![context saveToPersistentStore:&error]) {
-        NSLog(@"delete error %@", [error localizedDescription]);
+        NSLog(@"saving error %@", [error localizedDescription]);
     }
 }
 
@@ -761,6 +761,10 @@ static int activity_id = 0;
     return true;
 }
 
++(void)updateLastSeenTime:(Ride *)ride {
+    ride.lastSeenTime = [NSDate date];
+    [[RidesStore sharedStore] saveToPersistentStore:ride];
+}
 
 #pragma mark - getters with initializers
 

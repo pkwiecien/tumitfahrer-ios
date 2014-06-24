@@ -275,6 +275,10 @@
     [self reloadTableAndRide];
 }
 
+-(void)viewWillDisappear:(BOOL)animated {
+    [RidesStore updateLastSeenTime:self.ride];;
+}
+
 
 #pragma mark - Facebook sharing methods
 
