@@ -22,7 +22,7 @@
         [self sizeToFit];
         
         // postition label exactly in the middle of the screen with navigation bar
-        self.frame = CGRectMake(frame.size.width/2-self.frame.size.width/2, frame.size.height/2-self.frame.size.height/2-navigationBar.frame.size.height, self.frame.size.width, 150);
+        self.frame = CGRectMake(frame.size.width/2-self.frame.size.width/2, frame.size.height/2-75-navigationBar.frame.size.height, self.frame.size.width, 150);
     }
 
     return self;

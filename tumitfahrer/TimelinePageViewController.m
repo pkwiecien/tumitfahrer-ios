@@ -23,8 +23,6 @@
 @property NSArray *pageTitles;
 @property NSInteger currentIndex;
 
-// activity about new: rides (who add new activity ride, ride request, campus ride), who requests a ride, ride search, rating {activities : { activity_rides : { }, campus_ride: {}, ride_requests: {}, rating{}, }
-
 @end
 
 @implementation TimelinePageViewController
@@ -94,11 +92,6 @@
     UINavigationController *navController = self.navigationController;
     [NavigationBarUtilities setupNavbar:&navController withColor:[UIColor darkestBlue]];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
-#ifdef DEBUG
-    // set label for kif test
-    [self.navigationItem.backBarButtonItem setAccessibilityLabel:@"Back Button"];
-    [self.navigationItem.backBarButtonItem setIsAccessibilityElement:YES];
-#endif
     self.navigationController.navigationBar.translucent = NO;
     
     self.logo = [[LogoView alloc] initWithFrame:CGRectMake(0, 0, 200, 41) title:[self.pageTitles objectAtIndex:0]];

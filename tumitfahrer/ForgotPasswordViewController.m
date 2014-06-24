@@ -18,13 +18,6 @@
 
 @implementation ForgotPasswordViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -82,4 +75,5 @@
 - (IBAction)dismissKeyboard:(id)sender {
     [self.view endEditing:YES];
 }
+
 @end

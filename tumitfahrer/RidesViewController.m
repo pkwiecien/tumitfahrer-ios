@@ -111,7 +111,11 @@
 }
 
 -(void)checkPhotosOfRides {
-    // add here checking if all rides have photos
+    for (Ride *ride in [self ridesForCurrentIndex]) {
+        if (ride.destinationImage == nil) {
+            [[RidesStore sharedStore] fetchImageForCurrentRide:ride];
+        }
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -267,24 +271,13 @@
     [LocationController sharedInstance].currentLocationImage = image;
 }
 
--(void)didRecieveRidesFromWebService:(NSArray *)rides
-{
+-(void)didRecieveRidesFromWebService:(NSArray *)rides {
     for (Ride *ride in rides) {
         NSLog(@"Ride: %@", ride);
     }
 }
 
-// if upper refresh is shown (pull down), then fetch updated rides after a date
--(void)loadNewElements {
-
-    [[RidesStore sharedStore] fetchRidesfromDate:[ActionManager currentDate] rideType:self.RideType block:^(BOOL fetched) {
-        
-    }];
-}
-
-
 // if lower refres is show (pull up), then fetch rides that are later that the ride with last date
-
 
 -(NSArray *)ridesForCurrentIndex {
     switch (self.index) {
@@ -324,6 +317,8 @@
 -(void)dealloc {
     [self.imageCache removeAllObjects];
     self.delegate = nil;
+    [[RidesStore sharedStore] removeObserver:self];
+    [[PanoramioUtilities sharedInstance] removeObserver:self];
 }
 
 @end

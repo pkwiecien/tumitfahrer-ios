@@ -13,10 +13,8 @@
 #import "ActionManager.h"
 #import "CurrentUser.h"
 #import "Ride.h"
-#import "EAIntroView.h"
-#import "ControllerUtilities.h"
 
-@interface LoginViewController () <EAIntroDelegate>
+@interface LoginViewController ()
 
 @property CustomTextField *emailTextField;
 @property CustomTextField *passwordTextField;
@@ -43,31 +41,15 @@
         
         [self.view addSubview:self.emailTextField];
         [self.view addSubview:self.passwordTextField];
-        
-        // set up accessibility label for ui test
-        [self.emailTextField setAccessibilityLabel:@"Login Email"];
-        [self.emailTextField setIsAccessibilityElement:YES];
-        
-        [self.passwordTextField setAccessibilityLabel:@"Login Password"];
-        [self.passwordTextField setIsAccessibilityElement:YES];
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
-    UITapGestureRecognizer *tapRecognizer =
-    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRecognized)];
-    tapRecognizer.delegate = self;
-    // Add the gesture to the view
-    [self.view addGestureRecognizer:tapRecognizer];
     self.view.backgroundColor = [UIColor blackColor];
-    
-    // Set debug logging level to 'RKLogLevelTrace' to see JSON payload
-    RKLogConfigureByName("RestKit/Network", RKLogLevelDebug);
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -104,8 +86,7 @@
     [self.moviePlayerController play];
 }
 
-- (void)introMovieFinished:(NSNotification *)notification
-{
+- (void)introMovieFinished:(NSNotification *)notification {
     [self.moviePlayerController play];
 }
 
@@ -130,14 +111,11 @@
     [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[ActionManager encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
     
     [objectManager postObject:nil path:@"/api/v2/sessions" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        
         User *user = (User *)[mappingResult firstObject];
         user.password = [ActionManager createSHA512:self.passwordTextField.text];
         [[CurrentUser sharedInstance] initCurrentUser:user];
-        
-        NSError *error;
-        if (![[CurrentUser sharedInstance].user.managedObjectContext saveToPersistentStore:&error]) {
-            NSLog(@"Whoops");
-        }
+        [CurrentUser saveUserToPersistentStore:user];
         
         // check if fetch user has assigned a device token
         [self checkDeviceToken];
@@ -199,17 +177,6 @@
     }
     
     return YES;
-}
-
-- (IBAction)showIntroButtonPressed:(id)sender {
-    EAIntroView *intro = (EAIntroView *)[ControllerUtilities prepareIntroForView:self.view];
-    intro.delegate = self;
-    [intro showInView:self.view animateDuration:0.0];
-}
-
--(void)tapRecognized
-{
-    
 }
 
 @end

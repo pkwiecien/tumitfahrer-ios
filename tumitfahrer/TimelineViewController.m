@@ -30,7 +30,6 @@
 @interface TimelineViewController () <ActivityStoreDelegate>
 
 @property (nonatomic, retain) UILabel *zeroRidesLabel;
-@property CGFloat previousScrollViewYOffset;
 @property UIRefreshControl *refreshControl;
 @property UIImage *driverIconWhite;
 @property UIImage *passengerIconWhite;
@@ -40,8 +39,7 @@
 
 @implementation TimelineViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor customLightGray]];
     
@@ -73,29 +71,6 @@
     [self.tableView reloadData];
     [self checkIfAnyRides];
     [BadgeUtilities updateMyRidesDateInBadge:[ActionManager currentDate]];
-    NSLog(@"%f %f", self.view.frame.size.width, self.view.frame.size.height);
-}
-
--(void)checkIfAnyRides {
-    if ([[[ActivityStore sharedStore] recentActivitiesByType:self.index] count] == 0) {
-        if (self.index == 1 && ![LocationController locationServicesEnabled]) { // around me
-            self.zeroRidesLabel.text = @"Please enable location services on your iPhone:\n\nSettings -> Privacy -> Location Services -> TUMitfahrer";
-        } else {
-            self.zeroRidesLabel.text = @"Currenlty no new activities";
-        }
-        [self.view addSubview:self.zeroRidesLabel];
-        self.zeroRidesLabel.hidden = NO;
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    } else {
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-        [self.zeroRidesLabel removeFromSuperview];
-        self.zeroRidesLabel.hidden = YES;
-    }
-}
-
--(void)prepareZeroRidesLabel {
-    self.zeroRidesLabel = [[CustomUILabel alloc] initInMiddle:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) text:@"Currenlty no new activities" viewWithNavigationBar:self.navigationController.navigationBar];
-    self.zeroRidesLabel.textColor = [UIColor blackColor];
 }
 
 - (void)handleRefresh:(id)sender {
@@ -238,6 +213,28 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 80;
+}
+
+-(void)checkIfAnyRides {
+    if ([[[ActivityStore sharedStore] recentActivitiesByType:self.index] count] == 0) {
+        if (self.index == 1 && ![LocationController locationServicesEnabled]) { // around me
+            self.zeroRidesLabel.text = @"Please enable location services on your iPhone:\n\nSettings -> Privacy -> Location Services -> TUMitfahrer";
+        } else {
+            self.zeroRidesLabel.text = @"Currently no new activities";
+        }
+        [self.view addSubview:self.zeroRidesLabel];
+        self.zeroRidesLabel.hidden = NO;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    } else {
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        [self.zeroRidesLabel removeFromSuperview];
+        self.zeroRidesLabel.hidden = YES;
+    }
+}
+
+-(void)prepareZeroRidesLabel {
+    self.zeroRidesLabel = [[CustomUILabel alloc] initInMiddle:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) text:@"Currenlty no new activities" viewWithNavigationBar:self.navigationController.navigationBar];
+    self.zeroRidesLabel.textColor = [UIColor blackColor];
 }
 
 #pragma mark - delegate methods
