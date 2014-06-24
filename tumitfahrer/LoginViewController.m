@@ -64,6 +64,7 @@
     tapRecognizer.delegate = self;
     // Add the gesture to the view
     [self.view addGestureRecognizer:tapRecognizer];
+    self.view.backgroundColor = [UIColor blackColor];
     
     // Set debug logging level to 'RKLogLevelTrace' to see JSON payload
     RKLogConfigureByName("RestKit/Network", RKLogLevelDebug);
@@ -75,7 +76,7 @@
     if (email!=nil) {
         self.emailTextField.text = email;
     }
-    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"highway-nosound@2x" ofType:@"mp4"];
+    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"highway@2x" ofType:@"mp4"];
     NSURL *fileURL = [NSURL fileURLWithPath:filepath];
     
     if(self.moviePlayerController == nil) {
@@ -89,7 +90,12 @@
         [self.moviePlayerController setControlStyle:MPMovieControlStyleNone];
         
         [self.moviePlayerController prepareToPlay];
-        [self.moviePlayerController.view setFrame: CGRectMake(0, 0, 416, 1100)];
+
+        if (iPhone5) {
+            [self.moviePlayerController.view setFrame:CGRectMake(0, 250, 320, 568)];
+        } else {
+            [self.moviePlayerController.view setFrame:CGRectMake(0, 200, 320, 530)];
+        }
         [self.view addSubview:self.moviePlayerController.view];
         [self.view sendSubviewToBack:self.moviePlayerController.view];
     }
@@ -130,10 +136,10 @@
         if (![[CurrentUser sharedInstance].user.managedObjectContext saveToPersistentStore:&error]) {
             NSLog(@"Whoops");
         }
-                
+        
         // check if fetch user has assigned a device token
         [self checkDeviceToken];
-                
+        
         [self storeCurrentUserInDefaults];
         [self dismissViewControllerAnimated:YES completion:nil];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {

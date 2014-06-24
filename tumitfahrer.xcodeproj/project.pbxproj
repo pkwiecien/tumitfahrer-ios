@@ -68,6 +68,7 @@
 		E507851A1958DFFF00E7CD06 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = E50785191958DFFF00E7CD06 /* Message.m */; };
 		E507852619596F8F00E7CD06 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = E507852519596F8F00E7CD06 /* Conversation.m */; };
 		E507852C195973F800E7CD06 /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E507852B195973F800E7CD06 /* Ride.m */; };
+		E50785391959D46600E7CD06 /* highway@2x.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E50785381959D46600E7CD06 /* highway@2x.mp4 */; };
 		E507C437193901B5005F1083 /* CustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = E507C436193901B5005F1083 /* CustomAnnotation.m */; };
 		E507C43F193A298D005F1083 /* RideRequestInformationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E507C43D193A298D005F1083 /* RideRequestInformationCell.m */; };
 		E507C440193A298D005F1083 /* RideRequestInformationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E507C43E193A298D005F1083 /* RideRequestInformationCell.xib */; };
@@ -178,7 +179,6 @@
 		E599880C18E7836D00B01C62 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E599880A18E7836D00B01C62 /* MenuViewController.xib */; };
 		E599880E18E7FB1600B01C62 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E599880D18E7FB1600B01C62 /* AVFoundation.framework */; };
 		E599881118E7FC5900B01C62 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E599881018E7FC5900B01C62 /* MediaPlayer.framework */; };
-		E599881918E804E500B01C62 /* highway-nosound@2x.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E599881818E804E500B01C62 /* highway-nosound@2x.mp4 */; };
 		E599886218E84D9D00B01C62 /* MenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E599886018E84D9D00B01C62 /* MenuTableViewCell.m */; };
 		E599886318E84D9D00B01C62 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E599886118E84D9D00B01C62 /* MenuTableViewCell.xib */; };
 		E59B9A4B1916A241008DE80B /* YourRidesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59B9A491916A241008DE80B /* YourRidesViewController.m */; };
@@ -194,7 +194,6 @@
 		E5CD592D1951C14900E97DEC /* afnetworking.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD592C1951C14900E97DEC /* afnetworking.txt */; };
 		E5CD59371951C39D00E97DEC /* EAIntroView.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD592E1951C39D00E97DEC /* EAIntroView.txt */; };
 		E5CD59381951C39D00E97DEC /* Facebook-iOS-SDK.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD592F1951C39D00E97DEC /* Facebook-iOS-SDK.txt */; };
-		E5CD59391951C39D00E97DEC /* GPUImage.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD59301951C39D00E97DEC /* GPUImage.txt */; };
 		E5CD593A1951C39D00E97DEC /* JSMessagesViewController.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD59311951C39D00E97DEC /* JSMessagesViewController.txt */; };
 		E5CD593B1951C39D00E97DEC /* KIF.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD59321951C39D00E97DEC /* KIF.txt */; };
 		E5CD593C1951C39D00E97DEC /* MMDrawerController.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5CD59331951C39D00E97DEC /* MMDrawerController.txt */; };
@@ -398,6 +397,7 @@
 		E507852519596F8F00E7CD06 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 		E507852A195973F800E7CD06 /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
 		E507852B195973F800E7CD06 /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
+		E50785381959D46600E7CD06 /* highway@2x.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "highway@2x.mp4"; sourceTree = "<group>"; };
 		E507C435193901B5005F1083 /* CustomAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotation.h; sourceTree = "<group>"; };
 		E507C436193901B5005F1083 /* CustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotation.m; sourceTree = "<group>"; };
 		E507C43C193A298D005F1083 /* RideRequestInformationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideRequestInformationCell.h; sourceTree = "<group>"; };
@@ -571,7 +571,6 @@
 		E599880A18E7836D00B01C62 /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
 		E599880D18E7FB1600B01C62 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		E599881018E7FC5900B01C62 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
-		E599881818E804E500B01C62 /* highway-nosound@2x.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "highway-nosound@2x.mp4"; sourceTree = "<group>"; };
 		E599885F18E84D9D00B01C62 /* MenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableViewCell.h; sourceTree = "<group>"; };
 		E599886018E84D9D00B01C62 /* MenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableViewCell.m; sourceTree = "<group>"; };
 		E599886118E84D9D00B01C62 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
@@ -902,6 +901,14 @@
 			name = GooglePlacesAutocomplete;
 			sourceTree = "<group>";
 		};
+		E50785301959CEE200E7CD06 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				E50785381959D46600E7CD06 /* highway@2x.mp4 */,
+			);
+			name = Video;
+			sourceTree = "<group>";
+		};
 		E507C43B193A2968005F1083 /* Ride Request Information Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1135,10 +1142,10 @@
 		E522BAC018AE13F600ECD375 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E50785301959CEE200E7CD06 /* Video */,
 				E502639C19558D060041E21A /* Images */,
 				E5CD59441951C6DB00E97DEC /* Privacy */,
 				E5CD592B1951C13F00E97DEC /* Licenses */,
-				E599881818E804E500B01C62 /* highway-nosound@2x.mp4 */,
 				E522BAC118AE13F600ECD375 /* tumitfahrer-Info.plist */,
 				E522BAC218AE13F600ECD375 /* InfoPlist.strings */,
 				E522BAC518AE13F600ECD375 /* main.m */,
@@ -2033,6 +2040,7 @@
 				E59987FC18E7251000B01C62 /* RegisterViewController.xib in Resources */,
 				E599880C18E7836D00B01C62 /* MenuViewController.xib in Resources */,
 				E59987D118E6E47F00B01C62 /* LoginViewController.xib in Resources */,
+				E50785391959D46600E7CD06 /* highway@2x.mp4 in Resources */,
 				E5CD593E1951C39D00E97DEC /* RMDateSelectionViewController.txt in Resources */,
 				E50263BD19558F000041E21A /* SaqibPhoto@2x.jpg in Resources */,
 				E504D9BD190A58710036FFA8 /* MeetingPointViewController.xib in Resources */,
@@ -2066,7 +2074,6 @@
 				E58889F61913E14A0062D0DF /* RideInformationCell.xib in Resources */,
 				E50CCC21191E6A7E003A9490 /* LogoView.xib in Resources */,
 				E50164871956E1E0004DA38A /* MainCampus@2x.jpg in Resources */,
-				E599881918E804E500B01C62 /* highway-nosound@2x.mp4 in Resources */,
 				E50263B319558F000041E21A /* AbiPhoto@2x.jpg in Resources */,
 				E501648F195706FF004DA38A /* CustomRepeatViewController.xib in Resources */,
 				E50164801956E14F004DA38A /* DayRoadBackground.jpg in Resources */,
@@ -2102,7 +2109,6 @@
 				E5FEF2F31944766300E326BB /* MessagesOverviewViewController.xib in Resources */,
 				E5E215801908492200B0B150 /* FreeSeatsTableViewCell.xib in Resources */,
 				E526B617194C9C21006D3527 /* OwnerRequestViewController.xib in Resources */,
-				E5CD59391951C39D00E97DEC /* GPUImage.txt in Resources */,
 				E5CD59371951C39D00E97DEC /* EAIntroView.txt in Resources */,
 				E507C440193A298D005F1083 /* RideRequestInformationCell.xib in Resources */,
 				E5CD592819516E4F00E97DEC /* ProfileViewController.xib in Resources */,
