@@ -139,13 +139,10 @@
 -(void)initUniversalAnalytics {
     // automatically send uncaught exceptions
     [GAI sharedInstance].trackUncaughtExceptions = YES;
-    
     // set Google Analytics dispatch interval to e.g. 20 seconds.
     [GAI sharedInstance].dispatchInterval = 20;
-    
     // set Logger to VERBOSE for debug information.
-    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
-    
+    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelError];
     // Initialize tracker. Replace with your tracking ID.
     [[GAI sharedInstance] trackerWithTrackingId:@"UA-52228842-1"];
 }

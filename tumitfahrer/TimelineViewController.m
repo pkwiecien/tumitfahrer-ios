@@ -25,6 +25,7 @@
 #import "CustomUILabel.h"
 #import "BadgeUtilities.h"
 #import "WebserviceRequest.h"
+#import "LocationController.h"
 
 @interface TimelineViewController () <ActivityStoreDelegate>
 
@@ -77,6 +78,11 @@
 
 -(void)checkIfAnyRides {
     if ([[[ActivityStore sharedStore] recentActivitiesByType:self.index] count] == 0) {
+        if (self.index == 1 && ![LocationController locationServicesEnabled]) { // around me
+            self.zeroRidesLabel.text = @"Please enable location services on your iPhone:\n\nSettings -> Privacy -> Location Services -> TUMitfahrer";
+        } else {
+            self.zeroRidesLabel.text = @"Currenlty no new activities";
+        }
         [self.view addSubview:self.zeroRidesLabel];
         self.zeroRidesLabel.hidden = NO;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -88,7 +94,7 @@
 }
 
 -(void)prepareZeroRidesLabel {
-    self.zeroRidesLabel = [[CustomUILabel alloc] initInMiddle:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) text:@"There are no new activities in TUMitfahrer" viewWithNavigationBar:self.navigationController.navigationBar];
+    self.zeroRidesLabel = [[CustomUILabel alloc] initInMiddle:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) text:@"Currenlty no new activities" viewWithNavigationBar:self.navigationController.navigationBar];
     self.zeroRidesLabel.textColor = [UIColor blackColor];
 }
 

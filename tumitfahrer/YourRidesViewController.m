@@ -67,7 +67,7 @@
     [self.refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
     
-    NSArray *emptyCreated = [NSArray arrayWithObjects:@"No rides as drives", @"No requests for a ride", nil];
+    NSArray *emptyCreated = [NSArray arrayWithObjects:@"No rides as driver", @"No requests for your rides", nil];
     NSArray *emptyJoined = [NSArray arrayWithObjects:@"No upcoming rides as passenger", @"No pending ride requests", nil];
     NSArray *emptyPast = [NSArray arrayWithObjects:@"You don't have any past rides", nil];
     self.emptyCellDescriptionsArray = [NSArray arrayWithObjects:emptyCreated, emptyJoined, emptyPast, nil];

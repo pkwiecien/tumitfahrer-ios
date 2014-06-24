@@ -20,7 +20,6 @@
 
 @interface LocationController : NSObject <CLLocationManagerDelegate>
 
-
 @property (nonatomic, strong) CLLocationManager* locationManager;
 @property (nonatomic, strong) CLLocation* currentLocation; // todo add getting network location
 @property (nonatomic, strong) UIImage *currentLocationImage;
@@ -45,5 +44,6 @@ typedef void(^locationCompletionHandler)(CLLocation *);
 
 typedef void (^PlacemarkBlock)(CLPlacemark *placemark, NSError *error);
 + (void)resolveGecodePlaceToPlacemark:(PlacemarkBlock)block address:(NSString *)address;
++ (BOOL)locationServicesEnabled;
 
 @end

@@ -44,6 +44,10 @@
 
 # pragma mark - observer methods
 
++(BOOL)locationServicesEnabled {
+    return [CLLocationManager authorizationStatus] != kCLAuthorizationStatusDenied;
+}
+
 -(void)addObserver:(id<LocationControllerDelegate>)observer {
     [self.observers addObject:observer];
 }

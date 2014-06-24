@@ -301,6 +301,11 @@
 
 -(void)checkIfAnyRides {
     if ([[self ridesForCurrentIndex] count] == 0) {
+        if (self.index == 1 && ![LocationController locationServicesEnabled]) { // around me
+            self.zeroRidesLabel.text = @"Please enable location services on your iPhone:\n\nSettings -> Privacy -> Location Services -> TUMitfahrer";
+        } else {
+            self.zeroRidesLabel.text = @"Currently no rides availble";
+        }
         [self.view addSubview:self.zeroRidesLabel];
         self.zeroRidesLabel.hidden = NO;
         self.tableView.tableFooterView.hidden = YES;
@@ -312,7 +317,7 @@
 }
 
 -(void)prepareZeroRidesLabel {
-    self.zeroRidesLabel = [[CustomUILabel alloc] initInMiddle:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) text:@"No rides found" viewWithNavigationBar:self.navigationController.navigationBar];
+    self.zeroRidesLabel = [[CustomUILabel alloc] initInMiddle:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) text:@"Currently no rides availble" viewWithNavigationBar:self.navigationController.navigationBar];
     self.zeroRidesLabel.textColor = [UIColor blackColor];
 }
 

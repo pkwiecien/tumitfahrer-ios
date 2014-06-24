@@ -47,15 +47,15 @@
                         <rect key="frame" x="7" y="21" width="60" height="60"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
-                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="EmailIconBlack" translatesAutoresizingMaskIntoConstraints="NO" id="IYb-Tq-edH">
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="EmailGreenIcon" translatesAutoresizingMaskIntoConstraints="NO" id="IYb-Tq-edH">
                         <rect key="frame" x="288" y="10" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
-                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DeleteIconBlack" translatesAutoresizingMaskIntoConstraints="NO" id="RqE-mf-35C">
-                        <rect key="frame" x="288" y="70" width="20" height="20"/>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CancelRedIcon" translatesAutoresizingMaskIntoConstraints="NO" id="RqE-mf-35C">
+                        <rect key="frame" x="289" y="69" width="18" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
-                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="PassengerIconBlack" translatesAutoresizingMaskIntoConstraints="NO" id="0uI-B8-gcz">
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="PassengerOrangeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="0uI-B8-gcz">
                         <rect key="frame" x="288" y="40" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
@@ -75,10 +75,10 @@
     </objects>
     <resources>
         <image name="CalendarIconBlack" width="25" height="25"/>
-        <image name="DeleteIconBlack" width="30" height="30"/>
+        <image name="CancelRedIcon" width="20" height="20"/>
         <image name="DepartureIconBlack" width="25" height="25"/>
         <image name="DestinationIconBlack" width="16" height="25"/>
-        <image name="EmailIconBlack" width="30" height="30"/>
-        <image name="PassengerIconBlack" width="20" height="20"/>
+        <image name="EmailGreenIcon" width="31" height="20"/>
+        <image name="PassengerOrangeIcon" width="20" height="20"/>
     </resources>
 </document>
