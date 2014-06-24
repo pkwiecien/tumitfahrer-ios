@@ -91,7 +91,7 @@
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
                               mainQueueManagedObjectContext];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(userId = %d)", userId];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userId = %@", userId];
     [request setPredicate:predicate];
     request.entity = e;
     

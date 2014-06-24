@@ -19,12 +19,14 @@
         <attribute name="timelineUpdatedAt" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
     <entity name="Conversation" representedClassName="Conversation" syncable="YES">
-        <attribute name="conversationId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="conversationId" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="otherUserId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="rideId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="lastMessageTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="otherUserId" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="rideId" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="seenTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="userId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="userId" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="conversation" inverseEntity="Message" syncable="YES"/>
         <relationship name="ride" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ride" inverseName="conversations" inverseEntity="Ride" syncable="YES"/>
     </entity>
@@ -136,7 +138,7 @@
     <elements>
         <element name="Activity" positionX="-72" positionY="-180" width="128" height="105"/>
         <element name="Badge" positionX="-72" positionY="-180" width="128" height="193"/>
-        <element name="Conversation" positionX="-72" positionY="-180" width="128" height="165"/>
+        <element name="Conversation" positionX="-72" positionY="-180" width="128" height="195"/>
         <element name="Message" positionX="0" positionY="0" width="128" height="163"/>
         <element name="Photo" positionX="-72" positionY="-180" width="128" height="148"/>
         <element name="Rating" positionX="106" positionY="-99" width="128" height="163"/>
