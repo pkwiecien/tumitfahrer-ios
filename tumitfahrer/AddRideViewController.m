@@ -24,8 +24,12 @@
 #import "CustomRepeatViewController.h"
 #import "MenuViewController.h"
 #import "WebserviceRequest.h"
+#import "RMDateSelectionViewController.h"
+#import "MeetingPointViewController.h"
+#import "DestinationViewController.h"
+#import "FreeSeatsTableViewCell.h"
 
-@interface AddRideViewController () <SegmentedControlCellDelegate, SwitchTableViewCellDelegate, CustomRepeatViewController>
+@interface AddRideViewController () <SegmentedControlCellDelegate, SwitchTableViewCellDelegate, CustomRepeatViewController, RMDateSelectionViewControllerDelegate, MeetingPointDelegate, DestinationViewControllerDelegate, FreeSeatsCellDelegate>
 
 @property (nonatomic, assign) CLLocationCoordinate2D departureCoordinate;
 @property (nonatomic, assign) CLLocationCoordinate2D destinationCoordinate;
@@ -117,6 +121,9 @@
 
 
 -(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    self.screenName = @"Add ride view";
+    
     [self.tableView reloadData];
     [self setupNavigationBar];
     

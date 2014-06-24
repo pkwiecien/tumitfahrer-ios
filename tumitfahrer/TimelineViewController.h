@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GAITrackedViewController.h"
 
 @protocol TimelineViewControllerDelegate
 
@@ -14,7 +15,7 @@
 
 @end
 
-@interface TimelineViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface TimelineViewController : GAITrackedViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, weak) id<TimelineViewControllerDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

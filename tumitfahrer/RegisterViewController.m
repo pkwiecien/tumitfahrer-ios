@@ -48,6 +48,11 @@
     [super viewDidLoad];
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    self.screenName = @"Register screen";
+}
+
 - (void)prepareInputFields {
     
     float centerX = (self.view.frame.size.width - cUIElementWidth)/2;

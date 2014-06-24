@@ -59,6 +59,9 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    self.screenName = @"Setting screen";
+    
     [self setupLeftMenuButton];
     [self setupNavigationBar];
 }

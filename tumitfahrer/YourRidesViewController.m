@@ -88,6 +88,8 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.screenName = [NSString stringWithFormat:@"Your rides: %d", self.index];
+    
     [self.delegate willAppearViewWithIndex:self.index];
     
     [self setupNavigationBar];

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GAITrackedViewController.h"
 
-@interface FeedbackViewController : UIViewController
+@interface FeedbackViewController : GAITrackedViewController
 
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;

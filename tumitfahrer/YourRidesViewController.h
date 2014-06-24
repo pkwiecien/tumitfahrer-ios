@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GAITrackedViewController.h"
 
 @protocol YourRidesViewControllerDelegate
 
@@ -14,7 +15,7 @@
 
 @end
 
-@interface YourRidesViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface YourRidesViewController : GAITrackedViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) id<YourRidesViewControllerDelegate> delegate;

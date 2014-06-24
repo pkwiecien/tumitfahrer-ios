@@ -35,6 +35,7 @@
 #import "RatingMapping.h"
 #import "PanoramioMapping.h"
 #import <AWSRuntime/AWSRuntime.h>
+#import "GAI.h"
 
 @interface AppDelegate ()
 
@@ -70,6 +71,7 @@
 #else
     [AmazonLogger turnLoggingOff];
 #endif
+    [self initUniversalAnalytics];
     
     [AmazonErrorHandler shouldNotThrowExceptions];
     
@@ -132,6 +134,20 @@
 -(void)setupPushNotifications {
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+}
+
+-(void)initUniversalAnalytics {
+    // automatically send uncaught exceptions
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    
+    // set Google Analytics dispatch interval to e.g. 20 seconds.
+    [GAI sharedInstance].dispatchInterval = 20;
+    
+    // set Logger to VERBOSE for debug information.
+    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
+    
+    // Initialize tracker. Replace with your tracking ID.
+    [[GAI sharedInstance] trackerWithTrackingId:@"UA-52228842-1"];
 }
 
 -(void)setupNavigationController {

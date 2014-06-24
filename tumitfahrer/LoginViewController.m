@@ -71,6 +71,8 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    self.screenName = @"Login screen";
     
     NSString *email = [[NSUserDefaults standardUserDefaults] valueForKey:@"storedEmail"];
     if (email!=nil) {

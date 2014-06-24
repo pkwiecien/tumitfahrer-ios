@@ -37,6 +37,11 @@
     self.view.backgroundColor = [UIColor customLightGray];
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    self.screenName = @"Team screen";
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.teamPhotos count];
 }

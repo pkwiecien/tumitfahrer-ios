@@ -48,6 +48,8 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
+    self.screenName = @"Offer screen";
+    
     self.headerViewLabel.text = [@"To " stringByAppendingString:self.ride.destination];
 }
 

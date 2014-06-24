@@ -54,6 +54,8 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    self.screenName = @"Search results screen";
     
     if (self.searchResults == nil || self.searchResults.count == 0) {
         [self fetchResults];

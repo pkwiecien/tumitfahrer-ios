@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GAITrackedViewController.h"
 
 @class LogoView;
 
-@interface TimelinePageViewController : UIViewController <UIPageViewControllerDataSource>
+@interface TimelinePageViewController : GAITrackedViewController <UIPageViewControllerDataSource>
 
 @property (strong, nonatomic) UIPageViewController *pageController;
 

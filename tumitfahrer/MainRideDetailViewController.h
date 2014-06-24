@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GAITrackedViewController.h"
 
 @class HeaderContentView, Ride, Rating;
 
-@interface MainRideDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate> {
+@interface MainRideDetailViewController : GAITrackedViewController <UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate> {
     @protected UIButton *editButton;
 }
 

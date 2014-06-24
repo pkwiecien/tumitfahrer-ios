@@ -23,8 +23,12 @@
 #import "Ride.h"
 #import "HeaderContentView.h"
 #import "ActivityStore.h"
+#import "MeetingPointViewController.h"
+#import "DestinationViewController.h"
+#import "FreeSeatsTableViewCell.h"
+#import "RMDateSelectionViewController.h"
 
-@interface EditRideViewController () <SegmentedControlCellDelegate>
+@interface EditRideViewController () <SegmentedControlCellDelegate, DestinationViewControllerDelegate, FreeSeatsCellDelegate, RMDateSelectionViewControllerDelegate, MeetingPointDelegate>
 
 @property (nonatomic, assign) CLLocationCoordinate2D departureCoordinate;
 @property (nonatomic, assign) CLLocationCoordinate2D destinationCoordinate;
@@ -78,6 +82,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
+    self.screenName = @"Edit ride screen";
     [self.tableView reloadData];
     [self setupNavigationBar];
 }

@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RMDateSelectionViewController.h"
+#import "GAITrackedViewController.h"
 
-@interface SearchRideViewController : UIViewController <RMDateSelectionViewControllerDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface SearchRideViewController : GAITrackedViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, assign) DisplayType SearchDisplayType;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

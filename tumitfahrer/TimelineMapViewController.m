@@ -152,6 +152,9 @@ typedef enum {
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    self.screenName = @"Timeline map view";
+    
     [self setupNavigationBar];
 }
 

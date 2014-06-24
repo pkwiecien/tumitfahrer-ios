@@ -21,6 +21,7 @@
 #import "RecentPlace.h"
 #import "RecentPlaceUtilities.h"
 #import "RidesStore.h"
+#import "RMDateSelectionViewController.h"
 
 @interface SearchRideViewController () <SegmentedControlCellDelegate, DestinationViewControllerDelegate, RMDateSelectionViewControllerDelegate, SliderCellDelegate, ButtonCellDelegate>
 
@@ -52,6 +53,9 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    self.screenName = @"Search ride screen";
+    
     [self setupNavigationBar];
 
     if ([[self.tableValues objectAtIndex:1] isEqualToString:@""]) {

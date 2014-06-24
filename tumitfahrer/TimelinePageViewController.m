@@ -72,6 +72,8 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+
     // check if current user exists
     if([CurrentUser sharedInstance].user == nil) {
         [self showLoginScreen:NO];

@@ -30,6 +30,11 @@
     }
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    self.screenName = @"Feedback view";
+}
+
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if ([text isEqual:@"\n"]) {
         [textView resignFirstResponder];

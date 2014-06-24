@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "HeaderContentView.h"
+#import "GAITrackedViewController.h"
 
 @class User;
 
-@interface ProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface ProfileViewController : GAITrackedViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 typedef enum {
     Menu = 0,

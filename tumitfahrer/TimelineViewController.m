@@ -65,6 +65,9 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    self.screenName = [NSString stringWithFormat:@"Timeline screen: %d", self.index];
+
     [self.delegate willAppearViewWithIndex:self.index];
     [self.tableView reloadData];
     [self checkIfAnyRides];

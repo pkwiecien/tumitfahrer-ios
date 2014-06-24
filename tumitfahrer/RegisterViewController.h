@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GAITrackedViewController.h"
 
-@interface RegisterViewController : UIViewController<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface RegisterViewController : GAITrackedViewController <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (nonatomic, strong) UIPickerView *pickerView;
 

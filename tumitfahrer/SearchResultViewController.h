@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GAITrackedViewController.h"
 
-@interface SearchResultViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface SearchResultViewController : GAITrackedViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (assign, nonatomic) NSInteger index;

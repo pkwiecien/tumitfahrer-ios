@@ -44,6 +44,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
+    self.screenName = @"Request screen";
     
     self.headerViewLabel.text = [@"To " stringByAppendingString:self.ride.destination];
     self.headerTitles = [NSArray arrayWithObjects:@"Details", @"Passenger", @"", nil];

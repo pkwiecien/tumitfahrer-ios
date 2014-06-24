@@ -88,6 +88,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
+    self.screenName = @"Ride detail screen";
     
     if (self.ride.rideOwner == nil) {
         [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:self.ride.rideId block:^(Ride * fetched) {

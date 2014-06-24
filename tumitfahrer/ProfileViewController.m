@@ -80,6 +80,9 @@
 
 
 -(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    self.screenName = @"Profile screen";
+
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     if (self.user == nil) {
         self.user = [CurrentUser sharedInstance].user;

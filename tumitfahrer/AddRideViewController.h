@@ -7,14 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MeetingPointViewController.h"
-#import "DestinationViewController.h"
-#import "FreeSeatsTableViewCell.h"
-#import "RMDateSelectionViewController.h"
+#import "GAITrackedViewController.h"
 
 @class Ride;
 
-@interface AddRideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MeetingPointDelegate, DestinationViewControllerDelegate, FreeSeatsCellDelegate, RMDateSelectionViewControllerDelegate>
+@interface AddRideViewController : GAITrackedViewController <UITableViewDataSource, UITableViewDelegate>
 
 typedef enum {
     Passenger = 0,

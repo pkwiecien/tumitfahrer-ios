@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "GAITrackedViewController.h"
 
-@interface LoginViewController : UIViewController<UITextFieldDelegate, UIGestureRecognizerDelegate>
+@interface LoginViewController : GAITrackedViewController <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 @property (strong) MPMoviePlayerController *moviePlayerController;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;

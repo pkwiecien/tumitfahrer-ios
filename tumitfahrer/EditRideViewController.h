@@ -7,14 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MeetingPointViewController.h"
-#import "DestinationViewController.h"
-#import "FreeSeatsTableViewCell.h"
-#import "RMDateSelectionViewController.h"
+#import "GAITrackedViewController.h"
 
 @class Ride;
 
-@interface EditRideViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MeetingPointDelegate, DestinationViewControllerDelegate, FreeSeatsCellDelegate, RMDateSelectionViewControllerDelegate>
+@interface EditRideViewController : GAITrackedViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) Ride *ride;

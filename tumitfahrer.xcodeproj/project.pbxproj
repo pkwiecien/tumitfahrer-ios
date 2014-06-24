@@ -69,6 +69,10 @@
 		E507852619596F8F00E7CD06 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = E507852519596F8F00E7CD06 /* Conversation.m */; };
 		E507852C195973F800E7CD06 /* Ride.m in Sources */ = {isa = PBXBuildFile; fileRef = E507852B195973F800E7CD06 /* Ride.m */; };
 		E50785391959D46600E7CD06 /* highway@2x.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E50785381959D46600E7CD06 /* highway@2x.mp4 */; };
+		E5078542195A050500E7CD06 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E5078541195A050500E7CD06 /* libz.dylib */; };
+		E5078546195A055400E7CD06 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5078545195A055400E7CD06 /* libGoogleAnalyticsServices.a */; };
+		E5078548195A058A00E7CD06 /* libAdIdAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5078547195A058A00E7CD06 /* libAdIdAccess.a */; };
+		E507854A195A06EE00E7CD06 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E5078549195A06EE00E7CD06 /* libsqlite3.dylib */; };
 		E507C437193901B5005F1083 /* CustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = E507C436193901B5005F1083 /* CustomAnnotation.m */; };
 		E507C43F193A298D005F1083 /* RideRequestInformationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E507C43D193A298D005F1083 /* RideRequestInformationCell.m */; };
 		E507C440193A298D005F1083 /* RideRequestInformationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E507C43E193A298D005F1083 /* RideRequestInformationCell.xib */; };
@@ -398,6 +402,17 @@
 		E507852A195973F800E7CD06 /* Ride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ride.h; sourceTree = "<group>"; };
 		E507852B195973F800E7CD06 /* Ride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ride.m; sourceTree = "<group>"; };
 		E50785381959D46600E7CD06 /* highway@2x.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "highway@2x.mp4"; sourceTree = "<group>"; };
+		E507853B195A04DD00E7CD06 /* GAITracker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
+		E507853C195A04DD00E7CD06 /* GAITrackedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
+		E507853D195A04DD00E7CD06 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
+		E507853E195A04DD00E7CD06 /* GAI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
+		E507853F195A04DD00E7CD06 /* GAIFields.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAIFields.h; sourceTree = "<group>"; };
+		E5078540195A04DD00E7CD06 /* GAILogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAILogger.h; sourceTree = "<group>"; };
+		E5078541195A050500E7CD06 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		E5078543195A053500E7CD06 /* GoogleAnalyticsServicesiOS.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = GoogleAnalyticsServicesiOS.zip; path = ../../../../Downloads/GoogleAnalyticsServicesiOS.zip; sourceTree = "<group>"; };
+		E5078545195A055400E7CD06 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = ../../../../Downloads/GoogleAnalyticsServicesiOS_3.07/libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
+		E5078547195A058A00E7CD06 /* libAdIdAccess.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdIdAccess.a; path = ../../../../Downloads/GoogleAnalyticsServicesiOS_3.07/libAdIdAccess.a; sourceTree = "<group>"; };
+		E5078549195A06EE00E7CD06 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		E507C435193901B5005F1083 /* CustomAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotation.h; sourceTree = "<group>"; };
 		E507C436193901B5005F1083 /* CustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotation.m; sourceTree = "<group>"; };
 		E507C43C193A298D005F1083 /* RideRequestInformationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideRequestInformationCell.h; sourceTree = "<group>"; };
@@ -593,7 +608,6 @@
 		E5CD592C1951C14900E97DEC /* afnetworking.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = afnetworking.txt; sourceTree = "<group>"; };
 		E5CD592E1951C39D00E97DEC /* EAIntroView.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EAIntroView.txt; sourceTree = "<group>"; };
 		E5CD592F1951C39D00E97DEC /* Facebook-iOS-SDK.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Facebook-iOS-SDK.txt"; sourceTree = "<group>"; };
-		E5CD59301951C39D00E97DEC /* GPUImage.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GPUImage.txt; sourceTree = "<group>"; };
 		E5CD59311951C39D00E97DEC /* JSMessagesViewController.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = JSMessagesViewController.txt; sourceTree = "<group>"; };
 		E5CD59321951C39D00E97DEC /* KIF.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = KIF.txt; sourceTree = "<group>"; };
 		E5CD59331951C39D00E97DEC /* MMDrawerController.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MMDrawerController.txt; sourceTree = "<group>"; };
@@ -718,6 +732,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E507854A195A06EE00E7CD06 /* libsqlite3.dylib in Frameworks */,
+				E5078548195A058A00E7CD06 /* libAdIdAccess.a in Frameworks */,
+				E5078546195A055400E7CD06 /* libGoogleAnalyticsServices.a in Frameworks */,
+				E5FDDBD918EFDD1E00CE7B01 /* AdSupport.framework in Frameworks */,
+				E5078542195A050500E7CD06 /* libz.dylib in Frameworks */,
 				E58B872C191559B30032524A /* libicucore.dylib in Frameworks */,
 				E51FD51718F3B6EA0098AD11 /* CFNetwork.framework in Frameworks */,
 				E5FDDBC618EDE9B100CE7B01 /* MapKit.framework in Frameworks */,
@@ -735,7 +754,6 @@
 				E5FDDBDD18EFDD2E00CE7B01 /* SystemConfiguration.framework in Frameworks */,
 				E5FDDBDB18EFDD2700CE7B01 /* CoreImage.framework in Frameworks */,
 				E5E9C3821955EBB9009FF381 /* AWSRuntime.framework in Frameworks */,
-				E5FDDBD918EFDD1E00CE7B01 /* AdSupport.framework in Frameworks */,
 				E599881118E7FC5900B01C62 /* MediaPlayer.framework in Frameworks */,
 				E599880E18E7FB1600B01C62 /* AVFoundation.framework in Frameworks */,
 				E53D5D0018B14C39004016F8 /* QuartzCore.framework in Frameworks */,
@@ -907,6 +925,19 @@
 				E50785381959D46600E7CD06 /* highway@2x.mp4 */,
 			);
 			name = Video;
+			sourceTree = "<group>";
+		};
+		E507853A195A04D100E7CD06 /* Universal Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				E507853B195A04DD00E7CD06 /* GAITracker.h */,
+				E507853C195A04DD00E7CD06 /* GAITrackedViewController.h */,
+				E507853D195A04DD00E7CD06 /* GAIDictionaryBuilder.h */,
+				E507853E195A04DD00E7CD06 /* GAI.h */,
+				E507853F195A04DD00E7CD06 /* GAIFields.h */,
+				E5078540195A04DD00E7CD06 /* GAILogger.h */,
+			);
+			name = "Universal Analytics";
 			sourceTree = "<group>";
 		};
 		E507C43B193A2968005F1083 /* Ride Request Information Cell */ = {
@@ -1087,6 +1118,11 @@
 		E522BAB818AE13F600ECD375 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E5078549195A06EE00E7CD06 /* libsqlite3.dylib */,
+				E5078547195A058A00E7CD06 /* libAdIdAccess.a */,
+				E5078545195A055400E7CD06 /* libGoogleAnalyticsServices.a */,
+				E5078543195A053500E7CD06 /* GoogleAnalyticsServicesiOS.zip */,
+				E5078541195A050500E7CD06 /* libz.dylib */,
 				E5E9C3801955EBB9009FF381 /* AWSRuntime.framework */,
 				E5E9C3811955EBB9009FF381 /* AWSS3.framework */,
 				E58B872B191559B30032524A /* libicucore.dylib */,
@@ -1595,6 +1631,7 @@
 		E599886618E860FA00B01C62 /* zLibraries */ = {
 			isa = PBXGroup;
 			children = (
+				E507853A195A04D100E7CD06 /* Universal Analytics */,
 				E501649019571FF8004DA38A /* Segmented Control */,
 				E526B5AA194A487C006D3527 /* Custom Alert View */,
 				E58B872719151F1B0032524A /* KGStatusBar */,
@@ -1641,7 +1678,6 @@
 				E5CD592C1951C14900E97DEC /* afnetworking.txt */,
 				E5CD592E1951C39D00E97DEC /* EAIntroView.txt */,
 				E5CD592F1951C39D00E97DEC /* Facebook-iOS-SDK.txt */,
-				E5CD59301951C39D00E97DEC /* GPUImage.txt */,
 				E5CD59311951C39D00E97DEC /* JSMessagesViewController.txt */,
 				E5CD59401951C3EA00E97DEC /* KGStatusBar.txt */,
 				E5CD59321951C39D00E97DEC /* KIF.txt */,
@@ -2562,6 +2598,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
+					/Users/pawel/Downloads/GoogleAnalyticsServicesiOS_3.07,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2593,6 +2630,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
+					/Users/pawel/Downloads/GoogleAnalyticsServicesiOS_3.07,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

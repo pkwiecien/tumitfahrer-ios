@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "GAITrackedViewController.h"
 
-@interface TimelineMapViewController : UIViewController<MKMapViewDelegate, CLLocationManagerDelegate>
+@interface TimelineMapViewController : GAITrackedViewController<MKMapViewDelegate, CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (assign, nonatomic) TimelineContentType contentType;

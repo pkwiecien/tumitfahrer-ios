@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PanoramioUtilities.h"
 #import "RidesStore.h"
+#import "GAITrackedViewController.h"
 
 @protocol RidesViewControllerDelegate
 
@@ -16,7 +17,7 @@
 
 @end
 
-@interface RidesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate,  PanoramioUtilitiesDelegate, RideStoreDelegate>
+@interface RidesViewController : GAITrackedViewController <UITableViewDataSource, UITableViewDelegate,  PanoramioUtilitiesDelegate, RideStoreDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) id<RidesViewControllerDelegate> delegate;

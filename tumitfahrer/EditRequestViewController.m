@@ -23,8 +23,11 @@
 #import "LocationController.h"
 #import "Ride.h"
 #import "ActivityStore.h"
+#import "MeetingPointViewController.h"
+#import "DestinationViewController.h"
+#import "RMDateSelectionViewController.h"
 
-@interface EditRequestViewController () <NSFetchedResultsControllerDelegate, SegmentedControlCellDelegate>
+@interface EditRequestViewController () <SegmentedControlCellDelegate, MeetingPointDelegate, DestinationViewControllerDelegate, RMDateSelectionViewControllerDelegate>
 
 @property (nonatomic, assign) CLLocationCoordinate2D departureCoordinate;
 @property (nonatomic, assign) CLLocationCoordinate2D destinationCoordinate;
@@ -67,6 +70,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
+    self.screenName = @"Edit request screen";
     [self.tableView reloadData];
     [self setupNavigationBar];
 }
