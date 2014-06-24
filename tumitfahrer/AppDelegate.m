@@ -223,6 +223,7 @@
     [objectManager addResponseDescriptorsFromArray:@[[RideMapping postRideResponseDescriptorWithMapping:postRideMapping]]];
     RKEntityMapping *requestMapping = [RequestMapping requestMapping];
     [objectManager addResponseDescriptor:[RequestMapping postRequestResponseDescriptorWithMapping:requestMapping]];
+    [objectManager addResponseDescriptor:[RequestMapping getRequestResponseDescriptorWithMapping:requestMapping]];
     RKEntityMapping *activitiesMapping = [ActivityMapping generalActivityMapping];
     [objectManager addResponseDescriptor:[ActivityMapping getActivityResponseDescriptorWithMapping:activitiesMapping]];
     

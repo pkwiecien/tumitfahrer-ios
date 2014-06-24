@@ -60,7 +60,6 @@
         RKLogError(@"Load failed with error: %@", error);
         block(NO);
     }];
-    
 }
 
 +(void)postMessageForConversation:(Conversation *)conversation message:(NSString *)message senderId:(NSNumber *)senderId receiverId:(NSNumber *)receiverId rideId:(NSNumber *)rideId block:(messageCompletionHandler)block{
@@ -233,6 +232,21 @@
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         block(NO);
         RKLogError(@"Load failed with error: %@", error);
+    }];
+}
+
+
++(void)getRequestForRideId:(NSNumber *)rideId requestId:(NSNumber *)requestId block:(requestCompletionHandler)block {
+    
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
+    
+    [objectManager getObject:nil path:[NSString stringWithFormat:@"/api/v2/rides/%@/requests/%@", rideId, requestId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        Request *request = [mappingResult firstObject];
+        block(request);
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        RKLogError(@"Load failed with error: %@", error);
+        block(nil);
     }];
 }
 

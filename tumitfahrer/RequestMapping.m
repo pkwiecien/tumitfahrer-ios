@@ -42,7 +42,13 @@
 }
 
 +(RKResponseDescriptor *)putRequestResponseDescriptorWithMapping:(RKObjectMapping *)mapping {
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodPUT                                                                                      pathPattern:API_PUT_RIDES_REQUESTS                                                                                          keyPath:nil                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodPUT                                                                                      pathPattern:API_RIDES_REQUEST                                                                                          keyPath:nil                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    return responseDescriptor;
+}
+
++(RKResponseDescriptor *)getRequestResponseDescriptorWithMapping:(RKObjectMapping *)mapping {
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodGET                                                                                      pathPattern:API_RIDES_REQUEST                                                                                          keyPath:nil                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     
     return responseDescriptor;
 }

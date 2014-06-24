@@ -23,6 +23,8 @@
 
 @interface RidesStore : NSObject <LocationControllerDelegate, PanoramioUtilitiesDelegate>
 
+typedef void(^rideCompletionHandler)(Ride *);
+
 + (instancetype)sharedStore;
 
 - (NSArray *)allRides;
@@ -45,7 +47,7 @@
 - (void)removeObserver:(id<RideStoreDelegate>)observer;
 - (void)notifyAllAboutNewImageForRideId:(NSNumber *)rideId;
 
-- (void)fetchSingleRideFromWebserviceWithId:(NSNumber *)rideId block:(boolCompletionHandler)block;
+- (void)fetchSingleRideFromWebserviceWithId:(NSNumber *)rideId block:(rideCompletionHandler)block;
 - (Ride *)fetchRideFromCoreDataWithId:(NSNumber *)rideId;
 - (void)fetchPastRidesFromCoreData;
 - (NSMutableArray *)pastRides;
@@ -62,5 +64,6 @@
 - (void)fetchRidesFromDate:(NSDate *)date;
 - (NSArray *)fetchUserRequestsFromCoreDataForUserId:(NSNumber *)userId;
 + (void)updateLastSeenTime:(Ride *)ride;
++ (Request *)fetchRequestFromCoreDataWithId:(NSNumber *)requestId;
 
 @end

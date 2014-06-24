@@ -303,7 +303,6 @@
 -(void)moveRequestorToPassengers:(User *)requestor {
     if ([[RidesStore sharedStore] addPassengerForRideId:self.ride.rideId requestor:requestor]) {
         [self.rideDetail.tableView reloadData];
-        [self.ride.requests allObjects];
         [self findRequestForRide:self.ride requestor:requestor];
     }
 }

@@ -196,6 +196,25 @@ static int activity_id = 0;
     return [fetchedObjects firstObject];
 }
 
++ (Request *)fetchRequestFromCoreDataWithId:(NSNumber *)requestId {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *e = [NSEntityDescription entityForName:@"Request"
+                                         inManagedObjectContext:[RKManagedObjectStore defaultStore].
+                              mainQueueManagedObjectContext];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"requestId = %@", requestId];
+    [request setPredicate:predicate];
+    
+    request.entity = e;
+    
+    NSError *error;
+    NSArray *fetchedObjects = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:&error];
+    if (!fetchedObjects) {
+        [NSException raise:@"Fetch failed"
+                    format:@"Reason: %@", [error localizedDescription]];
+    }
+    return [fetchedObjects firstObject];
+}
+
 -(void)fetchRidesForCurrentUser:(boolCompletionHandler)block {
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
@@ -257,16 +276,17 @@ static int activity_id = 0;
     [BadgeUtilities updateMyRidesDateInBadge:[ActionManager currentDate]];
 }
 
--(void)fetchSingleRideFromWebserviceWithId:(NSNumber *)rideId block:(boolCompletionHandler)block {
+-(void)fetchSingleRideFromWebserviceWithId:(NSNumber *)rideId block:(rideCompletionHandler)block {
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
     
-    [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/rides/%@", rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        block(YES);
+    [objectManager getObject:nil path:@"/api/v2/rides/%@" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        Ride *ride = [mappingResult firstObject];
+        block(ride);
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);
-        block(NO);
+        block(nil);
     }];
 }
 
@@ -600,9 +620,9 @@ static int activity_id = 0;
     }];
 }
 
-
 -(void)setImage:(UIImage *)image photoInfo:(Photo *)photoInfo forRide:(Ride *)ride {
-    ride.destinationImage = UIImageJPEGRepresentation(image, 0.8);
+    NSData *data = UIImageJPEGRepresentation(image, 1.0);
+    ride.destinationImage = data;
     ride.photo = photoInfo;
     [self saveToPersistentStore:ride];
     [self notifyAllAboutNewImageForRideId:ride.rideId];

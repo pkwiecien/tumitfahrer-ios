@@ -24,6 +24,7 @@
 #import "ControllerUtilities.h"
 #import "CustomUILabel.h"
 #import "BadgeUtilities.h"
+#import "WebserviceRequest.h"
 
 @interface TimelineViewController () <ActivityStoreDelegate>
 
@@ -150,7 +151,7 @@
     } else if ([result isKindOfClass:[RideSearch class]] ) {
         RideSearch *search = ((RideSearch *)result);
         if (search.destination == nil || search.destination.length == 0) {
-           rideDescription = [NSString stringWithFormat:@"User searched for a ride from %@", search.departurePlace];
+            rideDescription = [NSString stringWithFormat:@"User searched for a ride from %@", search.departurePlace];
         } else {
             rideDescription = [NSString stringWithFormat:@"User searched for a ride to %@", search.destination];
         }
@@ -159,7 +160,7 @@
         
     } else if([result isKindOfClass:[Ride class]]) {
         Ride *ride = (Ride*)result;
-
+        
         NSArray* fullDestination = [ride.destination componentsSeparatedByString: @","];
         NSString* destination = [fullDestination objectAtIndex:0];
         
@@ -197,27 +198,30 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     id result = [[[ActivityStore sharedStore] recentActivitiesByType:self.index] objectAtIndex:indexPath.row];
-
+    
     if ([result isKindOfClass:[Ride class]]) {
         Ride *ride = (Ride *)result;
-        UIViewController *vc = [ControllerUtilities viewControllerForRide:ride];
-        [self.navigationController pushViewController:vc animated:YES];
+        Ride *coreDataRide = [[RidesStore sharedStore] fetchRideFromCoreDataWithId:ride.rideId];
+        if (coreDataRide == nil) {
+            
+            [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:ride.rideId block:^(Ride *fetchedRide) {
+                UIViewController *vc = [ControllerUtilities viewControllerForRide:fetchedRide];
+                [self.navigationController pushViewController:vc animated:YES];
+            }];
+        } else {
+            UIViewController *vc = [ControllerUtilities viewControllerForRide:coreDataRide];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     } else if([result isKindOfClass:[Request class]]) {
         Request *res = (Request *)result;
-        
-        Ride *ride = [[RidesStore sharedStore] containsRideWithId:res.rideId];
-        
-        if (ride != nil) {
-            res.requestedRide = ride;
-            UIViewController *vc = [ControllerUtilities viewControllerForRide:ride];
+        Request *request = [RidesStore fetchRequestFromCoreDataWithId:res.requestId];
+        if (request != nil) {
+            UIViewController *vc = [ControllerUtilities viewControllerForRide:request.requestedRide];
             [self.navigationController pushViewController:vc animated:YES];
         } else {
-            [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:res.rideId block:^(BOOL completed) {
-                if(completed) {
-                    Ride *ride = [[RidesStore sharedStore] fetchRideFromCoreDataWithId:res.rideId];
-                    UIViewController *vc = [ControllerUtilities viewControllerForRide:ride];
-                    [self.navigationController pushViewController:vc animated:YES];
-                }
+            [WebserviceRequest getRequestForRideId:res.rideId requestId:res.requestId block:^(Request *newRequest) {
+                UIViewController *vc = [ControllerUtilities viewControllerForRide:newRequest.requestedRide];
+                [self.navigationController pushViewController:vc animated:YES];
             }];
         }
     }

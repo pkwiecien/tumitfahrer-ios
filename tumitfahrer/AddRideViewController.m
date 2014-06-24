@@ -431,24 +431,12 @@
         }
         
         [[RidesStore sharedStore] addRideToStore:ride];
+        [self resetTables];
+        
         if(self.potentialRequestedRide != nil) {
             [self addPassengerToNewRide:ride];
-        }
-        [self resetTables];
-        [KGStatusBar showSuccessWithStatus:@"Ride added"];
-        
-        if ([ride.isRideRequest boolValue]) {
-            OwnerRequestViewController *requestVC = [[OwnerRequestViewController alloc] init];
-            requestVC.ride = ride;
-            requestVC.displayEnum = self.displayEnum;
-            requestVC.shouldGoBackEnum = GoBackToList;
-            [self.navigationController pushViewController:requestVC animated:YES];
         } else {
-            OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
-            rideDetailVC.ride = ride;
-            rideDetailVC.displayEnum = self.displayEnum;
-            rideDetailVC.shouldGoBackEnum = GoBackToList;
-            [self.navigationController pushViewController:rideDetailVC animated:YES];
+            [self redirectToRideDetailsWithRide:ride];
         }
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [ActionManager showAlertViewWithTitle:@"Error" description:@"Could not add a ride"];
@@ -457,12 +445,33 @@
     }];
 }
 
+
+-(void)redirectToRideDetailsWithRide:(Ride *)ride {
+    [KGStatusBar showSuccessWithStatus:@"Ride added"];
+    
+    if ([ride.isRideRequest boolValue]) {
+        OwnerRequestViewController *requestVC = [[OwnerRequestViewController alloc] init];
+        requestVC.ride = ride;
+        requestVC.displayEnum = self.displayEnum;
+        requestVC.shouldGoBackEnum = GoBackToList;
+        [self.navigationController pushViewController:requestVC animated:YES];
+    } else {
+        OwnerOfferViewController *rideDetailVC = [[OwnerOfferViewController alloc] init];
+        rideDetailVC.ride = ride;
+        rideDetailVC.displayEnum = self.displayEnum;
+        rideDetailVC.shouldGoBackEnum = GoBackToList;
+        [self.navigationController pushViewController:rideDetailVC animated:YES];
+    }
+}
+
 -(void)addPassengerToNewRide:(Ride *)newRide {
-    [WebserviceRequest addPassengerWithId:self.potentialRequestedRide.rideOwner.userId rideId:self.potentialRequestedRide.rideId block:^(BOOL isAdded) {
+    [WebserviceRequest addPassengerWithId:self.potentialRequestedRide.rideOwner.userId rideId:newRide.rideId block:^(BOOL isAdded) {
         if (isAdded) {
+            User *user = self.potentialRequestedRide.rideOwner;
             [WebserviceRequest deleteRideFromWebservice:self.potentialRequestedRide block:^(BOOL isCompleted) {
                 if (isCompleted) {
-                    NSLog(@"sucessfully added passenger to ride");
+                    [[RidesStore sharedStore] addPassengerForRideId:newRide.rideId requestor:user];
+                    [self redirectToRideDetailsWithRide:newRide];
                 }
             }];
         }

@@ -217,10 +217,9 @@ typedef enum {
             UIViewController *vc = [ControllerUtilities viewControllerForRide:ride];
             [self.navigationController pushViewController:vc animated:YES];
         } else {
-            [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:res.rideId block:^(BOOL completed) {
-                if(completed) {
-                    Ride *ride = [[RidesStore sharedStore] fetchRideFromCoreDataWithId:res.rideId];
-                    UIViewController *vc = [ControllerUtilities viewControllerForRide:ride];
+            [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:res.rideId block:^(Ride * requestedRide) {
+                if(requestedRide!=nil) {
+                    UIViewController *vc = [ControllerUtilities viewControllerForRide:requestedRide];
                     [self.navigationController pushViewController:vc animated:YES];
                 }
             }];

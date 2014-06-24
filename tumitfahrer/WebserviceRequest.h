@@ -12,11 +12,11 @@
 
 @interface WebserviceRequest : NSObject
 
-
 typedef void(^messageCompletionHandler)(Message *);
 typedef void(^userCompletionHandler)(User *);
 typedef void(^badgeCompletionHandler)(Badge *);
 typedef void(^conversationCompletionHandler)(Conversation *);
+typedef void(^requestCompletionHandler)(Request *);
 
 +(void)getConversationsForRideId:(NSInteger)rideId block:(boolCompletionHandler)block;
 +(void)getConversationForRideId:(NSNumber *)rideId conversationId:(NSNumber *)conversationId block:(boolCompletionHandler)block;
@@ -37,5 +37,5 @@ typedef void(^conversationCompletionHandler)(Conversation *);
 
 +(void)giveRatingToUserWithId:(NSNumber *)otherUserId rideId:(NSNumber *)rideId ratingType:(BOOL)ratingType block:(boolCompletionHandler)block;
 +(void)deleteRideFromWebservice:(Ride *)ride block:(boolCompletionHandler)block;
-
++(void)getRequestForRideId:(NSNumber *)rideId requestId:(NSNumber *)requestId block:(requestCompletionHandler)block;
 @end

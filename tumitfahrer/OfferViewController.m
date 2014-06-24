@@ -260,8 +260,8 @@
 }
 
 -(void)fetchRide {
-    [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:self.ride.rideId block:^(BOOL fetched) {
-        if (fetched) {
+    [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:self.ride.rideId block:^(Ride *fetchedRide) {
+        if (fetchedRide) {
             [self initRide];
         }
     }];

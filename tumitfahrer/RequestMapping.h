@@ -16,4 +16,6 @@
 +(RKObjectMapping *)putRequestMapping;
 +(RKResponseDescriptor *)putRequestResponseDescriptorWithMapping:(RKObjectMapping *)mapping;
 
++(RKResponseDescriptor *)getRequestResponseDescriptorWithMapping:(RKObjectMapping *)mapping;
+
 @end

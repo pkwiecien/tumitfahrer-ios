@@ -23,6 +23,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     self.textView.text = self.startText;
+    [self.textView becomeFirstResponder];
 }
 
 -(void)setupNavbar {

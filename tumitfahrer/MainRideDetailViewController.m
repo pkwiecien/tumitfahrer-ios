@@ -90,7 +90,7 @@
     [super viewWillAppear:YES];
     
     if (self.ride.rideOwner == nil) {
-        [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:self.ride.rideId block:^(BOOL fetched) {
+        [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:self.ride.rideId block:^(Ride * fetched) {
             [self.rideDetail.tableView reloadData];
         }];
     }
@@ -148,7 +148,7 @@
 }
 
 -(void)refreshRideButtonPressed {
-    [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:self.ride.rideId block:^(BOOL fetched) {
+    [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:self.ride.rideId block:^(Ride *fetched) {
         [self.rideDetail.tableView reloadData];
     }];
 }
@@ -258,7 +258,7 @@
 
 
 -(void)updateRide {
-    [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:self.ride.rideId block:^(BOOL fetched) {
+    [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:self.ride.rideId block:^(Ride * fetched) {
         [self reloadTableAndRide];
     }];
 }
