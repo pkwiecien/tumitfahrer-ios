@@ -88,7 +88,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.screenName = [NSString stringWithFormat:@"Your rides: %d", self.index];
+    self.screenName = [NSString stringWithFormat:@"Your rides: %d", (int)self.index];
     
     [self.delegate willAppearViewWithIndex:self.index];
     

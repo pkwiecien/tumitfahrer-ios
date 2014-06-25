@@ -101,7 +101,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    self.screenName = [NSString stringWithFormat:@"Rides screen: %d", self.index];
+    self.screenName = [NSString stringWithFormat:@"Rides screen: %d", (int)self.index];
     
     [self addToImageCache];
     [self.delegate willAppearViewWithIndex:self.index];

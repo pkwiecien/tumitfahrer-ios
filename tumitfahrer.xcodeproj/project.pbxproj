@@ -73,6 +73,14 @@
 		E5078546195A055400E7CD06 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5078545195A055400E7CD06 /* libGoogleAnalyticsServices.a */; };
 		E5078548195A058A00E7CD06 /* libAdIdAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5078547195A058A00E7CD06 /* libAdIdAccess.a */; };
 		E507854A195A06EE00E7CD06 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E5078549195A06EE00E7CD06 /* libsqlite3.dylib */; };
+		E507854D195A244300E7CD06 /* AnuradaPhoto.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E507854B195A244300E7CD06 /* AnuradaPhoto.jpg */; };
+		E507854E195A244300E7CD06 /* AnuradaPhoto@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E507854C195A244300E7CD06 /* AnuradaPhoto@2x.jpg */; };
+		E5078551195A252100E7CD06 /* MichaelPhoto.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E507854F195A252100E7CD06 /* MichaelPhoto.jpg */; };
+		E5078552195A252100E7CD06 /* MichaelPhoto@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E5078550195A252100E7CD06 /* MichaelPhoto@2x.jpg */; };
+		E5078565195AA90B00E7CD06 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5078564195AA90B00E7CD06 /* CoreText.framework */; };
+		E507856B195AAA2E00E7CD06 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5078567195AAA2E00E7CD06 /* HockeySDK.framework */; };
+		E507856C195AAA2E00E7CD06 /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E5078569195AAA2E00E7CD06 /* HockeySDK.xcconfig */; };
+		E507856D195AAA2E00E7CD06 /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E507856A195AAA2E00E7CD06 /* HockeySDKResources.bundle */; };
 		E507C437193901B5005F1083 /* CustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = E507C436193901B5005F1083 /* CustomAnnotation.m */; };
 		E507C43F193A298D005F1083 /* RideRequestInformationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E507C43D193A298D005F1083 /* RideRequestInformationCell.m */; };
 		E507C440193A298D005F1083 /* RideRequestInformationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E507C43E193A298D005F1083 /* RideRequestInformationCell.xib */; };
@@ -413,6 +421,14 @@
 		E5078545195A055400E7CD06 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = ../../../../Downloads/GoogleAnalyticsServicesiOS_3.07/libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
 		E5078547195A058A00E7CD06 /* libAdIdAccess.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdIdAccess.a; path = ../../../../Downloads/GoogleAnalyticsServicesiOS_3.07/libAdIdAccess.a; sourceTree = "<group>"; };
 		E5078549195A06EE00E7CD06 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		E507854B195A244300E7CD06 /* AnuradaPhoto.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = AnuradaPhoto.jpg; sourceTree = "<group>"; };
+		E507854C195A244300E7CD06 /* AnuradaPhoto@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "AnuradaPhoto@2x.jpg"; sourceTree = "<group>"; };
+		E507854F195A252100E7CD06 /* MichaelPhoto.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = MichaelPhoto.jpg; sourceTree = "<group>"; };
+		E5078550195A252100E7CD06 /* MichaelPhoto@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "MichaelPhoto@2x.jpg"; sourceTree = "<group>"; };
+		E5078564195AA90B00E7CD06 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		E5078567195AAA2E00E7CD06 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
+		E5078569195AAA2E00E7CD06 /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
+		E507856A195AAA2E00E7CD06 /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
 		E507C435193901B5005F1083 /* CustomAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotation.h; sourceTree = "<group>"; };
 		E507C436193901B5005F1083 /* CustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotation.m; sourceTree = "<group>"; };
 		E507C43C193A298D005F1083 /* RideRequestInformationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideRequestInformationCell.h; sourceTree = "<group>"; };
@@ -732,6 +748,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E522BABC18AE13F600ECD375 /* CoreGraphics.framework in Frameworks */,
+				E5078565195AA90B00E7CD06 /* CoreText.framework in Frameworks */,
 				E507854A195A06EE00E7CD06 /* libsqlite3.dylib in Frameworks */,
 				E5078548195A058A00E7CD06 /* libAdIdAccess.a in Frameworks */,
 				E5078546195A055400E7CD06 /* libGoogleAnalyticsServices.a in Frameworks */,
@@ -745,6 +763,7 @@
 				E51FD51518F3B6E00098AD11 /* libxml2.dylib in Frameworks */,
 				E51FD51118F3B6BD0098AD11 /* MobileCoreServices.framework in Frameworks */,
 				E51FD50F18F3B6AF0098AD11 /* Security.framework in Frameworks */,
+				E507856B195AAA2E00E7CD06 /* HockeySDK.framework in Frameworks */,
 				E51FD50D18F3B6A00098AD11 /* CoreData.framework in Frameworks */,
 				E5E9C3831955EBB9009FF381 /* AWSS3.framework in Frameworks */,
 				E5FDDBE718EFDD4F00CE7B01 /* CoreMotion.framework in Frameworks */,
@@ -757,7 +776,6 @@
 				E599881118E7FC5900B01C62 /* MediaPlayer.framework in Frameworks */,
 				E599880E18E7FB1600B01C62 /* AVFoundation.framework in Frameworks */,
 				E53D5D0018B14C39004016F8 /* QuartzCore.framework in Frameworks */,
-				E522BABC18AE13F600ECD375 /* CoreGraphics.framework in Frameworks */,
 				E522BABE18AE13F600ECD375 /* UIKit.framework in Frameworks */,
 				E522BABA18AE13F600ECD375 /* Foundation.framework in Frameworks */,
 				068F5848AB864309B2DEC0B8 /* libPods.a in Frameworks */,
@@ -843,10 +861,14 @@
 		E50263A519558DCC0041E21A /* Team */ = {
 			isa = PBXGroup;
 			children = (
+				E507854F195A252100E7CD06 /* MichaelPhoto.jpg */,
+				E5078550195A252100E7CD06 /* MichaelPhoto@2x.jpg */,
 				E50263A619558F000041E21A /* AbiPhoto.jpg */,
 				E50263A719558F000041E21A /* AbiPhoto@2x.jpg */,
 				E50263A819558F000041E21A /* AmrPhoto.jpg */,
 				E50263A919558F000041E21A /* AmrPhoto@2x.jpg */,
+				E507854B195A244300E7CD06 /* AnuradaPhoto.jpg */,
+				E507854C195A244300E7CD06 /* AnuradaPhoto@2x.jpg */,
 				E502639D19558D290041E21A /* BehrozPhoto.jpg */,
 				E502639F19558D310041E21A /* BehrozPhoto@2x.jpg */,
 				E50263AA19558F000041E21A /* DansenPhoto.jpg */,
@@ -938,6 +960,34 @@
 				E5078540195A04DD00E7CD06 /* GAILogger.h */,
 			);
 			name = "Universal Analytics";
+			sourceTree = "<group>";
+		};
+		E5078566195AAA2E00E7CD06 /* HockeySDK.embeddedframework */ = {
+			isa = PBXGroup;
+			children = (
+				E5078567195AAA2E00E7CD06 /* HockeySDK.framework */,
+				E5078568195AAA2E00E7CD06 /* Resources */,
+			);
+			name = HockeySDK.embeddedframework;
+			path = "SDKs/HockeySDK-iOS/HockeySDK.embeddedframework";
+			sourceTree = SOURCE_ROOT;
+		};
+		E5078568195AAA2E00E7CD06 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E5078569195AAA2E00E7CD06 /* HockeySDK.xcconfig */,
+				E507856A195AAA2E00E7CD06 /* HockeySDKResources.bundle */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E507856E195AAA3500E7CD06 /* Deploying */ = {
+			isa = PBXGroup;
+			children = (
+				E58889E51913C7010062D0DF /* UbertestersSDK */,
+				E5078566195AAA2E00E7CD06 /* HockeySDK.embeddedframework */,
+			);
+			name = Deploying;
 			sourceTree = "<group>";
 		};
 		E507C43B193A2968005F1083 /* Ride Request Information Cell */ = {
@@ -1118,6 +1168,7 @@
 		E522BAB818AE13F600ECD375 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E5078564195AA90B00E7CD06 /* CoreText.framework */,
 				E5078549195A06EE00E7CD06 /* libsqlite3.dylib */,
 				E5078547195A058A00E7CD06 /* libAdIdAccess.a */,
 				E5078545195A055400E7CD06 /* libGoogleAnalyticsServices.a */,
@@ -1158,6 +1209,7 @@
 		E522BABF18AE13F600ECD375 /* tumitfahrer */ = {
 			isa = PBXGroup;
 			children = (
+				E507856E195AAA3500E7CD06 /* Deploying */,
 				E522BAC818AE13F600ECD375 /* AppDelegate.h */,
 				E522BAC918AE13F600ECD375 /* AppDelegate.m */,
 				E50CCC15191E5844003A9490 /* Categories */,
@@ -1166,7 +1218,6 @@
 				E50DB26C18F52E5900E87E62 /* RKMappings */,
 				E522BAC018AE13F600ECD375 /* Supporting Files */,
 				E50CCCF3191F7416003A9490 /* tumitfahrer.xcdatamodeld */,
-				E58889E51913C7010062D0DF /* UbertestersSDK */,
 				E59987D418E6ECD800B01C62 /* UI Elements */,
 				E599882218E8155800B01C62 /* Utilities */,
 				E59987C418E6DBC300B01C62 /* ViewControllers */,
@@ -2067,6 +2118,7 @@
 				E501647B1956E0C0004DA38A /* bg1@2x.jpg in Resources */,
 				E5FEF3691945E5CD00E326BB /* FeedbackViewController.xib in Resources */,
 				E5E215651907A95F00B0B150 /* SearchRideViewController.xib in Resources */,
+				E507856C195AAA2E00E7CD06 /* HockeySDK.xcconfig in Resources */,
 				E50164881956E1E0004DA38A /* RoadBackground.jpg in Resources */,
 				E5CD59381951C39D00E97DEC /* Facebook-iOS-SDK.txt in Resources */,
 				E58889E91913C7010062D0DF /* UbertestersSDKResources.bundle in Resources */,
@@ -2088,6 +2140,7 @@
 				E526B5C6194B008F006D3527 /* HeaderLabelsView.xib in Resources */,
 				E522BAD218AE13F600ECD375 /* Images.xcassets in Resources */,
 				E526B644194DB84B006D3527 /* DescriptionCell.xib in Resources */,
+				E507854D195A244300E7CD06 /* AnuradaPhoto.jpg in Resources */,
 				E5A9BE19194236CD0072E9B0 /* YourRidesPageViewController.xib in Resources */,
 				E5CD593B1951C39D00E97DEC /* KIF.txt in Resources */,
 				E50CCC11191E529A003A9490 /* TimelineViewController.xib in Resources */,
@@ -2117,11 +2170,13 @@
 				E50263B919558F000041E21A /* LukasPhoto@2x.jpg in Resources */,
 				E50CCCC2191E7A94003A9490 /* TimelinePageViewController.xib in Resources */,
 				E50263B419558F000041E21A /* AmrPhoto.jpg in Resources */,
+				E5078552195A252100E7CD06 /* MichaelPhoto@2x.jpg in Resources */,
 				E50164811956E14F004DA38A /* DayRoadBackground@2x.jpg in Resources */,
 				E5FB4D3F1918DB18006F4F5D /* RideSectionHeaderCell.xib in Resources */,
 				E522BAC418AE13F600ECD375 /* InfoPlist.strings in Resources */,
 				E526B625194CB644006D3527 /* RidePersonCell.xib in Resources */,
 				E50263BB19558F000041E21A /* PawelPhoto@2x.jpg in Resources */,
+				E507854E195A244300E7CD06 /* AnuradaPhoto@2x.jpg in Resources */,
 				E5FEF37E19463D6800E326BB /* CarsharingViewController.xib in Resources */,
 				E50164861956E1E0004DA38A /* MainCampus.jpg in Resources */,
 				E59B9A4C1916A241008DE80B /* YourRidesViewController.xib in Resources */,
@@ -2136,11 +2191,13 @@
 				E526B61C194C9C2A006D3527 /* RequestViewController.xib in Resources */,
 				E50263A419558DCA0041E21A /* ShahidPhoto@2x.jpg in Resources */,
 				E50263B819558F000041E21A /* LukasPhoto.jpg in Resources */,
+				E5078551195A252100E7CD06 /* MichaelPhoto.jpg in Resources */,
 				E5CD593A1951C39D00E97DEC /* JSMessagesViewController.txt in Resources */,
 				E50263A019558D310041E21A /* BehrozPhoto@2x.jpg in Resources */,
 				E50164891956E1E0004DA38A /* RoadBackground@2x.jpg in Resources */,
 				E50263B519558F000041E21A /* AmrPhoto@2x.jpg in Resources */,
 				E50CCD07191FAE8A003A9490 /* RidesViewController.xib in Resources */,
+				E507856D195AAA2E00E7CD06 /* HockeySDKResources.bundle in Resources */,
 				E526B5D5194C2A78006D3527 /* EmptyCell.xib in Resources */,
 				E5FEF2F31944766300E326BB /* MessagesOverviewViewController.xib in Resources */,
 				E5E215801908492200B0B150 /* FreeSeatsTableViewCell.xib in Resources */,
@@ -2589,6 +2646,7 @@
 					"$(PROJECT_DIR)/tumitfahrer/UbertestersSDK/**",
 					"$(PROJECT_DIR)/tumitfahrer/UbertestersSDK",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/SDKs/HockeySDK-iOS/HockeySDK.embeddedframework",
 				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
@@ -2621,6 +2679,7 @@
 					"$(PROJECT_DIR)/tumitfahrer/UbertestersSDK/**",
 					"$(PROJECT_DIR)/tumitfahrer/UbertestersSDK",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/SDKs/HockeySDK-iOS/HockeySDK.embeddedframework",
 				);
 				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;

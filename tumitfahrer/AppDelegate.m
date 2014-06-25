@@ -8,6 +8,8 @@
 #import <RestKit/RestKit.h>
 #import <UbertestersSDK/Ubertesters.h>
 #import <QuartzCore/QuartzCore.h>
+#import <AWSRuntime/AWSRuntime.h>
+#import <HockeySDK/HockeySDK.h>
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "ForgotPasswordViewController.h"
@@ -34,7 +36,6 @@
 #import "BadgeMapping.h"
 #import "RatingMapping.h"
 #import "PanoramioMapping.h"
-#import <AWSRuntime/AWSRuntime.h>
 #import "GAI.h"
 
 @interface AppDelegate ()
@@ -61,7 +62,9 @@
     [self setupObservers];
     
     // Ubertersters SDK initialization
-    [[Ubertesters shared] initializeWithOptions:UTOptionsManual];
+    //[[Ubertesters shared] initializeWithOptions:UTOptionsManual];
+    // Hockey-app initialization
+    [self setupHockeyApp];
     
     // Load the FBLoginView class (needed for login)
     [FBLoginView class];
@@ -134,6 +137,12 @@
 -(void)setupPushNotifications {
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+}
+
+-(void)setupHockeyApp {
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"6ca33e4226218908f6d423fd04772a60"];
+    [[BITHockeyManager sharedHockeyManager] startManager];
+    [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
 }
 
 -(void)initUniversalAnalytics {
