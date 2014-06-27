@@ -130,7 +130,7 @@
     if(self.RideDisplayType == ShowAsViewController) {
         [self setupLeftMenuButton];
     }
-    if ([[self.tableValues objectAtIndex:1] isEqualToString:@""]) {
+    if ([[self.tableValues objectAtIndex:DRIVER_DEPARTURE_ENUM] isEqualToString:@""]) {
         [self setDepartureLabelForCurrentLocation];
     }
     [self.tableView sendSubviewToBack:self.headerView];

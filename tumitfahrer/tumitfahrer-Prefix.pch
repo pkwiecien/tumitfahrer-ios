@@ -31,7 +31,7 @@
 #import "UIColor+LayoutColors.h"
 
 static NSString * const SALT = @"toj369sbz1f316sx";
-static NSString * const API_ADDRESS = @"http://tumitfahrer-staging.herokuapp.com";
+static NSString * const API_ADDRESS = @"http://tumitfahrer.herokuapp.com";
 //static NSString * const API_ADDRESS = @"http://192.168.0.101:3000";
 
 # pragma mark - Constants
@@ -97,6 +97,18 @@ typedef enum cellType : NSUInteger {
     RequestCell = 1
 } CellTypeEnum;
 
+typedef enum addRideAsDriver : NSUInteger {
+    DRIVER_ROLE_ENUM = 0,
+    DRIVER_DEPARTURE_ENUM,
+    DRIVER_DESTINATION_ENUM,
+    DRIVER_DEPARTURE_TIME_ENUM,
+    DRIVER_REPEAT_ENUM,
+    DRIVER_SEATS_ENUM,
+    DRIVER_CAR_ENUM,
+    DRIVER_MEETING_POINT_ENUM,
+    DRIVER_RIDE_TYPE_ENUM,
+} AddRideAsDriverEnum;
+
 typedef void(^completionHandlerWithIndex)(NSInteger);
 
 typedef void(^boolCompletionHandler)(BOOL);
@@ -124,6 +136,6 @@ static NSString *API_ACTIVITIES = @"/api/v2/activities";
 static NSString *API_ACTIVITIES_BADGES = @"/api/v2/activities/badges";
 
 #else
-    #import <SystemConfiguration/SystemConfiguration.h>
-    #import <CoreServices/CoreServices.h>
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <CoreServices/CoreServices.h>
 #endif

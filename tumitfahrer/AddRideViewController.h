@@ -18,8 +18,15 @@ typedef enum {
     Driver = 1
 } TableTypeEnum;
 
+typedef enum {
+    TestValue = 0,
+    SecondValue,
+    ThirdValue,
+} AddRideTableValue;
+
 @property (nonatomic, strong) Ride *potentialRequestedRide;
 @property (nonatomic, assign) ShouldDisplayEnum displayEnum;
+@property (nonatomic, assign) AddRideTableValue addRideTableValue;
 @property (nonatomic, assign) TableTypeEnum TableType;
 @property (nonatomic, assign) ContentType RideType;
 @property (nonatomic, assign) DisplayType RideDisplayType;

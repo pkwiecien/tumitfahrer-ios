@@ -1209,10 +1209,10 @@
 		E522BABF18AE13F600ECD375 /* tumitfahrer */ = {
 			isa = PBXGroup;
 			children = (
-				E507856E195AAA3500E7CD06 /* Deploying */,
 				E522BAC818AE13F600ECD375 /* AppDelegate.h */,
 				E522BAC918AE13F600ECD375 /* AppDelegate.m */,
 				E50CCC15191E5844003A9490 /* Categories */,
+				E507856E195AAA3500E7CD06 /* Deploying */,
 				E522BAD118AE13F600ECD375 /* Images.xcassets */,
 				E59987C518E6DBCE00B01C62 /* Model */,
 				E50DB26C18F52E5900E87E62 /* RKMappings */,
