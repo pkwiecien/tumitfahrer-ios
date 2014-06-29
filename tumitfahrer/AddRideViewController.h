@@ -24,6 +24,20 @@ typedef enum {
     ThirdValue,
 } AddRideTableValue;
 
+typedef NS_ENUM(NSUInteger, CellName) {
+    DRIVER_ROLE_ENUM = 0,
+    DRIVER_DEPARTURE_ENUM,
+    DRIVER_DESTINATION_ENUM,
+    DRIVER_DEPARTURE_TIME_ENUM,
+    DRIVER_REPEAT_ENUM,
+    DRIVER_SEATS_ENUM,
+    DRIVER_CAR_ENUM,
+    DRIVER_MEETING_POINT_ENUM,
+    DRIVER_RIDE_TYPE_ENUM,
+};
+
+-(NSString *)stringForName:(CellName)paramName;
+
 @property (nonatomic, strong) Ride *potentialRequestedRide;
 @property (nonatomic, assign) ShouldDisplayEnum displayEnum;
 @property (nonatomic, assign) AddRideTableValue addRideTableValue;

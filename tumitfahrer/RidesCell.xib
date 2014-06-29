@@ -104,6 +104,10 @@
                         <rect key="frame" x="149" y="140" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="RepeatIcon" translatesAutoresizingMaskIntoConstraints="NO" id="DeR-lV-yA4">
+                        <rect key="frame" x="267" y="137" width="25" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                 </subviews>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -114,6 +118,8 @@
                 <outlet property="destinationLabel" destination="M6E-tQ-kF9" id="4vq-Tw-MKN"/>
                 <outlet property="directionsLabel" destination="8c9-e0-6NP" id="Y3b-1O-dls"/>
                 <outlet property="gradientImageView" destination="1ui-xF-wQS" id="9tO-4W-Nep"/>
+                <outlet property="joinNowView" destination="UOf-E2-MbH" id="khZ-iN-JM4"/>
+                <outlet property="repeatImagieView" destination="DeR-lV-yA4" id="2Cb-aw-qd4"/>
                 <outlet property="rideImageView" destination="HMM-gZ-ehe" id="8Mu-n4-k5a"/>
                 <outlet property="roleImageView" destination="jPY-ND-ATQ" id="JhB-pa-LcX"/>
                 <outlet property="roleView" destination="Hy5-St-7PM" id="63D-La-3i8"/>
@@ -129,6 +135,7 @@
         <image name="DepartureIconSmall" width="20" height="20"/>
         <image name="DestinationIconSmall" width="13" height="20"/>
         <image name="Gradient" width="300" height="170"/>
+        <image name="RepeatIcon" width="25" height="25"/>
         <image name="TimeIcon" width="20" height="20"/>
     </resources>
 </document>

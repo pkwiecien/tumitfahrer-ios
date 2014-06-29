@@ -97,18 +97,6 @@ typedef enum cellType : NSUInteger {
     RequestCell = 1
 } CellTypeEnum;
 
-typedef enum addRideAsDriver : NSUInteger {
-    DRIVER_ROLE_ENUM = 0,
-    DRIVER_DEPARTURE_ENUM,
-    DRIVER_DESTINATION_ENUM,
-    DRIVER_DEPARTURE_TIME_ENUM,
-    DRIVER_REPEAT_ENUM,
-    DRIVER_SEATS_ENUM,
-    DRIVER_CAR_ENUM,
-    DRIVER_MEETING_POINT_ENUM,
-    DRIVER_RIDE_TYPE_ENUM,
-} AddRideAsDriverEnum;
-
 typedef void(^completionHandlerWithIndex)(NSInteger);
 
 typedef void(^boolCompletionHandler)(BOOL);

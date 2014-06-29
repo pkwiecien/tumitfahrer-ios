@@ -47,6 +47,16 @@
 
 @end
 
+NSString *const kDriverRole = @"Driver Role";
+NSString *const kDeparturePlace = @"Departure Place";
+NSString *const kDestination = @"Destination";
+NSString *const kDepartureTime = @"Departure Time";
+NSString *const kRepeat = @"Repeat";
+NSString *const kSeats = @"Driver Role";
+NSString *const kCar = @"Car";
+NSString *const kMeetingPoint = @"Meeting Point";
+NSString *const kRideType = @"Ride Type";
+
 @implementation AddRideViewController {
     RideDetailActionCell *addActionCell;
 }
@@ -610,6 +620,12 @@
     } else {
         [self.tableValues replaceObjectAtIndex:4 withObject:@"No"];
     }
+}
+
+-(NSString *)stringForName:(CellName)paramName {
+    __strong NSString **pointer = (NSString **)&kDriverRole;
+    pointer += paramName;
+    return *pointer;
 }
 
 @end

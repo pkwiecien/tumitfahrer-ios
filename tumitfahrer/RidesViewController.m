@@ -167,15 +167,26 @@
     if([ride.isRideRequest boolValue]) {
         cell.seatsView.backgroundColor = [UIColor orangeColor];
         cell.roleImageView.image = self.passengerIcon;
-        cell.actionLabel.text = @"Help him";
+        cell.actionLabel.text = @"Offer him ride";
+        cell.actionLabel.frame = CGRectMake(cell.actionLabel.frame.origin.x, cell
+                                .actionLabel.frame.origin.y, 100, cell.actionLabel.frame.size.height);
+        cell.joinNowView.frame = CGRectMake(cell.joinNowView.frame.origin.x, cell
+                                           .joinNowView.frame.origin.y, 100, cell.joinNowView.frame.size.height);
     } else {
         cell.seatsView.backgroundColor = [UIColor orangeColor];
         cell.roleImageView.image = self.driverIcon;
         cell.actionLabel.text = @"Join now";
+        cell.actionLabel.frame = CGRectMake(cell.actionLabel.frame.origin.x, cell
+                                            .actionLabel.frame.origin.y, 70, cell.actionLabel.frame.size.height);
+        cell.joinNowView.frame = CGRectMake(cell.joinNowView.frame.origin.x, cell
+                                            .joinNowView.frame.origin.y, 70, cell.joinNowView.frame.size.height);
     }
+    
     if ([ride.isRideRequest boolValue]) {
-        cell.seatsLabel.text = @"offer a ride";
+//        cell.seatsLabel.text = @"offer a ride";
+        cell.seatsView.hidden = YES;
     } else if ([ride.freeSeats intValue] == 1) {
+        cell.seatsView.hidden = NO;
         cell.seatsLabel.text = @"1 seat left";
     } else {
         cell.seatsLabel.text = [NSString stringWithFormat:@"%@ seats left", ride.freeSeats];

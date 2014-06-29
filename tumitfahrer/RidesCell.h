@@ -25,5 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *timeImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *calendarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *gradientImageView;
+@property (weak, nonatomic) IBOutlet UIView *joinNowView;
+@property (weak, nonatomic) IBOutlet UIImageView *repeatImagieView;
 
 @end

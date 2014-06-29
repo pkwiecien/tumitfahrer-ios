@@ -89,6 +89,7 @@
         <attribute name="destinationLongitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="freeSeats" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="isPaid" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isRegularRide" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isRideRequest" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="lastCancelTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="lastSeenTime" optional="YES" attributeType="Date" syncable="YES"/>
@@ -139,16 +140,16 @@
         <relationship name="ridesAsPassenger" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Ride" inverseName="passengers" inverseEntity="Ride" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Activity" positionX="-72" positionY="-180" width="128" height="105"/>
-        <element name="Badge" positionX="-72" positionY="-180" width="128" height="193"/>
-        <element name="Conversation" positionX="-72" positionY="-180" width="128" height="210"/>
-        <element name="Message" positionX="0" positionY="0" width="128" height="163"/>
-        <element name="Photo" positionX="-72" positionY="-180" width="128" height="148"/>
-        <element name="Rating" positionX="106" positionY="-99" width="128" height="163"/>
-        <element name="RecentPlace" positionX="-72" positionY="-180" width="128" height="105"/>
-        <element name="Request" positionX="18" positionY="-333" width="128" height="165"/>
-        <element name="Ride" positionX="-279" positionY="-175" width="128" height="450"/>
-        <element name="RideSearch" positionX="-72" positionY="-180" width="128" height="238"/>
-        <element name="User" positionX="252" positionY="-40" width="128" height="285"/>
+        <element name="Activity" positionX="7" positionY="-141" width="128" height="105"/>
+        <element name="Badge" positionX="459" positionY="-202" width="128" height="193"/>
+        <element name="Conversation" positionX="-117" positionY="405" width="128" height="210"/>
+        <element name="Message" positionX="144" positionY="432" width="128" height="163"/>
+        <element name="Photo" positionX="-711" positionY="-292" width="128" height="148"/>
+        <element name="Rating" positionX="-711" positionY="99" width="128" height="163"/>
+        <element name="RecentPlace" positionX="-243" positionY="-333" width="128" height="105"/>
+        <element name="Request" positionX="63" positionY="-777" width="128" height="165"/>
+        <element name="Ride" positionX="-279" positionY="-175" width="128" height="465"/>
+        <element name="RideSearch" positionX="259" positionY="-315" width="128" height="238"/>
+        <element name="User" positionX="259" positionY="-18" width="128" height="285"/>
     </elements>
 </model>
