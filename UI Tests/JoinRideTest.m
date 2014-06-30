@@ -13,8 +13,8 @@
 
 -(void)beforeAll
 {
-    [tester tapViewWithAccessibilityLabel:@"Left Drawer Button"];
-    [tester waitForTappableViewWithAccessibilityLabel:@"Menu View"];
+    //[tester tapViewWithAccessibilityLabel:@"Left Drawer Button"];
+    //[tester waitForTappableViewWithAccessibilityLabel:@"Menu View"];
 }
 
 -(void)testJoinRide
