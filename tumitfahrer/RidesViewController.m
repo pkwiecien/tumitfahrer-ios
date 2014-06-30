@@ -167,11 +167,14 @@
     if([ride.isRideRequest boolValue]) {
         cell.seatsView.backgroundColor = [UIColor orangeColor];
         cell.roleImageView.image = self.passengerIcon;
-        cell.actionLabel.text = @"Offer him ride";
+        cell.actionLabel.text = @"Offer ride";
         cell.actionLabel.frame = CGRectMake(cell.actionLabel.frame.origin.x, cell
                                 .actionLabel.frame.origin.y, 100, cell.actionLabel.frame.size.height);
         cell.joinNowView.frame = CGRectMake(cell.joinNowView.frame.origin.x, cell
                                            .joinNowView.frame.origin.y, 100, cell.joinNowView.frame.size.height);
+        
+        // TODO: refactor so that the width is dynamically changes
+        
     } else {
         cell.seatsView.backgroundColor = [UIColor orangeColor];
         cell.roleImageView.image = self.driverIcon;
