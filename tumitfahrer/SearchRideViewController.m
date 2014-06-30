@@ -78,6 +78,10 @@
 
 -(void)setupLeftMenuButton{
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
+#ifdef DEBUG
+    [leftDrawerButton setAccessibilityLabel:@"Left Drawer Button"];
+    [leftDrawerButton setIsAccessibilityElement:YES];
+#endif
     [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
 }
 
@@ -142,6 +146,13 @@
         SliderCell *cell = [SliderCell sliderCell];
         cell.delegate = self;
         cell.indexPath = indexPath;
+        
+#ifdef DEBUG
+        NSString *label = [NSString stringWithFormat: @"Slider Radius Row %ld",indexPath.row ] ;
+        [cell.slider setAccessibilityLabel:label];
+        [cell.slider setIsAccessibilityElement:YES];
+#endif
+        
         return cell;
     } else if(indexPath.row == 6) {
         ButtonCell *cell = [ButtonCell buttonCell];

@@ -21,6 +21,9 @@
 @property (nonatomic, strong) NSIndexPath *indexPath;
 @property (weak, nonatomic) IBOutlet UIView *dividerView;
 @property (weak, nonatomic) IBOutlet UILabel *selectedDistanceLabel;
+#ifdef DEBUG
+@property (weak, nonatomic) IBOutlet UISlider *slider;
+#endif
 @property (nonatomic, strong) id <SliderCellDelegate> delegate;
 
 @end

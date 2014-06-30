@@ -220,6 +220,10 @@
     [mainView addSubview:self.counterLabel];
     self.textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 90, 270, 100)];
     self.textView.delegate = self;
+#ifdef DEBUG    
+    [self.textView setAccessibilityLabel:@"Delete Reason"];
+    [self.textView setIsAccessibilityElement:YES];
+#endif
     [mainView addSubview:self.textView];
     
     return mainView;

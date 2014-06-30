@@ -21,161 +21,225 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     [tester waitForTappableViewWithAccessibilityLabel:@"Menu View"];
 }
 
--(void)afterEach
+
+#pragma mark - test procedure
+-(void)testDemo
 {
-    [tester tapViewWithAccessibilityLabel:@"Back Button"];
-    [tester tapViewWithAccessibilityLabel:@"Left Drawer Button"];
-    [tester waitForTappableViewWithAccessibilityLabel:@"Menu View"];
+    // add an activity ride as driver with search place
+    [self addRideAsDriverWithActivityRideWithSearch];
+    // search an activity ride
+    [self searchRideWithActivityRideWithRadius0WithTimeWithSearch];
+    // delete an activity ride as an owner
+    [self deleteRideAsOffer];
 }
 
--(void)testAddRideAsPassengerWithCampusRide
+
+#pragma mark - test cases
+-(void)addRideAsPassengerWithCampusRide
 {
     [self selectAddRide];
     [self selectPassenger];
     [self selectPlace:0 section:0 type:kDEPARTURE_ADD];
     [self selectPlace:1 section:0 type:kDESTINATION_ADD];
 
-    
-    [self selectDate:@[@"Jun 25", @"6", @"30", @"AM"]];
+    [self selectDateByPoint];
     [self selectMeetPoint:@"Mensa" driver:NO];
     [self selectShare];
     
     [self addRideAsPassenger];
-    //TODO To be continued
-    [tester tapViewWithAccessibilityLabel:@"Back Button"];
-    [tester tapViewWithAccessibilityLabel:@"Left Drawer Button"];
-    [tester waitForTappableViewWithAccessibilityLabel:@"Menu View"];
-    [self searchRideWithCampusRide];
 }
 
-//-(void)testAddRideAsPassengerWithCampusRideWithSearch
-//{
-//    [self selectAddRide];
-//    [self selectPassenger];
-//    [self searchPlace:0 section:1 address:@"Garching" type:kDEPARTURE_ADD];
-//    [self searchPlace:0 section:1 address:@"Munich" type:kDESTINATION_ADD];
-//
-//    [self selectDate:@[@"Jun 17", @"6", @"30", @"AM"]];
-//    [self selectMeetPoint:@"Mensa" driver:NO];
-//    [self selectShare];
-//    
-//    [self addRideAsPassenger];
-//    //TODO To be continued
-//}
+-(void)addRideAsPassengerWithCampusRideWithSearch
+{
+    [self selectAddRide];
+    [self selectPassenger];
+    [self searchPlace:0 section:1 address:@"Garching" type:kDEPARTURE_ADD];
+    [self searchPlace:0 section:1 address:@"Munich" type:kDESTINATION_ADD];
 
-//-(void)testAddRideAsPassengerWithActivityRide
-//{
-//    [self selectAddRide];
-//    [self selectPassenger];
-//    [self selectPlace:0 section:0 type:kDEPARTURE_ADD];
-//    [self selectPlace:1 section:0 type:kDESTINATION_ADD];
-//    [self selectDate:@[@"Jun 17", @"6", @"30", @"AM"]];
-//    [self selectMeetPoint:@"Mensa" driver:NO];
-//    [self selectActivity];
-//    [self selectShare];
-//
-//    [self addRideAsPassenger];
-//
-//    //TODO To be continued
-//}
+    [self selectDateByPoint];
+    [self selectMeetPoint:@"Mensa" driver:NO];
+    [self selectShare];
+    
+    [self addRideAsPassenger];
 
-//-(void)testAddRideAsPassengerWithActivityRideWithSearch
-//{
-//    [self selectAddRide];
-//    [self selectPassenger];
-//    [self searchPlace:0 section:1 address:@"Garching" type:kDEPARTURE_ADD];
-//    [self searchPlace:0 section:1 address:@"Munich" type:kDESTINATION_ADD];
-//    
-//    [self selectDate:@[@"Jun 17", @"6", @"30", @"AM"]];
-//    [self selectMeetPoint:@"Mensa" driver:NO];
-//    [self selectActivity];
-//    [self selectShare];
-//    
-//    [self addRideAsPassenger];
-//    //TODO To be continued
-//}
+}
 
-//-(void)testAddRideAsDriverWithCampusRide
-//{
-//    
-//    [self selectAddRide];
-//    [self selectPlace:0 section:0 type:kDEPARTURE];
-//    [self selectPlace:1 section:0 type:kDESTINATION];
-//    [self selectDate:@[@"Jun 30", @"6", @"30", @"AM"]];
-//    [self selectSeatNumber:2];
-//    [self selectCar:@"BMW i8"];
-//    [self selectMeetPoint:@"Mensa" driver:YES];
-//    [self selectShare];
-//    
-//    [self addRideAsDriver];
-//   
-//    //TODO To be continued
-//}
+-(void)addRideAsPassengerWithActivityRide
+{
+    [self selectAddRide];
+    [self selectPassenger];
+    [self selectPlace:0 section:0 type:kDEPARTURE_ADD];
+    [self selectPlace:1 section:0 type:kDESTINATION_ADD];
+    [self selectDateByPoint];
+    [self selectMeetPoint:@"Mensa" driver:NO];
+    [self selectActivity];
+    [self selectShare];
 
-//-(void)testAddRideAsDriverWithCampusRideWithSearch
-//{
-//
-//    [self selectAddRide];
-//    [self searchPlace:0 section:1 address:@"Garching" type:kDEPARTURE_ADD];
-//    [self searchPlace:0 section:1 address:@"Munich" type:kDESTINATION_ADD];
-//    [self selectDate:@[@"Jun 30", @"6", @"30", @"AM"]];
-//    [self selectSeatNumber:2];
-//    [self selectCar:@"BMW i8"];
-//    [self selectMeetPoint:@"Mensa" driver:YES];
-//    [self selectShare];
-//
-//    [self addRideAsDriver];
-//
-//    //TODO To be continued
-//}
+    [self addRideAsPassenger];
+}
 
-//-(void)testAddRideAsDriverWithActivityRide
-//{
-//    
-//    [self selectAddRide];
-//    [self selectPlace:0 section:0 type:kDEPARTURE];
-//    [self selectPlace:1 section:0 type:kDESTINATION];
-//    [self selectDate:@[@"Jun 30", @"6", @"30", @"AM"]];
-//    [self selectSeatNumber:2];
-//    [self selectCar:@"BMW i8"];
-//    [self selectMeetPoint:@"Mensa" driver:YES];
-//    [self selectActivity];
-//    [self selectShare];
-//    
-//    [self addRideAsDriver];
-//    
-//    //TODO To be continued
-//}
+-(void)addRideAsPassengerWithActivityRideWithSearch
+{
+    [self selectAddRide];
+    [self selectPassenger];
+    [self searchPlace:0 section:1 address:@"Garching" type:kDEPARTURE_ADD];
+    [self searchPlace:0 section:1 address:@"Munich" type:kDESTINATION_ADD];
+    
+    [self selectDateByPoint];
+    [self selectMeetPoint:@"Mensa" driver:NO];
+    [self selectActivity];
+    [self selectShare];
+    
+    [self addRideAsPassenger];
+}
 
-//-(void)testAddRideAsDriverWithActivityRideWithSearch
-//{
-//
-//    [self selectAddRide];
-//    [self searchPlace:0 section:1 address:@"Garching" type:kDEPARTURE_ADD];
-//    [self searchPlace:0 section:1 address:@"Berlin" type:kDESTINATION_ADD];
-//    [self selectDate:@[@"Jun 30", @"6", @"30", @"AM"]];
-//    [self selectSeatNumber:2];
-//    [self selectCar:@"BMW i8"];
-//    [self selectMeetPoint:@"Mensa" driver:YES];
-//    [self selectActivity];
-//    [self selectShare];
-//
-//    [self addRideAsDriver];
-//
-//    //TODO To be continued
-//}
+-(void)addRideAsDriverWithCampusRide
+{
+    
+    [self selectAddRide];
+    [self selectPlace:0 section:0 type:kDEPARTURE_ADD];
+    [self selectPlace:1 section:0 type:kDESTINATION_ADD];
+    [self selectDateByPoint];
+    [self selectSeatNumber:2];
+    [self selectCar:@"BMW i8"];
+    [self selectMeetPoint:@"Mensa" driver:YES];
+    [self selectShare];
+    
+    [self addRideAsDriver];
+}
 
+-(void)addRideAsDriverWithCampusRideWithSearch
+{
 
--(void)searchRideWithCampusRide
+    [self selectAddRide];
+    [self searchPlace:0 section:1 address:@"Garching" type:kDEPARTURE_ADD];
+    [self searchPlace:0 section:1 address:@"Munich" type:kDESTINATION_ADD];
+    [self selectDateByPoint];
+    [self selectSeatNumber:2];
+    [self selectCar:@"BMW i8"];
+    [self selectMeetPoint:@"Mensa" driver:YES];
+    [self selectShare];
+
+    [self addRideAsDriver];
+}
+
+-(void)addRideAsDriverWithActivityRide
+{
+    
+    [self selectAddRide];
+    [self selectPlace:0 section:0 type:kDEPARTURE_ADD];
+    [self selectPlace:1 section:0 type:kDESTINATION_ADD];
+    [self selectDateByPoint];
+    [self selectSeatNumber:2];
+    [self selectCar:@"BMW i8"];
+    [self selectMeetPoint:@"Mensa" driver:YES];
+    [self selectActivity];
+    [self selectShare];
+    
+    [self addRideAsDriver];
+}
+
+-(void)addRideAsDriverWithActivityRideWithSearch
+{
+    
+    [self selectAddRide];
+    [self searchPlace:0 section:1 address:@"Garching" type:kDEPARTURE_ADD];
+    [self searchPlace:0 section:1 address:@"Munich" type:kDESTINATION_ADD];
+    [self selectDateByPoint];
+    [self selectSeatNumber:2];
+    [self selectCar:@"BMW i8"];
+    [self selectMeetPoint:@"Mensa" driver:YES];
+    [self selectActivity];
+    [self selectShare];
+    
+    [self addRideAsDriver];
+}
+
+-(void)searchRideWithCampusRideWithRadius0WithoutTime
 {
     [self selectSearchRide];
     
     [self selectPlace:1 section:0 type:kDEPARTURE_SEARCH];
+    [self sliderRadius:0 row:2];
+    
     [self selectPlace:2 section:0 type:kDESTINATION_SEARCH];
+    [self sliderRadius:0 row:4];
     
     [self search];
 }
 
+-(void)searchRideWithCampusRideWithRadius30WithoutTime
+{
+    [self selectSearchRide];
+    
+    [self selectPlace:1 section:0 type:kDEPARTURE_SEARCH];
+    [self sliderRadius:30 row:2];
+    
+    [self selectPlace:2 section:0 type:kDESTINATION_SEARCH];
+    [self sliderRadius:30 row:4];
+    
+    [self search];
+}
+
+-(void)searchRideWithCampusRideWithRadius30WithTime
+{
+    [self selectSearchRide];
+    
+    [self selectPlace:1 section:0 type:kDEPARTURE_SEARCH];
+    [self sliderRadius:30 row:2];
+    
+    [self selectPlace:2 section:0 type:kDESTINATION_SEARCH];
+    [self sliderRadius:30 row:4];
+    [self selectDateByPointInSearch];
+    
+    [self search];
+}
+
+-(void)searchRideWithCampusRideWithRadius0WithTime
+{
+    [self selectSearchRide];
+    
+    [self selectPlace:1 section:0 type:kDEPARTURE_SEARCH];
+    [self sliderRadius:0 row:2];
+    
+    [self selectPlace:2 section:0 type:kDESTINATION_SEARCH];
+    [self sliderRadius:0 row:4];
+    [self selectDateByPointInSearch];
+    
+    [self search];
+}
+
+-(void)searchRideWithActivityRideWithRadius0WithTimeWithSearch
+{
+    [self selectSearchRide];
+    [self selectActivity];
+    
+    [self searchPlace:0 section:1 address:@"Garching" type:kDEPARTURE_SEARCH];
+    [self sliderRadius:0 row:2];
+    
+    [self searchPlace:0 section:1 address:@"Munich" type:kDESTINATION_SEARCH];
+    [self sliderRadius:0 row:4];
+    [self selectDateByPointInSearch];
+    
+    [self search];
+}
+
+-(void)deleteRideAsRequest
+{
+    // then choose the first one in list
+
+    [self viewRideDetailAsRequestAndDelete];
+    [self tapDeleteButtonInAlert];
+    [self deleteBack];
+}
+
+-(void)deleteRideAsOffer
+{
+    // then choose the first one in list
+    [self viewRideDetailAsOfferAndDelete];
+    [self tapDeleteButtonInAlert];
+    [self deleteBack];
+}
 
 #pragma mark - test steps
 -(void)selectAddRide
@@ -230,7 +294,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section] inTableViewWithAccessibilityIdentifier:@"Destination List"];
         [tester waitForTappableViewWithAccessibilityLabel:@"Add Ride View"];}
     else{
-        [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:type inSection:0] inTableViewWithAccessibilityIdentifier:@"Search Ride List"];
+        [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:(type-2) inSection:0] inTableViewWithAccessibilityIdentifier:@"Search Ride List"];
         [tester waitForTappableViewWithAccessibilityLabel:@"Destination View"];
         
         [tester enterText:address intoViewWithAccessibilityLabel:@"Search Bar"];
@@ -262,6 +326,51 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     [tester waitForTappableViewWithAccessibilityLabel:@"Add Ride View"];
 }
 
+-(void)selectDateByPoint
+{
+    
+    [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0] inTableViewWithAccessibilityIdentifier:@"Add Ride List"];
+    
+    CGPoint select;
+    select.x = 50;
+    select.y = 450;
+    [tester tapScreenAtPoint:select];
+    [tester waitForTimeInterval:1];
+
+    select.x = 200;
+    select.y = 450;
+    [tester tapScreenAtPoint:select];
+    [tester waitForTimeInterval:1];
+    
+    select.x = 250;
+    select.y = 550;
+    [tester tapScreenAtPoint:select];
+    //[tester waitForViewWithAccessibilityLabel:@"Date Time Picker" value:@"Tuesday, Jun 17, 06:43 AM" traits:UIAccessibilityTraitNone];
+    [tester waitForTappableViewWithAccessibilityLabel:@"Add Ride View"];
+}
+
+-(void)selectDateByPointInSearch
+{
+    
+    [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:5 inSection:0] inTableViewWithAccessibilityIdentifier:@"Search Ride List"];
+    
+    CGPoint select;
+    select.x = 50;
+    select.y = 450;
+    [tester tapScreenAtPoint:select];
+    [tester waitForTimeInterval:1];
+    
+    select.x = 200;
+    select.y = 450;
+    [tester tapScreenAtPoint:select];
+    [tester waitForTimeInterval:1];
+    
+    select.x = 250;
+    select.y = 550;
+    [tester tapScreenAtPoint:select];
+    [tester waitForTappableViewWithAccessibilityLabel:@"Search Ride View"];
+}
+
 -(void)selectMeetPoint:(NSString *)location driver:(Boolean) driver
 {
     if(driver){
@@ -279,17 +388,18 @@ NSInteger const kDEPARTURE_SEARCH = 3;
 -(void)selectCampus
 {
     [tester tapViewWithAccessibilityLabel:@"Campus"];
-    [tester waitForTappableViewWithAccessibilityLabel:@"Add Ride View"];
+    //[tester waitForTappableViewWithAccessibilityLabel:@"Add Ride View"];
 }
 
 -(void)selectActivity
 {
     [tester tapViewWithAccessibilityLabel:@"Activity"];
-    [tester waitForTappableViewWithAccessibilityLabel:@"Add Ride View"];
+    //[tester waitForTappableViewWithAccessibilityLabel:@"Add Ride View"];
 }
 
 -(void)selectShare
 {
+    //share of facebook can not be tested
     //[tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] inTableViewWithAccessibilityIdentifier:@"Add Ride List"];
     //[tester setOn:YES forSwitchWithAccessibilityLabel:@"Facebook"];
 //    
@@ -330,7 +440,12 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     [tester swipeViewWithAccessibilityLabel:@"Add Ride View" inDirection:KIFSwipeDirectionUp];
     [tester tapViewWithAccessibilityLabel:@"Add Button"];
     [tester waitForTappableViewWithAccessibilityLabel:@"Owner Request View"];
-
+    
+    [tester waitForTimeInterval:1];
+    
+    [tester tapViewWithAccessibilityLabel:@"Back Button"];
+    [tester tapViewWithAccessibilityLabel:@"Left Drawer Button"];
+    [tester waitForTappableViewWithAccessibilityLabel:@"Menu View"];
 }
 
 -(void)addRideAsDriver
@@ -338,12 +453,69 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     [tester swipeViewWithAccessibilityLabel:@"Add Ride View" inDirection:KIFSwipeDirectionUp];
     [tester tapViewWithAccessibilityLabel:@"Add Button"];
     [tester waitForTappableViewWithAccessibilityLabel:@"Owner Offer View"];
+
+    [tester waitForTimeInterval:1];
+    
+    [tester tapViewWithAccessibilityLabel:@"Back Button"];
+    [tester tapViewWithAccessibilityLabel:@"Left Drawer Button"];
+    [tester waitForTappableViewWithAccessibilityLabel:@"Menu View"];
 }
 
 -(void)search
 {
     [tester tapViewWithAccessibilityLabel:@"Search Button"];
     [tester waitForTappableViewWithAccessibilityLabel:@"Search Result View"];
+    [tester waitForTimeInterval:1];
+
+}
+-(void)searchBack
+{
+    CGPoint select;
+    select.x = 20;
+    select.y = 20;
+    [tester tapScreenAtPoint:select];
+    [tester tapViewWithAccessibilityLabel:@"Left Drawer Button"];
+}
+
+-(void)sliderRadius:(NSInteger) radius row:(NSInteger)row
+{
+    [tester setValue:radius forSliderWithAccessibilityLabel: [NSString stringWithFormat: @"Slider Radius Row %ld", (long)row]];
+    [tester waitForViewWithAccessibilityLabel:@"Search Ride View"];
+}
+
+-(void)viewRideDetailAsRequestAndDelete
+{
+    [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] inTableViewWithAccessibilityIdentifier:@"Search Result List"];
+    [tester waitForViewWithAccessibilityLabel:@"Owner Request View"];
+    
+    [tester tapViewWithAccessibilityLabel:@"Delete Button"];
+}
+
+-(void)viewRideDetailAsOfferAndDelete
+{
+    [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] inTableViewWithAccessibilityIdentifier:@"Search Result List"];
+    [tester waitForViewWithAccessibilityLabel:@"Owner Offer View"];
+    
+    [tester tapViewWithAccessibilityLabel:@"Cancel Button"];
+}
+
+-(void)tapDeleteButtonInAlert
+{
+    [tester enterText:@"This is just a test. I need to delete this ride to continue test." intoViewWithAccessibilityLabel:@"Delete Reason"];
+    
+    CGPoint select;
+    select.x = 250;
+    select.y = 300;
+    [tester tapScreenAtPoint:select];
+    
+    select.x = 20;
+    select.y = 20;
+    [tester tapScreenAtPoint:select];
+}
+
+-(void)deleteBack
+{
+    [tester tapViewWithAccessibilityLabel:@"Back Button"];
 }
 
 @end

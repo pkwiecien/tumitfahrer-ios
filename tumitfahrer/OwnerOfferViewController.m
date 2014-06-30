@@ -232,6 +232,10 @@
     }else {  // show delete button
         
         RideDetailActionCell *actionCell = [RideDetailActionCell offerRideCell];
+#ifdef DEBUG
+        [actionCell.actionButton setAccessibilityLabel:@"Cancel Button"];
+        [actionCell.actionButton setIsAccessibilityElement:YES];
+#endif
         [actionCell.actionButton setTitle:@"Cancel ride" forState:UIControlStateNormal];
         [actionCell.actionButton addTarget:self action:@selector(showCancelationAlertView) forControlEvents:UIControlEventTouchDown];
         return actionCell;

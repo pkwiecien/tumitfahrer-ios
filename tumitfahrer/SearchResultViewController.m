@@ -50,6 +50,11 @@
     self.page = 0;
     self.title = @"Results";
     self.navigationItem.backBarButtonItem.title = @"Search";
+#ifdef DEBUG
+    [self.navigationItem.leftBarButtonItem setAccessibilityLabel:@"Back To Search"];
+    [self.navigationItem.leftBarButtonItem setIsAccessibilityElement:YES];
+#endif
+    
     [self prepareZeroRidesLabel];
 }
 

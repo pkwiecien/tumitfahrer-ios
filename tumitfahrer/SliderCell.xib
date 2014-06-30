@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -16,6 +16,9 @@
                     <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="15" minValue="0.0" maxValue="30" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dxn-PJ-QRK">
                         <rect key="frame" x="38" y="34" width="234" height="31"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <accessibility key="accessibilityConfiguration" label="">
+                            <bool key="isElement" value="NO"/>
+                        </accessibility>
                         <connections>
                             <action selector="sliderChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="mih-qh-ZT8"/>
                         </connections>
@@ -56,6 +59,7 @@
             <connections>
                 <outlet property="dividerView" destination="jfh-yi-o2M" id="9rr-1q-q4H"/>
                 <outlet property="selectedDistanceLabel" destination="fhN-WD-pSk" id="0rC-1E-idk"/>
+                <outlet property="slider" destination="Dxn-PJ-QRK" id="J9I-T9-ix0"/>
             </connections>
         </tableViewCell>
     </objects>
