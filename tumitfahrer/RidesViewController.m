@@ -249,6 +249,8 @@
     CGRect frame = self.navigationController.navigationBar.frame;
     if (frame.origin.y < 20) {
         [self animateNavBarTo:-(frame.size.height - 21)];
+    } else {
+        [self updateBarButtonItems:1];
     }
 }
 

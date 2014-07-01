@@ -223,7 +223,6 @@
     [mainView addSubview:self.textView];
     
     return mainView;
-    
 }
 
 -(void)textViewDidChange:(UITextView *)textView {

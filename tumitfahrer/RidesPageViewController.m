@@ -68,11 +68,6 @@
 
 -(void)setupLeftMenuButton{
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
-#ifdef DEBUG
-    // set label for kif test
-    [leftDrawerButton setAccessibilityLabel:@"Left Drawer Button"];
-    [leftDrawerButton setIsAccessibilityElement:YES];
-#endif
     
     [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
     
