@@ -60,7 +60,7 @@
     if (email!=nil) {
         self.emailTextField.text = email;
     }
-    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"highway@2x" ofType:@"mp4"];
+    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"3_iphone_big" ofType:@"mp4"];
     NSURL *fileURL = [NSURL fileURLWithPath:filepath];
     
     if(self.moviePlayerController == nil) {
@@ -76,9 +76,9 @@
         [self.moviePlayerController prepareToPlay];
 
         if (iPhone5) {
-            [self.moviePlayerController.view setFrame:CGRectMake(0, 250, 320, 568)];
+            [self.moviePlayerController.view setFrame:CGRectMake(0, 0, 320, 568)];
         } else {
-            [self.moviePlayerController.view setFrame:CGRectMake(0, 200, 320, 530)];
+            [self.moviePlayerController.view setFrame:CGRectMake(0, 0, 320, 510)];
         }
         [self.view addSubview:self.moviePlayerController.view];
         [self.view sendSubviewToBack:self.moviePlayerController.view];
