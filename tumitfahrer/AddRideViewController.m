@@ -68,6 +68,10 @@ NSString *const kRideType = @"Ride Type";
         self.tableSectionIcons = [[NSMutableArray alloc] initWithObjects:[UIImage imageNamed:@"DetailsIcon"], [UIImage imageNamed:@"ShareIcon"], nil];
         self.tableSectionHeaders = [[NSMutableArray alloc] initWithObjects:@"Details", @"Share", @"Add", nil];
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
+#ifdef DEBUG
+        [self.navigationItem.backBarButtonItem setAccessibilityLabel:@"Back Button"];
+        [self.navigationItem.backBarButtonItem setIsAccessibilityElement:YES];
+#endif
         self.repeatDates = [NSArray array];
     }
     return self;
@@ -205,6 +209,13 @@ NSString *const kRideType = @"Ride Type";
             cell.segmentedControl.selectedSegmentIndex = self.TableType;
             [cell setFirstSegmentTitle:@"I am Passenger" secondSementTitle:@"I am Driver"];
             [cell addHandlerToSegmentedControl];
+#ifdef DEBUG
+            // add label for kif test
+            [[[[cell segmentedControl] subviews] objectAtIndex:0] setAccessibilityLabel:@"Driver Choice"];
+            [[[[cell segmentedControl] subviews] objectAtIndex:1] setAccessibilityLabel:@"Passenger Choice"];
+            [[[[cell segmentedControl] subviews] objectAtIndex:0] setIsAccessibilityElement:YES];
+            [[[[cell segmentedControl] subviews] objectAtIndex:1] setIsAccessibilityElement:YES];
+#endif
             cell.controlId = 0;
             return cell;
         } else if(self.TableType == Driver && indexPath.row == 5) {
@@ -223,6 +234,13 @@ NSString *const kRideType = @"Ride Type";
             SegmentedControlCell *cell = [SegmentedControlCell segmentedControlCell];
             [cell setFirstSegmentTitle:@"Campus" secondSementTitle:@"Activity"];
             cell.segmentedControl.selectedSegmentIndex = self.RideType;
+#ifdef DEBUG
+            // add label for kif test
+            [[[[cell segmentedControl] subviews] objectAtIndex:0] setAccessibilityLabel:@"Activity"];
+            [[[[cell segmentedControl] subviews] objectAtIndex:1] setAccessibilityLabel:@"Campus"];
+            [[[[cell segmentedControl] subviews] objectAtIndex:0] setIsAccessibilityElement:YES];
+            [[[[cell segmentedControl] subviews] objectAtIndex:1] setIsAccessibilityElement:YES];
+#endif
             cell.delegate = self;
             [cell addHandlerToSegmentedControl];
             cell.controlId = 1;
@@ -253,13 +271,21 @@ NSString *const kRideType = @"Ride Type";
         switchCell.selectionStyle = UITableViewCellSelectionStyleNone;
         switchCell.switchId = indexPath.row;
         switchCell.delegate = self;
+#ifdef DEBUG
+        //set label for KIF test
+        [switchCell setAccessibilityLabel: switchCell.switchCellTextLabel.text];
+        [switchCell setIsAccessibilityElement:YES];
+#endif
         return switchCell;
     } else if (indexPath.section == 2) {
         addActionCell = [RideDetailActionCell offerRideCell];
         [addActionCell.actionButton addTarget:self action:@selector(addRideButtonPressed) forControlEvents:UIControlEventTouchDown];
         [addActionCell.actionButton setTitle:@"Add" forState:UIControlStateNormal];
         [addActionCell.actionButton setBackgroundImage:[ActionManager colorImage:[UIImage imageNamed:@"BlueButton"] withColor:[UIColor lighterBlue]] forState:UIControlStateNormal];
-        
+#ifdef DEBUG
+        [addActionCell.actionButton setAccessibilityLabel:@"Add Button"];
+        [addActionCell.actionButton setIsAccessibilityElement:YES];
+#endif
         return addActionCell;
     }
     

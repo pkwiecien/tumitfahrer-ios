@@ -10,6 +10,7 @@
 		068F5848AB864309B2DEC0B8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAEC5882914944C4B8E2DE24 /* libPods.a */; };
 		12849E718A644E04BCE4B00C /* libPods-UI Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 21C7515A720A4BD98246E980 /* libPods-UI Tests.a */; };
 		6E403B1219572D7A00FF75EC /* JoinRideTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E403B1119572D7A00FF75EC /* JoinRideTest.m */; };
+		6E4DAAFE1964620000ACC134 /* KIFUITestActor+EXAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4DAAFD1964620000ACC134 /* KIFUITestActor+EXAdditions.m */; };
 		6E4E133C1913F7B300D0C453 /* XCTest+GCovFlush.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4E133B1913F7B300D0C453 /* XCTest+GCovFlush.m */; };
 		6E4E133F1913F7BF00D0C453 /* UIApplication+GCovFlush.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4E133E1913F7BF00D0C453 /* UIApplication+GCovFlush.m */; };
 		6E5DACA5194D9C9600694DE7 /* LoginTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E5DACA4194D9C9600694DE7 /* LoginTest.m */; };
@@ -325,6 +326,8 @@
 		21C7515A720A4BD98246E980 /* libPods-UI Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UI Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E403B1019572D7A00FF75EC /* JoinRideTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinRideTest.h; sourceTree = "<group>"; };
 		6E403B1119572D7A00FF75EC /* JoinRideTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinRideTest.m; sourceTree = "<group>"; };
+		6E4DAAFC1964620000ACC134 /* KIFUITestActor+EXAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KIFUITestActor+EXAdditions.h"; sourceTree = "<group>"; };
+		6E4DAAFD1964620000ACC134 /* KIFUITestActor+EXAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KIFUITestActor+EXAdditions.m"; sourceTree = "<group>"; };
 		6E4E133A1913F7B300D0C453 /* XCTest+GCovFlush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTest+GCovFlush.h"; sourceTree = "<group>"; };
 		6E4E133B1913F7B300D0C453 /* XCTest+GCovFlush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTest+GCovFlush.m"; sourceTree = "<group>"; };
 		6E4E133D1913F7BF00D0C453 /* UIApplication+GCovFlush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+GCovFlush.h"; sourceTree = "<group>"; };
@@ -1410,6 +1413,8 @@
 				6E5DACAA194DC81F00694DE7 /* AddRideTest.m */,
 				6E403B1019572D7A00FF75EC /* JoinRideTest.h */,
 				6E403B1119572D7A00FF75EC /* JoinRideTest.m */,
+				6E4DAAFC1964620000ACC134 /* KIFUITestActor+EXAdditions.h */,
+				6E4DAAFD1964620000ACC134 /* KIFUITestActor+EXAdditions.m */,
 			);
 			path = "UI Tests";
 			sourceTree = "<group>";
@@ -2512,6 +2517,7 @@
 				6E403B1219572D7A00FF75EC /* JoinRideTest.m in Sources */,
 				6E5DACAB194DC81F00694DE7 /* AddRideTest.m in Sources */,
 				6E5DACA5194D9C9600694DE7 /* LoginTest.m in Sources */,
+				6E4DAAFE1964620000ACC134 /* KIFUITestActor+EXAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

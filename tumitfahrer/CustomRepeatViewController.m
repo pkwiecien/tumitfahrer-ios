@@ -28,7 +28,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.dayStepper.enabled = NO;
     self.dayStepper.minimumValue = 1;
     self.dayStepper.maximumValue = 7;

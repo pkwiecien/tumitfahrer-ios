@@ -174,6 +174,10 @@
             [actionCell.actionButton setTitle:@"Leave ride as passenger" forState:UIControlStateNormal];
         } else {
             [actionCell.actionButton setTitle:@"Join ride" forState:UIControlStateNormal];
+#ifdef DEBUG
+            [actionCell.actionButton setAccessibilityLabel:@"Join Ride Button"];
+            [actionCell.actionButton setIsAccessibilityElement:YES];
+#endif
         }
         return actionCell;
     }

@@ -74,8 +74,11 @@
     self.title = @"Settings";
     
     UIBarButtonItem *refreshButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"LogoutIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(logoutButtonPressed:)];
+    
 #ifdef DEBUG
     // set label for kif test
+    [refreshButtonItem setAccessibilityLabel:@"Logout Button"];
+    [refreshButtonItem setIsAccessibilityElement:YES];
     [self.navigationItem setAccessibilityLabel:@"Back Setting Button"];
     [self.navigationItem setIsAccessibilityElement:YES];
 #endif

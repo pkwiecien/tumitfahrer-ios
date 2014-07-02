@@ -39,6 +39,12 @@
         self.passwordTextField.tag = 11;
         self.passwordTextField.delegate = self;
         
+#ifdef DEBUG
+        [self.emailTextField setAccessibilityLabel:@"Login Email"];
+        [self.emailTextField setIsAccessibilityElement:YES];
+        [self.passwordTextField setAccessibilityLabel:@"Login Password"];
+        [self.passwordTextField setIsAccessibilityElement:YES];
+#endif
         [self.view addSubview:self.emailTextField];
         [self.view addSubview:self.passwordTextField];
     }

@@ -148,7 +148,7 @@
         cell.indexPath = indexPath;
         
 #ifdef DEBUG
-        NSString *label = [NSString stringWithFormat: @"Slider Radius Row %ld",indexPath.row ] ;
+        NSString *label = [NSString stringWithFormat: @"Slider Radius Row %ld",(long)indexPath.row ] ;
         [cell.slider setAccessibilityLabel:label];
         [cell.slider setIsAccessibilityElement:YES];
 #endif

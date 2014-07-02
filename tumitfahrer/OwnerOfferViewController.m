@@ -217,6 +217,12 @@
         } else {
             [cell.leftButton setBackgroundImage:[UIImage imageNamed:@"DeleteIconBlack"] forState:UIControlStateNormal];
             [cell.rightButton setBackgroundImage:[UIImage imageNamed:@"AcceptIconBlack"] forState:UIControlStateNormal];
+#ifdef DEBUG
+            [cell.leftButton setAccessibilityLabel:@"Reject Button"];
+            [cell.leftButton setIsAccessibilityElement:YES];
+            [cell.rightButton setAccessibilityLabel:@"Accept Button"];
+            [cell.rightButton setIsAccessibilityElement:YES];
+#endif
         }
         cell.leftObject = request;
         cell.rightObject = request;
