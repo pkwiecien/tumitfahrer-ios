@@ -47,16 +47,6 @@
                ReferencedContainer = "container:tumitfahrer.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E526B62B194D97E0006D3527"
-               BuildableName = "UI Tests.xctest"
-               BlueprintName = "UI Tests"
-               ReferencedContainer = "container:tumitfahrer.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
