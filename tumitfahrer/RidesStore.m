@@ -782,8 +782,10 @@ static int activity_id = 0;
 }
 
 +(void)updateLastSeenTime:(Ride *)ride {
-    ride.lastSeenTime = [NSDate date];
-    [[RidesStore sharedStore] saveToPersistentStore:ride];
+    if (ride != nil) {
+        ride.lastSeenTime = [NSDate date];
+        [[RidesStore sharedStore] saveToPersistentStore:ride];
+    }
 }
 
 #pragma mark - getters with initializers

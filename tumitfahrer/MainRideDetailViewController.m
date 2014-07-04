@@ -89,6 +89,7 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     self.screenName = @"Ride detail screen";
+    [RidesStore updateLastSeenTime:self.ride];
     
     if (self.ride.rideOwner == nil) {
         [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:self.ride.rideId block:^(Ride * fetched) {
@@ -214,7 +215,7 @@
     reasonLabel.font = [UIFont systemFontOfSize:14];
     [mainView addSubview:reasonLabel];
     self.counterLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, mainView.frame.size.width, 20)];
-    self.counterLabel.text = @"0 / 50 characters (required)";
+    self.counterLabel.text = @"0 / 25 characters (required)";
     self.counterLabel.textAlignment = NSTextAlignmentCenter;
     self.counterLabel.font = [UIFont systemFontOfSize:14];
     [mainView addSubview:self.counterLabel];
@@ -228,7 +229,7 @@
 -(void)textViewDidChange:(UITextView *)textView {
     self.counterLabel.textColor = [UIColor blackColor];
     int len = (int)textView.text.length;
-    self.counterLabel.text=[NSString stringWithFormat:@"%i / 50 characters (required)", len];
+    self.counterLabel.text=[NSString stringWithFormat:@"%i / 25 characters (required)", len];
 }
 
 -(void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -274,11 +275,6 @@
     [CurrentUser saveUserToPersistentStore:user];
     [self reloadTableAndRide];
 }
-
--(void)viewWillDisappear:(BOOL)animated {
-    [RidesStore updateLastSeenTime:self.ride];;
-}
-
 
 #pragma mark - Facebook sharing methods
 

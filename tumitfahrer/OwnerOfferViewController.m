@@ -396,7 +396,7 @@
 
 -(void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        if (self.textView.text.length < 50) {
+        if (self.textView.text.length < 25) {
             self.counterLabel.textColor = [UIColor redColor];
         } else {
             [self deleteRideButtonPressed];
