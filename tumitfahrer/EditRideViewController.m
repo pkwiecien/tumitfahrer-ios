@@ -27,8 +27,9 @@
 #import "DestinationViewController.h"
 #import "FreeSeatsTableViewCell.h"
 #import "RMDateSelectionViewController.h"
+#import "CustomRepeatViewController.h"
 
-@interface EditRideViewController () <SegmentedControlCellDelegate, DestinationViewControllerDelegate, FreeSeatsCellDelegate, RMDateSelectionViewControllerDelegate, MeetingPointDelegate>
+@interface EditRideViewController () <SegmentedControlCellDelegate, DestinationViewControllerDelegate, FreeSeatsCellDelegate, RMDateSelectionViewControllerDelegate, MeetingPointDelegate, CustomRepeatViewController>
 
 @property (nonatomic, assign) CLLocationCoordinate2D departureCoordinate;
 @property (nonatomic, assign) CLLocationCoordinate2D destinationCoordinate;
@@ -37,6 +38,8 @@
 @property (nonatomic, strong) NSMutableArray *tableValues;
 @property (nonatomic, assign) ContentType RideType;
 @property (nonatomic, strong) CustomBarButton *saveButton;
+@property (nonatomic, strong) NSMutableDictionary *selectedRepeatValues;
+@property (nonatomic, strong) NSArray *repeatDates;
 
 @end
 
@@ -45,7 +48,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"1", @"", @"", @"", nil];
+        self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"1", @"", @"", @"", nil];
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
     }
     return self;
@@ -77,7 +80,7 @@
     }
     
     self.tableValues = [[NSMutableArray alloc] initWithObjects:self.ride.departurePlace,self.ride.destination, [ActionManager stringFromDate:self.ride.departureTime], [self.ride.freeSeats stringValue], car, meetingPoint, @"", nil];
-    self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"Departure", @"Destination", @"Time", @"Free Seats", @"Car", @"Meeting Point", @"", nil];
+    self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"Departure", @"Destination", @"Time", @"Repeat", @"Free Seats", @"Car", @"Meeting Point", @"", nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -115,7 +118,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
 
-    if(indexPath.row == 3) {
+    if(indexPath.row == 4) {
         FreeSeatsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FreeSeatsTableViewCell"];
         
         if(cell == nil){
@@ -171,6 +174,12 @@
             RMDateSelectionViewController *dateSelectionVC = [RMDateSelectionViewController dateSelectionController];
             dateSelectionVC.delegate = self;
             [dateSelectionVC show];
+        } else if([[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Repeat"]) {
+            CustomRepeatViewController *customRepeatVC = [[CustomRepeatViewController alloc] init];
+            customRepeatVC.title = @"Repeat ride";
+            customRepeatVC.delegate = self;
+            customRepeatVC.values = self.selectedRepeatValues;
+            [self.navigationController pushViewController:customRepeatVC animated:YES];
         }
     }
 }
@@ -295,10 +304,10 @@
 
 - (void)dateSelectionViewController:(RMDateSelectionViewController *)vc didSelectDate:(NSDate *)aDate {
     NSString *dateString = [ActionManager stringFromDate:aDate];
-    [self.tableValues replaceObjectAtIndex:3 withObject:dateString];
+    [self.tableValues replaceObjectAtIndex:2 withObject:dateString];
     
     [self.tableView beginUpdates];
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:3 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView endUpdates];
 }
 
@@ -323,7 +332,7 @@
 }
 
 -(void)stepperValueChanged:(NSInteger)stepperValue {
-    [self.tableValues replaceObjectAtIndex:3 withObject:[[NSNumber numberWithInt:(int)stepperValue] stringValue]];
+    [self.tableValues replaceObjectAtIndex:4 withObject:[[NSNumber numberWithInt:(int)stepperValue] stringValue]];
 }
 
 #pragma mark - Button Handlers
@@ -339,6 +348,16 @@
         } else {
             self.RideType = ContentTypeActivityRides;
         }
+    }
+}
+
+-(void)didSelectRepeatDates:(NSArray *)repeatDates descriptionLabel:(NSString *)descriptionLabel selectedValues:(NSMutableDictionary *)selectedValues {
+    self.selectedRepeatValues = selectedValues;
+    self.repeatDates = repeatDates;
+    if (repeatDates.count > 0) {
+        [self.tableValues replaceObjectAtIndex:4 withObject:descriptionLabel];
+    } else {
+        [self.tableValues replaceObjectAtIndex:4 withObject:@"No"];
     }
 }
 
