@@ -176,6 +176,12 @@
         } else {
             [cell.leftButton setBackgroundImage:[UIImage imageNamed:@"DeleteIconBlack"] forState:UIControlStateNormal];
             [cell.rightButton setBackgroundImage:[UIImage imageNamed:@"EmailIconBlack"] forState:UIControlStateNormal];
+#ifdef DEBUG
+            [cell.leftButton setAccessibilityLabel:@"Delete Button"];
+            [cell.leftButton setIsAccessibilityElement:YES];
+            [cell.rightButton setAccessibilityLabel:@"Email Button"];
+            [cell.rightButton setIsAccessibilityElement:YES];
+#endif
         }
         return cell;
         

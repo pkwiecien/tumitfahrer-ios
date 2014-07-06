@@ -164,6 +164,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+#ifdef DEBUG
+    [tableView setAccessibilityIdentifier:@"Profile Table"];
+    [tableView setIsAccessibilityElement:YES];
+#endif
     if (indexPath.section == 0) {
         
         GeneralInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GeneralInfoCell"];
@@ -196,6 +200,7 @@
         }
         cell.imageView.image = [self.cellImages objectAtIndex:indexPath.row];
         cell.textLabel.text = [self.cellDescriptions objectAtIndex:indexPath.row];
+
         cell.backgroundColor = [UIColor customLightGray];
         if (![[self.cellDescriptions objectAtIndex:indexPath.row] isEqualToString:self.user.email] && [self.user.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;

@@ -13,20 +13,20 @@
 
 -(void)beforeAll
 {
-    [tester tapViewWithAccessibilityLabel:@"Left Drawer Button"];
-    [tester waitForTappableViewWithAccessibilityLabel:@"Menu View"];
-
+//    [tester tapViewWithAccessibilityLabel:@"Left Drawer Button"];
+//    [tester waitForTappableViewWithAccessibilityLabel:@"Menu View"];
 }
 
 -(void)testJoinRide
 {
-    //[self createRide];
-    [self logout];
-    [self reLogin:@"tumitfahrer@gmail.com" password:@"123456"];
-    [self joinRide];
-    [self logout];
-    [self reLogin:@"zds8978704@gmail.com" password:@"123456"];
-    [self ownerAgree];
+//[self createRide];
+//[self logout];
+//[self reLogin:@"zds8978704@gmail.com" password:@"123456"];
+//[self joinRide];
+//[self logout];
+//[self reLogin:@"tumitfahrer@gmail.com" password:@"123456"];
+//[self ownerAgree];
+//[self ownerDelete];
 }
 
 -(void)createRide
@@ -46,7 +46,6 @@
 {
     [tester clearTextFromAndThenEnterText:email intoViewWithAccessibilityLabel:@"Login Email"];
     
-    //[tester enterText:email intoViewWithAccessibilityLabel:@"Login Email"];
     [tester enterText:password intoViewWithAccessibilityLabel:@"Login Password"];
     [tester tapViewWithAccessibilityLabel:@"Login Button"];
 
@@ -84,14 +83,21 @@
     [tester searchRideWithCampusRideWithRadius0WithTime];
     
     [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] inTableViewWithAccessibilityIdentifier:@"Search Result List"];
-    [tester waitForViewWithAccessibilityLabel:@"Offer Owner View"];
+    [tester waitForViewWithAccessibilityLabel:@"Owner Offer View"];
     
     [tester tapViewWithAccessibilityLabel:@"Accept Button"];
+    [tester waitForViewWithAccessibilityLabel:@"Owner Offer View"];
 }
 
--(void)checkIfAgree
+-(void)ownerDelete
 {
+    [tester searchRideWithCampusRideWithRadius0WithTime];
     
+    [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] inTableViewWithAccessibilityIdentifier:@"Search Result List"];
+    [tester waitForViewWithAccessibilityLabel:@"Owner Offer View"];
+    
+    [tester tapViewWithAccessibilityLabel:@"Delete Button"];
+    [tester waitForViewWithAccessibilityLabel:@"Owner Offer View"];
 }
 
 

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		068F5848AB864309B2DEC0B8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAEC5882914944C4B8E2DE24 /* libPods.a */; };
 		12849E718A644E04BCE4B00C /* libPods-UI Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 21C7515A720A4BD98246E980 /* libPods-UI Tests.a */; };
+		6E2760691969988D005621AD /* ProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E2760681969988D005621AD /* ProfileTest.m */; };
+		6E27606C1969A839005621AD /* SlideTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E27606B1969A839005621AD /* SlideTest.m */; };
 		6E403B1219572D7A00FF75EC /* JoinRideTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E403B1119572D7A00FF75EC /* JoinRideTest.m */; };
 		6E4DAAFE1964620000ACC134 /* KIFUITestActor+EXAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4DAAFD1964620000ACC134 /* KIFUITestActor+EXAdditions.m */; };
 		6E4E133C1913F7B300D0C453 /* XCTest+GCovFlush.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4E133B1913F7B300D0C453 /* XCTest+GCovFlush.m */; };
@@ -324,6 +326,10 @@
 /* Begin PBXFileReference section */
 		00C0C3ED020C4AE39B725DA2 /* Pods-UI Tests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI Tests.xcconfig"; path = "Pods/Pods-UI Tests.xcconfig"; sourceTree = "<group>"; };
 		21C7515A720A4BD98246E980 /* libPods-UI Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UI Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E2760671969988D005621AD /* ProfileTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileTest.h; sourceTree = "<group>"; };
+		6E2760681969988D005621AD /* ProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileTest.m; sourceTree = "<group>"; };
+		6E27606A1969A839005621AD /* SlideTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideTest.h; sourceTree = "<group>"; };
+		6E27606B1969A839005621AD /* SlideTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideTest.m; sourceTree = "<group>"; };
 		6E403B1019572D7A00FF75EC /* JoinRideTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinRideTest.h; sourceTree = "<group>"; };
 		6E403B1119572D7A00FF75EC /* JoinRideTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinRideTest.m; sourceTree = "<group>"; };
 		6E4DAAFC1964620000ACC134 /* KIFUITestActor+EXAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KIFUITestActor+EXAdditions.h"; sourceTree = "<group>"; };
@@ -1404,17 +1410,21 @@
 		E526B630194D97E0006D3527 /* UI Tests */ = {
 			isa = PBXGroup;
 			children = (
-				E526B631194D97E0006D3527 /* Supporting Files */,
-				6E5DACA3194D9C9600694DE7 /* LoginTest.h */,
-				6E5DACA4194D9C9600694DE7 /* LoginTest.m */,
-				6E5DACA6194DA42600694DE7 /* SettingTest.h */,
-				6E5DACA7194DA42600694DE7 /* SettingTest.m */,
 				6E5DACA9194DC81F00694DE7 /* AddRideTest.h */,
 				6E5DACAA194DC81F00694DE7 /* AddRideTest.m */,
 				6E403B1019572D7A00FF75EC /* JoinRideTest.h */,
 				6E403B1119572D7A00FF75EC /* JoinRideTest.m */,
 				6E4DAAFC1964620000ACC134 /* KIFUITestActor+EXAdditions.h */,
 				6E4DAAFD1964620000ACC134 /* KIFUITestActor+EXAdditions.m */,
+				6E5DACA3194D9C9600694DE7 /* LoginTest.h */,
+				6E5DACA4194D9C9600694DE7 /* LoginTest.m */,
+				6E2760671969988D005621AD /* ProfileTest.h */,
+				6E2760681969988D005621AD /* ProfileTest.m */,
+				6E5DACA6194DA42600694DE7 /* SettingTest.h */,
+				6E5DACA7194DA42600694DE7 /* SettingTest.m */,
+				E526B631194D97E0006D3527 /* Supporting Files */,
+				6E27606A1969A839005621AD /* SlideTest.h */,
+				6E27606B1969A839005621AD /* SlideTest.m */,
 			);
 			path = "UI Tests";
 			sourceTree = "<group>";
@@ -2514,6 +2524,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6E5DACA8194DA42600694DE7 /* SettingTest.m in Sources */,
+				6E2760691969988D005621AD /* ProfileTest.m in Sources */,
+				6E27606C1969A839005621AD /* SlideTest.m in Sources */,
 				6E403B1219572D7A00FF75EC /* JoinRideTest.m in Sources */,
 				6E5DACAB194DC81F00694DE7 /* AddRideTest.m in Sources */,
 				6E5DACA5194D9C9600694DE7 /* LoginTest.m in Sources */,

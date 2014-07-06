@@ -53,6 +53,10 @@
     
     // right button of the navigation bar
     CustomBarButton *rightBarButton = [[CustomBarButton alloc] initWithTitle:@"Save"];
+#ifdef DEBUG
+    [rightBarButton setAccessibilityLabel:@"Save Button"];
+    [rightBarButton setIsAccessibilityElement:YES];
+#endif
     [rightBarButton addTarget:self action:@selector(rightBarButtonPressed) forControlEvents:UIControlEventTouchDown];
     UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBarButton];
     self.navigationItem.rightBarButtonItem = rightBarButtonItem;
