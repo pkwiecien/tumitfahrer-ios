@@ -142,8 +142,8 @@
             }
         }
         if ([self isPastRide] && self.ride.rideOwner != nil) {
-            [cell.leftButton setBackgroundImage:[UIImage imageNamed:@"DislikeIconBlack"] forState:UIControlStateNormal];
-            [cell.rightButton setBackgroundImage:[UIImage imageNamed:@"LikeIconBlack"] forState:UIControlStateNormal];
+            [cell.leftButton setImage:[UIImage imageNamed:@"DislikeIconBlack"] forState:UIControlStateNormal];
+            [cell.rightButton setImage:[UIImage imageNamed:@"LikeIconBlack"] forState:UIControlStateNormal];
             
             Rating *rating = [self isRatingGivenForUserId:self.ride.rideOwner.userId];
             if (rating != nil && [rating.ratingType boolValue]) {

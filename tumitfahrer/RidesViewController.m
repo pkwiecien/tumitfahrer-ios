@@ -78,6 +78,7 @@
         if (fetched) {
             [[RidesStore sharedStore] initRidesByType:self.RideType block:^(BOOL fetched) {
                 [self checkIfAnyRides];
+                [self addToImageCache];
                 [self.tableView reloadData];
                 [self.refreshControl endRefreshing];
             }];
@@ -186,13 +187,12 @@
     }
     
     if ([ride.isRideRequest boolValue]) {
-//        cell.seatsLabel.text = @"offer a ride";
         cell.seatsView.hidden = YES;
-    } else if ([ride.freeSeats intValue] == 1) {
+    } else if ([ride.freeSeats intValue] - [ride.passengers count] == 1) {
         cell.seatsView.hidden = NO;
         cell.seatsLabel.text = @"1 seat left";
     } else {
-        cell.seatsLabel.text = [NSString stringWithFormat:@"%@ seats left", ride.freeSeats];
+        cell.seatsLabel.text = [NSString stringWithFormat:@"%d seats left", [ride.freeSeats intValue]  - [ride.passengers count]];
     }
     
     cell.directionsLabel.text = [ride.departurePlace componentsSeparatedByString:@", "][0];
@@ -280,6 +280,7 @@
 #pragma mark - Observers Handlers
 
 -(void)didReceivePhotoForRide:(NSNumber *)rideId {
+    [self addToImageCache];
     [self.tableView reloadData];
 }
 

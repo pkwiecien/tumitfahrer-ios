@@ -103,7 +103,7 @@ static int activity_id = 0;
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
                               mainQueueManagedObjectContext];
     NSPredicate *predicate;
-    NSDate *now = [ActionManager currentDate];
+    NSDate *now = [NSDate date];
     predicate = [NSPredicate predicateWithFormat:@"(rideType = %d) AND (departureTime > %@)", contentType, now];
     
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"departureTime" ascending:YES];
@@ -123,6 +123,10 @@ static int activity_id = 0;
     
     if(contentType == ContentTypeCampusRides){
         self.privateCampusRides =[[NSMutableArray alloc] initWithArray:fetchedObjects];
+        
+        for (Ride *ride in self.privateCampusRides) {
+            NSLog(@"ride with id: %@ %@", ride.departureTime, ride.rideId);
+        }
     }
     else if(contentType == ContentTypeActivityRides) {
         self.privateActivityRides = [[NSMutableArray alloc] initWithArray:fetchedObjects];
@@ -280,8 +284,8 @@ static int activity_id = 0;
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
-    
-    [objectManager getObject:nil path:@"/api/v2/rides/%@" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+
+    [objectManager getObject:nil path:[NSString stringWithFormat:@"/api/v2/rides/%@", rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         Ride *ride = [mappingResult firstObject];
         block(ride);
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {

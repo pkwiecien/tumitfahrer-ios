@@ -162,8 +162,8 @@
         cell.rightObject = passenger;
         cell.cellTypeEnum = PassengerCell;
         if ([self isPastRide]) {
-            [cell.leftButton setBackgroundImage:[UIImage imageNamed:@"DislikeIconBlack"] forState:UIControlStateNormal];
-            [cell.rightButton setBackgroundImage:[UIImage imageNamed:@"LikeIconBlack"] forState:UIControlStateNormal];
+            [cell.leftButton setImage:[UIImage imageNamed:@"DislikeIconBlack"] forState:UIControlStateNormal];
+            [cell.rightButton setImage:[UIImage imageNamed:@"LikeIconBlack"] forState:UIControlStateNormal];
             
             Rating *rating = [self isRatingGivenForUserId:passenger.userId];
             if (rating != nil && [rating.ratingType boolValue]) {
@@ -174,8 +174,8 @@
                 cell.rightButton.hidden = YES;
             }
         } else {
-            [cell.leftButton setBackgroundImage:[UIImage imageNamed:@"DeleteIconBlackSmall"] forState:UIControlStateNormal];
-            [cell.rightButton setBackgroundImage:[UIImage imageNamed:@"EmailIconBlack"] forState:UIControlStateNormal];
+            [cell.leftButton setImage:[UIImage imageNamed:@"DeleteIconBlackSmall"] forState:UIControlStateNormal];
+            [cell.rightButton setImage:[UIImage imageNamed:@"EmailIconBlack"] forState:UIControlStateNormal];
         }
         return cell;
         
@@ -215,8 +215,8 @@
             cell.leftButton.hidden = YES;
             cell.rightButton.hidden = YES;
         } else {
-            [cell.leftButton setBackgroundImage:[UIImage imageNamed:@"DeleteIconBlackSmall"] forState:UIControlStateNormal];
-            [cell.rightButton setBackgroundImage:[UIImage imageNamed:@"AcceptIconBlack"] forState:UIControlStateNormal];
+            [cell.leftButton setImage:[UIImage imageNamed:@"DeleteIconBlackSmall"] forState:UIControlStateNormal];
+            [cell.rightButton setImage:[UIImage imageNamed:@"AcceptIconBlack"] forState:UIControlStateNormal];
         }
         cell.leftObject = request;
         cell.rightObject = request;
@@ -302,10 +302,23 @@
 }
 
 -(void)moveRequestorToPassengers:(User *)requestor {
-    if ([[RidesStore sharedStore] addPassengerForRideId:self.ride.rideId requestor:requestor]) {
-        [self.rideDetail.tableView reloadData];
-        [self findRequestForRide:self.ride requestor:requestor];
-    }
+    
+    [[RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:self.ride.rideId block:^(Ride *fetchedRide) {
+        if (fetchedRide) {
+            [self initRide];
+        }
+    }];
+    [self findRequestForRide:self.ride requestor:requestor];
+
+//    [RidesStore sharedStore] fetchSingleRideFromWebserviceWithId:<#(NSNumber *)#> block:<#^(Ride *)block#>
+//    if ([[RidesStore sharedStore] addPassengerForRideId:self.ride.rideId requestor:requestor]) {
+//        [self.rideDetail.tableView reloadData];
+//    }
+}
+
+-(void)initRide {
+    self.ride = [[RidesStore sharedStore] fetchRideFromCoreDataWithId:self.ride.rideId];
+    [self.rideDetail.tableView reloadData];
 }
 
 -(void)findRequestForRide:(Ride *)ride requestor:(User *)requestor {
@@ -320,7 +333,11 @@
 -(void)contactPassengerButtonPressedForUser:(User *)user {
     SimpleChatViewController *chatVC = [[SimpleChatViewController alloc] init];
     chatVC.title = [NSString stringWithFormat:@"Chat with %@", user.firstName];
-    chatVC.conversation = [ConversationUtilities findConversationBetweenUser:[CurrentUser sharedInstance].user otherUser:user conversationArray:[self.ride.conversations allObjects]];
+    Conversation *conv = [ConversationUtilities findConversationBetweenUser:[CurrentUser sharedInstance].user otherUser:user conversationArray:[self.ride.conversations allObjects]];
+    if (conv == nil) {
+        return;
+    }
+    chatVC.conversation = conv;
     chatVC.otherUser = user;
     [self.navigationController pushViewController:chatVC animated:YES];
 }
