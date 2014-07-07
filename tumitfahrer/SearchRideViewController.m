@@ -41,7 +41,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"15", @"", @"15", @"", @"", @"", nil];
+        self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"3", @"", @"3", @"", @"", @"", nil];
         self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"", @"Destination", @"", @"Time", @"", nil];
         self.navigationItem.backBarButtonItem.title = @"Search";
     }

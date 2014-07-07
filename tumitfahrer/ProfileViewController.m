@@ -72,7 +72,7 @@
     [buttonBack addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buttonBack];
     
-    [[RidesStore sharedStore] fetchPastRidesFromCoreData];
+    [[RidesStore sharedStore] fetchUserPastRidesFromCoreData];
     [AWSUploader sharedStore].delegate = self;
     
     self.initialImageData = [CurrentUser sharedInstance].user.profileImageData;
@@ -113,7 +113,9 @@
     if (self.user.profileImageData != nil) {
         UIImage *profilePic = [UIImage imageWithData:self.user.profileImageData];
         self.profileImageContentView.circularImage = profilePic;
+        [self.profileImageContentView.rideDetailHeaderView replaceImage:profilePic];
     } else {
+        [self.profileImageContentView.rideDetailHeaderView replaceImage:[UIImage imageNamed:@"bg1.jpg"]];
     }
 }
 
@@ -172,9 +174,9 @@
             cell = [GeneralInfoCell generalInfoCell];
         }
         
-        NSInteger totalRidesAsDriver = [self ridesAsOwnerAndIsDriving:NO rides:[self.user.ridesAsOwner allObjects]] + [self ridesAsOwnerAndIsDriving:NO rides:[[RidesStore sharedStore] pastRides]];
+        NSInteger totalRidesAsDriver = [self ridesAsOwnerAndIsDriving:NO rides:[self.user.ridesAsOwner allObjects]] + [self ridesAsOwnerAndIsDriving:NO rides:[[RidesStore sharedStore] userPastRides]];
         
-        NSInteger totalRidesAsPassenger = [self ridesAsOwnerAndIsDriving:YES rides:[self.user.ridesAsOwner allObjects]] + [self ridesAsOwnerAndIsDriving:YES rides:[[RidesStore sharedStore] pastRides]] + [self.user.ridesAsPassenger count];
+        NSInteger totalRidesAsPassenger = [self ridesAsOwnerAndIsDriving:YES rides:[self.user.ridesAsOwner allObjects]] + [self ridesAsOwnerAndIsDriving:YES rides:[[RidesStore sharedStore] userPastRides]] + [self.user.ridesAsPassenger count];
         
         cell.driverLabel.text = [NSString stringWithFormat:@"%d", (int)totalRidesAsDriver];
         cell.passengerLabel.text = [NSString stringWithFormat:@"%d", (int)totalRidesAsPassenger];

@@ -24,6 +24,7 @@
 @property (nonatomic) NSMutableArray *privateCampusRides;
 @property (nonatomic) NSMutableArray *privateActivityRides;
 @property (nonatomic) NSMutableArray *privatePastRides;
+@property (nonatomic) NSMutableArray *privateUserPastRides;
 @property (nonatomic) NSMutableArray *privateRideRequests;
 
 @property (nonatomic) NSMutableArray *privateCampusRidesNearby;
@@ -158,6 +159,32 @@ static int activity_id = 0;
                     format:@"Reason: %@", [error localizedDescription]];
     }
     self.privatePastRides = [[NSMutableArray alloc] initWithArray:fetchedObjects];
+}
+
+-(void)fetchUserPastRidesFromCoreData {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *e = [NSEntityDescription entityForName:@"Ride"
+                                         inManagedObjectContext:[RKManagedObjectStore defaultStore].
+                              mainQueueManagedObjectContext];
+    NSPredicate *predicate;
+    NSDate *now = [NSDate date];
+    predicate = [NSPredicate predicateWithFormat:@"(departureTime <= %@) AND (self.rideOwner.userId = %@)", now, [CurrentUser sharedInstance].user.userId];
+    
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"departureTime" ascending:NO];
+    request.sortDescriptors = @[descriptor];
+    
+    [request setPredicate:predicate];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    request.entity = e;
+    
+    NSError *error;
+    NSArray *fetchedObjects = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:&error];
+    if (!fetchedObjects) {
+        [NSException raise:@"Fetch failed"
+                    format:@"Reason: %@", [error localizedDescription]];
+    }
+    self.privateUserPastRides = [[NSMutableArray alloc] initWithArray:fetchedObjects];
 }
 
 - (NSArray *)fetchUserRequestsFromCoreDataForUserId:(NSNumber *)userId {
@@ -813,6 +840,13 @@ static int activity_id = 0;
         self.privatePastRides = [[NSMutableArray alloc] init];
     }
     return self.privatePastRides;
+}
+
+-(NSMutableArray *)userPastRides {
+    if (self.privateUserPastRides == nil) {
+        self.privateUserPastRides = [[NSMutableArray alloc] init];
+    }
+    return self.privateUserPastRides;
 }
 
 -(NSMutableArray *)rideRequests {

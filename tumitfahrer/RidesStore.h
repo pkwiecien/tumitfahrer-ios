@@ -51,6 +51,7 @@ typedef void(^rideCompletionHandler)(Ride *);
 - (Ride *)fetchRideFromCoreDataWithId:(NSNumber *)rideId;
 - (void)fetchPastRidesFromCoreData;
 - (NSMutableArray *)pastRides;
+- (NSMutableArray *)userPastRides;
 - (void)fetchRidesForCurrentUser:(boolCompletionHandler)block ;
 
 - (BOOL)addPassengerForRideId:(NSNumber *)rideId requestor:(User *)requestor;
@@ -65,5 +66,6 @@ typedef void(^rideCompletionHandler)(Ride *);
 - (NSArray *)fetchUserRequestsFromCoreDataForUserId:(NSNumber *)userId;
 + (void)updateLastSeenTime:(Ride *)ride;
 + (Request *)fetchRequestFromCoreDataWithId:(NSNumber *)requestId;
+- (void)fetchUserPastRidesFromCoreData;
 
 @end

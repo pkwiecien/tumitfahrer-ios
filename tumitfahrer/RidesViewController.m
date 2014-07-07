@@ -67,7 +67,7 @@
     NSString *fullURL = @"https://carsharing.mvg-mobil.de/";
     NSURL *url = [NSURL URLWithString:fullURL];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-    webview = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width,  [UIScreen mainScreen].bounds.size.height)];
+    webview = [[UIWebView alloc] initWithFrame:CGRectMake(0, 60, [UIScreen mainScreen].bounds.size.width,  [UIScreen mainScreen].bounds.size.height)];
     [webview loadRequest:requestObj];
 }
 
@@ -181,22 +181,26 @@
     if([ride.isRideRequest boolValue]) {
         cell.seatsView.backgroundColor = [UIColor orangeColor];
         cell.roleImageView.image = self.passengerIcon;
-        cell.actionLabel.text = @"Offer ride";
-        cell.actionLabel.frame = CGRectMake(cell.actionLabel.frame.origin.x, cell
-                                .actionLabel.frame.origin.y, 100, cell.actionLabel.frame.size.height);
-        cell.joinNowView.frame = CGRectMake(cell.joinNowView.frame.origin.x, cell
-                                           .joinNowView.frame.origin.y, 100, cell.joinNowView.frame.size.height);
+        if ([ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+            cell.actionLabel.text = @"Your request";
+        } else {
+            cell.actionLabel.text = @"Offer ride";
+        }
+//        cell.actionLabel.frame = CGRectMake(cell.actionLabel.frame.origin.x, cell.actionLabel.frame.origin.y, 100, cell.actionLabel.frame.size.height);
+//        cell.joinNowView.frame = CGRectMake(cell.joinNowView.frame.origin.x, cell.joinNowView.frame.origin.y, 100, cell.joinNowView.frame.size.height);
         
         // TODO: refactor so that the width is dynamically changes
         
     } else {
         cell.seatsView.backgroundColor = [UIColor orangeColor];
         cell.roleImageView.image = self.driverIcon;
-        cell.actionLabel.text = @"Join now";
-        cell.actionLabel.frame = CGRectMake(cell.actionLabel.frame.origin.x, cell
-                                            .actionLabel.frame.origin.y, 70, cell.actionLabel.frame.size.height);
-        cell.joinNowView.frame = CGRectMake(cell.joinNowView.frame.origin.x, cell
-                                            .joinNowView.frame.origin.y, 70, cell.joinNowView.frame.size.height);
+        if ([ride.rideOwner.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+            cell.actionLabel.text = @"Your ride";
+        } else {
+            cell.actionLabel.text = @"Join now";
+        }
+//        cell.actionLabel.frame = CGRectMake(cell.actionLabel.frame.origin.x, cell.actionLabel.frame.origin.y, 70, cell.actionLabel.frame.size.height);
+//        cell.joinNowView.frame = CGRectMake(cell.joinNowView.frame.origin.x, cell.joinNowView.frame.origin.y, 70, cell.joinNowView.frame.size.height);
     }
     
     if ([ride.isRideRequest boolValue]) {
@@ -205,7 +209,7 @@
         cell.seatsView.hidden = NO;
         cell.seatsLabel.text = @"1 seat left";
     } else {
-        cell.seatsLabel.text = [NSString stringWithFormat:@"%d seats left", [ride.freeSeats intValue]  - [ride.passengers count]];
+        cell.seatsLabel.text = [NSString stringWithFormat:@"%d seats left", (int)([ride.freeSeats intValue]  - [ride.passengers count])];
     }
     
     cell.directionsLabel.text = [ride.departurePlace componentsSeparatedByString:@", "][0];
