@@ -43,7 +43,7 @@
         self.headers = [[NSArray alloc] initWithObjects:@"Feedback", @"General", @"About TUMitfahrer", nil];
         self.actionOptions = [[NSArray alloc] initWithObjects:@"Send Feedback", @"Report a problem", nil];
         self.actionIcons = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"FeedbackIconBlack"], [UIImage imageNamed:@"ProblemIconBlack"], nil];
-        self.readOptions = [[NSArray alloc] initWithObjects:@"Reminder", @"Privacy", @"Licenses", @"Carsharing", nil];
+        self.readOptions = [[NSArray alloc] initWithObjects:@"Reminder", @"Terms of Use", @"Licenses", @"Carsharing", nil];
         self.readIcons = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"ReminderIconBlack"], [UIImage imageNamed:@"PrivacyIconBlack"], [UIImage imageNamed:@"LicenseIconBlack"], [UIImage imageNamed:@"CarIconBlack"], nil];
         self.contactOptions = [[NSArray alloc] initWithObjects:@"About TUMitfahrer", @"Team", @"Contact us", nil];
         self.contactIcons = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"InfoIconBlack"], [UIImage imageNamed:@"TeamIconBlack"], [UIImage imageNamed:@"EmailIconBlackSmall"], nil];
@@ -138,7 +138,7 @@
     }
     else if (indexPath.section == 1 && indexPath.row == 1) {
         PrivacyViewController *privacyVC = [[PrivacyViewController alloc] init];
-        privacyVC.title = @"Privacy";
+        privacyVC.title = @"Terms of Use";
         privacyVC.privacyViewTypeEnum = Privacy;
         [self.navigationController pushViewController:privacyVC animated:YES];
     } else if(indexPath.section == 1 && indexPath.row == 2) {

@@ -77,6 +77,7 @@
         [self showLoginScreen:NO];
     }
     
+    NSLog(@"current user: %@ %@", [CurrentUser sharedInstance].user.userId, [CurrentUser sharedInstance].user.email);
     [self setupLeftMenuButton];
     [self setupNavigationBar];
 }

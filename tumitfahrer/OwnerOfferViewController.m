@@ -174,7 +174,7 @@
                 cell.rightButton.hidden = YES;
             }
         } else {
-            [cell.leftButton setBackgroundImage:[UIImage imageNamed:@"DeleteIconBlack"] forState:UIControlStateNormal];
+            [cell.leftButton setBackgroundImage:[UIImage imageNamed:@"DeleteIconBlackSmall"] forState:UIControlStateNormal];
             [cell.rightButton setBackgroundImage:[UIImage imageNamed:@"EmailIconBlack"] forState:UIControlStateNormal];
         }
         return cell;
@@ -215,7 +215,7 @@
             cell.leftButton.hidden = YES;
             cell.rightButton.hidden = YES;
         } else {
-            [cell.leftButton setBackgroundImage:[UIImage imageNamed:@"DeleteIconBlack"] forState:UIControlStateNormal];
+            [cell.leftButton setBackgroundImage:[UIImage imageNamed:@"DeleteIconBlackSmall"] forState:UIControlStateNormal];
             [cell.rightButton setBackgroundImage:[UIImage imageNamed:@"AcceptIconBlack"] forState:UIControlStateNormal];
         }
         cell.leftObject = request;
@@ -227,7 +227,7 @@
         if (cell == nil) {
             cell = [EmptyCell emptyCell];
         }
-        cell.descriptionLabel.text = @"There are no passengers";
+        cell.descriptionLabel.text = @"There are no requests";
         return cell;
     }else {  // show delete button
         

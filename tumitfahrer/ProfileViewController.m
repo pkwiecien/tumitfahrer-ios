@@ -333,6 +333,7 @@
         [[AWSUploader sharedStore] uploadImageData:[CurrentUser sharedInstance].user.profileImageData user:self.user];
         self.initialImageData = self.user.profileImageData;
     }
+    self.user = nil;
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
