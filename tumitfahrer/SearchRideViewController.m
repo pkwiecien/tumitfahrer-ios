@@ -34,7 +34,9 @@
 
 @end
 
-@implementation SearchRideViewController
+@implementation SearchRideViewController {
+    UIScreenEdgePanGestureRecognizer *_swipeInLeftGestureRecognizer;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -65,7 +67,6 @@
     if(self.SearchDisplayType == ShowAsViewController)
         [self setupLeftMenuButton];
 }
-
 
 -(void)setDepartureLabelForCurrentLocation {
     NSString *departurePlace = [LocationController sharedInstance].currentAddress;

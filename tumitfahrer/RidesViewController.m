@@ -18,7 +18,7 @@
 #import "ControllerUtilities.h"
 #import "Photo.h"
 
-@interface RidesViewController ()
+@interface RidesViewController () 
 
 @property (nonatomic, retain) UILabel *zeroRidesLabel;
 @property CGFloat previousScrollViewYOffset;
@@ -30,7 +30,9 @@
 
 @end
 
-@implementation RidesViewController
+@implementation RidesViewController {
+    UIWebView *webview;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -61,6 +63,12 @@
     } else {
         self.tableView.frame = CGRectMake(0, 0, 320, 408);
     }
+    
+    NSString *fullURL = @"https://carsharing.mvg-mobil.de/";
+    NSURL *url = [NSURL URLWithString:fullURL];
+    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+    webview = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width,  [UIScreen mainScreen].bounds.size.height)];
+    [webview loadRequest:requestObj];
 }
 
 -(void)handleRefresh {
@@ -103,12 +111,17 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     self.screenName = [NSString stringWithFormat:@"Rides screen: %d", (int)self.index];
-    
-    [self addToImageCache];
     [self.delegate willAppearViewWithIndex:self.index];
-    [self.tableView reloadData];
-    [self checkIfAnyRides];
-    [self checkPhotosOfRides];
+
+    if (self.index == 2) {
+        [self.view addSubview:webview];
+    } else {
+        [webview removeFromSuperview];
+        [self addToImageCache];
+        [self.tableView reloadData];
+        [self checkIfAnyRides];
+        [self checkPhotosOfRides];
+    }
 }
 
 -(void)checkPhotosOfRides {
@@ -310,7 +323,7 @@
 }
 
 -(void)checkIfAnyRides {
-    if ([[self ridesForCurrentIndex] count] == 0) {
+    if (self.index != 2 && [[self ridesForCurrentIndex] count] == 0) {
         if (self.index == 1 && ![LocationController locationServicesEnabled]) { // around me
             self.zeroRidesLabel.text = @"Please enable location services on your iPhone:\n\nSettings -> Privacy -> Location Services -> TUMitfahrer";
         } else {
@@ -332,6 +345,7 @@
 }
 
 -(void)dealloc {
+    [webview removeFromSuperview];
     [self.imageCache removeAllObjects];
     self.delegate = nil;
     [[RidesStore sharedStore] removeObserver:self];

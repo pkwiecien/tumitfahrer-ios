@@ -19,20 +19,22 @@
 #import "Ride.h"
 #import "MenuViewController.h"
 
-@interface RidesPageViewController () <RidesViewControllerDelegate>
+@interface RidesPageViewController () <RidesViewControllerDelegate, UIGestureRecognizerDelegate>
 
 @property NSArray *pageTitles;
 @property UIColor *pageColor;
 
 @end
 
-@implementation RidesPageViewController
+@implementation RidesPageViewController {
+    UIScreenEdgePanGestureRecognizer *_swipeInLeftGestureRecognizer;
+}
 
 -(instancetype)initWithContentType:(ContentType)contentType {
     self = [super init];
     if (self) {
-        NSArray *campusTitles = [NSArray arrayWithObjects:@"All Campus", @"Around you", @"Recent Searches", nil];
-        NSArray *activityTitles = [NSArray arrayWithObjects:@"All Activity", @"Around you", @"Recent Searches", nil];
+        NSArray *campusTitles = [NSArray arrayWithObjects:@"All Campus", @"Around you", @"Get a car", nil];
+        NSArray *activityTitles = [NSArray arrayWithObjects:@"All Activity", @"Around you", @"Get a car", nil];
         self.pageTitles = [NSArray arrayWithObjects:campusTitles, activityTitles, nil];
         self.pageColor = [UIColor colorWithRed:0 green:0.361 blue:0.588 alpha:1];
         self.RideType = contentType;
@@ -59,7 +61,33 @@
     [self.pageController didMoveToParentViewController:self];
     self.view.backgroundColor = [UIColor customLightGray];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    UIScreenEdgePanGestureRecognizer *leftEdgeGesture = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(handleLeftEdgeGesture:)];
+    leftEdgeGesture.edges = UIRectEdgeLeft;
+    leftEdgeGesture.delegate = self;
+    [self.view addGestureRecognizer:leftEdgeGesture];
 }
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    // You can customize the way in which gestures can work
+    // Enabling multiple gestures will allow all of them to work together, otherwise only the topmost view's gestures will work (i.e. PanGesture view on bottom)
+    return YES;
+}
+
+- (void)handleLeftEdgeGesture:(UIScreenEdgePanGestureRecognizer *)gesture {
+    if (self.logo.pageControl.currentPage == 0) {
+        NSLog(@"left: being in first ine");
+    } else if(self.logo.pageControl.currentPage == 1) {
+        NSLog(@"left: being in second ine");
+    } else {
+        NSLog(@"SHOULD BE HERE!!");
+        
+        RidesViewController *initialViewController = [self viewControllerAtIndex:1];
+        NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
+        [self.pageController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    }
+}
+
 
 -(void)viewWillAppear:(BOOL)animated {
     [self setupNavigationBar];
