@@ -14,6 +14,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
 @implementation KIFUITestActor (EXAdditions)
 
 #pragma mark - test cases
+// add new campus ride as a passenger with choosing destination and departure from the suggestions
 -(void)addRideAsPassengerWithCampusRide
 {
     [self selectAddRide];
@@ -27,7 +28,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     
     [self addRideAsPassenger];
 }
-
+// add new campus ride as a passenger with choosing destination and departure from the search
 -(void)addRideAsPassengerWithCampusRideWithSearch
 {
     [self selectAddRide];
@@ -42,7 +43,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     [self addRideAsPassenger];
     
 }
-
+// add new activity ride as a passenger with choosing destination and departure from the suggestions
 -(void)addRideAsPassengerWithActivityRide
 {
     [self selectAddRide];
@@ -56,7 +57,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     
     [self addRideAsPassenger];
 }
-
+// add new activity ride as a passenger with choosing destination and departure from the search
 -(void)addRideAsPassengerWithActivityRideWithSearch
 {
     [self selectAddRide];
@@ -71,7 +72,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     
     [self addRideAsPassenger];
 }
-
+// add new campus ride as a driver with choosing destination and departure from the suggestions
 -(void)addRideAsDriverWithCampusRide
 {
     
@@ -87,7 +88,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     
     [self addRideAsDriver];
 }
-
+// add new campus ride as a driver with choosing destination and departure from the search
 -(void)addRideAsDriverWithCampusRideWithSearch
 {
     
@@ -103,7 +104,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     
     [self addRideAsDriver];
 }
-
+// add new activity ride as a driver with choosing destination and departure from the suggestions
 -(void)addRideAsDriverWithActivityRide
 {
     
@@ -120,7 +121,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     
     [self addRideAsDriver];
 }
-
+// add new activity ride as a driver with choosing destination and departure from the search
 -(void)addRideAsDriverWithActivityRideWithSearch
 {
     
@@ -137,7 +138,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     
     [self addRideAsDriver];
 }
-
+// search campus ride with radius 0 without specific time and departure/destination from suggestions
 -(void)searchRideWithCampusRideWithRadius0WithoutTime
 {
     [self selectSearchRide];
@@ -150,7 +151,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     
     [self search];
 }
-
+// search campus ride with radius 30 without specific time and departure/destination from suggestions
 -(void)searchRideWithCampusRideWithRadius30WithoutTime
 {
     [self selectSearchRide];
@@ -163,7 +164,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     
     [self search];
 }
-
+// search campus ride with radius 30 with specific time and departure/destination from suggestions
 -(void)searchRideWithCampusRideWithRadius30WithTime
 {
     [self selectSearchRide];
@@ -177,7 +178,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     
     [self search];
 }
-
+// search campus ride with radius 0 without specific time and departure/destination from suggestions
 -(void)searchRideWithCampusRideWithRadius0WithTime
 {
     [self selectSearchRide];
@@ -191,7 +192,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     
     [self search];
 }
-
+// search campus ride with radius 0 with specific time and departure/destination from search
 -(void)searchRideWithCampusRideWithRadius0WithTimeWithSearch
 {
     [self selectSearchRide];
@@ -205,7 +206,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     
     [self search];
 }
-
+// search activity ride with radius 0 with specific time and departure/destination from search
 -(void)searchRideWithActivityRideWithRadius0WithTimeWithSearch
 {
     [self selectSearchRide];
@@ -220,7 +221,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     
     [self search];
 }
-
+// delete a request
 -(void)deleteRideAsRequest
 {
     // then choose the first one in list
@@ -228,7 +229,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     [self viewRideDetailAsRequestAndDelete];
     [self tapDeleteButtonInAlert];
 }
-
+// delete an offer
 -(void)deleteRideAsOffer
 {
     // then choose the first one in list
@@ -237,29 +238,31 @@ NSInteger const kDEPARTURE_SEARCH = 3;
 }
 
 #pragma mark - test steps
+// select add a ride in menu
 -(void)selectAddRide
 {
     [self tapRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] inTableViewWithAccessibilityIdentifier:@"Menu List"];
     [self waitForTappableViewWithAccessibilityLabel:@"Add Ride View"];
 }
-
+// select search a ride in menu
 -(void)selectSearchRide
 {
     [self tapRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:2] inTableViewWithAccessibilityIdentifier:@"Menu List"];
     [self waitForTappableViewWithAccessibilityLabel:@"Search Ride View"];
 }
+// select passenger in add ride view
 -(void)selectPassenger
 {
     [self tapViewWithAccessibilityLabel:@"Passenger Choice"];
     [self waitForTappableViewWithAccessibilityLabel:@"Add Ride View"];
 }
-
+// select driver in add ride view
 -(void)selectDriver
 {
     [self tapViewWithAccessibilityLabel:@"Driver Choice"];
     [self waitForTappableViewWithAccessibilityLabel:@"Add Ride View"];
 }
-
+// select places from suggestions
 -(void)selectPlace:(NSInteger)row section:(NSInteger)section type:(NSInteger)type
 {
     if(type == kDESTINATION_ADD || type == kDEPARTURE_ADD){
@@ -276,7 +279,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
         [self waitForTappableViewWithAccessibilityLabel:@"Search Ride View"];
     }
 }
-
+// select places from search
 -(void)searchPlace:(NSInteger)row section:(NSInteger)section address:(NSString *)address type:(NSInteger)type
 {
     if(type == kDEPARTURE_ADD || type == kDESTINATION_ADD){
@@ -299,7 +302,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
         [self waitForTappableViewWithAccessibilityLabel:@"Search Ride View"];
     }
 }
-
+// select date time
 -(void)selectDate:(NSArray *)dateTime
 {
     
@@ -320,7 +323,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     //[self waitForViewWithAccessibilityLabel:@"Date Time Picker" value:@"Tuesday, Jun 17, 06:43 AM" traits:UIAccessibilityTraitNone];
     [self waitForTappableViewWithAccessibilityLabel:@"Add Ride View"];
 }
-
+// select date time, because a third party plugin of time picker is used, cannot use the original test from KIF, so a tap-point test is used
 -(void)selectDateByPoint
 {
     
@@ -343,7 +346,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     //[self waitForViewWithAccessibilityLabel:@"Date Time Picker" value:@"Tuesday, Jun 17, 06:43 AM" traits:UIAccessibilityTraitNone];
     [self waitForTappableViewWithAccessibilityLabel:@"Add Ride View"];
 }
-
+// select repeat, now repeat is not supported
 -(void)selectRepeat
 {
     
@@ -357,8 +360,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     
     [self waitForTappableViewWithAccessibilityLabel:@"Add Ride View"];
 }
-
-
+// select date by tap-point in the search view
 -(void)selectDateByPointInSearch
 {
     
@@ -380,7 +382,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     [self tapScreenAtPoint:select];
     [self waitForTappableViewWithAccessibilityLabel:@"Search Ride View"];
 }
-
+// change the meeting point in the add ride view
 -(void)selectMeetPoint:(NSString *)location driver:(Boolean) driver
 {
     if(driver){
@@ -394,19 +396,19 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     [self tapViewWithAccessibilityLabel:@"Save Meetpoint Button"];
     [self waitForTappableViewWithAccessibilityLabel:@"Add Ride View"];
 }
-
+// select campus ride
 -(void)selectCampus
 {
     [self tapViewWithAccessibilityLabel:@"Campus"];
     //[self waitForTappableViewWithAccessibilityLabel:@"Add Ride View"];
 }
-
+// select activity ride
 -(void)selectActivity
 {
     [self tapViewWithAccessibilityLabel:@"Activity"];
     //[self waitForTappableViewWithAccessibilityLabel:@"Add Ride View"];
 }
-
+// select share on facebook, this facebook plugin cannot be tested
 -(void)selectShare
 {
     //share of facebook can not be tested
@@ -416,7 +418,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     //    [self tapRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1] inTableViewWithAccessibilityIdentifier:@"Add Ride List"];
     //    [self setOn:YES forSwitchWithAccessibilityLabel:@"Email"];
 }
-
+// change the free seat number
 -(void)selectSeatNumber:(NSInteger)seat
 {
     // increase the seat
@@ -435,7 +437,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     [self tapScreenAtPoint:minusButton];
     [self tapScreenAtPoint:minusButton];
 }
-
+// change the car type
 -(void)selectCar:(NSString *)car
 {
     [self tapRowAtIndexPath:[NSIndexPath indexPathForRow:6 inSection:0] inTableViewWithAccessibilityIdentifier:@"Add Ride List"];
@@ -444,7 +446,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     [self tapViewWithAccessibilityLabel:@"Save Meetpoint Button"];
     [self waitForTappableViewWithAccessibilityLabel:@"Add Ride View"];
 }
-
+// click add button, change to owner request view
 -(void)addRideAsPassenger
 {
     [self swipeViewWithAccessibilityLabel:@"Add Ride View" inDirection:KIFSwipeDirectionUp];
@@ -457,7 +459,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     [self tapViewWithAccessibilityLabel:@"Left Drawer Button"];
     [self waitForTappableViewWithAccessibilityLabel:@"Menu View"];
 }
-
+// click add button, change to owner offer view
 -(void)addRideAsDriver
 {
     [self swipeViewWithAccessibilityLabel:@"Add Ride View" inDirection:KIFSwipeDirectionUp];
@@ -470,7 +472,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     [self tapViewWithAccessibilityLabel:@"Left Drawer Button"];
     [self waitForTappableViewWithAccessibilityLabel:@"Menu View"];
 }
-
+// click search button
 -(void)search
 {
     [self tapViewWithAccessibilityLabel:@"Search Button"];
@@ -478,6 +480,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     [self waitForTimeInterval:1];
     
 }
+// click back after viewing the search result
 -(void)searchBack
 {
     CGPoint select;
@@ -486,13 +489,13 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     [self tapScreenAtPoint:select];
     [self tapViewWithAccessibilityLabel:@"Left Drawer Button"];
 }
-
+// choose the different radius of search
 -(void)sliderRadius:(NSInteger) radius row:(NSInteger)row
 {
     [self setValue:radius forSliderWithAccessibilityLabel: [NSString stringWithFormat: @"Slider Radius Row %ld", (long)row]];
     [self waitForViewWithAccessibilityLabel:@"Search Ride View"];
 }
-
+// delete the request ride
 -(void)viewRideDetailAsRequestAndDelete
 {
     [self tapRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] inTableViewWithAccessibilityIdentifier:@"Search Result List"];
@@ -500,7 +503,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     
     [self tapViewWithAccessibilityLabel:@"Delete Button"];
 }
-
+// delete the offer ride
 -(void)viewRideDetailAsOfferAndDelete
 {
     [self tapRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] inTableViewWithAccessibilityIdentifier:@"Search Result List"];
@@ -508,7 +511,7 @@ NSInteger const kDEPARTURE_SEARCH = 3;
     
     [self tapViewWithAccessibilityLabel:@"Cancel Button"];
 }
-
+// insert delete reason
 -(void)tapDeleteButtonInAlert
 {
     [self enterText:@"This is just a test. I need to delete this ride to continue test." intoViewWithAccessibilityLabel:@"Delete Reason"];
