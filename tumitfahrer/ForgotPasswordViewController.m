@@ -24,6 +24,10 @@
     float centerX = (self.view.frame.size.width - cUIElementWidth)/2;
     UIImage *emailIcon = [ActionManager colorImage:[UIImage imageNamed:@"EmailIconBlack"] withColor:[UIColor whiteColor]];
      self.emailTextField = [[CustomTextField alloc] initWithFrame:CGRectMake(centerX, cMarginTop, cUIElementWidth, cUIElementHeight) placeholderText:@"Your TUM email" customIcon:emailIcon returnKeyType:UIReturnKeyNext keyboardType:UIKeyboardTypeEmailAddress shouldStartWithCapital:NO];
+#ifdef DEBUG
+    [self.emailTextField setAccessibilityLabel:@"Email Textfield"];
+    [self.emailTextField setIsAccessibilityElement:YES];
+#endif
     [self.view addSubview:self.emailTextField];
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"DayRoadBackground.jpg"]];

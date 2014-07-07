@@ -17,23 +17,32 @@
 //    [tester waitForTappableViewWithAccessibilityLabel:@"Menu View"];
 }
 
+// test case of join ride
 -(void)testJoinRide
 {
+////before join ride, add a new ride
 //[self createRide];
+////logout as user 1 and relogin as user 2
 //[self logout];
 //[self reLogin:@"zds8978704@gmail.com" password:@"123456"];
+////join the ride which is just added
 //[self joinRide];
+////logout as user 2 and relogin as user 1
 //[self logout];
 //[self reLogin:@"tumitfahrer@gmail.com" password:@"123456"];
+////owner accept the join
 //[self ownerAgree];
+////owner reject the join
 //[self ownerDelete];
 }
 
+// add new ride before join as use 1
 -(void)createRide
 {
     [tester addRideAsDriverWithCampusRide];
 }
 
+// logout
 -(void)logout
 {
     [tester tapViewWithAccessibilityLabel:@"Setting Button"];
@@ -42,6 +51,7 @@
     [tester tapViewWithAccessibilityLabel:@"Logout Button"];
 }
 
+//login as another user
 -(void)reLogin:(NSString *)email password:(NSString *)password
 {
     [tester clearTextFromAndThenEnterText:email intoViewWithAccessibilityLabel:@"Login Email"];
@@ -54,6 +64,7 @@
     [tester waitForTappableViewWithAccessibilityLabel:@"Menu View"];
 }
 
+// search ride and join ride
 -(void)joinRide
 {
     [tester searchRideWithCampusRideWithRadius0WithTime];
@@ -78,6 +89,7 @@
     [tester tapViewWithAccessibilityLabel:@"Left Drawer Button"];
 }
 
+// owner accept the join
 -(void)ownerAgree
 {
     [tester searchRideWithCampusRideWithRadius0WithTime];
@@ -89,6 +101,7 @@
     [tester waitForViewWithAccessibilityLabel:@"Owner Offer View"];
 }
 
+// owner reject the join
 -(void)ownerDelete
 {
     [tester searchRideWithCampusRideWithRadius0WithTime];

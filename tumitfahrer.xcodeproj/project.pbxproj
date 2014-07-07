@@ -21,6 +21,7 @@
 		6EB5C89A191CEFDA0026A886 /* FacultyManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5C899191CEFDA0026A886 /* FacultyManagerTests.m */; };
 		6EB7C1A7192CFDCD004AD7F5 /* CoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB7C1A6192CFDCD004AD7F5 /* CoreDataHelper.m */; };
 		6EC837D2192605AE00007017 /* CurrentUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EC837D1192605AE00007017 /* CurrentUserTests.m */; };
+		6EF72F02196AC17C00D42CE8 /* RegistrationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EF72F01196AC17C00D42CE8 /* RegistrationTest.m */; };
 		6EFC23801926343200AAF263 /* RideSearchStoreTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EFC237F1926343200AAF263 /* RideSearchStoreTest.m */; };
 		6EFC23821926447500AAF263 /* RideStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EFC23811926447500AAF263 /* RideStoreTests.m */; };
 		E50164781956B780004DA38A /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E50164771956B780004DA38A /* User.m */; };
@@ -348,6 +349,8 @@
 		6EB7C1A5192CFDCD004AD7F5 /* CoreDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataHelper.h; sourceTree = "<group>"; };
 		6EB7C1A6192CFDCD004AD7F5 /* CoreDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataHelper.m; sourceTree = "<group>"; };
 		6EC837D1192605AE00007017 /* CurrentUserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentUserTests.m; sourceTree = "<group>"; };
+		6EF72F00196AC17C00D42CE8 /* RegistrationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationTest.h; sourceTree = "<group>"; };
+		6EF72F01196AC17C00D42CE8 /* RegistrationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationTest.m; sourceTree = "<group>"; };
 		6EFC237F1926343200AAF263 /* RideSearchStoreTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideSearchStoreTest.m; sourceTree = "<group>"; };
 		6EFC23811926447500AAF263 /* RideStoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideStoreTests.m; sourceTree = "<group>"; };
 		BAEC5882914944C4B8E2DE24 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1425,6 +1428,8 @@
 				E526B631194D97E0006D3527 /* Supporting Files */,
 				6E27606A1969A839005621AD /* SlideTest.h */,
 				6E27606B1969A839005621AD /* SlideTest.m */,
+				6EF72F00196AC17C00D42CE8 /* RegistrationTest.h */,
+				6EF72F01196AC17C00D42CE8 /* RegistrationTest.m */,
 			);
 			path = "UI Tests";
 			sourceTree = "<group>";
@@ -2523,6 +2528,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6EF72F02196AC17C00D42CE8 /* RegistrationTest.m in Sources */,
 				6E5DACA8194DA42600694DE7 /* SettingTest.m in Sources */,
 				6E2760691969988D005621AD /* ProfileTest.m in Sources */,
 				6E27606C1969A839005621AD /* SlideTest.m in Sources */,

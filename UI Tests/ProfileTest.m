@@ -19,7 +19,7 @@
 //    [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3] inTableViewWithAccessibilityIdentifier:@"Menu List"];
 //    [tester waitForTappableViewWithAccessibilityLabel:@"Profile View"];
 //}
-//
+////test changing firstname
 //-(void)testFirstName
 //{
 //    [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] inTableViewWithAccessibilityIdentifier:@"Profile Table"];
@@ -28,7 +28,7 @@
 //    [tester clearTextFromAndThenEnterText:@"Firstname" intoViewWithAccessibilityLabel:@"Edit Profile View"];
 //    [tester tapViewWithAccessibilityLabel:@"Save Button"];
 //}
-//
+////test changing lastname
 //-(void)testLastName
 //{
 //    [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1] inTableViewWithAccessibilityIdentifier:@"Profile Table"];
@@ -37,7 +37,7 @@
 //    [tester clearTextFromAndThenEnterText:@"Lastname" intoViewWithAccessibilityLabel:@"Edit Profile View"];
 //    [tester tapViewWithAccessibilityLabel:@"Save Button"];
 //}
-//
+////test changing telephone
 //-(void)testTelephone
 //{
 //    [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:1] inTableViewWithAccessibilityIdentifier:@"Profile Table"];
@@ -46,7 +46,7 @@
 //    [tester clearTextFromAndThenEnterText:@"9876543210" intoViewWithAccessibilityLabel:@"Edit Profile View"];
 //    [tester tapViewWithAccessibilityLabel:@"Save Button"];
 //}
-//
+////test changing car
 //-(void)testCar
 //{
 //    [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:4 inSection:1] inTableViewWithAccessibilityIdentifier:@"Profile Table"];
@@ -55,7 +55,7 @@
 //    [tester clearTextFromAndThenEnterText:@"Smart" intoViewWithAccessibilityLabel:@"Edit Profile View"];
 //    [tester tapViewWithAccessibilityLabel:@"Save Button"];
 //}
-//
+////test changing password
 //-(void)testPassword
 //{
 //    [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:5 inSection:1] inTableViewWithAccessibilityIdentifier:@"Profile Table"];

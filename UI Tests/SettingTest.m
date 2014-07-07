@@ -25,7 +25,7 @@
 //    [tester tapViewWithAccessibilityLabel:@"Menu Button"];
 //    [tester waitForTappableViewWithAccessibilityLabel:@"Menu View"];
 //}
-//
+////test send feedback
 //-(void)test00SendFeedback
 //{
 //    [tester waitForTimeInterval:1];
@@ -40,7 +40,7 @@
 //    [tester tapViewWithAccessibilityLabel:@"Feedback Send Button"];
 //    [tester waitForTappableViewWithAccessibilityLabel:@"Setting View"];
 //}
-//
+////test report a problem
 //-(void)test10ReportProblem
 //{
 //    [tester waitForTimeInterval:1];
@@ -55,7 +55,7 @@
 //    [tester tapViewWithAccessibilityLabel:@"Feedback Send Button"];
 //    [tester waitForTappableViewWithAccessibilityLabel:@"Setting View"];
 //}
-//
+////test set reminder
 //-(void)test20Reminder
 //{
 //    [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] inTableViewWithAccessibilityIdentifier:@"Setting List"];
@@ -71,7 +71,7 @@
 //    [tester tapViewWithAccessibilityLabel:@"Back Setting Button"];
 //    [tester waitForTappableViewWithAccessibilityLabel:@"Setting View"];
 //}
-//
+////test view privacy
 //-(void)test30Privacy
 //{
 //    [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1] inTableViewWithAccessibilityIdentifier:@"Setting List"];
@@ -80,7 +80,7 @@
 //    [tester tapViewWithAccessibilityLabel:@"Back Setting Button"];
 //    [tester waitForTappableViewWithAccessibilityLabel:@"Setting View"];
 //}
-//
+////test view license
 //-(void)test40License
 //{
 //    [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1] inTableViewWithAccessibilityIdentifier:@"Setting List"];
@@ -89,7 +89,7 @@
 //    [tester tapViewWithAccessibilityLabel:@"Back Setting Button"];
 //    [tester waitForTappableViewWithAccessibilityLabel:@"Setting View"];
 //}
-//
+////test view car sharing
 //-(void)test50CarSharing
 //{
 //    [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:1] inTableViewWithAccessibilityIdentifier:@"Setting List"];
@@ -98,7 +98,7 @@
 //    [tester tapViewWithAccessibilityLabel:@"Back Setting Button"];
 //    [tester waitForTappableViewWithAccessibilityLabel:@"Setting View"];
 //}
-//
+////test contact message
 //-(void)test60ContactUs
 //{
 //    [tester tapRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:2] inTableViewWithAccessibilityIdentifier:@"Setting List"];

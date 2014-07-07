@@ -22,6 +22,7 @@
     //[tester returnToLoggedOutHomeScreen];
 }
 
+////login test
 //- (void)testSuccessfulLogin
 //{
 //    [tester enterText:@"tumitfahrer@gmail.com" intoViewWithAccessibilityLabel:@"Login Email"];

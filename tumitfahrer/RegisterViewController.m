@@ -73,6 +73,16 @@
     UIImage *campusIcon = [ActionManager colorImage:[UIImage imageNamed:@"CampusIcon"] withColor:[UIColor whiteColor]];
     self.departmentNameTextField = [[CustomTextField alloc] initNotEditableButton:CGRectMake(centerX,cMarginTop + cUIElementPadding*3 + self.emailTextField.frame.size.height*3, cUIElementWidth, cUIElementHeight) placeholderText:@"Department" customIcon:campusIcon];
     [self.departmentNameTextField addTarget:self action:@selector(showDepartmentPickerView) forControlEvents:UIControlEventTouchDown];
+#ifdef DEBUG
+    [self.emailTextField setAccessibilityLabel:@"Email Textfield"];
+    [self.emailTextField setIsAccessibilityElement:YES];
+    [self.firstNameTextField setAccessibilityLabel:@"Firstname Textfield"];
+    [self.firstNameTextField setIsAccessibilityElement:YES];
+    [self.lastNameTextField  setAccessibilityLabel:@"Lastname Textfield"];
+    [self.lastNameTextField setIsAccessibilityElement:YES];
+    [self.departmentNameTextField setAccessibilityLabel:@"Department Picker"];
+    [self.departmentNameTextField setIsAccessibilityElement:YES];
+#endif
 }
 
 - (IBAction)registerButtonPressed:(id)sender {

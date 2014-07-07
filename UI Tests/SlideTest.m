@@ -10,18 +10,19 @@
 
 @implementation SlideTest
 
--(void)testTimeline
-{
-    [tester swipeViewWithAccessibilityLabel:@"Timeline View" inDirection:KIFSwipeDirectionLeft];
-    [tester waitForTimeInterval:1];
-
-    [tester swipeViewWithAccessibilityLabel:@"Timeline View" inDirection:KIFSwipeDirectionLeft];
-    [tester waitForTimeInterval:1];
-    
-    [tester swipeViewWithAccessibilityLabel:@"Timeline View" inDirection:KIFSwipeDirectionRight];
-    [tester waitForTimeInterval:1];
-    
-    [tester swipeViewWithAccessibilityLabel:@"Timeline View" inDirection:KIFSwipeDirectionRight];
-    [tester waitForTimeInterval:1];
-}
+////test slide the view
+//-(void)testTimeline
+//{
+//    [tester swipeViewWithAccessibilityLabel:@"Timeline View" inDirection:KIFSwipeDirectionLeft];
+//    [tester waitForTimeInterval:1];
+//
+//    [tester swipeViewWithAccessibilityLabel:@"Timeline View" inDirection:KIFSwipeDirectionLeft];
+//    [tester waitForTimeInterval:1];
+//    
+//    [tester swipeViewWithAccessibilityLabel:@"Timeline View" inDirection:KIFSwipeDirectionRight];
+//    [tester waitForTimeInterval:1];
+//    
+//    [tester swipeViewWithAccessibilityLabel:@"Timeline View" inDirection:KIFSwipeDirectionRight];
+//    [tester waitForTimeInterval:1];
+//}
 @end
