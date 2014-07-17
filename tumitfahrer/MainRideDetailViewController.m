@@ -100,7 +100,8 @@
     if (self.ride.destinationImage == nil) {
         [RidesStore initRide:self.ride block:^(BOOL fetched) { }];
     } else {
-        self.rideDetail.selectedImageData = self.ride.destinationImage;
+//        self.rideDetail.selectedImageData = self.ride.destinationImage;
+        self.rideDetail.selectedImageData = UIImageJPEGRepresentation([UIImage imageNamed:@"MainCampus.jpg"], 1.0);
     }
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
