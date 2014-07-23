@@ -8,8 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  Class that creates a circular image view from the normal image.
+ */
 @interface CircularImageView : UIImageView
 
+/**
+ *  Inits image view with the normal image.
+ *
+ *  @param frame Size of the requested frame.
+ *  @param image Original image.
+ *
+ *  @return the class object.
+ */
 - (id)initWithFrame:(CGRect)frame image:(UIImage *)image;
 
 @property (nonatomic, strong) UIImage *image;

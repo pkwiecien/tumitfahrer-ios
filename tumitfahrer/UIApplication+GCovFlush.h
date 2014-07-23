@@ -8,5 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  The category for checking the test coverage.
+ */
 @interface UIApplication (GCovFlush)
 @end

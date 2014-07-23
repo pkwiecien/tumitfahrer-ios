@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  Category that extends the standard color palette.
+ */
 @interface UIColor (LayoutColors)
 
 + (UIColor *)lightestBlue;

@@ -22,8 +22,6 @@
 		E50164811956E14F004DA38A /* DayRoadBackground@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E501647F1956E14F004DA38A /* DayRoadBackground@2x.jpg */; };
 		E50164861956E1E0004DA38A /* MainCampus.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E50164821956E1E0004DA38A /* MainCampus.jpg */; };
 		E50164871956E1E0004DA38A /* MainCampus@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E50164831956E1E0004DA38A /* MainCampus@2x.jpg */; };
-		E50164881956E1E0004DA38A /* RoadBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E50164841956E1E0004DA38A /* RoadBackground.jpg */; };
-		E50164891956E1E0004DA38A /* RoadBackground@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E50164851956E1E0004DA38A /* RoadBackground@2x.jpg */; };
 		E501648E195706FF004DA38A /* CustomRepeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E501648C195706FF004DA38A /* CustomRepeatViewController.m */; };
 		E501648F195706FF004DA38A /* CustomRepeatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E501648D195706FF004DA38A /* CustomRepeatViewController.xib */; };
 		E501649C195723DA004DA38A /* MultiSelectSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E501649B195723DA004DA38A /* MultiSelectSegmentedControl.m */; };
@@ -152,6 +150,8 @@
 		E52EA4D3192C019C00E78B6D /* RideDetailMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E52EA4D1192C019C00E78B6D /* RideDetailMapViewController.m */; };
 		E52EA4D4192C019C00E78B6D /* RideDetailMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E52EA4D2192C019C00E78B6D /* RideDetailMapViewController.xib */; };
 		E53D5D0018B14C39004016F8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E53D5CFF18B14C39004016F8 /* QuartzCore.framework */; };
+		E55BE530197C3A48009B47B6 /* RoadNightBackground@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E55BE52F197C3A48009B47B6 /* RoadNightBackground@2x.jpg */; };
+		E55BE532197C3B65009B47B6 /* RoadNightBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E55BE531197C3B65009B47B6 /* RoadNightBackground.jpg */; };
 		E564464A192A976B00F636A5 /* GeneralInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5644648192A976B00F636A5 /* GeneralInfoCell.m */; };
 		E564464B192A976B00F636A5 /* GeneralInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5644649192A976B00F636A5 /* GeneralInfoCell.xib */; };
 		E564464F192AB67200F636A5 /* CircularImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E564464E192AB67200F636A5 /* CircularImageView.m */; };
@@ -326,8 +326,6 @@
 		E501647F1956E14F004DA38A /* DayRoadBackground@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "DayRoadBackground@2x.jpg"; sourceTree = "<group>"; };
 		E50164821956E1E0004DA38A /* MainCampus.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = MainCampus.jpg; sourceTree = "<group>"; };
 		E50164831956E1E0004DA38A /* MainCampus@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "MainCampus@2x.jpg"; sourceTree = "<group>"; };
-		E50164841956E1E0004DA38A /* RoadBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RoadBackground.jpg; sourceTree = "<group>"; };
-		E50164851956E1E0004DA38A /* RoadBackground@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "RoadBackground@2x.jpg"; sourceTree = "<group>"; };
 		E501648B195706FF004DA38A /* CustomRepeatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomRepeatViewController.h; sourceTree = "<group>"; };
 		E501648C195706FF004DA38A /* CustomRepeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomRepeatViewController.m; sourceTree = "<group>"; };
 		E501648D195706FF004DA38A /* CustomRepeatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomRepeatViewController.xib; sourceTree = "<group>"; };
@@ -530,6 +528,8 @@
 		E52EA4D1192C019C00E78B6D /* RideDetailMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideDetailMapViewController.m; sourceTree = "<group>"; };
 		E52EA4D2192C019C00E78B6D /* RideDetailMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RideDetailMapViewController.xib; sourceTree = "<group>"; };
 		E53D5CFF18B14C39004016F8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E55BE52F197C3A48009B47B6 /* RoadNightBackground@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "RoadNightBackground@2x.jpg"; sourceTree = "<group>"; };
+		E55BE531197C3B65009B47B6 /* RoadNightBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RoadNightBackground.jpg; sourceTree = "<group>"; };
 		E5644647192A976B00F636A5 /* GeneralInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralInfoCell.h; sourceTree = "<group>"; };
 		E5644648192A976B00F636A5 /* GeneralInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralInfoCell.m; sourceTree = "<group>"; };
 		E5644649192A976B00F636A5 /* GeneralInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GeneralInfoCell.xib; sourceTree = "<group>"; };
@@ -777,10 +777,10 @@
 		E50164791956E0B5004DA38A /* Backgrounds */ = {
 			isa = PBXGroup;
 			children = (
+				E55BE531197C3B65009B47B6 /* RoadNightBackground.jpg */,
+				E55BE52F197C3A48009B47B6 /* RoadNightBackground@2x.jpg */,
 				E50164821956E1E0004DA38A /* MainCampus.jpg */,
 				E50164831956E1E0004DA38A /* MainCampus@2x.jpg */,
-				E50164841956E1E0004DA38A /* RoadBackground.jpg */,
-				E50164851956E1E0004DA38A /* RoadBackground@2x.jpg */,
 				E501647E1956E14F004DA38A /* DayRoadBackground.jpg */,
 				E501647F1956E14F004DA38A /* DayRoadBackground@2x.jpg */,
 				E501647C1956E0F2004DA38A /* bg1.jpg */,
@@ -2040,7 +2040,6 @@
 				E5FEF3691945E5CD00E326BB /* FeedbackViewController.xib in Resources */,
 				E5E215651907A95F00B0B150 /* SearchRideViewController.xib in Resources */,
 				E507856C195AAA2E00E7CD06 /* HockeySDK.xcconfig in Resources */,
-				E50164881956E1E0004DA38A /* RoadBackground.jpg in Resources */,
 				E5CD59381951C39D00E97DEC /* Facebook-iOS-SDK.txt in Resources */,
 				E58889E91913C7010062D0DF /* UbertestersSDKResources.bundle in Resources */,
 				E5FEF3521945A02300E326BB /* SearchResultViewController.xib in Resources */,
@@ -2059,6 +2058,7 @@
 				E5FEF3461944F57A00E326BB /* SliderCell.xib in Resources */,
 				E526B5C6194B008F006D3527 /* HeaderLabelsView.xib in Resources */,
 				E522BAD218AE13F600ECD375 /* Images.xcassets in Resources */,
+				E55BE530197C3A48009B47B6 /* RoadNightBackground@2x.jpg in Resources */,
 				E526B644194DB84B006D3527 /* DescriptionCell.xib in Resources */,
 				E507854D195A244300E7CD06 /* AnuradaPhoto.jpg in Resources */,
 				E5A9BE19194236CD0072E9B0 /* YourRidesPageViewController.xib in Resources */,
@@ -2070,6 +2070,7 @@
 				E5FEF3641945E5BC00E326BB /* ReminderViewController.xib in Resources */,
 				E5CD592D1951C14900E97DEC /* afnetworking.txt in Resources */,
 				E526B5B2194AC8D9006D3527 /* EditDepartmentViewController.xib in Resources */,
+				E55BE532197C3B65009B47B6 /* RoadNightBackground.jpg in Resources */,
 				E526B612194C7DC8006D3527 /* OfferViewController.xib in Resources */,
 				E5FC44D5190CF83100E8DB65 /* MenuTopHeaderView.xib in Resources */,
 				E5DE44E8192610E10034AF6F /* AddRideTableHeader.xib in Resources */,
@@ -2114,7 +2115,6 @@
 				E5078551195A252100E7CD06 /* MichaelPhoto.jpg in Resources */,
 				E5CD593A1951C39D00E97DEC /* JSMessagesViewController.txt in Resources */,
 				E50263A019558D310041E21A /* BehrozPhoto@2x.jpg in Resources */,
-				E50164891956E1E0004DA38A /* RoadBackground@2x.jpg in Resources */,
 				E50263B519558F000041E21A /* AmrPhoto@2x.jpg in Resources */,
 				E50CCD07191FAE8A003A9490 /* RidesViewController.xib in Resources */,
 				E507856D195AAA2E00E7CD06 /* HockeySDKResources.bundle in Resources */,

@@ -30,11 +30,13 @@
     if (self) {
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
         
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RoadBackground.jpg"]];
+        UIImageView *imageViewFrame = [[UIImageView alloc] initWithFrame:CGRectMake(0, 100, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+        imageViewFrame.image = [UIImage imageNamed:@"RoadNightBackground.jpg"];
+        self.view.backgroundColor = [UIColor blackColor];
         [self prepareInputFields];
         
-        [self.view addSubview:imageView ];
-        [self.view sendSubviewToBack:imageView ];
+        [self.view addSubview:imageViewFrame];
+        [self.view sendSubviewToBack:imageViewFrame];
         
         [self.view addSubview:self.emailTextField];
         [self.view addSubview:self.firstNameTextField];

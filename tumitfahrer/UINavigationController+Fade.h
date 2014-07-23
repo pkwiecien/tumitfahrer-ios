@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  Categoy that add a new animated effect of pushing and poping a view controller.
+ */
 @interface UINavigationController (Fade)
 
 - (void)pushViewControllerWithFade:(UIViewController *)viewController;

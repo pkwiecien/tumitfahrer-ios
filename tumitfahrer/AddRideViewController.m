@@ -443,10 +443,6 @@ NSString *const kRideType = @"Ride Type";
             ride.photo = self.destinationPhotoInfo;
         }
         
-        if (self.repeatDates.count > 1) {
-            [[RidesStore sharedStore] fetchRidesFromDate:ride.createdAt];
-        }
-        
         [[RidesStore sharedStore] addRideToStore:ride];
         [self resetTables];
         

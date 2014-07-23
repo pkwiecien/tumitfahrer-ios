@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "MMDrawerController.h"
 
+/**
+ *  Category that extend the UIViewController with the left menu (called sidebar).
+ */
 @interface UIViewController (SideBarController)
 
 @property(nonatomic, strong, readonly) MMDrawerController *sideBarController;

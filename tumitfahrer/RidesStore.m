@@ -293,11 +293,6 @@ static int activity_id = 0;
     }];
 }
 
-
--(void)fetchRidesFromDate:(NSDate *)date {
-    
-}
-
 -(void)updateBadgesWithType:(NSInteger)rideType {
     if (rideType == ContentTypeCampusRides) {
         [BadgeUtilities updateCampusDateInBadge:[ActionManager currentDate]];

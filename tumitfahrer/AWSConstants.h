@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-#define ACCESS_KEY_ID          @"changeme"
-#define SECRET_KEY             @"changeme"
+#define ACCESS_KEY_ID          @"changeme" // Contact Pawel Kwiecien for the credentials to S3
+#define SECRET_KEY             @"changeme" // Contact Pawel Kwiecien for the credentials to S3
 #define BUCKET_NAME            @"tumitfahrer"
 
 @interface AWSConstants : NSObject
