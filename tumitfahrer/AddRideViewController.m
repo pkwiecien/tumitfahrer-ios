@@ -41,7 +41,8 @@
 @property (nonatomic, strong) NSMutableArray *tableSectionIcons;
 @property (nonatomic, strong) UIView *headerView;
 @property (nonatomic, strong) UIImage *destinationImage;
-@property (nonatomic, strong) Photo *destinationPhotoInfo;
+@property (nonatomic, strong) Photo *destinationPassengerPhotoInfo;
+@property (nonatomic, strong) Photo *destinationDriverPhotoInfo;
 @property (nonatomic, strong) NSArray *repeatDates;
 @property (nonatomic, strong) NSMutableDictionary *selectedRepeatValues;
 
@@ -76,7 +77,6 @@ NSString *const kRideType = @"Ride Type";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self initTables];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -104,13 +104,13 @@ NSString *const kRideType = @"Ride Type";
     } else {
         if(self.tableDriverValues != nil) {
             self.tableValues = [NSMutableArray arrayWithArray:self.tableDriverValues];
-        } else if(self.tableValues == nil){
+        } else {
             self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"No", @"", @"", @"", @"", nil];
             [self setDepartureLabelForCurrentLocation];
-        } else if(self.tableValues != nil) {
-            // init departureCoordinate, destinationCoordinate and fetchPhoto
-            [self initDepartureAndDestinationCoordinates];
         }
+        
+        // init departureCoordinate, destinationCoordinate and fetchPhoto
+        [self initDepartureAndDestinationCoordinates];
         
         self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"", @"Departure", @"Destination", @"Time", @"Repeat", @"Free Seats", @"Car", @"Meeting Point", @"", nil];
     }
@@ -119,6 +119,9 @@ NSString *const kRideType = @"Ride Type";
 -(void)initDepartureAndDestinationCoordinates {
     NSString *departure = [self.tableValues objectAtIndex:1];
     NSString *destination = [self.tableValues objectAtIndex:2];
+    if ([departure length] == 0 || [destination length] == 0) {
+        return;
+    }
     [[LocationController sharedInstance] fetchLocationForAddress:departure completionHandler:^(CLLocation *location) {
         [self setDepartureCoordinate:location.coordinate];
         
@@ -133,6 +136,7 @@ NSString *const kRideType = @"Ride Type";
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     self.screenName = @"Add ride view";
+    [self initTables];
     
     [self.tableView reloadData];
     [self setupNavigationBar];
@@ -219,7 +223,7 @@ NSString *const kRideType = @"Ride Type";
             cell.contentView.backgroundColor = [UIColor clearColor];
             cell.stepperLabelText.text = [self.tablePlaceholders objectAtIndex:indexPath.row];
             return  cell;
-        } else if(indexPath.row == [self.tableValues count]-1) {
+        } else if(indexPath.row == [self.tablePlaceholders count]-1) {
             SegmentedControlCell *cell = [SegmentedControlCell segmentedControlCell];
             [cell setFirstSegmentTitle:@"Campus" secondSementTitle:@"Activity"];
             cell.segmentedControl.selectedSegmentIndex = self.RideType;
@@ -229,7 +233,7 @@ NSString *const kRideType = @"Ride Type";
             return cell;
         }
         
-        if (indexPath.row < [self.tableValues count] && [self.tableValues objectAtIndex:indexPath.row] != nil) {
+        if (indexPath.row < [self.tablePlaceholders count] && [self.tableValues objectAtIndex:indexPath.row] != nil) {
             cell.detailTextLabel.text = [self.tableValues objectAtIndex:indexPath.row];
             cell.detailTextLabel.font = [UIFont systemFontOfSize:16.0];
         }
@@ -439,8 +443,11 @@ NSString *const kRideType = @"Ride Type";
         if (self.destinationImage != nil) {
             ride.destinationImage = UIImageJPEGRepresentation(self.destinationImage, 0.8);
         }
-        if (self.destinationPhotoInfo != nil) {
-            ride.photo = self.destinationPhotoInfo;
+        
+        if (self.destinationDriverPhotoInfo != nil && self.TableType == Driver) {
+            ride.photo = self.destinationDriverPhotoInfo;
+        } else if(self.destinationPassengerPhotoInfo != nil && self.TableType == Passenger) {
+            ride.photo = self.destinationDriverPhotoInfo;
         }
         
         [[RidesStore sharedStore] addRideToStore:ride];
@@ -494,11 +501,8 @@ NSString *const kRideType = @"Ride Type";
 -(void)resetTables {
     self.tablePassengerValues = nil;
     self.tableDriverValues = nil;
-    if(self.TableType == Passenger) {
-        self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"", @"", nil];
-    } else {
-        self.tableValues = [[NSMutableArray alloc] initWithObjects:@"", @"", @"", @"", @"No", @"", @"", @"", @"", nil];
-    }
+    self.destinationDriverPhotoInfo = nil;
+    self.destinationPassengerPhotoInfo = nil;
     self.selectedRepeatValues = [NSMutableDictionary dictionary];
     [self setDepartureLabelForCurrentLocation];
 }
@@ -522,6 +526,7 @@ NSString *const kRideType = @"Ride Type";
 
 -(void)didSelectValue:(NSString *)value forIndexPath:(NSIndexPath *)indexPath {
     [self.tableValues replaceObjectAtIndex:indexPath.row withObject:value];
+    [self saveTableValues];
 }
 
 -(void)selectedDestination:(NSString *)destination coordinate:(CLLocationCoordinate2D)coordinate indexPath:(NSIndexPath *)indexPath {
@@ -532,6 +537,7 @@ NSString *const kRideType = @"Ride Type";
         [self fetchPhotoForDestinationCoordinate];
     }
     [self.tableValues replaceObjectAtIndex:indexPath.row withObject:destination];
+    [self saveTableValues];
 }
 
 
@@ -546,7 +552,11 @@ NSString *const kRideType = @"Ride Type";
 }
 
 -(void)setDestinationPhoto:(Photo *)photo {
-    self.destinationPhotoInfo = photo;
+    if (self.TableType == Driver) {
+        self.destinationDriverPhotoInfo = photo;
+    } else if(self.TableType == Passenger) {
+        self.destinationPassengerPhotoInfo = photo;
+    }
     UIImageView *headerImage = (UIImageView *)[self.headerView viewWithTag:10];
     NSURL *url = [NSURL URLWithString:photo.photoFileUrl];
     self.destinationImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
@@ -569,12 +579,28 @@ NSString *const kRideType = @"Ride Type";
 
 -(void)segmentedControlChangedToIndex:(NSInteger)index segmentedControlId:(NSInteger)controlId{
     if (controlId == 0) { // driver or passenger
+        [self saveTableValues];
         if (index == 0) {
             self.TableType = Passenger;
+            
+            UIImageView *headerImage = (UIImageView *)[self.headerView viewWithTag:10];
+            NSURL *url = [NSURL URLWithString:self.destinationPassengerPhotoInfo.photoFileUrl];
+            self.destinationImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
+            if (self.destinationImage == nil) {
+                self.destinationImage = [UIImage imageNamed:@"MainCampus.jpg"];
+            }
+            headerImage.image = self.destinationImage;
         } else {
             self.TableType = Driver;
+            
+            UIImageView *headerImage = (UIImageView *)[self.headerView viewWithTag:10];
+            NSURL *url = [NSURL URLWithString:self.destinationDriverPhotoInfo.photoFileUrl];
+            self.destinationImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
+            if (self.destinationImage == nil) {
+                self.destinationImage = [UIImage imageNamed:@"MainCampus.jpg"];
+            }
+            headerImage.image = self.destinationImage;
         }
-        [self saveTableValues];
         [self initTables];
         [self.tableView reloadData];
     } else if(controlId == 1) { //ride type
@@ -588,9 +614,9 @@ NSString *const kRideType = @"Ride Type";
 
 -(void)saveTableValues {
     if (self.TableType == Driver) {
-        self.tablePassengerValues = [NSMutableArray arrayWithArray:self.tableValues];
-    } else {
         self.tableDriverValues = [NSMutableArray arrayWithArray:self.tableValues];
+    } else {
+        self.tablePassengerValues = [NSMutableArray arrayWithArray:self.tableValues];
     }
 }
 

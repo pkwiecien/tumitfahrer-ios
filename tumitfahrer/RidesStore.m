@@ -247,8 +247,11 @@ static int activity_id = 0;
 }
 
 -(void)fetchRidesForCurrentUser:(boolCompletionHandler)block {
+    if ([CurrentUser sharedInstance].user == nil) {
+        return;
+    }
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
+    [objectManager.HTTPClient setDefaultHeader:@"apiKey" value:[CurrentUser sharedInstance].user.apiKey];
     
     [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/users/%@/rides", [CurrentUser sharedInstance].user.userId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [self updateBadgesWithType:ContentTypeCampusRides];
@@ -261,9 +264,10 @@ static int activity_id = 0;
 }
 
 -(void)fetchNewRides:(boolCompletionHandler)block {
-    
+    if ([CurrentUser sharedInstance].user == nil) {
+        return;
+    }
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
     
     [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/rides?page=%d", activity_id] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         if ([[mappingResult array] count] > 0) {
@@ -278,7 +282,9 @@ static int activity_id = 0;
 }
 
 -(void)fetchRidesfromDate:(NSDate *)date rideType:(NSInteger)rideType block:(boolCompletionHandler)block {
-    
+    if ([CurrentUser sharedInstance].user == nil) {
+        return;
+    }
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     NSDictionary *queryParams = @{@"from_date": date, @"ride_type" : [NSNumber numberWithInt:(int)rideType]};
     
@@ -303,9 +309,7 @@ static int activity_id = 0;
 }
 
 -(void)fetchSingleRideFromWebserviceWithId:(NSNumber *)rideId block:(rideCompletionHandler)block {
-    
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
 
     [objectManager getObject:nil path:[NSString stringWithFormat:@"/api/v2/rides/%@", rideId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         Ride *ride = [mappingResult firstObject];
@@ -328,8 +332,6 @@ static int activity_id = 0;
 -(void)checkIfRidesExistInWebservice {
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
-    
     [objectManager getObjectsAtPath:@"/api/v2/rides/ids" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         IdsMapping *mapping = [mappingResult firstObject];
         [self compareRides:mapping.ids];
@@ -346,7 +348,6 @@ static int activity_id = 0;
         }
     }
 }
-
 
 # pragma mark - add and delete methods
 

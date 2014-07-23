@@ -35,6 +35,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor customLightGray];
+    
+    UIView *headerView = [[[NSBundle mainBundle] loadNibNamed:@"TeamHeaderView" owner:self options:nil] objectAtIndex:0];
+    self.tableView.tableHeaderView = headerView;
 }
 
 -(void)viewWillAppear:(BOOL)animated {

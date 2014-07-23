@@ -59,6 +59,7 @@
     
     [self setupNavigationController];
     [self setupRestKit];
+    [self setupCurrentUser];
     [self setupObservers];
     
     // Ubertersters SDK initialization
@@ -288,9 +289,22 @@
     [self.panoramioObjectManager addResponseDescriptor:[PanoramioMapping getPhotoResponseDescriptorWithMapping:photoMapping]];
 }
 
+-(void)setupCurrentUser {
+    NSString *emailLoggedInUser = [[NSUserDefaults standardUserDefaults] valueForKey:@"emailLoggedInUser"];
+    
+    if (emailLoggedInUser != nil) {
+        User *user = [CurrentUser fetchUserFromCoreDataWithEmail:emailLoggedInUser];
+        if (user != nil) {
+            [[CurrentUser sharedInstance] initCurrentUser:user];
+            RKObjectManager *objectManager = [RKObjectManager sharedManager];
+            [objectManager.HTTPClient setDefaultHeader:@"apiKey" value:[CurrentUser sharedInstance].user.apiKey];
+        }
+    }
+}
 
 -(void)setupObservers {
     // for getting location of a specific photo
+    
     [[LocationController sharedInstance] addObserver:[PanoramioUtilities sharedInstance]];
     [[LocationController sharedInstance] addObserver:[RidesStore sharedStore]];
     [[LocationController sharedInstance] addObserver:[ActivityStore sharedStore]];

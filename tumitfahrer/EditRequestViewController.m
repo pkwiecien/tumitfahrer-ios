@@ -176,7 +176,23 @@
         return;
     }
     
-    BOOL isNearby = [LocationController isLocation:[[CLLocation alloc] initWithLatitude:self.departureCoordinate.latitude longitude:self.departureCoordinate.longitude] nearbyAnotherLocation:[[CLLocation alloc] initWithLatitude:self.destinationCoordinate.latitude longitude:self.destinationCoordinate.longitude] thresholdInMeters:1000];
+    NSNumber *departureLatitude = nil, *departureLongitude = nil, *destinationLatitude = nil, *destinationLongitude = nil;
+    if (self.departureCoordinate.latitude != 0) {
+        departureLatitude = [NSNumber numberWithDouble:self.departureCoordinate.latitude];
+        departureLongitude = [NSNumber numberWithDouble:self.departureCoordinate.longitude];
+    } else {
+        departureLatitude = self.ride.departureLatitude;
+        departureLongitude = self.ride.departureLongitude;
+    }
+    if(self.destinationCoordinate.latitude != 0) {
+        destinationLatitude = [NSNumber numberWithDouble:self.destinationCoordinate.latitude];
+        destinationLongitude = [NSNumber numberWithDouble:self.destinationCoordinate.longitude];
+    } else {
+        destinationLatitude = self.ride.destinationLatitude;
+        destinationLongitude = self.ride.destinationLongitude;
+    }
+    
+    BOOL isNearby = [LocationController isLocation:[[CLLocation alloc] initWithLatitude:[departureLatitude doubleValue] longitude:[departureLongitude doubleValue]] nearbyAnotherLocation:[[CLLocation alloc] initWithLatitude:[destinationLatitude doubleValue] longitude:[destinationLongitude doubleValue]] thresholdInMeters:1000];
     if (isNearby) {
         [ActionManager showAlertViewWithTitle:@"Problem" description:@"The route is too short"];
         return;
@@ -202,22 +218,6 @@
     }
     
     NSDictionary *rideParams = nil;
-    
-    NSNumber *departureLatitude = nil, *departureLongitude = nil, *destinationLatitude = nil, *destinationLongitude = nil;
-    if (self.departureCoordinate.latitude != 0) {
-        departureLatitude = [NSNumber numberWithDouble:self.departureCoordinate.latitude];
-        departureLongitude = [NSNumber numberWithDouble:self.departureCoordinate.longitude];
-    } else {
-        departureLatitude = self.ride.departureLatitude;
-        departureLongitude = self.ride.departureLongitude;
-    }
-    if(self.destinationCoordinate.latitude != 0) {
-        destinationLatitude = [NSNumber numberWithDouble:self.destinationCoordinate.latitude];
-        destinationLongitude = [NSNumber numberWithDouble:self.destinationCoordinate.longitude];
-    } else {
-        destinationLatitude = self.ride.destinationLatitude;
-        destinationLongitude = self.ride.destinationLongitude;
-    }
     
     queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"ride_type": [NSNumber numberWithInt:self.RideType], @"is_driving": [NSNumber numberWithBool:NO],  @"meeting_point": meetingPoint, @"departure_latitude": departureLatitude, @"departure_longitude" : departureLongitude, @"destination_latitude" : destinationLatitude, @"destination_longitude" : destinationLongitude};
     

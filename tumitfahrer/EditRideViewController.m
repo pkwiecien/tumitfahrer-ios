@@ -79,7 +79,7 @@
         meetingPoint = self.ride.meetingPoint;
     }
     
-    self.tableValues = [[NSMutableArray alloc] initWithObjects:self.ride.departurePlace,self.ride.destination, [ActionManager stringFromDate:self.ride.departureTime], [self.ride.freeSeats stringValue], car, meetingPoint, @"", nil];
+    self.tableValues = [[NSMutableArray alloc] initWithObjects:self.ride.departurePlace,self.ride.destination, [ActionManager stringFromDate:self.ride.departureTime], @"No", [self.ride.freeSeats stringValue], car, meetingPoint, @"", nil];
     self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"Departure", @"Destination", @"Time", @"Repeat", @"Free Seats", @"Car", @"Meeting Point", @"", nil];
 }
 
@@ -209,7 +209,23 @@
         return;
     }
     
-    BOOL isNearby = [LocationController isLocation:[[CLLocation alloc] initWithLatitude:self.departureCoordinate.latitude longitude:self.departureCoordinate.longitude] nearbyAnotherLocation:[[CLLocation alloc] initWithLatitude:self.destinationCoordinate.latitude longitude:self.destinationCoordinate.longitude] thresholdInMeters:1000];
+    NSNumber *departureLatitude = nil, *departureLongitude = nil, *destinationLatitude = nil, *destinationLongitude = nil;
+    if (self.departureCoordinate.latitude != 0) {
+        departureLatitude = [NSNumber numberWithDouble:self.departureCoordinate.latitude];
+        departureLongitude = [NSNumber numberWithDouble:self.departureCoordinate.longitude];
+    } else {
+        departureLatitude = self.ride.departureLatitude;
+        departureLongitude = self.ride.departureLongitude;
+    }
+    if(self.destinationCoordinate.latitude != 0) {
+        destinationLatitude = [NSNumber numberWithDouble:self.destinationCoordinate.latitude];
+        destinationLongitude = [NSNumber numberWithDouble:self.destinationCoordinate.longitude];
+    } else {
+        destinationLatitude = self.ride.destinationLatitude;
+        destinationLongitude = self.ride.destinationLongitude;
+    }
+    
+    BOOL isNearby = [LocationController isLocation:[[CLLocation alloc] initWithLatitude:[departureLatitude doubleValue] longitude:[departureLongitude doubleValue]] nearbyAnotherLocation:[[CLLocation alloc] initWithLatitude:[destinationLatitude doubleValue] longitude:[destinationLongitude doubleValue]] thresholdInMeters:1000];
     if (isNearby) {
         [ActionManager showAlertViewWithTitle:@"Problem" description:@"The route is too short"];
         return;
@@ -229,36 +245,20 @@
     
     NSDictionary *rideParams = nil;
     
-    NSString *freeSeats = [self.tableValues objectAtIndex:3];
+    NSString *freeSeats = [self.tableValues objectAtIndex:4];
     if (freeSeats == nil || freeSeats.length == 0) {
         freeSeats = @"1";
     }
     
-    NSString *car = [self.tableValues objectAtIndex:4];
+    NSString *car = [self.tableValues objectAtIndex:5];
     if (car.length == 0 && [CurrentUser sharedInstance].user.car != nil) {
         car = [CurrentUser sharedInstance].user.car;
     }
     
-    NSString *meetingPoint = [self.tableValues objectAtIndex:5];
+    NSString *meetingPoint = [self.tableValues objectAtIndex:6];
     if (meetingPoint == nil) {
         [ActionManager showAlertViewWithTitle:@"No meeting place" description:@"To add a ride please specify the meeting place"];
         return;
-    }
-    
-    NSNumber *departureLatitude = nil, *departureLongitude = nil, *destinationLatitude = nil, *destinationLongitude = nil;
-    if (self.departureCoordinate.latitude != 0) {
-        departureLatitude = [NSNumber numberWithDouble:self.departureCoordinate.latitude];
-        departureLongitude = [NSNumber numberWithDouble:self.departureCoordinate.longitude];
-    } else {
-        departureLatitude = self.ride.departureLatitude;
-        departureLongitude = self.ride.departureLongitude;
-    }
-    if(self.destinationCoordinate.latitude != 0) {
-        destinationLatitude = [NSNumber numberWithDouble:self.destinationCoordinate.latitude];
-        destinationLongitude = [NSNumber numberWithDouble:self.destinationCoordinate.longitude];
-    } else {
-        destinationLatitude = self.ride.destinationLatitude;
-        destinationLongitude = self.ride.destinationLongitude;
     }
     
     queryParams = @{@"departure_place": departurePlace, @"destination": destination, @"departure_time": time, @"free_seats": freeSeats, @"meeting_point": meetingPoint, @"ride_type": [NSNumber numberWithInt:self.RideType], @"car": car, @"departure_latitude": departureLatitude, @"departure_longitude" : departureLongitude, @"destination_latitude" : destinationLatitude, @"destination_longitude" : destinationLongitude};

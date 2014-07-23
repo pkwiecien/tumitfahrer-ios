@@ -57,24 +57,14 @@
     [self addChildViewController:self.pageController];
     [[self view] addSubview:[self.pageController view]];
     [self.pageController didMoveToParentViewController:self];
-    
-    // get current user
-    NSString *emailLoggedInUser = [[NSUserDefaults standardUserDefaults] valueForKey:@"emailLoggedInUser"];
-    
-    if (emailLoggedInUser != nil) {
-        User *user = [CurrentUser fetchUserFromCoreDataWithEmail:emailLoggedInUser];
-        if (user != nil) {
-            [[CurrentUser sharedInstance] initCurrentUser:user];
-        }
-    }
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
 
     // check if current user exists
-    if([CurrentUser sharedInstance].user == nil) {
-        [self showLoginScreen:NO];
+    if([CurrentUser sharedInstance].user == nil || [CurrentUser sharedInstance].user.apiKey == nil) {
+        [self showLoginScreenWithAnimation:NO];
     }
     
     NSLog(@"current user: %@ %@", [CurrentUser sharedInstance].user.userId, [CurrentUser sharedInstance].user.email);
@@ -115,8 +105,7 @@
     [self.navigationController pushViewController:mapVC animated:YES];
 }
 
--(void)showLoginScreen:(BOOL)animated
-{
+-(void)showLoginScreenWithAnimation:(BOOL)animated {
     LoginViewController *loginVC = [[LoginViewController alloc] init];
     [self presentViewController:loginVC animated:animated completion:nil];
 }

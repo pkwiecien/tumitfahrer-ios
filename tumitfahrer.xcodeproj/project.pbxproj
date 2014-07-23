@@ -169,6 +169,7 @@
 		E58B8726191511EA0032524A /* RequestMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E58B8725191511EA0032524A /* RequestMapping.m */; };
 		E58B872A19151F1B0032524A /* KGStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E58B872919151F1B0032524A /* KGStatusBar.m */; };
 		E58B872C191559B30032524A /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E58B872B191559B30032524A /* libicucore.dylib */; };
+		E593F07E197F918200C1AF32 /* TeamHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E593F07D197F918200C1AF32 /* TeamHeaderView.xib */; };
 		E59987D018E6E47F00B01C62 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987CE18E6E47F00B01C62 /* LoginViewController.m */; };
 		E59987D118E6E47F00B01C62 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59987CF18E6E47F00B01C62 /* LoginViewController.xib */; };
 		E59987D718E6ECF200B01C62 /* CustomTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987D618E6ECF200B01C62 /* CustomTextField.m */; };
@@ -557,6 +558,7 @@
 		E58B872819151F1B0032524A /* KGStatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGStatusBar.h; sourceTree = "<group>"; };
 		E58B872919151F1B0032524A /* KGStatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGStatusBar.m; sourceTree = "<group>"; };
 		E58B872B191559B30032524A /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		E593F07D197F918200C1AF32 /* TeamHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TeamHeaderView.xib; sourceTree = "<group>"; };
 		E59987CD18E6E47F00B01C62 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		E59987CE18E6E47F00B01C62 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		E59987CF18E6E47F00B01C62 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -1368,6 +1370,7 @@
 		E526B64C194DFF6E006D3527 /* Team */ = {
 			isa = PBXGroup;
 			children = (
+				E593F07C197F917200C1AF32 /* Header */,
 				E526B652194E0101006D3527 /* Team Member Cell */,
 				E526B64D194E00FB006D3527 /* TeamViewController.h */,
 				E526B64E194E00FB006D3527 /* TeamViewController.m */,
@@ -1462,6 +1465,14 @@
 				E58B872919151F1B0032524A /* KGStatusBar.m */,
 			);
 			path = KGStatusBar;
+			sourceTree = "<group>";
+		};
+		E593F07C197F917200C1AF32 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				E593F07D197F918200C1AF32 /* TeamHeaderView.xib */,
+			);
+			name = Header;
 			sourceTree = "<group>";
 		};
 		E59987C418E6DBC300B01C62 /* ViewControllers */ = {
@@ -2054,6 +2065,7 @@
 				E5DF641618EB548E00D53164 /* SettingsViewController.xib in Resources */,
 				E50263B719558F000041E21A /* DansenPhoto@2x.jpg in Resources */,
 				E50CCD12191FC324003A9490 /* RidesPageViewController.xib in Resources */,
+				E593F07E197F918200C1AF32 /* TeamHeaderView.xib in Resources */,
 				E58889DD191383570062D0DF /* OwnerOfferViewController.xib in Resources */,
 				E5FEF3461944F57A00E326BB /* SliderCell.xib in Resources */,
 				E526B5C6194B008F006D3527 /* HeaderLabelsView.xib in Resources */,
