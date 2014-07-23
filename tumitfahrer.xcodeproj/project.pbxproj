@@ -170,6 +170,11 @@
 		E58B872A19151F1B0032524A /* KGStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E58B872919151F1B0032524A /* KGStatusBar.m */; };
 		E58B872C191559B30032524A /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E58B872B191559B30032524A /* libicucore.dylib */; };
 		E593F07E197F918200C1AF32 /* TeamHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E593F07D197F918200C1AF32 /* TeamHeaderView.xib */; };
+		E593F083197FD2EA00C1AF32 /* StomtViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E593F081197FD2EA00C1AF32 /* StomtViewController.m */; };
+		E593F084197FD2EA00C1AF32 /* StomtViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E593F082197FD2EA00C1AF32 /* StomtViewController.xib */; };
+		E593F08A197FDF0500C1AF32 /* StomtHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E593F089197FDF0500C1AF32 /* StomtHeaderView.m */; };
+		E593F094197FFE2A00C1AF32 /* StomtCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E593F092197FFE2A00C1AF32 /* StomtCell.m */; };
+		E593F095197FFE2A00C1AF32 /* StomtCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E593F093197FFE2A00C1AF32 /* StomtCell.xib */; };
 		E59987D018E6E47F00B01C62 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987CE18E6E47F00B01C62 /* LoginViewController.m */; };
 		E59987D118E6E47F00B01C62 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E59987CF18E6E47F00B01C62 /* LoginViewController.xib */; };
 		E59987D718E6ECF200B01C62 /* CustomTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = E59987D618E6ECF200B01C62 /* CustomTextField.m */; };
@@ -559,6 +564,14 @@
 		E58B872919151F1B0032524A /* KGStatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGStatusBar.m; sourceTree = "<group>"; };
 		E58B872B191559B30032524A /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		E593F07D197F918200C1AF32 /* TeamHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TeamHeaderView.xib; sourceTree = "<group>"; };
+		E593F080197FD2EA00C1AF32 /* StomtViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StomtViewController.h; sourceTree = "<group>"; };
+		E593F081197FD2EA00C1AF32 /* StomtViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StomtViewController.m; sourceTree = "<group>"; };
+		E593F082197FD2EA00C1AF32 /* StomtViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StomtViewController.xib; sourceTree = "<group>"; };
+		E593F088197FDF0500C1AF32 /* StomtHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StomtHeaderView.h; sourceTree = "<group>"; };
+		E593F089197FDF0500C1AF32 /* StomtHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StomtHeaderView.m; sourceTree = "<group>"; };
+		E593F091197FFE2A00C1AF32 /* StomtCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StomtCell.h; sourceTree = "<group>"; };
+		E593F092197FFE2A00C1AF32 /* StomtCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StomtCell.m; sourceTree = "<group>"; };
+		E593F093197FFE2A00C1AF32 /* StomtCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StomtCell.xib; sourceTree = "<group>"; };
 		E59987CD18E6E47F00B01C62 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		E59987CE18E6E47F00B01C62 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		E59987CF18E6E47F00B01C62 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -1475,6 +1488,37 @@
 			name = Header;
 			sourceTree = "<group>";
 		};
+		E593F07F197FD2D800C1AF32 /* stomt */ = {
+			isa = PBXGroup;
+			children = (
+				E593F08B197FF9FB00C1AF32 /* cell */,
+				E593F085197FDEC400C1AF32 /* header */,
+				E593F080197FD2EA00C1AF32 /* StomtViewController.h */,
+				E593F081197FD2EA00C1AF32 /* StomtViewController.m */,
+				E593F082197FD2EA00C1AF32 /* StomtViewController.xib */,
+			);
+			name = stomt;
+			sourceTree = "<group>";
+		};
+		E593F085197FDEC400C1AF32 /* header */ = {
+			isa = PBXGroup;
+			children = (
+				E593F088197FDF0500C1AF32 /* StomtHeaderView.h */,
+				E593F089197FDF0500C1AF32 /* StomtHeaderView.m */,
+			);
+			name = header;
+			sourceTree = "<group>";
+		};
+		E593F08B197FF9FB00C1AF32 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				E593F091197FFE2A00C1AF32 /* StomtCell.h */,
+				E593F092197FFE2A00C1AF32 /* StomtCell.m */,
+				E593F093197FFE2A00C1AF32 /* StomtCell.xib */,
+			);
+			name = cell;
+			sourceTree = "<group>";
+		};
 		E59987C418E6DBC300B01C62 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1725,6 +1769,7 @@
 		E5DF640B18EB42D800D53164 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				E593F07F197FD2D800C1AF32 /* stomt */,
 				E526B64C194DFF6E006D3527 /* Team */,
 				E5FEF37919463D5700E326BB /* Carsharing */,
 				E5FEF35A1945E4C500E326BB /* Feedback */,
@@ -2061,6 +2106,7 @@
 				E59987D118E6E47F00B01C62 /* LoginViewController.xib in Resources */,
 				E5CD593E1951C39D00E97DEC /* RMDateSelectionViewController.txt in Resources */,
 				E50263BD19558F000041E21A /* SaqibPhoto@2x.jpg in Resources */,
+				E593F084197FD2EA00C1AF32 /* StomtViewController.xib in Resources */,
 				E504D9BD190A58710036FFA8 /* MeetingPointViewController.xib in Resources */,
 				E5DF641618EB548E00D53164 /* SettingsViewController.xib in Resources */,
 				E50263B719558F000041E21A /* DansenPhoto@2x.jpg in Resources */,
@@ -2149,6 +2195,7 @@
 				E5FD9EC819234A8500902502 /* TimelineMapViewController.xib in Resources */,
 				E5FEF3911946F85100E326BB /* EditRequestViewController.xib in Resources */,
 				E52EA4D4192C019C00E78B6D /* RideDetailMapViewController.xib in Resources */,
+				E593F095197FFE2A00C1AF32 /* StomtCell.xib in Resources */,
 				E5DE44EE192618270034AF6F /* SegmentedControlCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2296,6 +2343,7 @@
 				E5A9BE0E19421F2C0072E9B0 /* IdsMapping.m in Sources */,
 				E50CCCC1191E7A94003A9490 /* TimelinePageViewController.m in Sources */,
 				E526B643194DB84B006D3527 /* DescriptionCell.m in Sources */,
+				E593F094197FFE2A00C1AF32 /* StomtCell.m in Sources */,
 				E59B9A6A1916D072008DE80B /* NavigationBarUtilities.m in Sources */,
 				E50DB27218F5DFB200E87E62 /* LocationController.m in Sources */,
 				E5DE44ED192618270034AF6F /* SegmentedControlCell.m in Sources */,
@@ -2328,8 +2376,10 @@
 				E59987FB18E7251000B01C62 /* RegisterViewController.m in Sources */,
 				E50263861954D5110041E21A /* ConversationUtilities.m in Sources */,
 				E50DB28B18F8730400E87E62 /* RidesStore.m in Sources */,
+				E593F083197FD2EA00C1AF32 /* StomtViewController.m in Sources */,
 				E50DB28818F8706500E87E62 /* RideMapping.m in Sources */,
 				E501648E195706FF004DA38A /* CustomRepeatViewController.m in Sources */,
+				E593F08A197FDF0500C1AF32 /* StomtHeaderView.m in Sources */,
 				E564464A192A976B00F636A5 /* GeneralInfoCell.m in Sources */,
 				E5FEF3721946181B00E326BB /* RideSearch.m in Sources */,
 				E5FD9EC719234A8500902502 /* TimelineMapViewController.m in Sources */,

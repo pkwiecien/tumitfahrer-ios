@@ -186,10 +186,6 @@
         } else {
             cell.actionLabel.text = @"Offer ride";
         }
-//        cell.actionLabel.frame = CGRectMake(cell.actionLabel.frame.origin.x, cell.actionLabel.frame.origin.y, 100, cell.actionLabel.frame.size.height);
-//        cell.joinNowView.frame = CGRectMake(cell.joinNowView.frame.origin.x, cell.joinNowView.frame.origin.y, 100, cell.joinNowView.frame.size.height);
-        
-        // TODO: refactor so that the width is dynamically changes
         
     } else {
         cell.seatsView.backgroundColor = [UIColor orangeColor];
@@ -199,8 +195,6 @@
         } else {
             cell.actionLabel.text = @"Join now";
         }
-//        cell.actionLabel.frame = CGRectMake(cell.actionLabel.frame.origin.x, cell.actionLabel.frame.origin.y, 70, cell.actionLabel.frame.size.height);
-//        cell.joinNowView.frame = CGRectMake(cell.joinNowView.frame.origin.x, cell.joinNowView.frame.origin.y, 70, cell.joinNowView.frame.size.height);
     }
     
     if ([ride.isRideRequest boolValue]) {

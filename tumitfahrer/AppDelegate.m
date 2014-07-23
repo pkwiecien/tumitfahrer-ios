@@ -62,6 +62,9 @@
     [self setupCurrentUser];
     [self setupObservers];
     
+    self.connectedWatch = [[PBPebbleCentral defaultCentral] lastConnectedWatch];
+    NSLog(@"Last connected watch: %@", self.connectedWatch);
+    
     // Ubertersters SDK initialization
     //[[Ubertesters shared] initializeWithOptions:UTOptionsManual];
     // Hockey-app initialization
@@ -121,6 +124,36 @@
     }
 }
 
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+//    if (application.applicationState == UIApplicationStateActive) {
+
+        NSDictionary *pushInfo = [userInfo objectForKey:@"notification"];
+        
+        NSString *alertMsg = @"";
+        NSString *custom = @"";
+        
+        if( [pushInfo objectForKey:@"msg"] != NULL)
+        {
+            alertMsg = [pushInfo objectForKey:@"msg"];
+        }
+        
+        if( [userInfo objectForKey:@"type"] != NULL)
+        {
+            custom = [userInfo objectForKey:@"type"];
+        }
+    if (self.connectedWatch != nil) {
+        
+        if ([custom isEqualToString:@"requestAccepted"]) {
+            
+        }
+    }
+        
+//    } else {
+    
+//    }
+}
+
+
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken {
     const unsigned *tokenBytes = [deviceToken bytes];
     NSString *hexToken = [NSString stringWithFormat:@"%08x%08x%08x%08x%08x%08x%08x%08x",
@@ -128,7 +161,18 @@
                           ntohl(tokenBytes[3]), ntohl(tokenBytes[4]), ntohl(tokenBytes[5]),
                           ntohl(tokenBytes[6]), ntohl(tokenBytes[7])];
     NSLog(@"Device token is: %@", hexToken);
+    
+    [self setupPebbleWithToken:hexToken];
+    
     [[Device sharedInstance] setDeviceToken:hexToken];
+}
+
+-(void)setupPebbleWithToken:(NSString *)token {
+    uuid_t myAppUUIDbytes;
+    NSUUID *myAppUUID = [[NSUUID alloc] initWithUUIDString:token];
+    [myAppUUID getUUIDBytes:myAppUUIDbytes];
+    
+    [[PBPebbleCentral defaultCentral] setAppUUID:[NSData dataWithBytes:myAppUUIDbytes length:16]];
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error {
