@@ -21,5 +21,5 @@ pod 'MMDrawerController'
 # Facebook api for sharing rides
 pod 'Facebook-iOS-SDK'
 # pod for communicating with Pebble
-pod 'PebbleKit'
+#pod 'PebbleKit'
 

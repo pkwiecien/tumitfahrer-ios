@@ -8,13 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
-#import <PebbleKit/PebbleKit.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) NSDictionary *refererAppLink;
 @property (strong, nonatomic) RKObjectManager *panoramioObjectManager;
-@property (strong, nonatomic) PBWatch *connectedWatch;
 
 @end

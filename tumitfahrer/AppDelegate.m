@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 #import <RestKit/RestKit.h>
-#import <UbertestersSDK/Ubertesters.h>
 #import <QuartzCore/QuartzCore.h>
 #import <AWSRuntime/AWSRuntime.h>
 #import <HockeySDK/HockeySDK.h>
@@ -62,11 +61,6 @@
     [self setupCurrentUser];
     [self setupObservers];
     
-    self.connectedWatch = [[PBPebbleCentral defaultCentral] lastConnectedWatch];
-    NSLog(@"Last connected watch: %@", self.connectedWatch);
-    
-    // Ubertersters SDK initialization
-    //[[Ubertesters shared] initializeWithOptions:UTOptionsManual];
     // Hockey-app initialization
     [self setupHockeyApp];
     
@@ -125,28 +119,7 @@
 }
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-//    if (application.applicationState == UIApplicationStateActive) {
 
-        NSDictionary *pushInfo = [userInfo objectForKey:@"notification"];
-        
-        NSString *alertMsg = @"";
-        NSString *custom = @"";
-        
-        if( [pushInfo objectForKey:@"msg"] != NULL)
-        {
-            alertMsg = [pushInfo objectForKey:@"msg"];
-        }
-        
-        if( [userInfo objectForKey:@"type"] != NULL)
-        {
-            custom = [userInfo objectForKey:@"type"];
-        }
-    if (self.connectedWatch != nil) {
-        
-        if ([custom isEqualToString:@"requestAccepted"]) {
-            
-        }
-    }
 }
 
 
@@ -158,17 +131,7 @@
                           ntohl(tokenBytes[6]), ntohl(tokenBytes[7])];
     NSLog(@"Device token is: %@", hexToken);
     
-    [self setupPebbleWithToken:hexToken];
-    
     [[Device sharedInstance] setDeviceToken:hexToken];
-}
-
--(void)setupPebbleWithToken:(NSString *)token {
-    uuid_t myAppUUIDbytes;
-    NSUUID *myAppUUID = [[NSUUID alloc] initWithUUIDString:token];
-    [myAppUUID getUUIDBytes:myAppUUIDbytes];
-    
-    [[PBPebbleCentral defaultCentral] setAppUUID:[NSData dataWithBytes:myAppUUIDbytes length:16]];
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error {
