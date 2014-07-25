@@ -8,7 +8,7 @@
 
 #import "StomtViewController.h"
 #import "StomtHeaderView.h"
-#import "StomtCell.h"
+#import "StomtExperimentalCell.h"
 
 @interface StomtViewController ()
 
@@ -51,8 +51,11 @@
     [stomtButton addTarget:self action:@selector(stomtButtonPressed) forControlEvents:UIControlEventTouchDown];
     optionalTextLabel = (UILabel *)[headerView viewWithTag:104];
     self.tableView.tableHeaderView = headerView;
-    
-    [self.tableView registerClass:[StomtCell class] forCellReuseIdentifier:@"StomtCell"];
+}
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 85;
 }
 
 -(void)stomtButtonPressed {
@@ -116,15 +119,18 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+   
+    static NSString *simpleTableIdentifier = @"StomtExperimentalCell";
     
-    StomtCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StomtCell"];
-    
-    if(cell == nil){
-        cell = [StomtCell stomtCell];
+    StomtExperimentalCell *cell = (StomtExperimentalCell *)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    if (cell == nil)
+    {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"StomtExperimentalCell" owner:self options:nil];
+        cell = [nib objectAtIndex:0];
     }
     
-    cell.stomtTextView.text = [NSString stringWithFormat:@"%d", (int)indexPath.row];
-
+    cell.stomTextView.text = [NSString stringWithFormat:@"%d", indexPath.row];
+    
     return cell;
 }
 

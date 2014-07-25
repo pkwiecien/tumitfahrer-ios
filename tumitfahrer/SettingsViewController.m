@@ -124,12 +124,12 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 
-//    if (indexPath.section == 0 && indexPath.row == 0) {
-//        StomtViewController *stomtVC = [[StomtViewController alloc] init];
-//        stomtVC.title = @"Feeback";
-//        [self.navigationController pushViewController:stomtVC animated:YES];
-//        return;
-//    }
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        StomtViewController *stomtVC = [[StomtViewController alloc] init];
+        stomtVC.title = @"Feeback";
+        [self.navigationController pushViewController:stomtVC animated:YES];
+        return;
+    }
     
     if(indexPath.section == 0) {
         FeedbackViewController *feedbackVC = [[FeedbackViewController alloc] init];
