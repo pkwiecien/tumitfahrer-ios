@@ -2,7 +2,7 @@
 //  Ride.m
 //  tumitfahrer
 //
-//  Created by Pawel Kwiecien on 6/30/14.
+//  Created by Pawel Kwiecien on 7/25/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
@@ -29,7 +29,7 @@
 @dynamic destinationLongitude;
 @dynamic freeSeats;
 @dynamic isPaid;
-@dynamic isRegularRide;
+@dynamic regularRideId;
 @dynamic isRideRequest;
 @dynamic lastCancelTime;
 @dynamic lastSeenTime;

@@ -33,6 +33,7 @@
                                                       @"is_paid":@"isPaid",
                                                       @"car":@"car",
                                                       @"last_cancel_time":@"lastCancelTime",
+                                                      @"regular_ride_id":@"regularRideId",
                                                       @"created_at": @"createdAt",
                                                       @"updated_at": @"updatedAt"
                                                       }];

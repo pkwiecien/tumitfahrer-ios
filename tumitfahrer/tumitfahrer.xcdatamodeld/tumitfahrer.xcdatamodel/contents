@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13D65" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Activity" representedClassName="Activity" syncable="YES">
         <attribute name="activityId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="requests" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Request" inverseName="activities" inverseEntity="Request" syncable="YES"/>
@@ -89,12 +89,12 @@
         <attribute name="destinationLongitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="freeSeats" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="isPaid" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="isRegularRide" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isRideRequest" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="lastCancelTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="lastSeenTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="meetingPoint" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="regularRideId" optional="YES" attributeType="Integer 32" syncable="YES"/>
         <attribute name="rideId" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="rideType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>

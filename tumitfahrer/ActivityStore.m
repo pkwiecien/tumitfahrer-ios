@@ -47,7 +47,6 @@ static int activity_id = 0;
         [self initAllActivitiesFromCoreData];
         
         // fetch rides from webservice created after date of last ride in core data
-        //
         [self fetchActivitiesFromWebservice:^(BOOL resultsFetched) {
             if(resultsFetched) {
                 [self initAllActivitiesFromCoreData];
@@ -257,7 +256,9 @@ static int activity_id = 0;
 #pragma mark - fetch methods
 
 -(void)fetchActivitiesFromWebservice:(boolCompletionHandler)block {
-    
+    if ([CurrentUser sharedInstance].user == nil) {
+        return;
+    }
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
     [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/activities?activity_id=%d", activity_id] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {

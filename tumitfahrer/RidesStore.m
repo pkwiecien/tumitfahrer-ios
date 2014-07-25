@@ -330,6 +330,9 @@ static int activity_id = 0;
 }
 
 -(void)checkIfRidesExistInWebservice {
+    if ([CurrentUser sharedInstance].user == nil) {
+        return;
+    }
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     [objectManager getObjectsAtPath:@"/api/v2/rides/ids" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {

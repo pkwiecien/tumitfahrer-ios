@@ -69,19 +69,12 @@
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    // You can customize the way in which gestures can work
     // Enabling multiple gestures will allow all of them to work together, otherwise only the topmost view's gestures will work (i.e. PanGesture view on bottom)
     return YES;
 }
 
 - (void)handleLeftEdgeGesture:(UIScreenEdgePanGestureRecognizer *)gesture {
-    if (self.logo.pageControl.currentPage == 0) {
-        NSLog(@"left: being in first ine");
-    } else if(self.logo.pageControl.currentPage == 1) {
-        NSLog(@"left: being in second ine");
-    } else {
-        NSLog(@"SHOULD BE HERE!!");
-        
+    if (self.logo.pageControl.currentPage == 2) {
         RidesViewController *initialViewController = [self viewControllerAtIndex:1];
         NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
         [self.pageController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];

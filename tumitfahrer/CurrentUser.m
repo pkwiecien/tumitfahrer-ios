@@ -41,6 +41,8 @@
 
 -(void)initCurrentUser:(User *)user {
     self.user = user;
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    [objectManager.HTTPClient setDefaultHeader:@"apiKey" value:[CurrentUser sharedInstance].user.apiKey];
     if (self.user.profileImageData == nil) {
         [AWSUploader sharedStore].delegate = self;
         [[AWSUploader sharedStore] downloadProfilePictureForUser:self.user];
