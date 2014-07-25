@@ -284,6 +284,7 @@
     [objectManager addResponseDescriptor:[DeviceMapping postDeviceResponseDescriptorWithMapping:postDeviceTokenMapping]];
     RKEntityMapping *postRideMapping = [RideMapping postRideMapping];
     [objectManager addResponseDescriptorsFromArray:@[[RideMapping postRideResponseDescriptorWithMapping:postRideMapping]]];
+    [objectManager addResponseDescriptor:[RideMapping postRegularRideResponseDescriptorWithMapping:postRideMapping]];
     RKEntityMapping *requestMapping = [RequestMapping requestMapping];
     [objectManager addResponseDescriptor:[RequestMapping postRequestResponseDescriptorWithMapping:requestMapping]];
     [objectManager addResponseDescriptor:[RequestMapping getRequestResponseDescriptorWithMapping:requestMapping]];

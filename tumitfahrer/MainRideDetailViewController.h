@@ -26,6 +26,7 @@
 @property (nonatomic, strong) UITextView *textView;
 
 - (void)showCancelationAlertView;
+- (void)showCancelationAlertViewWithTitle:(NSString *)title;
 - (BOOL)isPastRide;
 - (Rating *)isRatingGivenForUserId:(NSNumber *)otherUserId;
 - (void)updateRide;

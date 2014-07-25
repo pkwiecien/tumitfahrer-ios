@@ -301,4 +301,13 @@ typedef void(^rideCompletionHandler)(Ride *);
  */
 - (void)fetchUserPastRidesFromCoreData;
 
+/**
+ *  Fetches a group of rides that belong to regular ride.
+ *
+ *  @param regularRideId Primary id of the regular ride
+ *
+ *  @return Array of rides that belong to regular ride.
+ */
+-(NSArray *)fetchRegularRidesFromCoreDataWithId:(NSNumber *)regularRideId;
+
 @end

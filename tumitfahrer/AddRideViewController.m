@@ -288,6 +288,9 @@ NSString *const kRideType = @"Ride Type";
             destinationVC.rideTableIndexPath = indexPath;
             [self.navigationController pushViewController:destinationVC animated:YES];
         } else if([[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Time"]) {
+            if (![[self.tableValues objectAtIndex:4] isEqualToString:@"No"]) {
+                return;
+            }
             RMDateSelectionViewController *dateSelectionVC = [RMDateSelectionViewController dateSelectionController];
             dateSelectionVC.delegate = self;
             dateSelectionVC.hideNowButton = YES;
@@ -435,29 +438,34 @@ NSString *const kRideType = @"Ride Type";
         rideParams = @{@"ride": queryParams};
     }
     
-    [[[RKObjectManager sharedManager] HTTPClient] setDefaultHeader:@"apiKey" value:[[CurrentUser sharedInstance] user].apiKey];
-    
     [objectManager postObject:nil path:[NSString stringWithFormat:@"/api/v2/users/%@/rides", [CurrentUser sharedInstance].user.userId] parameters:rideParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         
-        Ride *ride = (Ride *)[mappingResult firstObject];
-        if (self.destinationImage != nil) {
-            ride.destinationImage = UIImageJPEGRepresentation(self.destinationImage, 0.8);
+        for (Ride *ride in [mappingResult array]) {
+            
+            if (self.destinationImage != nil) {
+                ride.destinationImage = UIImageJPEGRepresentation(self.destinationImage, 0.8);
+            }
+            
+            if (self.destinationDriverPhotoInfo != nil && self.TableType == Driver) {
+                ride.photo = self.destinationDriverPhotoInfo;
+            } else if(self.destinationPassengerPhotoInfo != nil && self.TableType == Passenger) {
+                ride.photo = self.destinationDriverPhotoInfo;
+            }
+            
+            if (ride.regularRideId != nil) { // we have a regular ride
+                
+            }
+            
+            [[RidesStore sharedStore] addRideToStore:ride];
         }
         
-        if (self.destinationDriverPhotoInfo != nil && self.TableType == Driver) {
-            ride.photo = self.destinationDriverPhotoInfo;
-        } else if(self.destinationPassengerPhotoInfo != nil && self.TableType == Passenger) {
-            ride.photo = self.destinationDriverPhotoInfo;
-        }
-        
-        [[RidesStore sharedStore] addRideToStore:ride];
         [self resetTables];
-        
         if(self.potentialRequestedRide != nil) {
-            [self addPassengerToNewRide:ride];
+            [self addPassengerToNewRide:[mappingResult firstObject]];
         } else {
-            [self redirectToRideDetailsWithRide:ride];
+            [self redirectToRideDetailsWithRide:[mappingResult firstObject]];
         }
+        
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [ActionManager showAlertViewWithTitle:@"Error" description:@"Could not add a ride"];
         addActionCell.actionButton.enabled = YES;
@@ -516,6 +524,7 @@ NSString *const kRideType = @"Ride Type";
 - (void)dateSelectionViewController:(RMDateSelectionViewController *)vc didSelectDate:(NSDate *)aDate {
     NSString *dateString = [ActionManager stringFromDate:aDate];
     [self.tableValues replaceObjectAtIndex:3 withObject:dateString];
+    [self saveTableValues];
     
     [self.tableView reloadData];
 }
@@ -629,19 +638,19 @@ NSString *const kRideType = @"Ride Type";
             self.displayEnum = ShouldDisplayNormally;
         }
     }
-    if (switchId == 1) { // go to email
-        
-    }
 }
 
 -(void)didSelectRepeatDates:(NSArray *)repeatDates descriptionLabel:(NSString *)descriptionLabel selectedValues:(NSMutableDictionary *)selectedValues {
     self.selectedRepeatValues = selectedValues;
     self.repeatDates = repeatDates;
     if (repeatDates.count > 0) {
+        NSString *dateString = [ActionManager stringFromDate:[repeatDates firstObject]];
+        [self.tableValues replaceObjectAtIndex:3 withObject:dateString];
         [self.tableValues replaceObjectAtIndex:4 withObject:descriptionLabel];
     } else {
         [self.tableValues replaceObjectAtIndex:4 withObject:@"No"];
     }
+    [self saveTableValues];
 }
 
 -(NSString *)stringForName:(CellName)paramName {

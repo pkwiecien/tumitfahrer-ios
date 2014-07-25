@@ -25,5 +25,6 @@
 
 +(RKObjectMapping *)putRideMapping;
 +(RKResponseDescriptor *)putRideResponseDescriptorWithMapping:(RKObjectMapping *)mapping;
++(RKResponseDescriptor *)postRegularRideResponseDescriptorWithMapping:(RKEntityMapping *)mapping;
 
 @end

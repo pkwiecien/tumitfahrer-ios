@@ -191,21 +191,30 @@
     [self.navigationController pushViewController:rideDetailMapVC animated:YES];
 }
 
-- (void)showCancelationAlertView {
+-(void)showCancelationAlertView {
+    [self showCancelationAlertViewWithTitle:@"Cancel Ride"];
+}
+
+- (void)showCancelationAlertViewWithTitle:(NSString *)alertTitle {
     
     CustomIOS7AlertView *alertView = [[CustomIOS7AlertView alloc] init];
-    [alertView setContainerView:[self prepareReasonView]];
+    if ([alertTitle isEqualToString:@"Cancel Ride"]) {
+        alertView.tag = 0;
+    } else {
+        alertView.tag = 1;
+    }
+    [alertView setContainerView:[self prepareReasonViewWithTitle:alertTitle]];
     [alertView setButtonTitles:[NSMutableArray arrayWithObjects:@"Cancel", @"Confirm", nil]];
     [alertView setDelegate:self];
     [alertView setUseMotionEffects:false];
     [alertView show];
 }
 
--(UIView *)prepareReasonView {
+-(UIView *)prepareReasonViewWithTitle:(NSString *)title {
     UIView *mainView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 290, 200)];
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, mainView.frame.size.width, 20)];
-    titleLabel.text = @"Cancel ride";
+    titleLabel.text = title;
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [mainView addSubview:titleLabel];
     UILabel *reasonLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, 290, 20)];

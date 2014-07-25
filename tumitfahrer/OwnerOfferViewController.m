@@ -92,6 +92,8 @@
         return [self.ride.passengers count];
     } else if(section == 2 && [self.ride.requests count] > 0) {
         return [self.ride.requests count];
+    } else if(section == 3 && self.ride.regularRideId != nil) { // cancel button
+        return 2;
     }
     
     return 1;
@@ -229,11 +231,15 @@
         }
         cell.descriptionLabel.text = @"There are no requests";
         return cell;
-    }else {  // show delete button
-        
+    } else {  // show delete button
         RideDetailActionCell *actionCell = [RideDetailActionCell offerRideCell];
-        [actionCell.actionButton setTitle:@"Cancel ride" forState:UIControlStateNormal];
-        [actionCell.actionButton addTarget:self action:@selector(showCancelationAlertView) forControlEvents:UIControlEventTouchDown];
+        if (indexPath.row == 0) {
+            [actionCell.actionButton setTitle:@"Cancel ride" forState:UIControlStateNormal];
+            [actionCell.actionButton addTarget:self action:@selector(showCancelationAlertView) forControlEvents:UIControlEventTouchDown];
+        } else if(indexPath.row == 1) {
+            [actionCell.actionButton setTitle:@"Cancel regular ride" forState:UIControlStateNormal];
+            [actionCell.actionButton addTarget:self action:@selector(showCancelationOfRegularRide) forControlEvents:UIControlEventTouchDown];
+        }
         return actionCell;
     }
 }
@@ -253,9 +259,11 @@
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    
 }
 
+- (void)showCancelationOfRegularRide {
+    [self showCancelationAlertViewWithTitle:@"Cancel Regular Ride"];
+}
 
 #pragma mark - Button actions
 
@@ -281,6 +289,25 @@
         [[CurrentUser sharedInstance].user removeRidesAsOwnerObject:self.ride];
         [[RidesStore sharedStore] deleteRideFromCoreData:self.ride];
         [KGStatusBar showWithStatus:@"Ride successfully deleted"];
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        RKLogError(@"Load failed with error: %@", error);
+    }];
+}
+
+-(void)deleteRegularRide {
+    
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    NSDictionary *queryParams = @{@"reason": self.textView.text, @"regular_ride_id": self.ride.regularRideId};
+    NSNumber *regularRideId = self.ride.regularRideId;
+    [objectManager deleteObject:self.ride path:[NSString stringWithFormat:@"/api/v2/rides/%@", self.ride.rideId] parameters:queryParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+
+        // iterate over regular rides in core data and delete them
+        for (Ride *regularRide in [[RidesStore sharedStore] fetchRegularRidesFromCoreDataWithId:regularRideId]) {
+            [[CurrentUser sharedInstance].user removeRidesAsOwnerObject:regularRide];
+            [[RidesStore sharedStore] deleteRideFromCoreData:regularRide];
+        }
         
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -415,8 +442,11 @@
     if (buttonIndex == 1) {
         if (self.textView.text.length < 25) {
             self.counterLabel.textColor = [UIColor redColor];
-        } else {
+        } else if([alertView tag] == 0){
             [self deleteRideButtonPressed];
+            [alertView close];
+        } else {
+            [self deleteRegularRide];
             [alertView close];
         }
     } else {

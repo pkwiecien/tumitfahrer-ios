@@ -99,6 +99,13 @@
     return responseDescriptor;
 }
 
++(RKResponseDescriptor *)postRegularRideResponseDescriptorWithMapping:(RKEntityMapping *)mapping {
+    
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor
+                                                responseDescriptorWithMapping:mapping method:RKRequestMethodPOST pathPattern:API_USERS_RIDES keyPath:@"rides" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    return responseDescriptor;
+}
 
 +(RKObjectMapping *)putRideMapping {
     RKObjectMapping *responseMapping = [RKObjectMapping mappingForClass:[StatusMapping class]];

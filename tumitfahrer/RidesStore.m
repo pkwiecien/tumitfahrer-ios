@@ -246,6 +246,26 @@ static int activity_id = 0;
     return [fetchedObjects firstObject];
 }
 
+
+-(NSArray *)fetchRegularRidesFromCoreDataWithId:(NSNumber *)regularRideId {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *e = [NSEntityDescription entityForName:@"Ride"
+                                         inManagedObjectContext:[RKManagedObjectStore defaultStore].
+                              mainQueueManagedObjectContext];
+    NSPredicate *predicate;
+    predicate = [NSPredicate predicateWithFormat:@"(regularRideId = %@)", regularRideId];
+    [request setPredicate:predicate];
+    request.entity = e;
+    
+    NSError *error;
+    NSArray *fetchedObjects = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:&error];
+    if (!fetchedObjects) {
+        [NSException raise:@"Fetch failed"
+                    format:@"Reason: %@", [error localizedDescription]];
+    }
+    return [[NSMutableArray alloc] initWithArray:fetchedObjects];
+}
+
 -(void)fetchRidesForCurrentUser:(boolCompletionHandler)block {
     if ([CurrentUser sharedInstance].user == nil) {
         return;
@@ -731,6 +751,7 @@ static int activity_id = 0;
         NSLog(@"saving error %@", [error localizedDescription]);
     }
 }
+
 
 -(void)deleteRideFromCoreData:(Ride *)ride {
     [self deleteRideFromLocalStore:ride];
