@@ -135,6 +135,8 @@
     NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
+    [urlRequest setValue:[CurrentUser sharedInstance].user.apiKey forHTTPHeaderField:@"apiKey"];
+
     return urlRequest;
 }
 

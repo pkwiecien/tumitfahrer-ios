@@ -13,6 +13,7 @@
 #import "ActionManager.h"
 #import "CurrentUser.h"
 #import "Ride.h"
+#import "TimelinePageViewController.h"
 
 @interface LoginViewController ()
 
@@ -120,7 +121,7 @@
         // check if fetch user has assigned a device token
         [self checkDeviceToken];
         
-        [self storeCurrentUserInDefaults];
+        [self storeCurrentUserInDefaults];        
         [self dismissViewControllerAnimated:YES completion:nil];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [ActionManager showAlertViewWithTitle:@"Invalid email/password" description:@"Could not login, please check your email and password."];

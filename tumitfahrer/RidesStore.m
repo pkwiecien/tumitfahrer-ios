@@ -250,6 +250,7 @@ static int activity_id = 0;
     if ([CurrentUser sharedInstance].user == nil) {
         return;
     }
+    
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     [objectManager.HTTPClient setDefaultHeader:@"apiKey" value:[CurrentUser sharedInstance].user.apiKey];
     
@@ -264,9 +265,7 @@ static int activity_id = 0;
 }
 
 -(void)fetchNewRides:(boolCompletionHandler)block {
-    if ([CurrentUser sharedInstance].user == nil) {
-        return;
-    }
+    
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     
     [objectManager getObjectsAtPath:[NSString stringWithFormat:@"/api/v2/rides?page=%d", activity_id] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
@@ -282,9 +281,7 @@ static int activity_id = 0;
 }
 
 -(void)fetchRidesfromDate:(NSDate *)date rideType:(NSInteger)rideType block:(boolCompletionHandler)block {
-    if ([CurrentUser sharedInstance].user == nil) {
-        return;
-    }
+
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
     NSDictionary *queryParams = @{@"from_date": date, @"ride_type" : [NSNumber numberWithInt:(int)rideType]};
     

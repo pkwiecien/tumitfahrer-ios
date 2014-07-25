@@ -17,6 +17,7 @@
 #import "TimelineMapViewController.h"
 #import "MenuViewController.h"
 #import "ActionManager.h"
+#import "ActivityStore.h"
 
 @interface TimelinePageViewController () <TimelineViewControllerDelegate>
 
@@ -27,8 +28,7 @@
 
 @implementation TimelinePageViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.pageTitles = [NSArray arrayWithObjects:@"Timeline", @"Around you", @"Last minute", nil];
@@ -36,8 +36,7 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
@@ -66,13 +65,12 @@
     if([CurrentUser sharedInstance].user == nil || [CurrentUser sharedInstance].user.apiKey == nil) {
         [self showLoginScreenWithAnimation:NO];
     }
-    
-    NSLog(@"current user: %@ %@", [CurrentUser sharedInstance].user.userId, [CurrentUser sharedInstance].user.email);
+
     [self setupLeftMenuButton];
     [self setupNavigationBar];
 }
 
--(void)setupLeftMenuButton{
+-(void)setupLeftMenuButton {
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
 }
@@ -109,7 +107,6 @@
     LoginViewController *loginVC = [[LoginViewController alloc] init];
     [self presentViewController:loginVC animated:animated completion:nil];
 }
-
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
     

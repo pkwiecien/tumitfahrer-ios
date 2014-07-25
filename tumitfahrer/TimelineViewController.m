@@ -47,7 +47,7 @@
     self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing timeline"];
     self.refreshControl.backgroundColor = [UIColor grayColor];
     self.refreshControl.tintColor = [UIColor darkestBlue];
-    [self.refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     [ActivityStore sharedStore].delegate = self;
@@ -61,6 +61,11 @@
     } else {
         self.tableView.frame = CGRectMake(0, 0, 320, 408);
     }
+    [[ActivityStore sharedStore] fetchActivitiesFromWebservice:^(BOOL isFetched) {
+        if (isFetched) {
+            [[ActivityStore sharedStore] initAllActivitiesFromCoreData];
+        }
+    }];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -73,7 +78,7 @@
     [BadgeUtilities updateMyRidesDateInBadge:[ActionManager currentDate]];
 }
 
-- (void)handleRefresh:(id)sender {
+- (void)handleRefresh {
     [[ActivityStore sharedStore] fetchActivitiesFromWebservice:^(BOOL isFetched) {
         if (isFetched) {
             [[ActivityStore sharedStore] initAllActivitiesFromCoreData];
@@ -94,7 +99,6 @@
         cell = [TimelineCell timelineCell];
     }
     
-    // TODO: potential bug
     id result = [[[ActivityStore sharedStore] recentActivitiesByType:self.index] objectAtIndex:indexPath.row];
     
     NSDate *now = [ActionManager currentDate];

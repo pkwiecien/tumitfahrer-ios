@@ -57,6 +57,7 @@
         return;
     }
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    block(nil);
     
     [delegate.panoramioObjectManager getObjectsAtPath:@"/map/get_panoramas.php" parameters:[self queryParams:location] success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         Photo *photo = [mappingResult firstObject];
