@@ -478,7 +478,7 @@
 		E51FD51218F3B6D10098AD11 /* libxpc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxpc.dylib; path = usr/lib/system/libxpc.dylib; sourceTree = SDKROOT; };
 		E51FD51418F3B6E00098AD11 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		E51FD51618F3B6EA0098AD11 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		E522BAB618AE13F600ECD375 /* tumitfahrer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tumitfahrer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E522BAB618AE13F600ECD375 /* mitfahrer-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mitfahrer-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E522BAB918AE13F600ECD375 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E522BABB18AE13F600ECD375 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		E522BABD18AE13F600ECD375 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -1138,7 +1138,7 @@
 		E522BAB718AE13F600ECD375 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E522BAB618AE13F600ECD375 /* tumitfahrer.app */,
+				E522BAB618AE13F600ECD375 /* mitfahrer-app.app */,
 				E522BAD718AE13F600ECD375 /* tumitfahrerTests.xctest */,
 			);
 			name = Products;
@@ -2006,9 +2006,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E522BAB518AE13F600ECD375 /* tumitfahrer */ = {
+		E522BAB518AE13F600ECD375 /* mitfahrer-app */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E522BAE818AE13F600ECD375 /* Build configuration list for PBXNativeTarget "tumitfahrer" */;
+			buildConfigurationList = E522BAE818AE13F600ECD375 /* Build configuration list for PBXNativeTarget "mitfahrer-app" */;
 			buildPhases = (
 				08AFFB74EA2F4AC190481684 /* Check Pods Manifest.lock */,
 				E522BAB218AE13F600ECD375 /* Sources */,
@@ -2021,9 +2021,9 @@
 			);
 			dependencies = (
 			);
-			name = tumitfahrer;
+			name = "mitfahrer-app";
 			productName = tumitfahrer;
-			productReference = E522BAB618AE13F600ECD375 /* tumitfahrer.app */;
+			productReference = E522BAB618AE13F600ECD375 /* mitfahrer-app.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E522BAD618AE13F600ECD375 /* tumitfahrerTests */ = {
@@ -2077,7 +2077,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E522BAB518AE13F600ECD375 /* tumitfahrer */,
+				E522BAB518AE13F600ECD375 /* mitfahrer-app */,
 				E522BAD618AE13F600ECD375 /* tumitfahrerTests */,
 			);
 		};
@@ -2440,7 +2440,7 @@
 /* Begin PBXTargetDependency section */
 		E522BADD18AE13F600ECD375 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E522BAB518AE13F600ECD375 /* tumitfahrer */;
+			target = E522BAB518AE13F600ECD375 /* mitfahrer-app */;
 			targetProxy = E522BADC18AE13F600ECD375 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -2583,7 +2583,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "287B75F9-31C2-45EA-92D1-A4E4D65EFCB1";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2617,7 +2617,7 @@
 					"$(PROJECT_DIR)/SDKs/GoogleAnalyticsServicesiOS_3.07",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "287B75F9-31C2-45EA-92D1-A4E4D65EFCB1";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -2694,7 +2694,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E522BAE818AE13F600ECD375 /* Build configuration list for PBXNativeTarget "tumitfahrer" */ = {
+		E522BAE818AE13F600ECD375 /* Build configuration list for PBXNativeTarget "mitfahrer-app" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E522BAE918AE13F600ECD375 /* Debug */,
