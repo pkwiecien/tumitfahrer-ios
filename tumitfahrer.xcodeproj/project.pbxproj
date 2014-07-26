@@ -230,6 +230,9 @@
 		E5E215801908492200B0B150 /* FreeSeatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E2157E1908492200B0B150 /* FreeSeatsTableViewCell.xib */; };
 		E5E2D665198319AC00A81EB4 /* StomtExperimentalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E2D664198319AC00A81EB4 /* StomtExperimentalCell.xib */; };
 		E5E2D66819831A2B00A81EB4 /* StomtExperimentalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D66719831A2B00A81EB4 /* StomtExperimentalCell.m */; };
+		E5E2D66E1983A5A400A81EB4 /* StomtMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D66D1983A5A400A81EB4 /* StomtMapping.m */; };
+		E5E2D6741983A72B00A81EB4 /* StomtUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D6731983A72B00A81EB4 /* StomtUtilities.m */; };
+		E5E2D6771983ABF000A81EB4 /* Stomt.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D6761983ABF000A81EB4 /* Stomt.m */; };
 		E5E9C3881955ECEE009FF381 /* AWSConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E9C3851955ECEE009FF381 /* AWSConstants.m */; };
 		E5E9C3891955ECEE009FF381 /* AWSUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E9C3871955ECEE009FF381 /* AWSUploader.m */; };
 		E5FB4D3E1918DB18006F4F5D /* RideSectionHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FB4D3C1918DB18006F4F5D /* RideSectionHeaderCell.m */; };
@@ -649,6 +652,12 @@
 		E5E2D664198319AC00A81EB4 /* StomtExperimentalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StomtExperimentalCell.xib; sourceTree = "<group>"; };
 		E5E2D66619831A2B00A81EB4 /* StomtExperimentalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StomtExperimentalCell.h; sourceTree = "<group>"; };
 		E5E2D66719831A2B00A81EB4 /* StomtExperimentalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StomtExperimentalCell.m; sourceTree = "<group>"; };
+		E5E2D66C1983A5A400A81EB4 /* StomtMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StomtMapping.h; sourceTree = "<group>"; };
+		E5E2D66D1983A5A400A81EB4 /* StomtMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StomtMapping.m; sourceTree = "<group>"; };
+		E5E2D6721983A72B00A81EB4 /* StomtUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StomtUtilities.h; sourceTree = "<group>"; };
+		E5E2D6731983A72B00A81EB4 /* StomtUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StomtUtilities.m; sourceTree = "<group>"; };
+		E5E2D6751983ABF000A81EB4 /* Stomt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stomt.h; sourceTree = "<group>"; };
+		E5E2D6761983ABF000A81EB4 /* Stomt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stomt.m; sourceTree = "<group>"; };
 		E5E9C3801955EBB9009FF381 /* AWSRuntime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSRuntime.framework; sourceTree = "<group>"; };
 		E5E9C3811955EBB9009FF381 /* AWSS3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSS3.framework; sourceTree = "<group>"; };
 		E5E9C3841955ECEE009FF381 /* AWSConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSConstants.h; sourceTree = "<group>"; };
@@ -1101,6 +1110,8 @@
 				E50DB26E18F52E8500E87E62 /* StatusMapping.m */,
 				E50DB28018F86F8000E87E62 /* UserMapping.h */,
 				E50DB28118F86F8000E87E62 /* UserMapping.m */,
+				E5E2D66C1983A5A400A81EB4 /* StomtMapping.h */,
+				E5E2D66D1983A5A400A81EB4 /* StomtMapping.m */,
 			);
 			name = RKMappings;
 			sourceTree = "<group>";
@@ -1558,6 +1569,8 @@
 				E50DB28A18F8730400E87E62 /* RidesStore.m */,
 				E50164761956B780004DA38A /* User.h */,
 				E50164771956B780004DA38A /* User.m */,
+				E5E2D6751983ABF000A81EB4 /* Stomt.h */,
+				E5E2D6761983ABF000A81EB4 /* Stomt.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1649,6 +1662,8 @@
 				E5CD594B1952255900E97DEC /* RecentPlaceUtilities.m */,
 				E5FEF3001944A9AD00E326BB /* WebserviceRequest.h */,
 				E5FEF3011944A9AD00E326BB /* WebserviceRequest.m */,
+				E5E2D6721983A72B00A81EB4 /* StomtUtilities.h */,
+				E5E2D6731983A72B00A81EB4 /* StomtUtilities.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -2358,6 +2373,7 @@
 				E526B5D4194C2A78006D3527 /* EmptyCell.m in Sources */,
 				E5FEF3551945AA1100E326BB /* SearchResultMapping.m in Sources */,
 				E59987FB18E7251000B01C62 /* RegisterViewController.m in Sources */,
+				E5E2D6771983ABF000A81EB4 /* Stomt.m in Sources */,
 				E50263861954D5110041E21A /* ConversationUtilities.m in Sources */,
 				E50DB28B18F8730400E87E62 /* RidesStore.m in Sources */,
 				E593F083197FD2EA00C1AF32 /* StomtViewController.m in Sources */,
@@ -2388,7 +2404,9 @@
 				E5FEF3021944A9AD00E326BB /* WebserviceRequest.m in Sources */,
 				E5FB4D3E1918DB18006F4F5D /* RideSectionHeaderCell.m in Sources */,
 				E5FEF3961946F8B100E326BB /* EditRideViewController.m in Sources */,
+				E5E2D66E1983A5A400A81EB4 /* StomtMapping.m in Sources */,
 				E52EA4D3192C019C00E78B6D /* RideDetailMapViewController.m in Sources */,
+				E5E2D6741983A72B00A81EB4 /* StomtUtilities.m in Sources */,
 				E50263CC1955ADB00041E21A /* Photo.m in Sources */,
 				E504D9D2190A7FC50036FFA8 /* SPGooglePlacesAutocompleteUtilities.m in Sources */,
 				E58889DC191383570062D0DF /* OwnerOfferViewController.m in Sources */,

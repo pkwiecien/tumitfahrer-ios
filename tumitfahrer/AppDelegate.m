@@ -36,6 +36,7 @@
 #import "RatingMapping.h"
 #import "PanoramioMapping.h"
 #import "GAI.h"
+#import "StomtMapping.h"
 
 @interface AppDelegate ()
 
@@ -214,6 +215,8 @@
     // add mappings to panormation object manager
     [self initPanoramioMapping];
     self.panoramioObjectManager.managedObjectStore = managedObjectStore;
+    [self initStomtMapping];
+    self.stomtObjectManager.managedObjectStore = managedObjectStore;
 
     
     // complete Core Data stack initialization
@@ -291,6 +294,17 @@
     
     RKEntityMapping *photoMapping =[PanoramioMapping panoramioMapping];
     [self.panoramioObjectManager addResponseDescriptor:[PanoramioMapping getPhotoResponseDescriptorWithMapping:photoMapping]];
+}
+
+-(void)initStomtMapping {
+    
+    NSURL *baseURL = [NSURL URLWithString:@"http://rest.stomt.com"];
+    
+    self.stomtObjectManager = [RKObjectManager managerWithBaseURL:baseURL];
+    
+    RKEntityMapping *stomtMapping =[StomtMapping stomtMapping];
+    [self.stomtObjectManager addResponseDescriptor:[StomtMapping getStomtsResponseDescriptorWithMapping:stomtMapping]];
+    [self.stomtObjectManager addResponseDescriptor:[StomtMapping postStomtResponseDescriptorWithMapping:stomtMapping]];
 }
 
 -(void)setupCurrentUser {

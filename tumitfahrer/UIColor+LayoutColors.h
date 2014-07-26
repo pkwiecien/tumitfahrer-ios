@@ -20,4 +20,6 @@
 + (UIColor *)customLightGray;
 + (UIColor *)customGreen;
 + (UIColor *)customDarkGray;
++ (UIColor *)lightRed;
+
 @end

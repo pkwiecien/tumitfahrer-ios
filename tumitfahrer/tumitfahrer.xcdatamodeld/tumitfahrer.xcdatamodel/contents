@@ -121,6 +121,15 @@
         <attribute name="userId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="activity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="rideSearches" inverseEntity="Activity" syncable="YES"/>
     </entity>
+    <entity name="Stomt" representedClassName="Stomt" syncable="YES">
+        <attribute name="counter" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="creator" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isNegative" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stomtId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="apiKey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="car" optional="YES" attributeType="String" syncable="YES"/>
@@ -143,7 +152,7 @@
         <element name="Activity" positionX="7" positionY="-141" width="128" height="105"/>
         <element name="Badge" positionX="459" positionY="-202" width="128" height="193"/>
         <element name="Conversation" positionX="-117" positionY="405" width="128" height="210"/>
-        <element name="Message" positionX="144" positionY="432" width="128" height="163"/>
+        <element name="Message" positionX="144" positionY="432" width="128" height="165"/>
         <element name="Photo" positionX="-711" positionY="-292" width="128" height="148"/>
         <element name="Rating" positionX="-711" positionY="99" width="128" height="163"/>
         <element name="RecentPlace" positionX="-243" positionY="-333" width="128" height="105"/>
@@ -151,5 +160,6 @@
         <element name="Ride" positionX="-279" positionY="-175" width="128" height="465"/>
         <element name="RideSearch" positionX="259" positionY="-315" width="128" height="238"/>
         <element name="User" positionX="259" positionY="-18" width="128" height="285"/>
+        <element name="Stomt" positionX="-504" positionY="-621" width="128" height="148"/>
     </elements>
 </model>

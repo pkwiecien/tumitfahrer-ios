@@ -36,7 +36,6 @@
 +(void)createConversationsForRideId:(NSNumber *)rideId userId:(NSNumber *)userId otherUserId:(NSNumber *)otherUserId block:(conversationCompletionHandler)block {
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
     
     NSString *requestString = [NSString stringWithFormat:@"/api/v2/rides/%@/conversations", rideId];
     NSDictionary *queryParams = @{@"user_id": userId, @"other_user_id" : otherUserId};
@@ -52,7 +51,6 @@
 +(void)getConversationForRideId:(NSNumber *)rideId conversationId:(NSNumber *)conversationId block:(boolCompletionHandler)block {
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
     
     [objectManager getObject:nil path:[NSString stringWithFormat:@"/api/v2/rides/%@/conversations/%@", rideId, conversationId] parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         block(YES);
@@ -65,7 +63,6 @@
 +(void)postMessageForConversation:(Conversation *)conversation message:(NSString *)message senderId:(NSNumber *)senderId receiverId:(NSNumber *)receiverId rideId:(NSNumber *)rideId block:(messageCompletionHandler)block{
     
     RKObjectManager *objectManager = [RKObjectManager sharedManager];
-    //    [objectManager.HTTPClient setDefaultHeader:@"Authorization: Basic" value:[self encryptCredentialsWithEmail:self.emailTextField.text password:self.passwordTextField.text]];
     
     NSString *requestString = [NSString stringWithFormat:@"/api/v2/rides/%@/conversations/%@/messages?content=%@&sender_id=%@&receiver_id=%@", rideId, conversation.conversationId, [message stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], senderId, receiverId];
     
