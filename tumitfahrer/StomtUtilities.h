@@ -8,11 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+@class Stomt;
+
 @interface StomtUtilities : NSObject
 
 +(void)getAllStomtsWithCompletionHandler:(boolCompletionHandler)block;
 +(void)postStomtWithText:(NSString *)text isNegative:(NSNumber *)isNegative boolCompletionHandler:(boolCompletionHandler)block;
++(void)deleteStomt:(Stomt *)stomt block:(boolCompletionHandler)block;
 
 +(NSArray *)fetchStomtsFromCoreData;
++(void)deleteStomtFromCoreData:(Stomt *)stomt;
 
 @end

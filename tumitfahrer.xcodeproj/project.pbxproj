@@ -233,7 +233,7 @@
 		E5E2D66E1983A5A400A81EB4 /* StomtMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D66D1983A5A400A81EB4 /* StomtMapping.m */; };
 		E5E2D6741983A72B00A81EB4 /* StomtUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D6731983A72B00A81EB4 /* StomtUtilities.m */; };
 		E5E2D6771983ABF000A81EB4 /* Stomt.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D6761983ABF000A81EB4 /* Stomt.m */; };
-		E5E9C3881955ECEE009FF381 /* AWSConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E9C3851955ECEE009FF381 /* AWSConstants.m */; };
+		E5E9C3881955ECEE009FF381 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E9C3851955ECEE009FF381 /* Constants.m */; };
 		E5E9C3891955ECEE009FF381 /* AWSUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E9C3871955ECEE009FF381 /* AWSUploader.m */; };
 		E5FB4D3E1918DB18006F4F5D /* RideSectionHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FB4D3C1918DB18006F4F5D /* RideSectionHeaderCell.m */; };
 		E5FB4D3F1918DB18006F4F5D /* RideSectionHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FB4D3D1918DB18006F4F5D /* RideSectionHeaderCell.xib */; };
@@ -660,8 +660,8 @@
 		E5E2D6761983ABF000A81EB4 /* Stomt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stomt.m; sourceTree = "<group>"; };
 		E5E9C3801955EBB9009FF381 /* AWSRuntime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSRuntime.framework; sourceTree = "<group>"; };
 		E5E9C3811955EBB9009FF381 /* AWSS3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSS3.framework; sourceTree = "<group>"; };
-		E5E9C3841955ECEE009FF381 /* AWSConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSConstants.h; sourceTree = "<group>"; };
-		E5E9C3851955ECEE009FF381 /* AWSConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSConstants.m; sourceTree = "<group>"; };
+		E5E9C3841955ECEE009FF381 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		E5E9C3851955ECEE009FF381 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		E5E9C3861955ECEE009FF381 /* AWSUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSUploader.h; sourceTree = "<group>"; };
 		E5E9C3871955ECEE009FF381 /* AWSUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSUploader.m; sourceTree = "<group>"; };
 		E5FB4D3B1918DB18006F4F5D /* RideSectionHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideSectionHeaderCell.h; sourceTree = "<group>"; };
@@ -884,8 +884,8 @@
 		E50263CD1955C5F50041E21A /* AWS */ = {
 			isa = PBXGroup;
 			children = (
-				E5E9C3841955ECEE009FF381 /* AWSConstants.h */,
-				E5E9C3851955ECEE009FF381 /* AWSConstants.m */,
+				E5E9C3841955ECEE009FF381 /* Constants.h */,
+				E5E9C3851955ECEE009FF381 /* Constants.m */,
 				E5E9C3861955ECEE009FF381 /* AWSUploader.h */,
 				E5E9C3871955ECEE009FF381 /* AWSUploader.m */,
 			);
@@ -2347,7 +2347,7 @@
 				E5E2D66819831A2B00A81EB4 /* StomtExperimentalCell.m in Sources */,
 				E5DE44ED192618270034AF6F /* SegmentedControlCell.m in Sources */,
 				E507C43F193A298D005F1083 /* RideRequestInformationCell.m in Sources */,
-				E5E9C3881955ECEE009FF381 /* AWSConstants.m in Sources */,
+				E5E9C3881955ECEE009FF381 /* Constants.m in Sources */,
 				E50CCD11191FC324003A9490 /* RidesPageViewController.m in Sources */,
 				E5FEF2F21944766300E326BB /* MessagesOverviewViewController.m in Sources */,
 				E5DF641518EB548E00D53164 /* SettingsViewController.m in Sources */,

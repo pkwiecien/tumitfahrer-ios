@@ -11,7 +11,9 @@
 @interface StomtMapping : NSObject
 
 +(RKEntityMapping *)stomtMapping;
++(RKObjectMapping *)deleteStomtMapping;
 +(RKResponseDescriptor *)getStomtsResponseDescriptorWithMapping:(RKEntityMapping *)mapping;
 +(RKResponseDescriptor *)postStomtResponseDescriptorWithMapping:(RKObjectMapping *)mapping;
++(RKResponseDescriptor *)deleteStomtResponseDescriptorWithMapping:(RKObjectMapping *)mapping;
 
 @end

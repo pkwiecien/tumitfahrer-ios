@@ -51,14 +51,12 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     // register app for receiving push notifications
-    //[self setupPushNotifications];
-    
-	// Let the device know we want to receive push notifications
-	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    [self setupPushNotifications];
     
     [self setupNavigationController];
     [self setupRestKit];
+    RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
+    RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
     [self setupCurrentUser];
     [self setupObservers];
     
@@ -217,7 +215,6 @@
     self.panoramioObjectManager.managedObjectStore = managedObjectStore;
     [self initStomtMapping];
     self.stomtObjectManager.managedObjectStore = managedObjectStore;
-
     
     // complete Core Data stack initialization
     [managedObjectStore createPersistentStoreCoordinator];
@@ -305,6 +302,9 @@
     RKEntityMapping *stomtMapping =[StomtMapping stomtMapping];
     [self.stomtObjectManager addResponseDescriptor:[StomtMapping getStomtsResponseDescriptorWithMapping:stomtMapping]];
     [self.stomtObjectManager addResponseDescriptor:[StomtMapping postStomtResponseDescriptorWithMapping:stomtMapping]];
+    
+    RKObjectMapping *deleteStomtMapping = [StomtMapping deleteStomtMapping];
+    [self.stomtObjectManager addResponseDescriptor:[StomtMapping deleteStomtResponseDescriptorWithMapping:deleteStomtMapping]];
 }
 
 -(void)setupCurrentUser {

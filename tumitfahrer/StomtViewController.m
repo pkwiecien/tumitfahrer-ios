@@ -11,10 +11,11 @@
 #import "StomtExperimentalCell.h"
 #import "StomtUtilities.h"
 #import "Stomt.h"
+#import "CurrentUser.h"
 
 @interface StomtViewController ()
 
-@property (nonatomic, strong) NSArray *stomts;
+@property (nonatomic, strong) NSMutableArray *stomts;
 @property UIRefreshControl *refreshControl;
 
 @end
@@ -30,8 +31,7 @@
     UIButton *stomtButton;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         opinionArray = [NSArray arrayWithObjects:@"like",@"wished", nil];
@@ -62,6 +62,8 @@
     self.refreshControl.tintColor = [UIColor darkestBlue];
     [self.refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
+    
+    [self reloadStomts];
 }
 
 - (void)handleRefresh {
@@ -74,7 +76,7 @@
 }
 
 -(void)reloadStomts {
-    self.stomts = [StomtUtilities fetchStomtsFromCoreData];
+    self.stomts = [NSMutableArray arrayWithArray:[StomtUtilities fetchStomtsFromCoreData]];
     [self.tableView reloadData];
 }
 
@@ -100,10 +102,10 @@
     
     if ([text isEqualToString:@"\n"]) {
         [textView resignFirstResponder];
-        shouldChangeText = NO;  
-    }  
+        shouldChangeText = NO;
+    }
     
-    return shouldChangeText;  
+    return shouldChangeText;
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -158,19 +160,26 @@
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (editingStyle == UITableViewCellEditingStyleDelete)
-    {
-//        NSDictionary *userData = [_contactsArray objectAtIndex:indexPath.row];
-//        NSLog(@"delete row %@",userData);
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [StomtUtilities deleteStomt:[self.stomts objectAtIndex:indexPath.row] block:^(BOOL deleted) {
+            if (deleted) {
+                [self.stomts removeObjectAtIndex:indexPath.row];
+                [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            }
+        }];
     }
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+    Stomt *stomt = [self.stomts objectAtIndex:indexPath.row];
+    if ([stomt.creator isEqualToString:[NSString stringWithFormat:@"%@", [CurrentUser sharedInstance].user.userId]]) {
+        return YES;
+    }
+    return NO;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-   
+    
     static NSString *simpleTableIdentifier = @"StomtExperimentalCell";
     
     StomtExperimentalCell *cell = (StomtExperimentalCell *)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];

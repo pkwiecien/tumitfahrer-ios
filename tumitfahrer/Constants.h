@@ -12,6 +12,11 @@
 #define SECRET_KEY             @"changeme" // Contact Pawel Kwiecien for the credentials to S3
 #define BUCKET_NAME            @"tumitfahrer"
 
-@interface AWSConstants : NSObject
+
+#define thirdpartyid @"changeme"
+#define thirdpartysecret @"changeme"
+#define userid @"changeme"
+
+@interface Constants : NSObject
 
 @end

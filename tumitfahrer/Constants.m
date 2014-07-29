@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
-#import "AWSConstants.h"
+#import "Constants.h"
 
-@implementation AWSConstants
+@implementation Constants
 
 @end

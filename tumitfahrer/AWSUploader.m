@@ -7,7 +7,7 @@
 //
 
 #import "AWSUploader.h"
-#import "AWSConstants.h"
+#import "Constants.h"
 #import "User.h"
 
 @interface AWSUploader ()
