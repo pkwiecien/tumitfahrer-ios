@@ -37,6 +37,7 @@
 #import "PanoramioMapping.h"
 #import "GAI.h"
 #import "StomtMapping.h"
+#import "StomtAgreementMapping.h"
 
 @interface AppDelegate ()
 
@@ -299,10 +300,12 @@
     
     self.stomtObjectManager = [RKObjectManager managerWithBaseURL:baseURL];
     
-    RKEntityMapping *stomtMapping =[StomtMapping stomtMapping];
+    RKEntityMapping *stomtMapping = [StomtMapping stomtMapping];
     [self.stomtObjectManager addResponseDescriptor:[StomtMapping getStomtsResponseDescriptorWithMapping:stomtMapping]];
     [self.stomtObjectManager addResponseDescriptor:[StomtMapping postStomtResponseDescriptorWithMapping:stomtMapping]];
-    
+    RKEntityMapping *agreementMapping = [StomtAgreementMapping agreementMapping];
+    [self.stomtObjectManager addResponseDescriptor:[StomtAgreementMapping postAgreementResponseDescriptorWithMapping:agreementMapping]];
+    [self.stomtObjectManager addResponseDescriptor:[StomtAgreementMapping deleteStomtAgreementResponseDescriptorWithMapping:[StomtAgreementMapping deleteStomtAgreementMapping]]];
     RKObjectMapping *deleteStomtMapping = [StomtMapping deleteStomtMapping];
     [self.stomtObjectManager addResponseDescriptor:[StomtMapping deleteStomtResponseDescriptorWithMapping:deleteStomtMapping]];
 }

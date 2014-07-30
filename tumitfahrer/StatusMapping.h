@@ -11,6 +11,6 @@
 @interface StatusMapping : NSObject
 
 @property NSString *message;
-@property NSNumber *data;
+@property NSDictionary *data;
 
 @end

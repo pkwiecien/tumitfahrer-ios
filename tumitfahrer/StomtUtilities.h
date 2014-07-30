@@ -15,8 +15,10 @@
 +(void)getAllStomtsWithCompletionHandler:(boolCompletionHandler)block;
 +(void)postStomtWithText:(NSString *)text isNegative:(NSNumber *)isNegative boolCompletionHandler:(boolCompletionHandler)block;
 +(void)deleteStomt:(Stomt *)stomt block:(boolCompletionHandler)block;
++(void)postAgreementWithId:(NSNumber *)stomtId isNegative:(NSNumber *)isNegative boolCompletionHandler:(boolCompletionHandler)block;
 
 +(NSArray *)fetchStomtsFromCoreData;
 +(void)deleteStomtFromCoreData:(Stomt *)stomt;
++(void)deleteAgreementFromStomt:(Stomt *)stomt block:(boolCompletionHandler)block;
 
 @end

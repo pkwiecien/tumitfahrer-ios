@@ -232,7 +232,9 @@
 		E5E2D66819831A2B00A81EB4 /* StomtExperimentalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D66719831A2B00A81EB4 /* StomtExperimentalCell.m */; };
 		E5E2D66E1983A5A400A81EB4 /* StomtMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D66D1983A5A400A81EB4 /* StomtMapping.m */; };
 		E5E2D6741983A72B00A81EB4 /* StomtUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D6731983A72B00A81EB4 /* StomtUtilities.m */; };
-		E5E2D6771983ABF000A81EB4 /* Stomt.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D6761983ABF000A81EB4 /* Stomt.m */; };
+		E5E2D68619890FA700A81EB4 /* Stomt.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D68519890FA700A81EB4 /* Stomt.m */; };
+		E5E2D6891989105500A81EB4 /* StomtAgreementMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D6881989105500A81EB4 /* StomtAgreementMapping.m */; };
+		E5E2D68C1989135E00A81EB4 /* StomtAgreement.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D68B1989135E00A81EB4 /* StomtAgreement.m */; };
 		E5E9C3881955ECEE009FF381 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E9C3851955ECEE009FF381 /* Constants.m */; };
 		E5E9C3891955ECEE009FF381 /* AWSUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E9C3871955ECEE009FF381 /* AWSUploader.m */; };
 		E5FB4D3E1918DB18006F4F5D /* RideSectionHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FB4D3C1918DB18006F4F5D /* RideSectionHeaderCell.m */; };
@@ -656,8 +658,12 @@
 		E5E2D66D1983A5A400A81EB4 /* StomtMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StomtMapping.m; sourceTree = "<group>"; };
 		E5E2D6721983A72B00A81EB4 /* StomtUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StomtUtilities.h; sourceTree = "<group>"; };
 		E5E2D6731983A72B00A81EB4 /* StomtUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StomtUtilities.m; sourceTree = "<group>"; };
-		E5E2D6751983ABF000A81EB4 /* Stomt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stomt.h; sourceTree = "<group>"; };
-		E5E2D6761983ABF000A81EB4 /* Stomt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stomt.m; sourceTree = "<group>"; };
+		E5E2D68419890FA700A81EB4 /* Stomt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stomt.h; sourceTree = "<group>"; };
+		E5E2D68519890FA700A81EB4 /* Stomt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stomt.m; sourceTree = "<group>"; };
+		E5E2D6871989105500A81EB4 /* StomtAgreementMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StomtAgreementMapping.h; sourceTree = "<group>"; };
+		E5E2D6881989105500A81EB4 /* StomtAgreementMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StomtAgreementMapping.m; sourceTree = "<group>"; };
+		E5E2D68A1989135E00A81EB4 /* StomtAgreement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StomtAgreement.h; sourceTree = "<group>"; };
+		E5E2D68B1989135E00A81EB4 /* StomtAgreement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StomtAgreement.m; sourceTree = "<group>"; };
 		E5E9C3801955EBB9009FF381 /* AWSRuntime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSRuntime.framework; sourceTree = "<group>"; };
 		E5E9C3811955EBB9009FF381 /* AWSS3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSS3.framework; sourceTree = "<group>"; };
 		E5E9C3841955ECEE009FF381 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -1112,6 +1118,8 @@
 				E50DB28118F86F8000E87E62 /* UserMapping.m */,
 				E5E2D66C1983A5A400A81EB4 /* StomtMapping.h */,
 				E5E2D66D1983A5A400A81EB4 /* StomtMapping.m */,
+				E5E2D6871989105500A81EB4 /* StomtAgreementMapping.h */,
+				E5E2D6881989105500A81EB4 /* StomtAgreementMapping.m */,
 			);
 			name = RKMappings;
 			sourceTree = "<group>";
@@ -1567,10 +1575,12 @@
 				E5FEF3711946181B00E326BB /* RideSearch.m */,
 				E50DB28918F8730400E87E62 /* RidesStore.h */,
 				E50DB28A18F8730400E87E62 /* RidesStore.m */,
+				E5E2D68419890FA700A81EB4 /* Stomt.h */,
+				E5E2D68519890FA700A81EB4 /* Stomt.m */,
 				E50164761956B780004DA38A /* User.h */,
 				E50164771956B780004DA38A /* User.m */,
-				E5E2D6751983ABF000A81EB4 /* Stomt.h */,
-				E5E2D6761983ABF000A81EB4 /* Stomt.m */,
+				E5E2D68A1989135E00A81EB4 /* StomtAgreement.h */,
+				E5E2D68B1989135E00A81EB4 /* StomtAgreement.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2340,10 +2350,12 @@
 				E526B61F194CA3ED006D3527 /* MainRideDetailViewController.m in Sources */,
 				E526B5A1194A1D07006D3527 /* EditProfileFieldViewController.m in Sources */,
 				E5A9BE0E19421F2C0072E9B0 /* IdsMapping.m in Sources */,
+				E5E2D68C1989135E00A81EB4 /* StomtAgreement.m in Sources */,
 				E50CCCC1191E7A94003A9490 /* TimelinePageViewController.m in Sources */,
 				E526B643194DB84B006D3527 /* DescriptionCell.m in Sources */,
 				E59B9A6A1916D072008DE80B /* NavigationBarUtilities.m in Sources */,
 				E50DB27218F5DFB200E87E62 /* LocationController.m in Sources */,
+				E5E2D68619890FA700A81EB4 /* Stomt.m in Sources */,
 				E5E2D66819831A2B00A81EB4 /* StomtExperimentalCell.m in Sources */,
 				E5DE44ED192618270034AF6F /* SegmentedControlCell.m in Sources */,
 				E507C43F193A298D005F1083 /* RideRequestInformationCell.m in Sources */,
@@ -2365,6 +2377,7 @@
 				E5FEF33D1944CEA500E326BB /* SimpleChatViewController.m in Sources */,
 				E5E2155F1907A94A00B0B150 /* AddRideViewController.m in Sources */,
 				E50CCD0C191FBD5A003A9490 /* RidesCell.m in Sources */,
+				E5E2D6891989105500A81EB4 /* StomtAgreementMapping.m in Sources */,
 				E50DB29118F881BC00E87E62 /* PanoramioUtilities.m in Sources */,
 				E504D9EE190BCCE20036FFA8 /* DeviceMapping.m in Sources */,
 				E5FEF3051944ABF300E326BB /* MessageMapping.m in Sources */,
@@ -2373,7 +2386,6 @@
 				E526B5D4194C2A78006D3527 /* EmptyCell.m in Sources */,
 				E5FEF3551945AA1100E326BB /* SearchResultMapping.m in Sources */,
 				E59987FB18E7251000B01C62 /* RegisterViewController.m in Sources */,
-				E5E2D6771983ABF000A81EB4 /* Stomt.m in Sources */,
 				E50263861954D5110041E21A /* ConversationUtilities.m in Sources */,
 				E50DB28B18F8730400E87E62 /* RidesStore.m in Sources */,
 				E593F083197FD2EA00C1AF32 /* StomtViewController.m in Sources */,

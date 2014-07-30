@@ -7,8 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Stomt.h"
+
+@protocol StomtExperimentalCellDelegate <NSObject>
+
+-(void)shouldReloadTable;
+
+@end
 
 @interface StomtExperimentalCell : UITableViewCell
+
+@property (nonatomic, strong) id<StomtExperimentalCellDelegate> delegate;
+
+@property (strong, nonatomic) Stomt *stomt;
+@property (nonatomic, assign) StomtOpinionType stomtOpinionType;
 
 @property (weak, nonatomic) IBOutlet UITextView *stomTextView;
 @property (weak, nonatomic) IBOutlet UIButton *plusButton;

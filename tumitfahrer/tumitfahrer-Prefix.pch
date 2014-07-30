@@ -97,6 +97,12 @@ typedef enum cellType : NSUInteger {
     RequestCell = 1
 } CellTypeEnum;
 
+typedef enum  : NSUInteger {
+    NegativeStomt,
+    PositiveStomt,
+    NoneStomt,
+} StomtOpinionType;
+
 typedef void(^completionHandlerWithIndex)(NSInteger);
 
 typedef void(^boolCompletionHandler)(BOOL);

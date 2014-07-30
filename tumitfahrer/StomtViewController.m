@@ -12,8 +12,9 @@
 #import "StomtUtilities.h"
 #import "Stomt.h"
 #import "CurrentUser.h"
+#import "StomtAgreement.h"
 
-@interface StomtViewController ()
+@interface StomtViewController () <StomtExperimentalCellDelegate>
 
 @property (nonatomic, strong) NSMutableArray *stomts;
 @property UIRefreshControl *refreshControl;
@@ -63,7 +64,7 @@
     [self.refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
     
-    [self reloadStomts];
+    [self shouldReloadTable];
 }
 
 - (void)handleRefresh {
@@ -86,6 +87,7 @@
 
 -(void)stomtButtonPressed {
     NSNumber *isNegative = [NSNumber numberWithBool:NO];
+    [opinionTextView resignFirstResponder];
     if ([opinionPickerView selectedRowInComponent:0]) {
         isNegative = [NSNumber numberWithBool:YES];
     }
@@ -191,12 +193,55 @@
     
     Stomt *stomt = [self.stomts objectAtIndex:indexPath.row];
     cell.stomTextView.text = stomt.text;
-    cell.counterLabel.text = [stomt.counter stringValue];
-    cell.plusButton.backgroundColor = [UIColor customGreen];
-    cell.minusButton.backgroundColor = [UIColor lightRed];
+    cell.stomt = stomt;
+    cell.counterLabel.text = [NSString stringWithFormat:@"%d", (int)[stomt.agreements count]];
+    cell.stomtOpinionType = NoneStomt;
+    cell.delegate = self;
+    
+    StomtOpinionType stomtOpinion = [self stomtOpinion:stomt];
+    switch (stomtOpinion) {
+        case PositiveStomt:
+            cell.plusButton.backgroundColor = [UIColor customGreen];
+            cell.minusButton.backgroundColor = [UIColor lightGrayColor];
+            cell.stomtOpinionType = PositiveStomt;
+            break;
+        case NegativeStomt:
+            cell.minusButton.backgroundColor = [UIColor lightRed];
+            cell.plusButton.backgroundColor = [UIColor lightGrayColor];
+            cell.stomtOpinionType = NegativeStomt;
+            break;
+        default:
+            cell.plusButton.backgroundColor = [UIColor lightGrayColor];
+            cell.minusButton.backgroundColor = [UIColor lightGrayColor];
+            cell.stomtOpinionType = NoneStomt;
+            break;
+    }
     
     return cell;
 }
 
+-(StomtOpinionType)stomtOpinion:(Stomt *)stomt {
+    for (StomtAgreement *agreement in stomt.agreements) {
+
+        if ([agreement.creator isEqualToString:stomt.creator]) {
+            if ([agreement.isNegative boolValue]) {
+                return NegativeStomt;
+            } else {
+                return PositiveStomt;
+            }
+        }
+        
+    }
+    
+    return NoneStomt;
+}
+
+-(void)shouldReloadTable {
+    [StomtUtilities getAllStomtsWithCompletionHandler:^(BOOL fetched) {
+        if (fetched) {
+            [self reloadStomts];
+        }
+    }];
+}
 
 @end

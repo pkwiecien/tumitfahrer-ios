@@ -8,9 +8,9 @@
 
 #import "StomtMapping.h"
 #import "StatusMapping.h"
+#import "StomtAgreementMapping.h"
 
 @implementation StomtMapping
-
 
 +(RKEntityMapping *)stomtMapping {
     
@@ -24,6 +24,9 @@
                                                       @"creator": @"creator",
                                                       @"created_at":@"createdAt",
                                                       }];
+    
+    [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"agreements" toKeyPath:@"agreements" withMapping:[StomtAgreementMapping agreementMapping]]];
+
     return mapping;
 }
 
@@ -40,7 +43,6 @@
     return responseDescriptor;
 }
 
-
 +(RKResponseDescriptor *)postStomtResponseDescriptorWithMapping:(RKObjectMapping *)mapping {
 
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodPOST                                                                                       pathPattern:@"/stomt"                                                                                           keyPath:@"data"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
@@ -50,9 +52,10 @@
 
 +(RKResponseDescriptor *)deleteStomtResponseDescriptorWithMapping:(RKObjectMapping *)mapping {
     
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodDELETE                                                                                   pathPattern:@"/stomt/:stomtId"                                                                                           keyPath:@"meta"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping                                                                                            method:RKRequestMethodDELETE                                                                                   pathPattern:@"/stomt/:stomtId"                                                                                           keyPath:@"data"                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     
     return responseDescriptor;
 }
+
 
 @end

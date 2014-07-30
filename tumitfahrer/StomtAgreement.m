@@ -1,24 +1,20 @@
 //
-//  Stomt.m
+//  StomtAgreement.m
 //  tumitfahrer
 //
 //  Created by Pawel Kwiecien on 7/30/14.
 //  Copyright (c) 2014 Pawel Kwiecien. All rights reserved.
 //
 
-#import "Stomt.h"
 #import "StomtAgreement.h"
+#import "Stomt.h"
 
 
-@implementation Stomt
+@implementation StomtAgreement
 
-@dynamic stomtId;
-@dynamic text;
-@dynamic language;
-@dynamic createdAt;
-@dynamic creator;
+@dynamic agreementId;
 @dynamic isNegative;
-@dynamic counter;
-@dynamic agreements;
+@dynamic creator;
+@dynamic stomt;
 
 @end
