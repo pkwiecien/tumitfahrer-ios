@@ -65,6 +65,13 @@
     [self.tableView insertSubview:self.refreshControl atIndex:0];
     
     [self shouldReloadTable];
+    
+    UIImage* stomtLogo = [UIImage imageNamed:@"StomtLogo"];
+    CGRect frameimg = CGRectMake(0, 0, 65, 38);
+    UIButton *someButton = [[UIButton alloc] initWithFrame:frameimg];
+    [someButton setBackgroundImage:stomtLogo forState:UIControlStateNormal];
+    UIBarButtonItem *stomtLogoButton =[[UIBarButtonItem alloc] initWithCustomView:someButton];
+    self.navigationItem.rightBarButtonItem=stomtLogoButton;
 }
 
 - (void)handleRefresh {
@@ -86,17 +93,35 @@
 }
 
 -(void)stomtButtonPressed {
+    if ([opinionPickerView selectedRowInComponent:0] == 1 && [opinionTextView.text length] < 5) {
+        optionalTextLabel.textColor = [UIColor redColor];
+        return;
+    }
+    
     NSNumber *isNegative = [NSNumber numberWithBool:NO];
     [opinionTextView resignFirstResponder];
     if ([opinionPickerView selectedRowInComponent:0]) {
         isNegative = [NSNumber numberWithBool:YES];
     }
-    NSString *stomtText = [NSString stringWithFormat:@"I %@ %@ %@", [opinionArray objectAtIndex:[opinionPickerView selectedRowInComponent:0]], [targetsArray objectAtIndex:[targetsPickerView selectedRowInComponent:0]], opinionTextView.text];
+    
+    NSString *opinion = [opinionTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if ([opinion isEqualToString:@"because"]) {
+        opinion = @"";
+    }
+    
+    NSString *stomtText = [NSString stringWithFormat:@"I %@ %@ %@", [opinionArray objectAtIndex:[opinionPickerView selectedRowInComponent:0]], [targetsArray objectAtIndex:[targetsPickerView selectedRowInComponent:0]], opinion];
     [StomtUtilities postStomtWithText:stomtText isNegative:isNegative boolCompletionHandler:^(BOOL posted) {
         if (posted) {
             [self reloadStomts];
         }
     }];
+    
+    if ([opinionPickerView selectedRowInComponent:0] == 0) {
+        opinionTextView.text = @"because ";
+    } else {
+        opinionTextView.text = @"";
+    }
+    optionalTextLabel.textColor = [UIColor blackColor];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
@@ -147,9 +172,9 @@
     if ([pickerView isEqual:opinionPickerView]) {
         if (row == 0) {
             optionalTextLabel.text = @"Optional text (100 characters):";
-            opinionTextView.text = @"because: ";
+            opinionTextView.text = @"because ";
         } else {
-            optionalTextLabel.text = @"Reason (min 5 characters):";
+            optionalTextLabel.text = @"Reason (min. 5 characters):";
             opinionTextView.text = @"";
         }
     }
@@ -194,7 +219,8 @@
     Stomt *stomt = [self.stomts objectAtIndex:indexPath.row];
     cell.stomTextView.text = stomt.text;
     cell.stomt = stomt;
-    cell.counterLabel.text = [NSString stringWithFormat:@"%d", (int)[stomt.agreements count]];
+    NSInteger positiveStomtCounter = [stomt.agreements count] - 2*[self countNegativeAgreementsForStomt:stomt];
+    cell.counterLabel.text = [NSString stringWithFormat:@"%d", (int)positiveStomtCounter];
     cell.stomtOpinionType = NoneStomt;
     cell.delegate = self;
     
@@ -218,6 +244,16 @@
     }
     
     return cell;
+}
+
+-(NSInteger)countNegativeAgreementsForStomt:(Stomt *)stomt {
+    NSInteger counter = 0;
+    for (StomtAgreement *agreement in stomt.agreements) {
+        if ([agreement.isNegative boolValue]) {
+            counter++;
+        }
+    }
+    return counter;
 }
 
 -(StomtOpinionType)stomtOpinion:(Stomt *)stomt {

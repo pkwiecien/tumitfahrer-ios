@@ -1,0 +1,43 @@
+Open source projects:
+● AFNetworking
+● RestKit
+● MMDrawerController
+● Facebook-iOS-SDK
+● EAIntroView
+● JSMessagesViewController
+● KGStatusBar
+● KIF
+● RMDateSelectionViewController
+● RMDateSelectionViewController
+
+Icons:
+● Information by elva zhao from The Noun Project
+● Check Mark by Icomatic from The Noun Project
+● Add by John Chapman from The Noun Project
+● Handshake by Yaroslav Samoilov from The Noun Project
+● Arrow by Icomatic from The Noun Project
+● Arrow by Huu Nguyen from The Noun Project
+● Car by Johan Victor Nilsson from The Noun Project
+● Calendar by Oriol Carbonell from The Noun Project
+● Delete by Convoy from The Noun Project
+● Flag by Ashley van Dyck from The Noun Project
+● Note by Mister Pixel from The Noun Project
+● Steering Wheel by P.J. Onori from The Noun Project
+● Mail by Edward Boatman from The Noun Project
+● Key by Nadir Balcikli from The Noun Project
+● Like by John Caserta from The Noun Project
+● Exit by Johan H. W. Basberg from The Noun Project
+● Map by Tóth Eszter from The Noun Project
+● Taxi by Luis Prado from The Noun Project
+● Telephone by Steffen Halme from The Noun Project
+● Map Marker by Sagar Shastry from The Noun Project
+● Warning by Björn Andersson from The Noun Project
+● Lock by Jeremy J Bristol from The Noun Project
+● User by Łukasz Kupś from The Noun Project
+● Star by Naomi Atkinson from The Noun Project
+● Repeat by Dimitry Sokolov from The Noun Project
+● Calendar by Lemon Liu from The Noun Project
+● Search by Egor Culcea from The Noun Project
+● Passenger by Aditya Dipankar from The Noun Project
+● Gear by P.J. Onori from The Noun Project
+● Team by Mister Pixel from The Noun Project

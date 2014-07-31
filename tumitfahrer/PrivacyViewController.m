@@ -21,19 +21,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-        NSString* license1 = [[NSBundle mainBundle] pathForResource:@"afnetworking" ofType:@"txt"];
-        NSString* license2 = [[NSBundle mainBundle] pathForResource:@"EAIntroView" ofType:@"txt"];
-        NSString* license4 = [[NSBundle mainBundle] pathForResource:@"JSMessagesViewController" ofType:@"txt"];
-        NSString* license5 = [[NSBundle mainBundle] pathForResource:@"KGStatusBar" ofType:@"txt"];
-        NSString* license6 = [[NSBundle mainBundle] pathForResource:@"KIF" ofType:@"txt"];
-        NSString* license7 = [[NSBundle mainBundle] pathForResource:@"Facebook-iOS-SDK" ofType:@"txt"];
-        NSString* license8 = [[NSBundle mainBundle] pathForResource:@"KIF" ofType:@"txt"];
-        NSString* license9 = [[NSBundle mainBundle] pathForResource:@"MMDrawerController" ofType:@"txt"];
-        NSString* license10 = [[NSBundle mainBundle] pathForResource:@"restkit" ofType:@"txt"];
-        NSString* license11 = [[NSBundle mainBundle] pathForResource:@"RMDateSelectionViewController" ofType:@"txt"];
-        NSString* license12 = [[NSBundle mainBundle] pathForResource:@"SocketRocket" ofType:@"txt"];
-        NSString* license13 = [[NSBundle mainBundle] pathForResource:@"SPGooglePlacesAutocompletePlace" ofType:@"txt"];
-        self.licensesArray = [NSArray arrayWithObjects:license1, license2, license4, license5, license6, license7, license8, license9, license10, license11, license12, license13, nil];
+        NSString* license = [[NSBundle mainBundle] pathForResource:@"OpenSourceProjects" ofType:@"txt"];
+        self.licensesArray = [NSArray arrayWithObjects:license, nil];
         NSString* privacy1 = [[NSBundle mainBundle] pathForResource:@"Privacy" ofType:@"txt"];
         self.privacyArray = [NSArray arrayWithObjects:privacy1, nil];
     }

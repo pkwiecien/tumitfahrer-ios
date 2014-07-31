@@ -205,4 +205,23 @@
     return [emailTest evaluateWithObject:checkString];
 }
 
++(NSString *)prepareJavaScriptCodeWithGeolocation:(CLLocation*)location {
+
+    float course = -1.0f;
+    float speed  = -1.0f;
+    NSString* coords =  [NSString stringWithFormat:@"coords: { latitude: %f, longitude: %f, altitude: %f, heading: %f, speed: %f, accuracy: %f, altitudeAccuracy: %f }",
+                         location.coordinate.latitude,
+                         location.coordinate.longitude,
+                         location.altitude,
+                         course,
+                         speed,
+                         location.horizontalAccuracy,
+                         location.verticalAccuracy
+						 ];
+    int epoch = [location.timestamp timeIntervalSince1970];
+    
+    NSString * jsCallBack = [NSString stringWithFormat:@"navigator.geolocation.setLocation({ timestamp: %d, %@ });", epoch, coords];
+    return jsCallBack;
+}
+
 @end

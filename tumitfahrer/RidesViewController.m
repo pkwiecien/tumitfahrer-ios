@@ -18,7 +18,7 @@
 #import "ControllerUtilities.h"
 #import "Photo.h"
 
-@interface RidesViewController () 
+@interface RidesViewController ()
 
 @property (nonatomic, retain) UILabel *zeroRidesLabel;
 @property CGFloat previousScrollViewYOffset;
@@ -32,6 +32,7 @@
 
 @implementation RidesViewController {
     UIWebView *webview;
+    UIImageView *arrowLeft;
 }
 
 - (void)viewDidLoad {
@@ -67,8 +68,12 @@
     NSString *fullURL = @"https://carsharing.mvg-mobil.de/";
     NSURL *url = [NSURL URLWithString:fullURL];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-    webview = [[UIWebView alloc] initWithFrame:CGRectMake(0, 60, [UIScreen mainScreen].bounds.size.width,  [UIScreen mainScreen].bounds.size.height)];
+    webview = [[UIWebView alloc] initWithFrame:CGRectMake(50, 0, [UIScreen mainScreen].bounds.size.width-50,  [UIScreen mainScreen].bounds.size.height)];
+    [webview stringByEvaluatingJavaScriptFromString:[ActionManager prepareJavaScriptCodeWithGeolocation:[LocationController sharedInstance].currentLocation]];
     [webview loadRequest:requestObj];
+    
+    arrowLeft = [[UIImageView alloc] initWithFrame:CGRectMake(-10, 250, 70, 70)];
+    arrowLeft.image = [UIImage imageNamed:@"ArrowLeft"];
 }
 
 -(void)handleRefresh {
@@ -81,7 +86,7 @@
             lastUpdate = ride.createdAt;
         }
     }
-
+    
     [[RidesStore sharedStore] fetchRidesfromDate:lastUpdate rideType:self.RideType block:^(BOOL fetched) {
         if (fetched) {
             [[RidesStore sharedStore] initRidesByType:self.RideType block:^(BOOL fetched) {
@@ -97,7 +102,7 @@
 -(void)addToImageCache {
     int counter = 0;
     UIImage *placeholderImage = [UIImage imageNamed:@"Placeholder"];
-
+    
     for (Ride *ride in [self ridesForCurrentIndex]) {
         UIImage *image = [UIImage imageWithData:ride.destinationImage];
         if (image == nil) {
@@ -112,10 +117,14 @@
     [super viewWillAppear:YES];
     self.screenName = [NSString stringWithFormat:@"Rides screen: %d", (int)self.index];
     [self.delegate willAppearViewWithIndex:self.index];
-
+    
     if (self.index == 2) {
         [self.view addSubview:webview];
+        [self.view addSubview:arrowLeft];
+        [self.view bringSubviewToFront:arrowLeft];
+        self.tableView.tableFooterView.hidden = YES;
     } else {
+        [arrowLeft removeFromSuperview];
         [webview removeFromSuperview];
         [self addToImageCache];
         [self.tableView reloadData];

@@ -158,7 +158,7 @@
     NSEntityDescription *e = [NSEntityDescription entityForName:@"Stomt"
                                          inManagedObjectContext:[RKManagedObjectStore defaultStore].
                               mainQueueManagedObjectContext];
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO];
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:YES];
     request.sortDescriptors = @[descriptor];
     request.entity = e;
     
@@ -168,7 +168,8 @@
         [NSException raise:@"Fetch failed"
                     format:@"Reason: %@", [error localizedDescription]];
     }
-    return [[NSMutableArray alloc] initWithArray:fetchedObjects];
+    NSArray* reversedArray = [[fetchedObjects reverseObjectEnumerator] allObjects];
+    return reversedArray;
 }
 
 +(void)deleteStomtFromCoreData:(Stomt *)stomt {

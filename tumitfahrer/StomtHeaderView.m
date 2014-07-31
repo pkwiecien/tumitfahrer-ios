@@ -21,7 +21,7 @@
         [targetsPickerView setTag:101];
         
         UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(20, 150, 280, 60)];
-        textView.text = @"because: ";
+        textView.text = @"because ";
         [textView setFont:[UIFont systemFontOfSize:13.0f]];
         [textView setTag:102];
         

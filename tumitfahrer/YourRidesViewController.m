@@ -67,7 +67,7 @@
     [self.refreshControl addTarget:self action:@selector(handleRefresh) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
     
-    NSArray *emptyCreated = [NSArray arrayWithObjects:@"No rides as driver", @"No requests for your rides", nil];
+    NSArray *emptyCreated = [NSArray arrayWithObjects:@"No rides as driver", @"No rides as passenger", nil];
     NSArray *emptyJoined = [NSArray arrayWithObjects:@"No upcoming rides as passenger", @"No pending ride requests", nil];
     NSArray *emptyPast = [NSArray arrayWithObjects:@"You don't have any past rides", nil];
     self.emptyCellDescriptionsArray = [NSArray arrayWithObjects:emptyCreated, emptyJoined, emptyPast, nil];
@@ -170,7 +170,7 @@
     } else if(self.index == 1) {
         self.arrayWithHeaders = [[NSMutableArray alloc] initWithObjects:@"Confirmed Rides as Passenger", @"Pending Ride Requests", nil];
     } else if(self.index == 2) {
-        self.arrayWithHeaders = [[NSMutableArray alloc] initWithObjects:@"Past Rides", nil];
+        self.arrayWithHeaders = [[NSMutableArray alloc] initWithObjects:@"All Your Past Rides", nil];
     }
 }
 
@@ -214,13 +214,17 @@
         
     } else  if(self.index == 2) {
         [[RidesStore sharedStore] fetchPastRidesFromCoreData];
+        NSMutableArray *emptyArray = [[NSMutableArray alloc] init];
+        [self.arrayWithSections addObject:emptyArray];
         
         if ([[RidesStore sharedStore] pastRides].count == 0) {
-            
+
             [WebserviceRequest getPastRidesForCurrentUserWithBlock:^(NSArray * fetchedRides) {
-                [self initPastRidesWithRides:fetchedRides];
+                if ([fetchedRides count] > 0) {
+                    [self initPastRidesWithRides:fetchedRides];
+                    [self.zeroRidesLabel removeFromSuperview];
+                }
                 [self stopActivityIndicator];
-                [self.zeroRidesLabel removeFromSuperview];
             }];
         } else {
             self.arrayWithSections = [NSMutableArray arrayWithObject:[[RidesStore sharedStore] pastRides]];
@@ -229,7 +233,12 @@
 }
 
 -(void)initPastRidesWithRides:(NSArray *)fetchedRides {
-    self.arrayWithSections = [NSMutableArray arrayWithObject:fetchedRides];
+    if (fetchedRides != nil) {
+        self.arrayWithSections = [NSMutableArray arrayWithObject:fetchedRides];
+    } else {
+        NSMutableArray *emptyArray = [[NSMutableArray alloc] init];
+        self.arrayWithSections = [NSMutableArray arrayWithObject:emptyArray];
+    }
     [self.tableView reloadData];
 }
 
@@ -331,7 +340,6 @@
 -(BOOL)rideHasUnseenMessage:(Ride *)ride {
     
     for (Conversation *conversation in ride.conversations) {
-        NSLog(@"conversaion last seen: %@", conversation.lastMessageTime);
         if (((conversation.lastMessageTime != nil && conversation.seenTime == nil) || ([conversation.lastMessageTime compare:conversation.seenTime] == NSOrderedDescending)) && ![conversation.lastSenderId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
             return YES;
         }

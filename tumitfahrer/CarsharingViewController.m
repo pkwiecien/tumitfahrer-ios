@@ -7,6 +7,8 @@
 //
 
 #import "CarsharingViewController.h"
+#import "ActionManager.h"
+#import "LocationController.h"
 
 @interface CarsharingViewController ()
 
@@ -30,6 +32,8 @@
     NSString *fullURL = @"https://carsharing.mvg-mobil.de/";
     NSURL *url = [NSURL URLWithString:fullURL];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+    [self.webView stringByEvaluatingJavaScriptFromString:[ActionManager prepareJavaScriptCodeWithGeolocation:[LocationController sharedInstance].currentLocation]];
+
     [self.webView loadRequest:requestObj];
 }
 

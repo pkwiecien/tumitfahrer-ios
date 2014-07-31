@@ -235,6 +235,8 @@
 		E5E2D68619890FA700A81EB4 /* Stomt.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D68519890FA700A81EB4 /* Stomt.m */; };
 		E5E2D6891989105500A81EB4 /* StomtAgreementMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D6881989105500A81EB4 /* StomtAgreementMapping.m */; };
 		E5E2D68C1989135E00A81EB4 /* StomtAgreement.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D68B1989135E00A81EB4 /* StomtAgreement.m */; };
+		E5E2D696198960D000A81EB4 /* StomtLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = E5E2D695198960D000A81EB4 /* StomtLogo.png */; };
+		E5E2D69819896A9000A81EB4 /* OpenSourceProjects.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5E2D69719896A9000A81EB4 /* OpenSourceProjects.txt */; };
 		E5E9C3881955ECEE009FF381 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E9C3851955ECEE009FF381 /* Constants.m */; };
 		E5E9C3891955ECEE009FF381 /* AWSUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E9C3871955ECEE009FF381 /* AWSUploader.m */; };
 		E5FB4D3E1918DB18006F4F5D /* RideSectionHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FB4D3C1918DB18006F4F5D /* RideSectionHeaderCell.m */; };
@@ -664,6 +666,8 @@
 		E5E2D6881989105500A81EB4 /* StomtAgreementMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StomtAgreementMapping.m; sourceTree = "<group>"; };
 		E5E2D68A1989135E00A81EB4 /* StomtAgreement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StomtAgreement.h; sourceTree = "<group>"; };
 		E5E2D68B1989135E00A81EB4 /* StomtAgreement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StomtAgreement.m; sourceTree = "<group>"; };
+		E5E2D695198960D000A81EB4 /* StomtLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StomtLogo.png; sourceTree = "<group>"; };
+		E5E2D69719896A9000A81EB4 /* OpenSourceProjects.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenSourceProjects.txt; sourceTree = "<group>"; };
 		E5E9C3801955EBB9009FF381 /* AWSRuntime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSRuntime.framework; sourceTree = "<group>"; };
 		E5E9C3811955EBB9009FF381 /* AWSS3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSS3.framework; sourceTree = "<group>"; };
 		E5E9C3841955ECEE009FF381 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -802,6 +806,7 @@
 		E50164791956E0B5004DA38A /* Backgrounds */ = {
 			isa = PBXGroup;
 			children = (
+				E5E2D695198960D000A81EB4 /* StomtLogo.png */,
 				E55BE531197C3B65009B47B6 /* RoadNightBackground.jpg */,
 				E55BE52F197C3A48009B47B6 /* RoadNightBackground@2x.jpg */,
 				E50164821956E1E0004DA38A /* MainCampus.jpg */,
@@ -1735,6 +1740,7 @@
 		E5CD592B1951C13F00E97DEC /* Licenses */ = {
 			isa = PBXGroup;
 			children = (
+				E5E2D69719896A9000A81EB4 /* OpenSourceProjects.txt */,
 				E5CD592C1951C14900E97DEC /* afnetworking.txt */,
 				E5CD592E1951C39D00E97DEC /* EAIntroView.txt */,
 				E5CD592F1951C39D00E97DEC /* Facebook-iOS-SDK.txt */,
@@ -2127,6 +2133,7 @@
 				E522BAD218AE13F600ECD375 /* Images.xcassets in Resources */,
 				E55BE530197C3A48009B47B6 /* RoadNightBackground@2x.jpg in Resources */,
 				E526B644194DB84B006D3527 /* DescriptionCell.xib in Resources */,
+				E5E2D69819896A9000A81EB4 /* OpenSourceProjects.txt in Resources */,
 				E507854D195A244300E7CD06 /* AnuradaPhoto.jpg in Resources */,
 				E5A9BE19194236CD0072E9B0 /* YourRidesPageViewController.xib in Resources */,
 				E5CD593B1951C39D00E97DEC /* KIF.txt in Resources */,
@@ -2135,6 +2142,7 @@
 				E50263B619558F000041E21A /* DansenPhoto.jpg in Resources */,
 				E5CD59421951C3EA00E97DEC /* KGStatusBar.txt in Resources */,
 				E5FEF3641945E5BC00E326BB /* ReminderViewController.xib in Resources */,
+				E5E2D696198960D000A81EB4 /* StomtLogo.png in Resources */,
 				E5CD592D1951C14900E97DEC /* afnetworking.txt in Resources */,
 				E526B5B2194AC8D9006D3527 /* EditDepartmentViewController.xib in Resources */,
 				E55BE532197C3B65009B47B6 /* RoadNightBackground.jpg in Resources */,

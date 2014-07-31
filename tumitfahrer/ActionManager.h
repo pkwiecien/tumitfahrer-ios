@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 /**
  *  A helped class that contains static utility functions.
@@ -166,5 +167,13 @@
  */
 +(BOOL)isValidEmail:(NSString *)checkString;
 
+/**
+ *  Prepares a string with the JavaScript code that should be included in the webview to prevent alert views prompting for location
+ *
+ *  @param newLocation The given location.
+ *
+ *  @return String with JavaScript code.
+ */
++(NSString *)prepareJavaScriptCodeWithGeolocation:(CLLocation*)location;
 
 @end
