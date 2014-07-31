@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-#define ACCESS_KEY_ID          @"changeme" // Contact Pawel Kwiecien for the credentials to S3
-#define SECRET_KEY             @"changeme" // Contact Pawel Kwiecien for the credentials to S3
-#define BUCKET_NAME            @"tumitfahrer"
+// Contact Pawel Kwiecien (p.kwiecien@tum.de) for the credentials to
+
+#define ACCESS_KEY_ID          @"changeme"
+#define SECRET_KEY             @"changeme"
+#define BUCKET_NAME            @"changeme"
 
 
 #define thirdpartyid @"changeme"

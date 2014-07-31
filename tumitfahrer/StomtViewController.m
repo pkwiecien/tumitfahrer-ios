@@ -257,9 +257,10 @@
 }
 
 -(StomtOpinionType)stomtOpinion:(Stomt *)stomt {
+    
     for (StomtAgreement *agreement in stomt.agreements) {
-
-        if ([agreement.creator isEqualToString:stomt.creator]) {
+        
+        if ([agreement.creator isEqualToString:[[CurrentUser sharedInstance].user.userId stringValue]]) {
             if ([agreement.isNegative boolValue]) {
                 return NegativeStomt;
             } else {

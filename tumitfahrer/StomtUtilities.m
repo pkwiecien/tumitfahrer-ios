@@ -184,7 +184,7 @@
 
 +(StomtAgreement *)findAgreementForUsersStomt:(Stomt *)stomt userId:(NSNumber *)userId {
     for (StomtAgreement *agreement in stomt.agreements) {
-        if ([agreement.creator isEqualToString:stomt.creator]) {
+        if ([agreement.creator isEqualToString:[userId stringValue]]) {
             return agreement;
         }
     }

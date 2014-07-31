@@ -11,6 +11,8 @@
 #import "TimePickerCell.h"
 #import "DescriptionCell.h"
 #import "ActionManager.h"
+#import "CurrentUser.h"
+#import "Ride.h"
 
 @interface ReminderViewController () <SwitchTableViewCellDelegate>
 
@@ -138,6 +140,56 @@
     [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithInt:(int)hour] forKey:@"reminderHour"];
     [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithInt:(int)minutes] forKey:@"reminderMinute"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"reminder"] boolValue]) {
+        for (Ride *ride in [CurrentUser sharedInstance].user.ridesAsPassenger) {
+            [self setupLocalNotificationDateForRide:ride];
+        }
+        
+        for (Ride *ride in [CurrentUser sharedInstance].user.ridesAsOwner) {
+            [self setupLocalNotificationDateForRide:ride];
+            
+        }
+    } else {
+        [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    }
+}
+
+-(void)setupLocalNotificationDateForRide:(Ride *)ride {
+    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+    if (localNotif == nil)
+        return;
+    
+    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
+    
+    // Break the date up into components
+    NSDateComponents *dateComponents = [calendar components:( NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit) fromDate:ride.departureTime];
+    NSDateComponents *timeComponents = [calendar components:( NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit ) fromDate:ride.departureTime];
+    
+    NSNumber *hour = [[NSUserDefaults standardUserDefaults] valueForKey:@"reminderHour"];
+    NSNumber *minute = [[NSUserDefaults standardUserDefaults] valueForKey:@"reminderMinute"];
+    // Set up the fire time
+    NSDateComponents *dateComps = [[NSDateComponents alloc] init];
+    [dateComps setDay:([dateComponents day]-1)];
+    [dateComps setMonth:[dateComponents month]];
+    [dateComps setYear:[dateComponents year]];
+    [dateComps setHour:[hour intValue]];
+    // Notification will fire in one minute
+    [dateComps setMinute:[minute intValue]];
+    [dateComps setSecond:[timeComponents second]];
+    NSDate *itemDate = [calendar dateFromComponents:dateComps];
+    localNotif.fireDate = itemDate;
+    localNotif.timeZone = [NSTimeZone defaultTimeZone];
+    
+    // Notification details
+    localNotif.alertBody = [NSString stringWithFormat:@"Reminder: Tomorrow you have a ride from %@ to %@ at %@", ride.departurePlace, ride.destination, ride.departureTime];
+    // Set the action button
+    localNotif.alertAction = @"View";
+    localNotif.soundName = UILocalNotificationDefaultSoundName;
+    localNotif.applicationIconBadgeNumber = 1;
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
 }
 
 @end

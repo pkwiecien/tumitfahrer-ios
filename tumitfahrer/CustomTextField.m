@@ -84,7 +84,7 @@
 
 -(BOOL)canPerformAction:(SEL)action withSender:(id)sender {
     // by default switch off following actions in the input field
-    if (action == @selector(paste:) || action == @selector(cut:) || action ==  @selector(select:) || action ==  @selector(selectAll:))
+    if (action == @selector(cut:) || action ==  @selector(select:) || action ==  @selector(selectAll:))
         return NO;
     return [super canPerformAction:action withSender:sender];
 }

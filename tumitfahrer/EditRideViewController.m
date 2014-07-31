@@ -27,9 +27,8 @@
 #import "DestinationViewController.h"
 #import "FreeSeatsTableViewCell.h"
 #import "RMDateSelectionViewController.h"
-#import "CustomRepeatViewController.h"
 
-@interface EditRideViewController () <SegmentedControlCellDelegate, DestinationViewControllerDelegate, FreeSeatsCellDelegate, RMDateSelectionViewControllerDelegate, MeetingPointDelegate, CustomRepeatViewController>
+@interface EditRideViewController () <SegmentedControlCellDelegate, DestinationViewControllerDelegate, FreeSeatsCellDelegate, RMDateSelectionViewControllerDelegate, MeetingPointDelegate>
 
 @property (nonatomic, assign) CLLocationCoordinate2D departureCoordinate;
 @property (nonatomic, assign) CLLocationCoordinate2D destinationCoordinate;
@@ -78,8 +77,12 @@
     if (self.ride.meetingPoint != nil) {
         meetingPoint = self.ride.meetingPoint;
     }
+    NSString *isRegularRide = @"No";
+    if(self.ride.regularRideId != nil) {
+        isRegularRide = @"Yes";
+    }
     
-    self.tableValues = [[NSMutableArray alloc] initWithObjects:self.ride.departurePlace,self.ride.destination, [ActionManager stringFromDate:self.ride.departureTime], @"No", [self.ride.freeSeats stringValue], car, meetingPoint, @"", nil];
+    self.tableValues = [[NSMutableArray alloc] initWithObjects:self.ride.departurePlace, self.ride.destination, [ActionManager stringFromDate:self.ride.departureTime], isRegularRide, [self.ride.freeSeats stringValue], car, meetingPoint, @"", nil];
     self.tablePlaceholders = [[NSMutableArray alloc] initWithObjects:@"Departure", @"Destination", @"Time", @"Repeat", @"Free Seats", @"Car", @"Meeting Point", @"", nil];
 }
 
@@ -147,7 +150,11 @@
         cell.detailTextLabel.font = [UIFont systemFontOfSize:16.0];
     }
     cell.textLabel.text = [self.tablePlaceholders objectAtIndex:indexPath.row];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    if (indexPath.row == 3) { // don't show accessory for repeat
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
     cell.textLabel.textColor = [UIColor blackColor];
     cell.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];
@@ -156,6 +163,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (indexPath.section == 0) {
         if ([[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Meeting Point"] || [[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Car"]) {
             MeetingPointViewController *meetingPointVC = [[MeetingPointViewController alloc] init];
@@ -174,12 +182,6 @@
             RMDateSelectionViewController *dateSelectionVC = [RMDateSelectionViewController dateSelectionController];
             dateSelectionVC.delegate = self;
             [dateSelectionVC show];
-        } else if([[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Repeat"]) {
-            CustomRepeatViewController *customRepeatVC = [[CustomRepeatViewController alloc] init];
-            customRepeatVC.title = @"Repeat ride";
-            customRepeatVC.delegate = self;
-            customRepeatVC.values = self.selectedRepeatValues;
-            [self.navigationController pushViewController:customRepeatVC animated:YES];
         }
     }
 }

@@ -235,7 +235,6 @@
 		E5E2D68619890FA700A81EB4 /* Stomt.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D68519890FA700A81EB4 /* Stomt.m */; };
 		E5E2D6891989105500A81EB4 /* StomtAgreementMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D6881989105500A81EB4 /* StomtAgreementMapping.m */; };
 		E5E2D68C1989135E00A81EB4 /* StomtAgreement.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D68B1989135E00A81EB4 /* StomtAgreement.m */; };
-		E5E2D696198960D000A81EB4 /* StomtLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = E5E2D695198960D000A81EB4 /* StomtLogo.png */; };
 		E5E2D69819896A9000A81EB4 /* OpenSourceProjects.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5E2D69719896A9000A81EB4 /* OpenSourceProjects.txt */; };
 		E5E9C3881955ECEE009FF381 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E9C3851955ECEE009FF381 /* Constants.m */; };
 		E5E9C3891955ECEE009FF381 /* AWSUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E9C3871955ECEE009FF381 /* AWSUploader.m */; };
@@ -666,7 +665,6 @@
 		E5E2D6881989105500A81EB4 /* StomtAgreementMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StomtAgreementMapping.m; sourceTree = "<group>"; };
 		E5E2D68A1989135E00A81EB4 /* StomtAgreement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StomtAgreement.h; sourceTree = "<group>"; };
 		E5E2D68B1989135E00A81EB4 /* StomtAgreement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StomtAgreement.m; sourceTree = "<group>"; };
-		E5E2D695198960D000A81EB4 /* StomtLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StomtLogo.png; sourceTree = "<group>"; };
 		E5E2D69719896A9000A81EB4 /* OpenSourceProjects.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenSourceProjects.txt; sourceTree = "<group>"; };
 		E5E9C3801955EBB9009FF381 /* AWSRuntime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSRuntime.framework; sourceTree = "<group>"; };
 		E5E9C3811955EBB9009FF381 /* AWSS3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSS3.framework; sourceTree = "<group>"; };
@@ -806,7 +804,6 @@
 		E50164791956E0B5004DA38A /* Backgrounds */ = {
 			isa = PBXGroup;
 			children = (
-				E5E2D695198960D000A81EB4 /* StomtLogo.png */,
 				E55BE531197C3B65009B47B6 /* RoadNightBackground.jpg */,
 				E55BE52F197C3A48009B47B6 /* RoadNightBackground@2x.jpg */,
 				E50164821956E1E0004DA38A /* MainCampus.jpg */,
@@ -1497,16 +1494,16 @@
 			name = Header;
 			sourceTree = "<group>";
 		};
-		E593F07F197FD2D800C1AF32 /* stomt */ = {
+		E593F07F197FD2D800C1AF32 /* Stomt */ = {
 			isa = PBXGroup;
 			children = (
-				E593F08B197FF9FB00C1AF32 /* cell */,
+				E593F08B197FF9FB00C1AF32 /* Stomt Cell */,
 				E593F085197FDEC400C1AF32 /* header */,
 				E593F080197FD2EA00C1AF32 /* StomtViewController.h */,
 				E593F081197FD2EA00C1AF32 /* StomtViewController.m */,
 				E593F082197FD2EA00C1AF32 /* StomtViewController.xib */,
 			);
-			name = stomt;
+			name = Stomt;
 			sourceTree = "<group>";
 		};
 		E593F085197FDEC400C1AF32 /* header */ = {
@@ -1518,14 +1515,14 @@
 			name = header;
 			sourceTree = "<group>";
 		};
-		E593F08B197FF9FB00C1AF32 /* cell */ = {
+		E593F08B197FF9FB00C1AF32 /* Stomt Cell */ = {
 			isa = PBXGroup;
 			children = (
 				E5E2D66619831A2B00A81EB4 /* StomtExperimentalCell.h */,
 				E5E2D66719831A2B00A81EB4 /* StomtExperimentalCell.m */,
 				E5E2D664198319AC00A81EB4 /* StomtExperimentalCell.xib */,
 			);
-			name = cell;
+			name = "Stomt Cell";
 			sourceTree = "<group>";
 		};
 		E59987C418E6DBC300B01C62 /* ViewControllers */ = {
@@ -1785,7 +1782,7 @@
 		E5DF640B18EB42D800D53164 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				E593F07F197FD2D800C1AF32 /* stomt */,
+				E593F07F197FD2D800C1AF32 /* Stomt */,
 				E526B64C194DFF6E006D3527 /* Team */,
 				E5FEF37919463D5700E326BB /* Carsharing */,
 				E5FEF35A1945E4C500E326BB /* Feedback */,
@@ -2142,7 +2139,6 @@
 				E50263B619558F000041E21A /* DansenPhoto.jpg in Resources */,
 				E5CD59421951C3EA00E97DEC /* KGStatusBar.txt in Resources */,
 				E5FEF3641945E5BC00E326BB /* ReminderViewController.xib in Resources */,
-				E5E2D696198960D000A81EB4 /* StomtLogo.png in Resources */,
 				E5CD592D1951C14900E97DEC /* afnetworking.txt in Resources */,
 				E526B5B2194AC8D9006D3527 /* EditDepartmentViewController.xib in Resources */,
 				E55BE532197C3B65009B47B6 /* RoadNightBackground.jpg in Resources */,
