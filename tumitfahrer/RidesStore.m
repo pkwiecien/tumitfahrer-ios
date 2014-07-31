@@ -142,7 +142,7 @@ static int activity_id = 0;
                               mainQueueManagedObjectContext];
     NSPredicate *predicate;
     NSDate *now = [ActionManager currentDate];
-    predicate = [NSPredicate predicateWithFormat:@"departureTime <= %@", now];
+    predicate = [NSPredicate predicateWithFormat:@"(departureTime <= %@) AND ((self.rideOwner.userId = %@) OR (ANY passengers.userId = %@))", now, [CurrentUser sharedInstance].user.userId, [CurrentUser sharedInstance].user.userId];
     
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"departureTime" ascending:NO];
     request.sortDescriptors = @[descriptor];

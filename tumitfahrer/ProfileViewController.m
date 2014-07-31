@@ -115,7 +115,7 @@
         self.profileImageContentView.circularImage = profilePic;
         [self.profileImageContentView.rideDetailHeaderView replaceImage:profilePic];
     } else {
-        [self.profileImageContentView.rideDetailHeaderView replaceImage:[UIImage imageNamed:@"bg1.jpg"]];
+        [self.profileImageContentView.rideDetailHeaderView replaceImage:[UIImage imageNamed:@"MainCampus.jpg"]];
     }
 }
 
@@ -314,6 +314,14 @@
     
     UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
     UIImage *resizedImage = [ActionManager imageWithImage:chosenImage scaledToSize:CGSizeMake(100, 135)];
+    if(chosenImage == nil) {
+        NSLog(@"chosen image is nil");
+    }
+    
+    if(resizedImage == nil) {
+        NSLog(@"resized image is nil");
+    }
+            
     NSData *chosenImageData = UIImageJPEGRepresentation(chosenImage, 1.0);
     NSData *resizedImageData = UIImageJPEGRepresentation(resizedImage, 1.0);
     
@@ -321,13 +329,14 @@
     
     self.profileImageContentView.rideDetailHeaderView.circularImage = resizedImage;
     [self.profileImageContentView.rideDetailHeaderView replaceImage:resizedImage];
-    self.user.profileImageData = UIImageJPEGRepresentation(resizedImage, 1.0f);
+    self.user.profileImageData = resizedImageData;
     
-    [picker dismissViewControllerAnimated:YES completion:NULL];
     NSError *error;
     if (![self.user.managedObjectContext saveToPersistentStore:&error]) {
-        NSLog(@"Whoops");
+        NSLog(@"Whoops %@", [error localizedDescription]);
     }
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -335,7 +344,10 @@
         [[AWSUploader sharedStore] uploadImageData:[CurrentUser sharedInstance].user.profileImageData user:self.user];
         self.initialImageData = self.user.profileImageData;
     }
-    self.user = nil;
+    
+    if (![self.user.userId isEqualToNumber:[CurrentUser sharedInstance].user.userId]) {
+        self.user = nil; // reset the user
+    }
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
