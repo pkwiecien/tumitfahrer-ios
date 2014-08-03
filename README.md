@@ -11,7 +11,6 @@ iOS app for TUMitfahrer App - carpooling app for students
 ##### Check the Timeline and add ride requests as a passenger
 
 <img src="https://raw.githubusercontent.com/pkwiecien/tumitfahrer-ios/master/screenshots/timeline@2x.png" alt="Campus Rides" width="254px" height="450px"  hspace="10"/> 
-
 <img src="https://raw.githubusercontent.com/pkwiecien/tumitfahrer-ios/master/screenshots/add@2x.png" alt="Campus Rides" width="254px" height="450px" /> 
 
 ##### Enjoy great user interface 
