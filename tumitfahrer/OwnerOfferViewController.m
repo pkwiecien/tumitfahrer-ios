@@ -286,9 +286,9 @@
     NSDictionary *queryParams = @{@"reason": self.textView.text};
     [objectManager deleteObject:self.ride path:[NSString stringWithFormat:@"/api/v2/rides/%@", self.ride.rideId] parameters:queryParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         
+        [KGStatusBar showSuccessWithStatus:@"Ride successfully deleted"];
         [[CurrentUser sharedInstance].user removeRidesAsOwnerObject:self.ride];
         [[RidesStore sharedStore] deleteRideFromCoreData:self.ride];
-        [KGStatusBar showWithStatus:@"Ride successfully deleted"];
         
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -303,11 +303,13 @@
     NSNumber *regularRideId = self.ride.regularRideId;
     [objectManager deleteObject:self.ride path:[NSString stringWithFormat:@"/api/v2/rides/%@", self.ride.rideId] parameters:queryParams success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
 
+        [KGStatusBar showSuccessWithStatus:@"Regular rides successfully deleted"];
+
         // iterate over regular rides in core data and delete them
         for (Ride *regularRide in [[RidesStore sharedStore] fetchRegularRidesFromCoreDataWithId:regularRideId]) {
             [[CurrentUser sharedInstance].user removeRidesAsOwnerObject:regularRide];
             [[RidesStore sharedStore] deleteRideFromCoreData:regularRide];
-        }
+        }        
         
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {

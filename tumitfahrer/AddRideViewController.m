@@ -288,7 +288,7 @@ NSString *const kRideType = @"Ride Type";
             destinationVC.rideTableIndexPath = indexPath;
             [self.navigationController pushViewController:destinationVC animated:YES];
         } else if([[self.tablePlaceholders objectAtIndex:indexPath.row] isEqualToString:@"Time"]) {
-            if (![[self.tableValues objectAtIndex:4] isEqualToString:@"No"]) {
+            if (![[self.tableValues objectAtIndex:4] isEqualToString:@"No"] && self.TableType == Driver) {
                 return;
             }
             RMDateSelectionViewController *dateSelectionVC = [RMDateSelectionViewController dateSelectionController];

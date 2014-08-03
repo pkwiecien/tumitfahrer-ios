@@ -18,6 +18,7 @@
 #import "RideDetailActionCell.h"
 #import "EditRequestViewController.h"
 #import "CustomIOS7AlertView.h"
+#import "KGStatusBar.h"
 
 @interface OwnerRequestViewController () <UIGestureRecognizerDelegate, RideStoreDelegate, HeaderContentViewDelegate, CustomIOS7AlertViewDelegate>
 
@@ -117,6 +118,8 @@
 -(void)deleteRideButtonPressed {
     [WebserviceRequest deleteRideFromWebservice:self.ride block:^(BOOL isDeleted) {
         if (isDeleted) {
+            [KGStatusBar showSuccessWithStatus:@"Ride request successfully deleted"];
+
             [self.navigationController popViewControllerAnimated:YES];
         }
     }];

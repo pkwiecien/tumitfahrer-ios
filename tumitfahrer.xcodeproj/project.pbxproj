@@ -236,6 +236,7 @@
 		E5E2D6891989105500A81EB4 /* StomtAgreementMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D6881989105500A81EB4 /* StomtAgreementMapping.m */; };
 		E5E2D68C1989135E00A81EB4 /* StomtAgreement.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E2D68B1989135E00A81EB4 /* StomtAgreement.m */; };
 		E5E2D69819896A9000A81EB4 /* OpenSourceProjects.txt in Resources */ = {isa = PBXBuildFile; fileRef = E5E2D69719896A9000A81EB4 /* OpenSourceProjects.txt */; };
+		E5E2D699198AB1B600A81EB4 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBD818EFDD1E00CE7B01 /* AdSupport.framework */; };
 		E5E9C3881955ECEE009FF381 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E9C3851955ECEE009FF381 /* Constants.m */; };
 		E5E9C3891955ECEE009FF381 /* AWSUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E9C3871955ECEE009FF381 /* AWSUploader.m */; };
 		E5FB4D3E1918DB18006F4F5D /* RideSectionHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FB4D3C1918DB18006F4F5D /* RideSectionHeaderCell.m */; };
@@ -247,7 +248,6 @@
 		E5FD9EC819234A8500902502 /* TimelineMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5FD9EC619234A8500902502 /* TimelineMapViewController.xib */; };
 		E5FD9ECD1923FA6C00902502 /* UIColor+LayoutColors.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FD9ECC1923FA6C00902502 /* UIColor+LayoutColors.m */; };
 		E5FDDBC618EDE9B100CE7B01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBC518EDE9B100CE7B01 /* MapKit.framework */; };
-		E5FDDBD918EFDD1E00CE7B01 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBD818EFDD1E00CE7B01 /* AdSupport.framework */; };
 		E5FDDBDB18EFDD2700CE7B01 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBDA18EFDD2700CE7B01 /* CoreImage.framework */; };
 		E5FDDBDD18EFDD2E00CE7B01 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBDC18EFDD2E00CE7B01 /* SystemConfiguration.framework */; };
 		E5FDDBDF18EFDD3500CE7B01 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDDBDE18EFDD3500CE7B01 /* CoreTelephony.framework */; };
@@ -754,6 +754,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5E2D699198AB1B600A81EB4 /* AdSupport.framework in Frameworks */,
 				E5B53E0019635FDB00F87964 /* AWSRuntime.framework in Frameworks */,
 				E5B53E0119635FDB00F87964 /* AWSS3.framework in Frameworks */,
 				E5BB85CF1961D810009DD9A7 /* libAdIdAccess.a in Frameworks */,
@@ -761,7 +762,6 @@
 				E522BABC18AE13F600ECD375 /* CoreGraphics.framework in Frameworks */,
 				E5078565195AA90B00E7CD06 /* CoreText.framework in Frameworks */,
 				E507854A195A06EE00E7CD06 /* libsqlite3.dylib in Frameworks */,
-				E5FDDBD918EFDD1E00CE7B01 /* AdSupport.framework in Frameworks */,
 				E5078542195A050500E7CD06 /* libz.dylib in Frameworks */,
 				E58B872C191559B30032524A /* libicucore.dylib in Frameworks */,
 				E51FD51718F3B6EA0098AD11 /* CFNetwork.framework in Frameworks */,

@@ -41,3 +41,6 @@ Icons:
 ● Passenger by Aditya Dipankar from The Noun Project
 ● Gear by P.J. Onori from The Noun Project
 ● Team by Mister Pixel from The Noun Project
+
+Graphics:
+● iOS Devices for Sketch - Robbie Pearce
