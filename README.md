@@ -1,7 +1,13 @@
-tumitfahrer-ios
+TUMitfahrer for iOS
 ===============
 
-iOS app for TUMitfahrer App - carpooling app for students
+TUMitfahrer - a carpooling platform for students of Technical University of Munich. Organize and join campus rides and travel between the Main Campus, Garching Forschungszentrum, Freising and other destinations. Enjoy activity rides and go for example to Ikea, for hiking in Alps or to the lake with fellow students. 
+
+If you are a driver - submit a ride offer and share costs of the trip with others. Don't worry if you don't have a car - the app enables you to post ride requests as a passenger. 
+
+In this updated version enjoy a great user interface and discover even more functionality that was developed by a group of 9 students from Informatics at Technical University of Munich at the Chair of Wirtschaftsinformatik. The first version was created by students from TUM: Junge Akademie.
+
+The project is open-source - everybody is welcome to join, collaborate and commit new features.
 
 ##### Organize Campus and Activity Rides
 
