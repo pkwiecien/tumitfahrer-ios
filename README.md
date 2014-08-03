@@ -9,6 +9,15 @@ In this updated version enjoy a great user interface and discover even more func
 
 The project is open-source - everybody is welcome to join, collaborate and commit new features.
 
+### Installation of the project
+
+1. `git clone https://github.com/pkwiecien/tumitfahrer-ios.git`
+2. Go to the directory tumitfahrer-ios and execture from command line `pod install`
+3. Open `tumitfahrer.xcworkspace`
+
+### Overview of the functionality
+
+
 ##### Organize Campus and Activity Rides
 
 <img src="https://raw.githubusercontent.com/pkwiecien/tumitfahrer-ios/master/screenshots/campus@2x.png" alt="Campus Rides" width="254px" height="450px"  hspace="10"/> 
